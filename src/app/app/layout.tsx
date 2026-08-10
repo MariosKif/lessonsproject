@@ -26,7 +26,24 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
             </Link>
           )}
           <div className="flex items-center justify-between gap-2">
-            <span className="truncate text-sm font-medium text-ink">{ctx.user.name}</span>
+            <Link
+              href="/app/profile"
+              className="flex min-w-0 items-center gap-2 text-sm font-medium text-ink hover:text-ultramarine"
+              title="Open your profile"
+            >
+              <span
+                aria-hidden
+                className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-ultramarine text-[10px] font-bold text-white"
+              >
+                {ctx.user.name
+                  .split(/\s+/)
+                  .map((w) => w[0])
+                  .slice(0, 2)
+                  .join("")
+                  .toUpperCase()}
+              </span>
+              <span className="truncate">{ctx.user.name}</span>
+            </Link>
             <form action={logoutAction}>
               <button className="text-xs text-ink-soft hover:text-ink">Log out</button>
             </form>
