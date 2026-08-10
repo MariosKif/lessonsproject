@@ -34,7 +34,8 @@ export default async function AppHome() {
     (p) => (progressByPath.get(p.slug) ?? 0) > 0 && !recommendedSlugs.has(p.slug)
   );
 
-  const tools = getTools({ featuredOnly: true });
+  const aiTools = getTools({ featuredOnly: true, type: "ai-tool" });
+  const technologies = getTools({ featuredOnly: true, type: "technology" });
   const toolCounts = getToolLessonCounts();
   const professions = getProfessions();
 
@@ -97,7 +98,7 @@ export default async function AppHome() {
       <section>
         <h2 className="display mb-4 text-xl font-semibold">Learn by AI tool</h2>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-          {tools.map((t) => (
+          {aiTools.map((t) => (
             <Link
               key={t.slug}
               href={`/app/library?tool=${t.slug}`}
@@ -114,6 +115,32 @@ export default async function AppHome() {
           ))}
         </div>
       </section>
+
+      {technologies.length > 0 && (
+        <section>
+          <h2 className="display mb-1 text-xl font-semibold">Learn a technology</h2>
+          <p className="mb-4 text-sm text-ink-soft">
+            Interactive coding courses with the built-in editor.
+          </p>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            {technologies.map((t) => (
+              <Link
+                key={t.slug}
+                href={`/app/library?tool=${t.slug}`}
+                className="group rounded-xl border border-mist bg-sheet p-4 transition-all hover:-translate-y-0.5 hover:border-cobalt/40"
+              >
+                <span className="mb-2 block h-2.5 w-2.5 rounded-[3px]" style={{ background: t.color }} />
+                <span className="display block text-sm font-semibold group-hover:text-ultramarine">
+                  {t.name}
+                </span>
+                <span className="mt-0.5 block font-mono text-xs text-ink-soft">
+                  {toolCounts[t.slug] ?? 0} lessons
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section>
         <h2 className="display mb-4 text-xl font-semibold">Learn for your profession</h2>

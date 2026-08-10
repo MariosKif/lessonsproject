@@ -35,7 +35,8 @@ const FAQ: [string, string][] = [
 
 export default function PricingPage() {
   const lessonCount = getLessonCount();
-  const toolCount = getTools({ featuredOnly: true }).length;
+  const toolCount = getTools({ featuredOnly: true, type: "ai-tool" }).length;
+  const technologyCount = getTools({ featuredOnly: true, type: "technology" }).length;
   const professionCount = getProfessions().length;
 
   return (
@@ -56,6 +57,10 @@ export default function PricingPage() {
         <ul className="mt-6 space-y-2.5 text-sm">
           <li>✓ All {lessonCount}+ lessons — growing toward thousands</li>
           <li>✓ {toolCount} AI tool academies, incl. the 3-course Claude track</li>
+          <li>
+            ✓ {technologyCount} interactive coding {technologyCount === 1 ? "technology" : "technologies"} with
+            a built-in editor, starting with HTML
+          </li>
           <li>✓ {professionCount} profession paths</li>
           <li>✓ Personalized learning path from your onboarding</li>
           <li>✓ Knowledge checks in every lesson + smart prompt personalization</li>
