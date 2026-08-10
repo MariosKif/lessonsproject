@@ -1,0 +1,284 @@
+{
+  "quizzes": {
+    "gem-b1-first-professional-result": [
+      {
+        "q": "A small business owner types 'write a follow-up email' into Gemini and gets a generic, unusable message. What does the lesson say is the fix?",
+        "options": [
+          "Ask Gemini to write three versions and pick one",
+          "Structure the prompt with role, context, specific requirements, format, and things to avoid",
+          "Switch to Gemini Live instead of typing",
+          "Repeat the request with more exclamation points"
+        ],
+        "answer": 1,
+        "why": "Each part of the structured prompt removes a guess Gemini would otherwise have to make, replacing generic output with a usable draft."
+      },
+      {
+        "q": "Why does the lesson say Gemini's prompt structure matters even more than for a standalone chatbot?",
+        "options": [
+          "Gemini has stricter content filters than other tools",
+          "Gemini requires a paid plan to follow instructions",
+          "Gemini sits inside Gmail, Docs, and Sheets, where you need a usable result fast, not a back-and-forth chat",
+          "Gemini cannot remember context within one chat"
+        ],
+        "answer": 2,
+        "why": "Because Gemini is embedded in Workspace apps, a structured first prompt matters more since there's less room for a slow back-and-forth."
+      },
+      {
+        "q": "You've built a prompt template that reliably produces great follow-up emails. What's the recommended way to reuse it going forward?",
+        "options": [
+          "Retype it from memory each time to keep it fresh",
+          "Paste the full example output as a new prompt every time",
+          "Only use it in Gemini Live",
+          "Turn it into a Gem with the role and requirements baked in as standing instructions"
+        ],
+        "answer": 3,
+        "why": "The proTip recommends turning a proven prompt into a Gem so only the task-specific details need to be added each time."
+      }
+    ],
+    "gem-b2-prompting-fundamentals-multimodal": [
+      {
+        "q": "You attach a blurry photo of a delivery note and ask Gemini 'what is this?' What mistake does this match from the lesson?",
+        "options": [
+          "Attaching a file but writing a vague prompt instead of stating the specific task",
+          "Cramming two unrelated tasks into one Task line",
+          "Skipping the Format part of the prompt",
+          "Using a file type Gemini doesn't support"
+        ],
+        "answer": 0,
+        "why": "The lesson names this exact mistake: attaching a file but asking a vague question instead of stating what to do with it."
+      },
+      {
+        "q": "What does the lesson say is the most common mistake once a file is attached to a Gemini prompt?",
+        "options": [
+          "Forgetting to name a role",
+          "Not telling Gemini explicitly what to do with the file — describe it, extract from it, compare it — instead of assuming it will guess",
+          "Attaching more than one file at once",
+          "Using Gemini Live instead of the chat window"
+        ],
+        "answer": 1,
+        "why": "Gemini will describe an attached image in general terms unless told exactly what to look for, extract, or compare."
+      },
+      {
+        "q": "Per the lesson, what's true of Gemini's biggest practical edge over a text-only assistant?",
+        "options": [
+          "It only works with typed text, never files",
+          "It requires a separate app for images and audio",
+          "It reads images, audio, video, and PDFs natively in the same chat as your text prompt",
+          "It can only process one file type per conversation"
+        ],
+        "answer": 2,
+        "why": "The lesson states Gemini's biggest edge is reading images, audio, video, and PDFs natively alongside your text prompt in the same chat."
+      }
+    ],
+    "gem-b3-gmail-docs-daily-communication": [
+      {
+        "q": "You ask Gemini's Gmail side panel to draft a reply promising a specific delivery date you're not actually sure you can hit. What guardrail did you skip?",
+        "options": [
+          "Asking Gemini to summarize the thread first",
+          "Reviewing the draft before sending",
+          "Using Help me write in Docs instead",
+          "Stating in the prompt what NOT to commit to, since Gemini doesn't know your real constraints unless told"
+        ],
+        "answer": 3,
+        "why": "The 'do not commit to' line is the key guardrail because Gemini doesn't know your real pricing, dates, or approval limits unless told explicitly."
+      },
+      {
+        "q": "In Google Docs, only one paragraph of a long draft needs a tone fix. What does the lesson recommend?",
+        "options": [
+          "Select that paragraph and ask Gemini to refine just that section, rather than regenerating the whole document",
+          "Regenerate the entire document from scratch",
+          "Delete the paragraph and write it manually",
+          "Ask Gemini to summarize the whole doc first"
+        ],
+        "answer": 0,
+        "why": "The lesson explicitly recommends refining just the section that needs it instead of regenerating the whole document."
+      },
+      {
+        "q": "Why does the lesson warn against sending a Gemini-drafted email reply without reading the actual thread first?",
+        "options": [
+          "Gemini cannot see the thread at all",
+          "You're accountable for what goes out, even though Gemini can see the thread it drafted from",
+          "Gemini drafts are always too short",
+          "The side panel doesn't save drafts"
+        ],
+        "answer": 1,
+        "why": "The lesson stresses that you remain accountable for what's sent, so a draft needs review even though Gemini already saw the thread."
+      }
+    ],
+    "gem-i1-analyzing-documents-and-images": [
+      {
+        "q": "An insurance policy PDF and photos of water damage seem to disagree about the cause of damage. What should the prompt explicitly require Gemini to do?",
+        "options": [
+          "Silently pick whichever source seems more reliable",
+          "Ignore the photos and trust the PDF only",
+          "Flag the disagreement clearly instead of resolving it silently",
+          "Ask a human to resolve it before responding at all"
+        ],
+        "answer": 2,
+        "why": "The value in cross-checking is Gemini surfacing a document-vs-image conflict explicitly rather than quietly resolving it in one direction."
+      },
+      {
+        "q": "Why does the lesson require the instruction 'answer only from the attached document and image(s)'?",
+        "options": [
+          "It's a technical requirement for multi-file uploads",
+          "It reduces the file size Gemini needs to process",
+          "It's needed only for audio files, not documents",
+          "Without it, Gemini may blend general knowledge about contracts or listings with what's actually in your files, indistinguishably"
+        ],
+        "answer": 3,
+        "why": "This is the anti-hallucination guardrail: without it, Gemini blends outside knowledge with actual file content in a way you can't detect."
+      },
+      {
+        "q": "You upload a poorly lit, blurry photo alongside a document and expect precise detail extraction. What does the lesson say about this?",
+        "options": [
+          "Quality in, quality out applies to files too — a blurry photo won't give reliable detail extraction",
+          "Gemini automatically enhances blurry images before analysis",
+          "This is fine as long as the document is high quality",
+          "Blurry photos are rejected automatically by Gemini"
+        ],
+        "answer": 0,
+        "why": "The lesson lists uploading a blurry or poorly lit photo and expecting precise extraction as a common mistake."
+      }
+    ],
+    "gem-i2-deep-research-grounded-reports": [
+      {
+        "q": "You enable Workspace sources for a Deep Research report combining your team's Gmail/Drive content with the public web. What should the brief explicitly request?",
+        "options": [
+          "Nothing extra — Workspace sources are handled automatically",
+          "That internal findings be clearly separated from public-web findings, since they have very different reliability profiles",
+          "That only Drive content be used, excluding Gmail entirely",
+          "That the report skip citations for internal sources"
+        ],
+        "answer": 1,
+        "why": "The lesson stresses separating internal (primary-source) findings from public-web findings so their different reliability isn't blended together."
+      },
+      {
+        "q": "Before letting a Deep Research session run, the lesson says you should do what?",
+        "options": [
+          "Immediately close the tab and check back in 30 minutes",
+          "Skip straight to reading the final report",
+          "Review the research plan Gemini proposes and adjust scope if it's missing an angle you care about",
+          "Disable Workspace sources for every run to save time"
+        ],
+        "answer": 2,
+        "why": "Skipping the plan review step is a named common mistake; reviewing it lets you correct scope before the run wastes time."
+      },
+      {
+        "q": "A one-line research question like 'tell me about competitor pricing' is submitted straight to Deep Research. What's the likely problem, per the lesson?",
+        "options": [
+          "A vague request with no audience or scope produces a report covering the wrong angles",
+          "Deep Research will refuse to run",
+          "It will only search Gmail, not the web",
+          "It uses fewer citations than a scoped request"
+        ],
+        "answer": 0,
+        "why": "A vague one-line question with no audience or scope is listed as a common mistake that produces a report on the wrong angles."
+      }
+    ],
+    "gem-i3-sheets-data-workflows": [
+      {
+        "q": "You ask Gemini's Sheets side panel to 'flag rows with a big change' without a number. What happens, per the lesson?",
+        "options": [
+          "Gemini asks a clarifying question before doing anything",
+          "Gemini defaults to a 10% threshold automatically",
+          "The formula fails to insert",
+          "'Significant change' gets interpreted arbitrarily since no numeric threshold was specified"
+        ],
+        "answer": 3,
+        "why": "Not specifying a numeric threshold is a named common mistake — the flagging condition ends up interpreted arbitrarily."
+      },
+      {
+        "q": "Why does the lesson say to name the exact column headers instead of saying 'the growth column'?",
+        "options": [
+          "Column headers must be typed in all caps for Gemini to read them",
+          "Vague column references can lead Gemini to guess the wrong column",
+          "It's required to unlock the Sheets side panel",
+          "It speeds up formula calculation time"
+        ],
+        "answer": 1,
+        "why": "Vague column references force Gemini to guess, which is exactly the failure mode the lesson calls out."
+      },
+      {
+        "q": "After Gemini inserts a formula into your sheet, what should you do before trusting it?",
+        "options": [
+          "Immediately copy it to every other tab",
+          "Ask for a full sheet rebuild to double-check",
+          "Spot-check it against 2-3 rows by hand, and ask for a plain-language explanation if you don't recognize the function",
+          "Nothing — inserted formulas are already verified by Gemini"
+        ],
+        "answer": 2,
+        "why": "The lesson requires reviewing and hand-checking the formula before accepting, and asking for a plain-language explanation to be able to maintain it."
+      }
+    ],
+    "gem-a1-notebooklm-vs-gemini": [
+      {
+        "q": "A law firm associate needs to know whether clause 4.2 in one specific vendor contract conflicts with the firm's standard terms, with zero tolerance for outside-knowledge blending. Which tool fits, per the lesson's decision framework?",
+        "options": [
+          "NotebookLM, loading both documents as sources for a citation-backed answer",
+          "Gemini, using open web search",
+          "Gemini Deep Research without Workspace sources",
+          "Either tool works identically for this task"
+        ],
+        "answer": 0,
+        "why": "A fixed, specific document set requiring zero outside-knowledge blending is exactly the scenario the lesson routes to NotebookLM."
+      },
+      {
+        "q": "NotebookLM responds 'this isn't in your sources' to a question that actually needed outside context. What does the lesson say this response represents?",
+        "options": [
+          "A bug that should be reported",
+          "The intended safety feature working as designed, not a limitation to route around",
+          "A sign to switch to a different NotebookLM notebook",
+          "Evidence the sources were uploaded incorrectly"
+        ],
+        "answer": 1,
+        "why": "The lesson explicitly frames this refusal as NotebookLM's intended design, not a flaw — the tell-tale sign you picked the wrong tool for that question."
+      },
+      {
+        "q": "A consultant needs a briefing combining a client's internal 40-page strategy doc with current public market data, with both types of source clearly separated. What's the recommended approach?",
+        "options": [
+          "Use NotebookLM alone, since it handles both internal and public sources",
+          "Use Gemini alone with no source grounding",
+          "Use Gemini Deep Research with Workspace sources enabled, so it can read the Drive doc and the live web in one report",
+          "Manually copy both documents into a single chat message"
+        ],
+        "answer": 2,
+        "why": "Scenario C in the lesson uses exactly this approach: Deep Research with Workspace sources to combine internal Drive content with live web research."
+      }
+    ],
+    "gem-a2-google-ecosystem-workflow": [
+      {
+        "q": "A team runs great Deep Research every month but the findings never get logged anywhere searchable, so decisions get forgotten. What failure mode does this illustrate?",
+        "options": [
+          "Building a workflow too elaborate to run",
+          "Treating each tool as a separate silo instead of chaining research into a doc, tracker, and archive",
+          "Skipping the human review step",
+          "Forgetting to add source files to NotebookLM"
+        ],
+        "answer": 1,
+        "why": "The lesson's top listed mistake is treating each tool as a silo — great research that's never logged anywhere trackable."
+      },
+      {
+        "q": "Why does the lesson recommend a human review pass between the Deep Research export and the tracking Sheet or client-facing doc?",
+        "options": [
+          "Deep Research reports cannot be exported directly to Docs",
+          "Human review is only needed for Workspace-sourced reports",
+          "An unreviewed report shouldn't go straight to a tracker or client without cutting off-target content and adding judgment calls",
+          "It satisfies a compliance requirement unrelated to accuracy"
+        ],
+        "answer": 2,
+        "why": "Skipping the human review step and letting an unreviewed report flow straight to a tracker or client is a named common mistake."
+      },
+      {
+        "q": "A colleague covering for a consultant asks a NotebookLM archive about a client decision made months earlier, in a cycle they weren't part of, and gets an accurate cited answer. What made this possible?",
+        "options": [
+          "NotebookLM automatically syncs with every Gemini chat ever run",
+          "The consultant re-explained everything to the colleague beforehand",
+          "Gemini's memory feature retained the decision",
+          "The finished doc and source files were added to a standing NotebookLM notebook as part of the workflow"
+        ],
+        "answer": 3,
+        "why": "The workflow's archive step — adding the doc and source files to a standing NotebookLM notebook — is what made the decision findable later by anyone."
+      }
+    ]
+  }
+}

@@ -1,0 +1,284 @@
+{
+  "quizzes": {
+    "html-a01-global-attributes": [
+      {
+        "q": "A form's error summary must receive focus from JavaScript after a failed submit, but should never be a Tab stop. Which markup is correct?",
+        "options": [
+          "<section id=\"errors\" tabindex=\"0\">",
+          "<section id=\"errors\" tabindex=\"-1\">",
+          "<section id=\"errors\" tabindex=\"1\">",
+          "<section id=\"errors\" accesskey=\"e\">"
+        ],
+        "answer": 1,
+        "why": "tabindex=\"-1\" makes an element focusable by script (element.focus()) while keeping it out of the Tab order; 0 would add a useless Tab stop and positive values scramble the sequence."
+      },
+      {
+        "q": "An English page displays user-submitted chat messages that may arrive in Hebrew or English. How should each message element handle text direction?",
+        "options": [
+          "dir=\"rtl\" on the html element",
+          "dir=\"ltr\" on every message to keep the layout stable",
+          "dir=\"auto\" on each message element",
+          "No dir attribute — browsers detect direction from the font"
+        ],
+        "answer": 2,
+        "why": "dir=\"auto\" makes the browser inspect each element's first strongly directional character and set ltr or rtl per message — the only approach that works for unpredictable user content."
+      },
+      {
+        "q": "A tooltip explaining an icon's meaning is provided only via the title attribute. Who reliably never sees that information?",
+        "options": [
+          "Desktop users with a mouse",
+          "Users of Chromium-based browsers",
+          "Touch-screen and keyboard-only users",
+          "Users with the page zoomed to 200%"
+        ],
+        "answer": 2,
+        "why": "The title tooltip appears on pointer hover only: touch screens have no hover and keyboard focus does not trigger it, so critical information must exist as visible text or an accessible name instead."
+      }
+    ],
+    "html-a02-data-attributes": [
+      {
+        "q": "Your JavaScript needs to read el.dataset.maxRetries. Which attribute must the HTML carry?",
+        "options": [
+          "data-maxRetries=\"3\"",
+          "data-max-retries=\"3\"",
+          "max-retries=\"3\"",
+          "dataset-max-retries=\"3\""
+        ],
+        "answer": 1,
+        "why": "dataset camelCases the kebab-case name after the data- prefix, so dataset.maxRetries maps to data-max-retries; uppercase in the attribute itself is lowercased by the parser and breaks the mapping."
+      },
+      {
+        "q": "A card must show whether an event is upcoming or past, and screen-reader users need machine-readable timing too. What is the right markup for the date?",
+        "options": [
+          "<span data-date=\"2026-09-01\">Sept 1</span>",
+          "<time datetime=\"2026-09-01\">Sept 1</time>",
+          "<span data-datetime=\"2026-09-01\" data-type=\"date\">Sept 1</span>",
+          "<span title=\"2026-09-01\">Sept 1</span>"
+        ],
+        "answer": 1,
+        "why": "When HTML has a native element for the meaning — time with datetime — using data-* instead throws away real semantics; data attributes are only for information no standard feature covers."
+      },
+      {
+        "q": "A filter script hides products by comparing li.dataset.price > 50. It never matches anything, even for a li with data-price=\"89\". Why?",
+        "options": [
+          "dataset only works on div elements",
+          "The attribute should be named data-Price",
+          "dataset values are strings, so the comparison needs Number(li.dataset.price)",
+          "data-price is reserved by HTML for commerce metadata"
+        ],
+        "answer": 2,
+        "why": "Every dataset value is a string; \"89\" > 50 relies on coercion quirks and equality checks fail outright, so numeric data must be converted with Number() before comparing."
+      }
+    ],
+    "html-a03-responsive-images": [
+      {
+        "q": "A hero image renders 100vw wide on phones and 800px elsewhere, with candidates at 400w/800w/1600w. A 400px-wide viewport at device pixel ratio 2 loads which file, and why?",
+        "options": [
+          "hero-400.jpg — the viewport is 400px wide",
+          "hero-800.jpg — 400 CSS px × 2 DPR needs ~800 image pixels",
+          "hero-1600.jpg — browsers always take the largest candidate",
+          "hero-800.jpg — the sizes attribute defaults to 800px"
+        ],
+        "answer": 1,
+        "why": "The browser resolves sizes to 400 CSS pixels, multiplies by DPR 2 to get a needed width of ~800 pixels, and downloads the smallest candidate at or above it: the 800w file."
+      },
+      {
+        "q": "You must show a wide landscape crop on desktop but a tight square crop on phones — genuinely different files. Which mechanism is correct?",
+        "options": [
+          "srcset with x descriptors on one img",
+          "srcset with w descriptors plus sizes on one img",
+          "picture with source media=\"(max-width: 600px)\" for the square crop",
+          "Two img elements toggled with the hidden attribute"
+        ],
+        "answer": 2,
+        "why": "Changing the crop is art direction — an editorial decision the browser must obey — which is exactly what picture's media-based source selection is for; srcset only scales the same picture."
+      },
+      {
+        "q": "After adding loading=\"lazy\" to every image sitewide, the homepage's Largest Contentful Paint got worse. What happened?",
+        "options": [
+          "lazy also disables srcset selection",
+          "The above-the-fold hero now waits for layout before fetching, delaying the largest paint",
+          "decoding=\"async\" is required for lazy to work",
+          "Lazy images always load at 1x resolution first"
+        ],
+        "answer": 1,
+        "why": "Lazy loading removes an image from the preload scanner's early fetch, so applying it to first-screen images delays exactly the paint LCP measures — above-the-fold images must load eagerly."
+      }
+    ],
+    "html-a04-seo-social-meta": [
+      {
+        "q": "A marketing URL shared in Slack shows no image and the bare domain, though the page looks fine in a browser. The og: tags are injected by client-side React. What is the actual problem?",
+        "options": [
+          "Slack only supports Twitter card tags",
+          "Link scrapers do not execute JavaScript, so client-injected tags are invisible to them",
+          "og:image must be a relative URL",
+          "The page is missing a favicon"
+        ],
+        "answer": 1,
+        "why": "Preview scrapers read the server-delivered HTML once and never run scripts, so Open Graph tags must be present in the initial markup (server-rendered or prerendered)."
+      },
+      {
+        "q": "The same article is reachable at /guide, /guide?utm_source=mail and /Guide. What single head element consolidates ranking signals onto one URL?",
+        "options": [
+          "<meta name=\"robots\" content=\"noindex\"> on the variants",
+          "<link rel=\"canonical\" href=\"https://site.example/guide\">",
+          "<meta property=\"og:url\" content=\"/guide\">",
+          "<base href=\"https://site.example/guide\">"
+        ],
+        "answer": 1,
+        "why": "rel=canonical declares the one official URL for duplicated content so engines merge the variants' signals; noindex would remove pages from search rather than consolidate them."
+      },
+      {
+        "q": "A production page vanished from Google weeks after launch. The head contains <meta name=\"robots\" content=\"noindex\"> left over from staging. What does that tag do?",
+        "options": [
+          "It only blocks the page's images from image search",
+          "It is advisory — engines usually ignore it",
+          "It directs engines to drop the page from search results entirely",
+          "It merely hides the meta description snippet"
+        ],
+        "answer": 2,
+        "why": "robots noindex is a directive, not a hint: compliant engines deindex the page, which is why leftover staging meta tags are a classic and costly launch bug."
+      }
+    ],
+    "html-a05-accessibility-alt-headings": [
+      {
+        "q": "A purely decorative divider image sits between article sections. What is the correct markup?",
+        "options": [
+          "<img src=\"divider.png\">",
+          "<img src=\"divider.png\" alt=\"divider\">",
+          "<img src=\"divider.png\" alt=\"\">",
+          "<img src=\"divider.png\" title=\"decorative\">"
+        ],
+        "answer": 2,
+        "why": "The explicit empty alt tells screen readers to skip the image silently; omitting the attribute makes them fall back to announcing the filename, and describing decoration adds noise."
+      },
+      {
+        "q": "A designer hides the 'Skip to content' link with display: none, revealing it via a hover class. Why is the feature now broken?",
+        "options": [
+          "Skip links must be buttons, not anchors",
+          "display: none removes the link from the Tab order, so keyboard users can never reach it",
+          "The link needs aria-hidden=\"true\" as well",
+          "Hover styles are not allowed on anchors"
+        ],
+        "answer": 1,
+        "why": "A skip link works by being the first Tab stop and appearing on focus; display: none removes it from the tab order entirely, so it must be hidden off-screen and revealed with :focus."
+      },
+      {
+        "q": "The same portrait photo appears on a team page and in an article about studio lighting. What is true about its alt text?",
+        "options": [
+          "It should be identical in both places for consistency",
+          "It depends on context: the person's name on the team page, the lighting technique in the article",
+          "Both should use the filename so they stay in sync",
+          "The article copy needs no alt because the caption describes it"
+        ],
+        "answer": 1,
+        "why": "Alt text conveys what the image contributes in its context, so one file legitimately gets different descriptions on different pages — and a caption comments on an image rather than replacing it."
+      }
+    ],
+    "html-a06-aria": [
+      {
+        "q": "A developer adds role=\"button\" and aria-label=\"Save\" to a div with a click handler. A keyboard user Tabs toward it. What happens?",
+        "options": [
+          "It works — role=\"button\" makes Enter and Space activate it",
+          "Focus skips it entirely: ARIA changes announcements, never focusability or behavior",
+          "It receives focus but only Space works",
+          "The browser converts it to a native button internally"
+        ],
+        "answer": 1,
+        "why": "ARIA only edits the accessibility tree; the div still needs tabindex=\"0\" and hand-written Enter/Space key handling — which is why the first rule of ARIA says to use a native button instead."
+      },
+      {
+        "q": "A section's visible heading should serve as its accessible name for screen readers. Which wiring is best?",
+        "options": [
+          "aria-label=\"Billing address\" on the section",
+          "aria-describedby pointing at the heading's id",
+          "aria-labelledby on the section pointing at the heading's id",
+          "title=\"Billing address\" on the section"
+        ],
+        "answer": 2,
+        "why": "aria-labelledby reuses on-screen text as the name, so it cannot drift out of date and gets translated; aria-label duplicates the string invisibly and describedby supplies description, not the name."
+      },
+      {
+        "q": "A save confirmation ('Draft saved') is written into a status element by script, but screen readers say nothing. The element was created by the same script that sets its text. What is the robust fix?",
+        "options": [
+          "Switch the message to aria-live=\"assertive\"",
+          "Keep an empty aria-live=\"polite\" element in the DOM from page load and update its text",
+          "Move focus to the status element on every save",
+          "Use aria-hidden=\"false\" on the message"
+        ],
+        "answer": 1,
+        "why": "Screen readers register live regions when the tree is first built; a region injected together with its message is often missed, so the container must pre-exist empty and receive only text updates."
+      }
+    ],
+    "html-a07-keyboard-focus": [
+      {
+        "q": "A brand stylesheet contains * { outline: none } because the focus ring 'looked ugly'. What is the professional fix?",
+        "options": [
+          "Delete all focus styling permanently — rings are optional",
+          "Add a :focus-visible rule with a styled outline so keyboard users get an indicator while mouse clicks stay ring-free",
+          "Replace outlines with title tooltips on focus",
+          "Set tabindex=\"-1\" on all controls so focus is never visible"
+        ],
+        "answer": 1,
+        "why": ":focus-visible shows the indicator only for keyboard-driven focus, satisfying both the designer's complaint about click rings and WCAG's requirement that keyboard focus be visible."
+      },
+      {
+        "q": "The visual design places the Save button left of Cancel, but the DOM has Cancel first, so Tab reaches Cancel before Save. What is the correct repair?",
+        "options": [
+          "tabindex=\"1\" on Save and tabindex=\"2\" on Cancel",
+          "Reorder the buttons in the source so DOM order matches visual order",
+          "tabindex=\"0\" on Save only",
+          "aria-flowto on the Save button"
+        ],
+        "answer": 1,
+        "why": "Natural tab order follows source order; fixing the source keeps everything maintainable, whereas positive tabindex values create a fragile parallel order that breaks on the next change."
+      },
+      {
+        "q": "An icon-only bold button must announce as 'Bold' but show only the letter B. Which pattern is correct?",
+        "options": [
+          "<button><span class=\"sr-only\" style=\"display:none\">Bold</span>B</button>",
+          "<button title=\"Bold\">B</button>",
+          "<button><span aria-hidden=\"true\">B</span><span class=\"sr-only\">Bold</span></button>",
+          "<button aria-hidden=\"true\">Bold</button>"
+        ],
+        "answer": 2,
+        "why": "The icon is silenced with aria-hidden while the sr-only span supplies real, translatable name text hidden by clipping — display:none would hide it from screen readers too, and title is unreliable."
+      }
+    ],
+    "html-a08-details-dialog": [
+      {
+        "q": "A settings page needs an accordion where opening one section automatically closes the others, with no JavaScript. Which markup achieves it?",
+        "options": [
+          "Several <details> elements sharing the same name attribute",
+          "Several <details> elements sharing the same class",
+          "One <details> wrapping all the sections",
+          "<details exclusive> on each section"
+        ],
+        "answer": 0,
+        "why": "Like radio buttons, details elements with a shared name form an exclusive group: the browser closes the open member whenever another opens."
+      },
+      {
+        "q": "A confirmation box appears via <dialog open> in the markup, but users can still click the page behind it and Tab escapes the box. Why?",
+        "options": [
+          "The dialog is missing aria-modal",
+          "The open attribute (and show()) presents a dialog non-modally; only showModal() makes the page inert, traps focus and enables the ::backdrop",
+          "dialog only becomes modal inside a form",
+          "Escape handling must be added before modality activates"
+        ],
+        "answer": 1,
+        "why": "Modality is decided by how the dialog is shown: showModal() delivers the inert background, focus trap, Escape support and backdrop, while the open attribute always yields a non-modal box."
+      },
+      {
+        "q": "A 'Filters' button should toggle a floating panel that closes when the user clicks anywhere else, without blocking the page. Which primitive fits?",
+        "options": [
+          "A dialog opened with showModal()",
+          "A details element wrapping the panel",
+          "A div with the popover attribute, toggled by the button's popovertarget",
+          "A hidden div toggled by removing the hidden attribute"
+        ],
+        "answer": 2,
+        "why": "Light-dismiss floating overlays are the popover attribute's exact use case: top-layer rendering, outside-click and Escape dismissal, and pure-HTML wiring via popovertarget — no modality, no script."
+      }
+    ]
+  }
+}

@@ -1,0 +1,399 @@
+{
+  "enrichment": {
+    "dev-b1-choose-the-right-tool": {
+      "placeholders": [
+        {
+          "name": "DESCRIBE THE TASK IN 1-2 SENTENCES",
+          "what": "Write what you actually need done, in plain terms - the real task in front of you right now, not a hypothetical. Include enough detail that someone reading only this sentence would understand the scope (one file vs. many, bug vs. feature).",
+          "examples": [
+            "Fix a flaky integration test in our checkout flow that fails about 1 in 5 CI runs.",
+            "Add a 'export to CSV' button to the admin orders table, client-side only, no new backend endpoint.",
+            "Upgrade our Express API from v4 to v5 across roughly 40 route handler files."
+          ]
+        },
+        {
+          "name": "ANSWER",
+          "what": "This placeholder repeats several times in the checklist for different questions (repo type, where you work, shape of the work, current subscriptions). Each time it appears, answer the specific question directly above it in one short phrase - don't leave any blank, since a skipped question is exactly the kind of factor that leads to picking the wrong tool.",
+          "examples": [
+            "Team-owned repo with 6 other engineers",
+            "VS Code, with the terminal open most of the day",
+            "Multi-file feature needing a plan, not a quick edit"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version when you already know your options",
+          "whenToUse": "Use this when you're only choosing between two specific tools you already have access to, rather than surveying all four from scratch.",
+          "prompt": "I'm deciding between [TOOL A] and [TOOL B] for this task: [DESCRIBE THE TASK IN 1-2 SENTENCES].\n\nRepo context: [SOLO OR TEAM-OWNED]. Shape of work: [QUICK EDIT / MULTI-FILE FEATURE / BUG NEEDING INVESTIGATION / HAND-OFF TASK].\n\nWhich of the two fits better, and specifically what would go wrong if I used the other one for this task?"
+        },
+        {
+          "label": "Team decision - picking a default tool for a whole project",
+          "whenToUse": "Use this when you're not deciding per-task but setting a standing recommendation for your team on a specific repository or project type.",
+          "prompt": "I'm setting a default coding-tool recommendation for my team on this kind of project: [DESCRIBE THE PROJECT TYPE, e.g. 'internal admin dashboards, small team, fast iteration'].\n\nOur team currently has access to: [LIST TOOLS AND PLANS, e.g. 'Claude Pro seats for half the team, Codex access via a ChatGPT Team plan for everyone via the org'].\n\nGiven the kind of day-to-day tasks this project type generates (mostly small features, some bug fixes, occasional larger refactors), recommend a default tool and a clear exception rule for when someone should reach for a different one instead."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "I'm still torn between two - force a tiebreaker",
+          "prompt": "You said two tools are close. Give me one concrete tiebreaker question I should ask myself right now, and tell me what answer points to which tool."
+        },
+        {
+          "label": "Check I'm not double-paying for the same task",
+          "prompt": "Looking at my answers again, is there any risk I'd end up running heavy exploration in one tool and heavy implementation in another, burning two separate paid usage allowances on what's really one task? If so, suggest how to consolidate to one tool for this task."
+        },
+        {
+          "label": "Turn this into a rule I can reuse without re-asking every time",
+          "prompt": "Based on this decision, write me a 3-line rule of thumb I can keep as a personal reference for the next time I face a similar task, without having to fill out the full checklist again."
+        }
+      ],
+      "walkthrough": "Ben is a backend developer at a mid-size company. His team has Claude Pro seats, shared Codex access via a ChatGPT Team plan, and a couple of people also pay for Cursor personally. He's been defaulting to whichever tool has a tab already open, and today he catches himself about to use Cursor's autocomplete for something that needs deeper reasoning: a flaky integration test in checkout that fails about 1 in 5 CI runs.\n\nHe opens the lesson and copies the tool-fit checklist into Claude. He fills in the task as the flaky test, notes the repo is team-owned, says he works mostly in VS Code with a terminal open, and describes the work as 'a bug that needs root-cause investigation.' He also lists what he's already paying for: Claude Pro and the team's Codex access.\n\nClaude's answer walks through the factors: the task needs multi-step reasoning across several files to trace why the test is flaky, which favors Claude Code's Plan Mode over Cursor's autocomplete strength. It notes Codex would also work if he wanted to hand the whole thing off as a PR to review later, but since he wants to understand the root cause himself, an interactive Claude Code session fits better. No tiebreaker is needed - the task shape decides it.\n\nBen sends the second follow-up, asking whether he's at risk of double-paying for the same task across tools. Claude points out that since he's already committed to Claude Code for the investigation, he should use it for the eventual fix too, rather than switching to Codex midway and burning two separate usage allowances on one bug.\n\nHe opens Claude Code, pastes the failing test output, and starts the investigation there instead of switching tools out of habit. The tool-selection exercise took about 4 minutes - a small check that saved him from spending 20 minutes in the wrong tool guessing at a root cause autocomplete was never going to surface."
+    },
+    "dev-b2-understand-a-repo": {
+      "placeholders": [
+        {
+          "name": "DESCRIBE ONE REAL FLOW, e.g. 'a user submits the checkout form'",
+          "what": "Name one specific, concrete user action or system event whose full path through the code you want traced - not 'how does the app work' in general, but one thing that actually happens. Picking something you genuinely need to understand (not a random example) makes the trace immediately useful to your real task.",
+          "examples": [
+            "A user submits the checkout form and pays with a credit card",
+            "An incoming webhook from Stripe updates a subscription's status",
+            "A scheduled cron job runs the nightly inventory sync"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a small, single-purpose repo",
+          "whenToUse": "Use this for a small utility, script, or library repo where a full architecture tour is overkill and you just need the essentials before making a change.",
+          "prompt": "You are in read-only/exploration mode. Do not edit any files. In under 10 bullet points, give me: what this repo does, its main entry point, how to run it locally, how to run its tests, and any file I should read before making my first change. Cite exact file paths. If you're not confident about something, say so instead of guessing."
+        },
+        {
+          "label": "Deep dive before a major refactor or migration",
+          "whenToUse": "Use this before starting a large refactor or migration, when you need a fuller map of dependencies and coupling, not just one flow.",
+          "prompt": "You are in read-only/exploration mode. Do not edit any files. I'm planning a significant change to [DESCRIBE THE AREA, e.g. 'the authentication module'] and need a full map before I start.\n\nGive me:\n1. Every file that imports from or depends on this area, cited by path.\n2. Every external dependency (library, service, API) this area relies on.\n3. A trace of the 2-3 most important flows through this area, file by file.\n4. Anywhere this area's behavior is tested, and the exact command to run just those tests.\n5. Anything that looks fragile, undocumented, or unusually coupled to unrelated parts of the codebase - flag it, don't fix it.\nFor anything you're not confident about, say so explicitly instead of guessing."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify the trace against the real files",
+          "prompt": "For the flow you just traced, give me the exact list of file paths and function names in order, with nothing else, so I can open each one myself and confirm it matches what you described."
+        },
+        {
+          "label": "Draft a CLAUDE.md/AGENTS.md from what you found",
+          "prompt": "Based only on what you actually found in this repo (not general best practices), draft a CLAUDE.md covering: build and test commands, the directory layout, key conventions you observed, and anything you're inferring versus certain about. I will review and edit before committing it."
+        },
+        {
+          "label": "It sounded too confident - find the gaps",
+          "prompt": "Re-read your summary above. List anything you stated as fact that you actually inferred without directly reading the relevant file, so I know what to double-check myself before relying on it."
+        }
+      ],
+      "walkthrough": "Sofia just joined a company and was handed access to a mid-size Next.js e-commerce repo with no onboarding doc and about 40,000 lines of code. Her first ticket touches checkout, and she doesn't want to start editing before she understands how an order actually gets placed.\n\nShe opens the repo in Claude Code and presses Shift+Tab to enter Plan Mode, keeping the session read-only. She pastes the lesson's repo-tour prompt, filling in the flow as 'a user submits the checkout form and pays with a credit card.'\n\nClaude Code responds with a one-paragraph project summary (a Next.js storefront with a Postgres backend), names the entry point files, lays out the top-level folders, and traces the checkout flow step by step: the client component capturing the form submission, the API route it calls, the Stripe payment intent creation, the database write, and the email trigger - each with an exact file path and function name. It gives the exact test command and flags one thing it's not fully confident about: whether a specific webhook handler is still in active use, since it found no recent references to it.\n\nSofia runs the first follow-up, asking for just the file list so she can check it herself. She opens three of the six cited files and confirms each does what Claude described - the API route really does call the exact Stripe function named, and the database write really happens where claimed.\n\nSince the repo has no CLAUDE.md, she runs the second follow-up and gets a draft covering build commands, folder layout, and observed conventions. She edits two lines that were slightly off, based on her spot-check, then commits the file so the next person - human or agent - starts with real context.\n\nThe whole exploration and CLAUDE.md draft took about 20 minutes. Sofia then opens her ticket with a verified mental model instead of a guess, and starts her change in the route she now knows handles order creation."
+    },
+    "dev-b3-write-specs-for-agents": {
+      "variations": [
+        {
+          "label": "Faster version for a very small, low-risk change",
+          "whenToUse": "Use this for a small, contained change (a copy tweak, a config value, a one-line bug fix) where the full spec template is overkill but you still want acceptance criteria and a definition of done.",
+          "prompt": "Task: [ONE-SENTENCE DESCRIPTION]\n\nAcceptance criteria: [1-2 CHECKABLE STATEMENTS]\nConstraints: [WHAT NOT TO TOUCH]\nDefinition of done: [HOW TO VERIFY, e.g. 'existing tests still pass']\n\nImplement this directly - it's small enough to skip a separate planning step - but tell me exactly which files you changed and why."
+        },
+        {
+          "label": "Backend API change with explicit contract requirements",
+          "whenToUse": "Use this when the task involves a new or changed API endpoint, where the request/response shape and error behavior need to be nailed down precisely to avoid the agent guessing at a contract.",
+          "prompt": "Task: [DESCRIBE THE ENDPOINT CHANGE, e.g. 'add a PATCH /api/orders/:id/status endpoint']\n\nGoal: [WHAT SHOULD BE POSSIBLE WHEN DONE]\n\nAcceptance criteria:\n- Request shape: [EXACT FIELDS AND TYPES]\n- Response shape on success: [EXACT FIELDS, STATUS CODE]\n- Response shape on each error case: [LIST EACH CASE AND ITS STATUS CODE/BODY]\n- Authorization requirement: [WHO CAN CALL THIS]\n\nConstraints:\n- Follow the existing error-response format used elsewhere in this API (find and match it, cite where you found it).\n- Do not change any other endpoint.\n- Do not change the database schema unless explicitly stated here.\n\nLikely files: [PATHS IF KNOWN]\n\nDefinition of done: existing tests pass, new tests cover each listed error case, and a manual request with curl or the existing test client confirms the response shape matches.\n\nBefore implementing, show me your plan."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "My acceptance criteria were vague - tighten them",
+          "prompt": "Look at my acceptance criteria above and flag any that are adjectives or vibes rather than checkable statements (e.g. 'better UX', 'clean code'). Rewrite each flagged one as a specific, testable statement, and ask me anything you need to know to do that accurately."
+        },
+        {
+          "label": "Check the plan doesn't touch anything I didn't expect",
+          "prompt": "Before I approve this plan, list every file you intend to create or modify, one per line, with a one-sentence reason for each. I want to check none of them are outside what I described."
+        },
+        {
+          "label": "Turn this into a ticket for a human teammate too",
+          "prompt": "Rewrite this same spec as a ticket I could hand to a human developer instead of an AI agent - same acceptance criteria and constraints, but drop anything that only makes sense for an AI agent (like asking it to show a plan first)."
+        },
+        {
+          "label": "I forgot to mention an edge case - add it without breaking the rest",
+          "prompt": "I need to add one more acceptance criterion I missed: [DESCRIBE THE EDGE CASE]. Update the spec to include it, and tell me if this changes your plan or which files are likely involved."
+        }
+      ],
+      "walkthrough": "Aisha is a frontend developer who wants an 'Export CSV' button added to the admin Orders table. Her first attempt, months ago on a different task, was a one-line request to an agent that produced a feature adding a whole new backend export endpoint she didn't need and didn't want - a half-day of cleanup she's determined not to repeat.\n\nThis time she opens the lesson's spec template and works through it deliberately. Goal: users can download the currently filtered orders as a CSV. Acceptance criteria, written as checkable statements: a button labeled 'Export CSV' appears above the table; clicking it downloads a file with only the visible, filtered rows; the button is disabled with a tooltip when there are zero visible rows. Constraints: don't touch the filtering logic, don't add a backend endpoint, generate the CSV client-side from data already loaded, don't modify any other page. She names the likely file: src/components/OrdersTable.tsx. Definition of done: tests pass, and a manual check confirms the downloaded rows match the screen.\n\nShe pastes the full spec into Claude Code and asks for a plan first, per the lesson's instruction. The plan comes back naming exactly two files: OrdersTable.tsx and a new small csvExport.ts utility - nothing touching the backend, nothing touching filtering logic.\n\nBefore approving, she runs the second follow-up, asking for the file list with a one-sentence reason for each. Both reasons check out against her acceptance criteria, so she approves.\n\nThe implementation comes back matching the spec exactly: a disabled button when there are no visible rows, a working CSV download respecting active filters, and no changes outside the two named files. She runs the test suite herself and confirms it passes, then does one manual download to eyeball that the CSV rows match what's on screen.\n\nWriting the spec took about 8 minutes - longer than just typing 'add a CSV export button' - but the implementation needed zero rework this time, compared to the half-day of cleanup her vague request caused last time."
+    },
+    "dev-i1-implement-from-spec": {
+      "variations": [
+        {
+          "label": "Working in an isolated worktree instead of your main branch",
+          "whenToUse": "Use this for anything beyond a trivial change, so the agent's implementation happens in an isolated branch/worktree and your main working directory stays clean while you review.",
+          "prompt": "Here is the spec for this task:\n[PASTE SPEC]\n\nWork in a new git worktree (or a new branch if worktrees aren't set up) rather than my current working directory, so I can keep working elsewhere while you implement this.\n\nFirst, show me your implementation plan: which files you'll create or modify, and the approach for each. Do not write any code yet.\n\nOnce I approve the plan, implement it in that isolated workspace, run the test suite, and report the exact pass/fail result. If any test fails, fix it before reporting completion. Tell me the branch/worktree name so I know where to review the diff."
+        },
+        {
+          "label": "Multiple related changes across a monorepo",
+          "whenToUse": "Use this when the spec spans more than one package or app in a monorepo, and you need the agent to be explicit about cross-package impact before implementing.",
+          "prompt": "Here is the spec for this task:\n[PASTE SPEC]\n\nThis repo is a monorepo with multiple packages/apps. First, show me your implementation plan, including: which packages/apps are touched, whether this requires a version bump or changelog entry in any of them, and whether any other package that depends on the changed one needs updating too. Do not write any code yet.\n\nOnce I approve the plan, implement it, run the test suite for every affected package (not just the one you changed), and report the exact pass/fail result per package."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Diff looks bigger than expected - find the scope creep",
+          "prompt": "List every file in your diff that isn't directly required by the acceptance criteria in the spec. For each one, explain why it was touched, and revert anything that isn't actually necessary."
+        },
+        {
+          "label": "It reported tests passed - show me the actual output",
+          "prompt": "Paste the exact, unedited terminal output from the test run, not a summary. I want to see the real pass/fail counts and any warnings myself before I run it again on my end."
+        },
+        {
+          "label": "One thing is wrong - fix it without a full redo",
+          "prompt": "This part of the implementation isn't right: [DESCRIBE THE SPECIFIC PROBLEM]. Make a targeted fix for just this issue - don't re-implement the rest of the feature, and don't touch any file you haven't already touched unless this fix requires it."
+        },
+        {
+          "label": "Capture a convention for next time",
+          "prompt": "Did this task reveal any convention, gotcha, or pattern in this codebase worth recording in CLAUDE.md or AGENTS.md so future sessions don't have to rediscover it? If so, draft the addition for my review."
+        }
+      ],
+      "walkthrough": "Marcus has the CSV-export spec from a previous lesson - a button that exports the currently filtered Orders table rows to CSV, client-side only, no new backend endpoint. He's ready to build it with Claude Code instead of doing it by hand.\n\nHe pastes the spec into Claude Code along with the lesson's prompt, which asks for a plan before any code. The plan comes back: modify OrdersTable.tsx to add the button and click handler, create a new src/lib/csvExport.ts utility, and add two test files. Marcus checks this against his acceptance criteria and approves it.\n\nClaude Code implements the whole thing in one pass, then runs the test suite and reports '47 passed, 0 failed.' Marcus doesn't take that at face value; he runs the second follow-up and asks for the raw terminal output rather than the summary. It matches - genuinely 47 passing.\n\nHe reviews the diff file by file, not just the prose summary. Four files changed: the two expected ones, plus - unexpectedly - a shared Button component's default styling. He runs the first follow-up, asking Claude to justify every file outside the stated scope. Claude explains it adjusted the Button component's padding while adding a new size variant. Marcus decides this is legitimate and keeps it, but wouldn't have caught it without reading the actual diff.\n\nBefore merging, he runs the test suite independently on his own machine and confirms the same 47 passing tests. He also manually clicks through the feature: filters the table, clicks Export CSV, and opens the downloaded file to confirm the rows match the screen.\n\nFinally, he runs the fourth follow-up, and Claude Code suggests adding a note to AGENTS.md that CSV/export utilities belong in src/lib/. Marcus adds it. Total time from spec to merged PR: about 25 minutes, with the diff review catching the one thing that needed a real judgment call."
+    },
+    "dev-i2-debug-failing-test": {
+      "placeholders": [
+        {
+          "name": "PASTE FULL ERROR OUTPUT / STACK TRACE",
+          "what": "Copy the complete, real error output from actually running the failing test - the full stack trace, the assertion message, and any surrounding log lines. Do not summarize it in your own words or paraphrase; the exact text (including file names and line numbers in the trace) is what lets the agent trace backward accurately instead of guessing from a vague description.",
+          "examples": [
+            "AssertionError: expected 18.00 to equal 17.995999999999995\\n  at Object.<anonymous> (test/pricing.test.js:42:21)\\n  at processTicksAndRejections (node:internal/process/task_queues:95:5)",
+            "TypeError: Cannot read properties of undefined (reading 'id')\\n  at getUserOrders (src/services/orders.js:118:34)\\n  at OrdersController.list (src/controllers/orders.js:22:18)\\n  ...\\nFAIL test/services/orders.test.js > returns orders for a valid user",
+            "1) Checkout flow > applies discount code correctly:\\n   Expected: 45.00\\n   Received: 50.00\\n   at ChaiExpect (test/checkout.spec.js:87:10)"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Intermittent/flaky test that only fails sometimes",
+          "whenToUse": "Use this when the test doesn't fail reliably, so you need the agent to reason about race conditions, timing, or shared state instead of a single deterministic failure.",
+          "prompt": "This test fails intermittently - roughly [FREQUENCY, e.g. '1 in 5 runs'] - not every time. Here is the error output from one failing run:\n[PASTE FULL ERROR OUTPUT / STACK TRACE]\n\nDo not change any code yet. First:\n1. List the possible root causes for a test that fails intermittently rather than consistently (e.g. race conditions, shared/leaked state between tests, timing assumptions, unseeded randomness, external network calls).\n2. For each candidate cause, tell me what evidence in this codebase would confirm or rule it out, and where to look.\n3. Propose how to reproduce the failure reliably (e.g. running the test in isolation many times, or artificially delaying an async call) before proposing any fix.\nDo not modify test assertions. Once we've confirmed a reliable reproduction and root cause, propose a fix scoped to that cause, then run the full suite multiple times to confirm the flakiness is gone, not just the one run."
+        },
+        {
+          "label": "Production bug with no failing test yet",
+          "whenToUse": "Use this when a bug was reported from production or QA but there's no automated test currently exposing it - you need a reproduction first, not a fix.",
+          "prompt": "We have a reported bug, not yet a failing test: [DESCRIBE THE BUG AND HOW TO REPRODUCE IT MANUALLY, e.g. 'applying a discount code twice in the same session doubles the discount instead of rejecting the second attempt'].\n\nFirst, write a minimal automated test that reproduces this bug and confirm it fails for the right reason (paste me the failing output). Do not fix the underlying code yet.\n\nOnce I confirm the reproduction is accurate, trace the root cause backward from that failure, citing file and line. Then propose a fix scoped to that cause, and run the full suite afterward to check for regressions."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "The explanation feels like a guess - push for evidence",
+          "prompt": "You stated a root cause. Walk me through exactly what you read in the code that confirms this, line by line, rather than what seems plausible given the error message. If you're not fully certain, say so and tell me what you'd need to check to be certain."
+        },
+        {
+          "label": "Confirm no test assertions were weakened",
+          "prompt": "Show me a diff of exactly what changed in the test file, if anything. If any assertion, expected value, or mock changed, justify each change individually - I want to rule out the fix being a disguised weakening of the test."
+        },
+        {
+          "label": "Run the full suite, not just this test",
+          "prompt": "Now run the entire test suite, not just the test we were debugging, and report the full pass/fail results. I want to check this fix didn't break anything else that depended on the old (buggy) behavior."
+        }
+      ],
+      "walkthrough": "Yuki is debugging a failing test in the pricing module: `expected 18.00 to equal 17.995999999999995`. Her first instinct months ago would have been to just round the assertion and move on, but she's learned that's usually a sign of a real bug hiding under a passing test.\n\nShe runs the test herself first to get the exact output, then opens Claude Code and pastes the lesson's root-cause-first prompt along with the full error text, explicit that no code should change yet.\n\nClaude Code traces backward: it finds the discount calculation in src/pricing/discount.js, line 34, where a discount amount is subtracted from a price using plain JavaScript floating-point subtraction. It explains floating-point arithmetic on currency values produces exactly this kind of near-miss result, and rates its confidence high because it confirmed no rounding or integer-cents conversion happens anywhere in the function.\n\nYuki runs the first follow-up anyway, asking it to walk through the evidence line by line rather than trust the explanation at face value. Claude Code points to the exact line and confirms there's no `toFixed()`, `Math.round()`, or cents-based integer math anywhere in the module - the float subtraction really is unguarded, matching a genuine floating-point bug rather than a guess.\n\nOnce she agrees with the root cause, she asks for a fix scoped to it: converting the pricing calculations to integer cents instead of floating-point dollars. Claude Code implements it, and Yuki runs the second follow-up to confirm no test assertions were touched - only discount.js changed, nothing in the test file.\n\nFinally she runs the third follow-up and executes the full suite, not just the pricing test. Everything passes, including two other tests touching discount calculations indirectly that could easily have broken if the fix had been sloppy. Total time: about 15 minutes, and the fix addressed a real rounding-drift bug that would eventually have surfaced as a customer-facing pricing discrepancy, not just a flaky assertion."
+    },
+    "dev-i3-refactor-safely": {
+      "placeholders": [
+        {
+          "name": "FILE/MODULE PATH",
+          "what": "The exact path to the file or module you want restructured. Being specific (not 'the backend' or 'the codebase') keeps the agent's search space narrow and its proposed steps concrete.",
+          "examples": [
+            "src/services/orderProcessing.js",
+            "app/lib/auth/session-manager.ts",
+            "packages/api/src/routes/checkout.ts"
+          ]
+        },
+        {
+          "name": "DESCRIBE THE STRUCTURAL IMPROVEMENT, e.g. 'split this into smaller, named functions' or 'extract the validation logic into its own module'",
+          "what": "State what should get better structurally - readability, separation of concerns, reduced duplication - without describing any behavior change. This is the difference between a refactor and a rewrite: the goal should be entirely about internal structure, not what the code does.",
+          "examples": [
+            "Split this 400-line processOrder function into named steps: validate, price, apply discounts, dispatch fulfillment",
+            "Extract the inline SQL query-building logic into a separate query-builder module",
+            "Replace the three nearly-identical retry-loop implementations with one shared retry utility"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Module with no existing tests - add characterization tests first",
+          "whenToUse": "Use this when the module you want to refactor has little or no test coverage, so you need to lock in current behavior before touching structure at all.",
+          "prompt": "I want to eventually refactor [FILE/MODULE PATH], but it has little or no test coverage right now. Before any refactor, write characterization tests that describe its CURRENT behavior (including any behavior that looks like a bug - don't fix it, just capture what actually happens today) for its realistic range of inputs, including edge cases.\n\nShow me the list of behaviors you're about to test before writing test code, so I can add anything domain-specific you might miss. Once these tests are in place and passing against the current code, stop - we'll do the actual refactor as a separate step using them as our safety net."
+        },
+        {
+          "label": "Refactoring for a specific known reason (e.g. before adding a feature)",
+          "whenToUse": "Use this when the refactor isn't abstract cleanup but exists to make a specific, already-planned upcoming change easier - so the refactor's shape should be guided by that future need.",
+          "prompt": "I need to refactor [FILE/MODULE PATH] to prepare for an upcoming change: [DESCRIBE THE UPCOMING FEATURE OR CHANGE THIS IS PREPARING FOR].\n\nHard constraint: the public interface and observable behavior must not change in this refactor - every existing test must still pass with no modification to test assertions. This refactor is purely to make the upcoming change easier, not to implement it yet.\n\nPropose the refactor as a sequence of small, independently verifiable steps, specifically shaped around making [THE UPCOMING CHANGE] straightforward afterward. Show me the sequence first, then implement one step at a time with my approval."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "A test failed - explain before fixing anything",
+          "prompt": "Test [NAME/PATH] failed after that step. Before changing anything, explain exactly what behavior changed and why - do not modify the test or the implementation until I understand the cause and tell you how to proceed."
+        },
+        {
+          "label": "Confirm no test assertions were touched",
+          "prompt": "Show me a diff of every test file across all the steps so far. Confirm none of the assertions were modified, and if any were, explain why and get my explicit approval before continuing."
+        },
+        {
+          "label": "Summarize structural vs. behavioral changes",
+          "prompt": "Now that all steps are applied, give me a clear summary: what changed structurally (organization, naming, file layout) versus what you're confirming stayed behaviorally identical, with the test evidence for that claim."
+        }
+      ],
+      "walkthrough": "Devon inherited a 400-line `processOrder` function in src/services/orderProcessing.js that handles validation, pricing, tax, and fulfillment dispatch all in one block. It has decent test coverage - about 30 tests - but nobody wants to touch it because it's hard to reason about.\n\nHe opens Claude Code and pastes the lesson's safe-refactor prompt, naming the file and stating the goal: split it into named functions for validation, pricing, tax calculation, and fulfillment dispatch. He includes the hard constraint that the public interface and every existing test must pass unmodified.\n\nClaude Code proposes five steps: extract validation into its own function, extract pricing, extract tax calculation, extract fulfillment dispatch, then reassemble the orchestrator to call each in sequence. Devon reviews the sequence, and it looks reasonable, so he approves step one.\n\nAfter each step, Claude Code runs the full test suite and reports the result before moving on. Steps one, two, and four pass cleanly. On step three, extracting tax calculation, one test fails: `applies correct tax for orders over $10,000`. Devon runs the first follow-up immediately, asking for an explanation before anything gets touched further.\n\nClaude Code explains that the extraction accidentally dropped a rounding call that had been sitting between the pricing and tax steps in the original code - the kind of implicit ordering dependency that's easy to miss when splitting a function apart. It does not modify the test to match the new (wrong) behavior; it flags the discrepancy and waits.\n\nDevon confirms this is a real regression, not an intentional behavior change, and directs Claude Code to restore the rounding call inside the tax extraction. The test suite passes again after the fix. He runs the second follow-up across all steps to confirm no test assertions were ever touched - clean.\n\nOnce all five steps are applied, he runs the third follow-up for a structural-vs-behavioral summary, confirming the function is now four named steps plus an orchestrator, with all 30 original tests passing unmodified. Total time: about 35 minutes, including catching and fixing the one real regression before it ever reached production."
+    },
+    "dev-i4-generate-tests-that-catch-bugs": {
+      "placeholders": [
+        {
+          "name": "PASTE CODE OR FILE PATH",
+          "what": "The actual function or module you want tested - either paste its full source, or give the exact file path if the agent already has access to the repo. Give it the real, current code, not a simplified description of what it does.",
+          "examples": [
+            "src/pricing/discount.js (function applyDiscount(price, discountPercent, minOrderValue))",
+            "function calculateShipping(weightKg, destinationZone, isPriorityShipping) { ... } // paste full function body",
+            "src/auth/passwordValidator.ts"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Fast version for a simple, low-risk function",
+          "whenToUse": "Use this for a small, low-complexity function (a formatter, a simple mapper) where a full edge-case discussion is overkill but you still want more than a single happy-path test.",
+          "prompt": "Here is the function: [PASTE CODE OR FILE PATH]\n\nWrite tests covering the normal case, at least one boundary value, and at least one invalid/unexpected input. Each test should fail if the logic is wrong, not just if the function isn't called. Keep it to 4-6 focused tests."
+        },
+        {
+          "label": "Testing code that calls an external API or service",
+          "whenToUse": "Use this when the function under test makes real calls to an external service (payment processor, third-party API), where over-mocking is a real risk and you need to be explicit about what's faked versus real.",
+          "prompt": "Here is the function/module: [PASTE CODE OR FILE PATH]. It calls an external service: [NAME THE SERVICE, e.g. 'the Stripe API'].\n\nFirst, list the distinct behaviors and edge cases worth testing, including how the code should behave on the external service's success response, its documented error responses, a timeout, and a malformed/unexpected response. Do not write test code yet.\n\nOnce I confirm the list, write tests for each. Requirements:\n- Mock only the external service call itself, not the logic that processes its response - I want to verify our own handling logic, not just that a mock was called.\n- Include at least one test using the external service's actual documented error response shape, not a made-up one.\n- Flag any behavior (e.g. a specific rare error code) you can't verify without checking the service's real documentation, rather than guessing at its shape."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Prove it with a real red-green check",
+          "prompt": "Pick the test you're least confident actually catches a bug. Show me exactly how to temporarily break the implementation so that specific test fails, then confirm what the failure output looks like, so I can verify it myself before restoring the code."
+        },
+        {
+          "label": "Check for hollow 'was it called' tests",
+          "prompt": "Review the tests you wrote and flag any that only assert a function or mock was called, without actually verifying the resulting behavior or return value. Rewrite each flagged one to check real output instead."
+        },
+        {
+          "label": "Add the edge case only I would know about",
+          "prompt": "Here's a business rule you wouldn't know from the code alone: [DESCRIBE THE RULE, e.g. 'a discount can never bring the price below the item's cost basis']. Add a test for this specific rule."
+        },
+        {
+          "label": "Too many mocks - simplify to test real logic",
+          "prompt": "Look at the tests you wrote and tell me if any mock so much of the real logic away that the test isn't meaningfully exercising the actual code. Rewrite those to use real objects/data wherever possible instead of mocks."
+        }
+      ],
+      "walkthrough": "Leah is looking at a discount-calculation function with thin test coverage - just a normal case and a zero-discount case - and suspects an untested edge case near the minimum order threshold, since a support ticket mentioned an odd discount amount last week.\n\nShe pastes the function into Claude Code along with the lesson's meaningful-tests prompt, asking for the behavior list before any test code. Claude Code lists: normal discount application, discount at exactly zero, an order value exactly at the minimum threshold, one cent below it, a negative or zero price input, and a discount percentage over 100%.\n\nLeah reviews the list and adds one thing only she'd know: their business rule that a discount can never bring the final price below $0.01, not obvious from reading the code alone. She sends this as the fourth follow-up.\n\nClaude Code writes eight tests covering the full list, including the new rule. Leah spot-checks them using the second follow-up's concern about hollow 'was it called' tests, and Claude Code flags one of its own tests that only checked a mock was invoked; it rewrites that one to assert the real output value.\n\nShe then runs the red-green check from the first follow-up on the threshold-boundary test, the one she's least sure about. Claude Code tells her exactly which line to comment out to simulate the bug. She does it, reruns the suite, and watches that test fail with a clear assertion mismatch - proof it actually catches the bug. She restores the code and confirms the suite passes again.\n\nSure enough, the threshold test reveals the real bug behind the support ticket: at exactly the minimum order value, the discount was being applied when it shouldn't have been, an off-by-one in a `>=` versus `>` comparison. Leah fixes the bug separately and keeps the new tests in place. Total time: about 20 minutes, and the process surfaced a real production bug the shallow original suite had been silently missing."
+    },
+    "dev-i5-review-a-pull-request": {
+      "variations": [
+        {
+          "label": "Quick pass for a small, low-risk PR",
+          "whenToUse": "Use this for a small PR (a copy change, a config tweak, a minor bug fix) where a full classification table is more overhead than the change warrants.",
+          "prompt": "Review this pull request quickly. Tell me: any bugs or security issues you see (with file and line), and whether the diff actually matches what the PR description claims it does. Keep it to the essentials - I don't need a full breakdown for a change this size."
+        },
+        {
+          "label": "Reviewing your own PR before requesting review from a teammate",
+          "whenToUse": "Use this before you ask a human colleague to review your own pull request, as a self-check pass to catch issues before spending someone else's time.",
+          "prompt": "This is my own pull request, and I want to self-review before asking a teammate to look at it. Review the diff and for each issue:\n1. State the file and line.\n2. Classify it as: bug, security risk, style/convention, or missing test coverage.\n3. Explain your reasoning in 1-2 sentences.\n4. Rate your confidence (high/medium/low).\n\nAlso tell me honestly: does this diff fully accomplish what my PR description says, or did I leave something incomplete? Be direct - I'd rather catch this now than have my teammate catch it."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify a high-confidence security finding yourself",
+          "prompt": "For the finding you rated highest confidence, walk me through exactly how to reproduce or confirm it's real - what input, what code path, what would actually go wrong in production. I want to verify this myself before I act on it, not just trust the label."
+        },
+        {
+          "label": "Separate real findings from noise",
+          "prompt": "Group your findings into two lists: ones I should act on before merging, and ones that are low-confidence nitpicks I can dismiss in writing. For each dismissed one, give me a one-line reason I can post as a comment so the next reviewer doesn't re-raise it."
+        },
+        {
+          "label": "Does the code actually match the ticket, not just the description?",
+          "prompt": "Here's the original ticket this PR is supposed to resolve: [PASTE TICKET DESCRIPTION]. Compare the actual diff against the ticket's requirements, not just the PR's own description, and tell me if anything required by the ticket is missing from the diff."
+        }
+      ],
+      "walkthrough": "Priya is reviewing a teammate's pull request titled 'Fix pagination off-by-one bug' before her afternoon starts. The PR is 6 files and about 140 lines changed - enough that she doesn't want to just skim it and approve.\n\nShe lets the org's automated Codex review run first, then opens the lesson's classify-and-confidence prompt in her own Claude Code session and points it at the diff. It comes back with three findings: a high-confidence note that the pagination fix itself (changing a `<=` to `<` in the page-boundary check) is correct and matches standard off-by-one patterns; a medium-confidence style note about an unused import; and, when she asks the second part of the prompt directly, something more important - the diff also silently changes the default page size from 20 to 25, which the PR description never mentions.\n\nPriya runs the first follow-up on the page-size finding specifically, since it's the one thing that isn't just mechanical. Claude walks her through it: the changed default is in the same config object as the pagination fix, so it's easy to assume it's part of the fix, but nothing in the ticket or PR description calls for it. She opens the cited line herself and confirms - yes, it's a real, undiscussed change riding along with the intended fix.\n\nShe runs the second follow-up to triage the rest: the unused-import note goes on the dismiss list with a one-line comment ('unrelated to this PR's scope, low priority'), while the page-size change goes on the act-on list.\n\nInstead of approving, Priya comments directly on the PR asking the author whether the page-size change was intentional. It turns out it wasn't - a leftover from local testing that the author forgot to revert. The author pushes a fix removing it, and Priya approves the corrected version.\n\nTotal review time: about 12 minutes, most of it spent confirming the one finding that mattered. Without deliberately asking whether the diff matched the description - not just whether the code was well-formed - that scope creep would have merged unnoticed."
+    },
+    "dev-a1-plan-a-migration": {
+      "placeholders": [
+        {
+          "name": "DESCRIBE THE MIGRATION, e.g. 'upgrade from React 17 to React 19' or 'move the users table from a single Postgres instance to a sharded setup'",
+          "what": "State exactly what's changing at a technical level - the current state and the target state. Be specific about versions, technologies, or the exact structural change, since a vague migration description produces a generic, less useful plan.",
+          "examples": [
+            "Upgrade our Express API from v4 to v5 across the whole backend",
+            "Migrate off the deprecated Stripe Charges API to the Payment Intents API before Stripe's sunset date",
+            "Move session storage from in-memory to Redis to support horizontal scaling"
+          ]
+        },
+        {
+          "name": "WHAT MUST KEEP WORKING THROUGHOUT / DEADLINE / ROLLBACK REQUIREMENTS",
+          "what": "List the hard constraints on this migration: what can never break for users during the process, any fixed deadline (like a vendor sunset date), and whether you need the ability to roll back at any point. These constraints shape which migration strategies (big-bang vs. phased, feature-flagged vs. hard cutover) are even acceptable.",
+          "examples": [
+            "Checkout must keep working with zero downtime throughout; hard deadline of the vendor's API sunset date, June 1, 2026; must be able to roll back any single phase within minutes",
+            "No fixed deadline, but the team can only dedicate 20% capacity per sprint; rollback not required since this is a dev-only tooling change",
+            "User login must never be interrupted; deadline is soft (before next quarter); each phase must be revertible via a feature flag, not a code revert"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Small, low-risk migration - lighter version",
+          "whenToUse": "Use this for a smaller migration (a minor dependency bump, a single-service change) where the full phased/risk/rollback apparatus of the main prompt is more process than the risk warrants.",
+          "prompt": "I'm planning a small migration: [DESCRIBE THE MIGRATION]. Constraints: [WHAT MUST KEEP WORKING / DEADLINE].\n\nStay in plan mode - do not edit any files.\n\nInventory what this touches in the repo, citing file paths. Then give me a short plan: the order of changes, one thing that could go wrong, and how I'd know if it did (what to check or test). This doesn't need multiple formal phases - just enough structure that I'm not flying blind."
+        },
+        {
+          "label": "Database schema migration with data safety as the primary concern",
+          "whenToUse": "Use this specifically for a database schema change, where data integrity and safe rollback of already-migrated data are the dominant risks, more than code changes.",
+          "prompt": "I'm planning a database schema migration: [DESCRIBE THE SCHEMA CHANGE, e.g. 'add a NOT NULL column with a backfill to a 10M-row table'].\n\nConstraints: [WHAT MUST KEEP WORKING / DEADLINE / ROLLBACK REQUIREMENTS].\n\nStay in plan mode - do not edit any files or run any migration.\n\nInventory every place in the codebase that reads or writes this table, citing file paths. Then propose the migration as phases that are safe under concurrent production writes - specifically address: how the backfill runs without locking the table for reads/writes, how the application code handles the transition period where old and new schema assumptions might both be in play, and the exact rollback procedure if the migration needs to be reversed after partial completion, including what happens to any data written during the partial state."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "The inventory missed something - re-check",
+          "prompt": "I know of a usage this migration touches that I don't see in your inventory: [DESCRIBE IT]. Search the repo again specifically for this and tell me if you missed it initially or if it genuinely isn't there, and update the plan if it changes anything."
+        },
+        {
+          "label": "Push harder on the riskiest phase",
+          "prompt": "Which single phase of this plan carries the most production risk, and why? For that phase specifically, propose a feature-flag or dual-write strategy instead of a hard cutover, so we can verify it safely at low traffic before fully committing."
+        },
+        {
+          "label": "Turn the plan into a document I can share",
+          "prompt": "Format this entire plan as a design doc I can share with my team for review: a summary at the top, then the phases with their risks and rollback paths, and an open-questions section for anything that needs a decision before we start."
+        }
+      ],
+      "walkthrough": "Marcus's team needs to migrate off a payment SDK that's being deprecated, with a hard sunset date from the vendor six weeks out. He's seen migrations go badly before - a rushed cutover once caused a partial outage in checkout - so this time he wants a real plan before anyone touches code.\n\nHe opens Claude Code in the target repo, presses Shift+Tab for Plan Mode, and pastes the lesson's migration-planning prompt. He describes the migration as moving to the SDK's replacement, and states the constraint clearly: checkout must have zero downtime throughout, the deadline is fixed at six weeks, and each phase needs a fast rollback path.\n\nClaude Code's inventory pass finds 14 call sites across 6 files - including one usage buried in a background job that processes failed-payment retries, which nobody on the team remembered still used the old SDK directly.\n\nThe phased plan isolates that background job as an early, standalone phase specifically because it's the highest-risk, least-visible piece - failing quietly there could mean silently dropped retries with no immediate symptom. The remaining phases handle the more visible, better-tested checkout flow, each with its own stated risk and rollback path and recommended verification steps before moving on.\n\nMarcus runs the second follow-up, asking which phase carries the most production risk. Claude Code names the final checkout cutover and proposes a dual-write strategy behind a feature flag instead of a hard switch - writing to both SDKs briefly, comparing results, and flipping the flag only once confidence is high, with an instant rollback if anything looks wrong.\n\nMarcus reviews the plan for gaps only he'd know about - one team member is on leave during week 3 - and adjusts the phase ordering. He runs the third follow-up to format it as a shareable design doc, then posts it for team review before any implementation begins. Total time: about 25 minutes to get a plan grounded in the actual repo, catching the hidden background-job dependency the team would likely have missed under deadline pressure."
+    },
+    "dev-a2-repo-guardrails": {
+      "variations": [
+        {
+          "label": "Solo project - lighter version without team coordination",
+          "whenToUse": "Use this for a personal or solo project where you don't need multi-tool cross-references or team-facing documentation, just your own standing context for future sessions.",
+          "prompt": "Look at this repository and draft a short CLAUDE.md for my own future sessions (solo project, no team). Cover: exact build/test/lint commands, any convention I clearly follow consistently (inferred only from what you find, not assumed), and anything that would otherwise waste time being rediscovered every session. Keep it under half a page - I don't need enterprise-scale documentation for a project only I work on. Flag anything you're inferring versus certain about."
+        },
+        {
+          "label": "Adding an enforced CI check, not just a prompted rule",
+          "whenToUse": "Use this once you've identified a rule that's too important to leave as a prompted instruction (something that must never happen regardless of what any agent decides) and needs to be backed by an actual CI check or hook.",
+          "prompt": "I have a rule that currently only lives as prompted guidance in our CLAUDE.md/AGENTS.md: [DESCRIBE THE RULE, e.g. 'never modify files under /infra without explicit approval']. I want to back this with something enforced, not just prompted.\n\nPropose a concrete CI check or pre-commit hook for this repo (using whatever CI system/hooks setup we already have - check the repo for it first, citing what you find) that would block a violation of this rule regardless of what any AI agent or developer decided in the moment. Show me the exact config or script, and explain what it catches and what it doesn't."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check the draft against what's actually true",
+          "prompt": "You flagged some of this as inferred rather than certain. Walk me through each inferred item and show me exactly what you found in the repo that led to that inference, so I can confirm or correct it before I commit this file."
+        },
+        {
+          "label": "Add the off-limits rule I know about but you couldn't",
+          "prompt": "Add this explicit off-limits rule to the draft, which you wouldn't know from the code alone: [DESCRIBE THE RULE AND WHY, e.g. 'never add new code to /billing, it's being replaced by /billing-v2, see ADR-014']."
+        },
+        {
+          "label": "Make sure this doesn't go stale silently",
+          "prompt": "Add a short note at the top of this file with today's date and a suggested review interval, and tell me what kind of change in this codebase (e.g. a major dependency upgrade, a new module) should trigger someone to revisit and update it."
+        }
+      ],
+      "walkthrough": "Wei leads a team of five developers who use different AI coding tools - some Claude Code, some Cursor, some Copilot - on a shared internal-tools repository. He's noticed agents keep suggesting changes to a legacy /billing directory that's mid-deprecation and shouldn't get new code, because nobody wrote that constraint down anywhere an agent would see it.\n\nHe opens Claude Code in the repo and pastes the lesson's context-file draft prompt, asking it to draft an AGENTS.md (readable by Codex and Cursor too, not just Claude Code) grounded in what it actually finds in the repository.\n\nClaude Code returns a draft: exact build/test/lint commands found in package.json, architectural conventions it observed (tests co-located with source files, a shared error-handling utility used almost everywhere), and a note flagging it's inferring the team's state-management convention from majority pattern rather than a written rule, since a few older files don't follow it.\n\nWei runs the first follow-up on that flagged inference, and Claude Code shows him the specific files that follow the pattern versus the handful that don't, letting him confirm the newer convention is correct and the older files simply aren't migrated yet - worth a note, not a contradiction.\n\nHe then runs the second follow-up to add the /billing rule directly: 'do not add new code to /billing; it is being replaced by /billing-v2, see ADR-014' - something no code reading would have told the agent, since it required knowing about a decision made in a meeting six months ago.\n\nBecause this rule matters enough that a prompted instruction alone doesn't feel sufficient, Wei separately runs the second variation prompt to get a CI check blocking any pull request touching /billing without an explicit override label - enforced even if a future agent session forgets.\n\nHe commits both files the same afternoon. Within a week, a teammate's Cursor session correctly declines to add a billing feature to the old directory and points to the AGENTS.md note instead - the constraint now lives in a file every session reads, not just in Wei's memory."
+    }
+  }
+}

@@ -1,0 +1,1345 @@
+{
+  "lessons": [
+    {
+      "slug": "html-i01-semantic-layout",
+      "title": "Lay out a complete page with semantic landmark elements",
+      "summary": "Replace anonymous divs with header, nav, main, section, article, aside and footer, and learn exactly what each region means.",
+      "difficulty": "intermediate",
+      "minutes": 14,
+      "isFree": true,
+      "goal": "Assemble a full page skeleton from the seven structural elements, with each one in its correct place.",
+      "whyItMatters": "Every professional page you will ever build starts from the same structural frame: a header, navigation, one main content area, and a footer. Getting these elements right is not decoration — screen readers use them as jump targets, search engines use them to find your primary content, and teammates use them to understand your layout at a glance. Once this skeleton is second nature, every layout you write becomes faster and cleaner.",
+      "steps": [
+        "Read the first two theory sections to learn what header, nav and footer mean.",
+        "Read the section on main and memorise its one-per-page rule.",
+        "Study the article vs section decision rule — it is the part people get wrong most.",
+        "Open the starter code: a blog page built entirely from divs.",
+        "Work through tasks 1–5, converting each div into its semantic equivalent.",
+        "Press Run after each change and confirm the checks turn green.",
+        "Compare your result with the full skeleton in the last theory section."
+      ],
+      "prompt": "<body>\n  <header>\n    <h1>Field Notes</h1>\n    <nav>\n      <a href=\"/\">Home</a>\n      <a href=\"/trails\">Trails</a>\n    </nav>\n  </header>\n  <main>\n    <article>\n      <header>\n        <h2>Crossing the Vikos Gorge</h2>\n        <p>Posted 3 May</p>\n      </header>\n      <p>The descent starts before sunrise...</p>\n    </article>\n    <aside>\n      <h2>Gear checklist</h2>\n      <p>Boots, water filter, headlamp.</p>\n    </aside>\n  </main>\n  <footer>\n    <p>© 2026 Field Notes</p>\n  </footer>\n</body>",
+      "promptLabel": "Key code example",
+      "explanation": "The outer header holds the site identity and its navigation, so the nav nests inside it. main wraps everything unique to this page — there is exactly one, and it never contains the site header or footer. The blog post is an article because it would make sense republished on its own, and it carries its own inner header for the title and date. The gear checklist is related but skippable, which is precisely what aside expresses, and the footer closes the page with repeated boilerplate.",
+      "example": "Before: a page made of six anonymous <div> elements. Nothing tells a screen reader where navigation ends and content begins, and a search engine has to guess which block matters.\n\nAfter: the same content wrapped in header, nav, main, article, aside and footer. A screen-reader user can now press one key to jump straight to the main content, and any machine reading the page knows the post is the point and the checklist is a sidebar.",
+      "exercise": "In the editor on the right, convert the div-based blog page into a semantic skeleton: a header containing the nav, a main wrapping the content, an article with its own header for the post, an aside for the gear checklist, and a footer at the end.",
+      "expectedResult": "The preview looks almost identical — these elements carry no special styling — but all five checks pass, confirming the page now has a real landmark structure.",
+      "commonMistakes": [
+        "Using more than one main per page. main marks the unique content of this page, and there can only ever be one visible at a time.",
+        "Wrapping every list of links in nav. Reserve nav for major navigation blocks; three footer links do not need it.",
+        "Choosing section when article is correct. If the block would still make sense syndicated on its own — a post, a comment, a product card — it is an article.",
+        "Treating aside as 'anything in a sidebar column'. aside is about content relationship (tangential, skippable), not screen position."
+      ],
+      "proTip": "Audit any page's landmark structure in seconds: run document.querySelectorAll('header, nav, main, article, section, aside, footer') in DevTools and check the list reads like a sensible outline of the page.",
+      "tools": [
+        "html"
+      ],
+      "professions": [],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will rebuild a div-based blog page as a proper semantic skeleton, placing all seven structural elements where they belong.",
+        "sections": [
+          {
+            "heading": "Named regions instead of anonymous boxes",
+            "body": "A div is a box with no meaning: it groups content and nothing more. HTML5 added a set of structural elements that behave exactly like divs visually but declare what their content is for. Browsers, screen readers, search engines and reader modes all understand these names.\n\nThe seven you will use constantly are header, nav, main, section, article, aside and footer. Learning them is not about memorising tags — it is about learning the one question each element answers: who is this content for, and what role does it play on the page?\n\nNone of these elements changes how the page looks. They are pure structure. That is the point: meaning and appearance are separate jobs, and CSS handles the second one.",
+            "code": "<!-- Meaningless -->\n<div>...</div>\n\n<!-- Meaningful, identical rendering -->\n<article>...</article>"
+          },
+          {
+            "heading": "header, nav and footer",
+            "body": "header marks introductory content for its nearest ancestor: a logo, a title, a tagline, often the site navigation. It is not only for the top of the page — an article can open with its own header holding the title and publish date.\n\nnav wraps a block of major navigation links: the site menu, a table of contents, breadcrumbs. Not every group of links qualifies. A paragraph with two inline links, or a short list of legal links in the footer, works fine without nav — flooding a page with nav elements makes the real navigation harder to find for screen-reader users who jump between them.\n\nfooter is the mirror of header: closing content for its nearest ancestor. On the page level that means copyright lines, contact details and secondary links. Like header, it can also appear inside an article to hold metadata such as the author or tags.",
+            "code": "<header>\n  <h1>Field Notes</h1>\n  <nav>\n    <a href=\"/\">Home</a>\n    <a href=\"/trails\">Trails</a>\n  </nav>\n</header>"
+          },
+          {
+            "heading": "main: exactly one per page",
+            "body": "main wraps the content that is unique to the current page — the reason this URL exists. Everything repeated across pages stays outside it: the site header, the site navigation, the footer.\n\nThe rule that matters: one main per page, and it cannot be nested inside article, aside, header, footer or nav. Assistive technologies rely on this. The single main is the landmark a screen-reader user jumps to in order to skip past the banner and menus, so a page with two mains — or with the menu accidentally inside main — defeats the entire feature.\n\nIf you find yourself wanting a second main, you actually want section or article. If you find your nav inside main, your nav is in the wrong place (unless it is genuinely page-specific navigation, like a table of contents for the article — that one may live inside main).",
+            "code": "<body>\n  <header>...site banner...</header>\n  <main>\n    <!-- only this page's unique content -->\n  </main>\n  <footer>...site footer...</footer>\n</body>"
+          },
+          {
+            "heading": "article vs section: the decision rule",
+            "body": "These two cause the most hesitation, but one question settles almost every case: would this block still make sense if you lifted it out and published it somewhere else on its own?\n\nIf yes, it is an article. A blog post, a news story, a forum comment, a product card, a widget in a dashboard — each is a self-contained composition. The name misleads people: article is not only for written articles, it is for anything independently distributable. An RSS feed is a good mental test — if the block could be an entry in a feed, it is an article.\n\nIf no — the block only makes sense as a chapter of the surrounding page — it is a section. A landing page's 'Pricing' and 'Testimonials' blocks are sections: meaningful here, meaningless alone. A section should almost always start with a heading; if you cannot think of a natural heading for it, you probably wanted a plain div.\n\nThey nest both ways. A long article can be divided into sections (chapters of the post). A section can contain articles (a 'Latest news' section holding three post teasers).",
+            "code": "<!-- Independent: article -->\n<article>\n  <h2>Crossing the Vikos Gorge</h2>\n  <p>...</p>\n</article>\n\n<!-- Chapter of this page: section -->\n<section>\n  <h2>Pricing</h2>\n  <p>...</p>\n</section>"
+          },
+          {
+            "heading": "aside: related, not required",
+            "body": "aside holds content that is tangentially related to what surrounds it — the reader could skip it without losing the thread. Classic examples: a pull quote, a glossary box, a list of related posts, an author bio, advertising.\n\nThe common misunderstanding is to equate aside with 'sidebar column'. Position is irrelevant. An aside can render inline, below, or floated right; what makes it an aside is the relationship of its content to the main flow. Conversely, a sidebar column that contains your primary navigation is a nav, not an aside.\n\nAn aside placed inside an article is understood as related to that article (a note about the trail in this post). An aside placed directly in body or main is understood as related to the page as a whole (a site-wide newsletter box).",
+            "code": "<aside>\n  <h2>Gear checklist</h2>\n  <p>Boots, water filter, headlamp.</p>\n</aside>"
+          },
+          {
+            "heading": "Nesting: landmarks inside landmarks",
+            "body": "The structural elements are designed to compose. header and footer attach to their nearest sectioning ancestor, so a page header and an article header coexist without conflict — one introduces the site, the other introduces the post.\n\nCommon, correct combinations: nav inside the page header; header and footer inside an article; sections inside an article to split it into chapters; an aside inside main next to the article it relates to; articles inside a section that groups them.\n\nCombinations to avoid: main inside anything other than body (or a plain wrapper div); a footer inside a footer or header inside a header; nav wrapped around every link cluster. When unsure, keep the skeleton shallow — depth should follow the content's real structure, not habit.",
+            "code": "<article>\n  <header>\n    <h2>Crossing the Vikos Gorge</h2>\n    <p>Posted 3 May</p>\n  </header>\n  <p>The descent starts before sunrise...</p>\n  <footer>\n    <p>Filed under: Greece, day hikes</p>\n  </footer>\n</article>"
+          },
+          {
+            "heading": "The complete page skeleton",
+            "body": "Put together, nearly every content page follows one shape: header with nav at the top, one main holding the unique content (articles and sections, with asides where relevant), and a footer at the bottom.\n\nMemorise this frame. When you start a new page, type it before anything else, then fill it in. It keeps you from ever reaching for a div where a landmark belongs, and it means every page you produce is navigable by assistive technology from the first minute.\n\nThe starter code in the editor is this exact page with every landmark flattened into a div. Your job is to restore the structure.",
+            "code": "<body>\n  <header>\n    <h1>Site name</h1>\n    <nav>...main menu...</nav>\n  </header>\n  <main>\n    <article>...the content this URL exists for...</article>\n    <aside>...related extras...</aside>\n  </main>\n  <footer>...copyright, contact...</footer>\n</body>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Field Notes — a hiking blog</title>\n</head>\n<body>\n  <!-- TODO 1: make this wrapper a <header> and the link group a <nav> -->\n  <div>\n    <h1>Field Notes</h1>\n    <div>\n      <a href=\"/\">Home</a>\n      <a href=\"/trails\">Trails</a>\n    </div>\n  </div>\n\n  <!-- TODO 2: wrap the page's unique content in a single <main> -->\n  <!-- TODO 3: the post stands alone — make it an <article> with its own <header> -->\n  <div>\n    <div>\n      <h2>Crossing the Vikos Gorge</h2>\n      <p>Posted 3 May</p>\n    </div>\n    <p>The descent starts before sunrise, with the limestone walls still grey.</p>\n  </div>\n\n  <!-- TODO 4: this related box is an <aside> (keep it inside main) -->\n  <div>\n    <h2>Gear checklist</h2>\n    <p>Boots, water filter, headlamp.</p>\n  </div>\n\n  <!-- TODO 5: the closing strip is a <footer> -->\n  <div>\n    <p>© 2026 Field Notes</p>\n  </div>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Field Notes — a hiking blog</title>\n</head>\n<body>\n  <header>\n    <h1>Field Notes</h1>\n    <nav>\n      <a href=\"/\">Home</a>\n      <a href=\"/trails\">Trails</a>\n    </nav>\n  </header>\n\n  <main>\n    <article>\n      <header>\n        <h2>Crossing the Vikos Gorge</h2>\n        <p>Posted 3 May</p>\n      </header>\n      <p>The descent starts before sunrise, with the limestone walls still grey.</p>\n    </article>\n\n    <aside>\n      <h2>Gear checklist</h2>\n      <p>Boots, water filter, headlamp.</p>\n    </aside>\n  </main>\n\n  <footer>\n    <p>© 2026 Field Notes</p>\n  </footer>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Turn the top wrapper into a <header> and the link group inside it into a <nav>.",
+            "hint": "The outer div becomes <header>; the div holding the two links becomes <nav>, nested inside the header.",
+            "errorMessage": "No <nav> found inside a <header>. The site navigation should nest inside the page header.",
+            "check": {
+              "type": "selector",
+              "selector": "header nav"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Wrap the post and the gear checklist in a single <main> element.",
+            "hint": "Open <main> after the header and close it before the footer. Exactly one main per page.",
+            "errorMessage": "No <main> element found. The page's unique content needs a single <main> wrapper.",
+            "check": {
+              "type": "selector",
+              "selector": "main"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Make the blog post an <article> with its own inner <header> holding the title and date.",
+            "hint": "The post's outer div becomes <article>; the div around the h2 and the date becomes a nested <header>.",
+            "errorMessage": "Expected an <article> inside <main> that opens with its own <header>.",
+            "check": {
+              "type": "selector",
+              "selector": "main article header"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Convert the gear checklist box into an <aside> inside main.",
+            "hint": "The checklist is related but skippable content — exactly what <aside> means.",
+            "errorMessage": "No <aside> found inside <main>. The gear checklist should be an aside.",
+            "check": {
+              "type": "selector",
+              "selector": "main aside"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Turn the closing copyright strip into a <footer>.",
+            "hint": "Replace the last div with <footer>...</footer>.",
+            "errorMessage": "No <footer> with the copyright line found at the end of the page.",
+            "check": {
+              "type": "text",
+              "selector": "footer",
+              "pattern": "field notes"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-i02-why-semantics",
+      "title": "See exactly what semantic markup buys you over div soup",
+      "summary": "Compare a div-only page with its semantic twin and understand the concrete wins: search ranking, screen-reader landmarks, maintainability and reader modes.",
+      "difficulty": "intermediate",
+      "minutes": 12,
+      "isFree": true,
+      "goal": "Convert a div-soup page to semantic markup and articulate why each conversion pays off — and where a div is still the right tool.",
+      "whyItMatters": "Semantic markup is one of the cheapest quality wins in web development: it costs nothing at render time and pays out in search visibility, accessibility compliance, and code your colleagues can read without a map. Companies get sued over inaccessible pages and lose traffic over unparseable ones — both problems often start with a wall of anonymous divs. Knowing when a div is still correct is part of the same skill.",
+      "steps": [
+        "Read the side-by-side comparison in the first theory section.",
+        "Work through the sections on SEO, landmarks and maintainability to see who benefits and how.",
+        "Read 'When div is still the right choice' — semantics is not about banning div.",
+        "Open the starter code: a small news page written as div soup.",
+        "Complete tasks 1–5, converting the structural divs but deliberately keeping the styling div.",
+        "Run the checks and confirm the page structure is now machine-readable."
+      ],
+      "prompt": "<!-- Div soup: renders fine, means nothing -->\n<div class=\"header\">...</div>\n<div class=\"main\">\n  <div class=\"post\">...</div>\n</div>\n\n<!-- Semantic: identical rendering, full meaning -->\n<header>...</header>\n<main>\n  <article>...</article>\n</main>",
+      "promptLabel": "Key code example",
+      "explanation": "Both snippets produce the same pixels, which is why div soup survives: nothing looks broken. The difference is invisible until a non-human reads the page. The class names header and main are private vocabulary — no browser, crawler or screen reader is obliged to understand them. The element names header and main are a public contract that every consumer of HTML already implements, so the second snippet gets landmark navigation, content extraction and clearer code for free.",
+      "example": "A screen-reader user opens the div-soup version of a news site and hears one undifferentiated stream; reaching the story means arrowing through the entire menu every single visit.\n\nOn the semantic version, the same user presses one key to jump to the main landmark and is reading the story within a second. Meanwhile a search crawler confidently extracts the article for indexing, and the browser's reader mode strips everything but the story text.",
+      "exercise": "In the editor on the right, upgrade the div-soup news page: convert the header, nav, main content, story and footer to their semantic elements — but keep the inner card div exactly as it is, because it exists purely for styling.",
+      "expectedResult": "The preview looks unchanged, but the checks confirm a real landmark structure exists — and that the purely presentational div survived, because deleting every div was never the goal.",
+      "commonMistakes": [
+        "Believing class names add semantics. <div class=\"nav\"> means nothing to machines; only the element name carries shared meaning.",
+        "Replacing every single div during a refactor. Divs that exist only as styling or layout hooks are correct as divs.",
+        "Restarting headings at h1 inside each section or article. The document has one heading outline; sectioning elements do not reset it.",
+        "Treating semantics as an SEO trick only. The accessibility and maintainability wins apply to every page, including internal tools no crawler will ever see."
+      ],
+      "proTip": "Open any page you have built in your browser's reader mode (or run Lighthouse's accessibility audit). If reader mode extracts garbage or Lighthouse finds no landmarks, that page is telling you it is div soup.",
+      "tools": [
+        "html"
+      ],
+      "professions": [],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will refactor a div-soup news page into semantic markup, keeping one deliberate div to prove you know when div is still correct.",
+        "sections": [
+          {
+            "heading": "The same page, twice",
+            "body": "Take a small news page: site title, menu, one story, copyright line. You can build it entirely from divs with descriptive class names, and it will render perfectly. Developers call this pattern div soup — a page whose structure exists only in class names that no machine understands.\n\nNow build the identical page with header, nav, main, article and footer. The rendering is pixel-for-pixel the same, because these elements carry no default styling beyond display: block.\n\nSo why bother? Because HTML is not only read by browsers painting pixels. It is read by search crawlers, screen readers, reader modes, translation tools, scrapers, and by the next developer. Every one of those readers gets more from the second version. The rest of this lesson itemises exactly what they get.",
+            "code": "<!-- Version A -->\n<div class=\"header\"><h1>Daily Brew</h1></div>\n<div class=\"main\"><div class=\"post\">...</div></div>\n<div class=\"footer\">...</div>\n\n<!-- Version B: same pixels -->\n<header><h1>Daily Brew</h1></header>\n<main><article>...</article></main>\n<footer>...</footer>"
+          },
+          {
+            "heading": "What search engines get",
+            "body": "Crawlers try to answer one question about your page: what is the actual content here, as opposed to the chrome around it? Semantic markup answers it directly. main says 'the unique content is here'; article says 'this block is a self-contained piece'; nav and footer say 'this is boilerplate, weight it lightly'.\n\nWith div soup, the crawler falls back to heuristics — text density, link ratios, position — which work most of the time and fail quietly the rest. Failure looks like your navigation labels appearing in a search snippet, or a sidebar promo being indexed as the page topic.\n\nSemantics is not a magic ranking boost, and no honest source claims it is. What it gives you is accurate extraction: the engine indexes what you meant. Structured content also feeds features such as snippets and article previews more reliably.",
+            "code": "<main>\n  <article>\n    <h2>A new roastery opens downtown</h2>\n    <p>The first batch sold out in an hour.</p>\n  </article>\n</main>"
+          },
+          {
+            "heading": "What screen readers get: landmarks",
+            "body": "Screen readers map the structural elements to landmarks — named regions a user can list and jump between with a keystroke. header becomes banner, nav becomes navigation, main becomes main, aside becomes complementary, footer becomes contentinfo.\n\nThis changes how a page is used. Instead of listening through the site header and full menu on every page load, a screen-reader user jumps straight to main. Instead of hunting for the menu, they jump to navigation. Surveys of screen-reader users consistently show landmark and heading navigation among the primary ways they move through pages.\n\nDiv soup produces zero landmarks. The page becomes a single flat stream, and every visit means wading from the top. You could bolt landmarks onto divs with ARIA role attributes, but the first rule of ARIA is to prefer the native element that already carries the role — <header> over <div role=\"banner\"> — because it is shorter, harder to get wrong, and impossible to forget.",
+            "code": "<!-- Landmarks a screen reader announces: -->\n<header>   <!-- banner -->\n<nav>      <!-- navigation -->\n<main>     <!-- main -->\n<aside>    <!-- complementary -->\n<footer>   <!-- contentinfo -->"
+          },
+          {
+            "heading": "What your team gets: code that explains itself",
+            "body": "Open an unfamiliar file and find <footer> on line 80 — you instantly know what that block is and roughly what belongs in it. Find <div class=\"bx-3\"> and you know nothing until you trace the CSS.\n\nSemantic elements act as enforced, standardised comments. Unlike class names, they cannot drift into private jargon, they survive CSS rewrites and framework migrations, and they are identical across every codebase in the industry. A new hire who knows HTML already knows your page structure.\n\nThey also give you resilient styling hooks. A rule like main > article works regardless of what the design system renames its classes this quarter. Teams that lean on structure for layout selectors ship fewer of the 'renamed a class, broke a page' regressions.",
+            "code": "/* Survives any class-name rewrite */\nmain > article { max-width: 42rem; }\nheader nav a { text-decoration: none; }"
+          },
+          {
+            "heading": "What reader modes and other tools get",
+            "body": "Browsers ship reader modes that strip a page down to its content for comfortable reading. Their extraction logic leans heavily on structure: an article inside main is a strong signal of 'the content'; nav, aside and footer are strong signals of 'discard this'.\n\nOn a semantic page, reader mode produces a clean, complete story. On div soup it guesses — sometimes dropping half the article, sometimes including the cookie banner. The same extraction problem is faced by read-later apps, text-to-speech services, translation pipelines, AI assistants summarising the page, and print stylesheets. One markup decision feeds all of them.\n\nThis is the general principle worth internalising: you do not control which software will consume your HTML over its lifetime. Writing semantically is how you stay correct for consumers that do not exist yet.",
+            "code": "<main>\n  <article>\n    <h2>The story reader mode will keep</h2>\n    <p>...</p>\n  </article>\n</main>\n<aside>The promo reader mode will drop.</aside>"
+          },
+          {
+            "heading": "When div is still the right choice",
+            "body": "Semantics does not mean 'never write div'. A div is correct precisely when a block has no meaning to convey — it exists so CSS can grab it. Wrappers that centre a layout, flex and grid containers, styled cards, overlay backdrops: these are presentational grouping, and div is the honest element for them.\n\nThe test is simple: if you removed all styling, would this grouping still communicate something about the content? If yes, pick the semantic element. If the grouping only exists for the stylesheet, keep the div. Forcing section onto every styling wrapper is as wrong as div soup — it buries the real landmarks in noise.\n\nThe same logic applies inline: span is the phrasing-level div, correct when you need a styling or scripting hook on a run of text that has no semantic identity of its own.",
+            "code": "<article>\n  <h2>A new roastery opens downtown</h2>\n  <!-- purely visual card: div is correct -->\n  <div class=\"card\">\n    <p>The first batch sold out in an hour.</p>\n  </div>\n</article>"
+          },
+          {
+            "heading": "Headings inside sectioned content",
+            "body": "HTML5 originally proposed an 'outline algorithm' in which every section or article could restart at h1 and nesting depth would determine the real level. No browser or screen reader ever implemented it, and the idea has been removed from the standard. Do not structure headings as if it existed.\n\nThe working rule: the page has one heading outline, numbered explicitly by you. One h1 for the page; an article or section directly under it starts at h2; a subsection inside that uses h3; and no level is skipped going down. Sectioning elements group content, but they do not renumber anything.\n\nIn practice, put a heading at the top of every section and article — it names the region for sighted scanners and screen-reader users alike — and choose its level from the document outline, not from the element it happens to sit in.",
+            "code": "<h1>Daily Brew</h1>\n<main>\n  <article>\n    <h2>A new roastery opens downtown</h2>\n    <h3>Opening week</h3>\n  </article>\n</main>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Daily Brew — coffee news</title>\n</head>\n<body>\n  <!-- TODO 1: make the outer wrapper a <header> -->\n  <div class=\"header\">\n    <h1>Daily Brew</h1>\n    <!-- TODO 2: make the menu a <nav> (keep it inside the header) -->\n    <div class=\"nav\">\n      <a href=\"/\">Home</a>\n      <a href=\"/reviews\">Reviews</a>\n    </div>\n  </div>\n\n  <!-- TODO 3: the unique page content belongs in <main> -->\n  <div class=\"content\">\n    <!-- TODO 4: this story is self-contained — make it an <article> -->\n    <div class=\"post\">\n      <h2>A new roastery opens downtown</h2>\n      <!-- Keep this div! It exists purely for styling. -->\n      <div class=\"card\">\n        <p>The first batch sold out in an hour.</p>\n      </div>\n    </div>\n  </div>\n\n  <!-- TODO 5: the closing strip is a <footer> -->\n  <div class=\"footer\">\n    <p>© 2026 Daily Brew</p>\n  </div>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Daily Brew — coffee news</title>\n</head>\n<body>\n  <header>\n    <h1>Daily Brew</h1>\n    <nav>\n      <a href=\"/\">Home</a>\n      <a href=\"/reviews\">Reviews</a>\n    </nav>\n  </header>\n\n  <main>\n    <article>\n      <h2>A new roastery opens downtown</h2>\n      <div class=\"card\">\n        <p>The first batch sold out in an hour.</p>\n      </div>\n    </article>\n  </main>\n\n  <footer>\n    <p>© 2026 Daily Brew</p>\n  </footer>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Convert the outer wrapper div into a <header> containing the site title.",
+            "hint": "Replace <div class=\"header\"> with <header> — the class was only ever a label for humans.",
+            "errorMessage": "No <header> containing the h1 site title was found.",
+            "check": {
+              "type": "selector",
+              "selector": "header h1"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Convert the menu div into a <nav>, still nested inside the header.",
+            "hint": "The div with the two links becomes <nav>...</nav> inside the header.",
+            "errorMessage": "No <nav> found inside the <header>. The menu needs a real navigation element.",
+            "check": {
+              "type": "selector",
+              "selector": "header nav a"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Replace the content div with a single <main> element.",
+            "hint": "<div class=\"content\"> becomes <main> — the unique content of this page.",
+            "errorMessage": "No <main> element found wrapping the page's unique content.",
+            "check": {
+              "type": "selector",
+              "selector": "main"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Make the story an <article> inside main, keeping the inner styling div untouched.",
+            "hint": "Only <div class=\"post\"> changes to <article>. The card div stays a div — it is a pure styling hook.",
+            "errorMessage": "Expected an <article> inside <main> that still contains the div.card styling wrapper.",
+            "check": {
+              "type": "selector",
+              "selector": "main article div.card"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Convert the closing strip into a <footer>.",
+            "hint": "Replace <div class=\"footer\"> with <footer>.",
+            "errorMessage": "No <footer> with the copyright line found.",
+            "check": {
+              "type": "text",
+              "selector": "footer",
+              "pattern": "daily brew"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-i03-tables-basics",
+      "title": "Build a correct data table with rows, cells and scoped headers",
+      "summary": "Learn table, tr, td and th — including the scope attribute from day one — and when a table is the right tool at all.",
+      "difficulty": "intermediate",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Construct a small data table with properly scoped header cells and understand the row-based model behind every HTML table.",
+      "whyItMatters": "Real applications are full of genuinely tabular data: invoices, schedules, comparison charts, admin dashboards. A table built correctly — headers marked as headers, with scope declared — is readable to everyone including screen-reader users, who hear each cell announced with its column and row context. A table built from divs or with plain bold cells forces users to count columns in their head, and it happens constantly in production code.",
+      "steps": [
+        "Read the theory on what a table is and the rows-first mental model.",
+        "Study th and the scope attribute — do not skip scope; it is part of correct table syntax here from the start.",
+        "Read when a table is the right choice and when it is layout abuse.",
+        "Open the starter code: an empty table shell for planet data.",
+        "Add the header row with three scoped th cells (tasks 1–2).",
+        "Add the three data rows (tasks 3–4) and run the checks."
+      ],
+      "prompt": "<table>\n  <tr>\n    <th scope=\"col\">Planet</th>\n    <th scope=\"col\">Moons</th>\n    <th scope=\"col\">Day length</th>\n  </tr>\n  <tr>\n    <td>Mars</td>\n    <td>2</td>\n    <td>25 hours</td>\n  </tr>\n</table>",
+      "promptLabel": "Key code example",
+      "explanation": "The table is written row by row: each tr is one horizontal slice, and the cells inside it fall into columns purely by position. The first row uses th instead of td because its cells label the columns rather than hold data, and scope=\"col\" states that explicitly — each th governs the cells below it. With that in place, a screen reader can announce 'Moons: 2' when a user lands on the second cell of the Mars row, instead of just the bare number.",
+      "example": "Imagine reading '25 hours' aloud to someone with no table visible. Useless — until you add its context: 'Mars, day length, 25 hours'.\n\nThat context is exactly what th and scope encode. A sighted reader reconstructs it by glancing up the column; a screen reader can only provide it if the markup says which cells are headers and which direction they apply.",
+      "exercise": "In the editor on the right, complete the planets table: one header row with three th cells scoped to their columns, followed by three data rows of td cells with the planet facts.",
+      "expectedResult": "The preview shows a compact, borderless grid: a bold header row (Planet, Moons, Day length) above three aligned data rows.",
+      "commonMistakes": [
+        "Marking header cells as bold td instead of th. Bold styling is invisible to assistive technology; only th declares 'this cell labels others'.",
+        "Omitting scope because the table 'is simple'. Adding scope costs seconds and keeps the table unambiguous as it inevitably grows.",
+        "Writing cells column by column in your head. HTML tables are strictly row-major: every tr is one row, and uneven cell counts between rows shear the grid.",
+        "Using a table to position page elements. Layout is CSS's job; tables are for data with a genuine row-and-column meaning."
+      ],
+      "proTip": "Before writing any table, sketch it as a spreadsheet in a comment: header line first, one line per row. If you cannot express the content as a spreadsheet, it is not tabular data and does not belong in a table.",
+      "tools": [
+        "html"
+      ],
+      "professions": [],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will build a three-column planets table from an empty shell, marking every header cell with th and scope from the start.",
+        "sections": [
+          {
+            "heading": "What a table really is",
+            "body": "An HTML table is a two-dimensional grid for data whose meaning comes from its position: each cell is defined by the row and the column it sits in. Think of a spreadsheet — a price list, a league standing, a timetable. If the row and column intersection carries meaning, you have tabular data.\n\nFour elements are enough for a basic table. table is the container for the whole grid. tr (table row) defines one horizontal slice. td (table data) is an ordinary cell inside a row. th (table header) is a cell that labels other cells rather than holding data itself.\n\nEverything in a table must live inside cells. Text placed directly inside table or tr, outside any td or th, is invalid — browsers actually hoist such stray text out above the table, which is a classic source of mysteriously misplaced content.",
+            "code": "<table>\n  <tr>\n    <td>one cell</td>\n    <td>another cell</td>\n  </tr>\n</table>"
+          },
+          {
+            "heading": "Rows first: the mental model",
+            "body": "HTML tables are written strictly row by row. There is no element for a column of cells — you never write 'the Moons column'; you write each row and the columns emerge from cell positions. The second cell of every row forms the second column, and so on.\n\nThis has a practical consequence: every row must contain the same number of cells (spanning, covered in a later lesson, is the controlled exception). If one tr has three cells and the next has two, the grid shears and the browser leaves a gap. When a table looks broken, count cells per row first — it is the cause more often than anything else.\n\nA good habit is to draft the table as plain text before writing tags: 'Planet | Moons | Day length' on line one, then one line per planet. Each draft line becomes one tr, each pipe-separated value one cell. This makes miscounts visible before they become markup.",
+            "code": "<!-- Draft:\n  Planet | Moons | Day length\n  Mars   | 2     | 25 hours\n-->\n<tr>\n  <td>Mars</td>\n  <td>2</td>\n  <td>25 hours</td>\n</tr>"
+          },
+          {
+            "heading": "th: cells that label other cells",
+            "body": "A header cell uses th instead of td. Browsers render th bold and centred by default, but as always the styling is incidental — the meaning is the point: this cell names what the cells in its row or column contain.\n\nThe most common pattern is a first row made entirely of th elements, one per column. Tables can also have row headers: a first column of th cells, where each row is labelled by its first cell (think of a nutrition table where each row starts with 'Protein', 'Fat', 'Sugar').\n\nBoth patterns can coexist in one table — column headers across the top and row headers down the left side. That is exactly when the question 'which cells does this th apply to?' stops being guessable, which is why th has a companion attribute you should use from your very first table.",
+            "code": "<tr>\n  <th scope=\"col\">Planet</th>\n  <th scope=\"col\">Moons</th>\n  <th scope=\"col\">Day length</th>\n</tr>"
+          },
+          {
+            "heading": "scope: which direction a header points",
+            "body": "The scope attribute states which cells a th governs. scope=\"col\" means 'I label the column below me'. scope=\"row\" means 'I label the row to my right'. Two more values, rowgroup and colgroup, exist for spanned headers and are covered in the lesson on complex tables.\n\nScreen readers use scope to give every data cell its context. When a user navigates to a cell, the reader announces the associated headers first: 'Mars, Moons, 2'. Without scope, readers fall back to guessing from table shape — which works for trivial tables and fails silently the moment a layout gets slightly unusual.\n\nMake scope a habit, not an upgrade: every th you ever write should carry either scope=\"col\" or scope=\"row\". It documents your intent for machines and for the developer who extends the table next year.",
+            "code": "<!-- Column headers -->\n<th scope=\"col\">Moons</th>\n\n<!-- A row header, first cell of its row -->\n<th scope=\"row\">Mars</th>"
+          },
+          {
+            "heading": "When a table is right — and when it is wrong",
+            "body": "Use a table when the data is genuinely two-dimensional: each row is one record, each column one property, and the intersection is a fact. Price lists, results, timetables, feature comparisons, financial statements — all tables.\n\nDo not use a table to arrange unrelated page parts into a visual grid. In the era before CSS layout, entire sites were built as giant invisible tables; the technique survives in old code and email templates. On the modern web it is wrong twice over: screen readers announce it as data ('table with 3 rows and 2 columns...') when it is not, and CSS grid or flexbox does the layout job better.\n\nThe inverse mistake is newer: rebuilding real data grids out of styled divs because a CSS framework makes that easy. If the content is a spreadsheet at heart, divs throw away the row-and-column semantics that make it navigable. Tabular data deserves table markup.",
+            "code": "<!-- Wrong: layout via table -->\n<table><tr><td>sidebar</td><td>content</td></tr></table>\n\n<!-- Wrong: data via divs -->\n<div class=\"row\"><div>Mars</div><div>2</div></div>"
+          },
+          {
+            "heading": "What you see by default",
+            "body": "An unstyled table renders more plainly than most people expect: no borders, no gridlines, minimal spacing — just aligned text, with th cells bold and centred. The classic 'lines around every cell' look is CSS, typically border on cells plus border-collapse: collapse on the table.\n\nThe old border=\"1\" attribute on table still draws crude borders in browsers, and you will meet it in legacy code and tutorials. It is presentational leftovers from early HTML: fine for a ten-second debugging peek, not for real styling — keep appearance in CSS.\n\nTwo default behaviours worth knowing: columns size themselves to their content, so cell widths shift as data changes unless CSS fixes them; and a table only grows as wide as it needs, not to the full page width. Neither is a bug — both are just the unstyled starting point you will later shape with CSS.",
+            "code": "/* The classic grid look is CSS, not HTML */\ntable { border-collapse: collapse; }\ntd, th { border: 1px solid #999; padding: 0.4rem; }"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Planets at a glance</title>\n</head>\n<body>\n  <h1>Planets at a glance</h1>\n\n  <table>\n    <!-- TODO 1+2: add the header row: three <th scope=\"col\"> cells\n         for Planet, Moons, Day length -->\n\n    <!-- TODO 3+4: add three data rows using <td> cells:\n         Mercury | 0 | 59 days\n         Earth   | 1 | 24 hours\n         Mars    | 2 | 25 hours -->\n  </table>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Planets at a glance</title>\n</head>\n<body>\n  <h1>Planets at a glance</h1>\n\n  <table>\n    <tr>\n      <th scope=\"col\">Planet</th>\n      <th scope=\"col\">Moons</th>\n      <th scope=\"col\">Day length</th>\n    </tr>\n    <tr>\n      <td>Mercury</td>\n      <td>0</td>\n      <td>59 days</td>\n    </tr>\n    <tr>\n      <td>Earth</td>\n      <td>1</td>\n      <td>24 hours</td>\n    </tr>\n    <tr>\n      <td>Mars</td>\n      <td>2</td>\n      <td>25 hours</td>\n    </tr>\n  </table>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Add a header row: a <tr> containing three <th> cells — Planet, Moons, Day length.",
+            "hint": "The first tr holds only th cells: <tr><th>Planet</th>...</tr>.",
+            "errorMessage": "Expected three <th> header cells in the table. Add the header row first.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "th",
+              "min": 3
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Give every th the attribute scope=\"col\" so each header labels its column.",
+            "hint": "Each header cell becomes <th scope=\"col\">...</th>.",
+            "errorMessage": "The header cells need scope=\"col\" — all three th elements should declare it.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "th[scope='col']",
+              "min": 3
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Add three data rows for Mercury, Earth and Mars, each as a <tr> of three <td> cells.",
+            "hint": "One tr per planet, three td cells per tr — same cell count as the header row.",
+            "errorMessage": "Expected at least nine <td> cells: three data rows with three cells each.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "td",
+              "min": 9
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Make sure the table has four rows in total: one header row plus three data rows.",
+            "hint": "Count your <tr> elements — there should be exactly four.",
+            "errorMessage": "The table needs at least four <tr> rows (header + Mercury + Earth + Mars).",
+            "check": {
+              "type": "selectorCount",
+              "selector": "tr",
+              "min": 4
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Keep Mars in the table with its 25-hour day.",
+            "hint": "The last data row is Mars | 2 | 25 hours.",
+            "errorMessage": "Could not find a cell containing 'Mars' — the third data row is missing.",
+            "check": {
+              "type": "text",
+              "selector": "table",
+              "pattern": "mars"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-i04-tables-structure",
+      "title": "Structure tables with caption, head, body, foot and column groups",
+      "summary": "Add caption, thead, tbody, tfoot and colgroup/col to a table and learn why these grouping elements matter for styling, scrolling and printing.",
+      "difficulty": "intermediate",
+      "minutes": 13,
+      "isFree": false,
+      "goal": "Upgrade a flat table into a fully structured one: titled, banded into head/body/foot, with columns addressable via colgroup.",
+      "whyItMatters": "Production tables are rarely four rows of demo data — they are long, scrollable, printable reports. The structural elements in this lesson are what make those behaviours possible: sticky header rows need a thead to pin, printed reports repeat thead on every page, totals live in tfoot, and column-wide styling hangs off colgroup. Skipping them works for toy tables and collapses the moment requirements grow.",
+      "steps": [
+        "Read about caption and why a table should announce its own subject.",
+        "Study the three row bands — thead, tbody, tfoot — and what each contains.",
+        "Read why the grouping matters: scrolling, printing and styling all depend on it.",
+        "Learn colgroup and col, including the span attribute.",
+        "Open the starter code: a flat expenses table with no structure.",
+        "Complete tasks 1–6, adding each structural element, and run the checks."
+      ],
+      "prompt": "<table>\n  <caption>Monthly expenses, first term 2026</caption>\n  <colgroup>\n    <col>\n    <col span=\"2\" class=\"amounts\">\n  </colgroup>\n  <thead>\n    <tr><th scope=\"col\">Month</th><th scope=\"col\">Rent</th><th scope=\"col\">Food</th></tr>\n  </thead>\n  <tbody>\n    <tr><th scope=\"row\">January</th><td>800</td><td>250</td></tr>\n  </tbody>\n  <tfoot>\n    <tr><th scope=\"row\">Total</th><td>800</td><td>250</td></tr>\n  </tfoot>\n</table>",
+      "promptLabel": "Key code example",
+      "explanation": "caption names the table and must be the first child of table. colgroup comes next and describes the vertical structure the row markup cannot express: here one plain column and a col spanning the two amount columns, giving CSS a single hook for both. thead holds the header row, tbody the data, tfoot the totals — three bands the browser can treat differently when scrolling or printing. Note that tfoot renders at the bottom regardless, and every row still lives inside one of the three bands.",
+      "example": "A finance page shows a 200-row expense report. Without structure, scrolling loses the header immediately and printing repeats nothing, so page four is a sea of unlabeled numbers.\n\nWith thead/tbody/tfoot in place, CSS pins the header while tbody scrolls, print engines repeat the head on every sheet, and the totals row stays visually anchored at the bottom — all without a single line of JavaScript.",
+      "exercise": "In the editor on the right, give the flat expenses table its full structure: a caption, a colgroup whose second col spans the two amount columns, a thead around the header row, tbody around the data rows, and a tfoot holding the totals row.",
+      "expectedResult": "The preview shows the table with its caption above it; visually little else changes, but all six checks pass, and the table is now ready for sticky headers, print repetition and column styling.",
+      "commonMistakes": [
+        "Placing caption anywhere but first. The caption element must be the first child of table or the document is invalid.",
+        "Putting the totals row at the end of tbody instead of in tfoot. It renders in the same place, but loses its meaning and its print/scroll behaviour.",
+        "Expecting colgroup to carry any styling by default — col elements accept only a handful of CSS properties (background, width, border, visibility), so test what you hang on them.",
+        "Forgetting that browsers auto-generate a tbody around stray rows. Your CSS selectors like table > tr silently fail because the tr is actually inside an implicit tbody."
+      ],
+      "proTip": "Inspect any table in DevTools and you will see a tbody you may never have written — the parser inserts one automatically. Write it explicitly anyway: what is visible in your source is what your teammates can reason about.",
+      "tools": [
+        "html"
+      ],
+      "professions": [],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will take a flat expenses table and add every structural element: caption, colgroup/col, thead, tbody and tfoot.",
+        "sections": [
+          {
+            "heading": "caption: the table's own title",
+            "body": "A caption is the accessible name of a table — a short phrase stating what the data is. It must be the very first child of the table element, before any rows or groups, and each table can have at most one.\n\nBy default the caption renders as a line of text above the table (CSS caption-side can move it below). More importantly, screen readers announce it when a user enters the table, and it is what appears when tables are listed for navigation. A page with three tables named 'Monthly expenses', 'Annual summary' and 'Payment schedule' is navigable; three anonymous tables are not.\n\nPrefer caption over a nearby heading when the title belongs to the table itself: the association is explicit in markup, travels with the table if it moves, and does not add noise to the page's heading outline.",
+            "code": "<table>\n  <caption>Monthly expenses, first term 2026</caption>\n  <!-- rows follow -->\n</table>"
+          },
+          {
+            "heading": "thead, tbody, tfoot: three named bands",
+            "body": "Rows can be grouped into three horizontal bands. thead holds the rows that label the columns — usually one row of th elements. tbody holds the actual data rows. tfoot holds summary rows: totals, averages, footnote rows.\n\nThe required order in source is thead, then tbody, then tfoot (older HTML allowed tfoot before tbody; modern HTML does not). Regardless of source order, browsers always render tfoot at the visual bottom.\n\nOne behaviour surprises everyone eventually: tbody exists even when you never wrote it. The HTML parser wraps any bare rows in an implicit tbody, so document.querySelector('table > tr') finds nothing and CSS child selectors behave unexpectedly. Writing tbody explicitly costs one line and removes the surprise.",
+            "code": "<table>\n  <thead>\n    <tr><th scope=\"col\">Month</th><th scope=\"col\">Rent</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>January</td><td>800</td></tr>\n  </tbody>\n  <tfoot>\n    <tr><td>Total</td><td>800</td></tr>\n  </tfoot>\n</table>"
+          },
+          {
+            "heading": "Why the grouping matters",
+            "body": "The bands are not bureaucracy — three real behaviours hang off them.\n\nScrolling: a long table inside a fixed-height container can keep its header visible while the data scrolls. The standard technique — position: sticky on the thead cells — needs a thead to target. Without the band, there is nothing to pin.\n\nPrinting: when a multi-page table is printed, browsers repeat the thead rows at the top of every printed page and can repeat tfoot at the bottom. A 40-page report whose column labels appear only on page one is the direct cost of skipping thead.\n\nStyling and scripting: the bands are clean hooks. tbody tr:nth-child(odd) stripes only data rows without accidentally striping the header; a script that sorts rows can rebuild tbody alone and leave head and foot untouched.",
+            "code": "/* Sticky header — requires a real thead */\nthead th {\n  position: sticky;\n  top: 0;\n  background: white;\n}"
+          },
+          {
+            "heading": "colgroup and col: talking about columns",
+            "body": "Table markup is row-major, so there is no element that contains a column's cells. colgroup and col exist to fix that for the cases where you need to address columns anyway. colgroup sits immediately after caption (before any rows) and contains col elements, one per column, in left-to-right order.\n\nA col with span=\"2\" stands for two adjacent columns at once — handy when several columns share a role, like a pair of amount columns that should share a background and width. Note this span attribute is about column description; it is unrelated to the cell-merging colspan you will meet in the next lesson.\n\ncol elements are empty and accept only a limited set of CSS properties — background-color, width, border and visibility are the reliable ones. Text styling like color or font-weight does not work through col; for that you style the cells themselves. Within its limits, colgroup saves you from repeating a class on every cell of a column.",
+            "code": "<table>\n  <caption>Monthly expenses</caption>\n  <colgroup>\n    <col>\n    <col span=\"2\" class=\"amounts\">\n  </colgroup>\n  <!-- rows follow -->\n</table>\n\n<!-- CSS: .amounts { background: #f4f6f8; width: 8rem; } -->"
+          },
+          {
+            "heading": "Multiple tbody: grouping rows by theme",
+            "body": "A table may contain more than one tbody, and this is the idiomatic way to group related runs of rows: quarters within a year, teams within a league, categories within a price list.\n\nEach tbody is a styling and scripting unit. You can give alternating groups different backgrounds, add a visual gap between groups with border-spacing tricks, collapse or expand one group with a single class toggle, or re-sort rows within their group only. Screen-reader support for announcing row groups is limited, so if group identity matters to understanding the data, also give each group a labelling row (a th spanning the table works well, using techniques from the next lesson).\n\nThe alternative people reach for — separate tables per group — costs you shared column widths and a single caption. Multiple tbody keeps one table, one grid, one set of headers.",
+            "code": "<tbody class=\"first-half\">\n  <tr><th scope=\"row\">January</th><td>800</td><td>250</td></tr>\n  <tr><th scope=\"row\">February</th><td>800</td><td>240</td></tr>\n</tbody>\n<tbody class=\"second-half\">\n  <tr><th scope=\"row\">March</th><td>800</td><td>260</td></tr>\n  <tr><th scope=\"row\">April</th><td>800</td><td>230</td></tr>\n</tbody>"
+          },
+          {
+            "heading": "The full ordering, once and for all",
+            "body": "A completely structured table has a fixed internal order: caption first, then colgroup, then thead, then one or more tbody elements, then tfoot. Nothing else sits directly inside table, and every row lives inside one of the three band elements.\n\nYou will not need every part in every table — a four-row table with no totals can be caption + thead + tbody and nothing else. The skill is knowing the full menu so that when a requirement lands ('make the header sticky', 'print with repeated headings', 'shade the amount columns') you already have the element it attaches to.\n\nThe starter table in the editor has none of this: bare rows, a heading floating above it, totals mixed into the data. Restore the order piece by piece as the tasks direct.",
+            "code": "<table>\n  <caption>...</caption>\n  <colgroup>...</colgroup>\n  <thead>...</thead>\n  <tbody>...</tbody>\n  <tbody>...</tbody>\n  <tfoot>...</tfoot>\n</table>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Expense report</title>\n</head>\n<body>\n  <!-- TODO 1: move this title into a <caption> as the table's first child -->\n  <p>Monthly expenses, first term 2026</p>\n  <table>\n    <!-- TODO 2: after the caption, add <colgroup> with a plain <col>\n         and a <col span=\"2\"> for the two amount columns -->\n    <!-- TODO 3: wrap this header row in <thead> -->\n    <tr>\n      <th scope=\"col\">Month</th>\n      <th scope=\"col\">Rent</th>\n      <th scope=\"col\">Food</th>\n    </tr>\n    <!-- TODO 4+5: wrap Jan+Feb in one <tbody> and Mar+Apr in a second <tbody> -->\n    <tr><th scope=\"row\">January</th><td>800</td><td>250</td></tr>\n    <tr><th scope=\"row\">February</th><td>800</td><td>240</td></tr>\n    <tr><th scope=\"row\">March</th><td>800</td><td>260</td></tr>\n    <tr><th scope=\"row\">April</th><td>800</td><td>230</td></tr>\n    <!-- TODO 6: move the totals row into a <tfoot> -->\n    <tr><th scope=\"row\">Total</th><td>3200</td><td>980</td></tr>\n  </table>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Expense report</title>\n</head>\n<body>\n  <table>\n    <caption>Monthly expenses, first term 2026</caption>\n    <colgroup>\n      <col>\n      <col span=\"2\">\n    </colgroup>\n    <thead>\n      <tr>\n        <th scope=\"col\">Month</th>\n        <th scope=\"col\">Rent</th>\n        <th scope=\"col\">Food</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr><th scope=\"row\">January</th><td>800</td><td>250</td></tr>\n      <tr><th scope=\"row\">February</th><td>800</td><td>240</td></tr>\n    </tbody>\n    <tbody>\n      <tr><th scope=\"row\">March</th><td>800</td><td>260</td></tr>\n      <tr><th scope=\"row\">April</th><td>800</td><td>230</td></tr>\n    </tbody>\n    <tfoot>\n      <tr><th scope=\"row\">Total</th><td>3200</td><td>980</td></tr>\n    </tfoot>\n  </table>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Replace the paragraph title with a <caption> as the first child of the table.",
+            "hint": "Delete the <p> and add <caption>Monthly expenses, first term 2026</caption> directly after the opening <table> tag.",
+            "errorMessage": "No <caption> naming the table was found. It must sit first inside <table>.",
+            "check": {
+              "type": "text",
+              "selector": "caption",
+              "pattern": "monthly expenses"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Add a <colgroup> after the caption: one plain <col>, then a <col span=\"2\"> covering Rent and Food.",
+            "hint": "<colgroup><col><col span=\"2\"></colgroup> — the spanning col stands for both amount columns.",
+            "errorMessage": "Expected a <col> with span=\"2\" inside a <colgroup> to describe the two amount columns.",
+            "check": {
+              "type": "attr",
+              "selector": "colgroup col[span]",
+              "attr": "span",
+              "value": "2"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Wrap the header row (Month / Rent / Food) in a <thead>.",
+            "hint": "<thead> opens before that tr and closes after it.",
+            "errorMessage": "The header row is not inside a <thead> element.",
+            "check": {
+              "type": "selector",
+              "selector": "thead th"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Write the tbody elements explicitly in your source (the browser will not do it for you in a way you can see).",
+            "hint": "Add literal <tbody> and </tbody> tags around the data rows.",
+            "errorMessage": "No explicit <tbody> tag found in your source code — write it out rather than relying on the parser.",
+            "check": {
+              "type": "source",
+              "pattern": "<tbody"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Split the data rows into two groups: one <tbody> for January+February, a second for March+April.",
+            "hint": "Two separate <tbody> elements, each containing two rows.",
+            "errorMessage": "Expected two <tbody> row groups (Jan–Feb and Mar–Apr).",
+            "check": {
+              "type": "selectorCount",
+              "selector": "tbody",
+              "min": 2
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Move the totals row into a <tfoot> after the last tbody.",
+            "hint": "<tfoot><tr><th scope=\"row\">Total</th>...</tr></tfoot> goes at the end of the table.",
+            "errorMessage": "The totals row should live in a <tfoot>, not among the data rows.",
+            "check": {
+              "type": "text",
+              "selector": "tfoot",
+              "pattern": "total"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-i05-tables-spanning",
+      "title": "Merge table cells with colspan and rowspan — and keep them accessible",
+      "summary": "Span cells across columns and rows, plan the grid so every row still adds up, and wire up complex-table accessibility with scope and headers/id.",
+      "difficulty": "intermediate",
+      "minutes": 15,
+      "isFree": false,
+      "goal": "Build a two-level sales table using colspan and rowspan, with every cell's meaning preserved for assistive technology.",
+      "whyItMatters": "Merged cells appear in nearly every real report: grouped column headings, category labels spanning several rows, summary cells. Spanning is also where tables most often break — one miscounted cell shears the whole grid — and where accessibility quietly dies, because a screen reader can no longer infer which headers describe which cell. This lesson teaches both halves: making the numbers add up and making the relationships explicit.",
+      "steps": [
+        "Read how colspan and rowspan consume grid positions.",
+        "Work through the planning section — draw the grid before writing any spans.",
+        "Read the four scope values, including rowgroup and colgroup for spanned headers.",
+        "Study the headers/id technique for tables too complex for scope alone.",
+        "Open the starter code and add the spans (tasks 1–2), row headers (task 3) and scope/headers wiring (tasks 4–5).",
+        "Run the checks and confirm the grid renders without gaps or overhangs."
+      ],
+      "prompt": "<table>\n  <tr>\n    <th rowspan=\"2\" scope=\"col\" id=\"region\">Region</th>\n    <th colspan=\"2\" scope=\"colgroup\" id=\"h1\">Half 1</th>\n  </tr>\n  <tr>\n    <th scope=\"col\" id=\"q1\">Q1</th>\n    <th scope=\"col\" id=\"q2\">Q2</th>\n  </tr>\n  <tr>\n    <th scope=\"row\" id=\"north\">North</th>\n    <td headers=\"north h1 q1\">12</td>\n    <td headers=\"north h1 q2\">15</td>\n  </tr>\n</table>",
+      "promptLabel": "Key code example",
+      "explanation": "The table is three columns wide. In the first row, the Region header spends a rowspan to cover two rows, and Half 1 spends a colspan to cover two columns — together they fill all three positions. The second row supplies only Q1 and Q2 because column one is already occupied from above. Half 1 spans a group of columns, so its scope is colgroup rather than col. The headers attribute on each data cell then lists the ids of every header that applies to it, making the cell's full meaning explicit no matter how tangled the geometry.",
+      "example": "Picture the grid as graph paper three squares wide. Every cell you write claims the next free square in its row; a colspan claims extra squares to the right, a rowspan reserves the same square in rows below.\n\nWrite 'Region' with rowspan 2 and square one of row two is pre-claimed — so row two only needs two more cells, not three. Miss that and Q2 overhangs the table edge: the classic spanning bug, visible as a lonely cell jutting out.",
+      "exercise": "In the editor on the right, convert the flat headers into a two-level spanned structure: Region spans two rows, Half 1 spans two columns with scope=\"colgroup\", each region name becomes a scoped row header, and the data cells are wired to their headers with the headers/id technique.",
+      "expectedResult": "The preview shows a clean two-tier header — Region on the left spanning both header rows, Half 1 bridging Q1 and Q2 — above two aligned data rows, with no cell overhanging the grid.",
+      "commonMistakes": [
+        "Forgetting to remove cells swallowed by a span. A rowspan reserves space in following rows, so those rows must contain fewer cells — writing the full count shears the grid.",
+        "Counting a colspan cell as one column when checking row widths. A colspan=\"2\" cell occupies two positions; each row's spans plus plain cells must total the table's column count.",
+        "Using scope=\"col\" on a header that spans several columns. A multi-column header labels a group, so it takes scope=\"colgroup\" (and a multi-row header takes rowgroup).",
+        "Leaving headers/id half-wired: ids on the th elements but stale or missing id lists in the headers attributes. Every id referenced must exist, and the list must cover all applicable headers."
+      ],
+      "proTip": "Before writing any spanned table, sketch it on paper and number the columns. Then for each tr, add up plain cells plus colspans plus positions reserved by rowspans from above — every row must reach the same total. Thirty seconds of arithmetic saves an hour of tag shuffling.",
+      "tools": [
+        "html"
+      ],
+      "professions": [],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will turn a flat sales table into a two-level spanned table, then make the merged structure fully readable to assistive technology.",
+        "sections": [
+          {
+            "heading": "colspan: one cell across several columns",
+            "body": "The colspan attribute makes a single cell occupy that many column positions in its row. colspan=\"2\" on a th means the cell stretches over two columns; the row then needs correspondingly fewer cells to reach the table's width.\n\nThe classic use is a group heading over related columns: 'Half 1' bridging Q1 and Q2, 'Contact' bridging Phone and Email. The grouped heading sits in an upper header row; the individual column headings sit in the row below it.\n\ncolspan applies to td as well as th — a data cell can span, which is how you build full-width divider rows or notes inside a table. The value must be a positive whole number; a colspan larger than the space remaining in the row does not widen the table, browsers simply clamp it, so oversized values are bugs waiting to confuse someone.",
+            "code": "<tr>\n  <th colspan=\"2\">Half 1</th>\n</tr>\n<tr>\n  <th>Q1</th>\n  <th>Q2</th>\n</tr>"
+          },
+          {
+            "heading": "rowspan: one cell down several rows",
+            "body": "rowspan is the vertical twin: the cell claims its column position in this row and reserves the same position in the next rows down. rowspan=\"2\" on the Region header means the cell exists in both header rows, sitting vertically centred across them by default.\n\nThe crucial mechanical consequence: the rows below a rowspan must omit the cell for that column. The position is already taken; supplying a cell anyway pushes everything rightward and the row overhangs the grid. This is the single most common spanning bug, and it looks exactly like 'my table has a random extra cell sticking out'.\n\nTypical rowspan uses: a corner header covering a two-row header block, a category label beside the rows in that category ('Beverages' next to three drink rows), or a merged cell for repeated values.",
+            "code": "<tr>\n  <th rowspan=\"2\">Region</th>\n  <th colspan=\"2\">Half 1</th>\n</tr>\n<tr>\n  <!-- no first cell: Region occupies it from above -->\n  <th>Q1</th>\n  <th>Q2</th>\n</tr>"
+          },
+          {
+            "heading": "Planning the grid so the counts add up",
+            "body": "Spanned tables reward five minutes of planning. Start by fixing the total column count — the widest row defines it. Our sales table is three columns: Region, Q1, Q2.\n\nNow audit each row. Row one: Region (1 position, plus a reservation below) + Half 1 (2 positions via colspan) = 3. Correct. Row two: 1 position pre-claimed by Region's rowspan + Q1 + Q2 = 3. Correct — so we write only two cells. Data rows: a row header plus two data cells = 3.\n\nDo this audit whenever you add or remove a span, because spans interact: a change in one row silently changes how many cells its neighbours need. If the rendered table shows a hole, a row is short; if a cell juts out past the right edge, a row is over — usually because a rowspan's reservation was forgotten.",
+            "code": "<!-- Column audit, 3 columns total:\n row 1: Region(1, spans down) + Half 1(2) = 3\n row 2: [reserved](1) + Q1(1) + Q2(1)   = 3\n row 3: North(1) + 12(1) + 15(1)        = 3\n-->"
+          },
+          {
+            "heading": "The four scope values",
+            "body": "You already use scope=\"col\" and scope=\"row\". Spanned headers need the other two values, because a merged header labels a group of columns or rows, not a single one.\n\nscope=\"colgroup\" goes on a header spanning multiple columns: Half 1 describes both the Q1 and Q2 columns, so every cell in either column inherits it as context. scope=\"rowgroup\" is the mirror for a header spanning multiple rows — a 'Beverages' label with rowspan=\"3\" scoped as rowgroup applies to all three drink rows.\n\nWith all four values placed correctly, a screen reader arriving at the number 15 can announce 'North, Half 1, Q2: 15' — the complete address of the cell. That is the standard to aim for: every data cell in a complex table should have an unambiguous, machine-derivable set of headers.",
+            "code": "<th rowspan=\"2\" scope=\"col\">Region</th>\n<th colspan=\"2\" scope=\"colgroup\">Half 1</th>\n<th scope=\"col\">Q1</th>\n<th scope=\"row\">North</th>"
+          },
+          {
+            "heading": "headers and id: explicit wiring for hard cases",
+            "body": "Some tables outgrow what scope can express — multiple stacked header layers, irregular blocks, headers that apply non-contiguously. For these, HTML offers a fully explicit mechanism: give each header cell an id, and give each data cell a headers attribute listing the ids of every header that describes it, separated by spaces.\n\nThe browser then has zero guessing to do: the cell declares its own context. The cost is verbosity and maintenance — every table edit must keep the id lists truthful, and a typo in one id silently breaks the association since nothing validates it for you.\n\nPractical guidance: use scope alone for anything scope can describe, which is most tables, including the one in this lesson. Reach for headers/id when scope genuinely cannot express the relationships — and once you commit to it, wire every data cell, not just some, so the table behaves consistently. In this exercise you will apply it alongside scope to see the mechanics.",
+            "code": "<th id=\"north\" scope=\"row\">North</th>\n<td headers=\"north h1 q1\">12</td>\n<td headers=\"north h1 q2\">15</td>"
+          },
+          {
+            "heading": "Knowing when to simplify instead",
+            "body": "The final skill with complex tables is recognising when not to build one. Every span you add raises the cost of reading, maintaining and navigating the table. Before merging, ask whether the structure serves the data or just imitates a spreadsheet someone exported.\n\nOften a monster table splits cleanly into two simple ones — one per half-year, say — each covered by plain scope=\"col\" and scope=\"row\", with a caption distinguishing them. Screen-reader users, mobile layouts and future maintainers all benefit, and you drop the headers/id bookkeeping entirely.\n\nWhen the merged structure genuinely is the data — grouped quarters under halves, categories spanning rows — use the tools from this lesson without apology. The goal is the simplest table that tells the truth about the data, spanned or not.",
+            "code": "<!-- Sometimes better than one spanned giant: -->\n<table>\n  <caption>Sales, Half 1</caption>\n  ...simple 3-column table...\n</table>\n<table>\n  <caption>Sales, Half 2</caption>\n  ...simple 3-column table...\n</table>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Sales by region</title>\n</head>\n<body>\n  <table>\n    <caption>Half-year sales by region (thousands)</caption>\n    <tr>\n      <!-- TODO 1: make Region span both header rows (rowspan) -->\n      <th scope=\"col\" id=\"region\">Region</th>\n      <!-- TODO 2: make Half 1 span the two quarter columns (colspan)\n           TODO 4: and give it scope=\"colgroup\" -->\n      <th id=\"h1\">Half 1</th>\n    </tr>\n    <tr>\n      <th scope=\"col\" id=\"q1\">Q1</th>\n      <th scope=\"col\" id=\"q2\">Q2</th>\n    </tr>\n    <tr>\n      <!-- TODO 3: region names are row headers: th with scope=\"row\" -->\n      <td id=\"north\">North</td>\n      <!-- TODO 5: wire each data cell to its headers, e.g. headers=\"north h1 q1\" -->\n      <td>12</td>\n      <td>15</td>\n    </tr>\n    <tr>\n      <td id=\"south\">South</td>\n      <td>9</td>\n      <td>11</td>\n    </tr>\n  </table>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Sales by region</title>\n</head>\n<body>\n  <table>\n    <caption>Half-year sales by region (thousands)</caption>\n    <tr>\n      <th rowspan=\"2\" scope=\"col\" id=\"region\">Region</th>\n      <th colspan=\"2\" scope=\"colgroup\" id=\"h1\">Half 1</th>\n    </tr>\n    <tr>\n      <th scope=\"col\" id=\"q1\">Q1</th>\n      <th scope=\"col\" id=\"q2\">Q2</th>\n    </tr>\n    <tr>\n      <th scope=\"row\" id=\"north\">North</th>\n      <td headers=\"north h1 q1\">12</td>\n      <td headers=\"north h1 q2\">15</td>\n    </tr>\n    <tr>\n      <th scope=\"row\" id=\"south\">South</th>\n      <td headers=\"south h1 q1\">9</td>\n      <td headers=\"south h1 q2\">11</td>\n    </tr>\n  </table>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Give the Region header rowspan=\"2\" so it covers both header rows.",
+            "hint": "Add rowspan=\"2\" to the Region th — and note the second header row already omits its first cell.",
+            "errorMessage": "No header cell with rowspan=\"2\" found. Region must span both header rows.",
+            "check": {
+              "type": "selector",
+              "selector": "th[rowspan='2']"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Give the Half 1 header colspan=\"2\" so it bridges the Q1 and Q2 columns.",
+            "hint": "Add colspan=\"2\" to the Half 1 th; the row then totals three column positions.",
+            "errorMessage": "No header cell with colspan=\"2\" found. Half 1 must span the two quarter columns.",
+            "check": {
+              "type": "selector",
+              "selector": "th[colspan='2']"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Turn North and South into row headers: <th scope=\"row\"> instead of <td>.",
+            "hint": "Change both region cells from td to th and add scope=\"row\" (keep their ids).",
+            "errorMessage": "Expected two row headers — North and South should be th elements with scope=\"row\".",
+            "check": {
+              "type": "selectorCount",
+              "selector": "th[scope='row']",
+              "min": 2
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Set scope=\"colgroup\" on the spanning Half 1 header.",
+            "hint": "A header covering multiple columns labels a group: scope=\"colgroup\", not scope=\"col\".",
+            "errorMessage": "The Half 1 header spans two columns, so it needs scope=\"colgroup\".",
+            "check": {
+              "type": "selector",
+              "selector": "th[scope='colgroup']"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Wire every data cell to its headers with the headers attribute (e.g. headers=\"north h1 q1\").",
+            "hint": "Each of the four number cells lists its row header, the group header and its quarter header by id.",
+            "errorMessage": "The data cells are not wired up — each td needs a headers attribute listing its header ids.",
+            "check": {
+              "type": "attr",
+              "selector": "td[headers]",
+              "attr": "headers",
+              "pattern": "q1"
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Keep the grid arithmetic correct: the second header row must contain only Q1 and Q2.",
+            "hint": "Region's rowspan already occupies the first position of row two — do not add a third cell there.",
+            "errorMessage": "Check the second header row: it should hold exactly the Q1 and Q2 headers.",
+            "check": {
+              "type": "text",
+              "selector": "th#q2",
+              "pattern": "q2"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-i06-forms-basics",
+      "title": "Send data to a server with your first working forms",
+      "summary": "Understand what a form submission really is: the form element, action, GET vs POST, the name attribute as the key of every value, and enctype.",
+      "difficulty": "intermediate",
+      "minutes": 14,
+      "isFree": false,
+      "goal": "Build two working forms — a POST signup and a GET search — and know exactly what data leaves the browser when each is submitted.",
+      "whyItMatters": "Forms are how the web collects data: logins, checkouts, searches, uploads. Most form bugs in real projects are not visual — they are fields that never arrive at the server because a name was missing, passwords leaking into URLs because the method was GET, or file uploads arriving empty because enctype was wrong. Understanding what a submission actually sends makes all three bugs impossible.",
+      "steps": [
+        "Read what happens at the moment a form is submitted.",
+        "Study action, then the GET vs POST comparison — including what each does to the URL.",
+        "Read the section on name carefully: it decides what data exists in the submission at all.",
+        "Skim the enctype section so file uploads never surprise you later.",
+        "In the editor, complete the signup form (tasks 1–4), then the search form (task 5).",
+        "Run the checks and trace mentally what each form would send."
+      ],
+      "prompt": "<form action=\"/subscribe\" method=\"post\">\n  <label for=\"email\">Email address</label>\n  <input type=\"text\" id=\"email\" name=\"email\">\n  <button type=\"submit\">Subscribe</button>\n</form>\n\n<!-- Submitting with 'ana@example.com' typed in sends:\n     POST /subscribe\n     body: email=ana%40example.com -->",
+      "promptLabel": "Key code example",
+      "explanation": "On submit, the browser walks the form, collects every control that has a name, and builds name=value pairs from them — here just email=ana@example.com, encoded for transport. action says which URL receives the pairs and method says how they travel: POST puts them in the request body, keeping them out of the address bar. The button of type submit is the trigger; without any submit control the form can only be submitted by pressing Enter in a text field.",
+      "example": "Type 'coffee' into a GET search form named q and submit: the browser navigates to /search?q=coffee. The data is the URL — visible, bookmarkable, shareable, stored in history.\n\nSubmit the same value through a POST form and the URL stays clean (/search); the pair q=coffee travels inside the request body instead. Same data, different envelope — and that difference is the entire GET vs POST decision.",
+      "exercise": "In the editor on the right, finish the newsletter signup form: point it at /subscribe with method POST, name the email field so its value is actually sent, and add a submit button. Then build the small GET search form below it.",
+      "expectedResult": "The preview shows a signup form with a labelled email field and Subscribe button, plus a one-field search form. All five checks pass; submitting would send email=... via POST and q=... via GET respectively.",
+      "commonMistakes": [
+        "Omitting name on an input. A control without a name contributes nothing to the submission — the field silently vanishes from the data.",
+        "Sending sensitive data with GET. Values in a query string end up in browser history, server logs and shared links; anything private travels by POST.",
+        "Confusing name with id. id is for labels, CSS and scripts inside the page; name is the key the server receives. A field usually needs both, doing different jobs.",
+        "Setting enctype=\"multipart/form-data\" only after noticing file uploads arrive empty. Any form containing a file input needs it from the start, together with method POST."
+      ],
+      "proTip": "Open DevTools' Network tab, submit any form, and click the request: you can read exactly which name=value pairs left the browser and whether they rode in the URL or the body. It is the fastest way to debug 'the server never got my field'.",
+      "tools": [
+        "html"
+      ],
+      "professions": [],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will complete a POST newsletter signup and build a GET search form, learning exactly what each submission puts on the wire.",
+        "sections": [
+          {
+            "heading": "What a form actually does",
+            "body": "A form is a machine for turning typed input into an HTTP request. The form element itself is invisible — it draws nothing. Its job is to group controls (inputs, buttons, and later selects and textareas) and define what happens when the user submits.\n\nAt the moment of submission, the browser performs three steps: it collects every control inside the form that has a name attribute, builds a list of name=value pairs from their current values, and sends that list to a URL. The page then navigates to the server's response.\n\nEverything else in forms — methods, encodings, buttons — is configuration of those three steps. Keep the model in mind and the attributes stop being trivia: action configures where the pairs go, method configures how they travel, enctype configures how they are packaged, and name decides which pairs exist at all.",
+            "code": "<form action=\"/subscribe\" method=\"post\">\n  <!-- controls live here -->\n</form>"
+          },
+          {
+            "heading": "action: where the data goes",
+            "body": "The action attribute holds the URL that will receive the submission. It can be a relative path like /subscribe, handled by your own server, or an absolute URL on another origin. When the form is submitted, the browser sends the collected data there and displays whatever comes back — a thank-you page, search results, a validation error.\n\nIf you omit action entirely, the form submits to the current page's own URL. You will see this on pages that both display a form and process it. An empty action=\"\" historically meant the same thing but is technically invalid HTML — either provide a real URL or leave the attribute off.\n\nOne mental adjustment matters here: plain HTML form submission is a full page navigation, exactly like clicking a link. The 'submit without reloading' behaviour you know from modern apps is JavaScript intercepting the form — a later layer built on top of what you are learning now.",
+            "code": "<!-- Sends the data to /subscribe on the same site -->\n<form action=\"/subscribe\" method=\"post\">...</form>\n\n<!-- No action: submits to the current URL -->\n<form method=\"post\">...</form>"
+          },
+          {
+            "heading": "GET vs POST: two ways to travel",
+            "body": "The method attribute chooses between two transports. method=\"get\" (the default when omitted) appends the data to the action URL as a query string: /search?q=coffee&page=2. method=\"post\" sends the data in the body of the request, leaving the URL untouched.\n\nBecause GET puts data in the URL, the resulting page is bookmarkable and shareable — reload it, and the same submission happens again harmlessly. That fits requests that only read data: searches, filters, sorting, pagination. The costs of the same property: values are visible in the address bar, saved in history, and logged by servers; URLs also have practical length limits.\n\nPOST keeps data out of the URL and is the right method for anything that changes state or carries private values: registrations, logins, payments, uploads, deletions. Browsers even warn before re-submitting a POST on refresh, precisely because repeating it might repeat a real-world effect.\n\nThe rule of thumb: GET to ask, POST to act. And never GET for secrets — a password in a query string is a password in every log file along the way.",
+            "code": "<!-- GET: data becomes part of the URL -->\n<form action=\"/search\" method=\"get\">\n  <input type=\"text\" name=\"q\">\n</form>\n<!-- → /search?q=coffee -->\n\n<!-- POST: data rides in the request body -->\n<form action=\"/signup\" method=\"post\">...</form>"
+          },
+          {
+            "heading": "name: the key of every value",
+            "body": "The name attribute is the single most important attribute in forms, because it is the key under which a control's value is submitted. An input with name=\"email\" containing 'ana@example.com' contributes the pair email=ana@example.com. An input with no name contributes nothing — the browser skips it entirely, no matter what the user typed.\n\nThis is the number one forms bug in practice: a beautifully styled field whose value never reaches the server. The field had an id, a label, a placeholder — everything except a name. Remember the division of labour: id identifies the element inside the page (for label pairing, CSS, scripts); name identifies the value inside the submission. Servers read names, never ids.\n\nWhat gets sent is always the current value at submit time: whatever text is in the box, or for choice controls (next lessons) the value attribute of the selected option. Special characters are percent-encoded for transport — @ becomes %40 — and the server framework decodes them back automatically.",
+            "code": "<!-- Sent as email=... -->\n<input type=\"text\" id=\"email\" name=\"email\">\n\n<!-- Never sent: no name -->\n<input type=\"text\" id=\"nickname\">"
+          },
+          {
+            "heading": "enctype: how the payload is packaged",
+            "body": "For POST forms, the enctype attribute chooses the packaging format of the body. The default, application/x-www-form-urlencoded, writes all pairs in one string — name=value&name2=value2, percent-encoded — and is right for any form made of text-like values.\n\nThe important alternative is multipart/form-data. It splits the body into separate parts, one per field, each with its own small header — which is the only format that can carry file contents. Any form containing <input type=\"file\"> must declare method=\"post\" and enctype=\"multipart/form-data\", or the server receives just the file's name as text instead of the file itself. This is worth memorising now, before the file-input lesson, because the failure is silent.\n\nA third value, text/plain, exists for historical reasons and sends loosely formatted text no server should be asked to parse reliably. Treat it as trivia. GET forms ignore enctype entirely — their data always goes URL-style into the query string.",
+            "code": "<!-- Default: fine for text fields -->\n<form action=\"/signup\" method=\"post\">...</form>\n\n<!-- Required as soon as a file input exists -->\n<form action=\"/upload\" method=\"post\"\n      enctype=\"multipart/form-data\">\n  <input type=\"file\" name=\"avatar\">\n</form>"
+          },
+          {
+            "heading": "A first working form, assembled",
+            "body": "Combine the pieces and a minimal real form emerges: a form with action and method, one named text input with a label, and a submit button. That is genuinely everything a server needs to receive data from a user.\n\nTrace a submission through it. The user types ana@example.com and clicks Subscribe. The browser finds the named controls — just email — builds email=ana%40example.com, and because the method is post, sends it in the body of a request to /subscribe. The server reads the email key, stores the address, and responds with a confirmation page the browser then displays.\n\nIn the editor you will build exactly this, plus a GET search form so you use both methods deliberately. Every later forms lesson — labels, choice inputs, specialised types — only adds richer controls into this same submission machine.",
+            "code": "<form action=\"/subscribe\" method=\"post\">\n  <label for=\"email\">Email address</label>\n  <input type=\"text\" id=\"email\" name=\"email\">\n  <button type=\"submit\">Subscribe</button>\n</form>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Field Notes — newsletter</title>\n</head>\n<body>\n  <h1>Join the newsletter</h1>\n\n  <!-- TODO 1: point this form at /subscribe\n       TODO 2: make it send by POST -->\n  <form>\n    <label for=\"email\">Email address</label>\n    <!-- TODO 3: this field's value is never sent — give it name=\"email\" -->\n    <input type=\"text\" id=\"email\">\n    <!-- TODO 4: add a submit button labelled Subscribe -->\n  </form>\n\n  <h2>Search past issues</h2>\n  <!-- TODO 5: build a search form: action=\"/search\", method=\"get\",\n       one text input with name=\"q\" and a submit button -->\n\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Field Notes — newsletter</title>\n</head>\n<body>\n  <h1>Join the newsletter</h1>\n\n  <form action=\"/subscribe\" method=\"post\">\n    <label for=\"email\">Email address</label>\n    <input type=\"text\" id=\"email\" name=\"email\">\n    <button type=\"submit\">Subscribe</button>\n  </form>\n\n  <h2>Search past issues</h2>\n  <form action=\"/search\" method=\"get\">\n    <label for=\"q\">Search</label>\n    <input type=\"text\" id=\"q\" name=\"q\">\n    <button type=\"submit\">Go</button>\n  </form>\n\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Give the signup form action=\"/subscribe\" so the data has a destination.",
+            "hint": "Add the attribute to the opening tag: <form action=\"/subscribe\" ...>.",
+            "errorMessage": "The signup form has no action=\"/subscribe\" — the submission needs a destination URL.",
+            "check": {
+              "type": "attr",
+              "selector": "form",
+              "attr": "action",
+              "value": "/subscribe"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Make the signup form submit with method=\"post\" — an email address does not belong in a URL.",
+            "hint": "Add method=\"post\" next to the action attribute.",
+            "errorMessage": "The signup form should use method=\"post\" so the address travels in the request body.",
+            "check": {
+              "type": "attr",
+              "selector": "form",
+              "attr": "method",
+              "pattern": "post"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Give the email input name=\"email\" so its value is included in the submission.",
+            "hint": "Without a name, the field is skipped entirely. Keep the id — it serves the label.",
+            "errorMessage": "The email field has no name attribute, so nothing would be sent. Add name=\"email\".",
+            "check": {
+              "type": "selector",
+              "selector": "form input[name='email']"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Add a submit button to the signup form: <button type=\"submit\">Subscribe</button>.",
+            "hint": "Place the button inside the form, after the input.",
+            "errorMessage": "No submit button found in the signup form — there is no way to send it.",
+            "check": {
+              "type": "selector",
+              "selector": "form button[type='submit']"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Build the search form: action=\"/search\", method=\"get\", a text input named q, and a submit button.",
+            "hint": "A search only reads data, so GET is correct — the query will appear in the URL as /search?q=...",
+            "errorMessage": "Expected a second form with action=\"/search\" and method=\"get\" containing an input named q.",
+            "check": {
+              "type": "selector",
+              "selector": "form[action='/search'][method='get'] input[name='q']"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-i07-labels-inputs",
+      "title": "Pair every input with a real label and pick the right button",
+      "summary": "Master label/for/id pairing, the core text-like inputs, why placeholder is not a label, and the button element's default-type trap.",
+      "difficulty": "intermediate",
+      "minutes": 13,
+      "isFree": false,
+      "goal": "Build a login form where every field has a programmatically linked label and every button has an explicit, correct type.",
+      "whyItMatters": "Unlabeled inputs are among the most common accessibility failures on the web, and they hurt everyone: screen readers announce an anonymous 'edit text', mobile users miss the enlarged tap target, and autofill guesses wrong. Meanwhile the button default-type trap — a plain button inside a form submitting it by surprise — is a real bug class that breaks 'Show password' toggles and delete confirmations in production apps.",
+      "steps": [
+        "Read how label works and what the for/id pairing gives users.",
+        "Compare the wrapping alternative and when to use each style.",
+        "Review the text-like inputs and the difference between value, name and placeholder.",
+        "Read the button section — especially the default type=submit pitfall.",
+        "In the editor, label both fields (tasks 1–3), then fix the buttons (tasks 4–5).",
+        "Run the checks, then click each label in the preview and watch focus jump to its field."
+      ],
+      "prompt": "<label for=\"username\">Username</label>\n<input type=\"text\" id=\"username\" name=\"username\">\n\n<label for=\"password\">Password</label>\n<input type=\"password\" id=\"password\" name=\"password\">\n\n<button type=\"submit\">Log in</button>\n<button type=\"button\">Show password</button>",
+      "promptLabel": "Key code example",
+      "explanation": "Each label's for attribute holds exactly the id of its input, forging a programmatic link: clicking the label focuses the field, and assistive technology announces the label text when the field gains focus. The password input masks what is typed but still submits under its name like any field. Both buttons declare their type explicitly — the first submits the form, while the second is inert to submission, existing purely for a script to hook onto; without type=\"button\" it would silently submit the form too.",
+      "example": "A user with a motor impairment tries to tap a bare 10-pixel checkbox and misses repeatedly. With a paired label, the entire text 'Remember me' becomes the tap target and the first tap lands.\n\nA screen-reader user tabs into an unlabeled field and hears only 'edit text'. Password? Email? Search? With for/id pairing they hear 'Username, edit text' — the field explains itself.",
+      "exercise": "In the editor on the right, wire the login form: link both labels with matching for/id pairs, make the password field a real password input, give the login button an explicit submit type, and defuse the Show-password button with type=\"button\".",
+      "expectedResult": "The preview shows a login form where clicking either label focuses its field, typing in the password field shows dots, and the Show password button no longer submits the form when clicked.",
+      "commonMistakes": [
+        "Relying on placeholder as the field's only label. The hint disappears on first keystroke, is skipped by many assistive setups, and its low-contrast text fails users with poor vision.",
+        "Mismatched for/id pairs — a for pointing at a name, a typo, or a duplicated id. The link fails silently; always click the label to verify focus moves.",
+        "Writing <button> inside a form without a type. Its default is submit, so a decorative or JS-only button unexpectedly submits the whole form.",
+        "Adding a reset button by habit. Users click it by accident and lose everything they typed; genuine use cases for reset are rare."
+      ],
+      "proTip": "A quick audit for any form: click every label — focus must land in a field; then tab through and confirm each field is announced by name. Two minutes, and it catches the majority of labelling bugs before any user does.",
+      "tools": [
+        "html"
+      ],
+      "professions": [],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will repair a login form: real labels correctly paired to inputs, a masked password field, and buttons whose types are explicit and correct.",
+        "sections": [
+          {
+            "heading": "label: the clickable name of a field",
+            "body": "Every input needs a visible name a human can read, and HTML has a dedicated element for it: label. The pairing mechanism is explicit — the input carries an id, and the label carries a for attribute containing exactly that id.\n\nThe pairing buys three behaviours. Clicking or tapping the label focuses (or toggles) the field, dramatically enlarging the hit area — decisive on touch screens and for anyone with imprecise motor control. Screen readers announce the label text when the field receives focus, turning 'edit text' into 'Username, edit text'. And browsers use label text as a signal for autofill.\n\nThe pairing is exact and case-sensitive: for must match an id, not a name, and that id must be unique in the document. If two elements share the id, the label binds to the first and your form misbehaves subtly. Nothing warns you when a pairing is broken — the form just silently loses all three behaviours, which is why the click-the-label test belongs in your routine.",
+            "code": "<label for=\"username\">Username</label>\n<input type=\"text\" id=\"username\" name=\"username\">"
+          },
+          {
+            "heading": "The wrapping alternative",
+            "body": "There is a second, equally valid pairing style: put the input inside the label element. The association is then implicit — no for or id needed for the link — and the entire wrapped area, text included, becomes clickable.\n\nWrapping shines for checkboxes and radio buttons, where the tiny control and its text naturally read as one unit. The for/id style shines when layout separates label and field — labels in one grid column, inputs in another — or when styling needs them as independent elements.\n\nTwo cautions. First, choose one mechanism per field; using both (wrapping and for/id) is allowed only if the for points at the wrapped input, and it adds nothing. Second, some assistive technology historically handled explicit for/id more reliably, so many teams standardise on it for text fields and allow wrapping for choice controls. Either way: every input gets exactly one label, and no label goes empty.",
+            "code": "<!-- Implicit pairing: input nested in label -->\n<label>\n  <input type=\"checkbox\" name=\"remember\">\n  Remember me\n</label>"
+          },
+          {
+            "heading": "The text-like inputs: text and password",
+            "body": "input type=\"text\" is the general single-line field, and the default if type is missing or misspelled — worth knowing, because a typo like type=\"pasword\" silently produces a plain text field.\n\ninput type=\"password\" behaves identically in submission terms but masks the display with dots. Understand what it does and does not protect: it hides the value from someone looking over the user's shoulder, and browsers block copying it. It does not encrypt anything — the value travels like any other field, which is why password forms must POST and sites must use HTTPS.\n\nThree attributes complete the picture. name, as always, is the submission key. value sets the initial content of the field — what is pre-filled when the page loads, and what the user edits; the submitted value is whatever the field holds at submit time. maxlength caps input length — fine as a convenience, never as security, since anyone can bypass client-side limits.",
+            "code": "<input type=\"text\" id=\"username\" name=\"username\" value=\"ana\">\n<input type=\"password\" id=\"password\" name=\"password\" maxlength=\"64\">"
+          },
+          {
+            "heading": "placeholder is not a label",
+            "body": "The placeholder attribute shows dimmed hint text inside an empty field. Its legitimate job is a format example: a date field hinting 'DD/MM/YYYY', a phone field hinting '+30 210 ...'.\n\nUsing placeholder as the field's only label is a design pattern you will see everywhere, and it fails users in stacked ways. The text vanishes the moment typing starts, so users mid-form can no longer see what the field asks for — and neither can anyone reviewing their answers before submitting. The default grey typically fails contrast requirements. Some assistive technologies do not read placeholders at all. And because the hint sits where the value goes, users can mistake a placeholder for pre-filled content and skip the field.\n\nThe rule: every field gets a real label, and placeholder is an optional extra hint — never load-bearing. If a design insists on the floating-hint look, implement it with a real label element positioned by CSS, keeping the accessibility intact.",
+            "code": "<!-- Wrong: hint doing a label's job -->\n<input type=\"text\" name=\"email\" placeholder=\"Email\">\n\n<!-- Right: label + optional format hint -->\n<label for=\"email\">Email</label>\n<input type=\"text\" id=\"email\" name=\"email\"\n       placeholder=\"you@example.com\">"
+          },
+          {
+            "heading": "The three input buttons",
+            "body": "Before the button element, forms used input for buttons, and you will still meet all three kinds. input type=\"submit\" renders a button that submits the form; its value attribute is its visible text. input type=\"reset\" clears every field back to its initial values. input type=\"button\" does nothing on its own — a bare hook for JavaScript.\n\nTwo practical notes. A submit control also matters for keyboard flow: pressing Enter in a text field submits the form via it. And reset deserves suspicion — users hit it while aiming for submit and watch their work evaporate; include it only when clearing a form is a genuine, common need.\n\nThese input buttons are void elements: their text can only be plain value text, which is the main reason the button element has largely replaced them.",
+            "code": "<input type=\"submit\" value=\"Log in\">\n<input type=\"reset\" value=\"Clear\">\n<input type=\"button\" value=\"Show password\">"
+          },
+          {
+            "heading": "The button element and its default-type trap",
+            "body": "button is the modern button: a real container element, so it can hold formatted text, icons or images, and it is easier to style. It takes the same three types as its input ancestors: submit, reset and button.\n\nHere is the trap that catches even experienced developers: inside a form, a button with no type attribute defaults to type=\"submit\". You add a harmless 'Show password' toggle, wire it to JavaScript, and every click also submits the form — the page navigates away, the form data flies to the server, and the bug report says 'clicking the eye icon logs me out'.\n\nThe professional habit is to always write the type explicitly on every button element: type=\"submit\" for the one control meant to send the form, type=\"button\" for everything wired to scripts. Outside a form the default is effectively inert, but the habit costs nothing and makes intent readable. One more capability worth knowing: a button can carry its own name and value, which are submitted only when that specific button triggers the submission — the classic way to distinguish 'Save' from 'Save and publish' server-side.",
+            "code": "<!-- The one that submits -->\n<button type=\"submit\">Log in</button>\n\n<!-- Inert to submission; JavaScript's hook -->\n<button type=\"button\">Show password</button>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Log in</title>\n</head>\n<body>\n  <h1>Log in</h1>\n  <form action=\"/login\" method=\"post\">\n    <!-- TODO 1: pair this label to the input below with for/id -->\n    <label>Username</label>\n    <input type=\"text\" name=\"username\" placeholder=\"e.g. ana\">\n\n    <!-- TODO 2: pair this label too\n         TODO 3: and make the field an actual password input -->\n    <label>Password</label>\n    <input type=\"text\" name=\"password\">\n\n    <!-- TODO 4: this button should explicitly declare type=\"submit\" -->\n    <button>Log in</button>\n    <!-- TODO 5: this one must NOT submit the form — give it type=\"button\" -->\n    <button>Show password</button>\n  </form>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Log in</title>\n</head>\n<body>\n  <h1>Log in</h1>\n  <form action=\"/login\" method=\"post\">\n    <label for=\"username\">Username</label>\n    <input type=\"text\" id=\"username\" name=\"username\" placeholder=\"e.g. ana\">\n\n    <label for=\"password\">Password</label>\n    <input type=\"password\" id=\"password\" name=\"password\">\n\n    <button type=\"submit\">Log in</button>\n    <button type=\"button\">Show password</button>\n  </form>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Pair the Username label with its input: for=\"username\" on the label, id=\"username\" on the input.",
+            "hint": "The for value must equal the input's id exactly — and note the input currently has only a name.",
+            "errorMessage": "The Username label is not linked — add for=\"username\" to the label and id=\"username\" to the input.",
+            "check": {
+              "type": "attr",
+              "selector": "label[for='username']",
+              "attr": "for",
+              "value": "username"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Give the username input the matching id so the label's for attribute has something to point at.",
+            "hint": "Add id=\"username\" alongside the existing name=\"username\" — they do different jobs.",
+            "errorMessage": "No input with id=\"username\" found; the label link is dangling.",
+            "check": {
+              "type": "selector",
+              "selector": "input#username"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Make the password field a real password input, paired with its label (for/id \"password\").",
+            "hint": "Change type=\"text\" to type=\"password\", add id=\"password\", and set for=\"password\" on its label.",
+            "errorMessage": "Expected an input with type=\"password\" and id=\"password\" linked to its label.",
+            "check": {
+              "type": "selector",
+              "selector": "input[type='password']#password"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Declare the Log in button's type explicitly: type=\"submit\".",
+            "hint": "It already submits by default — writing the type makes intent visible and protects against refactors.",
+            "errorMessage": "The Log in button should carry an explicit type=\"submit\".",
+            "check": {
+              "type": "selector",
+              "selector": "form button[type='submit']"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Defuse the Show password button with type=\"button\" so it stops submitting the form.",
+            "hint": "Inside a form, a typeless button defaults to submit — exactly the trap this task removes.",
+            "errorMessage": "The Show password button still submits: give it type=\"button\".",
+            "check": {
+              "type": "selector",
+              "selector": "form button[type='button']"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-i08-input-types-choice",
+      "title": "Offer choices with radio groups, checkboxes and fieldsets",
+      "summary": "Build single-choice radio groups and multi-choice checkbox sets, preselect defaults, and group them accessibly with fieldset and legend.",
+      "difficulty": "intermediate",
+      "minutes": 14,
+      "isFree": false,
+      "goal": "Build a pizza order form with a correctly grouped radio set, a checkbox set, a preselected default, and a label on every choice.",
+      "whyItMatters": "Choice controls carry the highest-stakes data in most products — plan selection, consent boxes, configuration options. They are also where three silent bugs cluster: radios that do not exclude each other because their names differ, submissions that send meaningless values because value was omitted, and choice groups whose shared question is invisible to screen readers because there is no fieldset. This lesson closes all three.",
+      "steps": [
+        "Read how a shared name turns individual radios into one exclusive group.",
+        "Study value and checked — what is sent, and how defaults are declared.",
+        "Read the two checkbox patterns: single boolean and multi-select group.",
+        "Learn what fieldset and legend add for grouped choices.",
+        "In the editor, build the size radios (tasks 1–2), the toppings checkboxes (task 3) and the fieldsets (task 4), labelling everything (task 5).",
+        "Run the checks, then click each option's text and watch the control toggle."
+      ],
+      "prompt": "<fieldset>\n  <legend>Size</legend>\n  <label><input type=\"radio\" name=\"size\" value=\"small\"> Small</label>\n  <label><input type=\"radio\" name=\"size\" value=\"medium\" checked> Medium</label>\n  <label><input type=\"radio\" name=\"size\" value=\"large\"> Large</label>\n</fieldset>",
+      "promptLabel": "Key code example",
+      "explanation": "All three radios share name=\"size\", which is what makes them one group: selecting any of them deselects the others, and on submit exactly one pair like size=medium is sent. Each radio carries a value, because that value — not the visible text — is what the server receives. checked on the middle option preselects it, so the group can never submit empty. The fieldset draws the options together and its legend states the question they answer, which screen readers announce alongside each option's own label.",
+      "example": "Ask 'what size pizza?' with three radios named size1, size2 and size3, and users can select all three at once — three groups of one instead of one group of three. The form looks right and behaves absurdly.\n\nRename them all to size and the browser enforces the either/or for you. That is the entire radio contract: grouping is by name, never by proximity in the markup.",
+      "exercise": "In the editor on the right, complete the order form: three size radios sharing one name with Medium preselected, at least two topping checkboxes sharing the name topping, each set wrapped in a fieldset with a legend, and every single option labelled.",
+      "expectedResult": "The preview shows two boxed groups — Size with Medium already selected, Toppings with none — where clicking any option's text toggles it, and only one size can ever be active.",
+      "commonMistakes": [
+        "Giving radios in one group different names. Exclusivity comes only from the shared name; differing names create independent one-button groups.",
+        "Omitting value on radios and checkboxes. The server then receives the default 'on' for whichever was chosen — size=on says nothing about which size.",
+        "Preselecting nothing in a radio group. Once a radio group is touched it cannot be fully deselected, but an untouched group submits nothing — pick a sensible default with checked.",
+        "Skipping fieldset for grouped choices. Each radio's own label says 'Medium', but only a legend tells assistive technology what question 'Medium' answers."
+      ],
+      "proTip": "checked=\"checked\", checked=\"\", and bare checked are all identical — it is a boolean attribute, so its presence is the whole message. The same is true of disabled, required and readonly; write the bare form and never write checked=\"false\", which still checks the box.",
+      "tools": [
+        "html"
+      ],
+      "professions": [],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will build the choice controls of a pizza order form: an exclusive size group, a multi-select toppings group, and accessible grouping around both.",
+        "sections": [
+          {
+            "heading": "Radio buttons: one of many",
+            "body": "A radio button offers one option from a mutually exclusive set — named after the mechanical station buttons on old radios, where pressing one popped the others out. In HTML each option is its own input type=\"radio\", and the grouping mechanism is subtle but absolute: radios belong to the same group if and only if they share the same name attribute within the same form.\n\nPosition means nothing. Three radios can sit in different corners of the form and still be one group if their names match; three adjacent radios with different names are three unrelated groups. When a user picks one member of a group, the browser deselects whichever other member was active.\n\nOn submission the group contributes at most one pair: its shared name with the chosen option's value. If no option is selected, the group contributes nothing at all — not an empty value, simply absence — which is a classic source of server-side 'missing field' surprises.",
+            "code": "<input type=\"radio\" name=\"size\" value=\"small\">\n<input type=\"radio\" name=\"size\" value=\"medium\">\n<input type=\"radio\" name=\"size\" value=\"large\">\n<!-- one group, because one shared name -->"
+          },
+          {
+            "heading": "value: what the server actually receives",
+            "body": "The text a user reads next to a radio lives in its label. The data the server receives lives in the value attribute. These are deliberately separate: the label can say 'Large (+2.50 €)' while the value stays a clean machine token like large.\n\nForgetting value has a specific, confusing failure mode: a selected control with no value submits the literal string 'on'. Your server then receives size=on — it knows a size was chosen but not which. Because the form still 'works', this bug routinely survives until someone reads the stored data.\n\nGive every radio and checkbox an explicit value, and keep values stable and code-like (lowercase, no spaces) even when labels are wordy or translated. The label is for humans and may change freely; the value is an API contract with the server and should not.",
+            "code": "<label>\n  <input type=\"radio\" name=\"size\" value=\"large\">\n  Large (+2.50 €)\n</label>\n<!-- submits: size=large -->"
+          },
+          {
+            "heading": "checked: declaring the default",
+            "body": "The checked attribute preselects a control when the page loads. It is a boolean attribute: its mere presence checks the control, regardless of any value you assign it — even checked=\"false\" checks the box, a trap worth seeing once so you never fall into it.\n\nFor radio groups, a sensible default is more than politeness. An untouched radio group submits nothing, and a touched one can never return to fully unselected — the user can change the choice but not unmake it. Preselecting the most common option with checked gives every submission a value and shows users what a valid answer looks like. Put checked on exactly one member per group; if you mark several, the last one wins.\n\nThe attribute defines the initial state, not the live one. After the user interacts, the current selection is what submits — the markup's checked is only where things started.",
+            "code": "<label>\n  <input type=\"radio\" name=\"size\" value=\"medium\" checked>\n  Medium\n</label>"
+          },
+          {
+            "heading": "Checkboxes alone: a yes or no",
+            "body": "A single input type=\"checkbox\" represents an independent boolean: newsletter opt-in, accept-the-terms, remember-me. Unlike radios, a checkbox can always be freely toggled off again — it answers its own yes/no question and belongs to no exclusive group.\n\nIts submission behaviour is the part that surprises people. Checked: the pair name=value is sent (or name=on if you set no value). Unchecked: nothing is sent — the name is entirely absent from the submission. Servers must therefore treat 'key missing' as the false state; there is no terms=false coming to help you.\n\nA checkbox can also carry checked to start ticked. Legal note from practice: pre-ticking consent boxes (marketing emails, data sharing) is prohibited by regulations like GDPR — consent must be an action, not an omission. Default states are a design and compliance decision, not just a technical one.",
+            "code": "<label>\n  <input type=\"checkbox\" name=\"terms\" value=\"accepted\">\n  I accept the terms\n</label>\n<!-- checked → terms=accepted ; unchecked → nothing sent -->"
+          },
+          {
+            "heading": "Checkbox groups: several of many",
+            "body": "For 'choose any that apply' questions, use several checkboxes sharing one name, each with its own value — structurally like a radio group, but without exclusivity. A user picking mushrooms and olives submits two pairs under the same key: topping=mushrooms and topping=olives.\n\nRepeated keys are legal and standard in form data; every server framework offers a way to read all values for a key as a list (some conventions, like PHP's, expect the name written as topping[] — follow your backend's convention). The browser sends the chosen pairs in document order.\n\nDecide between the two group types by the question's grammar: 'pick one' is radios, 'pick any' is checkboxes. Users have deep muscle memory for the visual difference — circles mean exclusive, squares mean multiple — which is one more reason never to restyle one to look like the other.",
+            "code": "<label><input type=\"checkbox\" name=\"topping\" value=\"mushrooms\"> Mushrooms</label>\n<label><input type=\"checkbox\" name=\"topping\" value=\"olives\"> Olives</label>\n<label><input type=\"checkbox\" name=\"topping\" value=\"peppers\"> Peppers</label>\n<!-- picking two → topping=mushrooms&topping=olives -->"
+          },
+          {
+            "heading": "fieldset and legend: naming the question",
+            "body": "Each individual option has a label, but the question the options answer — Size? Toppings? — lives nowhere unless you give it a home. That home is fieldset, a grouping element for related controls, with legend as its first child stating the group's purpose.\n\nThe accessibility payoff is concrete: when a screen-reader user reaches an option, the legend is announced together with the option's label — 'Size, Medium, radio button' — so the choice is never context-free. Visually, browsers draw a thin border around a fieldset with the legend breaking the border line; keep or restyle it with CSS as you wish, but keep the elements.\n\nUse a fieldset for every radio group and every checkbox group, and for larger logical regions of long forms (shipping address vs billing address). One more capability: disabled on a fieldset disables every control inside it at once — handy for switching off a whole section until an earlier answer makes it relevant.",
+            "code": "<fieldset>\n  <legend>Toppings</legend>\n  <label><input type=\"checkbox\" name=\"topping\" value=\"mushrooms\"> Mushrooms</label>\n  <label><input type=\"checkbox\" name=\"topping\" value=\"olives\"> Olives</label>\n</fieldset>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Order a pizza</title>\n</head>\n<body>\n  <h1>Order a pizza</h1>\n  <form action=\"/order\" method=\"post\">\n    <!-- TODO 4: wrap this group in <fieldset> with <legend>Size</legend> -->\n    <!-- TODO 1: three radios sharing name=\"size\", values small/medium/large\n         TODO 2: preselect Medium with checked\n         TODO 5: wrap each option in a <label> -->\n    <input type=\"radio\"> Small\n    <input type=\"radio\"> Medium\n    <input type=\"radio\"> Large\n\n    <!-- TODO 4: wrap this group in <fieldset> with <legend>Toppings</legend> -->\n    <!-- TODO 3: checkboxes sharing name=\"topping\" with real values,\n         each wrapped in a <label> -->\n    <input type=\"checkbox\"> Mushrooms\n    <input type=\"checkbox\"> Olives\n\n    <button type=\"submit\">Add to order</button>\n  </form>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Order a pizza</title>\n</head>\n<body>\n  <h1>Order a pizza</h1>\n  <form action=\"/order\" method=\"post\">\n    <fieldset>\n      <legend>Size</legend>\n      <label><input type=\"radio\" name=\"size\" value=\"small\"> Small</label>\n      <label><input type=\"radio\" name=\"size\" value=\"medium\" checked> Medium</label>\n      <label><input type=\"radio\" name=\"size\" value=\"large\"> Large</label>\n    </fieldset>\n\n    <fieldset>\n      <legend>Toppings</legend>\n      <label><input type=\"checkbox\" name=\"topping\" value=\"mushrooms\"> Mushrooms</label>\n      <label><input type=\"checkbox\" name=\"topping\" value=\"olives\"> Olives</label>\n    </fieldset>\n\n    <button type=\"submit\">Add to order</button>\n  </form>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Make the three size radios one exclusive group: all share name=\"size\", with values small, medium and large.",
+            "hint": "Same name on all three — that is what creates the either/or behaviour. Each gets its own value.",
+            "errorMessage": "Expected three radio inputs sharing name=\"size\". Without the shared name they are not a group.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "input[type='radio'][name='size']",
+              "min": 3
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Preselect the Medium option by adding the checked attribute to it.",
+            "hint": "checked is boolean — write it bare: <input type=\"radio\" name=\"size\" value=\"medium\" checked>.",
+            "errorMessage": "No preselected size found. Add checked to the medium radio so the group cannot submit empty.",
+            "check": {
+              "type": "selector",
+              "selector": "input[type='radio'][value='medium'][checked]"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Turn the toppings into a checkbox group: both share name=\"topping\" with values mushrooms and olives.",
+            "hint": "Checkboxes in a 'pick any' group share one name, each with its own value.",
+            "errorMessage": "Expected at least two checkboxes sharing name=\"topping\" with their own values.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "input[type='checkbox'][name='topping'][value]",
+              "min": 2
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Wrap each group in a <fieldset> whose first child is a <legend> naming the question (Size, Toppings).",
+            "hint": "Two fieldsets, each opening with its legend: <fieldset><legend>Size</legend>...</fieldset>.",
+            "errorMessage": "Expected two fieldsets, each with a legend stating what the group asks.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "fieldset legend",
+              "min": 2
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Give every option a label by wrapping each input and its text in a <label> element.",
+            "hint": "The wrapping style pairs implicitly: <label><input ...> Mushrooms</label>.",
+            "errorMessage": "Each of the five options needs its own label — wrap input and text together in <label>.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "label input",
+              "min": 5
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-i09-input-types-modern",
+      "title": "Use the specialised input types: email, number, range, color, file, hidden",
+      "summary": "Swap generic text fields for inputs with built-in meaning — validation, the right mobile keyboard, native pickers — plus number constraints, file uploads and hidden data.",
+      "difficulty": "intermediate",
+      "minutes": 14,
+      "isFree": false,
+      "goal": "Build a product review form using the specialised input types with their constraint attributes, a scoped file upload, and a hidden field.",
+      "whyItMatters": "Choosing the precise input type is free quality: email fields get the @ keyboard on phones and basic validation without a line of JavaScript, number fields reject letters, range gives you a native slider, and file inputs handle the OS picker for you. Teams that leave everything as type=\"text\" end up re-implementing all of this by hand — worse, and at cost. Hidden inputs, meanwhile, are how real forms carry context like record ids through a submission.",
+      "steps": [
+        "Read the text-like family — email, url, tel, search — and what each changes.",
+        "Study number and its min/max/step constraint attributes.",
+        "Read range and how an output element pairs with it, then color.",
+        "Read file carefully: accept, multiple, and the enctype requirement.",
+        "Read hidden and its legitimate uses.",
+        "In the editor, complete tasks 1–5, then run the checks and try each control in the preview."
+      ],
+      "prompt": "<input type=\"email\" name=\"email\">\n<input type=\"number\" name=\"rating\" min=\"1\" max=\"10\" step=\"1\">\n<input type=\"range\" name=\"sweetness\" min=\"0\" max=\"100\" value=\"50\">\n<input type=\"color\" name=\"accent\" value=\"#336699\">\n<input type=\"file\" name=\"photo\" accept=\"image/*\" multiple>\n<input type=\"hidden\" name=\"product-id\" value=\"prod-8841\">",
+      "promptLabel": "Key code example",
+      "explanation": "Each line replaces a generic text box with a control that knows its data: the email field validates its shape and summons the @ keyboard on phones; the number field steps between 1 and 10 and refuses letters; the range renders as a slider bounded by the same kind of min/max; color opens a native color picker and always submits a #rrggbb value; file opens the OS file dialog restricted to images and allows several at once; and hidden submits its fixed pair without rendering anything. All of them are still just inputs — name and value semantics are unchanged.",
+      "example": "A phone user meets a plain text field asking for an email and has to fish for the @ symbol through three keyboard layers. The same field as type=\"email\" opens the keyboard with @ and . ready — and quietly refuses 'ana@' as incomplete on submit.\n\nThe upgrade cost one word in the markup. That is the recurring deal in this lesson: precise types buy behaviour you would otherwise write, test and maintain yourself.",
+      "exercise": "In the editor on the right, finish the review form: make the email field a real email input, constrain the rating with number min/max/step, add a sweetness slider, scope the photo upload to images with accept, and carry the product id in a hidden input.",
+      "expectedResult": "The preview shows a labelled form with an email field, a stepping number box for rating, a slider, a file chooser, and no visible trace of the hidden product id — with all five checks green.",
+      "commonMistakes": [
+        "Trusting client-side validation as security. Every constraint — type, min, max, accept — can be bypassed by editing the page or crafting a request; the server must revalidate everything.",
+        "Using type=\"number\" for phone numbers or ids. Leading zeros vanish and steppers make no sense; digit-like codes are tel or text, not numbers.",
+        "Adding a file input to a form without method=\"post\" and enctype=\"multipart/form-data\" — the upload silently degrades to sending just the filename.",
+        "Treating hidden inputs as secret. They are invisible, not protected: anyone can read and alter them in DevTools, so never put trusted-as-is values there."
+      ],
+      "proTip": "Pair a range with an <output> element to show its live value — <input type=\"range\" id=\"s\"> <output for=\"s\">50</output> — and one line of JS keeps it updated. A slider whose current value is invisible is a guess, not a control.",
+      "tools": [
+        "html"
+      ],
+      "professions": [],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will upgrade a review form from generic text boxes to precise input types, constraining values in the markup and carrying hidden context.",
+        "sections": [
+          {
+            "heading": "Text-like with built-in meaning: email, url, tel, search",
+            "body": "Four types look like text fields but declare their content. type=\"email\" expects an email address: browsers check the basic shape (something@something) during native validation and, crucially, mobile keyboards switch to a layout with @ and dot prominent. Add the multiple attribute and the field accepts a comma-separated list of addresses.\n\ntype=\"url\" expects an absolute URL and validates that shape (https://... passes; a bare word does not). type=\"tel\" is for phone numbers — it brings up the dial-pad keyboard on phones but deliberately validates nothing, because worldwide phone formats are too varied; add pattern or server checks if you need strictness. type=\"search\" behaves like text but signals search semantics: some browsers add a clear (×) button and style history differently.\n\nThe shared lesson: these types cost nothing over type=\"text\" and buy keyboard, validation and semantics. When a field has a more precise type, use it — text is the fallback, not the default choice.",
+            "code": "<input type=\"email\" name=\"email\">\n<input type=\"url\" name=\"website\">\n<input type=\"tel\" name=\"phone\">\n<input type=\"search\" name=\"q\">"
+          },
+          {
+            "heading": "number: min, max and step",
+            "body": "type=\"number\" accepts numeric input only: letters are rejected as typed in most browsers, spinner arrows let users step the value, and three attributes define the legal space. min and max bound the range; a value outside them fails native validation on submit. step sets the stepping increment and the validity grid — step=\"1\" (the default) allows integers, step=\"0.5\" allows halves, and step=\"any\" allows any number, which you need for free decimal input like prices or measurements.\n\nThe grid detail bites in practice: with min=\"1\" and step=\"2\", valid values are 1, 3, 5... — a typed 4 is invalid even though it is inside the range. Steps count from min (or from 0 if no min is set).\n\nJust as important is when not to use number: any 'digits that are not a quantity'. Phone numbers, postal codes, credit cards and ids lose leading zeros, gain absurd spinners, and may trip locale formatting. If you would never compute an average of the field, it is not a number — use tel or text with a pattern.",
+            "code": "<label for=\"rating\">Rating (1–10)</label>\n<input type=\"number\" id=\"rating\" name=\"rating\"\n       min=\"1\" max=\"10\" step=\"1\">\n\n<!-- decimals allowed: -->\n<input type=\"number\" name=\"price\" min=\"0\" step=\"any\">"
+          },
+          {
+            "heading": "range: the slider — always show its value",
+            "body": "type=\"range\" renders as a drag slider for choosing a number where the feel is approximate: volume, brightness, sweetness. It shares number's min, max and step attributes (defaults 0, 100, 1), and value positions the initial thumb — omit it and the thumb starts at the midpoint.\n\nThe honest limitation: a slider hides its number. The user sees a position, not a value, and the exact figure submitted is invisible. The standard cure is pairing the slider with an output element — a semantic element meant exactly for displaying a calculation or control result — plus a small script keeping it current. If the precise number matters to the user (a price limit, a quantity), prefer type=\"number\" outright; ranges are for relative settings.\n\nSubmission is unchanged from any input: name=value with the thumb's current number. One accessibility note: keyboard users adjust the slider with arrow keys, which is why respecting a sensible step matters.",
+            "code": "<label for=\"sweetness\">Sweetness</label>\n<input type=\"range\" id=\"sweetness\" name=\"sweetness\"\n       min=\"0\" max=\"100\" step=\"10\" value=\"50\">\n<output for=\"sweetness\">50</output>"
+          },
+          {
+            "heading": "color: a native picker in one attribute",
+            "body": "type=\"color\" renders a small swatch that opens the operating system's colour picker on click. No library, no palette widget — the whole picker is one attribute.\n\nIts contract is strict and simple: the value is always a seven-character lowercase hex string in the form #rrggbb. That is what value must contain to preselect a colour (invalid initial values fall back to #000000, black), and exactly what submits. No alpha channel, no named colours, no shorthand #369 — normalise before and after.\n\nUse cases are narrower than the other types — theme accent choices, label colours, drawing tools — but where it fits, it replaces significant custom UI. As with all of this lesson's controls, pair it with a real label; the bare swatch says nothing about what the colour is for.",
+            "code": "<label for=\"accent\">Accent colour</label>\n<input type=\"color\" id=\"accent\" name=\"accent\" value=\"#336699\">\n<!-- submits: accent=%23336699 (the # encoded) -->"
+          },
+          {
+            "heading": "file: uploads with accept and multiple",
+            "body": "type=\"file\" renders a button that opens the OS file dialog; the chosen filename appears beside it. Two attributes shape the dialog. accept filters which files the picker offers, taking a comma-separated list of MIME types, wildcards or extensions: accept=\"image/*\" for any image, accept=\".pdf,.docx\" for specific formats, accept=\"image/png,image/jpeg\" for exact types. multiple allows selecting several files at once.\n\nTwo hard requirements from the forms-basics lesson come due here: the form must use method=\"post\" and enctype=\"multipart/form-data\", the only encoding that can carry file bytes. Without it, submission does not fail loudly — the server just receives the filename as text, an error you find days later.\n\nTwo trust warnings. accept filters the dialog for convenience; users can often override it, and a crafted request can send anything — the server must verify actual file type and size. And for privacy, a file input's value cannot be preset by markup or script; only the user can pick files, which is why you cannot 're-fill' a file field after a failed submit.",
+            "code": "<form action=\"/review\" method=\"post\"\n      enctype=\"multipart/form-data\">\n  <label for=\"photo\">Photos of your dish</label>\n  <input type=\"file\" id=\"photo\" name=\"photo\"\n         accept=\"image/*\" multiple>\n</form>"
+          },
+          {
+            "heading": "hidden: data the user never edits",
+            "body": "type=\"hidden\" renders nothing at all — no box, no label needed — yet submits its name=value pair like any field. It exists to carry context the submission needs but the user should not edit: which product this review belongs to, which step of a wizard is being submitted, an anti-forgery (CSRF) token issued by the server, a tracking source code.\n\nThe value is typically written into the markup by the server when generating the page, then travels back on submit — a round trip that keeps stateless HTTP conversations coherent without cookies or JavaScript.\n\nThe security boundary must be exact in your head: hidden means not rendered, nothing more. Any user can open DevTools, read the value and change it before submitting. So hidden fields may carry identifiers and tokens the server verifies, but never authority the server trusts blindly — a hidden price=0.01 that the checkout believes is the textbook exploit. Validate hidden values exactly as sceptically as visible ones.",
+            "code": "<input type=\"hidden\" name=\"product-id\" value=\"prod-8841\">\n<!-- invisible in the page, present in the submission -->"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Review this product</title>\n</head>\n<body>\n  <h1>Review: Moka Pot Classic</h1>\n  <form action=\"/review\" method=\"post\" enctype=\"multipart/form-data\">\n    <!-- TODO 5: add a hidden input name=\"product-id\" value=\"prod-8841\" -->\n\n    <label for=\"email\">Your email</label>\n    <!-- TODO 1: make this a real email input -->\n    <input type=\"text\" id=\"email\" name=\"email\">\n\n    <label for=\"rating\">Rating (1–10)</label>\n    <!-- TODO 2: number input constrained with min=1 max=10 step=1 -->\n    <input type=\"text\" id=\"rating\" name=\"rating\">\n\n    <label for=\"sweetness\">Coffee strength preference</label>\n    <!-- TODO 3: make this a range slider from 0 to 100 -->\n    <input type=\"text\" id=\"sweetness\" name=\"sweetness\">\n\n    <label for=\"photo\">Photo (images only)</label>\n    <!-- TODO 4: file input accepting only images -->\n    <input type=\"file\" id=\"photo\" name=\"photo\">\n\n    <button type=\"submit\">Publish review</button>\n  </form>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Review this product</title>\n</head>\n<body>\n  <h1>Review: Moka Pot Classic</h1>\n  <form action=\"/review\" method=\"post\" enctype=\"multipart/form-data\">\n    <input type=\"hidden\" name=\"product-id\" value=\"prod-8841\">\n\n    <label for=\"email\">Your email</label>\n    <input type=\"email\" id=\"email\" name=\"email\">\n\n    <label for=\"rating\">Rating (1–10)</label>\n    <input type=\"number\" id=\"rating\" name=\"rating\" min=\"1\" max=\"10\" step=\"1\">\n\n    <label for=\"sweetness\">Coffee strength preference</label>\n    <input type=\"range\" id=\"sweetness\" name=\"sweetness\" min=\"0\" max=\"100\" value=\"50\">\n\n    <label for=\"photo\">Photo (images only)</label>\n    <input type=\"file\" id=\"photo\" name=\"photo\" accept=\"image/*\">\n\n    <button type=\"submit\">Publish review</button>\n  </form>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Change the email field's type from text to email.",
+            "hint": "One word: type=\"email\". Keep the id and name as they are.",
+            "errorMessage": "The email field is still a plain text input — set type=\"email\" for validation and the right mobile keyboard.",
+            "check": {
+              "type": "selector",
+              "selector": "input[type='email'][name='email']"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Make the rating a number input constrained to whole values from 1 to 10.",
+            "hint": "type=\"number\" with min=\"1\" max=\"10\" step=\"1\".",
+            "errorMessage": "Expected a number input with min, max and step set on the rating field.",
+            "check": {
+              "type": "selector",
+              "selector": "input[type='number'][min][max][step]"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Turn the strength preference into a range slider from 0 to 100.",
+            "hint": "type=\"range\" min=\"0\" max=\"100\" — add value=\"50\" to start the thumb at the middle.",
+            "errorMessage": "No range slider found — the strength preference should be type=\"range\" with min and max.",
+            "check": {
+              "type": "selector",
+              "selector": "input[type='range'][min][max]"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Restrict the photo upload to image files with the accept attribute.",
+            "hint": "accept=\"image/*\" filters the file dialog to images of any format.",
+            "errorMessage": "The file input does not restrict its picker — add accept=\"image/*\".",
+            "check": {
+              "type": "attr",
+              "selector": "input[type='file']",
+              "attr": "accept",
+              "pattern": "image"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Add a hidden input carrying the product id: name=\"product-id\", value=\"prod-8841\".",
+            "hint": "Place it just inside the form: <input type=\"hidden\" name=\"product-id\" value=\"prod-8841\">.",
+            "errorMessage": "No hidden product-id field found — the server cannot know which product is being reviewed.",
+            "check": {
+              "type": "selector",
+              "selector": "input[type='hidden'][name='product-id'][value='prod-8841']"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-i10-input-types-datetime",
+      "title": "Pick dates and times with the five date-time input types",
+      "summary": "Use date, time, datetime-local, month and week inputs, master their exact value formats, constrain them with min/max/step, and degrade gracefully where support is missing.",
+      "difficulty": "intermediate",
+      "minutes": 14,
+      "isFree": false,
+      "goal": "Build an appointment booking form with native date and time pickers, bounded ranges, and value formats you can read and write by hand.",
+      "whyItMatters": "Date entry is one of the most error-prone parts of any form — day/month order differs by country, typos create impossible dates, and custom picker widgets are heavy and often inaccessible. The native date-time inputs solve all of this: localised pickers for free, impossible dates unpickable, and one unambiguous wire format (ISO 8601) reaching your server regardless of the user's locale. Knowing the formats and the support caveats is what makes them safe to rely on.",
+      "steps": [
+        "Read date and its YYYY-MM-DD value format.",
+        "Read time, then datetime-local and its T-joined format.",
+        "Skim month and week — rarer, but they complete the family.",
+        "Study min, max and step as they apply to dates and times.",
+        "Read the support and graceful-degradation section before trusting any of this in production.",
+        "In the editor, complete tasks 1–5 and test the pickers in the preview."
+      ],
+      "prompt": "<input type=\"date\" name=\"day\"\n       min=\"2026-08-10\" max=\"2026-12-31\">\n\n<input type=\"time\" name=\"start\" min=\"09:00\" max=\"17:00\" step=\"900\">\n\n<input type=\"datetime-local\" name=\"delivery\"\n       value=\"2026-08-15T14:30\">\n\n<input type=\"month\" name=\"billing\" value=\"2026-08\">",
+      "promptLabel": "Key code example",
+      "explanation": "Each control opens a native picker and speaks one fixed wire format: the date is bounded to a booking window and will submit like day=2026-08-20; the time field limits picks to office hours in 15-minute steps (step is in seconds, so 900); datetime-local combines both with a literal T between them and no timezone; month drops the day entirely. Whatever format the user sees on screen — 20/08/2026 in Athens, 8/20/2026 in Chicago — the submitted value is always the ISO form on the left.",
+      "example": "A booking form with a plain text date field receives '3/4/2026' — March in one country, April in another — plus '31/02/2026' from typos and 'next Tuesday' from optimists. Every record needs parsing, guessing and apologising.\n\nThe same field as type=\"date\" shows each user a calendar in their own format, makes February 31st unpickable, and delivers 2026-04-03 to the server every single time. The ambiguity does not need handling because it can no longer occur.",
+      "exercise": "In the editor on the right, build the booking form's scheduling fields: a date picker bounded to the clinic's booking window, a time picker for office hours, a datetime-local field for the follow-up call, and a month picker for the payment plan.",
+      "expectedResult": "The preview shows four labelled picker fields; opening the date field displays a calendar that refuses dates outside the window, and all five checks pass.",
+      "commonMistakes": [
+        "Writing localised values into value, min or max — value=\"20/08/2026\" is simply ignored. The wire format is always ISO: YYYY-MM-DD, HH:MM, YYYY-MM-DDTHH:MM.",
+        "Assuming datetime-local carries a timezone. It is deliberately 'local, unspecified': for events pinned to a global instant, the server must combine it with a separately captured zone.",
+        "Forgetting that step on time inputs counts seconds. step=\"15\" means 15 seconds, not minutes — a quarter-hour grid is step=\"900\".",
+        "Trusting the picker as validation. Unsupported browsers fall back to a bare text field, and crafted requests can send anything — the server revalidates format and range, always."
+      ],
+      "proTip": "The ISO formats sort correctly as plain strings — 2026-08-09 < 2026-08-10 alphabetically. That is not a coincidence; it is why year comes first, and it means you can sort and compare submitted dates without parsing them.",
+      "tools": [
+        "html"
+      ],
+      "professions": [],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will equip a clinic booking form with the native date-time inputs, bounding each one so impossible appointments cannot be picked.",
+        "sections": [
+          {
+            "heading": "date: a calendar in one attribute",
+            "body": "input type=\"date\" gives the user a full calendar picker: browsers render a field that opens a month grid, with year and month navigation, localised day names, and impossible dates simply not offered. The user experience — clicking a day on a calendar — took whole JavaScript libraries to build before this type existed.\n\nIts value format is the heart of the matter: always YYYY-MM-DD, zero-padded, regardless of what the user sees. A German user sees and types 20.08.2026, an American sees 08/20/2026 — both fields submit day=2026-08-20. Display is localised; the wire format is universal. The same ISO form is what you must write when presetting value, and what min and max expect.\n\nThe field submits its name with the ISO string, or an empty value when nothing was picked — combine with the required attribute if a date is mandatory. There is no way to express 'partial' dates here; for a month without a day, a dedicated type exists later in this lesson.",
+            "code": "<label for=\"day\">Appointment date</label>\n<input type=\"date\" id=\"day\" name=\"day\" value=\"2026-08-20\">\n<!-- submits: day=2026-08-20, whatever the local display -->"
+          },
+          {
+            "heading": "time: hours and minutes, no day",
+            "body": "input type=\"time\" collects a time of day with no date attached, rendering a spinner or dropdown-style picker depending on the browser and platform. Twelve- versus twenty-four-hour display follows the user's system settings; as with dates, the presentation is localised while the value is fixed.\n\nThat value format is HH:MM in 24-hour form — 09:00, 14:30, 23:05 — zero-padded on both sides. If seconds are relevant (they rarely are), the format extends to HH:MM:SS, and browsers show a seconds slot only when the step attribute demands that precision.\n\nA time value alone means 'this time of day, wherever you are': a daily alarm, opening hours, a recurring meeting slot. It carries no timezone and no date, which is exactly right for those cases — and exactly wrong for one-off global events, which is what the next type addresses.",
+            "code": "<label for=\"start\">Preferred time</label>\n<input type=\"time\" id=\"start\" name=\"start\" value=\"09:30\">\n<!-- submits: start=09:30 (24-hour wire format) -->"
+          },
+          {
+            "heading": "datetime-local: both at once, no timezone",
+            "body": "input type=\"datetime-local\" combines the two pickers into one control collecting a date and a time together. Its value format joins the two previous formats with a literal capital T: 2026-08-15T14:30. Write it exactly so in value, min and max; the submitted value has the same shape.\n\nThe name's suffix is a specification, not decoration: the value is local and timezone-less. '15 August, 14:30' — but 14:30 where? The control does not say, and that is by design. For an in-person appointment at a clinic, the location is implied and the type is perfect. For a webinar joined from three continents, a naked local datetime is a bug factory: the server must also know the relevant timezone, captured separately (a select of zones, or JavaScript reading the browser's), and convert to UTC for storage.\n\nA historical note you will meet in old code: an input type=\"datetime\" (with timezone) once existed in the spec and was abandoned — browsers treat it as text. datetime-local is the one that survived.",
+            "code": "<label for=\"followup\">Follow-up call</label>\n<input type=\"datetime-local\" id=\"followup\" name=\"followup\"\n       value=\"2026-08-15T14:30\">\n<!-- submits: followup=2026-08-15T14:30 -->"
+          },
+          {
+            "heading": "month and week: the coarse pickers",
+            "body": "Two coarser-grained types complete the family. input type=\"month\" collects a month within a year — value format YYYY-MM, like 2026-08 — with a picker that skips days entirely. It fits billing periods, card expiry dates and report months: anywhere a day number would be noise.\n\ninput type=\"week\" collects an ISO week within a year, value format YYYY-Www — 2026-W33 is the 33rd week of 2026. ISO weeks start on Monday, and week 1 is the week containing the year's first Thursday, so the first days of January can belong to the previous year's last week; planning and logistics domains use this numbering, and the input speaks it natively.\n\nHonest guidance: these two have the weakest browser support of the family — several browsers render them as plain text fields — so they are exactly where the degradation strategy of the last section matters most. If your audience skews to unsupported browsers, two selects (month + year) remain a reasonable substitute for month.",
+            "code": "<label for=\"billing\">First billing month</label>\n<input type=\"month\" id=\"billing\" name=\"billing\" value=\"2026-09\">\n\n<label for=\"delivery-week\">Delivery week</label>\n<input type=\"week\" id=\"delivery-week\" name=\"delivery-week\" value=\"2026-W38\">"
+          },
+          {
+            "heading": "min, max and step on dates and times",
+            "body": "The constraint attributes you know from number apply across the whole family, expressed in each type's own value format. A booking window is two attributes: min=\"2026-08-10\" max=\"2026-12-31\" on a date input makes earlier and later days unpickable in the calendar and invalid on submit. Office hours on a time input: min=\"09:00\" max=\"17:00\".\n\nstep is where units demand attention. On time and datetime-local inputs, step counts seconds: a 15-minute appointment grid is step=\"900\", and any step below 60 makes browsers reveal a seconds field. On date inputs, step counts days (step=\"7\" allows only every seventh day from min — a crude weekly grid); on month inputs it counts months, and on week inputs, weeks.\n\nTwo reminders complete the picture. Constraints participate in native validation — the form refuses to submit with an out-of-range value and shows a browser message — and they are advisory at the network level, so range-checking on the server remains mandatory. And min/max only bound static windows; 'no earlier than today' needs the server or a script to write today's date into min when generating the page.",
+            "code": "<!-- Booking window, office hours, quarter-hour grid -->\n<input type=\"date\" name=\"day\"\n       min=\"2026-08-10\" max=\"2026-12-31\">\n<input type=\"time\" name=\"start\"\n       min=\"09:00\" max=\"17:00\" step=\"900\">"
+          },
+          {
+            "heading": "Browser support and graceful degradation",
+            "body": "Support across the family is uneven: date, time and datetime-local enjoy solid support in current browsers, while month and week are still missing in several — and any unknown type falls back to a plain text input. That fallback is the family's built-in safety net, and designing for it is what makes these types production-safe.\n\nThe fallback field still submits under its name, so the data flow survives; what disappears is the picker, the format enforcement and the constraints. Three habits make the degraded experience acceptable. State the expected format in the label or a hint ('YYYY-MM-DD') so text-mode users can comply. Never let the placeholder be the only format documentation. And validate format and range on the server, which you were doing anyway — the fallback simply makes that non-negotiable.\n\nYou can detect support in JavaScript when you need to know: create an input, set its type, and read the property back — an unsupported type reads as 'text' — then mount a fallback widget only where necessary. But start from the native control and add machinery only when evidence demands it: the native pickers are localised, accessible and maintained by the browser, which is a bar most custom widgets never reach.",
+            "code": "// Feature detection for any input type\nconst i = document.createElement('input');\ni.setAttribute('type', 'month');\nconst supported = i.type === 'month'; // false → fell back to text"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Book an appointment</title>\n</head>\n<body>\n  <h1>Book an appointment</h1>\n  <form action=\"/book\" method=\"post\">\n    <label for=\"day\">Date</label>\n    <!-- TODO 1: make this a date picker (name=\"day\")\n         TODO 2: bound it: min=\"2026-08-10\" max=\"2026-12-31\" -->\n    <input type=\"text\" id=\"day\" name=\"day\">\n\n    <label for=\"start\">Time (office hours)</label>\n    <!-- TODO 3: time picker, min=\"09:00\" max=\"17:00\" -->\n    <input type=\"text\" id=\"start\" name=\"start\">\n\n    <label for=\"followup\">Follow-up call (date and time)</label>\n    <!-- TODO 4: datetime-local input named \"followup\" -->\n    <input type=\"text\" id=\"followup\" name=\"followup\">\n\n    <label for=\"billing\">First billing month</label>\n    <!-- TODO 5: month input named \"billing\" -->\n    <input type=\"text\" id=\"billing\" name=\"billing\">\n\n    <button type=\"submit\">Book</button>\n  </form>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Book an appointment</title>\n</head>\n<body>\n  <h1>Book an appointment</h1>\n  <form action=\"/book\" method=\"post\">\n    <label for=\"day\">Date</label>\n    <input type=\"date\" id=\"day\" name=\"day\" min=\"2026-08-10\" max=\"2026-12-31\">\n\n    <label for=\"start\">Time (office hours)</label>\n    <input type=\"time\" id=\"start\" name=\"start\" min=\"09:00\" max=\"17:00\">\n\n    <label for=\"followup\">Follow-up call (date and time)</label>\n    <input type=\"datetime-local\" id=\"followup\" name=\"followup\">\n\n    <label for=\"billing\">First billing month</label>\n    <input type=\"month\" id=\"billing\" name=\"billing\">\n\n    <button type=\"submit\">Book</button>\n  </form>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Turn the date field into a real date picker: type=\"date\", keeping name=\"day\".",
+            "hint": "Change the type attribute — the browser supplies the whole calendar UI.",
+            "errorMessage": "No date input named day found — set type=\"date\" on the first field.",
+            "check": {
+              "type": "selector",
+              "selector": "input[type='date'][name='day']"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Bound the booking window: min=\"2026-08-10\" and max=\"2026-12-31\" on the date input.",
+            "hint": "Both attributes take the ISO wire format YYYY-MM-DD, never a localised date.",
+            "errorMessage": "The date input needs min and max in YYYY-MM-DD form to close the booking window.",
+            "check": {
+              "type": "attr",
+              "selector": "input[type='date']",
+              "attr": "min",
+              "pattern": "\\d{4}-\\d{2}-\\d{2}"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Make the time field a time picker limited to office hours: min=\"09:00\", max=\"17:00\".",
+            "hint": "type=\"time\" with min and max in 24-hour HH:MM format.",
+            "errorMessage": "Expected a time input with min and max bounding it to office hours.",
+            "check": {
+              "type": "selector",
+              "selector": "input[type='time'][min][max]"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Make the follow-up field a combined picker: type=\"datetime-local\".",
+            "hint": "Its values look like 2026-08-15T14:30 — date and time joined by a capital T.",
+            "errorMessage": "No datetime-local input found for the follow-up call.",
+            "check": {
+              "type": "selector",
+              "selector": "input[type='datetime-local'][name='followup']"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Make the billing field a month picker: type=\"month\".",
+            "hint": "Month values have no day: YYYY-MM, like 2026-09.",
+            "errorMessage": "The billing field should be type=\"month\" — a day number would be noise here.",
+            "check": {
+              "type": "selector",
+              "selector": "input[type='month'][name='billing']"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

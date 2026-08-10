@@ -1,0 +1,308 @@
+{
+  "enrichment": {
+    "cop-b1-setup-and-quality-completions": {
+      "variations": [
+        {
+          "label": "Quick one-liner for a simple function",
+          "whenToUse": "Use this when the function is small enough that a full multi-line comment would be overkill — a single clear sentence is enough context for Tab to work with.",
+          "prompt": "// isValidEmail: returns true if the string is a syntactically valid email address, false otherwise (no network lookup)\nfunction isValidEmail(value) {"
+        },
+        {
+          "label": "Typed version for TypeScript projects",
+          "whenToUse": "Use this when your project uses TypeScript — typed parameters and a return type give Tab stronger constraints than a plain-JS comment alone.",
+          "prompt": "// calculateMonthlyPayment\n// Fixed-rate loan payment given principal, annual interest rate (%), and term in months.\n// If annualRatePercent is 0, return principal / termMonths (no interest).\nfunction calculateMonthlyPayment(principal: number, annualRatePercent: number, termMonths: number): number {"
+        },
+        {
+          "label": "When the first suggestion keeps missing an edge case",
+          "whenToUse": "Use this after a first attempt already ignored a specific edge case — spell the edge case out as its own commented line right above the brace instead of relying on repeated attempts.",
+          "prompt": "// calculateMonthlyPayment\n// Fixed-rate loan payment given principal, annual interest rate (%), and term in months.\n// EDGE CASE: annualRatePercent === 0 must return principal / termMonths exactly, with no division by a rate.\n// Returns the payment rounded to 2 decimal places.\nfunction calculateMonthlyPayment(principal, annualRatePercent, termMonths) {"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Suggestion looks right — make it prove it",
+          "prompt": "Write 3 test cases for this function: a normal case with a nonzero rate, the zero-rate edge case, and a case with a term of 1 month. Show expected output for each."
+        },
+        {
+          "label": "Suggestion is close but not quite right",
+          "prompt": "This suggestion doesn't handle the case where termMonths is 0. Rewrite it to throw a clear error in that case instead of dividing by zero."
+        },
+        {
+          "label": "Want to understand what it just wrote",
+          "prompt": "Explain this function line by line as if I've never seen the amortization formula before — what does each variable represent and why is the rate divided by 12?"
+        },
+        {
+          "label": "Checking it didn't overcomplicate things",
+          "prompt": "Is there a simpler way to write this that doesn't lose any of the stated behavior? Show it only if it's genuinely simpler, not just shorter."
+        }
+      ],
+      "walkthrough": "Dana is a junior developer at a small fintech startup, and her ticket for the day is to add a monthly-payment calculator to the loan application form. She's used Cursor's Tab autocomplete before without thinking much about it, but this is her first time trying to use it deliberately.\n\nShe opens the real file where the calculator will live, not a blank scratch file, since the surrounding code already imports the currency-formatting helpers she'll need — and Cursor's codebase index can see the rest of the project too. She types a descriptive function name, calculateMonthlyPayment, and above it writes a three-line comment stating the inputs, what happens when the interest rate is zero, and that the result should be rounded to two decimal places. Then she types the opening brace and waits.\n\nGrey ghost text appears: a full function body that converts the annual rate to a monthly decimal, applies the standard formula, and returns a rounded number. She doesn't press Tab immediately — she reads it first, and notices it doesn't check for the zero-rate case she mentioned in her comment. She deletes the suggestion, adds an explicit EDGE CASE line to her comment, and retriggers. The next suggestion includes the check, matching her comment exactly. She accepts it with Tab.\n\nBefore moving on, she pastes a follow-up into Cursor Chat: write 3 test cases — a normal case, the zero-rate edge case, and a term of 1 month. It returns three test cases with expected values, which she runs against her new function — all three pass.\n\nFrom opening the file to a passing test suite: about six minutes. Dana ships the function in her next commit, able to explain exactly what it does because she read every line before accepting it."
+    },
+    "cop-b2-steer-completions-with-comments-and-context": {
+      "variations": [
+        {
+          "label": "When you don't have JSDoc conventions in your project",
+          "whenToUse": "Use this in a plain JS project without typed doc comments — a short prose comment with one worked example still steers Tab effectively.",
+          "prompt": "// formatCurrency(amountCents, currencyCode) -> localized string\n// Example: formatCurrency(1050, \"USD\") returns \"$10.50\"\n// Example: formatCurrency(99, \"EUR\") returns \"€0.99\"\nfunction formatCurrency(amountCents, currencyCode) {"
+        },
+        {
+          "label": "Steering a whole file of repetitive tests",
+          "whenToUse": "Use this when you're about to write several similar test cases and want Tab to follow the pattern of the first one exactly.",
+          "prompt": "describe(\"formatCurrency\", () => {\n  it(\"formats whole dollar amounts correctly\", () => {\n    expect(formatCurrency(1000, \"USD\")).toBe(\"$10.00\");\n  });\n\n  it(\"formats amounts under a dollar correctly\", () => {"
+        },
+        {
+          "label": "Turning a repeated reminder into a standing Rule",
+          "whenToUse": "Use this once you've typed the same convention reminder in a comment three or more times — write it once as a Rule instead of restating it in every file.",
+          "prompt": "---\ndescription: Money values are always integer cents\nalwaysApply: true\n---\n\nAll monetary amounts in this codebase are integer cents (never floats or decimal dollars). Any function that accepts or returns a money value must name its parameter/return with a `Cents` suffix (e.g. `amountCents`) and convert to a display string only at the UI boundary via the shared `formatCurrency` helper."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check it actually matches your worked examples",
+          "prompt": "Run through both @example lines in the comment by hand against the code you just wrote — does the output match exactly, including the currency symbol and decimal places?"
+        },
+        {
+          "label": "Suggestion ignored one of your open files' patterns",
+          "prompt": "Look at how errors are handled in the other function I have open in this tab. Rewrite this suggestion to follow that same error-handling pattern instead of throwing a generic Error."
+        },
+        {
+          "label": "Want the pattern applied to the rest of the list",
+          "prompt": "Using the first test case above as the pattern, write 3 more test cases covering: a negative amount, an unsupported currency code, and zero cents. Keep the same structure and assertion style."
+        },
+        {
+          "label": "Turn this into a standing Rule",
+          "prompt": "Turn the JSDoc convention above into a `.cursor/rules/money.mdc` file with alwaysApply: true, so every future money-handling function follows it without me repeating the comment."
+        }
+      ],
+      "walkthrough": "Marcus is a mid-level developer whose team just standardized on integer cents for all money values, and he's been asked to write a shared formatCurrency helper the rest of the codebase will import. Two related files already exist — a currency-constants file and an older, differently named formatter he's replacing — so before typing anything, he opens both in editor tabs, since he knows Tab weighs open and recently edited files more heavily than the rest of Cursor's index.\n\nIn the new file, he writes a JSDoc comment above the function: parameter types, a return type, and two concrete example lines showing exact input and output, including one case under a dollar to catch rounding. He leaves the cursor on the next line and waits for ghost text.\n\nThe first suggestion divides cents by 100 and uses Intl.NumberFormat, matching both worked examples exactly, because the examples removed the guesswork about symbol placement and rounding. He accepts it with Tab.\n\nNext he needs five test cases. He writes the first one carefully by hand, matching his team's existing test file's structure, then lets Tab draft the rest by continuing to type the next test description. He reads each one — the fourth handles a negative amount incorrectly, so he edits just that line instead of retyping the whole test.\n\nRealizing he's typed the 'money is always integer cents' reminder in three different files this week, he creates .cursor/rules/money.mdc with alwaysApply: true stating the convention once. Total time: about fifteen minutes for a tested helper function plus a standing rule that saves every future comment like it."
+    },
+    "cop-i1-copilot-chat-explanation-and-exploration": {
+      "variations": [
+        {
+          "label": "Quick question with nothing selected, in Cursor",
+          "whenToUse": "Use this when you just want a fast orientation to an unfamiliar file before diving into a specific function, and you're already working in Cursor.",
+          "prompt": "@filename Give me a short overview: what this file's main responsibility is, its three most important functions, and anything that looks unusual or risky at a glance."
+        },
+        {
+          "label": "Debugging a specific failure",
+          "whenToUse": "Use this when you have a stack trace or failing test and want the tool to trace the actual code path instead of explaining the function in general.",
+          "prompt": "I'm getting this error when calling this function: [PASTE ERROR MESSAGE]. Trace through the logic step by step and tell me exactly which line is likely causing it and why."
+        },
+        {
+          "label": "Repo-wide question, no local checkout",
+          "whenToUse": "Use this when you're reviewing a PR or exploring a repo you don't have cloned locally, from a Claude Code web session against the GitHub repo directly.",
+          "prompt": "Across this repository, where is user authentication actually enforced — list every middleware or check that enforces it, and flag any route that appears to skip it."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify the explanation against the real code",
+          "prompt": "Show me the exact file and line numbers that support each claim you just made, so I can check them myself."
+        },
+        {
+          "label": "Too high-level, need the actual mechanism",
+          "prompt": "That was too general. Walk through the exact sequence of function calls that happens when this runs, in order, not a summary of what it accomplishes."
+        },
+        {
+          "label": "Push for the harder 'why' question",
+          "prompt": "Given what this code does, why do you think it was written this way instead of the more obvious simpler approach? What constraint might explain the extra complexity?"
+        },
+        {
+          "label": "Turn it into a note for the team",
+          "prompt": "Summarize what you just explained in 3 sentences I can paste directly into this PR's description or a Slack message, written for someone who hasn't read the code."
+        }
+      ],
+      "walkthrough": "Priya joined a new team two weeks ago and has been assigned a bug in a module called reconcile.ts that nobody currently on her team wrote. The bug report describes an intermittent crash, and she suspects it'll take real tracing across multiple files, not a one-line answer — so instead of asking a quick question in Cursor Chat, she decides this is worth a dedicated investigation and opens a fresh Claude Code session pointed at the repo.\n\nShe tells it plainly not to edit anything, then asks about the 40-line function the bug report points to, with three specific follow-ups: what happens if the items array is empty, whether the function mutates its input, and where else in the file it's called without checking the return value for null. She picked those three because empty-input and null-return bugs are the most common causes of an intermittent crash like the one described.\n\nClaude Code responds with a paragraph on the transformation logic, then confirms directly: an empty items array returns an empty result without throwing, the array is copied rather than mutated, but two call sites elsewhere in the file call the function without checking whether it returned null.\n\nPriya doesn't take this as fact. She opens the file herself and reads the two flagged call sites — both really do skip the null check, and one matches the exact conditions in the bug report. She fixes that call site, adds a null check, and writes a one-line test to prevent regression.\n\nBefore closing the ticket, she asks for a three-sentence summary she can paste into the PR description. From opening the session to a verified root cause and a written note for reviewers: about eleven minutes — and the next person who touches reconcile.ts won't have to redo any of it."
+    },
+    "cop-i2-edit-across-files-with-copilot": {
+      "variations": [
+        {
+          "label": "Smaller scope for a first try",
+          "whenToUse": "Use this the first time you try an interactive agent, on a task that only touches one or two files, so reviewing the diffs stays fast while you learn the review habit.",
+          "prompt": "Add a `GET /api/orders/:id` endpoint that returns a single order by id, or a 404 if it doesn't exist.\n\nScope: only touch src/routes/orders.ts and its existing test file. Do not modify the database schema.\n\nAdd test cases for the found and not-found paths."
+        },
+        {
+          "label": "Refactor across an existing pattern",
+          "whenToUse": "Use this when the task is renaming or restructuring something that already exists in multiple files, rather than adding new behavior.",
+          "prompt": "Rename the `orderStatus` field to `status` everywhere it's used.\n\nScope: only touch files under src/ that reference `orderStatus` — do a search first and list them before making any changes. Do not touch database migration files; the column rename will be handled separately.\n\nUpdate all TypeScript types, function signatures, and existing tests to match."
+        },
+        {
+          "label": "Well-specified enough to hand off unattended",
+          "whenToUse": "Use this when the task is well-specified enough that you're comfortable walking away — hand it to a Codex cloud task or a Claude Code background session instead of watching it live.",
+          "prompt": "Part 1 of 2: Add the backend logic only. Create a `POST /api/orders/:id/refund` endpoint that validates the order is in \"delivered\" status, creates a refund record, and returns the updated order.\n\nScope: only touch src/routes/orders.ts, src/services/orderService.ts, and their test files. Do not touch any frontend code — that will be a separate request."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Diff touched a file you didn't expect",
+          "prompt": "Why did you modify src/lib/db.ts? That wasn't in the scope I gave you — explain the reason, and if it's not strictly necessary, revert that file and find another way."
+        },
+        {
+          "label": "Plan looks wrong before it even starts writing",
+          "prompt": "Before you write any code, explain your plan for handling the case where the order doesn't exist. If that's not covered, add it to the plan first."
+        },
+        {
+          "label": "Check the tests actually run",
+          "prompt": "Run the test suite for the files you just changed and paste the results. If anything fails, fix it and rerun before I review."
+        },
+        {
+          "label": "One file's diff needs a change",
+          "prompt": "In src/services/orderService.ts only, change the error message on the invalid-status case to include the order's current status in the text. Leave every other file as-is."
+        }
+      ],
+      "walkthrough": "Tom is a backend engineer at a mid-size e-commerce company, and his task for the sprint is adding order cancellation — a feature that needs a new API route, new business logic, and new test coverage. It touches business rules he's not entirely sure about yet, so he decides he wants to watch it happen rather than hand it off unattended, and opens Cursor Agent instead of a Codex cloud task.\n\nHe pastes a scoped description: add a cancel endpoint, name the two files that should change, explicitly say not to touch the database schema or add dependencies, state the business rule that only pending or processing orders can be cancelled, otherwise return a 409, and ask for three specific test cases.\n\nCursor responds first with a short plan — it will add a cancelOrder method to the service, wire a new route, and write the three requested tests. Tom reads the plan and confirms it matches what he asked before it starts writing.\n\nA minute later, three file diffs appear. He reviews them one at a time: the service method's status check looks correct, the route wiring matches the existing route style, and the tests cover the valid-cancel, invalid-status, and not-found cases as requested. He accepts each file individually rather than approving the whole batch at once.\n\nHe runs the test suite himself afterward — all three new tests pass, plus the existing suite is untouched. From opening Agent to a committed, reviewed change: about eighteen minutes. He notes for next time that the same task, once he trusts the business rule, would be a fine candidate to hand to a Codex cloud task instead and walk away from entirely."
+    },
+    "cop-a1-coding-agent-issue-to-pull-request": {
+      "variations": [
+        {
+          "label": "Smaller bug fix instead of a new feature",
+          "whenToUse": "Use this for a well-understood bug with a known cause, where the acceptance criteria describe the correct behavior rather than a new capability.",
+          "prompt": "Title: Fix incorrect tax calculation for orders with multiple discount codes\n\nProblem: when an order has 2+ discount codes applied, tax is calculated on the pre-discount subtotal instead of the post-discount subtotal, overcharging customers.\n\nAcceptance criteria:\n1. Tax is calculated on the subtotal after all discounts are applied.\n2. Existing single-discount and no-discount orders are unaffected (add regression tests).\n3. Add a test case with 2 stacked discount codes confirming the corrected tax amount.\n\nScope: only touch src/services/pricingService.ts and its test file."
+        },
+        {
+          "label": "Documentation task instead of code",
+          "whenToUse": "Use this when the deliverable is a README or docs update rather than application code — the same scoped-issue discipline still applies.",
+          "prompt": "Title: Document the public REST API's authentication flow\n\nProblem: docs/api.md has no section explaining how to authenticate requests, and new integrators keep asking the same questions in support.\n\nAcceptance criteria:\n1. Add a new \"Authentication\" section to docs/api.md covering: how to obtain an API key, the required header format, and token expiry behavior.\n2. Include one complete curl example of an authenticated request.\n3. Link the new section from the docs table of contents.\n\nScope: only touch docs/api.md. Do not modify any application code."
+        },
+        {
+          "label": "Chained follow-up issue after the first PR merges",
+          "whenToUse": "Use this to delegate the next slice of a larger initiative once the first agent-authored PR has merged, keeping each issue small and independently reviewable.",
+          "prompt": "Title: Add rate limiting to the /api/autocomplete endpoint\n\nProblem: /api/search now has rate limiting (see #482, merged), but /api/autocomplete does not, and it's a cheaper target for abuse since it fires on every keystroke.\n\nAcceptance criteria:\n1. Reuse the same rate-limiting middleware added in #482 — do not write a new implementation.\n2. Limit to 60 requests/minute per API key (higher than search, since it's per-keystroke).\n3. Add tests mirroring the pattern used in #482's test file.\n\nScope: only touch src/routes/autocomplete.ts. Reuse existing middleware from src/middleware/."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "PR description doesn't match what it built",
+          "prompt": "Your PR description says this satisfies acceptance criterion 3, but I don't see a test for the Retry-After header value. Add that test case, or explain why it's already covered."
+        },
+        {
+          "label": "Push back on an unexpected file",
+          "prompt": "This PR modifies src/lib/redis.ts, which wasn't in scope. Explain why that change was necessary, and if it isn't strictly required, revert it and use the existing client as-is."
+        },
+        {
+          "label": "CI passed but you're not convinced",
+          "prompt": "CI is green, but walk me through how the 429 response behaves if two requests arrive at the exact same millisecond — is the Redis increment atomic, or is there a race condition?"
+        },
+        {
+          "label": "Ready to request changes",
+          "prompt": "Leave this as a PR review comment: the Retry-After header should be an integer number of seconds, not a decimal — please fix and re-push."
+        }
+      ],
+      "walkthrough": "Aisha is an engineering manager at a logistics startup, and she's just noticed the public search endpoint has no rate limiting — a real risk since one misbehaving client could degrade the service for everyone. Rather than pull an engineer off their current sprint work, she decides to delegate it.\n\nShe opens a new GitHub issue and writes it like a spec: a one-paragraph problem statement, four numbered acceptance criteria covering a per-key request limit, a 429 response with a Retry-After header, a configurable limit, and three named test cases, plus an explicit scope line naming the two files that should change and the existing Redis client to reuse instead of adding anything new. She connects the repo at chatgpt.com/codex and hands the issue to a new cloud task.\n\nAbout fifteen minutes later, a draft PR appears. Its description restates each acceptance criterion and says how it was addressed. Aisha reads the diff the same way she'd review a new hire's first PR: she checks the Redis counter logic isn't vulnerable to a race condition under concurrent requests, confirms the 429 response actually includes a correctly formatted Retry-After header, and runs through all three test cases to confirm they test what they claim to.\n\nShe finds one gap — the environment variable has no documented default, so a missing config value would silently disable rate limiting. She leaves a PR comment describing the issue. The task picks up the comment and pushes a fix within a few minutes, adding a sane default and a test for the missing-config case.\n\nAisha merges once CI is green and every acceptance criterion checks out — a real feature delegated and reviewed in under an hour of her own attention, most of which was writing the issue itself."
+    },
+    "cop-a2-ai-code-review-on-github": {
+      "variations": [
+        {
+          "label": "General first-pass review with no specific worry",
+          "whenToUse": "Use this on a routine PR where you don't have a specific risk in mind yet and want a broad first pass before your own read-through.",
+          "prompt": "Review this PR for correctness, obvious edge cases, and anything that looks inconsistent with the rest of this file's existing style."
+        },
+        {
+          "label": "High-risk PR touching payments or auth",
+          "whenToUse": "Use this on a PR touching money movement, authentication, or access control, where you want the review to specifically exercise the failure paths, not just the happy path.",
+          "prompt": "Review this PR with particular attention to: 1) every place a permission or ownership check could be bypassed by a malformed or unexpected request, 2) whether any error path returns a stack trace or internal identifier in the response body, 3) whether the code handles the case where an external payment provider call times out or returns a partial success."
+        },
+        {
+          "label": "Requesting review on a specific file only",
+          "whenToUse": "Use this on a large PR where most files are low-risk boilerplate and you only want deep scrutiny on the one file that actually matters.",
+          "prompt": "Review this PR, but focus your analysis specifically on src/services/paymentService.ts — the other files are generated migrations and can be skimmed."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Comment flagged something — verify it yourself",
+          "prompt": "For the race condition you flagged in the Redis counter, show me the exact two lines where the check and the increment happen, so I can confirm whether they're actually atomic."
+        },
+        {
+          "label": "Disagree with a flagged issue",
+          "prompt": "I think the pattern you flagged as a security issue is actually intentional — this endpoint is intended to be publicly readable without authorization. Explain what specifically made you flag it, so I can decide whether to dismiss it."
+        },
+        {
+          "label": "Push for a second pass after fixes",
+          "prompt": "I've pushed a commit addressing the authorization-ordering issue you flagged. Review that specific change again and confirm whether it's fully resolved."
+        },
+        {
+          "label": "Check for anything it might have missed",
+          "prompt": "Besides what you already flagged, is there any part of this diff you're less confident about, or any code path you weren't able to fully trace?"
+        }
+      ],
+      "walkthrough": "Ben is a tech lead at a subscription-billing company, and a mid-level engineer on his team just opened a PR adding an order-cancellation endpoint. Before Ben looks at it himself, he wants a fast first pass. The repo already has Codex enabled as an automatic PR reviewer, so he adds a comment naming three specific worries: whether the authorization check runs before the status check, whether the Redis-based rate counter has a race condition, and whether any new error response leaks internal details.\n\nHe picked those three because they're the categories of bug that have actually caused incidents on his team before — a generic review request tends to return mostly style comments, so he briefs it the way he'd brief a new reviewer joining the team.\n\nA few minutes later — longer than a simple diff scan, because this review actually executes parts of the code — three comments appear. The first confirms the authorization check does run first. The second flags a real issue: the Redis increment and the limit check aren't wrapped in a single atomic operation, so two simultaneous requests near the limit could both slip through. The third confirms the error responses are clean.\n\nBen doesn't take the race-condition flag on faith. He opens the file, reads the two lines in question, and agrees — it's a real check-then-act race. He leaves a review comment asking the original author to wrap both operations in a single atomic transaction.\n\nHe still does his own full read of the diff afterward, and still asks a second human teammate to review before merge, since this touches business logic. But the AI pass caught a real concurrency bug in under five minutes, and it took him two minutes to write the review request that made that catch possible."
+    },
+    "cop-a3-custom-instructions-for-your-repository": {
+      "variations": [
+        {
+          "label": "Smaller repo just getting started",
+          "whenToUse": "Use this for a small or early-stage repo that doesn't have many enforced conventions yet — start with just the stack and one or two hard rules rather than a long list.",
+          "prompt": "# AGENTS.md for this repository\n\nStack: Python 3.12, FastAPI, SQLite via SQLAlchemy (no ORM abstraction beyond the models in app/models.py).\n\nConventions:\n- All endpoints return Pydantic response models, never raw dicts.\n\nDo not:\n- Add new third-party dependencies without flagging it for human approval.\n- Use synchronous database calls inside async route handlers."
+        },
+        {
+          "label": "Path-specific rule for a legacy directory",
+          "whenToUse": "Use this when one part of a repo genuinely follows different, older conventions than the rest — for example a legacy module the team hasn't migrated yet — as a scoped Cursor rule that only applies inside that directory.",
+          "prompt": "---\ndescription: Legacy Pages Router directory\nglobs: [\"src/legacy/**\"]\n---\n\nThis directory predates the App Router migration and still uses the Pages Router and class components — do not suggest Server Components or hooks-based patterns here. Match the existing class-component style exactly. New features should go in src/app/ instead; only bug fixes belong in src/legacy/."
+        },
+        {
+          "label": "Enterprise repo with strict compliance rules",
+          "whenToUse": "Use this for a repo in a regulated industry where certain patterns are compliance requirements, not just style preferences.",
+          "prompt": "# AGENTS.md for this repository\n\nStack: Java 21, Spring Boot 3.x, PostgreSQL.\n\nConventions:\n- All PII fields must be encrypted at rest using the EncryptedField wrapper in com.company.security — never store PII as a plain String column.\n- All external API calls go through the ResilientClient wrapper (retries, circuit breaker) in com.company.http — never call HttpClient directly.\n\nDo not:\n- Log any field tagged @PII, even at debug level.\n- Introduce a new logging framework — this repo uses SLF4J with Logback exclusively."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify it's actually being followed",
+          "prompt": "Ask me an ordinary question about adding a new API route in this repo, and show me your answer. I want to check whether it follows the ApiResult and AppError conventions from the instructions file without me repeating them in this prompt."
+        },
+        {
+          "label": "File is getting long — trim it",
+          "prompt": "Review this AGENTS.md and flag any line that's generic best-practice advice rather than a repo-specific fact. Suggest which lines to cut."
+        },
+        {
+          "label": "Add a new rule after a real mistake",
+          "prompt": "Add a new line to the 'Do not' section: never modify files under src/generated/ — they're auto-generated from the OpenAPI spec and any manual edit gets overwritten on the next build."
+        },
+        {
+          "label": "Check for a stale rule after an upgrade",
+          "prompt": "We just upgraded from Next.js 14 to Next.js 15. Read through this instructions file and flag any line that might now be outdated or contradicted by the new version."
+        }
+      ],
+      "walkthrough": "Sofia is a tech lead on a five-person team sharing one Next.js repository, and she's noticed every developer's AI suggestions look slightly different depending on which of the three tools they used — some produce old Pages Router patterns, some invent a new error-handling style each time. None of it matches the conventions the team actually agreed on in code review over the past year, and worse, three different people had each started their own half-written instructions file for their own tool.\n\nShe consolidates them into one AGENTS.md at the repository root — the file Codex reads automatically and Cursor reads as ambient project context. She states the stack precisely — TypeScript 5.x, Next.js 15 with the App Router, no Pages Router code — instead of just naming the framework. She adds three positive conventions, each pointing at a real file: all API responses use the shared ApiResult type, errors are thrown as AppError subclasses, and database queries go through a repository layer rather than inline Prisma calls. She adds a short 'Do not' section: no new dependencies without approval, no third-party date libraries since the team standardized on the native Temporal API, and no unrelated schema changes.\n\nIn CLAUDE.md, she deletes the team's old duplicate content and replaces it with a single line: `@AGENTS.md`. For one legacy directory that genuinely still uses the Pages Router, she adds a scoped .cursor/rules/legacy.mdc with a globs pattern so Cursor only applies the old-style guidance there.\n\nTo check it's working, she asks the same ordinary question — add an endpoint that returns order data — in Cursor, Claude Code, and Codex. All three wrap the response in ApiResult, throw an OrderNotFoundError extending AppError, and call into an orders repository method, without her mentioning any of those conventions in the question itself. Total setup time: about twenty-five minutes, for three tools that now agree with each other."
+    },
+    "cop-a4-integrating-copilot-into-a-team-workflow": {
+      "variations": [
+        {
+          "label": "Smaller team, lighter policy",
+          "whenToUse": "Use this for a 2-4 person team that wants shared defaults without the overhead of formal access controls yet — start with tool defaults and a monthly usage check-in, and add an access policy once the team grows.",
+          "prompt": "Team AI coding defaults (lightweight)\n\nDefault tool by task:\n- Day-to-day coding: Cursor\n- Investigation and review: Claude Code\n- Small, well-scoped delegated fixes: Codex cloud tasks\n\nShared instructions: one AGENTS.md at each repo root, imported into CLAUDE.md via `@AGENTS.md`.\n\nUsage check-in: last Friday of the month, everyone glances at their Claude, ChatGPT/Codex, and Cursor usage pages and flags anything trending upward in the team channel."
+        },
+        {
+          "label": "Access policy first, before anything else",
+          "whenToUse": "Use this as the very first rollout step for an org administrator, before individual developers start picking tools on their own.",
+          "prompt": "Org access policy — rollout step 1\n\n1. Restrict Codex cloud tasks and Claude Code background sessions to a named allowlist of repos, starting with 2-3 low-risk ones.\n2. Require human review on every agent-authored PR — no auto-merge, even with passing CI.\n3. New repos start hands-on-only (Cursor Agent, interactive Claude Code) until a lead explicitly adds them to the unattended-task allowlist.\n4. Revisit the allowlist quarterly as trust in the workflow grows."
+        },
+        {
+          "label": "Cross-functional teammate reference",
+          "whenToUse": "Use this to explain the policy to a PM, designer, or other non-engineering stakeholder who needs to understand review timelines without needing the technical detail.",
+          "prompt": "In plain terms: our engineers use three different AI coding tools for different situations — a fast in-editor assistant for daily work, a deeper investigation tool for tricky bugs and reviews, and a delegation tool for well-defined tickets that can be worked on in the background. Every change an AI tool produces still gets a human review before it ships — nothing merges on AI approval alone. If a ticket is flagged 'delegated,' expect it to take a bit longer since it's queued rather than worked on live."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Policy references an outdated convention",
+          "prompt": "You just referenced the old retry logic in this policy/AGENTS.md, but we changed to exponential backoff last month. Check whether that change is reflected anywhere in our shared instructions, and if not, tell me exactly what's missing."
+        },
+        {
+          "label": "Check usage before it surprises anyone",
+          "prompt": "Summarize what you know about this team's usage trends across Claude, Codex/ChatGPT, and Cursor for the past 30 days, and flag anything that looks like it's trending toward needing a plan upgrade."
+        },
+        {
+          "label": "New hire test of the policy",
+          "prompt": "Pretend you're a new hire with no prior context. Read this team policy and tell me the three things you'd still be unsure about after reading it."
+        },
+        {
+          "label": "Tighten policy after an incident",
+          "prompt": "We just had an unattended agent task touch a repo it shouldn't have had access to. Draft an updated access-policy section restricting it to an explicit allowlist, and list what should be on it based on our current repos."
+        }
+      ],
+      "walkthrough": "Grace is an engineering director at a company where individual teams picked their own AI coding tools with no coordination — some engineers live in Cursor, others swear by Claude Code, and one team has been quietly running Codex cloud tasks on their own initiative. Nobody has a shared source of truth for which tool to reach for, and she's just found out one engineer's unattended agent task touched a repo it had no business being in.\n\nShe starts by writing the one-page policy: Cursor as the default for hands-on daily coding, Claude Code for deep investigation and CI-integrated review, and Codex cloud tasks for well-scoped, walk-away-able delegation. She names the actual repos that unattended tasks are allowed to touch — three low-risk internal tools to start — and states plainly that everything else stays hands-on-only until a lead explicitly adds it.\n\nShe points every repo at a shared AGENTS.md, imported into CLAUDE.md with `@AGENTS.md`, so the policy is encoded in the tools themselves and not just a document people forget. She sets a monthly usage check-in for the first Monday, where each team lead glances at their Claude, ChatGPT/Codex, and Cursor billing pages.\n\nA new hire's first week later, he reads the one-pager in under five minutes and correctly starts a small bugfix in Cursor, escalates a confusing legacy module to a dedicated Claude Code session, and delegates a well-scoped backlog ticket to a Codex cloud task — without asking anyone which tool to use.\n\nA month in, Grace's usage check-in catches Codex token credits trending up faster than expected on one team, well before it became a surprise line item. Total setup time for the policy and the first access allowlist: about two hours, paying off in every 'which tool should I use' question it now answers on its own."
+    }
+  }
+}

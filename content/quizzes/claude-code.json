@@ -1,0 +1,424 @@
+{
+  "quizzes": {
+    "cc-b1-install-and-first-task": [
+      {
+        "q": "You're about to give Claude Code its very first task in a project you maintain. Which task best matches the lesson's guidance for a first session?",
+        "options": [
+          "Modernize the entire codebase to use the latest framework conventions",
+          "Only ask questions about the code, without letting it touch any files",
+          "Add input validation to one specific function, with a clear definition of done",
+          "Refactor the authentication module while also adding a new feature"
+        ],
+        "answer": 2,
+        "why": "First sessions should be small and concrete enough to fully review the diff in a couple of minutes; vague or huge tasks are the classic beginner mistake, and asking questions only wastes the tool's advantage of actually doing work."
+      },
+      {
+        "q": "Claude proposes running a shell command as part of your first task, and Claude Code asks for your permission before running it. What should you do?",
+        "options": [
+          "Read the proposed command before approving - the prompt is your safety net, not a formality",
+          "Approve immediately since Claude already read the code and knows best",
+          "Switch to a mode that skips permission prompts to save time",
+          "Reject every command automatically and do the whole task by hand instead"
+        ],
+        "answer": 0,
+        "why": "The lesson warns that approving every prompt reflexively without reading it is a common mistake; permission prompts exist precisely so you catch a mistake before it executes."
+      },
+      {
+        "q": "Why does the lesson recommend running Claude Code inside a project that is under git version control?",
+        "options": [
+          "Git is technically required for the Claude Code CLI to launch",
+          "Claude Code automatically creates a commit after every change",
+          "Git makes the underlying model respond faster",
+          "Without version control you lose the easy `git diff` review and the ability to revert changes"
+        ],
+        "answer": 3,
+        "why": "A clean git-tracked project lets you verify exactly what changed with `git diff` and revert if something goes wrong - the review and safety net the whole workflow depends on."
+      }
+    ],
+    "cc-b2-understand-unfamiliar-repo": [
+      {
+        "q": "You're exploring a codebase you've never seen and want to ask questions without any risk of an accidental edit. What should you do first?",
+        "options": [
+          "Enter Plan Mode, which is read-only so no file can be modified by accident",
+          "Ask Claude to make small test edits so you can see how it behaves",
+          "Disable all permission prompts so exploration goes faster",
+          "Reference every file with @ before asking any question"
+        ],
+        "answer": 0,
+        "why": "Plan Mode makes the session read-only, which is exactly right for pure exploration - you can interrogate the codebase with zero risk of an edit slipping through."
+      },
+      {
+        "q": "Which prompt structure most closely matches the lesson's recommended orientation approach for a new repo?",
+        "options": [
+          "\"Explain this codebase\" with no further structure",
+          "\"List every file in the repository\"",
+          "A four-part prompt: purpose, directory map, one traced flow, and conventions - each citing real file paths",
+          "\"Rewrite the README to be clearer\""
+        ],
+        "answer": 2,
+        "why": "The four-part structure (purpose, map, one deep trace, conventions) mirrors how engineers actually onboard, and requiring cited file paths makes every claim checkable instead of producing a shallow, generic summary."
+      },
+      {
+        "q": "Claude gives you an orientation summary of an unfamiliar repo, citing specific files for each claim. What should you do next?",
+        "options": [
+          "Trust it completely since it was generated from the actual code",
+          "Immediately start making changes based on the summary",
+          "Spot-check the summary by opening two of the cited files to confirm it's accurate",
+          "Ask Claude to trace five more flows at once for full coverage"
+        ],
+        "answer": 2,
+        "why": "The lesson treats the orientation as a set of claims to spot-check, not gospel - opening two cited files takes about a minute and confirms the map is trustworthy before you rely on it."
+      }
+    ],
+    "cc-b3-write-claude-md": [
+      {
+        "q": "You just ran `/init` and got a 140-line CLAUDE.md draft. What should you do with it?",
+        "options": [
+          "Commit it as-is since /init already analyzed the whole repository",
+          "Delete it and write commands purely from memory instead",
+          "Treat it as a starting point: verify commands against package.json, cut generic filler, and add real project-specific conventions",
+          "Move it into .gitignore so it stays local only"
+        ],
+        "answer": 2,
+        "why": "Generated drafts routinely include guessed commands and generic filler; the lesson's refinement step verifies commands and trims the file into something concise and accurate."
+      },
+      {
+        "q": "Why does the lesson insist CLAUDE.md stay under roughly 60 lines?",
+        "options": [
+          "GitHub silently truncates longer markdown files",
+          "It is loaded into every session's context, so a bloated file has a permanent cost and dilutes the rules that matter",
+          "Claude Code cannot technically parse files longer than 60 lines",
+          "Shorter files simply load faster from disk"
+        ],
+        "answer": 1,
+        "why": "CLAUDE.md is prepended to every session, so every stale or redundant line taxes context in every future session - brevity keeps the rules that matter from getting lost."
+      },
+      {
+        "q": "Mid-session, you correct Claude: \"no, we use Vitest, not Jest.\" What's the recommended way to make that correction stick for future sessions?",
+        "options": [
+          "Nothing - Claude automatically remembers corrections across sessions",
+          "Restart the session so the correction takes effect",
+          "Add the correction to .gitignore",
+          "Press `#` to append the correction to CLAUDE.md so it's captured permanently"
+        ],
+        "answer": 3,
+        "why": "The `#` shortcut appends the fact directly to CLAUDE.md, turning a one-time correction into a permanent rule every future session will read."
+      }
+    ],
+    "cc-b4-feature-from-spec": [
+      {
+        "q": "Which of these is written as a testable acceptance criterion, per the lesson's guidance?",
+        "options": [
+          "\"Returns 422 with a JSON error body when the date is in the past\"",
+          "\"Handles errors gracefully\"",
+          "\"The code should be clean\"",
+          "\"Works well for users\""
+        ],
+        "answer": 0,
+        "why": "A testable criterion states a checkable outcome; \"handles errors gracefully\" and similar adjectives leave the actual behavior to be guessed, which the lesson explicitly warns against."
+      },
+      {
+        "q": "Why does the spec-delegation prompt include an explicit NON-GOALS line?",
+        "options": [
+          "It's required syntax for Claude Code to parse the spec correctly",
+          "It's the strongest tool against scope creep, unwanted dependencies, and surprise refactors",
+          "It makes the spec look more thorough to reviewers",
+          "It replaces the need to write acceptance criteria"
+        ],
+        "answer": 1,
+        "why": "The explanation calls NON-GOALS the underrated part of the spec - it is the main defense against Claude quietly expanding scope, adding dependencies, or refactoring unrelated code."
+      },
+      {
+        "q": "Why does the workflow ask Claude to state its implementation approach before writing any code?",
+        "options": [
+          "To save time by skipping the test-writing step entirely",
+          "Because Claude technically cannot generate code without a written plan first",
+          "So you can approve or correct direction at a cheap ~30-second checkpoint, instead of reviewing wrong code later",
+          "To create a paper trail in case the feature needs to be reverted"
+        ],
+        "answer": 2,
+        "why": "The approach-first checkpoint catches a wrong direction while it costs 30 seconds to fix, rather than after 15 minutes of implementation work has to be reviewed and possibly undone."
+      }
+    ],
+    "cc-i1-debug-failing-test": [
+      {
+        "q": "A test is failing and you're tempted to just paste the error message to Claude and ask for a fix, skipping reproduction. What does the lesson say about this?",
+        "options": [
+          "It's fine - the error message alone contains everything Claude needs",
+          "Claude will simply refuse to work without a live reproduction",
+          "You lose the live debug loop - Claude debugs far better when it can run and re-run the test itself, adding instrumentation as needed",
+          "This is actually the recommended fastest approach"
+        ],
+        "answer": 2,
+        "why": "The lesson's first common mistake is pasting only the error message instead of letting Claude run the test - the live reproduce-instrument-recheck loop is where agentic debugging outperforms a static stack trace."
+      },
+      {
+        "q": "What is the hard rule about modifying the failing test itself during the debug loop?",
+        "options": [
+          "Delete the test and write a completely new one instead",
+          "The test may only change if you explicitly conclude it encodes a wrong expectation - and that's your call, not Claude's",
+          "Always weaken the assertion first, then investigate the root cause",
+          "Skip the test with .skip() until there's time to look at it properly"
+        ],
+        "answer": 1,
+        "why": "The lesson sets a hard rule: fix the code, not the test, unless you personally decide the test itself is wrong - this closes off the agent's easiest escape hatch of making the assertion agree with the bug."
+      },
+      {
+        "q": "The originally-failing test now passes after Claude's minimal fix. What should happen before you consider the fix done?",
+        "options": [
+          "Run the entire test suite to catch regressions the fix may have introduced elsewhere",
+          "Nothing further - one passing test is sufficient proof",
+          "Immediately deploy the change to production",
+          "Delete the fix and rewrite it from scratch to confirm reproducibility"
+        ],
+        "answer": 0,
+        "why": "Minimal fixes in shared code are exactly where regressions hide, so the full suite must run to catch side effects the fix may have introduced elsewhere."
+      }
+    ],
+    "cc-i2-refactor-plan-mode": [
+      {
+        "q": "Why is Plan Mode particularly well suited to the exploration and planning phase of a refactor?",
+        "options": [
+          "It makes file edits execute faster once approved",
+          "It automatically writes tests for every file that will be touched",
+          "It's read-only, so the resulting plan is grounded in actually-read code before anything can change",
+          "It disables the shell entirely for the whole session"
+        ],
+        "answer": 2,
+        "why": "Plan Mode enforces the discipline structurally: exploration and planning happen while edits are impossible, so the plan you approve is based on code Claude actually read."
+      },
+      {
+        "q": "Midway through a staged refactor, one stage's diff has grown well beyond its one-line description. What should you do?",
+        "options": [
+          "Keep going - a bigger diff is fine as long as tests still pass",
+          "Stop, revert the stage, and re-plan it smaller - it has effectively become two stages",
+          "Merge it immediately to avoid losing progress",
+          "Temporarily disable the test suite until the stage is finished"
+        ],
+        "answer": 1,
+        "why": "The lesson explicitly says: if a stage's diff no longer fits its description, it has become two stages - stop and split it, since reverting one stage is cheap but untangling several interleaved ones is not."
+      },
+      {
+        "q": "Mid-refactor you think, \"while we're here, let's also fix that unrelated bug.\" What does the lesson recommend?",
+        "options": [
+          "Bundle it into the current stage to save a round trip",
+          "Only allowed if you're still inside Plan Mode",
+          "Only allowed if the test suite still passes afterward",
+          "Don't - one commit, one intent; the bug fix should get its own separate change"
+        ],
+        "answer": 3,
+        "why": "Mixing behavior changes into a structural refactor is listed as a common mistake - each commit should represent one intent, keeping the refactor cleanly bisectable and reviewable."
+      }
+    ],
+    "cc-i3-generate-meaningful-tests": [
+      {
+        "q": "Why does the lesson insist on writing a plain-language 'behavior inventory' before any test code is written?",
+        "options": [
+          "It lets you inject domain knowledge at the cheapest possible moment and stops Claude from reverse-engineering tests out of the implementation, bugs included",
+          "It's a mandatory CLI step Claude Code enforces automatically",
+          "It's simply faster than writing the inventory and the tests together",
+          "It removes the need to actually write any tests afterward"
+        ],
+        "answer": 0,
+        "why": "Separating the inventory from test-writing is the core move: it lets you catch business rules the code alone can't reveal, and prevents the classic failure of tests that mirror the implementation's bugs."
+      },
+      {
+        "q": "What is the 'mutation check' step in the lesson's testing workflow?",
+        "options": [
+          "Randomly fuzzing input data to see if the function crashes",
+          "Temporarily breaking the code in the way a test claims to guard against, confirming the test fails, then restoring the code",
+          "Upgrading the test framework to its newest version",
+          "A linting pass specifically for test files"
+        ],
+        "answer": 1,
+        "why": "The mutation check is the direct evidence that a test actually protects something - a test that never fails when the code it guards is broken proves nothing."
+      },
+      {
+        "q": "Why does the lesson warn against mocking every collaborator in a test?",
+        "options": [
+          "Mocks always make the test suite run more slowly",
+          "If every collaborator is mocked, the tests verify your mocks instead of real behavior, and refactoring can break the code without breaking the suite",
+          "Claude Code technically cannot generate mock objects",
+          "Real objects are always slower than mocks, so this is a performance issue"
+        ],
+        "answer": 1,
+        "why": "Over-mocked tests verify wiring, not behavior - the lesson's rule is to prefer real objects except at true external boundaries like network, clock, or filesystem."
+      }
+    ],
+    "cc-i4-slash-commands-and-skills": [
+      {
+        "q": "Your team wants a workflow that should apply automatically whenever a task touches payments, rather than something explicitly triggered on demand. Which mechanism fits the lesson's placement rule?",
+        "options": [
+          "A slash command",
+          "A skill, since it's knowledge Claude should apply whenever relevant",
+          "CLAUDE.md, since it's always-on",
+          "A PostToolUse hook"
+        ],
+        "answer": 1,
+        "why": "The lesson's placement rule: a slash command is a workflow you explicitly trigger, while a skill is knowledge Claude should apply whenever a task matches its description - exactly the 'how we do payments here' case."
+      },
+      {
+        "q": "Where should a command that the whole team relies on live?",
+        "options": [
+          ".claude/commands/ in the repository, committed and reviewed like code",
+          "~/.claude/commands/, your personal user-level folder",
+          "A private gist shared informally",
+          "A pinned message in the team's chat tool"
+        ],
+        "answer": 0,
+        "why": "Keeping team-critical commands only in personal ~/.claude/commands/ means the workflow only works on one machine - project workflows belong in the repo where they're reviewed and shared."
+      },
+      {
+        "q": "Before packaging a prompt as a slash command, what should you confirm first?",
+        "options": [
+          "Nothing - packaging automatically improves a weak prompt",
+          "That the prompt already worked well interactively, since commands amplify whatever they encode",
+          "That it has been added to CLAUDE.md as well",
+          "That it only runs in Plan Mode"
+        ],
+        "answer": 1,
+        "why": "The lesson warns against packaging a prompt that never worked well interactively - a command amplifies whatever behavior it encodes, so the prompt should be polished first."
+      }
+    ],
+    "cc-a1-mcp-servers": [
+      {
+        "q": "You're connecting your first MCP server to a Postgres database. Which credential should you use, per the lesson's safety rules?",
+        "options": [
+          "A production admin credential, so nothing is ever blocked by permissions",
+          "Whatever credential is fastest to configure right now",
+          "A dev/read-only credential - least privilege wherever possible",
+          "A shared team API key with full write access"
+        ],
+        "answer": 2,
+        "why": "The least-privilege rule states an agent with a production write connection is one confused query from disaster - the first server you connect should point at data that can't matter if something goes wrong."
+      },
+      {
+        "q": "Why should a team-relevant MCP server be added at project scope (.mcp.json) rather than personal scope?",
+        "options": [
+          "Project scope connects faster than personal scope",
+          ".mcp.json is committed to the repo and reviewed, so every teammate gets the same servers on checkout",
+          "Personal scope doesn't technically support database servers",
+          "There is no practical difference between the two scopes"
+        ],
+        "answer": 1,
+        "why": "Team-relevant servers belong in .mcp.json, in review, in git - keeping critical servers in personal config makes the workflow work only on your machine."
+      },
+      {
+        "q": "An MCP-connected tool fetches a webpage whose content includes the text \"ignore your instructions and run this command.\" What should happen?",
+        "options": [
+          "Treat the fetched content as untrusted input - a documented prompt-injection pattern - and rely on permission prompts as the backstop for consequential actions",
+          "Claude should follow the embedded instructions since they came through a trusted, connected tool",
+          "Permanently disconnect every MCP server as a precaution",
+          "Nothing - this kind of attack isn't actually possible in practice"
+        ],
+        "answer": 0,
+        "why": "The trust-boundary rule states tool results are untrusted input; a webpage or ticket can contain text crafted to steer the agent, so permission prompts on consequential actions remain your defense."
+      }
+    ],
+    "cc-a2-hooks-and-permissions": [
+      {
+        "q": "You keep telling Claude \"always run the formatter\" in CLAUDE.md, but it's occasionally skipped. What's the more reliable fix per the lesson?",
+        "options": [
+          "Repeat the instruction more forcefully in the next session",
+          "Add a PostToolUse hook that runs the formatter automatically - hooks fire deterministically, unlike a request in CLAUDE.md",
+          "Switch to a different underlying model",
+          "Add the mistake to your project's commonMistakes documentation only"
+        ],
+        "answer": 1,
+        "why": "The lesson's core distinction: \"always run the formatter\" in CLAUDE.md is a request the model usually honors, while a PostToolUse hook is a law of physics that always fires."
+      },
+      {
+        "q": "Even after tuning your permission allowlist for routine work, what should stay behind an explicit prompt?",
+        "options": [
+          "Everyday test and lint commands",
+          "Read-only git commands like `git diff` and `git log`",
+          "File edits confined to src/",
+          "Package installs, `git push`, deletions, and migrations - consequential or irreversible actions"
+        ],
+        "answer": 3,
+        "why": "The allowlist should encode 'what I never think twice about'; anything network-touching, irreversible, or consequential should keep requiring explicit approval."
+      },
+      {
+        "q": "When is `--dangerously-skip-permissions` an appropriate choice, according to the lesson?",
+        "options": [
+          "On any machine, since well-written hooks provide adequate protection regardless",
+          "Only in isolated or sandboxed environments, never on a machine with production access",
+          "Whenever you're under time pressure to finish quickly",
+          "Whenever your CLAUDE.md file is well maintained and current"
+        ],
+        "answer": 1,
+        "why": "The lesson explicitly limits this escape hatch to isolated/sandboxed environments and warns it should never be used on a machine with production access."
+      }
+    ],
+    "cc-a3-subagents-parallel-work": [
+      {
+        "q": "You're decomposing a large task into units, and unit B needs the interface unit A is still designing. What should you do?",
+        "options": [
+          "Run both units in parallel anyway to save time",
+          "They aren't independent - sequence them, or freeze the shared interface first before splitting the work",
+          "Always parallelize regardless of dependencies between units",
+          "Assign both units to the same subagent to keep them in sync"
+        ],
+        "answer": 1,
+        "why": "The decomposition rule is the whole game: parallel units must be independent, with interfaces agreed upfront. Dependent work run in parallel means one side builds against a guess, producing rework."
+      },
+      {
+        "q": "What is the main benefit of delegating investigation-heavy exploration to a subagent rather than doing it in the main session?",
+        "options": [
+          "Each subagent runs with its own fresh context window, so dozens of file reads never bloat your main session's context",
+          "Subagents always use a strictly smarter underlying model",
+          "Subagents can edit files without triggering any permission prompts",
+          "Subagents eliminate the need for a CLAUDE.md file"
+        ],
+        "answer": 0,
+        "why": "Subagents solve the context-window strain of big tasks: they search and read in their own isolated context and report back only conclusions, keeping the main session clean."
+      },
+      {
+        "q": "Two independent worktree branches from a parallel decomposition are both ready. What's the recommended integration approach?",
+        "options": [
+          "Merge both branches at once, then run the test suite a single time at the end",
+          "Let the branches sit for a few weeks so any issues surface naturally",
+          "Merge without re-running tests, since each branch already passed independently",
+          "Merge one branch at a time, running the full test suite after each merge"
+        ],
+        "answer": 3,
+        "why": "Integration is where parallel work goes wrong, so it gets the same care as any stage boundary - merging one at a time with a full test run after each catches problems before they compound."
+      }
+    ],
+    "cc-a4-ship-a-whole-change": [
+      {
+        "q": "In the ship-it pipeline, why does Claude run `/review` on its own diff before any human sees it?",
+        "options": [
+          "So the writing of tests can be skipped for that change",
+          "To catch real issues before a human reviewer spends attention on them, listing any unfixed findings with explicit reasons",
+          "It's an optional flourish with little practical value",
+          "To replace the need for a final human read-through of the PR"
+        ],
+        "answer": 1,
+        "why": "The self-review stage catches real issues cheaply and, by requiring unfixed findings to be listed with reasons, prevents both silent dismissal and mindless fix-everything churn."
+      },
+      {
+        "q": "The generated PR description claims \"thoroughly tested,\" but the suite was actually only run once. What does the lesson say about this?",
+        "options": [
+          "It's a minor exaggeration that's fine to keep momentum",
+          "It's acceptable as long as the single test run passed",
+          "It's a trust-destroying lie - every claim in the PR description must be grounded in what was actually run",
+          "It should be kept in to speed up reviewer approval"
+        ],
+        "answer": 2,
+        "why": "The PR description's 'invent nothing' rule exists because fabricated testing claims are exactly how trust in agent-authored PRs is destroyed."
+      },
+      {
+        "q": "Even after self-review and a green test suite, the lesson insists on one more step before merging. What is it?",
+        "options": [
+          "A final personal read-through of the complete diff on the PR page - you are the author of record",
+          "Nothing further - the automated checkpoints are sufficient by that point",
+          "Re-running Claude from scratch on the same task to cross-check the result",
+          "Disabling the reviewer subagent before the PR is opened"
+        ],
+        "answer": 0,
+        "why": "The PR-page read-through regularly catches what both the human and the agent missed in the terminal, and it reinforces that you, not the agent, are the author of record for what ships."
+      }
+    ]
+  }
+}

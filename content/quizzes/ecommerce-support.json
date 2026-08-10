@@ -1,0 +1,424 @@
+{
+  "quizzes": {
+    "ecom-b1-product-descriptions-that-sell": [
+      {
+        "q": "The AI wants to add a claim like \"clinically proven\" that isn't backed by any fact you supplied. What should the prompt make it do instead?",
+        "options": [
+          "Include the claim anyway since it sounds persuasive",
+          "Put it in a separate \"needs a source\" list instead of the main copy",
+          "Delete the whole product description and start over",
+          "Let it slide since customers rarely check advertising claims"
+        ],
+        "answer": 1,
+        "why": "The \"needs a source\" list catches plausible-sounding claims the model wants to add on its own, so you see exactly what to verify or cut before publishing."
+      },
+      {
+        "q": "Why should the description lead with the buyer's problem instead of the product name?",
+        "options": [
+          "It's required by Amazon's search algorithm",
+          "Shoppers skim for \"is this for me\" before reading features, which is what actually improves conversion",
+          "Product names are always too long to lead with",
+          "It reduces the overall word count"
+        ],
+        "answer": 1,
+        "why": "Leading with the buyer's problem matches how shoppers actually read a listing, which is why it converts better than opening with a brand or product name."
+      },
+      {
+        "q": "What's the single biggest risk in AI-written product copy that this lesson warns about?",
+        "options": [
+          "Using too few bullet points",
+          "Letting the AI fill blank spec fields with plausible-sounding but invented numbers",
+          "Writing in too warm a tone",
+          "Keeping the description under 200 words"
+        ],
+        "answer": 1,
+        "why": "Restricting the AI to only the facts you supply is the core guardrail against hallucinated specs, which is the single biggest risk in AI-written product copy."
+      }
+    ],
+    "ecom-b2-ad-copy-variants-for-testing": [
+      {
+        "q": "You ask for \"10 ad variations\" without naming distinct angles. What's the likely result?",
+        "options": [
+          "10 genuinely distinct hypotheses ready for a meaningful A/B test",
+          "10 rewordings of essentially the same idea, telling you nothing useful about what moves your audience",
+          "The AI will refuse the request as too vague",
+          "Exactly 10 platform-specific formats"
+        ],
+        "answer": 1,
+        "why": "Asking for variations without naming structured angles almost always produces near-duplicate rewordings of one idea rather than genuinely different tests."
+      },
+      {
+        "q": "Why label each ad variant with the specific angle it tests (price, urgency, social proof, etc.)?",
+        "options": [
+          "It's required by every ad platform's upload format",
+          "It makes it possible to trace test results back to a hypothesis, instead of just knowing which wording won with no idea why",
+          "It automatically shortens each variant",
+          "It increases click-through rate on its own"
+        ],
+        "answer": 1,
+        "why": "Labeling by angle turns a winning variant into a learning about your audience, rather than just a preferred wording."
+      },
+      {
+        "q": "Which of these should the prompt explicitly ban the AI from doing?",
+        "options": [
+          "Staying within the platform's character limits",
+          "Inventing a discount percentage or guarantee that isn't real",
+          "Labeling each variant by its tested angle",
+          "Writing exactly one variant per angle"
+        ],
+        "answer": 1,
+        "why": "An invented discount or guarantee can lead to ad rejections and false-advertising exposure, so the prompt must ban adding claims not in the real offer."
+      }
+    ],
+    "ecom-i1-product-lifestyle-photos-ai-image": [
+      {
+        "q": "A store owner wants to use a fully AI-generated image (from ChatGPT or Gemini) as their Amazon primary listing photo. What's wrong with this?",
+        "options": [
+          "Nothing — AI images are acceptable everywhere on marketplaces",
+          "Most marketplaces require the primary listing photo to be an actual photograph of the real item",
+          "AI images are always too low-resolution for listings",
+          "It violates ChatGPT's and Gemini's terms of service"
+        ],
+        "answer": 1,
+        "why": "AI-generated imagery belongs in secondary and marketing placements, not the primary listing slot, which platforms require to be a literal photograph."
+      },
+      {
+        "q": "Why upload a reference image of your real product when generating a lifestyle scene with ChatGPT (GPT Image 2) or Gemini (Nano Banana 2)?",
+        "options": [
+          "It's required for the tool to function at all",
+          "It anchors the generation so the model doesn't \"helpfully\" reinvent the product's actual appearance",
+          "It makes image generation faster",
+          "It removes the need to review the output afterward"
+        ],
+        "answer": 1,
+        "why": "Anchoring to a real reference image is the key guardrail against the model altering the product's real color, proportions, or features, which becomes a truth-in-advertising problem in paid ads."
+      },
+      {
+        "q": "What should you never ask GPT Image 2 or Nano Banana 2 to render directly into the scene?",
+        "options": [
+          "Multiple variations for comparison",
+          "Text or logos, since these suffer from a common garbled-text failure mode in image models",
+          "A specific aspect ratio for the destination platform",
+          "Lighting and mood descriptions"
+        ],
+        "answer": 1,
+        "why": "Rendered text and logos are a common failure mode for image models; typography should be added afterward in a design tool instead."
+      }
+    ],
+    "ecom-i2-customer-service-replies-refunds-delays-complaints": [
+      {
+        "q": "A customer's order is 12 days late and no specific new delivery date is confirmed. What should the AI-drafted reply do?",
+        "options": [
+          "Invent a plausible delivery date to reassure the customer",
+          "State the honest facts and, since the resolution isn't fully clear, say so and list what's needed instead of guessing",
+          "Promise a full refund regardless of your actual policy",
+          "Skip the delay topic and focus only on a general apology"
+        ],
+        "answer": 1,
+        "why": "The explicit fallback to say so and list what's needed stops the AI from confidently inventing a resolution when the facts given are incomplete."
+      },
+      {
+        "q": "Why does the prompt require opening with acknowledgment of the specific issue instead of a generic \"sorry for the inconvenience\"?",
+        "options": [
+          "Generic apologies are against most platforms' policies",
+          "It changes how the reply lands with an already-frustrated customer compared to boilerplate language",
+          "It reduces the total word count",
+          "It's required for chargeback disputes specifically"
+        ],
+        "answer": 1,
+        "why": "Naming the specific issue rather than a generic apology is what actually reads as genuine to a frustrated customer."
+      },
+      {
+        "q": "What's the core guardrail this lesson emphasizes for refund and complaint replies?",
+        "options": [
+          "Grounding every draft in your real order facts and real policy so it never invents a promise you can't honor",
+          "Always offering the maximum possible remedy to prevent complaints",
+          "Keeping every reply under 50 words regardless of complexity",
+          "Never mentioning specific order details in a reply"
+        ],
+        "answer": 0,
+        "why": "The realistic risk with AI-drafted replies is a confidently invented promise — a specific timeline, dollar amount, or exception — that was never actually authorized."
+      }
+    ],
+    "ecom-i3-email-flows-welcome-abandoned-cart-post-purchase": [
+      {
+        "q": "A 3-email abandoned-cart flow reads almost identically in all three emails, just with different subject lines. What went wrong?",
+        "options": [
+          "This is correct — repetition reinforces the message",
+          "Each email should have a distinct job (e.g., set expectations, build trust, create urgency) — repeating the same message is the most common flow failure",
+          "The subject lines should have been identical too",
+          "The send timing between the emails was wrong"
+        ],
+        "answer": 1,
+        "why": "Assigning a distinct job to each email prevents a flow from collapsing into three versions of the same generic message."
+      },
+      {
+        "q": "Why explicitly instruct \"do not invent a discount... if I said no discount, do not add one anywhere in the flow\"?",
+        "options": [
+          "Discounts are illegal in automated email marketing",
+          "Models default to adding urgency with a made-up percentage off even when never asked, which can cost real margin",
+          "It's purely a formatting requirement",
+          "It shortens the overall email flow"
+        ],
+        "answer": 1,
+        "why": "Without this guardrail, an AI-drafted flow can silently add a discount that was never authorized, costing real margin if shipped unreviewed."
+      },
+      {
+        "q": "Before turning a new automated flow on for real customers, what must happen?",
+        "options": [
+          "Load it directly into the platform and monitor results",
+          "Test-trigger the full flow end to end yourself first",
+          "Publish it and only check open rates afterward",
+          "Skip review since AI-generated copy reads confidently"
+        ],
+        "answer": 1,
+        "why": "Testing the flow by triggering it yourself is what catches broken timing, links, or copy issues before real customers ever see it."
+      }
+    ],
+    "ecom-a1-automate-recurring-store-content": [
+      {
+        "q": "You're designing an automation that auto-drafts a description whenever a new SKU is added. What's the mandatory checkpoint before anything publishes?",
+        "options": [
+          "An automated spellcheck step",
+          "A human approval step before anything publishes or sends",
+          "A/B testing the copy automatically",
+          "A 24-hour delay before publishing"
+        ],
+        "answer": 1,
+        "why": "Unreviewed AI output publishing directly to customers is the realistic failure mode, so a mandatory human approval checkpoint is the core safety guardrail."
+      },
+      {
+        "q": "Why scope the first automation to one recurring task instead of the whole content calendar at once?",
+        "options": [
+          "Claude and ChatGPT can only handle one instruction at a time",
+          "It prevents building a fragile multi-step system before you know the pattern actually works",
+          "It's required by Claude's and ChatGPT's pricing tiers",
+          "One task uses less AI compute"
+        ],
+        "answer": 1,
+        "why": "Proving out one task first avoids building an elaborate, fragile automation before validating that the basic pattern is reliable."
+      },
+      {
+        "q": "What happens if the AI drafting step is built around fields that aren't reliably present at trigger time (e.g., missing spec fields on a new product)?",
+        "options": [
+          "It automatically skips that product with no issue",
+          "It causes thin or broken drafts",
+          "The whole automation stops working",
+          "It has no effect since AI fills gaps intelligently"
+        ],
+        "answer": 1,
+        "why": "Prompt templates built around fields that aren't always populated at trigger time produce thin or broken drafts, which is why the design should flag or route around missing data."
+      }
+    ],
+    "cs-b1-rewrite-difficult-reply-firm-kind-correct": [
+      {
+        "q": "A refund is genuinely denied, but the rewritten reply hedges so much that the customer could reasonably think it's negotiable. What went wrong?",
+        "options": [
+          "The reply was too firm and needs softening",
+          "The decision wasn't stated clearly within the first two sentences, implying flexibility that doesn't exist",
+          "The reply was too short overall",
+          "The customer's concern wasn't acknowledged"
+        ],
+        "answer": 1,
+        "why": "Burying a firm \"no\" under too much hedging is the most common failure in written support replies, and it produces more follow-up tickets, not fewer."
+      },
+      {
+        "q": "Why does the prompt separate \"acknowledge the customer's frustration\" from \"apologize for the decision itself\"?",
+        "options": [
+          "They mean the same thing so it doesn't matter",
+          "It keeps empathy genuine without implying the company did something wrong when the decision was actually correct",
+          "Apologies are against most companies' written policy",
+          "It shortens the overall reply"
+        ],
+        "answer": 1,
+        "why": "Apologizing for a correct decision undermines your own policy, while acknowledging frustration without apologizing keeps the reply both honest and kind."
+      },
+      {
+        "q": "What's a common mistake this lesson warns against?",
+        "options": [
+          "Stating the actual decision clearly in the opening",
+          "Accepting an invented workaround or discount the AI added even though none was authorized",
+          "Reading the reply once more as if you were the customer before sending",
+          "Keeping the real decision unchanged from what you supplied"
+        ],
+        "answer": 1,
+        "why": "The AI may manufacture a plausible workaround or discount that oversteps your actual authority, so any added exception must be checked against what was truly authorized."
+      }
+    ],
+    "cs-b2-macro-library-from-real-tickets": [
+      {
+        "q": "The AI rewrites your team's proven, real reply into more polished, generic customer-service language. Is this an improvement?",
+        "options": [
+          "Yes, always improve the wording for professionalism",
+          "No — this strips out the tone that's already proven to work with your customers, replacing it with boilerplate",
+          "Yes, since generic wording reduces the chance of errors",
+          "It doesn't matter as long as the facts stay accurate"
+        ],
+        "answer": 1,
+        "why": "The instruction to preserve wording and structure protects tone that's already proven effective instead of defaulting to generic template language."
+      },
+      {
+        "q": "Why require specific placeholders like [ORDER #] and [DAYS DELAYED] instead of vague ones like [DETAILS]?",
+        "options": [
+          "Vague placeholders are simply shorter to type",
+          "Specific placeholders reduce the risk of an agent sending a macro with a placeholder or stale detail left in it",
+          "CRM software requires exact bracket syntax",
+          "It makes the overall library file smaller"
+        ],
+        "answer": 1,
+        "why": "Vague placeholders are the most common way a macro goes out with an unfilled field or a leftover detail from a previous customer."
+      },
+      {
+        "q": "How should you start building this macro library?",
+        "options": [
+          "Cover every possible ticket type at once for completeness",
+          "Start with 5-8 of your highest-frequency real ticket types",
+          "Use only the newest agent's replies as the source",
+          "Skip writing a fill-in checklist to save time"
+        ],
+        "answer": 1,
+        "why": "Building the whole library at once instead of starting with the highest-frequency types is a common mistake that delays getting real value from the library."
+      }
+    ],
+    "cs-i1-knowledge-base-articles-from-resolved-tickets": [
+      {
+        "q": "A resolved ticket's fix actually depended on the customer also being on an updated app version, though this wasn't stated as a general requirement. How should the KB draft handle this?",
+        "options": [
+          "State the fix as universally true for every customer in this situation",
+          "Flag it under a \"needs verification\" note instead of stating it as generally true fact",
+          "Omit the article entirely since it's unclear",
+          "Publish immediately since it worked for one customer"
+        ],
+        "answer": 1,
+        "why": "A resolved ticket is evidence for one case, not proof the same steps work for every customer, so uncertain generalizations must be flagged, not stated as fact."
+      },
+      {
+        "q": "Why is a human technical review required before publishing a KB article drafted from one ticket?",
+        "options": [
+          "It's a formality with no real risk involved",
+          "A resolved ticket only proves the fix worked for one case, not that it generalizes to every customer",
+          "AI-drafted articles are always factually wrong",
+          "Search engines require human-authored content"
+        ],
+        "answer": 1,
+        "why": "Publishing an unverified 'always do X' step that only worked because of one customer's specific account state can actively mislead future readers."
+      },
+      {
+        "q": "What's a common mistake this lesson warns against?",
+        "options": [
+          "Stripping customer-identifying details before pasting the ticket into the prompt",
+          "Publishing a KB article straight from the AI draft without a technical review confirming it holds generally",
+          "Including a \"when this might not work\" section",
+          "Phrasing the article title as a real customer search query"
+        ],
+        "answer": 1,
+        "why": "Skipping the technical review is the primary risk this lesson addresses, since it's what catches whether the resolution actually generalizes."
+      }
+    ],
+    "cs-i2-escalation-summaries-engineers-managers": [
+      {
+        "q": "The technical summary states a likely root cause that was never actually confirmed in the ticket thread. What's the risk?",
+        "options": [
+          "None — engineers will verify it themselves anyway",
+          "It can send debugging in the wrong direction and waste real engineering time",
+          "It makes the summary more thorough and useful",
+          "It speeds up the resolution process"
+        ],
+        "answer": 1,
+        "why": "A support agent guessing at a technical cause and stating it confidently can misdirect an engineer's investigation, which the prompt explicitly forbids."
+      },
+      {
+        "q": "Why generate both the technical and manager summaries from the exact same source facts in one pass?",
+        "options": [
+          "It's simply faster to type once",
+          "It keeps the two summaries from drifting into inconsistent stories as the escalation gets retold",
+          "Managers and engineers read the identical document anyway",
+          "It reduces the total word count needed"
+        ],
+        "answer": 1,
+        "why": "Generating both from the same facts prevents the technical and manager versions of the story from contradicting each other over time."
+      },
+      {
+        "q": "A reproduction detail (like the browser used) wasn't captured in the thread. What should the technical summary do?",
+        "options": [
+          "Guess the most common browser to keep the summary complete",
+          "Flag it explicitly as \"missing — need to obtain\"",
+          "Omit any mention of reproduction steps entirely",
+          "Leave it out and note nothing about it"
+        ],
+        "answer": 1,
+        "why": "Flagging missing reproduction details turns a gap into an action item instead of a silent hole in the report."
+      }
+    ],
+    "cs-i3-tone-consistency-across-support-team": [
+      {
+        "q": "Instead of grounding the tone guide in your team's own real replies, you ask for generic customer-service tone advice. What's the problem?",
+        "options": [
+          "Nothing — generic advice generalizes better across teams",
+          "It produces something nobody actually references since it isn't concrete or specific to how your team actually writes",
+          "Generic advice is inherently more accurate",
+          "It takes longer for the AI to generate"
+        ],
+        "answer": 1,
+        "why": "Grounding the guide in real examples is what makes it something agents can pattern-match against, instead of another set of abstract adjectives everyone interprets differently."
+      },
+      {
+        "q": "Why require a real example next to every do/don't point in the tone guide?",
+        "options": [
+          "It's purely a formatting preference",
+          "It's the mechanism that keeps the guide concrete instead of abstract adjectives like \"be friendly\"",
+          "Examples are legally required in HR documentation",
+          "It shortens the overall checklist"
+        ],
+        "answer": 1,
+        "why": "Abstract adjectives on their own get interpreted differently by every agent; a concrete example next to each point removes that ambiguity."
+      },
+      {
+        "q": "How should the pre-send checklist be used after the team has been trained on it?",
+        "options": [
+          "Only during new-hire onboarding",
+          "To periodically spot-check real sent replies, not just new drafts",
+          "Never revisited once the guide is written",
+          "Only applied to escalation tickets"
+        ],
+        "answer": 1,
+        "why": "Using the checklist only for training misses how tone naturally drifts over time even after everyone has already been trained on the guide."
+      }
+    ],
+    "cs-a1-triage-workflows-ai-assistance-human-judgment": [
+      {
+        "q": "The AI classifier has low confidence on an ambiguous incoming ticket. What should the workflow do by default?",
+        "options": [
+          "Force-classify it into the AI's best-guess category anyway",
+          "Route it to a human review queue by default rather than guessing",
+          "Auto-close it since it's ambiguous",
+          "Delete it to keep the queue clean"
+        ],
+        "answer": 1,
+        "why": "The low-confidence-routes-to-human default rule keeps genuinely uncertain cases from being silently mishandled."
+      },
+      {
+        "q": "Why must a VIP-tagged or possible churn/legal-risk ticket always go to a human, regardless of AI confidence level?",
+        "options": [
+          "VIP tickets simply take longer to process either way",
+          "These are exactly the high-stakes cases where an unnoticed auto-routing or auto-closing error causes real damage",
+          "Every helpdesk platform legally requires this",
+          "AI models cannot technically read account tags"
+        ],
+        "answer": 1,
+        "why": "The realistic failure mode in support automation is a high-stakes, ambiguous ticket being auto-handled with nobody noticing until real damage is done."
+      },
+      {
+        "q": "What's a common mistake to avoid when rolling out this triage workflow?",
+        "options": [
+          "Testing the AI's classification against a batch of past tickets before going live",
+          "Letting the AI auto-close or auto-resolve tickets in the first version instead of keeping resolution and closing fully human",
+          "Defining an explicit low-confidence fallback rule",
+          "Listing your real ticket categories exactly as your team currently uses them"
+        ],
+        "answer": 1,
+        "why": "This workflow is designed for classification and routing only — resolution and closing must stay human, especially in the first version."
+      }
+    ]
+  }
+}

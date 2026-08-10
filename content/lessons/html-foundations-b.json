@@ -1,0 +1,1582 @@
+{
+  "lessons": [
+    {
+      "slug": "html-b13-link-targets",
+      "title": "Control where links open and what they point at",
+      "summary": "Master the target attribute, safe new-tab links with rel=\"noopener\", in-page fragment links, and special schemes like mailto:, tel: and downloadable files.",
+      "difficulty": "beginner",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Build a contact page whose links open in the right place, jump to the right section, and trigger email, phone and download actions.",
+      "whyItMatters": "A link is more than a blue underline: the target attribute decides whether it replaces the current page or opens a new tab, and getting that wrong frustrates users or leaks a security hole. Fragment links power every 'back to top' button and table of contents on the web. mailto:, tel: and download links turn a static page into something people can act on with one tap.",
+      "steps": [
+        "Read the theory on the target attribute and why _blank needs rel=\"noopener\".",
+        "In the editor, turn the portfolio text into a new-tab link (tasks 1 and 2).",
+        "Read the fragment-link sections, then add the jump link and its id target (tasks 3 and 4).",
+        "Read the section on special schemes and add the mailto: link (task 5).",
+        "Add the download link for the price list (task 6).",
+        "Run after each change and watch the feedback console until all six checks pass."
+      ],
+      "prompt": "<a href=\"https://example.com/portfolio\" target=\"_blank\" rel=\"noopener\">my portfolio</a>\n<a href=\"#contact\">Jump to contact</a>\n<h2 id=\"contact\">Contact</h2>\n<a href=\"mailto:nadia@example.com\">email me</a>\n<a href=\"price-list.pdf\" download>price list</a>",
+      "promptLabel": "Key code example",
+      "explanation": "The first link opens in a new tab because of target=\"_blank\", and rel=\"noopener\" stops the new page from being able to script the one that opened it. The second link navigates within the same page: the browser scrolls to whichever element carries id=\"contact\". The mailto: link opens the visitor's email program with the address pre-filled, and the download attribute tells the browser to save the PDF instead of displaying it.",
+      "example": "A photographer's one-page site starts with plain text: 'see my portfolio', 'email me', 'grab my price list'. Visitors have to copy addresses by hand and scroll to find the contact details.\n\nAfter this lesson the same page has a portfolio link that opens in a fresh tab (so the visitor never loses the photographer's page), a jump link straight to the contact section, a one-click email link, and a price list that downloads instead of opening.",
+      "exercise": "In the editor on the right, complete six links on a photographer's page: a new-tab portfolio link secured with rel=\"noopener\", a fragment link plus the id it jumps to, a mailto: link, and a download link for a PDF.",
+      "expectedResult": "The preview shows a page where 'Jump to contact' scrolls to the Contact heading, the portfolio link opens a new tab, and the email and price-list links are clickable. All six checks pass.",
+      "commonMistakes": [
+        "Writing target=\"blank\" without the underscore. That is not a keyword — it creates a named window called 'blank', which behaves confusingly on repeat clicks.",
+        "Using target=\"_blank\" without rel=\"noopener\". Older browsers give the new page a window.opener reference it can abuse to redirect your page.",
+        "Linking to href=\"#contact\" but forgetting to put id=\"contact\" on any element. The click then does nothing (or jumps to the top).",
+        "Adding a space in mailto: links, such as mailto: name@example.com. The scheme must run straight into the address with no space."
+      ],
+      "proTip": "Modern browsers treat target=\"_blank\" as if rel=\"noopener\" were present, but write it explicitly anyway: it documents your intent, protects visitors on older browsers, and satisfies security linters that flag the bare form.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will wire up a photographer's contact page with every kind of link behavior: new tabs, in-page jumps, email, and downloads.",
+        "sections": [
+          {
+            "heading": "The target attribute: where a link opens",
+            "body": "By default, clicking a link replaces the current page. That default has a name: target=\"_self\". You almost never write it, because it is what happens anyway, but knowing it exists makes the other values easier to understand.\n\nThe value you will actually use is target=\"_blank\", which opens the destination in a new tab (or a new window, depending on the visitor's browser settings). It is the right choice when the visitor is in the middle of something on your page — filling a form, reading an article — and the link leads somewhere external they will want to glance at and come back from.\n\nThe underscore matters. _blank, _self, _parent and _top are reserved keywords; any other string is treated as a window name. target=\"blank\" (no underscore) opens a window named 'blank' and then reuses that same window for every later click, which is rarely what anyone intends.",
+            "code": "<!-- default: replaces the current page -->\n<a href=\"about.html\">About</a>\n\n<!-- opens a new tab -->\n<a href=\"https://example.com\" target=\"_blank\" rel=\"noopener\">External site</a>"
+          },
+          {
+            "heading": "_parent and _top: the frame escape hatches",
+            "body": "Two more keywords exist for pages embedded inside other pages with frames or iframes. target=\"_parent\" loads the destination in the parent document — the page one level up from the frame the link lives in. target=\"_top\" goes further and loads it in the full browser tab, breaking out of every level of nesting at once.\n\nIf your page is not inside a frame, both behave exactly like _self, so they are harmless but pointless. You will meet them mostly in embedded widgets, ad units, and older framed sites. Recognize them when you read code; reach for them only when you are genuinely working inside an iframe."
+          },
+          {
+            "heading": "Why _blank needs rel=\"noopener\"",
+            "body": "When a link opens a new tab, the new page historically received a JavaScript reference back to yours, called window.opener. A malicious destination could use it to quietly redirect your original tab to a look-alike phishing page — an attack known as tabnabbing. The visitor switches back to what they think is your site and types their password into a fake.\n\nAdding rel=\"noopener\" severs that reference: the new tab gets no handle on the old one. A related value, rel=\"noreferrer\", additionally stops the browser from telling the destination which page the visitor came from; you can combine them as rel=\"noopener noreferrer\".\n\nCurrent browsers now apply noopener behavior to every target=\"_blank\" link automatically, but explicit is better than implied: it keeps older browsers safe and makes the security decision visible in your source.",
+            "code": "<a href=\"https://example.com/portfolio\"\n   target=\"_blank\"\n   rel=\"noopener\">my portfolio</a>"
+          },
+          {
+            "heading": "Fragment links: jumping inside a page",
+            "body": "An href that starts with # does not fetch anything — it scrolls. href=\"#contact\" tells the browser to find the element whose id is contact on the current page and bring it into view. The pair is always the same: a link with #some-id, and exactly one element somewhere on the page carrying id=\"some-id\".\n\nThis is the mechanism behind tables of contents, 'skip to content' accessibility links, and every 'back to top' button. For back-to-top you give an element near the top an id (the h1 is a common host) and link to it from the bottom. A bare href=\"#\" also scrolls to the top, but it puts a stray # in the address bar and is often abused as a do-nothing placeholder, so prefer a real id.\n\nThe id value is case-sensitive and must be unique on the page — if two elements share it, the browser jumps to the first and the duplicate is a bug waiting to confuse someone.",
+            "code": "<a href=\"#contact\">Jump to contact</a>\n<!-- ...much later on the page... -->\n<h2 id=\"contact\">Contact</h2>"
+          },
+          {
+            "heading": "Fragments on other pages",
+            "body": "A fragment can ride along on any URL, not just the current page. href=\"pricing.html#enterprise\" first loads pricing.html, then scrolls it to the element with id=\"enterprise\". The same works with full external URLs: https://example.com/docs#installation.\n\nThis is how deep links into documentation work, and why well-chosen ids on your headings are a gift to anyone who wants to share a precise spot on your page. The fragment lives after the # in the address bar and never gets sent to the server — the server returns the whole page and the browser does the scrolling on its own."
+          },
+          {
+            "heading": "Links that are not pages: mailto: and tel:",
+            "body": "The href attribute accepts more schemes than http and https. href=\"mailto:nadia@example.com\" opens the visitor's default mail program with the To field pre-filled. You can pre-fill more by appending URL parameters: mailto:nadia@example.com?subject=Booking adds a subject line.\n\nhref=\"tel:+302101234567\" dials a number — on phones it opens the dialer, and on desktops it may hand off to a calling app. Always write the number in international form with a leading + and no spaces or dashes inside the href; format the visible link text however reads best.\n\nOne caveat for mailto: it only works if the visitor has a mail client configured, which is not guaranteed on shared or public computers. Show the address as the visible text too, so it can be copied by hand as a fallback.",
+            "code": "<a href=\"mailto:nadia@example.com\">nadia@example.com</a>\n<a href=\"tel:+302101234567\">+30 210 123 4567</a>"
+          },
+          {
+            "heading": "The download attribute",
+            "body": "By default a browser displays whatever it can — PDFs, images, text files all open in the tab. Adding the download attribute to a link flips that behavior: the browser saves the file instead of navigating to it.\n\nThe attribute can stand alone (<a href=\"price-list.pdf\" download>) or carry a value that suggests a filename for the saved copy: download=\"nadia-prices-2026.pdf\". The value only renames the download; the href still decides what is fetched.\n\nOne important restriction: browsers honor the download attribute only for files from your own origin (your own site). For cross-origin URLs it is ignored and the link navigates normally — a deliberate safety rule so pages cannot force-download files from other sites under misleading names.",
+            "code": "<a href=\"price-list.pdf\" download>Download the price list</a>\n<a href=\"report.pdf\" download=\"harbour-report-2026.pdf\">Save the report</a>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Nadia Kim — Photographer</title>\n</head>\n<body>\n  <h1 id=\"top\">Nadia Kim — Photographer</h1>\n  <!-- TODO 3: add a link here that jumps down to the contact section (href=\"#contact\") -->\n\n  <h2>Work</h2>\n  <!-- TODO 1: turn \"my portfolio\" into a link to https://example.com/portfolio that opens in a new tab -->\n  <!-- TODO 2: add rel=\"noopener\" to that link -->\n  <p>Most of my recent work lives on my portfolio.</p>\n\n  <!-- TODO 4: give this heading id=\"contact\" so the jump link can find it -->\n  <h2>Contact</h2>\n  <!-- TODO 5: turn \"email me\" into a mailto: link to nadia@example.com -->\n  <p>The fastest way to reach me is to email me.</p>\n  <!-- TODO 6: link \"price list\" to price-list.pdf with the download attribute -->\n  <p>You can also grab my price list.</p>\n\n  <p><a href=\"#top\">Back to top</a></p>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Nadia Kim — Photographer</title>\n</head>\n<body>\n  <h1 id=\"top\">Nadia Kim — Photographer</h1>\n  <p><a href=\"#contact\">Jump to contact</a></p>\n\n  <h2>Work</h2>\n  <p>Most of my recent work lives on\n    <a href=\"https://example.com/portfolio\" target=\"_blank\" rel=\"noopener\">my portfolio</a>.</p>\n\n  <h2 id=\"contact\">Contact</h2>\n  <p>The fastest way to reach me is to\n    <a href=\"mailto:nadia@example.com\">email me</a>.</p>\n  <p>You can also grab my\n    <a href=\"price-list.pdf\" download>price list</a>.</p>\n\n  <p><a href=\"#top\">Back to top</a></p>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Turn 'my portfolio' into a link to https://example.com/portfolio that opens in a new tab with target=\"_blank\".",
+            "hint": "Wrap the words in <a href=\"https://example.com/portfolio\" target=\"_blank\">my portfolio</a>.",
+            "errorMessage": "No link with target=\"_blank\" found — the portfolio link must open in a new tab.",
+            "check": {
+              "type": "selector",
+              "selector": "a[target='_blank']"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Secure the new-tab link by adding rel=\"noopener\" to it.",
+            "hint": "The same <a> gets both attributes: target=\"_blank\" rel=\"noopener\".",
+            "errorMessage": "Your target=\"_blank\" link is missing rel=\"noopener\" — new-tab links need it for security.",
+            "check": {
+              "type": "attr",
+              "selector": "a[target='_blank']",
+              "attr": "rel",
+              "pattern": "noopener"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Under the h1, add a link that jumps to the contact section: href=\"#contact\".",
+            "hint": "Something like <a href=\"#contact\">Jump to contact</a> — the # means 'find this id on the current page'.",
+            "errorMessage": "No link with href=\"#contact\" found — add the in-page jump link near the top.",
+            "check": {
+              "type": "selector",
+              "selector": "a[href='#contact']"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Give the Contact heading id=\"contact\" so the jump link has somewhere to land.",
+            "hint": "Change <h2>Contact</h2> to <h2 id=\"contact\">Contact</h2>.",
+            "errorMessage": "The Contact <h2> has no id=\"contact\" — a fragment link needs a matching id to jump to.",
+            "check": {
+              "type": "selector",
+              "selector": "h2#contact"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Turn 'email me' into a mailto: link to nadia@example.com.",
+            "hint": "The scheme goes inside href with no space: <a href=\"mailto:nadia@example.com\">email me</a>.",
+            "errorMessage": "No mailto: link found — the email link's href must start with mailto: followed immediately by the address.",
+            "check": {
+              "type": "selector",
+              "selector": "a[href^='mailto:']"
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Link 'price list' to price-list.pdf and add the download attribute so it saves instead of opening.",
+            "hint": "<a href=\"price-list.pdf\" download>price list</a> — the attribute can stand alone with no value.",
+            "errorMessage": "No link with a download attribute found — the price list should download rather than display.",
+            "check": {
+              "type": "selector",
+              "selector": "a[download]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b14-images",
+      "title": "Put images on a page the right way",
+      "summary": "Use img with src and meaningful alt text, reserve space with width and height, pick the right file format, and make images clickable.",
+      "difficulty": "beginner",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Build a small photo page with a properly described main image, a decorative divider, dimension attributes that prevent layout shift, and a clickable thumbnail.",
+      "whyItMatters": "Images carry most of a page's visual weight and most of its download size, so small markup decisions have outsized effects. Good alt text is the difference between a blind visitor understanding your page and hitting a dead end, and it is what search engines index. Width and height attributes stop the page from jumping around while photos load — one of the metrics Google actually scores sites on.",
+      "steps": [
+        "Read how img, src and alt work together.",
+        "Add the main harbour photo with its src (task 1).",
+        "Write descriptive alt text for it (task 2), using the alt-writing section as a guide.",
+        "Add width and height so the browser can reserve space (task 3).",
+        "Read the decorative-image section, then add the divider with an empty alt (task 4).",
+        "Wrap the thumbnail in a link to make it clickable (task 5), then Run."
+      ],
+      "prompt": "<img src=\"harbour.jpg\"\n     alt=\"Fishing boats moored in a harbour at sunrise\"\n     width=\"640\" height=\"420\">\n\n<img src=\"wave.svg\" alt=\"\" width=\"640\" height=\"24\">\n\n<a href=\"gallery.html\"><img src=\"thumb.jpg\" alt=\"Thumbnail of the harbour gallery\" width=\"160\" height=\"100\"></a>",
+      "promptLabel": "Key code example",
+      "explanation": "The first img names its file in src, describes its content in alt for anyone who cannot see it, and declares its dimensions so the browser reserves the right amount of space before the file arrives. The second image is pure decoration, so its alt is deliberately empty — screen readers skip it entirely instead of announcing a useless filename. The third img sits inside an <a>, which makes the whole picture clickable; its alt then describes where the link goes.",
+      "example": "A photo diary page written carelessly: <img src=\"IMG_4021.jpg\"> — no alt, no dimensions. A screen-reader user hears 'IMG 4021 jpeg', the page reflows twice while images load, and Google has no idea what the photo shows.\n\nThe corrected page describes each meaningful photo in a short sentence, silences the decorative divider with alt=\"\", declares every image's width and height, and loads instantly into a stable layout.",
+      "exercise": "In the editor on the right, complete a harbour photo diary: add the main photo with src, descriptive alt, and width/height; add a decorative divider with an empty alt; and wrap the gallery thumbnail in a link.",
+      "expectedResult": "The preview shows the page structure with image placeholders in stable, correctly sized boxes (the sample files do not exist, which is fine — the checks read your markup, not the pixels). All five checks pass.",
+      "commonMistakes": [
+        "Omitting alt entirely. Screen readers then fall back to reading the filename, and validators flag the page. Every img needs an alt attribute — even if its value is empty.",
+        "Writing alt text that starts with 'image of' or 'picture of'. The screen reader already announces it as an image; describe the content itself.",
+        "Giving decorative images real alt text. A flourish or divider described aloud is noise; use alt=\"\" so assistive tech skips it.",
+        "Leaving out width and height 'because CSS will size it anyway'. Without them the browser cannot reserve space, and the page jumps as each image arrives."
+      ],
+      "proTip": "A quick alt-text test: imagine reading the page aloud over the phone to someone. Whatever you would naturally say when you reach the picture — that is the alt text. If you would say nothing and keep reading, the image is decorative and gets alt=\"\".",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will build a small photo diary page: one hero photo done completely right, one decorative divider, and one clickable thumbnail.",
+        "sections": [
+          {
+            "heading": "The img element: src is the picture",
+            "body": "Images arrive on a page through the img element. It is a void element — no closing tag, no content of its own — because the content is the file named in its src attribute. The browser reads src, fetches that file as a separate download, and paints it where the img sits in the document.\n\nThe src value is a URL like any link target: a filename in the same folder (harbour.jpg), a path (images/harbour.jpg), or a full address on another server. If the file cannot be fetched, the browser shows a broken-image icon plus the alt text — which is your first hint of why alt matters so much.\n\nBecause every image is an extra download, each one has a cost. A page with ten photos makes ten additional requests, and the total file size directly controls how long a visitor on a slow connection waits.",
+            "code": "<img src=\"harbour.jpg\" alt=\"Fishing boats moored in a harbour at sunrise\">"
+          },
+          {
+            "heading": "Writing alt text that actually helps",
+            "body": "The alt attribute holds the text that replaces the image when the image cannot be seen: for blind visitors using screen readers, for anyone whose connection failed mid-load, and for search engines, which cannot see pixels at all.\n\nGood alt text answers one question: what would the visitor miss if the image vanished? Describe the content and its point, briefly — 'Fishing boats moored in a harbour at sunrise' — not the medium ('a photo showing...') and not keywords stuffed for SEO. Aim for a phrase or short sentence; if an image needs a paragraph of explanation, that explanation belongs in the visible page text.\n\nContext changes the right answer. The same chart could have alt=\"Sales rose 40% from January to June\" on a results page, but alt=\"Example of a misleading truncated y-axis\" in a design article. Write for what the image does on this page, not what it objectively is.",
+            "code": "<!-- weak -->\n<img src=\"harbour.jpg\" alt=\"photo\">\n\n<!-- strong -->\n<img src=\"harbour.jpg\" alt=\"Fishing boats moored in a harbour at sunrise\">"
+          },
+          {
+            "heading": "Decorative images: the empty alt",
+            "body": "Not every image carries meaning. Dividers, background flourishes, and purely visual spacers add nothing a listener needs to know. For those, write alt=\"\" — the attribute present, its value empty.\n\nThe distinction matters: an empty alt tells screen readers 'skip this, it is decoration', while a missing alt attribute tells them 'the author forgot', and most will read the filename aloud as a guess. So the rule is absolute: every img gets an alt attribute; the only choice is whether its value describes the image or is deliberately empty.\n\nWhen in doubt, ask whether the page loses information if the image disappears. Loses information: describe it. Loses only prettiness: alt=\"\".",
+            "code": "<img src=\"wave.svg\" alt=\"\" width=\"640\" height=\"24\">"
+          },
+          {
+            "heading": "width, height and layout shift",
+            "body": "Until an image file arrives, the browser has no idea how big it is — so by default it renders the page without reserving space, then shoves everything downward when the image finally loads. That jump is called layout shift, and it is genuinely hostile: visitors tap the wrong button because the page moved under their finger. Google measures it as Cumulative Layout Shift and ranks pages on it.\n\nThe fix costs two attributes: width and height, in pixels, matching the image file's real proportions. The browser uses their ratio to reserve a correctly shaped box immediately, and the image loads into a space that was always there. CSS can still scale the displayed size later; the attributes' job is the placeholder ratio, not the final look.\n\nWrite them as bare numbers — width=\"640\", not width=\"640px\". The px is implied in HTML attributes; the unit syntax belongs to CSS.",
+            "code": "<img src=\"harbour.jpg\"\n     alt=\"Fishing boats moored in a harbour at sunrise\"\n     width=\"640\" height=\"420\">"
+          },
+          {
+            "heading": "Choosing a file format",
+            "body": "Six formats cover practically every image on the web, and each has a natural home. JPG (or JPEG) compresses photographs well by discarding detail your eye barely notices; it is the default for photos but blurs sharp-edged graphics. PNG is lossless and supports transparency, which makes it right for screenshots, logos with transparent backgrounds, and any graphic with crisp lines — at the price of larger files for photos.\n\nGIF is the legacy option: only 256 colors, but it animates, which kept it alive for memes; for everything else it has been superseded. SVG is not pixels at all but geometry — a text file of shapes that scales to any size without blurring, perfect for icons, logos and diagrams, and usually tiny.\n\nWebP and AVIF are the modern generation: they compress both photos and graphics substantially better than JPG and PNG, support transparency and animation, and are now supported by all current browsers. For new work, WebP is a safe default for photographic content, with AVIF squeezing files even smaller where the encoder is available. The practical rule: photos in WebP or JPG, sharp graphics in SVG or PNG, and animation in video formats rather than GIF when you can."
+          },
+          {
+            "heading": "Images as links, and title vs alt",
+            "body": "Wrap an img in an <a> and the entire picture becomes clickable — the standard pattern for logos that link home and thumbnails that open galleries. When an image is a link, its alt text should describe the destination or action ('Open the full harbour gallery'), because for a screen-reader user that alt is the link text.\n\nThe title attribute is a different, weaker tool: it produces the small tooltip that appears when a mouse hovers. It is not a substitute for alt — touchscreen users never see tooltips, and screen readers do not reliably read them. Use title, sparingly, for a bonus hint on top of solid alt text, never instead of it.",
+            "code": "<a href=\"gallery.html\">\n  <img src=\"thumb.jpg\" alt=\"Open the full harbour gallery\"\n       width=\"160\" height=\"100\">\n</a>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Harbour photo diary</title>\n</head>\n<body>\n  <h1>Harbour photo diary</h1>\n\n  <!-- TODO 1: add the main photo: <img> with src=\"harbour.jpg\" -->\n  <!-- TODO 2: give it a descriptive alt text -->\n  <!-- TODO 3: add width=\"640\" and height=\"420\" so the layout stays stable -->\n\n  <h2>About this shot</h2>\n  <p>Taken at sunrise from the east pier, ten minutes before the boats went out.</p>\n\n  <!-- TODO 4: add the decorative divider wave.svg with an EMPTY alt -->\n\n  <h2>More photos</h2>\n  <!-- TODO 5: add thumb.jpg wrapped in a link to gallery.html so the image is clickable -->\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Harbour photo diary</title>\n</head>\n<body>\n  <h1>Harbour photo diary</h1>\n\n  <img src=\"harbour.jpg\"\n       alt=\"Fishing boats moored in a harbour at sunrise\"\n       width=\"640\" height=\"420\">\n\n  <h2>About this shot</h2>\n  <p>Taken at sunrise from the east pier, ten minutes before the boats went out.</p>\n\n  <img src=\"wave.svg\" alt=\"\" width=\"640\" height=\"24\">\n\n  <h2>More photos</h2>\n  <a href=\"gallery.html\">\n    <img src=\"thumb.jpg\" alt=\"Open the full harbour gallery\"\n         width=\"160\" height=\"100\">\n  </a>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Add the main photo under the h1: an <img> with src=\"harbour.jpg\".",
+            "hint": "img is a void element: <img src=\"harbour.jpg\"> — no closing tag.",
+            "errorMessage": "No <img> with src=\"harbour.jpg\" found — add the main photo below the page heading.",
+            "check": {
+              "type": "selector",
+              "selector": "img[src='harbour.jpg']"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Give the harbour photo a real descriptive alt text (a short phrase, not one word).",
+            "hint": "Describe what a visitor would miss if the photo vanished, e.g. alt=\"Fishing boats moored in a harbour at sunrise\".",
+            "errorMessage": "The harbour photo needs descriptive alt text — a few words describing the scene, not empty and not just 'photo'.",
+            "check": {
+              "type": "attr",
+              "selector": "img[src='harbour.jpg']",
+              "attr": "alt",
+              "pattern": "[a-z]+\\s+[a-z]+"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Add width=\"640\" and height=\"420\" to the harbour photo so the browser can reserve its space.",
+            "hint": "Bare numbers, no px: width=\"640\" height=\"420\" inside the same img tag.",
+            "errorMessage": "The harbour photo is missing width/height attributes — without them the page shifts while the image loads.",
+            "check": {
+              "type": "attr",
+              "selector": "img[width]",
+              "attr": "height",
+              "pattern": "\\d+"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Add the decorative divider image wave.svg with an empty alt attribute.",
+            "hint": "Decoration is silenced with alt=\"\": <img src=\"wave.svg\" alt=\"\" width=\"640\" height=\"24\">.",
+            "errorMessage": "No decorative image with an empty alt found — the divider needs alt=\"\" (present but empty) so screen readers skip it.",
+            "check": {
+              "type": "selector",
+              "selector": "img[alt='']"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Under 'More photos', add thumb.jpg wrapped in a link to gallery.html.",
+            "hint": "Put the whole img inside the anchor: <a href=\"gallery.html\"><img src=\"thumb.jpg\" alt=\"Open the full harbour gallery\"></a>.",
+            "errorMessage": "No image inside a link found — wrap the thumbnail <img> inside an <a href=\"gallery.html\">.",
+            "check": {
+              "type": "selector",
+              "selector": "a img"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b15-figure-favicon",
+      "title": "Caption images with figure and give your site a favicon",
+      "summary": "Use figure and figcaption to bind images to their captions, sketch a clickable image map with map and area, and add the little tab icon every real site has.",
+      "difficulty": "beginner",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Publish a chart page with a semantically captioned figure, a clickable region on a floor plan, and a favicon in the head.",
+      "whyItMatters": "A caption sitting in a loose paragraph under an image is only visually attached; figure and figcaption attach it structurally, so screen readers, search engines and reader modes know the two belong together. And the favicon is often the first detail visitors judge: a site without one looks unfinished in every browser tab, bookmark list and history entry.",
+      "steps": [
+        "Read the figure/figcaption sections on the left.",
+        "Wrap the sales chart in a <figure> (task 1).",
+        "Add the <figcaption> inside it (task 2).",
+        "Read the favicon section, then add the icon link in the head (tasks 3 and 4).",
+        "Read the image-map section and add a map with one clickable area (task 5).",
+        "Run and confirm all checks pass."
+      ],
+      "prompt": "<figure>\n  <img src=\"sales-chart.png\" alt=\"Bar chart of monthly sales rising from January to June\" width=\"480\" height=\"320\">\n  <figcaption>Figure 1: Monthly sales, Jan–Jun</figcaption>\n</figure>\n\n<link rel=\"icon\" href=\"favicon.png\" sizes=\"32x32\" type=\"image/png\">",
+      "promptLabel": "Key code example",
+      "explanation": "The figure element declares 'this image and this caption are one unit that could be moved elsewhere without breaking the text around it'. The figcaption inside it is the caption — machines now know exactly which text describes which image. The link rel=\"icon\" in the head points the browser at the small image it shows in the tab, in bookmarks, and in history; sizes and type help it pick the right file when several are offered.",
+      "example": "A report page shows a chart with the caption in a plain <p> below it. Visually fine — but a screen reader reads them as two unrelated blocks, and a reader mode may keep the image and drop the caption.\n\nWrapped in figure/figcaption, the pair travels together everywhere: assistive tech announces the caption as belonging to the chart, and the browser tab now shows the company's little icon instead of a generic gray globe.",
+      "exercise": "In the editor on the right, wrap the sales chart in a figure with a figcaption, add a favicon link (with a sensible file reference) to the head, and make one region of the office floor plan clickable with map and area.",
+      "expectedResult": "The preview shows the chart placeholder with its caption grouped beneath it and the floor plan below; the favicon link and image map are verified by the checks rather than visible in the preview.",
+      "commonMistakes": [
+        "Placing figcaption outside the figure. It must be a child of figure — first or last inside it — or it is just a stray element.",
+        "Using figcaption as a replacement for alt. They serve different readers: alt describes the image for those who cannot see it; the caption adds context for everyone.",
+        "Forgetting that usemap's value needs the # prefix (usemap=\"#plan\") while the map's name has none (name=\"plan\").",
+        "Linking the favicon from a subpage-relative path so it breaks on nested pages. Use a root-relative path like /favicon.png on real sites."
+      ],
+      "proTip": "Browsers request /favicon.ico from your site root automatically even with no link tag — dropping a favicon.ico there is a zero-markup fallback that also covers old bookmarks. A modern setup pairs it with an SVG icon: <link rel=\"icon\" href=\"/icon.svg\" type=\"image/svg+xml\">.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will give a chart a real, machine-readable caption, make part of a floor plan clickable, and put an icon in the browser tab.",
+        "sections": [
+          {
+            "heading": "figure: content that stands apart",
+            "body": "Some content is referenced by the text rather than woven into it: a chart, a photo, a code listing, a quoted poem. HTML marks that kind of content with the figure element. The definition to remember: a figure is self-contained — you could move it to the bottom of the page or into an appendix, and the surrounding paragraphs would still read correctly.\n\nThat test tells you when figure is right. 'As figure 1 shows, sales rose steadily' — the chart can float anywhere, so it is a figure. An icon inside a sentence cannot move without breaking the sentence, so it is not.\n\nA figure is not limited to one image: it can hold several images sharing one caption, a code snippet, a table, a video — any self-contained block that deserves a label.",
+            "code": "<figure>\n  <img src=\"sales-chart.png\"\n       alt=\"Bar chart of monthly sales rising from January to June\"\n       width=\"480\" height=\"320\">\n  <figcaption>Figure 1: Monthly sales, Jan–Jun</figcaption>\n</figure>"
+          },
+          {
+            "heading": "figcaption: the caption that machines can see",
+            "body": "Inside a figure you may place exactly one figcaption, either as the first child or the last — caption above or caption below, your choice. Its text is the figure's label, and because the relationship is structural rather than visual, every consumer of the page gets it: screen readers announce the caption with the figure, search engines index them together, and reader modes keep them paired.\n\nfigcaption complements alt; it never replaces it. The alt attribute serves someone who cannot see the image at all and describes its content. The caption serves everyone and adds context — the source, the date range, the 'Figure 1' number. A chart typically needs both: alt=\"Bar chart of monthly sales rising from January to June\" and a caption of 'Figure 1: Monthly sales, Jan–Jun'."
+          },
+          {
+            "heading": "Image maps: clickable regions with map and area",
+            "body": "Occasionally one image needs several clickable zones — a floor plan where each room links to its own page, or a world map with per-country links. HTML's classic answer is the image map: the img gets a usemap attribute pointing at a named map element, and the map contains area elements, each defining one clickable shape.\n\nEach area sets a shape (rect, circle or poly), coords giving the shape's pixel coordinates on the image, an href for the destination, and an alt describing the region — areas are links, so they need link text for assistive tech. The naming convention trips people up: the map declares name=\"plan\" without a hash, while the image references it as usemap=\"#plan\" with one.\n\nImage maps are worth recognizing more than mastering: the pixel coordinates do not adapt when the image scales responsively, so modern sites usually reach for SVG or positioned links instead. But for a fixed-size diagram they still work in every browser.",
+            "code": "<img src=\"office-plan.png\" alt=\"Office floor plan\"\n     usemap=\"#plan\" width=\"400\" height=\"300\">\n<map name=\"plan\">\n  <area shape=\"rect\" coords=\"0,0,200,300\"\n        href=\"#kitchen\" alt=\"Kitchen\">\n</map>"
+          },
+          {
+            "heading": "The favicon: your site's smallest asset",
+            "body": "The favicon (favorites icon) is the small image browsers display beside your page title — in the tab, in bookmarks, in the history list, and on some platforms in search results. It is declared in the head with a link element: rel=\"icon\" plus an href to the image file.\n\nThe optional sizes attribute tells the browser what pixel dimensions a file provides (sizes=\"32x32\"), and type names its MIME type (type=\"image/png\"). You can list several link elements at different sizes and let the browser choose the best fit for each context — tabs want tiny icons, while a bookmark on a phone home screen wants a large one.\n\nEven without any markup, browsers try one guess: they request a file called favicon.ico from the root of your site. That legacy behavior is why favicon.ico still exists on most servers, and why placing one there is a sensible safety net alongside your explicit links.",
+            "code": "<link rel=\"icon\" href=\"favicon.png\" sizes=\"32x32\" type=\"image/png\">"
+          },
+          {
+            "heading": "Favicon formats in practice",
+            "body": "The traditional format is ICO — a container that bundles multiple sizes (16x16, 32x32, 48x48) in one file, which is exactly what favicon.ico is. PNG works in all modern browsers and is easier to produce; supply at least a 32x32, and a 180x180 or larger if you care about phone home screens.\n\nSVG is the modern favorite where supported: one vector file stays sharp at any size and can even adapt to dark mode with embedded CSS. A robust minimal setup for a new site is two lines — an SVG icon for modern browsers and a favicon.ico fallback at the site root for everything else.\n\nOne practical note: browsers cache favicons aggressively. If you swap the icon and the tab keeps showing the old one, it is almost never your markup — force-refresh or bump the filename."
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Chart of the week</title>\n  <!-- TODO 3+4: add the favicon link: rel=\"icon\", href=\"favicon.png\", sizes=\"32x32\" -->\n</head>\n<body>\n  <h1>Chart of the week</h1>\n\n  <!-- TODO 1: wrap this image in a <figure> -->\n  <img src=\"sales-chart.png\" alt=\"Bar chart of monthly sales rising from January to June\" width=\"480\" height=\"320\">\n  <!-- TODO 2: add a <figcaption> inside the figure: Figure 1: Monthly sales, Jan-Jun -->\n\n  <h2>Office map</h2>\n  <!-- TODO 5: make the left half clickable: add usemap=\"#plan\" to the img,\n       then a <map name=\"plan\"> with one rect <area> linking to #kitchen -->\n  <img src=\"office-plan.png\" alt=\"Office floor plan\" width=\"400\" height=\"300\">\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Chart of the week</title>\n  <link rel=\"icon\" href=\"favicon.png\" sizes=\"32x32\" type=\"image/png\">\n</head>\n<body>\n  <h1>Chart of the week</h1>\n\n  <figure>\n    <img src=\"sales-chart.png\" alt=\"Bar chart of monthly sales rising from January to June\" width=\"480\" height=\"320\">\n    <figcaption>Figure 1: Monthly sales, Jan-Jun</figcaption>\n  </figure>\n\n  <h2>Office map</h2>\n  <img src=\"office-plan.png\" alt=\"Office floor plan\" usemap=\"#plan\" width=\"400\" height=\"300\">\n  <map name=\"plan\">\n    <area shape=\"rect\" coords=\"0,0,200,300\" href=\"#kitchen\" alt=\"Kitchen\">\n  </map>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Wrap the sales chart image in a <figure> element.",
+            "hint": "Open <figure> before the img and close </figure> after it (the figcaption will live inside too).",
+            "errorMessage": "The chart <img> is not inside a <figure> — wrap it so the image and its caption form one unit.",
+            "check": {
+              "type": "selector",
+              "selector": "figure img"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Inside the figure, add a <figcaption> reading: Figure 1: Monthly sales, Jan-Jun.",
+            "hint": "Place it just after the img, still inside the figure: <figcaption>Figure 1: Monthly sales, Jan-Jun</figcaption>.",
+            "errorMessage": "No figcaption mentioning the monthly sales caption found inside the figure.",
+            "check": {
+              "type": "text",
+              "selector": "figure figcaption",
+              "pattern": "monthly sales"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "In the head, add the favicon link: <link rel=\"icon\" ...>.",
+            "hint": "It is a void element in the head: <link rel=\"icon\" href=\"favicon.png\" sizes=\"32x32\" type=\"image/png\">.",
+            "errorMessage": "No <link rel=\"icon\"> found in the head — the page has no favicon declared.",
+            "check": {
+              "type": "selector",
+              "selector": "link[rel='icon']"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Point the favicon link's href at an icon file (favicon.png).",
+            "hint": "href=\"favicon.png\" — .ico and .svg would also be valid favicon formats.",
+            "errorMessage": "The favicon link's href does not reference an icon file (.png, .ico or .svg).",
+            "check": {
+              "type": "attr",
+              "selector": "link[rel='icon']",
+              "attr": "href",
+              "pattern": "\\.(png|ico|svg)"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Give the floor plan a clickable region: add usemap=\"#plan\" to the img, then a <map name=\"plan\"> containing one rect <area> with coords=\"0,0,200,300\", href=\"#kitchen\" and alt=\"Kitchen\".",
+            "hint": "The map's name has no # (name=\"plan\") but the img's usemap does (usemap=\"#plan\").",
+            "errorMessage": "No <area> inside a named <map> found — add the map element with one clickable rectangle.",
+            "check": {
+              "type": "selector",
+              "selector": "map[name] area"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b16-lists",
+      "title": "Organize anything with ordered and unordered lists",
+      "summary": "Use ul, ol and li to structure bullet points, numbered steps and navigation menus — including nesting, the start and reversed attributes, and continuing numbers across lists.",
+      "difficulty": "beginner",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Build a trip-planner page with a bulleted packing list, numbered itinerary steps that continue across sections, a nested sub-list, and a list-based navigation menu.",
+      "whyItMatters": "Lists are everywhere once you look: navigation menus, search results, step-by-step instructions, shopping carts. Marking them up as real ul/ol lists — instead of paragraphs with dashes — tells screen readers how many items there are and lets users jump between them, gives CSS a clean structure to style, and keeps numbered steps renumbering themselves automatically when you edit.",
+      "steps": [
+        "Read what separates ordered from unordered lists.",
+        "Build the packing list as a ul with at least three items (task 1).",
+        "Build Saturday's itinerary as an ol (task 2).",
+        "Read about the start and reversed attributes, then make Sunday's list continue at 4 (task 3).",
+        "Nest a toiletries sub-list inside the packing list (task 4).",
+        "Read the navigation section and convert the top links into a nav menu (task 5), then Run."
+      ],
+      "prompt": "<ul>\n  <li>Rain jacket</li>\n  <li>Toiletries\n    <ul>\n      <li>Toothbrush</li>\n    </ul>\n  </li>\n</ul>\n\n<ol start=\"4\">\n  <li>Visit the market</li>\n</ol>",
+      "promptLabel": "Key code example",
+      "explanation": "The ul renders bullets because item order carries no meaning; the browser numbers the ol automatically, and start=\"4\" makes its numbering continue from a previous list. The nested ul lives inside an li of its parent — a list is nested inside an item, never directly inside another list. Every visible entry, including the one hosting the sub-list, is an li.",
+      "example": "A trip page written as paragraphs: 'Pack: jacket, boots, toiletries. Day 1: catch the train, then hike, then dinner.' Editing step 2 means renumbering by hand, and a screen reader hears one long sentence.\n\nAs real lists, the packing items become scannable bullets, the itinerary numbers itself (and renumbers when a step is inserted), and the toiletries expand into an indented sub-list without touching anything else.",
+      "exercise": "In the editor on the right, build four lists on a weekend-trip page: an unordered packing list, an ordered Saturday itinerary, a Sunday list continuing the numbering at 4, a nested toiletries sub-list, and a nav menu made from a list of links.",
+      "expectedResult": "The preview shows bulleted packing items with an indented sub-list, numbered steps that run 1-3 on Saturday and 4-5 on Sunday, and a menu of links at the top. All five checks pass.",
+      "commonMistakes": [
+        "Putting text or other elements directly inside ul or ol. The only valid children of a list are li elements — everything else goes inside an li.",
+        "Nesting a sub-list as a sibling of the li instead of inside it. The inner <ul> must sit within the parent <li>, before its closing tag.",
+        "Faking numbered lists by typing '1.', '2.' into paragraphs. The numbers stop matching reality the first time you insert a step.",
+        "Choosing ol just because numbers look tidier. If reordering the items would not change their meaning, the list is unordered."
+      ],
+      "proTip": "Nearly every horizontal navigation bar on the web is secretly a ul — CSS removes the bullets and lines the items up. Keep the markup a real list even when it will not look like one: screen readers announce 'list, five items', which is exactly what a menu is.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will structure a weekend-trip planner with every list pattern that matters: bullets, numbers, continued numbering, nesting, and a nav menu.",
+        "sections": [
+          {
+            "heading": "Two list types, one question",
+            "body": "HTML offers two general-purpose list containers. ul (unordered list) renders its items with bullets; ol (ordered list) renders them with automatic numbers. Both hold the same kind of children: li (list item) elements, and nothing else directly — no loose text, no stray paragraphs between items.\n\nThe choice between them comes down to one question: does the order carry meaning? Steps in a recipe, ranked results, an itinerary — reorder those and the content breaks, so they are ordered. A packing list, a set of features, links in a menu — any order works, so they are unordered. The visual difference (bullets versus numbers) is just the symptom; the real distinction is semantic, and screen readers announce it.\n\nBrowsers indent both list types and pick the marker automatically. Each additional item is one more <li>, and the numbering of an ol maintains itself: insert a step in the middle and every number below it updates for free.",
+            "code": "<ul>\n  <li>Rain jacket</li>\n  <li>Hiking boots</li>\n</ul>\n\n<ol>\n  <li>Catch the 08:10 train</li>\n  <li>Hike the coastal path</li>\n</ol>"
+          },
+          {
+            "heading": "Tuning ordered lists: type, start, reversed",
+            "body": "Ordered lists take three attributes worth knowing. type changes the numbering style: \"1\" for decimal (the default), \"A\" and \"a\" for letters, \"I\" and \"i\" for Roman numerals. Legal documents and outlines use the letter and Roman styles; most pages never need them.\n\nstart sets the first number: <ol start=\"4\"> begins at 4. Its everyday use is continuing a sequence that was interrupted — steps 1-3 under one heading, then the list resumes at 4 under the next. The value is always a number even when type shows letters (start=\"3\" with type=\"A\" begins at C).\n\nreversed is a boolean attribute that counts down instead of up — a top-ten list running 10 to 1 is <ol reversed>. It needs no value; its presence flips the direction. All three attributes belong on the ol itself, not on individual items.",
+            "code": "<ol type=\"A\">\n  <li>Appears as A</li>\n</ol>\n\n<ol start=\"4\">\n  <li>Appears as 4</li>\n</ol>\n\n<ol reversed>\n  <li>Counts down</li>\n</ol>"
+          },
+          {
+            "heading": "Nesting lists inside lists",
+            "body": "Lists nest to any depth, and the rule for doing it correctly is strict: the inner list goes inside an li of the outer list — after that item's text, before its closing </li>. The sub-list belongs to that item; putting it directly between two li elements is invalid and renders unpredictably.\n\nBrowsers indent each level further and, for unordered lists, usually switch the bullet style per level (disc, then circle, then square), which gives free visual hierarchy. You can mix types freely: an ol of steps where one step contains a ul of options is perfectly normal.\n\nWhen nesting goes wrong it is almost always a closing-tag problem, so indent nested lists in your source exactly as you want to think about them — the inner ul visibly inside its host li.",
+            "code": "<ul>\n  <li>Toiletries\n    <ul>\n      <li>Toothbrush</li>\n      <li>Sunscreen</li>\n    </ul>\n  </li>\n</ul>"
+          },
+          {
+            "heading": "Lists as navigation menus",
+            "body": "A navigation menu is, structurally, a list of links — and that is exactly how the web marks it up: a nav element wrapping a ul, each li containing one a. The nav element tells assistive technology 'this block is site navigation', and the list tells it how many destinations there are and lets users skip past them with one keystroke.\n\nThe pattern looks over-engineered until you see what each layer buys: nav gives the block a landmark role, ul/li gives it countable structure, and the anchors do the linking. CSS then removes the bullets and lays the items out horizontally — the markup stays a list even when it looks like a toolbar.\n\nThis is the single most common list you will ever write. Practically every site header on the web contains one.",
+            "code": "<nav>\n  <ul>\n    <li><a href=\"index.html\">Home</a></li>\n    <li><a href=\"#packing\">Packing</a></li>\n    <li><a href=\"#itinerary\">Itinerary</a></li>\n  </ul>\n</nav>"
+          },
+          {
+            "heading": "What lists do not control: their looks",
+            "body": "Everything visual about a list — the bullet symbol, custom markers, horizontal layout, indentation — belongs to CSS, chiefly the list-style family of properties. list-style-type swaps the marker (square, decimal, none), list-style-image replaces it with an image, and list-style: none removes markers entirely, which is step one of turning a list into a menu bar.\n\nOlder HTML had presentational attributes for some of this, and you will still meet type on ul in ancient code; treat it as historical. The division of labor is the same one running through this whole course: HTML says what the content is (a list, ordered or not), CSS says how it looks. Choose ul versus ol for meaning, then restyle freely."
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Weekend trip planner</title>\n</head>\n<body>\n  <!-- TODO 5: turn this into a real menu: <nav> containing a ul of three links\n       (index.html, #packing, #itinerary) -->\n  <p>Home | Packing | Itinerary</p>\n\n  <h1>Weekend trip planner</h1>\n\n  <h2 id=\"packing\">Packing list</h2>\n  <!-- TODO 1: an unordered list with at least three items\n       (rain jacket, hiking boots, toiletries) -->\n  <!-- TODO 4: give the Toiletries item its own nested ul (toothbrush, sunscreen) -->\n\n  <h2 id=\"itinerary\">Saturday</h2>\n  <!-- TODO 2: an ordered list: catch the 08:10 train, hike the coastal path,\n       dinner at the harbour -->\n\n  <h2>Sunday</h2>\n  <!-- TODO 3: an ordered list that continues the numbering — start it at 4\n       (visit the market, train home) -->\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Weekend trip planner</title>\n</head>\n<body>\n  <nav>\n    <ul>\n      <li><a href=\"index.html\">Home</a></li>\n      <li><a href=\"#packing\">Packing</a></li>\n      <li><a href=\"#itinerary\">Itinerary</a></li>\n    </ul>\n  </nav>\n\n  <h1>Weekend trip planner</h1>\n\n  <h2 id=\"packing\">Packing list</h2>\n  <ul>\n    <li>Rain jacket</li>\n    <li>Hiking boots</li>\n    <li>Toiletries\n      <ul>\n        <li>Toothbrush</li>\n        <li>Sunscreen</li>\n      </ul>\n    </li>\n  </ul>\n\n  <h2 id=\"itinerary\">Saturday</h2>\n  <ol>\n    <li>Catch the 08:10 train</li>\n    <li>Hike the coastal path</li>\n    <li>Dinner at the harbour</li>\n  </ol>\n\n  <h2>Sunday</h2>\n  <ol start=\"4\">\n    <li>Visit the market</li>\n    <li>Train home</li>\n  </ol>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Under 'Packing list', build a <ul> with at least three <li> items.",
+            "hint": "Every visible entry is its own <li>, and only <li> elements go directly inside the <ul>.",
+            "errorMessage": "Fewer than three list items found inside a ul — the packing list needs at least three <li> entries.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "ul > li",
+              "min": 3
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Under 'Saturday', build an <ol> with the three itinerary steps.",
+            "hint": "Same shape as ul but numbered automatically: <ol><li>Catch the 08:10 train</li>...</ol>.",
+            "errorMessage": "No ordered list with items found — Saturday's steps must be an <ol> so they are numbered.",
+            "check": {
+              "type": "selector",
+              "selector": "ol li"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Make Sunday's ordered list continue the weekend numbering by starting at 4.",
+            "hint": "The attribute goes on the list, not the items: <ol start=\"4\">.",
+            "errorMessage": "Sunday's <ol> does not carry start=\"4\" — the numbering should continue where Saturday stopped.",
+            "check": {
+              "type": "attr",
+              "selector": "ol[start]",
+              "attr": "start",
+              "value": "4"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Give the Toiletries item a nested <ul> (toothbrush, sunscreen) inside its <li>.",
+            "hint": "The inner list opens after 'Toiletries' and closes before that item's </li> — inside the item, not next to it.",
+            "errorMessage": "No nested list found — the toiletries sub-list must sit inside the Toiletries <li>.",
+            "check": {
+              "type": "selector",
+              "selector": "li ul"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Replace the 'Home | Packing | Itinerary' paragraph with a <nav> containing a ul of three links.",
+            "hint": "Each destination is one item: <nav><ul><li><a href=\"index.html\">Home</a></li>...</ul></nav>.",
+            "errorMessage": "No link inside a nav list found — the menu should be a <nav> wrapping a ul of <li><a> entries.",
+            "check": {
+              "type": "selector",
+              "selector": "nav ul li a"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b17-description-lists",
+      "title": "Pair terms with definitions using description lists",
+      "summary": "Use dl, dt and dd to mark up glossaries, FAQs and metadata — including several descriptions per term and richer markup inside definitions.",
+      "difficulty": "beginner",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Build a small web glossary as a dl, with one term carrying two descriptions and code markup nested inside a definition.",
+      "whyItMatters": "Plenty of real content is name-value pairs: glossary terms and meanings, product specs and values, questions and answers. Bullet lists flatten those pairs into indistinguishable lines; the description list keeps the pairing explicit, so the structure survives into styling, screen readers and scripts. Once you can spot term-plus-description content, you will find uses for dl on nearly every project.",
+      "steps": [
+        "Read how dl, dt and dd divide the work.",
+        "Create the dl and add the first term with its description (task 1).",
+        "Add the remaining terms until there are three dt entries (task 2) each with a dd (task 3).",
+        "Read the multiple-dd section and give HTTP a second description (task 4).",
+        "Read about nesting markup in dd, then wrap the tag name in <code> (task 5).",
+        "Run and confirm every check passes."
+      ],
+      "prompt": "<dl>\n  <dt>HTML</dt>\n  <dd>The markup language that structures pages — a heading is written as <code>&lt;h1&gt;</code>.</dd>\n  <dt>HTTP</dt>\n  <dd>The protocol browsers use to request pages.</dd>\n  <dd>Also the scheme at the front of most URLs.</dd>\n</dl>",
+      "promptLabel": "Key code example",
+      "explanation": "The dl is the container, each dt names a term, and every dd immediately following a dt describes it — so HTTP here owns two descriptions simply because two dd elements follow it. Definitions are ordinary flow content, which is why the HTML entry can nest a code element (and could nest paragraphs, links or lists). Browsers indent the dd elements by default, visually hanging each description under its term.",
+      "example": "A glossary drafted as bullets reads: 'HTML - the markup language', 'CSS - the stylesheet language'. The dash is doing structural work that only sighted readers can see.\n\nRebuilt as a dl, each term is a dt and each meaning a dd: screen readers announce term and description as a pair, CSS can style terms bold and definitions indented with two selectors, and adding a second meaning to a term is just one more dd.",
+      "exercise": "In the editor on the right, build a three-term web glossary as a description list: every term gets a dd, HTTP gets a second one, and the HTML definition wraps its example tag in a code element.",
+      "expectedResult": "The preview shows three bold-ish terms each with indented descriptions beneath them — HTTP with two — and the tag name inside the HTML definition rendered in monospace. All five checks pass.",
+      "commonMistakes": [
+        "Writing definition text directly inside the dl. Only dt and dd (and wrapper div elements) may be children of dl — all prose lives in dd.",
+        "Pairing terms and definitions by proximity in a ul instead of using dl. The pairing then exists only visually and is lost to assistive tech.",
+        "Assuming one dt can have only one dd. Any number of dd elements may follow a term — and several dt elements may share one dd.",
+        "Using dl for content that is not name-value shaped, just to get indentation. Indentation is a CSS job; dl is for genuine term-description pairs."
+      ],
+      "proTip": "dl is quietly ideal for metadata blocks: 'Author: N. Kim, Published: May 2026, Reading time: 6 min' is three dt/dd pairs. Many documentation sites render function parameters exactly this way — parameter name as dt, explanation as dd.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will convert a flat glossary into a proper description list, including a term with two descriptions and markup nested inside a definition.",
+        "sections": [
+          {
+            "heading": "The third list type: dl, dt, dd",
+            "body": "Beyond bulleted and numbered lists, HTML has a list built for pairs: the description list. Three elements share the work. dl (description list) is the container. dt (description term) holds a name — a word being defined, a spec label, a question. dd (description details) holds whatever describes the dt before it.\n\nThe pairing is positional: a dd belongs to the nearest dt above it. Browsers render dt elements flush left and indent each dd beneath its term, which is why glossaries built with dl look right with zero CSS.\n\nOnly dt and dd may appear directly inside a dl (a div wrapper around groups is also allowed, mainly for styling). Loose text between them is invalid — every piece of prose belongs inside a dd.",
+            "code": "<dl>\n  <dt>CSS</dt>\n  <dd>The stylesheet language that controls how pages look.</dd>\n</dl>"
+          },
+          {
+            "heading": "Several descriptions, several terms",
+            "body": "The dt/dd relationship is not one-to-one. A term can be followed by multiple dd elements, each an additional description: a word with two senses, a spec with a value plus a footnote, a question with a short answer and a longer elaboration. All the dd elements between one dt and the next belong to that dt.\n\nThe reverse also works: several consecutive dt elements can share the dd that follows them — useful when two spellings or synonyms carry one definition ('colour', 'color', then a single dd).\n\nThis flexibility is exactly what ul and ol lack, and it is the reason dl exists: the grouping of names and values is expressed in the markup itself rather than implied by line breaks.",
+            "code": "<dl>\n  <dt>HTTP</dt>\n  <dd>The protocol browsers use to request pages.</dd>\n  <dd>Also the scheme at the front of most URLs.</dd>\n\n  <dt>colour</dt>\n  <dt>color</dt>\n  <dd>Two spellings, one CSS property.</dd>\n</dl>"
+          },
+          {
+            "heading": "Where description lists shine",
+            "body": "Three content shapes come up constantly and all fit dl naturally. Glossaries and dictionaries are the textbook case: term, meaning. Metadata panels are the workhorse case: 'Author', 'Published', 'License' as dt elements with their values as dd — product spec sheets, recipe info boxes and API parameter tables are all this shape. And FAQs fit too: each question a dt, its answer a dd.\n\nThe test for whether dl is right: can you read the content aloud as 'X: Y' pairs without forcing it? 'HTML: the markup language' — natural, use dl. 'Rain jacket: ...' has no second half — that is a plain ul.\n\nWhat dl is not for is layout. Early web developers used it to get indentation for free; today that is simply a styling decision made in CSS, and misusing dl for it confuses every machine reader of the page."
+          },
+          {
+            "heading": "dl versus ul and ol",
+            "body": "All three lists group items, so the differences are worth stating plainly. ul groups equal items whose order is free. ol groups equal items whose order is meaningful. dl groups unequal items — pairs in which one side names and the other side describes.\n\nStructurally, ul and ol allow exactly one kind of child (li), while dl alternates two kinds (dt and dd) whose sequence encodes the pairing. That is also why you cannot get dl's semantics by styling a ul: the bullet list has no way to say which line defines which.\n\nScreen readers reflect the distinction: a ul is announced as 'list, N items', while dl support varies but generally conveys term-description grouping. Choose by meaning and the announcement takes care of itself."
+          },
+          {
+            "heading": "Rich content inside dd",
+            "body": "A dd is not restricted to plain text — it accepts nearly any markup: paragraphs, links, emphasis, code, even entire nested lists. A glossary definition can therefore include a code example, an FAQ answer can contain a link to documentation, and a spec value can hold a small ul of options.\n\nThe dt is more constrained: it takes phrasing-level content (text, code, abbr and similar), not block structures like paragraphs or lists. Keep terms short and put anything substantial in the dd.\n\nOne pattern you will use in this exercise: writing about HTML inside HTML. To show a literal tag such as <h1> as text, its angle brackets must be written as the entities &lt; and &gt;, usually wrapped in a code element for monospace rendering — a preview of the entities lesson coming later in this course.",
+            "code": "<dt>HTML</dt>\n<dd>The markup language that structures pages —\n    a heading is written as <code>&lt;h1&gt;</code>.</dd>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Web glossary</title>\n</head>\n<body>\n  <h1>Web glossary</h1>\n  <p>Three terms every beginner meets in week one.</p>\n\n  <!-- TODO 1-3: rebuild this as a <dl>: each term a <dt>, each meaning a <dd> -->\n  <!-- TODO 4: give HTTP a SECOND <dd>: \"Also the scheme at the front of most URLs.\" -->\n  <!-- TODO 5: in the HTML definition, wrap &lt;h1&gt; in a <code> element -->\n  <p>HTML - the markup language that structures pages; a heading is written as &lt;h1&gt;.</p>\n  <p>CSS - the stylesheet language that controls how pages look.</p>\n  <p>HTTP - the protocol browsers use to request pages.</p>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Web glossary</title>\n</head>\n<body>\n  <h1>Web glossary</h1>\n  <p>Three terms every beginner meets in week one.</p>\n\n  <dl>\n    <dt>HTML</dt>\n    <dd>The markup language that structures pages; a heading is written as <code>&lt;h1&gt;</code>.</dd>\n\n    <dt>CSS</dt>\n    <dd>The stylesheet language that controls how pages look.</dd>\n\n    <dt>HTTP</dt>\n    <dd>The protocol browsers use to request pages.</dd>\n    <dd>Also the scheme at the front of most URLs.</dd>\n  </dl>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Create a <dl> and put the first term (HTML) in a <dt> inside it.",
+            "hint": "The container is <dl>...</dl>; each term name goes in its own <dt>.",
+            "errorMessage": "No <dt> found inside a <dl> — start the description list with its first term.",
+            "check": {
+              "type": "selector",
+              "selector": "dl dt"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Add all three terms — HTML, CSS and HTTP — each as its own <dt>.",
+            "hint": "Terms are siblings inside the same dl: <dt>HTML</dt> ... <dt>CSS</dt> ... <dt>HTTP</dt>.",
+            "errorMessage": "Fewer than three <dt> terms found — the glossary defines HTML, CSS and HTTP.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "dl dt",
+              "min": 3
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Give every term its description in a <dd> placed right after its <dt>.",
+            "hint": "Each meaning from the old paragraphs becomes a <dd> under its term.",
+            "errorMessage": "Fewer than three <dd> descriptions found — each of the three terms needs one.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "dl dd",
+              "min": 3
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Give HTTP a second description: add another <dd> reading 'Also the scheme at the front of most URLs.'",
+            "hint": "Two <dd> elements in a row both belong to the <dt> above them.",
+            "errorMessage": "No term has two consecutive descriptions — HTTP should be followed by two <dd> elements.",
+            "check": {
+              "type": "selector",
+              "selector": "dd + dd"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Inside the HTML definition, wrap the example tag &lt;h1&gt; in a <code> element.",
+            "hint": "Definitions accept markup: ...written as <code>&lt;h1&gt;</code>.",
+            "errorMessage": "No <code> element found inside a <dd> — the tag example in the HTML definition should be marked as code.",
+            "check": {
+              "type": "selector",
+              "selector": "dd code"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b18-block-inline",
+      "title": "Know which elements stack and which flow: block vs inline",
+      "summary": "Understand block and inline behavior, use div and span as generic containers, and respect the nesting rules that browsers silently enforce.",
+      "difficulty": "beginner",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Group content into div blocks, tag words with inline spans, and repair an invalid block-inside-paragraph nesting.",
+      "whyItMatters": "Every layout question starts here: block elements stack vertically and claim the full width; inline elements flow inside lines of text. Misunderstanding the difference produces the classic beginner bugs — a div jammed inside a paragraph that the browser silently rips apart, or a span expected to behave like a box. div and span are also the raw material of styling: most CSS you will ever write hangs off one or the other.",
+      "steps": [
+        "Read the block and inline behavior sections.",
+        "Wrap the first vacancy in a <div class=\"card\"> (task 1).",
+        "Read about span, then tag 'New this week' with <span class=\"tag\"> (task 2).",
+        "Read the nesting rules and fix the invalid div inside the closing paragraph (task 3).",
+        "Wrap the second vacancy in its own div.card (task 4).",
+        "Run and watch all four checks pass."
+      ],
+      "prompt": "<div class=\"card\">\n  <h2>Junior developer</h2>\n  <p>Remote, full time.</p>\n</div>\n\n<p>New this week: <span class=\"tag\">both roles above</span>.</p>",
+      "promptLabel": "Key code example",
+      "explanation": "The div is a block: it starts on a new line, spans the available width, and groups the heading and paragraph into one styleable unit. The span is inline: it wraps two words mid-sentence without breaking the line, giving CSS and JavaScript a handle on just that phrase. Neither element means anything by itself — they exist purely to carry classes, ids and styles when no semantic element fits.",
+      "example": "A job board lists two vacancies as loose headings and paragraphs. To draw a bordered card around each one, there is nothing to attach the border to.\n\nAfter wrapping each vacancy in a div.card, one CSS rule draws both cards. And the phrase 'both roles above' — previously unreachable inside its sentence — now sits in a span that can be highlighted without touching the rest of the line.",
+      "exercise": "In the editor on the right, group each of two vacancies into a div card, wrap a phrase in a span tag, and fix a paragraph that illegally contains a div by converting it to a span.",
+      "expectedResult": "The preview shows the same text, now grouped: two card blocks stacked vertically, with the tagged phrase and the fixed deadline flowing inline within their sentences. All four checks pass.",
+      "commonMistakes": [
+        "Putting a block element like div inside a <p>. The browser closes the paragraph early and your structure silently changes — check DevTools and the p ends before the div.",
+        "Using div where a semantic element exists. If the group is a navigation menu, an article or a figure, use that element; div is the fallback, not the default.",
+        "Expecting a span to take width, height or margins like a box. Inline elements size to their content; making one behave like a block is a CSS display decision.",
+        "Wrapping everything in divs 'just in case'. Every wrapper you add is one more layer to debug; group only when you need a hook for styling or scripting."
+      ],
+      "proTip": "The browser never renders your invalid nesting — it renders its repaired version of it. When a layout makes no sense, compare your source with the Elements panel in DevTools: if they differ, the parser has been quietly fixing your HTML, and the fix is rarely what you meant.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will group a job board into styleable blocks with div, tag phrases inline with span, and repair a nesting mistake the browser would otherwise fix behind your back.",
+        "sections": [
+          {
+            "heading": "Two ways to occupy a page",
+            "body": "Every visible HTML element renders in one of two basic modes. Block-level elements behave like stacked boxes: each one starts on a new line, stretches across the full available width, and pushes whatever follows below it. Inline elements behave like words: they sit inside a line of text, take only the width of their content, and wrap across lines exactly as words do.\n\nYou have been using both all along. Headings, paragraphs and lists stack — block. Links, bold and italic sit mid-sentence — inline. The distinction explains rendering you may have wondered about: why two <p> elements never sit side by side, and why an <a> never forces a line break.\n\nKeep one refinement in mind: 'block' and 'inline' describe default display behavior, not a permanent property. CSS's display property can make any element render either way. The HTML-level question is about defaults and about what is allowed to nest where.",
+            "code": "<p>Paragraphs stack on top of each other.</p>\n<p>Like this — always a new line.</p>\n\n<p>But <a href=\"#\">links</a>, <strong>bold</strong> and\n<em>italics</em> flow inside the sentence.</p>"
+          },
+          {
+            "heading": "The block roster and the inline roster",
+            "body": "The block-level elements you will use constantly: p, h1 through h6, div, ul, ol, li, dl, dt, dd, table, form, blockquote, pre, hr, and the semantic sections (header, footer, nav, main, section, article, aside, figure). Each claims its own horizontal band of the page.\n\nThe everyday inline elements: a, span, strong, b, em, i, small, mark, sub, sup, u, del, ins, code, abbr, br, img, input, button, label. They ride along inside lines. A couple are special: img and input are inline yet have intrinsic size, so they behave like an oversized character sitting on the text line — which is why images align with text baselines by default.\n\nYou do not need to memorize these lists; you need the instinct. Ask: does this element structure the page (block) or annotate text within a line (inline)? The instinct is right far more often than not, and the exceptions are learned by meeting them."
+          },
+          {
+            "heading": "div: the generic block container",
+            "body": "div is a block element with no meaning whatsoever. It says nothing about its content — it exists solely to group things, so that the group can be styled with CSS, targeted by JavaScript, or laid out as a unit. Wrap a heading and its paragraphs in <div class=\"card\"> and you can border, shade and position them as one card.\n\nBecause it is meaningless, div is the tool of last resort, not first: if the group is navigation, use nav; if it is a standalone article, use article; if it is an image with a caption, use figure. Those elements group and carry meaning. Reach for div when no semantic element describes the group — which, in real layouts, is still remarkably often.\n\nDivs nest freely inside other divs, and complex layouts are built from exactly such nesting. The discipline is to add wrappers when they earn their place, and to name them honestly with classes.",
+            "code": "<div class=\"card\">\n  <h2>Junior developer</h2>\n  <p>Remote, full time.</p>\n</div>"
+          },
+          {
+            "heading": "span: the generic inline container",
+            "body": "span is div's inline twin: a meaningless wrapper for a run of text within a line. It changes nothing visually on its own — its entire purpose is to give a phrase an identity that CSS or JavaScript can grab: <span class=\"tag\">New</span> can be colored, badged or read by a script without disturbing the sentence it lives in.\n\nAs with div, prefer meaning when meaning exists: emphasis is <em>, importance is <strong>, highlighted relevance is <mark>, code is <code>. span is for purely presentational or scripting hooks — highlighting a search match, styling the first word of a paragraph, wrapping a price so a script can update it.\n\nA span may contain other inline elements (a span holding a link is fine) but never block elements — a rule the next section makes precise.",
+            "code": "<p>New this week: <span class=\"tag\">both roles above</span>.</p>"
+          },
+          {
+            "heading": "The nesting rules browsers enforce",
+            "body": "Two rules govern who may contain whom. First: inline elements may contain other inline content, but never block elements. A div inside a span is invalid; so is a paragraph inside a link's text... with the modern exception that <a> is allowed to wrap block content — the one inline element granted that power, which is how whole cards become clickable.\n\nSecond, and the source of endless beginner confusion: the p element may contain only inline content. No div, no list, no table, not even another p inside a paragraph. And the parser does not report the error — it repairs it. The moment it meets <div> inside an open <p>, it closes the paragraph immediately, leaving the div outside it and often a stray empty paragraph behind.\n\nThat silent repair means your page can render 'mostly fine' while its real structure differs from your source — until a CSS rule targets p and mysteriously misses half the text. The fix is always the same: if the content is inline, use an inline wrapper (span); if it is genuinely a block, move it out of the paragraph.",
+            "code": "<!-- invalid: the parser closes the p before the div -->\n<p>Applications close on <div>Friday</div>.</p>\n\n<!-- valid: inline content stays in an inline wrapper -->\n<p>Applications close on <span class=\"deadline\">Friday</span>.</p>"
+          },
+          {
+            "heading": "Display is ultimately CSS's decision",
+            "body": "Everything above describes defaults and validity — what HTML allows and how elements render before any styling. CSS then has the final word on presentation: display: block makes a link stack like a paragraph, display: inline-block gives a span dimensions, display: flex and grid turn a div into a layout engine for its children.\n\nWhat CSS cannot change is validity. Setting display: inline on a div does not make it legal inside a span or a p — the parser repaired the tree long before CSS ran. Write markup that is valid by HTML's rules, then restyle its rendering as freely as the design demands.\n\nThis boundary — structure decided in HTML, presentation decided in CSS — is the theme of the next lessons, where CSS enters the course properly."
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Job board</title>\n</head>\n<body>\n  <h1>Job board</h1>\n\n  <!-- TODO 1: group this vacancy (h2 + p) into a <div class=\"card\"> -->\n  <h2>Junior developer</h2>\n  <p>Remote, full time.</p>\n\n  <!-- TODO 4: group this vacancy into a second <div class=\"card\"> -->\n  <h2>Marketing intern</h2>\n  <p>Athens office, part time.</p>\n\n  <!-- TODO 2: wrap \"both roles above\" in <span class=\"tag\"> -->\n  <p>New this week: both roles above.</p>\n\n  <!-- TODO 3: a div may not live inside a p — make it a <span class=\"deadline\"> instead -->\n  <p>Applications close on <div>Friday at noon</div>.</p>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Job board</title>\n</head>\n<body>\n  <h1>Job board</h1>\n\n  <div class=\"card\">\n    <h2>Junior developer</h2>\n    <p>Remote, full time.</p>\n  </div>\n\n  <div class=\"card\">\n    <h2>Marketing intern</h2>\n    <p>Athens office, part time.</p>\n  </div>\n\n  <p>New this week: <span class=\"tag\">both roles above</span>.</p>\n\n  <p>Applications close on <span class=\"deadline\">Friday at noon</span>.</p>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Group the Junior developer vacancy (its h2 and p) inside a <div class=\"card\">.",
+            "hint": "Open the div before the h2 and close it after the paragraph — the whole vacancy becomes one block.",
+            "errorMessage": "No <div class=\"card\"> found — wrap the first vacancy in a card div so it can be styled as a unit.",
+            "check": {
+              "type": "selector",
+              "selector": "div.card"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Wrap the phrase 'both roles above' in a <span class=\"tag\"> without breaking the sentence.",
+            "hint": "span is inline, so the sentence keeps flowing: New this week: <span class=\"tag\">both roles above</span>.",
+            "errorMessage": "No <span class=\"tag\"> found — the phrase needs an inline wrapper, not a block one.",
+            "check": {
+              "type": "selector",
+              "selector": "span.tag"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Fix the invalid markup in the last paragraph: replace the <div> around 'Friday at noon' with a <span class=\"deadline\">.",
+            "hint": "A p may only contain inline content — swap both div tags for span tags and add class=\"deadline\".",
+            "errorMessage": "The deadline is still not an inline span — a div inside a p is invalid and the browser breaks the paragraph apart.",
+            "check": {
+              "type": "text",
+              "selector": "span.deadline",
+              "pattern": "friday"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Group the Marketing intern vacancy into a second <div class=\"card\">.",
+            "hint": "Same pattern as the first card — both vacancies should be sibling div.card blocks.",
+            "errorMessage": "Only one card div found — both vacancies should be wrapped, giving two div.card blocks.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "div.card",
+              "min": 2
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b19-classes-ids",
+      "title": "Label elements for styling and scripting with class and id",
+      "summary": "Use the class attribute for reusable labels and id for unique ones, and see exactly how CSS selectors and JavaScript find elements through them.",
+      "difficulty": "beginner",
+      "minutes": 11,
+      "isFree": false,
+      "goal": "Label a newsletter page with reusable classes, stack two classes on one element, and give the signup section a unique id that a fragment link targets.",
+      "whyItMatters": "class and id are the naming system of the web: CSS rules, JavaScript lookups and fragment links all find elements through them. Choose names well and a stylesheet reads like documentation; choose badly and every change becomes a hunt. Nearly every line of CSS you will ever write starts by referencing a class, so learning to apply them cleanly now pays off for the rest of the course.",
+      "steps": [
+        "Read how the class attribute works and how names should be chosen.",
+        "Give the first note paragraph class=\"note\" (task 1).",
+        "Read about multiple classes, then mark the privacy line as both note and important (task 2).",
+        "Read the id section and give the signup heading id=\"signup\" (task 3).",
+        "Add the jump link that targets #signup (task 4).",
+        "Label the third note so the class is reused three times (task 5), then Run."
+      ],
+      "prompt": "<p class=\"note\">Issues arrive every Friday.</p>\n<p class=\"note important\">We never share your address.</p>\n\n<a href=\"#signup\">Go to signup</a>\n<h2 id=\"signup\">Sign up</h2>",
+      "promptLabel": "Key code example",
+      "explanation": "The class attribute labels elements with reusable names — every element marked note can share one CSS rule, and the second paragraph carries two classes separated by a space, picking up both rules. The id is different: signup appears exactly once in the document, which is what lets the fragment link scroll to it and lets JavaScript's getElementById find it without ambiguity. Classes answer 'what kind of thing is this?'; ids answer 'which exact thing is this?'.",
+      "example": "A newsletter page has three informational asides and a signup form. Unlabeled, there is no way to style the asides consistently or link straight to the form.\n\nWith class=\"note\" on all three asides, one CSS rule styles them identically; adding important to one of them layers a second style on top. With id=\"signup\" on the form's heading, the page gains a shareable deep link and a JavaScript handle in one attribute.",
+      "exercise": "In the editor on the right, label a newsletter page: three paragraphs get class=\"note\", one of them also gets important, the signup heading gets a unique id, and a link at the top jumps to it.",
+      "expectedResult": "The preview looks almost unchanged — classes and ids are invisible until CSS or scripts use them — but the 'Go to signup' link now scrolls to the heading, and all five checks pass.",
+      "commonMistakes": [
+        "Reusing an id on two elements. Ids must be unique per page: duplicates break fragment links, JavaScript lookups and label associations in quiet, confusing ways.",
+        "Writing class=\"note\" class=\"important\" as two attributes. An element takes one class attribute; multiple names go inside it separated by spaces.",
+        "Naming classes after their looks (red-text, big-box). The first redesign makes the names lies; name the role instead (note, warning, price).",
+        "Putting spaces in id values. An id must be a single token — spaces split it into nonsense and the CSS selector #my id will never match."
+      ],
+      "proTip": "A practical convention used across the industry: lowercase names with hyphens (signup-form, note-important), classes for anything CSS styles, and ids reserved for fragment targets and form label wiring. Some teams go as far as never styling ids at all — their high specificity makes CSS harder to override later.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will give a newsletter page the labels that CSS, links and JavaScript rely on: reusable classes, a stacked pair of classes, and one unique id.",
+        "sections": [
+          {
+            "heading": "class: reusable labels for kinds of things",
+            "body": "The class attribute attaches one or more names to an element. The names mean nothing to the browser by themselves — no styling changes, no behavior — but they create hooks: CSS selects by class to style every matching element at once, and JavaScript queries by class to operate on the whole set.\n\nAny element can carry a class, and — this is the point — many elements can carry the same one. Mark every informational aside on a site with class=\"note\" and a single CSS rule styles all of them, today and every note you add next year. The class is a statement: 'this element is one of these'.\n\nThe attribute is written once per element: class=\"note\". Its value is your choice entirely; HTML predefines no class names.",
+            "code": "<p class=\"note\">Issues arrive every Friday.</p>\n<p class=\"note\">Unsubscribe with one click.</p>"
+          },
+          {
+            "heading": "Multiple classes on one element",
+            "body": "One class attribute can hold several names, separated by spaces: class=\"note important\" makes the element a member of both the note group and the important group. It inherits every rule written for either class, with the normal CSS cascade resolving any conflicts.\n\nThis is how styling stays composable. The base class carries the shared look (every note gets the same background and padding); modifier classes layer variations on top (important adds a stronger border). Rather than inventing note-red, note-big, note-red-big for every combination, you combine small single-purpose classes.\n\nOrder inside the attribute does not matter — class=\"important note\" is identical — and duplicate names are ignored. What does matter is the space: it is the separator, which is exactly why an individual class name can never contain one.",
+            "code": "<p class=\"note\">A plain note.</p>\n<p class=\"note important\">A note that is also important.</p>"
+          },
+          {
+            "heading": "id: one name, one element",
+            "body": "The id attribute gives an element a name that must be unique on the page. Where class says 'one of these', id says 'the one'. That uniqueness is a real contract, not a style preference: three separate mechanisms depend on it.\n\nFragment links scroll to ids — href=\"#signup\" finds the element with id=\"signup\", as you saw in the links lesson. JavaScript's fastest lookup, document.getElementById('signup'), returns the one element (and silently returns only the first if you break the contract with duplicates). And form labels bind to inputs by id, which is what makes clicking a label focus its field.\n\nAn id value must contain no spaces, and in practice you should keep it to letters, digits and hyphens, starting with a letter. It is case-sensitive: Signup and signup are different names — one more reason to stay lowercase everywhere.",
+            "code": "<h2 id=\"signup\">Sign up</h2>\n\n<!-- three consumers of that one id: -->\n<a href=\"#signup\">Go to signup</a>\n<!-- CSS:  #signup { ... } -->\n<!-- JS:   document.getElementById('signup') -->"
+          },
+          {
+            "heading": "Choosing between class and id",
+            "body": "The decision rule is short: could there ever be a second one? Notes, cards, buttons, warnings — of course there could; those are classes. The page's single signup section, the site header, the main content region — one per page by definition; those may take ids.\n\nWhen in doubt, choose class. A class used once costs nothing and is ready if a second instance appears. An id that turns out to need a sibling forces renaming and breaks whatever pointed at it. Many experienced developers style exclusively with classes and reserve ids for the jobs only ids can do: fragment targets, getElementById, and form label wiring.\n\nThe two attributes coexist happily on one element: <section id=\"signup\" class=\"panel\"> is a common shape — unique identity for linking, shared class for styling."
+          },
+          {
+            "heading": "Naming that survives redesigns",
+            "body": "Names are for the humans who maintain the page, so optimize them for meaning. Name what the element is, not what it currently looks like: class=\"warning\" outlives class=\"red-text\" the day warnings turn orange. Keep names lowercase and hyphen-separated (reader-note, signup-form) — the style used by virtually every CSS codebase.\n\nConsistency beats cleverness. A page where every label follows one convention can be skimmed like a table of contents; a page mixing warningBox, Warning_2 and redtext must be deciphered. Larger projects formalize this with naming systems (you may meet BEM, with names like card__title--large), but the underlying discipline is the same one you are practicing here.\n\nA last habit worth stealing: before adding a new class, check whether an existing one already means the same thing. Vocabulary that stays small stays learnable."
+          },
+          {
+            "heading": "How CSS and JavaScript consume these labels",
+            "body": "You will meet CSS properly in the next lesson, but the selector syntax belongs here because it mirrors the attributes exactly. In a stylesheet, .note (leading dot) selects every element whose class list contains note; #signup (leading hash) selects the element with that id; .note.important — two selectors glued together — matches only elements carrying both classes.\n\nJavaScript reads the same names: document.getElementById('signup') for ids (no hash — the method name already says id), and document.querySelectorAll('.note') to collect every note using CSS selector syntax. The names you put in your HTML today are the exact strings those tools will match tomorrow.\n\nThis is why tidy labeling is not cosmetic. Every selector, every script, every deep link is a promise that a name exists in the markup — and you are writing those names now.",
+            "code": "/* CSS */\n.note { background: #fffbe6; }\n.note.important { border: 2px solid #c00; }\n#signup { margin-top: 3rem; }\n\n// JavaScript\ndocument.getElementById('signup');\ndocument.querySelectorAll('.note');"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>The Weekly Byte</title>\n</head>\n<body>\n  <h1>The Weekly Byte</h1>\n  <!-- TODO 4: add a link here that jumps to the signup section (href=\"#signup\") -->\n  <p>A short newsletter about the web, written by hand.</p>\n\n  <!-- TODO 1: give this paragraph class=\"note\" -->\n  <p>Issues arrive every Friday.</p>\n\n  <!-- TODO 2: this one is a note AND important — give it both classes -->\n  <p>We never share your address.</p>\n\n  <!-- TODO 5: one more plain note -->\n  <p>Unsubscribe with one click.</p>\n\n  <!-- TODO 3: give this heading id=\"signup\" -->\n  <h2>Sign up</h2>\n  <p>Send a blank email to join@example.com and you are in.</p>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>The Weekly Byte</title>\n</head>\n<body>\n  <h1>The Weekly Byte</h1>\n  <p><a href=\"#signup\">Go to signup</a></p>\n  <p>A short newsletter about the web, written by hand.</p>\n\n  <p class=\"note\">Issues arrive every Friday.</p>\n\n  <p class=\"note important\">We never share your address.</p>\n\n  <p class=\"note\">Unsubscribe with one click.</p>\n\n  <h2 id=\"signup\">Sign up</h2>\n  <p>Send a blank email to join@example.com and you are in.</p>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Give the 'Issues arrive every Friday' paragraph the class note.",
+            "hint": "The attribute goes in the opening tag: <p class=\"note\">.",
+            "errorMessage": "No paragraph with class=\"note\" found — add the class to the first note.",
+            "check": {
+              "type": "selector",
+              "selector": "p.note"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Mark the privacy line as both note and important — two classes in one attribute.",
+            "hint": "Space-separated names in a single attribute: class=\"note important\".",
+            "errorMessage": "No element carries both classes — the privacy paragraph needs class=\"note important\" (one attribute, two names).",
+            "check": {
+              "type": "selector",
+              "selector": "p.note.important"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Give the Sign up heading the unique id signup.",
+            "hint": "<h2 id=\"signup\">Sign up</h2> — and make sure no other element uses this id.",
+            "errorMessage": "No element with id=\"signup\" found — the signup heading needs its unique id.",
+            "check": {
+              "type": "selector",
+              "selector": "#signup"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Under the h1, add a link that jumps to the signup section.",
+            "hint": "Fragment links target ids: <a href=\"#signup\">Go to signup</a>.",
+            "errorMessage": "No link with href=\"#signup\" found — add the jump link near the top of the page.",
+            "check": {
+              "type": "selector",
+              "selector": "a[href='#signup']"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Give the 'Unsubscribe with one click' paragraph class=\"note\" too, so the class is reused across all three notes.",
+            "hint": "Reuse is the whole point of classes — same attribute, same value as the first note.",
+            "errorMessage": "Fewer than three elements with class note found — all three informational paragraphs should share it.",
+            "check": {
+              "type": "selectorCount",
+              "selector": ".note",
+              "min": 3
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b20-styles-css-intro",
+      "title": "Give HTML its looks: inline styles, style blocks and stylesheets",
+      "summary": "Meet CSS at the HTML boundary: the style attribute, the style element in the head, external stylesheets via link, and how the three layers cascade.",
+      "difficulty": "beginner",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Style a tea shop page three ways — one inline style, a style block with body and h1 rules, and a linked external stylesheet.",
+      "whyItMatters": "Every real page pairs HTML with CSS, and where you attach the CSS shapes the whole project: inline styles are quick and unmaintainable, style blocks suit single pages, and external stylesheets are how every production site shares one design across hundreds of pages. Understanding the three attachment points — and which wins when they disagree — is the foundation for all the styling you will ever do.",
+      "steps": [
+        "Read the section on the HTML/CSS boundary.",
+        "Add an inline style to the promo line (task 1).",
+        "Read about the style element, then add one to the head (task 2).",
+        "Write rules in it: a body background-color and font-family (task 3), and a centered h1 (task 4).",
+        "Read about external stylesheets and add the link element (task 5).",
+        "Run, watch the preview change color, and confirm all checks pass."
+      ],
+      "prompt": "<head>\n  <style>\n    body { background-color: #f4efe6; font-family: Georgia, serif; }\n    h1 { text-align: center; color: #3b5d50; }\n  </style>\n  <link rel=\"stylesheet\" href=\"styles.css\">\n</head>\n<body>\n  <p style=\"color: darkred;\">Today only: free shipping.</p>\n</body>",
+      "promptLabel": "Key code example",
+      "explanation": "Three attachment points appear here. The style attribute paints one element directly — fastest to write, hardest to maintain. The style element holds real CSS rules that apply across this one page: each rule is a selector (body, h1) plus declarations of property: value pairs. The link element pulls in a shared stylesheet file that any number of pages can reuse; it is a void element in the head, just like the favicon link.",
+      "example": "The tea shop page starts as unstyled HTML: black serif text on white, browser defaults everywhere.\n\nAfter this lesson the body carries a warm background and a chosen typeface, the h1 sits centered in the shop's green, the promo line pops in dark red — and a stylesheet link stands ready so tomorrow's second page can inherit the same design from one shared file.",
+      "exercise": "In the editor on the right, style the tea shop three ways: one inline style on the promo paragraph, a head style block giving the body a background-color and font-family plus centering the h1, and a link to an external styles.css.",
+      "expectedResult": "The preview transforms: tinted background, new typeface, centered colored heading, dark red promo line. All five checks pass.",
+      "commonMistakes": [
+        "Writing CSS syntax in HTML attributes or vice versa. Inside style=\"...\" and style blocks it is property: value with colons and semicolons — not the equals sign HTML attributes use.",
+        "Placing the style element in the body. It belongs in the head; browsers tolerate it elsewhere, but you invite a flash of unstyled content and validation errors.",
+        "Writing <link rel=\"stylesheet\"> but forgetting the href — or closing link with </link>. It is a void element and needs both rel and href to do anything.",
+        "Reaching for inline styles as the default. Ten paragraphs styled inline are ten places to edit; one class-based rule is one."
+      ],
+      "proTip": "You can watch the cascade argue in DevTools: inspect any element and the Styles panel lists every rule that targets it, with the losers shown crossed out. It is the fastest way to answer 'why is this text still black?' — usually a more specific or later rule is winning.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will style one page three different ways — inline, in a head style block, and via a linked stylesheet — and see why real projects prefer the third.",
+        "sections": [
+          {
+            "heading": "Where HTML stops and CSS begins",
+            "body": "HTML answers one question: what is this content? A heading, a list, a link. CSS answers a different one: how should it look? Color, size, spacing, alignment, typeface. The two languages are deliberately separate, and the separation is the single most important design decision in web platform history: content survives redesigns, one stylesheet can reskin a thousand pages, and machines reading your HTML are never misled by decoration.\n\nCSS is written as declarations — property: value pairs like color: darkred — grouped into rules that say which elements they apply to. HTML's role is only to host or reference that CSS, and it offers exactly three attachment points: an attribute on one element, a style element in the page, and a link to a separate file. This lesson walks through all three.\n\nA small vocabulary note before the syntax: in color: darkred, the property is color, the value is darkred, and the colon binds them. Semicolons separate multiple declarations. Getting colons and semicolons swapped is the classic first-day CSS typo.",
+            "code": "color: darkred;\nfont-family: Georgia, serif;\nbackground-color: #f4efe6;"
+          },
+          {
+            "heading": "The style attribute: inline styles",
+            "body": "Any visible element accepts a style attribute whose value is a list of CSS declarations applied to that element only: <p style=\"color: darkred;\">. No selector is needed — the attribute already sits on its target.\n\nInline styles are immediate and precise, which is exactly their problem. The styling lives inside the content, so changing a design means hunting through markup; nothing is reusable, so the same declaration gets pasted onto every similar element; and inline declarations override nearly everything else, making later stylesheets fight to take effect. They also cannot express hover effects, media queries, or anything beyond plain declarations.\n\nLegitimate uses survive: quick experiments, HTML email (where support for anything else is poor), and values computed by JavaScript at runtime. For everything else, treat the style attribute as the exception you can read, not the tool you reach for.",
+            "code": "<p style=\"color: darkred;\">Today only: free shipping.</p>"
+          },
+          {
+            "heading": "The style element: page-level CSS",
+            "body": "The second attachment point is a style element in the head. Everything inside it is genuine CSS: rules made of a selector, braces, and declarations. body { background-color: #f4efe6; } paints the whole page's background; h1 { text-align: center; } centers every h1 on the page.\n\nThe selectors are the same vocabulary you met in the classes lesson: element names select every instance of a tag, .note selects by class, #signup selects by id. One rule, many elements — this is the reuse inline styles cannot offer, and it is why even a single-page project should prefer a style block over scattered style attributes.\n\nThe style element's scope is the one page containing it. That makes it right for one-off pages, demos and email templates — and wrong for a multi-page site, where the same block would be copied into every page and drift out of sync.",
+            "code": "<head>\n  <style>\n    body { background-color: #f4efe6; font-family: Georgia, serif; }\n    h1   { text-align: center; color: #3b5d50; }\n  </style>\n</head>"
+          },
+          {
+            "heading": "link rel=\"stylesheet\": one file, every page",
+            "body": "The third attachment point moves the CSS out of the HTML entirely: a .css file containing only rules, referenced from the head with <link rel=\"stylesheet\" href=\"styles.css\">. The link element is void — no closing tag — and its two attributes do all the work: rel declares the relationship (this file is a stylesheet for me) and href locates the file.\n\nThis is how essentially every production site works, because the benefits compound: one file styles unlimited pages, so a redesign edits one place; browsers cache the file, so every page after the first loads faster; and content people can edit HTML while design people edit CSS without touching each other's files.\n\nA page may link several stylesheets, and links can sit alongside a style block. In this exercise the linked file does not actually exist — the link is still valid markup, and in a real project it would be the first file you create.",
+            "code": "<head>\n  <link rel=\"stylesheet\" href=\"styles.css\">\n</head>"
+          },
+          {
+            "heading": "When the layers disagree: the cascade",
+            "body": "With three attachment points, conflicts are inevitable — the stylesheet says the paragraph is black, the style block says green, the inline style says dark red. CSS resolves this with the cascade, and for now one paragraph of it is enough: more specific beats less specific (an id rule beats a class rule beats a plain element rule), inline style attributes beat all three, and when two rules are otherwise equal, the one declared later wins — so a style block after the link overrides the linked file, and the last rule in a sheet overrides an identical earlier one. Browser defaults sit at the bottom of the pile, which is why your rules always take effect over them.\n\nThat ordering explains the standard head convention: link elements first, page-specific style blocks after, so page tweaks can override the shared design. It also explains the deeper reason inline styles are avoided: sitting at the top of the cascade, they can only be beaten by heavy machinery, which turns stylesheets into arms races."
+          },
+          {
+            "heading": "Five properties to make pages visibly yours",
+            "body": "The rest of CSS belongs to its own course; these five properties are enough to make every exercise from here on visual. color sets text color, and background-color paints the area behind an element — set both deliberately so text stays readable. font-family chooses the typeface, written as a wish list ending in a generic fallback: Georgia, serif asks for Georgia and accepts any serif if it is missing.\n\nfont-size sets text size (16px is the browser's default paragraph size; units get their own lesson in the CSS course). text-align aligns text within its block — left, center, right or justify — and is the honest way to center a heading.\n\nEverything you learned about labeling now pays off: these properties become powerful when aimed through selectors at the classes and ids you already know how to write.",
+            "code": "body { background-color: #f4efe6; color: #222222; }\nh1   { font-family: Georgia, serif; font-size: 40px; text-align: center; }"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Leaf &amp; Cup</title>\n  <!-- TODO 2: add a <style> element here -->\n  <!-- TODO 3: inside it, give body a background-color and a font-family -->\n  <!-- TODO 4: also center the h1 with text-align -->\n  <!-- TODO 5: below the style block, link the external stylesheet styles.css -->\n</head>\n<body>\n  <h1>Leaf &amp; Cup</h1>\n  <p>Small-batch teas, roasted and blended in-house.</p>\n\n  <!-- TODO 1: use an inline style to make this one line dark red -->\n  <p>Today only: free shipping.</p>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Leaf &amp; Cup</title>\n  <style>\n    body { background-color: #f4efe6; font-family: Georgia, serif; }\n    h1 { text-align: center; color: #3b5d50; }\n  </style>\n  <link rel=\"stylesheet\" href=\"styles.css\">\n</head>\n<body>\n  <h1>Leaf &amp; Cup</h1>\n  <p>Small-batch teas, roasted and blended in-house.</p>\n\n  <p style=\"color: darkred;\">Today only: free shipping.</p>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Give the 'Today only' paragraph an inline style that sets its color to darkred.",
+            "hint": "CSS syntax inside the attribute: <p style=\"color: darkred;\"> — colon between property and value.",
+            "errorMessage": "No paragraph with an inline color style found — the promo line needs style=\"color: darkred;\".",
+            "check": {
+              "type": "attr",
+              "selector": "p[style]",
+              "attr": "style",
+              "pattern": "color"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Add a <style> element to the head to hold this page's CSS rules.",
+            "hint": "It opens and closes like normal: <style> ... </style>, placed inside <head>.",
+            "errorMessage": "No <style> element found — add one to the head to hold the page's rules.",
+            "check": {
+              "type": "selector",
+              "selector": "style"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Inside the style block, write a body rule setting background-color (try #f4efe6) and font-family (try Georgia, serif).",
+            "hint": "body { background-color: #f4efe6; font-family: Georgia, serif; } — semicolons separate the declarations.",
+            "errorMessage": "No background-color declaration found — the body rule should set one (plus a font-family).",
+            "check": {
+              "type": "source",
+              "pattern": "background-color\\s*:"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Add an h1 rule that centers the heading with text-align: center.",
+            "hint": "h1 { text-align: center; } inside the same style block.",
+            "errorMessage": "No text-align: center declaration found — center the h1 in the style block.",
+            "check": {
+              "type": "source",
+              "pattern": "text-align\\s*:\\s*center"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Link the external stylesheet: a <link rel=\"stylesheet\" href=\"styles.css\"> in the head.",
+            "hint": "A void element like the favicon link — rel says what it is, href says where it lives.",
+            "errorMessage": "No <link rel=\"stylesheet\"> found — add the external stylesheet reference to the head.",
+            "check": {
+              "type": "selector",
+              "selector": "link[rel='stylesheet']"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b21-colors",
+      "title": "Speak color fluently: names, hex, rgb() and hsl()",
+      "summary": "Write the same color four ways — keywords, hex codes, rgb()/rgba() and hsl()/hsla() — and keep text readable with real contrast.",
+      "difficulty": "beginner",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Fill a brand-palette tester with one swatch per color notation and give the hero banner a dark background with properly contrasting light text.",
+      "whyItMatters": "Colors appear in every design conversation, and each notation exists for a reason: names for quick drafts, hex because every design tool exports it, rgb() and hsl() when you need transparency or systematic palette adjustments. Reading all four fluently means you can use any designer's handoff, any brand guide, any code you inherit — and contrast literacy keeps what you build legible and accessible.",
+      "steps": [
+        "Read how color notations relate to each other.",
+        "Paint the first swatch with a named color (task 1).",
+        "Read the hex section, then paint the second swatch with a hex code (task 2).",
+        "Paint the rgb() swatch (task 3) and the hsl() swatch (task 4).",
+        "Read the contrast section, then give the hero a dark background with white text (task 5).",
+        "Run and check every swatch shows its color in the preview."
+      ],
+      "prompt": "background-color: teal;                 /* named  */\nbackground-color: #2e6f6c;              /* hex    */\nbackground-color: rgb(46, 111, 108);    /* rgb    */\nbackground-color: hsl(177, 41%, 31%);   /* hsl    */\n\n/* contrast pair */\nbackground-color: #1a1a2e; color: #ffffff;",
+      "promptLabel": "Key code example",
+      "explanation": "Four notations, one idea: telling the screen how much red, green and blue to emit. The keyword teal is a fixed shade from a predefined list; #2e6f6c states the three channels in hexadecimal; rgb(46, 111, 108) states them in decimal; hsl(177, 41%, 31%) describes the same color as a hue angle, saturation and lightness — the version humans can reason about. The final pair shows the discipline that matters most: background and text color chosen together so the text stays readable.",
+      "example": "A brand guide arrives saying the primary color is #2e6f6c. The junior developer who only knows color names is stuck; the one who reads hex recognizes a muted teal, converts it to hsl(177, 41%, 31%) to derive lighter and darker variants by adjusting the last number, and uses rgba(46, 111, 108, 0.15) for a translucent tint of the same brand color.\n\nSame color, four notations, each earning its place in one workflow.",
+      "exercise": "In the editor on the right, complete a palette tester: paint four swatches using a named color, a hex code, rgb() and hsl() respectively, then give the hero banner a dark background with white text.",
+      "expectedResult": "The preview shows four tinted swatch rows — all roughly the same teal, written four different ways — and a dark hero banner whose white heading is clearly readable. All five checks pass.",
+      "commonMistakes": [
+        "Dropping the # from hex codes. background-color: 2e6f6c is invalid and silently ignored — the page just stays unstyled.",
+        "Setting a text color with no thought for what is behind it (or vice versa). The pair is one decision; grey on grey is the classic accident.",
+        "Writing rgb percentages and numbers inconsistently or forgetting the % on hsl saturation and lightness — hsl(177, 41, 31) does nothing.",
+        "Trusting color names beyond the basics. darkgray is famously lighter than gray; past the common dozen names, check rather than guess."
+      ],
+      "proTip": "Every browser's DevTools includes a contrast checker: inspect a text element, click the small color swatch in the Styles panel, and it reports the contrast ratio against the background with pass/fail marks for the WCAG targets (4.5:1 for body text). Make checking it a reflex whenever you pick a text/background pair.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will paint the same brand teal in four notations and build one high-contrast banner — the complete color toolkit for HTML and CSS work.",
+        "sections": [
+          {
+            "heading": "One color, many spellings",
+            "body": "Screens make color by mixing three channels of light — red, green and blue — each dialed from 0 to 255. Every CSS color notation is just a different way of writing those three dials (sometimes plus a fourth for transparency), which means the notations are fully interchangeable: teal, #008080, rgb(0, 128, 128) and hsl(180, 100%, 25%) are the identical pixel.\n\nColors go wherever CSS goes — inline style attributes, style blocks, stylesheets — through properties like color (the text) and background-color (the area behind it). In this lesson you will write them into style attributes so each swatch shows its result immediately.\n\nWhy learn four spellings of the same thing? Because each dominates a different context: names in teaching and quick tests, hex in design handoffs, rgb() in image-editor exports and transparency work, hsl() wherever palettes are built systematically. Fluency means never being stopped by the notation a project happens to use."
+          },
+          {
+            "heading": "Named colors: the quick draft",
+            "body": "CSS predefines around 140 color keywords. A handful you will use forever: black, white, red, green, blue, gray, orange, purple, teal, navy, plus the honorary member transparent. The rest range from tomato and gold to curiosities like papayawhip — real, but rarely seen in production.\n\nNames are unbeatable for speed: background-color: teal needs no lookup and no tooling. Their weakness is precision — no brand's palette happens to match a keyword, and some names mislead (darkgray is lighter than gray, a genuine historical accident of the list). So names serve drafts, examples and tests, and then hex or hsl takes over.\n\nNames are case-insensitive; the lowercase convention is universal.",
+            "code": "<p style=\"background-color: teal; color: white;\">Named: teal</p>"
+          },
+          {
+            "heading": "Hex codes: the industry's exchange format",
+            "body": "A hex code is a # followed by six hexadecimal digits — two per channel, in red-green-blue order. Hexadecimal counts 0-9 then a-f, so each pair runs from 00 (channel off) to ff (channel fully on): #ff0000 is pure red, #000000 black, #ffffff white, #2e6f6c a muted teal. Letter case does not matter.\n\nA three-digit shorthand exists for codes whose pairs are doubled digits: #fff expands to #ffffff, #c30 to #cc3300. You will see the short form constantly in handwritten CSS. An eight-digit form (#2e6f6c80) appends a fourth pair for transparency, though rgba/hsla are more common for that.\n\nHex is the lingua franca: Figma, Photoshop and every color picker export it, and brand guides are written in it. You do not need to compute hex in your head — you need to recognize the shape, spot roughly what it says (high red pair, low blue pair: warm color), and paste it accurately, never forgetting the #.",
+            "code": "<p style=\"background-color: #2e6f6c; color: #ffffff;\">Hex: #2e6f6c</p>\n<!-- shorthand: #fff = #ffffff, #c30 = #cc3300 -->"
+          },
+          {
+            "heading": "rgb() and rgba(): decimal channels and transparency",
+            "body": "The rgb() function states the three channels in ordinary decimal, 0 to 255: rgb(46, 111, 108) is the same muted teal as #2e6f6c. Nothing hex says is beyond rgb() — it is the same numbers in a base humans read natively, which is why image editors report colors this way.\n\nIts historic superpower is the fourth channel: rgba() adds alpha, opacity from 0 (invisible) to 1 (solid). rgba(46, 111, 108, 0.5) is the teal at half transparency — the tool behind tinted overlays on photos, soft shadows, and translucent panels. Alpha differs from lightening a color: a half-transparent teal lets whatever is behind it show through, while a paler teal is just a different solid color.\n\nModern CSS also accepts a slash syntax — rgb(46 111 108 / 0.5) — and treats rgb()/rgba() as one function. The comma forms remain fully valid and are what you will meet most in existing code.",
+            "code": "<p style=\"background-color: rgb(46, 111, 108); color: white;\">RGB</p>\n<div style=\"background-color: rgba(46, 111, 108, 0.5);\">Half-transparent overlay</div>"
+          },
+          {
+            "heading": "hsl() and hsla(): color the way people think",
+            "body": "hsl() abandons channel arithmetic for three human questions. Hue: which direction on the color wheel, in degrees — 0 red, 120 green, 240 blue, wrapping back to red at 360. Saturation: how vivid, 0% (gray) to 100% (pure). Lightness: how bright, 0% (black) through 50% (the pure color) to 100% (white). The brand teal becomes hsl(177, 41%, 31%): a cyan-ish hue, moderately muted, on the dark side.\n\nThe payoff is systematic palettes. Need a hover shade? Same hue and saturation, nudge the lightness: hsl(177, 41%, 41%). Need a whole scale from pale tint to deep shade? Hold hue, walk lightness from 90% down to 15%. Doing that in hex means recalculating three channels; in hsl it is editing one number. hsla() (or the slash syntax) adds the same alpha channel as rgba().\n\nBoth percent signs are mandatory — hsl(177, 41, 31) is invalid and silently ignored, one of the easiest color bugs to write.",
+            "code": "<p style=\"background-color: hsl(177, 41%, 31%); color: white;\">HSL</p>\n<!-- lighter variant for hover: hsl(177, 41%, 41%) -->"
+          },
+          {
+            "heading": "Contrast: the pair is the decision",
+            "body": "Text color and background color are not two choices but one: what matters is the difference between them. That difference is measured as a contrast ratio from 1:1 (identical) to 21:1 (black on white), and the WCAG accessibility guidelines set the working targets — at least 4.5:1 for normal text, 3:1 for large headings. These are not bureaucratic niceties: low-contrast text is what makes pages unreadable on a sunlit phone screen or with aging eyes.\n\nThe reliable recipe is dark-on-light or light-on-dark, committed to fully. A near-black background like #1a1a2e with white text lands around 16:1 — effortless reading. The failures are always the timid middles: mid-gray on light gray, white on yellow, brand-color text on a tinted background of the same brand color.\n\nTwo habits complete the discipline. Whenever you set a background-color, set color in the same rule (and vice versa) so you never inherit an unreadable combination by accident. And verify rather than eyeball — DevTools' built-in contrast checker gives you the ratio in one click.",
+            "code": "<div style=\"background-color: #1a1a2e; color: #ffffff; padding: 20px;\">\n  <h2>Readable hero banner</h2>\n</div>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Brand palette tester</title>\n</head>\n<body>\n  <h1>Brand palette tester</h1>\n\n  <!-- TODO 5: give the hero a dark background-color (#1a1a2e) AND white text -->\n  <div class=\"hero\" style=\"padding: 20px;\">\n    <h2>Readable hero banner</h2>\n  </div>\n\n  <!-- TODO 1: add background-color: teal to this swatch's style -->\n  <p class=\"swatch-named\" style=\"padding: 10px; color: white;\">Named: teal</p>\n\n  <!-- TODO 2: add a hex background-color (#2e6f6c) -->\n  <p class=\"swatch-hex\" style=\"padding: 10px; color: white;\">Hex: #2e6f6c</p>\n\n  <!-- TODO 3: add an rgb() background-color: rgb(46, 111, 108) -->\n  <p class=\"swatch-rgb\" style=\"padding: 10px; color: white;\">RGB: rgb(46, 111, 108)</p>\n\n  <!-- TODO 4: add an hsl() background-color: hsl(177, 41%, 31%) -->\n  <p class=\"swatch-hsl\" style=\"padding: 10px; color: white;\">HSL: hsl(177, 41%, 31%)</p>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Brand palette tester</title>\n</head>\n<body>\n  <h1>Brand palette tester</h1>\n\n  <div class=\"hero\" style=\"padding: 20px; background-color: #1a1a2e; color: #ffffff;\">\n    <h2>Readable hero banner</h2>\n  </div>\n\n  <p class=\"swatch-named\" style=\"padding: 10px; color: white; background-color: teal;\">Named: teal</p>\n\n  <p class=\"swatch-hex\" style=\"padding: 10px; color: white; background-color: #2e6f6c;\">Hex: #2e6f6c</p>\n\n  <p class=\"swatch-rgb\" style=\"padding: 10px; color: white; background-color: rgb(46, 111, 108);\">RGB: rgb(46, 111, 108)</p>\n\n  <p class=\"swatch-hsl\" style=\"padding: 10px; color: white; background-color: hsl(177, 41%, 31%);\">HSL: hsl(177, 41%, 31%)</p>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Paint the first swatch with the named color teal (add background-color: teal to its style attribute).",
+            "hint": "Append to the existing style value: style=\"padding: 10px; color: white; background-color: teal;\".",
+            "errorMessage": "The named swatch has no teal background — add background-color: teal to its inline style.",
+            "check": {
+              "type": "attr",
+              "selector": ".swatch-named",
+              "attr": "style",
+              "pattern": "background-color:\\s*teal"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Paint the hex swatch with background-color: #2e6f6c.",
+            "hint": "Six hex digits after a # — two each for red, green, blue: background-color: #2e6f6c;.",
+            "errorMessage": "The hex swatch has no hex background-color — remember the leading # before the six digits.",
+            "check": {
+              "type": "attr",
+              "selector": ".swatch-hex",
+              "attr": "style",
+              "pattern": "#[0-9a-f]{3,6}"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Paint the rgb swatch with background-color: rgb(46, 111, 108).",
+            "hint": "Three decimal channels, 0-255, comma-separated inside rgb( ).",
+            "errorMessage": "The rgb swatch has no rgb() background — write the channels as rgb(46, 111, 108).",
+            "check": {
+              "type": "attr",
+              "selector": ".swatch-rgb",
+              "attr": "style",
+              "pattern": "rgba?\\("
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Paint the hsl swatch with background-color: hsl(177, 41%, 31%).",
+            "hint": "Hue in degrees, then saturation and lightness — both need their % signs.",
+            "errorMessage": "The hsl swatch has no hsl() background — check the syntax, including both percent signs.",
+            "check": {
+              "type": "attr",
+              "selector": ".swatch-hsl",
+              "attr": "style",
+              "pattern": "hsla?\\("
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Make the hero readable: add background-color: #1a1a2e and color: #ffffff to its style attribute.",
+            "hint": "Both declarations in the same attribute, semicolon-separated — background and text color are one decision.",
+            "errorMessage": "The hero's text color is not set to white — pair the dark background with color: #ffffff (or white) for real contrast.",
+            "check": {
+              "type": "attr",
+              "selector": ".hero",
+              "attr": "style",
+              "pattern": "color:\\s*(#fff|white)"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b22-head-title-meta",
+      "title": "Fill the head: title, meta tags and the viewport",
+      "summary": "Master everything that lives in the head — title, meta charset, description, author and viewport, the base element, and where scripts and stylesheets belong.",
+      "difficulty": "beginner",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Build a complete, correctly ordered head for a bakery site: charset first, a real title, a search-worthy description, the mobile viewport, and an author credit.",
+      "whyItMatters": "Nothing in the head is visible on the page, yet it decides how the page appears everywhere else: the title is your tab label and your search-result headline, the description is the gray snippet under it, and without the viewport meta a phone renders your page as a zoomed-out desktop postage stamp. A well-formed head is the difference between a page that merely renders and one that presents itself properly to browsers, search engines and social platforms.",
+      "steps": [
+        "Read what the head is for and how it differs from the body.",
+        "Declare the charset as the first thing inside the head (task 2).",
+        "Add the page title (task 1).",
+        "Read the meta section, then write the description (task 3).",
+        "Add the viewport meta and read what it does on phones (task 4).",
+        "Add the author meta (task 5), then Run and confirm all checks pass."
+      ],
+      "prompt": "<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Crumb &amp; Crust — Neighbourhood Bakery</title>\n  <meta name=\"description\" content=\"Sourdough, rye and pastries baked before sunrise in the heart of the neighbourhood.\">\n  <meta name=\"author\" content=\"Crumb & Crust\">\n</head>",
+      "promptLabel": "Key code example",
+      "explanation": "The charset declaration comes first so the browser knows how to decode every byte that follows. The viewport meta tells phones to render at their real screen width instead of pretending to be desktops. The title feeds the tab, bookmarks and search results; the description meta feeds the snippet below the search result; and the author meta credits the maker. None of this renders in the page itself — the head is metadata, information about the document rather than content of it.",
+      "example": "Two identical bakery pages sit in search results. One is titled 'Untitled Document' with a snippet Google scraped from its footer; on a phone it loads zoomed out with microscopic text.\n\nThe other shows 'Crumb & Crust — Neighbourhood Bakery' above a hand-written sentence about sourdough baked before sunrise, and opens on a phone at a readable size. The difference is five lines of head markup.",
+      "exercise": "In the editor on the right, complete the empty head of a bakery page: charset first, then the title, a one-sentence description meta, the standard viewport meta, and an author meta.",
+      "expectedResult": "The preview body is unchanged — head content is invisible — but the browser tab would now read 'Crumb & Crust', and all five checks pass in the console.",
+      "commonMistakes": [
+        "Putting visible content like headings in the head, or metadata like title in the body. The head describes; the body displays. Browsers repair violations in surprising ways.",
+        "Declaring the charset late. It must appear within the first 1024 bytes, and by convention immediately after <head> — everything decoded before it is guesswork.",
+        "Writing the viewport meta with typos (viewport is one word; content values are comma-separated). A broken viewport silently reverts phones to zoomed-out desktop rendering.",
+        "Stuffing the description with keywords. It is your search-result ad copy — one clear sentence outperforms a comma-salad, and Google rewrites bad ones anyway."
+      ],
+      "proTip": "The head is also where social preview tags live: Open Graph metas like og:title and og:image control the card shown when your link is pasted into chat apps and social feeds. They follow exactly the pattern you learned here — meta elements with name/property and content — so you can add them the day you need them.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will assemble a production-quality head, line by line, and learn what each piece of metadata does for browsers, phones and search engines.",
+        "sections": [
+          {
+            "heading": "The document's control panel",
+            "body": "An HTML document splits into two halves with opposite jobs. The body holds everything a visitor sees. The head holds information about the document — its title, its character encoding, its relationship to other files, instructions for phones and search engines. Nothing placed in the head renders on the page.\n\nThat invisibility misleads beginners into treating the head as boilerplate to paste and forget. In reality every line answers a question some system will ask: What do I put on the tab? (title). How do I decode these bytes? (charset). How wide should I render on this phone? (viewport). What snippet represents this page in results? (description). Which stylesheet applies? (link).\n\nThe head is written between <head> and </head>, before the body. You have already been placing title, style and link elements there; this lesson completes the set with the meta family.",
+            "code": "<html lang=\"en\">\n<head>\n  <!-- metadata: about the page -->\n</head>\n<body>\n  <!-- content: the page -->\n</body>\n</html>"
+          },
+          {
+            "heading": "title: the page's public name",
+            "body": "The title element sets the document's name — required in every valid HTML document, exactly one per page, plain text only. Its reach is wider than the tab: it labels bookmarks, appears in the browser history, is announced first by screen readers when a page loads, and becomes the blue headline of your search result. Search engines also treat its words as a strong relevance signal, which makes it one of the highest-leverage lines of SEO you control.\n\nGood titles are specific and front-loaded: the page's own subject first, the site name after a separator — 'Sourdough Loaves — Crumb & Crust' rather than 'Crumb & Crust | Products | Page 2'. Keep it under roughly 60 characters so results do not truncate it, and give every page of a site a distinct title; twelve tabs all reading 'Home' help no one.\n\nDo not confuse title with the h1. The h1 is content, visible in the page; the title is metadata, visible everywhere else. They often carry similar text, and that is fine — they are still two different elements doing two different jobs.",
+            "code": "<title>Crumb &amp; Crust — Neighbourhood Bakery</title>"
+          },
+          {
+            "heading": "The meta element and charset",
+            "body": "meta is the head's general-purpose metadata carrier: a void element whose attributes hold the data. It comes in two main shapes. The first is the special one-attribute form <meta charset=\"UTF-8\">, which declares the character encoding — the rulebook translating the file's raw bytes back into letters. Declare UTF-8 always; it encodes every character of every language, and the next lesson explores what goes wrong without it.\n\nPosition matters for this one meta: the browser needs the encoding before it can safely read anything else, so the declaration must sit within the first 1024 bytes of the file. The universal convention is to make it the first line inside the head, and there is no reason to deviate.\n\nThe second shape is the name/content pair — <meta name=\"...\" content=\"...\"> — a small key-value store for everything else: description, author, viewport and more. The name says which property, the content carries its value.",
+            "code": "<meta charset=\"UTF-8\">\n<meta name=\"author\" content=\"Crumb & Crust\">"
+          },
+          {
+            "heading": "description and author",
+            "body": "The description meta is your page's one-sentence pitch: <meta name=\"description\" content=\"Sourdough, rye and pastries baked before sunrise...\">. Search engines display it as the gray snippet under your result — it does not affect ranking, but it heavily affects whether people click. Write it like ad copy: one or two natural sentences, roughly 150-160 characters, unique per page. Leave it out and search engines improvise a snippet from whatever page text matched the query, with mixed results.\n\nThe author meta simply credits a person or organization: <meta name=\"author\" content=\"N. Kim\">. Tools and archives read it; search engines largely ignore it. It costs one line and documents provenance.\n\nOne meta you will see in old code and should never write: name=\"keywords\". It was abused into meaninglessness decades ago, and every major search engine ignores it completely."
+          },
+          {
+            "heading": "viewport: the line that makes pages mobile",
+            "body": "When smartphones first got real browsers, the web was desktop-only — so phone browsers lied: they rendered pages onto an imaginary desktop-width canvas (about 980px) and zoomed out to fit the screen. Legacy pages survived as tiny-but-complete miniatures; users pinch-zoomed around them. Phone browsers still do this today for any page that does not say otherwise.\n\nThe viewport meta is how you say otherwise: <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">. width=device-width sets the layout canvas to the phone's true screen width; initial-scale=1.0 starts at 100% zoom. With it, your text renders at readable size and your CSS can respond to the real screen; without it, no amount of styling makes a page genuinely mobile-friendly, and Google flags the page in its mobile checks.\n\nThis line is non-negotiable boilerplate for every page you will ever ship. Resist the old temptation to bolt on user-scalable=no to stop pinch-zooming — zoom is an accessibility feature, and disabling it locks out low-vision users.",
+            "code": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">"
+          },
+          {
+            "heading": "base, and the ordering conventions",
+            "body": "One rarer head element completes the inventory: base sets the starting point for every relative URL in the document. <base href=\"https://example.com/docs/\"> makes a link to guide.html resolve inside /docs/; <base target=\"_blank\"> makes every link default to a new tab. At most one base is allowed, it must precede any element that uses URLs, and it is a blunt instrument — it rewrites all relative links at once — so most sites simply never use it. Recognize it; reach for it rarely.\n\nA conventional head reads in this order: charset first (the decoding rule), viewport next (the rendering rule), then title, then the remaining metas, then link elements for stylesheets and icons, then any style block. The order is mostly convention rather than law, but conventions shared by millions of developers are worth keeping — anyone can skim your head and find what they expect where they expect it.\n\nFinally, placement of scripts: script elements may live in the head or the body, but a script in the head blocks page rendering while it loads. The long-standing pattern is stylesheets in the head (so the page never renders unstyled) and scripts at the end of the body — or in the head with the defer attribute, which tells the browser to keep rendering and run the script after the document is parsed."
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <!-- TODO 2: declare the character encoding — first thing in the head -->\n  <!-- TODO 4: add the viewport meta so phones render at their real width -->\n  <!-- TODO 1: give the page its title: Crumb &amp; Crust — Neighbourhood Bakery -->\n  <!-- TODO 3: add a meta description: one natural sentence, ~150 characters -->\n  <!-- TODO 5: add a meta author crediting Crumb & Crust -->\n</head>\n<body>\n  <h1>Crumb &amp; Crust</h1>\n  <p>Sourdough, rye and pastry, baked before sunrise.</p>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Crumb &amp; Crust — Neighbourhood Bakery</title>\n  <meta name=\"description\" content=\"Sourdough, rye and pastries baked before sunrise in the heart of the neighbourhood. Open Tuesday to Sunday from seven.\">\n  <meta name=\"author\" content=\"Crumb & Crust\">\n</head>\n<body>\n  <h1>Crumb &amp; Crust</h1>\n  <p>Sourdough, rye and pastry, baked before sunrise.</p>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Give the page a title element naming the bakery: Crumb &amp; Crust — Neighbourhood Bakery.",
+            "hint": "<title>Crumb &amp; Crust — Neighbourhood Bakery</title> — the &amp; entity writes the ampersand safely.",
+            "errorMessage": "The title does not name the bakery — add a <title> containing 'Crumb & Crust'.",
+            "check": {
+              "type": "text",
+              "selector": "title",
+              "pattern": "crumb"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Declare the character encoding as the first line inside the head.",
+            "hint": "The one-attribute meta form: <meta charset=\"UTF-8\">.",
+            "errorMessage": "No <meta charset> found — the browser needs the encoding declared before anything else in the head.",
+            "check": {
+              "type": "selector",
+              "selector": "meta[charset]"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Add a meta description: one natural sentence describing the bakery (aim for around 150 characters).",
+            "hint": "<meta name=\"description\" content=\"Sourdough, rye and pastries baked before sunrise...\"> — write it like the search snippet it will become.",
+            "errorMessage": "No substantial meta description found — add name=\"description\" with a real sentence in its content attribute.",
+            "check": {
+              "type": "attr",
+              "selector": "meta[name='description']",
+              "attr": "content",
+              "pattern": ".{40,}"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Add the standard viewport meta so phones render the page at their true width.",
+            "hint": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> — comma between the two values.",
+            "errorMessage": "No viewport meta with width=device-width found — without it phones render the page zoomed out.",
+            "check": {
+              "type": "attr",
+              "selector": "meta[name='viewport']",
+              "attr": "content",
+              "pattern": "width=device-width"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Credit the maker with an author meta.",
+            "hint": "Same name/content pattern: <meta name=\"author\" content=\"Crumb & Crust\">.",
+            "errorMessage": "No <meta name=\"author\"> found — add the author credit to the head.",
+            "check": {
+              "type": "selector",
+              "selector": "meta[name='author']"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b23-charsets-entities",
+      "title": "Write any character safely: UTF-8 and HTML entities",
+      "summary": "Understand why meta charset matters, when entities like &lt; &amp; and &nbsp; are required versus optional, and how symbols, emoji and URL encoding fit together.",
+      "difficulty": "beginner",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Repair a page with a missing charset declaration and use entities to display literal tags, ampersands, a copyright line and a non-breaking space.",
+      "whyItMatters": "Sooner or later every developer meets a page where the euro signs turned into garbage, or a paragraph that vanished because a stray < opened a phantom tag. Both bugs come from the same two systems: character encoding, which maps bytes to characters, and entities, which let you write characters HTML would otherwise misread. Master the small required set and the common symbols, and text handling stops being a source of mystery bugs.",
+      "steps": [
+        "Read why encodings exist and declare UTF-8 in the head (task 1).",
+        "Read which characters MUST be escaped, then display the literal <p> tag using entities (task 2).",
+        "Fix the menu line so its ampersand is written as &amp; (task 3).",
+        "Read the symbols section and build the copyright footer with &copy; (task 4).",
+        "Use &nbsp; to keep '10 GB' unbreakable (task 5).",
+        "Run and confirm all five checks pass."
+      ],
+      "prompt": "<meta charset=\"UTF-8\">\n\n<p>Every paragraph starts with the <code>&lt;p&gt;</code> tag.</p>\n<p>Menu: Fish &amp; Chips</p>\n<p>The free plan includes 10&nbsp;GB of storage.</p>\n<p>&copy; 2026 The Markup Cafe</p>",
+      "promptLabel": "Key code example",
+      "explanation": "The charset meta tells the browser which rulebook decodes the file's bytes into characters — UTF-8 covers every language and symbol. The entities do the escaping: &lt; and &gt; display angle brackets without opening a real tag, &amp; displays an ampersand without starting an accidental entity, &nbsp; inserts a space that refuses to line-break, and &copy; produces the © symbol. Each entity is an ampersand, a name, and a semicolon — the three parts are all mandatory.",
+      "example": "A cafe's page is saved as UTF-8 but never declares it. On most machines it looks fine; on one visitor's browser the € prices render as â‚¬ and the © in the footer becomes Â©.\n\nOne line — <meta charset=\"UTF-8\"> — pins the decoding on every machine. And where the menu once read 'Fish & Chips' with a bare ampersand that validators flag, it now reads identically to visitors but is written unambiguously as Fish &amp; Chips in the source.",
+      "exercise": "In the editor on the right, declare UTF-8 in the head, then fix four lines of a cafe page: show a literal <p> tag with entities, escape the menu's ampersand, add a &copy; footer, and glue '10 GB' together with &nbsp;.",
+      "expectedResult": "The preview shows the tag name <p> as visible text, the menu reading Fish & Chips, a © 2026 footer, and no possibility of '10' and 'GB' separating across lines. All five checks pass.",
+      "commonMistakes": [
+        "Forgetting the semicolon: &copy without it may still render in some browsers but is invalid and fails unpredictably — always &copy;.",
+        "Declaring a charset that does not match how the file was actually saved. The declaration describes the bytes; if the editor saved Latin-1, claiming UTF-8 still garbles them.",
+        "Escaping the ampersands inside URLs is required too — href=\"page?a=1&amp;b=2\" — a spot almost everyone misses at first.",
+        "Scattering &nbsp; to fake indentation or layout spacing. It is for keeping word pairs together; spacing and indentation are CSS jobs."
+      ],
+      "proTip": "You rarely need to memorize numeric entity codes: any character has a named or numeric form, but with UTF-8 declared you can paste ©, €, → or an emoji directly into your file and it will just work. Reserve entities for the characters with syntax meaning (< > &) and the invisible ones you could not see in your editor anyway (&nbsp;).",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will fix a cafe page twice over: once at the byte level with a UTF-8 declaration, and once at the character level with the entities every developer must know.",
+        "sections": [
+          {
+            "heading": "Bytes, characters, and why pages garble",
+            "body": "A file on disk is only bytes — numbers. A character encoding is the agreed table that maps those numbers back to letters: 72 means H, and so on. The old encodings (ASCII, then regional ones like Latin-1 or ISO-8859-7 for Greek) each covered one alphabet in 256 slots, which is why the early web garbled anything that crossed a language boundary.\n\nUTF-8 ended that era: one encoding that represents every character in Unicode — every alphabet, every symbol, every emoji — while staying byte-compatible with ASCII for plain English text. It is the encoding of effectively the entire modern web, and there is no reason to author in anything else.\n\nThe garbling you have seen — â‚¬ where € should be, Ã© instead of é — is what happens when text saved under one encoding is decoded under another. The bytes are fine; the reader used the wrong table. Which raises the question: how does a browser know which table to use?"
+          },
+          {
+            "heading": "meta charset: pinning the decoding",
+            "body": "The browser learns the encoding from your declaration: <meta charset=\"UTF-8\"> in the head. It must appear early — within the first 1024 bytes — because the browser is already decoding as it reads; convention puts it as the first line inside head. Without a declaration the browser guesses from the bytes, and guesses are exactly what work on your machine and fail on someone else's.\n\nTwo halves make the system work, and they must agree: your editor saves the file as UTF-8 (every modern editor's default), and your meta declares UTF-8. The declaration does not convert anything — it describes. Declaring UTF-8 on a file actually saved as Latin-1 garbles it just as surely as declaring nothing.\n\nWith both halves in place, you can type ©, €, ü, Ω or 🎉 directly into your HTML and they render perfectly. That is the modern baseline — and it makes entities a targeted tool rather than a constant chore.",
+            "code": "<head>\n  <meta charset=\"UTF-8\">\n  <title>The Markup Cafe</title>\n</head>"
+          },
+          {
+            "heading": "Entities: writing characters by name",
+            "body": "An entity is a way to write one character as a short code: an ampersand, a name (or a # plus a number), and a closing semicolon. &lt; produces <. &#169; and &copy; both produce ©. The browser replaces the code with the character when rendering; your source shows the code, your visitors see the symbol.\n\nWhy would anyone write characters indirectly? Two reasons. First: some characters ARE HTML syntax — type a literal < and the parser starts reading a tag. Entities let you display those characters instead of triggering them. Second, historically: characters you could not type or save reliably. UTF-8 has mostly retired the second reason, but the first is permanent.\n\nAll three parts are mandatory. Omit the semicolon and you are writing invalid HTML that happens to render sometimes; names are case-sensitive (&COPY; is not a thing). When an entity seems to 'not work', check those two details first.",
+            "code": "&lt;   →  <\n&gt;   →  >\n&amp;  →  &\n&quot; →  \"\n&copy; →  ©\n&#8364; → € (numeric form; &euro; also works)"
+          },
+          {
+            "heading": "The required escapes: < > and &",
+            "body": "Three characters have non-negotiable escaping rules because they carry syntax meaning. The less-than sign must be written &lt; whenever you want it displayed as text — a literal < in prose makes the parser open a phantom tag and can swallow everything up to the next >. Writing about HTML in HTML, as this course constantly does, means &lt;p&gt; every time a tag name appears as content. The greater-than sign is safer in practice, but the rule of the pair is: escape both, always, and never think about edge cases.\n\nThe ampersand is subtler: & is the character that BEGINS entities, so a bare one is ambiguous — is 'Fish & Chips' text, or the start of &Chi...? Browsers usually recover, but validators flag it and edge cases bite. Write &amp; wherever an ampersand is content, including inside attribute values: a URL with parameters becomes href=\"search?a=1&amp;b=2\".\n\nThe quote entities &quot; (\") and &#39; (') are required only in one situation: inside an attribute value delimited by the same quote character. <img alt=\"The &quot;big&quot; one\"> — otherwise the inner quotes would end the attribute early. In ordinary text, quotes need no escaping at all.",
+            "code": "<!-- displaying a tag as text -->\n<p>Every paragraph starts with the <code>&lt;p&gt;</code> tag.</p>\n\n<!-- ampersand as content, and inside a URL -->\n<p>Fish &amp; Chips</p>\n<a href=\"menu?meal=fish&amp;side=chips\">Order</a>"
+          },
+          {
+            "heading": "&nbsp; and the useful symbol set",
+            "body": "&nbsp; is the non-breaking space: it renders like a normal space but forbids the browser from wrapping a line at it. Use it to glue pairs that must not separate — 10&nbsp;GB, 25&nbsp;°C, page&nbsp;7 — so a line break never strands the unit from its number. What it is NOT for is layout: chains of &nbsp;&nbsp;&nbsp; to indent or space things out is a relic of the 1990s; spacing belongs to CSS. Note also that consecutive normal spaces collapse into one when rendered — another reason people once abused &nbsp; — but the correct response is CSS, not entity chains.\n\nA small symbol vocabulary covers most real needs: &copy; ©, &reg; ®, &trade; ™, &euro; €, &pound; £, &yen; ¥, &deg; °, &times; ×, &divide; ÷, &mdash; — (the long dash), &hellip; …, and the arrows &larr; &uarr; &rarr; &darr;. Every one also has a numeric form (&#169; equals &copy;), which exists for the thousands of characters without names.\n\nAnd emoji? Just characters. With UTF-8 declared, paste 🎉 directly — no entity needed, though &#127881; would produce the same party popper. Emoji in HTML need no special treatment whatsoever; that is the whole point of a universal encoding.",
+            "code": "<p>The free plan includes 10&nbsp;GB of storage.</p>\n<p>&copy; 2026 The Markup Cafe &middot; Espresso 2&nbsp;&euro;</p>\n<p>Next &rarr;</p>"
+          },
+          {
+            "heading": "A related system: URL encoding",
+            "body": "You will meet a second escaping system living right next to this one: URLs have their own reserved characters and their own escape syntax, percent-encoding. A space cannot appear in a URL, so it becomes %20 — a percent sign plus the character's byte value in hexadecimal. my file.pdf is fetched as my%20file.pdf; non-ASCII characters encode as multi-byte sequences, which is why a Greek word in a URL balloons into %CE%B1-style runs.\n\nBrowsers largely handle this for you: type a space or paste ω into the address bar or click such an href, and the browser encodes on the wire while showing you the readable form. You mostly notice percent-encoding when copying URLs out of the address bar or when building URLs in code.\n\nKeep the two systems distinct in your head: entities (&amp;) escape characters for HTML's parser; percent-codes (%20) escape characters for URLs. They never substitute for each other — and the one place they meet is the one you already know: a URL used inside an href still writes its parameter-joining ampersands as &amp;, because the attribute value is HTML first."
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <!-- TODO 1: this page never declares its encoding — add the UTF-8 meta -->\n  <title>The Markup Cafe</title>\n</head>\n<body>\n  <h1>The Markup Cafe</h1>\n\n  <!-- TODO 2: make the literal tag visible: put &lt;p&gt; inside the code element -->\n  <p>Every paragraph starts with the <code></code> tag.</p>\n\n  <!-- TODO 3: rewrite the ampersand as an entity: Fish &amp; Chips -->\n  <p>Menu of the day: Fish and Chips</p>\n\n  <!-- TODO 5: glue the number to its unit with &nbsp; -->\n  <p>Free wifi and the free plan includes 10 GB of storage.</p>\n\n  <!-- TODO 4: add a footer paragraph: &copy; 2026 The Markup Cafe -->\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>The Markup Cafe</title>\n</head>\n<body>\n  <h1>The Markup Cafe</h1>\n\n  <p>Every paragraph starts with the <code>&lt;p&gt;</code> tag.</p>\n\n  <p>Menu of the day: Fish &amp; Chips</p>\n\n  <p>Free wifi and the free plan includes 10&nbsp;GB of storage.</p>\n\n  <p>&copy; 2026 The Markup Cafe</p>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Declare the page's character encoding: add the UTF-8 meta as the first line of the head.",
+            "hint": "<meta charset=\"UTF-8\"> — before the title, so the browser decodes everything correctly.",
+            "errorMessage": "No UTF-8 charset declaration found — without it the browser guesses the encoding and can garble symbols.",
+            "check": {
+              "type": "attr",
+              "selector": "meta[charset]",
+              "attr": "charset",
+              "pattern": "utf-8"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Inside the empty <code> element, write the literal tag &lt;p&gt; using entities so it displays as text.",
+            "hint": "Angle brackets that should DISPLAY are written as entities: &lt;p&gt; — a real <p> here would open an actual tag.",
+            "errorMessage": "The literal <p> tag is not written with entities — use &lt;p&gt; inside the code element.",
+            "check": {
+              "type": "source",
+              "pattern": "&lt;p&gt;"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Change 'Fish and Chips' to 'Fish &amp; Chips', writing the ampersand as an entity.",
+            "hint": "A bare & starts an entity, so an ampersand shown as text is written &amp;.",
+            "errorMessage": "The menu's ampersand is not escaped — write it as Fish &amp; Chips in the source.",
+            "check": {
+              "type": "source",
+              "pattern": "fish\\s*&amp;\\s*chips"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Add the footer paragraph: &copy; 2026 The Markup Cafe.",
+            "hint": "The copyright symbol has a named entity: &copy; — ampersand, name, semicolon.",
+            "errorMessage": "No &copy; entity found — the footer's copyright symbol should be written as an entity.",
+            "check": {
+              "type": "source",
+              "pattern": "&copy;"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Replace the space in '10 GB' with a non-breaking space so the pair can never split across lines.",
+            "hint": "10&nbsp;GB — renders as a space, wraps like a single word.",
+            "errorMessage": "No &nbsp; found — glue the number to its unit with the non-breaking space entity.",
+            "check": {
+              "type": "source",
+              "pattern": "&nbsp;"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b24-project-profile-page",
+      "title": "Capstone: build your personal profile page from scratch",
+      "summary": "Combine everything from the course — skeleton, headings, formatted text, lists, an image, safe links, entities and comments — into one complete personal page.",
+      "difficulty": "beginner",
+      "minutes": 15,
+      "isFree": false,
+      "goal": "Author a complete, valid personal profile page from an almost-empty file, applying every element the course has taught.",
+      "whyItMatters": "This is the moment the course pays off: no single new element, just the judgment to combine two dozen known ones into a page that would survive real scrutiny. A personal profile page is also genuinely useful — it is the seed of a portfolio, the standard first deliverable in interviews and bootcamps, and the page you will keep upgrading as the CSS and JavaScript courses add capabilities.",
+      "steps": [
+        "Read the planning section first — decide the outline before touching the editor.",
+        "Lay the foundation: doctype above the html element (task 1).",
+        "Build the heading skeleton: your name as the h1, then About, Skills and Contact as h2 sections (task 2).",
+        "Fill About with a formatted paragraph and your photo with proper alt text (task 3).",
+        "Fill Skills with a ul (task 4) and Contact with the two links — external with target and rel, plus mailto (task 5).",
+        "Finish with the entity footer and a maintenance comment (task 6), then Run until every check passes."
+      ],
+      "prompt": "<h1>Alex Petrou</h1>\n<h2>About</h2>\n<p>Student developer who enjoys <strong>clean markup</strong>.</p>\n<img src=\"portrait.jpg\" alt=\"Alex smiling in front of a whiteboard\" width=\"200\" height=\"200\">\n<h2>Skills</h2>\n<ul><li>HTML</li><li>Alt text</li><li>Debugging</li></ul>\n<h2>Contact</h2>\n<a href=\"https://github.com/alexp\" target=\"_blank\" rel=\"noopener\">GitHub</a>\n<a href=\"mailto:alex@example.com\">Email me</a>\n<p>&copy; 2026 Alex Petrou</p>",
+      "promptLabel": "Key code example",
+      "explanation": "The page is a straight application of the course: one h1 naming the person, h2 sections forming the outline, a formatted paragraph and a described image in About, a real ul for skills, and a Contact section whose external link opens safely in a new tab while the mailto link opens the visitor's mail client. The footer's copyright symbol is an entity, and a source comment (invisible to visitors) records maintenance notes. Nothing here is new — that is the point.",
+      "example": "Before: an empty body and a blinking cursor — the honest starting state of every real page.\n\nAfter: a complete profile — name at the top, a short About with your photo, a scannable skills list, working contact links and a tidy footer. View it in any browser and it reads as a finished (if unstyled) page; view its source and every element is deliberate. That double standard — works rendered, reads clean — is what 'knowing HTML' means.",
+      "exercise": "In the editor on the right, build the entire profile page from the TODO skeleton: doctype, heading structure, formatted About paragraph with your photo, skills list, safe external and mailto links, and an entity-based footer with a maintenance comment.",
+      "expectedResult": "The preview shows a complete profile page: name, three titled sections, an image placeholder with alt text, a bulleted skill list, two working links and a copyright footer. All six checks pass.",
+      "commonMistakes": [
+        "Building top-to-bottom without an outline. Plan the h1/h2 skeleton first and every element afterwards has an obvious home — the pros sketch structure before typing.",
+        "A skills 'list' that is really one paragraph with commas. If items are enumerable, they are li elements — machines and screen readers then count them for you.",
+        "An external link with target=\"_blank\" but no rel=\"noopener\", or a mailto with a space after the colon. The details from lesson 13 still count in a big page.",
+        "Skipping alt on the portrait because 'it is my own page'. Alt text is practice for the habit — and your profile page will be read by more screen readers than you think."
+      ],
+      "proTip": "Before calling any page finished, run the 60-second audit you now know how to do: exactly one h1? No skipped heading levels? Every img has alt? Every _blank link has noopener? Charset in the head? That five-question checklist catches the majority of real-world HTML review comments.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "software-developer",
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "No new elements — just you, an almost-empty file, and everything the course has taught, assembled into a page worth keeping.",
+        "sections": [
+          {
+            "heading": "Plan before you type",
+            "body": "Professionals do not start pages by typing tags; they start by deciding the outline. For a profile page the questions take one minute: What is the single h1? (Your name.) What are the major sections? (About, Skills, Contact — three h2s.) What does each section contain? (A paragraph and a photo; a list; two links.) Write that down, even as a comment, and the rest of the build is filling in blanks.\n\nThe payoff of planning is that every later decision becomes local. When you add the photo you are only asking 'what belongs in About?', not 'what is my page?'. When structure questions and content questions are answered separately, neither gets rushed.\n\nThis lesson's tasks follow that exact order deliberately: skeleton first, structure second, content third, finishing touches last. It is the order to internalize for every page you build after this one."
+          },
+          {
+            "heading": "The skeleton, from memory this time",
+            "body": "Every valid page stands on the same five-line frame, and by now you should be able to write it without reference: the doctype declaration first — <!DOCTYPE html>, above everything, telling the browser to use modern standards rendering — then the html element with its lang attribute, containing exactly two children: head and body.\n\nThe head carries the metadata set you assembled in lesson 22: meta charset first, the viewport meta, and a title that will label the tab and the search result. For a profile page, make the title your name plus a word of context — 'Alex Petrou — Student Developer' — since 'My page' helps no search engine and no bookmark list.\n\nOne detail this exercise makes you handle: the starter file is missing its doctype. A page without one still renders, but in quirks mode — the browser's bug-compatibility emulation of the 1990s — with subtly wrong layout behavior. First task, one line, permanent habit."
+          },
+          {
+            "heading": "Headings make the outline real",
+            "body": "Your plan becomes markup through the heading rules of lesson 6: exactly one h1 — your name, since the whole page is about you — and one h2 per major section: About, Skills, Contact. No levels skipped; subsections, if you ever add them, become h3s under their h2.\n\nRead the finished outline as a table of contents to check it: Alex Petrou — About — Skills — Contact. Sensible. That reading is exactly what a screen-reader user does with a headings shortcut, and roughly what a search engine extracts, so if the outline reads well, the page's bones are right.\n\nResist the decorative temptation one more time: if a section title should look smaller, that will be a CSS decision in the next course. Levels encode structure, not size — the discipline you have practiced since the headings lesson."
+          },
+          {
+            "heading": "Body text, formatting and the photo",
+            "body": "The About section wants two or three honest sentences, in real p elements, with inline formatting doing semantic work: strong for what genuinely matters ('currently seeking an internship'), em for stress ('I enjoy the debugging most'), never bold-as-decoration. One well-formatted paragraph outperforms five plain ones.\n\nThe photo applies lesson 14 end to end: src naming the file, width and height so the layout never jumps, and alt text describing the image for whoever cannot see it — 'Alex smiling in front of a whiteboard', not 'photo' and not empty, because a portrait on a profile page is content, not decoration.\n\nThe Skills section applies lesson 16: enumerable items are a ul of li elements, one skill per item, no comma-lists inside a paragraph. Order does not rank you, so unordered is the honest choice — and when you later learn CSS grid, this same list restyles into a tag cloud without touching the markup.",
+            "code": "<h2>About</h2>\n<p>Student developer, currently <strong>seeking an internship</strong>.\n   I enjoy <em>debugging</em> most of all.</p>\n<img src=\"portrait.jpg\" alt=\"Alex smiling in front of a whiteboard\"\n     width=\"200\" height=\"200\">\n\n<h2>Skills</h2>\n<ul>\n  <li>Semantic HTML</li>\n  <li>Accessible images</li>\n  <li>Version control basics</li>\n</ul>"
+          },
+          {
+            "heading": "Contact links, done safely",
+            "body": "The Contact section replays lesson 13 with real stakes, because these are links you will actually publish. The external link — your GitHub, portfolio, or a professional profile — opens in a new tab so visitors keep your page: target=\"_blank\", always paired with rel=\"noopener\" so the destination gets no scripting handle on your page.\n\nThe email link uses the mailto: scheme, address glued directly to the colon. Show the address (or a clear label) as the link text, remembering that visitors without a configured mail client will want to copy it. If you add a phone number, tel: with the international +30-style prefix is the pattern.\n\nSmall real-world note: publishing an email address in a public page does attract scrapers and spam. For a learning page with an example.com address it is a non-issue; for your real site you might prefer a contact form later — a topic for the forms lesson.",
+            "code": "<h2>Contact</h2>\n<p><a href=\"https://github.com/alexp\" target=\"_blank\" rel=\"noopener\">My GitHub</a></p>\n<p><a href=\"mailto:alex@example.com\">alex@example.com</a></p>"
+          },
+          {
+            "heading": "Finishing touches: entity, comment, audit",
+            "body": "Two small finishers separate a complete page from an abandoned draft. The footer line — © year and your name — writes its copyright symbol as the entity &copy;, applying lesson 23. And a source comment records what the page needs next: <!-- last updated Aug 2026; add project links next -->. Comments render nowhere; they exist for the maintainer, who in six months will be you with no memory of today.\n\nThen audit before you call it done, the same five questions every code review asks of HTML: one h1 and an unbroken heading sequence; alt on every img; noopener on every _blank; charset and title present in the head; and no validator-bait like bare ampersands in text. Your page should pass all five before the checks even run.\n\nWhere next: this page is deliberately unstyled — it is pure structure, which is exactly what makes it the perfect substrate for the CSS course, where the same markup gains layout, typography and color without changing a single element."
+          }
+        ],
+        "starterCode": "<!-- TODO 1: add the doctype above the html element -->\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Alex Petrou — Student Developer</title>\n</head>\n<body>\n  <!-- TODO 2: your name as the single h1 -->\n  <!-- TODO 3: three h2 sections: About, Skills, Contact -->\n\n  <!-- TODO 4 (About): a short paragraph with some <strong> or <em>,\n       plus portrait.jpg with alt, width=\"200\", height=\"200\" -->\n\n  <!-- TODO 5 (Skills): a ul with at least three skills -->\n\n  <!-- TODO 5 (Contact): an external link with target=\"_blank\" + rel=\"noopener\",\n       and a mailto: link -->\n\n  <!-- TODO 6: footer paragraph with &copy; 2026 and your name,\n       plus an HTML comment noting when you last updated the page -->\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Alex Petrou — Student Developer</title>\n</head>\n<body>\n  <h1>Alex Petrou</h1>\n\n  <h2>About</h2>\n  <p>Student developer, currently <strong>seeking an internship</strong>.\n     I write clean markup and enjoy <em>debugging</em> most of all.</p>\n  <img src=\"portrait.jpg\" alt=\"Alex smiling in front of a whiteboard\" width=\"200\" height=\"200\">\n\n  <h2>Skills</h2>\n  <ul>\n    <li>Semantic HTML</li>\n    <li>Accessible images and alt text</li>\n    <li>Version control basics</li>\n  </ul>\n\n  <h2>Contact</h2>\n  <p><a href=\"https://github.com/alexp\" target=\"_blank\" rel=\"noopener\">My GitHub</a></p>\n  <p><a href=\"mailto:alex@example.com\">alex@example.com</a></p>\n\n  <!-- last updated August 2026 — add project links next -->\n  <p>&copy; 2026 Alex Petrou</p>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Replace the first TODO comment with the doctype declaration, above the html element.",
+            "hint": "<!DOCTYPE html> — first line of the file, before <html lang=\"en\">.",
+            "errorMessage": "The document does not start with <!DOCTYPE html> — without it browsers render in quirks mode.",
+            "check": {
+              "type": "doctype"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Build the heading skeleton: your name as the page's single h1, then h2 sections for About, Skills and Contact.",
+            "hint": "One h1 (<h1>Alex Petrou</h1>) and three sibling <h2> elements one level below it — never skip from h1 to h3.",
+            "errorMessage": "The heading outline is incomplete — the page needs its h1 plus at least the About, Skills and Contact <h2> sections.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "h2",
+              "min": 2
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "In About, write a short paragraph using <strong> or <em>, and add portrait.jpg with descriptive alt text, width=\"200\" and height=\"200\".",
+            "hint": "The image needs all of src, alt, width and height — describe yourself in the alt as a stranger would see the photo.",
+            "errorMessage": "No image with alt text found — the portrait needs an <img> carrying a real alt attribute.",
+            "check": {
+              "type": "selector",
+              "selector": "img[alt]"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "In Skills, add an unordered list with at least three skills, one per li.",
+            "hint": "Enumerable items are a <ul> of <li> elements — no comma-lists inside a paragraph.",
+            "errorMessage": "Fewer than three list items found — the Skills section needs a ul with at least three <li> entries.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "ul li",
+              "min": 3
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "In Contact, add an external link with target=\"_blank\" and rel=\"noopener\", plus a mailto: link.",
+            "hint": "The noopener sits on the same <a> as target=\"_blank\", and the mailto: address follows the colon with no space.",
+            "errorMessage": "The external link is missing rel=\"noopener\" on its target=\"_blank\" anchor (also make sure the mailto link is in place).",
+            "check": {
+              "type": "attr",
+              "selector": "a[target='_blank']",
+              "attr": "rel",
+              "pattern": "noopener"
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Finish the page: a footer paragraph with &copy; 2026 and your name, and an HTML comment noting when you last updated the page.",
+            "hint": "The copyright symbol is the entity &copy; — and comments are <!-- like this -->, invisible to visitors.",
+            "errorMessage": "No &copy; entity found — the footer's copyright symbol should be written as an entity.",
+            "check": {
+              "type": "source",
+              "pattern": "&copy;"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

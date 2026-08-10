@@ -1,0 +1,575 @@
+{
+  "enrichment": {
+    "auto-b1-what-agents-automations-are": {
+      "placeholders": [
+        {
+          "name": "LIST YOUR 5 TASKS, e.g. 1. Forwarding new leads from a contact form into our CRM and writing a personalized first reply. 2. ...",
+          "what": "Five real repetitive tasks pulled from your actual week, described specifically enough that someone else could tell whether they involve judgment or just moving data. Vague entries like 'admin work' can't be scored — name the actual systems and action involved.",
+          "examples": [
+            "1. Forwarding new leads from our contact form into the CRM and writing a personalized first reply. 2. Reminding customers by email when an invoice is 7+ days overdue. 3. Summarizing each week's sales calls into one Slack digest. 4. Categorizing incoming expense receipts by department. 5. Posting the same product update to three different social accounts.",
+            "1. Copying new Shopify orders into a fulfillment spreadsheet. 2. Answering repetitive 'where is my order' emails. 3. Writing first-draft product descriptions for new inventory. 4. Flagging low-stock items to the purchasing team. 5. Replying to 1-star reviews with an apology and next steps.",
+            "1. Scheduling intro calls for new leads based on their form answers. 2. Drafting follow-up emails after a sales call. 3. Updating the CRM stage after each call. 4. Compiling a weekly pipeline report for the sales director. 5. Sending contract reminders to prospects who haven't signed."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Solo founder version",
+          "whenToUse": "Use this when you're a one-person operation and want the analysis to weigh your own time value directly, without department-level attribution.",
+          "prompt": "I'm a solo founder deciding what to automate first. Here are candidate repetitive tasks I do myself:\n[LIST YOUR 5 TASKS]\n\nFor each task, tell me:\n1. Whether it is mainly mechanical data-transfer, an AI judgment task, or both.\n2. A rough estimate of hours per week it costs me personally.\n3. The risk level if automation makes a mistake (low/medium/high), and why.\n4. Whether it's a good first automation project (yes/no) and why.\nRank the tasks from best to worst first-automation candidate, weighing that my time is the main constraint, not team coordination. Do not recommend a specific tool yet."
+        },
+        {
+          "label": "Team-scale version with department attribution",
+          "whenToUse": "Use this when multiple people or departments are affected by the same task, and you want to know who benefits most before picking a target.",
+          "prompt": "I want to pick my team's first process to automate with AI. Here are candidate repetitive tasks across the team:\n[LIST YOUR 5 TASKS]\n\nFor each task, tell me:\n1. Whether it is mainly mechanical data-transfer, an AI judgment task, or both.\n2. Which department or role it costs the most time for, and a rough weekly hour estimate.\n3. The risk level if automation makes a mistake, and who would be affected.\n4. Whether it's a good first automation project.\nRank the tasks from best to worst, and note if any two tasks would compete for the same team's attention if built at the same time."
+        },
+        {
+          "label": "Down to two finalists",
+          "whenToUse": "Use this when you've already narrowed your list to two strong candidates and need a tie-breaker instead of a full ranking of five.",
+          "prompt": "I've narrowed my first automation project to two candidates:\nTask A: [DESCRIBE TASK A]\nTask B: [DESCRIBE TASK B]\n\nCompare them directly on: mechanical vs. judgment work involved, estimated hours per week saved, risk if automation makes a mistake, and how quickly I could realistically get a working version live. Recommend one as the clear first choice and explain what would have to be true for the other one to become the better choice later."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Estimate the cost of waiting",
+          "prompt": "For the top-ranked task, estimate roughly what it's costing us, in hours per month, to keep doing this manually while we decide whether to automate it."
+        },
+        {
+          "label": "Match it to the right tool category",
+          "prompt": "Now that we've picked this task, which category does it need — a classic trigger-action automation, an AI-in-the-loop step inside an automation, or a full autonomous agent? Explain why in one paragraph, referencing the specific judgment or mechanical work involved."
+        },
+        {
+          "label": "Push back on the risk rating",
+          "prompt": "I think you rated the risk for [TASK NAME] too [high/low]. Here's why: [YOUR REASONING]. Re-rank the list taking this into account."
+        },
+        {
+          "label": "Get a one-line pitch",
+          "prompt": "Write a two-sentence pitch I could use to get a skeptical manager or partner to approve building this as our first automation, focused on the time saved and the low risk if it goes wrong."
+        }
+      ],
+      "walkthrough": "Jake runs a small ecommerce store selling outdoor gear and has heard 'AI agents' mentioned constantly but has never built anything himself. He wants to pick one real automation project instead of guessing.\n\nHe opens Claude and lists five tasks from his actual week: copying new Shopify orders into a fulfillment spreadsheet, answering repetitive 'where is my order' emails, drafting first-pass product descriptions for new inventory, flagging low-stock items to his one part-time employee, and replying to 1-star reviews with an apology. He pastes the lesson's prompt with this list filled in.\n\nClaude returns a ranked table. Copying orders into a spreadsheet ranks lowest for a first project — it's purely mechanical and Shopify likely has a built-in report for this anyway. Drafting product descriptions ranks highest: it's a genuine AI judgment task, costs him roughly three hours a week, and a bad first draft is low-risk since he reviews everything before publishing. Replying to 1-star reviews ranks last as a first project, flagged high-risk because a wrong tone posted publicly under the store's name could make a bad situation worse.\n\nJake isn't sure product descriptions is really his biggest time sink, so he sends a follow-up asking Claude to estimate the monthly cost of continuing to write them manually. It estimates roughly 12 hours a month at his stated pace. He then asks which tool category fits — Claude explains this is an AI-in-the-loop task, not a full agent, since it needs one judgment step (drafting) inside a simple trigger (new inventory item), not autonomous multi-step decision-making.\n\nThe whole exercise takes Jake about fifteen minutes and leaves him with one specific, defensible first project instead of a vague plan to 'use AI more.'"
+    },
+    "auto-b2-map-a-process-to-automate": {
+      "placeholders": [
+        {
+          "name": "PASTE YOUR TRIGGER, STEPS, SYSTEMS, EXCEPTIONS, AND DESIRED HUMAN CHECKPOINT",
+          "what": "Your own honest, plain-language description of how the process actually works today — what starts it, which tools it touches in order, what usually goes wrong, and where you'd want a human to approve before anything happens automatically. The messier and more specific this is, the better the gap analysis, since a vague description just produces a vague map back.",
+          "examples": [
+            "Trigger: an invoice hits 7 days overdue in QuickBooks. Steps: I check QuickBooks for the balance, open Gmail, write a reminder email by hand, sometimes call if it's a big client. Systems: QuickBooks, Gmail, sometimes phone. Exceptions: partial payments happen a lot, and disputed invoices where the client says they already paid. Checkpoint I want: never auto-send anything to a client who's disputed a charge before.",
+            "Trigger: a new lead fills out our Typeform. Steps: I get an email notification, manually copy their info into HubSpot, check their company size on LinkedIn, decide if they're enterprise or SMB, assign to the right rep. Systems: Typeform, Gmail, HubSpot, LinkedIn. Exceptions: sometimes the company field is blank, sometimes it's a personal email with no company at all. Checkpoint I want: a human should confirm any lead assigned to the enterprise rep before the rep gets notified.",
+            "Trigger: a customer submits a support ticket through our Zendesk widget. Steps: I read it, decide if it's billing, technical, or general, tag it, and either answer myself or forward to the right person. Systems: Zendesk, Slack. Exceptions: angry or threatening messages need special handling, and sometimes tickets are duplicates from the same customer. Checkpoint I want: any ticket mentioning cancellation should go to me directly, not auto-routed."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "When the process is still fuzzy in your head",
+          "whenToUse": "Use this when you can't yet describe the process cleanly yourself and need the AI to interview you first, before attempting a full map.",
+          "prompt": "I want to automate a business process but I can't describe it cleanly yet. Here's my rough, messy description:\n[PASTE WHATEVER YOU HAVE, EVEN IF INCOMPLETE]\n\nAsk me up to 6 specific questions, one at a time, that would help you understand the actual trigger, steps, systems involved, exceptions, and where a human should approve something, so we can build a clean process map together."
+        },
+        {
+          "label": "Multi-branch process",
+          "whenToUse": "Use this when your process already has several distinct decision paths, not a single straight line from trigger to result.",
+          "prompt": "Here is a business process with multiple decision branches, described in my own words:\n[PASTE YOUR TRIGGER, STEPS, SYSTEMS, EXCEPTIONS, AND DESIRED HUMAN CHECKPOINT]\n\nDo the following:\n1. Rewrite this as a clean numbered flow with explicit branch points — show each decision as a fork with its conditions.\n2. For each branch, name the system involved and whether it's a rule-based decision or a judgment call needing AI.\n3. Flag any branch with no clear rule for which path it should take.\n4. Point out at least 2 edge cases across the whole flow, not just one branch.\n5. Suggest where a human approval checkpoint makes sense on the riskiest branch specifically.\nUse only the information I gave you."
+        },
+        {
+          "label": "Auditing an existing automation",
+          "whenToUse": "Use this when you already built something and want to check it for gaps, instead of mapping a fully manual process for the first time.",
+          "prompt": "Here is an automation I already built, described in my own words:\n[DESCRIBE THE CURRENT AUTOMATION'S TRIGGER, STEPS, SYSTEMS, AND ANY KNOWN ISSUES]\n\nAudit it as if you were mapping it fresh:\n1. Rewrite it as a clean numbered flow.\n2. Flag any step where the automation is making a judgment call with no explicit rule behind it.\n3. Point out at least 2 edge cases it likely doesn't handle based on what I've described.\n4. Tell me whether there's currently a human checkpoint anywhere, and whether there should be one that's missing.\nUse only the information I gave you."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Turn it into an onboarding checklist",
+          "prompt": "Turn this process map into a numbered checklist simple enough to hand to a new hire who's never done this task before, with no automation jargon."
+        },
+        {
+          "label": "Check for duplicate-trigger failures",
+          "prompt": "Walk through what would happen if this trigger fired twice for the exact same event, for example the same form submitted twice by mistake. Where would that break the process, and what should happen instead?"
+        },
+        {
+          "label": "Pick the first piece to build",
+          "prompt": "If I can only automate one piece of this process first rather than the whole thing, which single step would give the most value for the least risk, and why?"
+        },
+        {
+          "label": "Find one more edge case",
+          "prompt": "You flagged two edge cases. Think harder and find a third one I haven't considered, specifically something that would only show up after this automation has been running for a while, not on day one."
+        }
+      ],
+      "walkthrough": "Helena manages operations at a small B2B services firm and picked 'sending overdue invoice reminders' as her first automation candidate in the previous lesson. Before building anything, she needs to map exactly how the process works today.\n\nShe writes out, in her own words, what actually happens: an invoice becomes 7 days overdue in QuickBooks, she checks the balance, opens Gmail, writes a reminder by hand, and sometimes calls big clients directly. She notes two recurring problems — partial payments and clients who claim they already paid — and decides she wants a rule that nothing auto-sends to a client who's disputed a charge before.\n\nShe pastes this into Claude using the lesson's prompt. The response comes back as a clean numbered flow: Trigger (invoice hits 7 days overdue in QuickBooks) → Step 1 (check current balance in QuickBooks) → Step 2 (draft reminder email) → Step 3 (send). It flags a missing piece of information — there's no defined threshold for when a call happens instead of just an email — and separates the balance-check as a rule-based step from the email-drafting as a judgment step. It surfaces two edge cases: partial payments, which Helena already knew about, and invoices where the client has a separate payment plan on file, which she hadn't thought of. It suggests a checkpoint before any 'final notice' escalation email, not just the first reminder.\n\nHelena sends a follow-up asking what would happen if QuickBooks fired the trigger twice for the same invoice by mistake — the AI points out this would need a duplicate-check step comparing against reminders already sent that week, something she adds to her map.\n\nThe whole mapping session takes about eighteen minutes and gives her a document she saves alongside the automation she'll build in a later lesson."
+    },
+    "auto-b3-mcp-explained": {
+      "placeholders": [
+        {
+          "name": "LIST YOUR AI TOOLS, e.g. Claude, ChatGPT",
+          "what": "The AI chat products or platforms you actually have logins for, listed by name and plan if relevant, since connector availability sometimes differs by plan tier.",
+          "examples": [
+            "Claude and ChatGPT, both on Team plans",
+            "Claude Pro only",
+            "ChatGPT Plus and Cursor"
+          ]
+        },
+        {
+          "name": "LIST YOUR BUSINESS APPS, e.g. Notion, Google Drive, Slack, a Postgres database",
+          "what": "The actual software your business data lives in, named specifically by product, not by category — 'our CRM' is less useful than naming which CRM.",
+          "examples": [
+            "Notion, Google Drive, and a Postgres database we use for order data",
+            "Slack, HubSpot, and GitHub",
+            "QuickBooks, Gmail, and Airtable"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "IT or security reviewer version",
+          "whenToUse": "Use this when you're vetting connectors before approving them for a whole team, not just checking your own personal setup.",
+          "prompt": "I'm evaluating MCP connectors for team-wide approval, not just personal use. We use these AI tools: [LIST YOUR AI TOOLS] and these business tools: [LIST YOUR BUSINESS APPS].\n\nFor my specific combination:\n1. Which business tools likely have an official MCP connector, based on what's commonly available in 2026.\n2. What data or actions each connector would expose if a team member connected it with default settings.\n3. What questions our security or IT policy should require an employee to answer before self-connecting one of these, such as data residency, write access, or audit logging.\nBe explicit about uncertainty rather than guessing at specific vendor details you're not sure about."
+        },
+        {
+          "label": "Single-tool deep dive",
+          "whenToUse": "Use this when you only care about one specific business tool and want more depth on its scopes than a broad survey would give.",
+          "prompt": "I use [YOUR AI TOOL] and want to understand the MCP connector for [ONE SPECIFIC BUSINESS APP] in detail. Explain: what specific tools or actions this connector typically exposes, what the difference is between its available permission scopes if it has more than one, and one realistic scenario where the wrong scope choice could cause a problem. Say clearly if you're not certain about specifics for this exact connector."
+        },
+        {
+          "label": "\"I don't know what I have\" version",
+          "whenToUse": "Use this when you're not sure what business software your company or team actually uses well enough to list it yourself.",
+          "prompt": "Help me inventory the business tools I might want to connect an AI tool to before I try to list MCP connectors. Ask me questions about what software my team uses for: customer records, documents, communication, and any databases or internal systems, one category at a time, so I end up with a real list I can use for a connector evaluation."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Local vs. remote for one specific tool",
+          "prompt": "For [SPECIFIC TOOL FROM YOUR LIST], explain the practical difference between a local and a remote MCP server for that specific tool, and which one is more likely to be what I'd actually be offered when I click connect."
+        },
+        {
+          "label": "What would show up in an audit log",
+          "prompt": "If an admin at my company reviewed the audit log after I connected [SPECIFIC TOOL], what would they actually be able to see about what the AI did or accessed?"
+        },
+        {
+          "label": "Find the tools without a known connector",
+          "prompt": "Of the business apps I listed, which ones do NOT commonly have an official MCP connector as of 2026, as far as you know? Be honest if you're not sure rather than guessing."
+        },
+        {
+          "label": "Get the exact settings path",
+          "prompt": "Give me the exact menu path to find connector or integration settings inside [YOUR SPECIFIC AI TOOL], step by step, as precisely as you can."
+        }
+      ],
+      "walkthrough": "Ben owns a 15-person consulting firm and keeps hearing the term MCP in demos from vendors but has never understood what he'd actually be agreeing to by clicking 'connect.' He wants to understand it before letting anyone on his team enable anything.\n\nHe opens Claude and works through the lesson's steps first, learning the host-client-server model: Claude is the host he's using, a client inside Claude handles each connection, and a server is the external program, like a Notion server, exposing specific tools and data.\n\nHe then runs the copyable prompt, filling in [LIST YOUR AI TOOLS] with 'Claude, Pro plan' and [LIST YOUR BUSINESS APPS] with 'Notion, Google Drive, and Slack.' Claude explains that Notion and Google Drive commonly have official connectors he could enable directly in Claude's settings, and that Slack's availability depends on plan tier, flagging that it isn't fully certain about Slack's current status for his specific plan and suggesting he check directly rather than assume.\n\nIt explains that connecting Notion would typically let Claude read pages and, depending on the scope he grants, create or edit them too — not blanket access to his whole workspace by default.\n\nBen sends a follow-up asking what would actually show up in an audit log if he connected Notion, since his firm handles some confidential client documents there. Claude explains that most connector platforms log which tools were called and roughly when, though the exact detail depends on Notion's own audit logging, not Claude's.\n\nBen opens Claude's Settings and finds the Connectors section, recognizing Notion and Google Drive in the list without connecting either one yet. The whole exercise takes him about twelve minutes and leaves him able to explain to his team, in plain terms, what a connector actually grants before anyone enables one for real."
+    },
+    "auto-i1-connect-first-mcp-connector": {
+      "placeholders": [
+        {
+          "name": "SERVICE NAME, e.g. Notion",
+          "what": "The exact name of the connected app you're querying, matching how it's labeled in your AI tool's connector list, so the AI knows which connection to use if you have more than one active.",
+          "examples": [
+            "Notion",
+            "Google Drive",
+            "GitHub"
+          ]
+        },
+        {
+          "name": "SPECIFIC ITEM, e.g. the most recent page in my Marketing section",
+          "what": "One precise, low-stakes item you can personally verify the answer to, so you can immediately tell whether the connector worked correctly rather than just trusting a plausible-sounding response.",
+          "examples": [
+            "the most recent page in my Marketing section",
+            "the doc titled 'Q3 Planning Notes' in my Drive",
+            "the open issues in the 'website-redesign' GitHub repo"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Testing a safe write action",
+          "whenToUse": "Use this after your read-only test passes, when you plan to use this connector for write actions later and want to see exactly what an AI-initiated write looks like first, on something low-stakes.",
+          "prompt": "You're connected to my [SERVICE NAME] account through this chat.\n\nCreate a new test page or note titled 'MCP Connector Test — [TODAY'S DATE]' with the single line of text 'This is a test, safe to delete.' Confirm afterward exactly what you created and where, so I can go verify and delete it myself."
+        },
+        {
+          "label": "Multiple accounts for the same service",
+          "whenToUse": "Use this when you have both a personal and a work account for the same service and need extra certainty about which one just got connected.",
+          "prompt": "You're connected to my [SERVICE NAME] account through this chat.\n\nBefore doing anything else, tell me exactly which account this connection is authenticated as — any identifying detail like a workspace name, email, or account name that's visible to you — so I can confirm it's my [work/personal] account and not the other one."
+        },
+        {
+          "label": "Reviewing and revoking an old connector",
+          "whenToUse": "Use this periodically to audit connectors you no longer need, rather than only ever adding new ones.",
+          "prompt": "I want to review my connected services before deciding what to keep. For [SERVICE NAME], tell me, based on what you can currently do through this connection, exactly what scope of access it appears to have — read-only or read/write, and how broad. I'll use this to decide whether to keep, narrow, or revoke it in my account settings."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Widen the search if it couldn't find the item",
+          "prompt": "You couldn't find that. Try again with a broader search — tell me exactly what you searched for and what came back, so I can tell if the item is named differently than I expected."
+        },
+        {
+          "label": "Confirm exactly what scope it has",
+          "prompt": "Based on what you're able to do right now, explain exactly what scope of access this connector has — can you only read, or can you also create, edit, or delete? Be specific rather than general."
+        },
+        {
+          "label": "Draft a write action without sending it",
+          "prompt": "Draft what a test write action would look like — for example, the exact page title and content you'd create — but don't actually create it yet. Show me first so I can approve it."
+        },
+        {
+          "label": "Explain the theoretical blast radius",
+          "prompt": "In plain language, summarize everything this connection could theoretically let you do in my [SERVICE NAME] account if I asked, based on the scope you currently have — not just what I've asked you to do so far."
+        }
+      ],
+      "walkthrough": "Nadia is a solo consultant who wants to connect Google Drive to Claude so she can ask questions about her project files without digging through folders manually. She's cautious, since her Drive has both personal files and client documents mixed together.\n\nShe opens Claude's Settings, clicks Connectors, and finds Google Drive in the list. Before clicking connect, she reads the permissions screen and notices a choice between full-account access and a narrower option limited to files Claude has specifically been given access to. She picks the narrower option for this first connection.\n\nShe completes the OAuth login, double-checking the account email in the popup since she has both a personal and a business Google account. Once connected, she opens a new chat and pastes the read-only test prompt, filling in [SERVICE NAME] with 'Google Drive' and [SPECIFIC ITEM] with 'the doc titled Q3 Planning Notes in my Drive.'\n\nClaude finds the document, reports its last-edited date as three days ago, gives a three-sentence summary of its content, and includes a direct link. Nadia opens the actual document herself and confirms the summary matches — the connector is working correctly and made no changes.\n\nSince she plans to use this connector for creating meeting notes later, she runs the write-action test variation next, asking Claude to create a page titled 'MCP Connector Test' with one line of throwaway text. It confirms creation and tells her exactly where to find it. She checks her Drive, sees the test file, and deletes it.\n\nShe writes a one-line note in her own task list: 'Connected Google Drive to Claude, limited scope, [today's date].' The entire process, from opening settings to a verified, logged connection, takes about nine minutes."
+    },
+    "auto-i2-zapier-ai-automation": {
+      "placeholders": [
+        {
+          "name": "FREQUENCY, e.g. weekday morning at 8am",
+          "what": "How often the real-world trigger actually happens, stated specifically enough to set an accurate schedule. Matching the cadence to the real trigger avoids over-scheduling, checking hourly for something that only changes weekly, or under-scheduling and missing time-sensitive cases.",
+          "examples": [
+            "weekday morning at 8am",
+            "every Monday at 9am",
+            "the first of each month at 7am"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Summarization task instead of classification",
+          "whenToUse": "Use this when the task's job is condensing information for a human to read, rather than deciding which category or path something takes.",
+          "prompt": "Every [FREQUENCY], summarize each new support ticket I paste into this task in one sentence a support agent could read in under 5 seconds to understand the core issue.\nRules: Do not include greetings or filler. If nothing new was pasted this run, reply exactly: Nothing new today.\nOtherwise reply with one line per ticket: the ticket's subject, a colon, then the one-sentence summary. Nothing else."
+        },
+        {
+          "label": "More than two output categories",
+          "whenToUse": "Use this when your process has three or more real outcomes, not just a two-way split like Enterprise vs. SMB.",
+          "prompt": "Every [FREQUENCY], review the support requests I paste into this task and decide which team should handle each one: Billing, Technical, Sales, or General.\nRules: Use Billing only for payment, invoice, or refund topics. Use Technical only for product errors or bugs. Use Sales only for pricing or upgrade questions from a non-customer. Everything else is General. If you genuinely cannot tell, mark it NEEDS-HUMAN-REVIEW.\nIf nothing new was pasted this run, reply exactly: Nothing new today.\nOtherwise reply with a table: columns Request, Team."
+        },
+        {
+          "label": "AI drafts for human approval instead of auto-sending",
+          "whenToUse": "Use this when the output shouldn't trigger an automatic action at all, but instead produce a draft a human reviews and sends manually.",
+          "prompt": "Every [FREQUENCY], draft a reply to each new lead message I paste into this task.\nRules: Do not promise pricing or discounts. If a message asks something you can't answer confidently, add a bracketed note like [NEEDS INFO: specific question] instead of guessing.\nIf nothing new was pasted this run, reply exactly: Nothing new today.\nOtherwise reply with one draft per lead, ready for me to review and send myself, not to send automatically."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Test against edge cases before trusting it live",
+          "prompt": "Here are three example inputs, including one tricky edge case: [PASTE 3 EXAMPLES, ONE UNUSUAL]. Walk through what your current instructions would output for each one, step by step, so I can check before I let the schedule run unattended."
+        },
+        {
+          "label": "Fix an UNKNOWN rate that's too high",
+          "prompt": "This task is returning UNKNOWN too often in real runs. Here are a few recent inputs that got marked UNKNOWN: [PASTE EXAMPLES]. Suggest a tightened rule that would correctly classify more of these without guessing on genuinely ambiguous ones."
+        },
+        {
+          "label": "Explain one specific real decision",
+          "prompt": "Here's a real example from a live run: [PASTE THE ACTUAL INPUT AND WHAT IT OUTPUT]. Walk through exactly why your instructions produced that output, step by step, referencing the specific rule that applied."
+        },
+        {
+          "label": "Add a logged reason to the output",
+          "prompt": "Rewrite these instructions so the output also includes a one-line reason for each decision, in a format I can still scan reliably every run, so I have a record of why each classification happened."
+        }
+      ],
+      "walkthrough": "Owen runs sales operations at a small SaaS company and wants to stop manually checking every inbound lead's company size before routing it to the right rep. He's picked lead classification as his first ChatGPT Task, following the process map he built earlier in the course.\n\nHe opens ChatGPT and builds a small Custom GPT first, with system instructions describing how his sales team defines Enterprise versus SMB, so the classification rule stays consistent across every run. From that GPT's composer, he opens the tools menu, chooses Tasks, and writes the schedule instructions using the lesson's template: 'Every weekday morning at 8am, review the leads I paste into this task and classify each one as Enterprise or SMB. Rules: company size over 50 employees is Enterprise, 50 or fewer is SMB, missing or non-numeric size is UNKNOWN. If there is nothing new to process this run, reply exactly: Nothing new today. Otherwise reply with a table: Name, Company, Size, Classification.'\n\nHe sets the schedule for 8am on weekdays, matching how often new leads actually arrive worth batching. Before trusting it, he clicks Run Now and pastes in three real leads, including one with a blank size field — the table comes back correctly, with the blank-size lead marked UNKNOWN instead of a guessed value.\n\nBefore letting the schedule run unattended, Owen sends the edge-case follow-up to Claude in a separate chat, pasting the same three leads and asking it to walk through what the instructions would output for each — confirming the blank case is handled correctly and catching a wording ambiguity in his 'over 50' rule, which he tightens to 'more than 50 employees.'\n\nHe lets the Task run for the first week, checking ChatGPT's task history each morning, and one day it correctly returns 'Nothing new today' when no leads came in — exactly the fallback behavior he tested for before trusting it unattended."
+    },
+    "auto-i3-n8n-make-workflow-ai-step": {
+      "placeholders": [
+        {
+          "name": "BUSINESS NAME",
+          "what": "Your company or team's actual name, given to the AI step so its responses and any customer-facing drafts are grounded in the right context rather than generic.",
+          "examples": [
+            "Larkspur Design Studio",
+            "Northwind Hardware",
+            "Bright Path Tutoring"
+          ]
+        },
+        {
+          "name": "PASTE THE REAL MESSAGE TEXT HERE",
+          "what": "The actual message content your script pulled for this run, substituted directly into the prompt before it's passed to `claude -p` — headless mode has no live variable binding, so your script must fill this in with real text before each call, not a template placeholder.",
+          "examples": [
+            "The whole dashboard is down for our whole team, we need this fixed now.",
+            "Hi, I was charged twice for my subscription this month, can you check?",
+            "Just wanted to say the new export feature is great, thanks!"
+          ]
+        },
+        {
+          "name": "PASTE THE REAL CUSTOMER TIER HERE",
+          "what": "The customer's actual account tier as your script reads it from your real data source, substituted directly into the prompt so the classification rule has the context it needs.",
+          "examples": [
+            "enterprise",
+            "free",
+            "pro"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "More categories for finer routing",
+          "whenToUse": "Use this when four categories aren't granular enough for your actual support volume and you need finer-grained routing, such as separating shipping issues from product defects.",
+          "prompt": "You are triaging inbound support messages for [BUSINESS NAME].\nMessage: [PASTE THE REAL MESSAGE TEXT HERE]\nCustomer tier: [PASTE THE REAL CUSTOMER TIER HERE]\n\nClassify this message into exactly one category: Billing, Shipping, Product-Defect, General-Question, or Urgent-Escalation.\nUse Urgent-Escalation only if the message mentions a complete outage, a security issue, or the customer explicitly threatens to cancel.\nUse Product-Defect only if the customer describes something physically wrong with an item they received, not a shipping delay.\nRespond with valid JSON only, in this exact shape: {\"category\": \"...\", \"one_line_reason\": \"...\"}\nDo not include any text outside the JSON object."
+        },
+        {
+          "label": "Handling non-English messages",
+          "whenToUse": "Use this when your support inbox regularly receives messages in languages other than English and you need the script to handle that explicitly rather than fail silently.",
+          "prompt": "You are triaging inbound support messages for [BUSINESS NAME], which may arrive in any language.\nMessage: [PASTE THE REAL MESSAGE TEXT HERE]\nCustomer tier: [PASTE THE REAL CUSTOMER TIER HERE]\n\nFirst, detect the message's language. Then classify it into exactly one category: Billing, Technical, General, or Urgent-Escalation, using the same rules regardless of language. Use Urgent-Escalation only if the message mentions a complete outage, a security issue, or an explicit cancellation threat.\nRespond with valid JSON only, in this exact shape: {\"detected_language\": \"...\", \"category\": \"...\", \"one_line_reason\": \"...\"}\nDo not include any text outside the JSON object."
+        },
+        {
+          "label": "Adding a confidence score for borderline cases",
+          "whenToUse": "Use this when you want the script to route uncertain classifications to a human instead of forcing a guess on every message.",
+          "prompt": "You are triaging inbound support messages for [BUSINESS NAME].\nMessage: [PASTE THE REAL MESSAGE TEXT HERE]\nCustomer tier: [PASTE THE REAL CUSTOMER TIER HERE]\n\nClassify this message into exactly one category: Billing, Technical, General, or Urgent-Escalation, and rate your confidence from 1-5, where 5 means completely certain and 1 means you're mostly guessing.\nUse Urgent-Escalation only if the message mentions a complete outage, a security issue, or an explicit cancellation threat.\nRespond with valid JSON only, in this exact shape: {\"category\": \"...\", \"confidence\": 0, \"one_line_reason\": \"...\"}\nDo not include any text outside the JSON object."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Explain a borderline real decision",
+          "prompt": "Here's a real message that came through: [PASTE THE ACTUAL MESSAGE AND WHAT CATEGORY IT GOT]. Walk through exactly why it landed in that category instead of a neighboring one, step by step."
+        },
+        {
+          "label": "Tighten the Urgent-Escalation trigger",
+          "prompt": "Too many normal messages are triggering Urgent-Escalation. Here are a few recent examples that got flagged but shouldn't have been: [PASTE EXAMPLES]. Suggest a stricter version of the Urgent-Escalation rule that would exclude these while still catching genuine emergencies."
+        },
+        {
+          "label": "Add a needs-more-info category",
+          "prompt": "Add a fifth category called Needs-More-Info for messages that are too vague or incomplete to classify confidently into any of the existing categories, instead of forcing a best guess. Update the JSON shape and rules accordingly."
+        },
+        {
+          "label": "Add a suggested reply draft",
+          "prompt": "Alongside the category, also output a suggested one-line opening reply a support agent could use to acknowledge the message while they look into it, added as a new field in the same JSON object."
+        }
+      ],
+      "walkthrough": "Layla leads customer support at a small hardware ecommerce company and wants more control than a single scheduled task can offer, since urgent messages need to skip the daily digest and go straight to Slack immediately. She's chosen to script this with Claude Code's headless mode so the logic lives in version control and runs on her own schedule.\n\nShe writes a short Node script that reads new support messages from her ticket export, and for each one calls `claude -p` with the lesson's template, substituting the real message text and customer tier directly into the prompt, filling in [BUSINESS NAME] with 'Northwind Hardware' and requesting `--output-format json`.\n\nShe tests the script with two sample inputs: a routine message asking about a return policy, which correctly returns {\"category\": \"General\", \"one_line_reason\": \"Asking about return policy\"}, and an edge case reading 'the whole dashboard is down for our whole team,' which correctly returns {\"category\": \"Urgent-Escalation\", \"one_line_reason\": \"Customer reports complete outage\"}. Her script's branch logic appends the urgent case to urgent.log and calls a webhook that pings the on-call Slack channel, while the routine case goes to daily-digest.log.\n\nAfter running the script each morning via cron for a week, she notices a customer message saying 'if this isn't fixed I might have to look elsewhere' got flagged Urgent-Escalation, which feels like a stretch. She sends the tightening follow-up to Claude in a separate chat with that example, and gets a revised rule requiring an explicit cancellation statement, not just dissatisfaction, which she updates in the prompt template inside her script.\n\nWriting the script, testing both cases, and later refining the rule takes Layla about fifty minutes across two sessions, plus five minutes to fix the false-positive issue once she spotted it in the log."
+    },
+    "auto-a1-design-safe-agent-instructions": {
+      "placeholders": [
+        {
+          "name": "PASTE YOUR DRAFT INSTRUCTIONS",
+          "what": "The current or planned standing instructions for your agent, in whatever rough state they're actually in — even a few loose sentences are enough to start the red-team review, since the point is finding what's missing, not submitting a polished document.",
+          "examples": [
+            "Respond to customer billing questions professionally. Look up their account, explain any charges, and offer a refund if it seems reasonable. Keep replies friendly and concise.",
+            "Monitor the shared inbox for meeting requests. Check the calendar for availability, propose two time options, and send the invite once the person confirms one.",
+            "When a new support ticket comes in, read it, decide the priority, and draft a first response using our knowledge base articles as reference."
+          ]
+        },
+        {
+          "name": "LIST TOOLS, e.g. read customer records, draft email replies, send email, update order status",
+          "what": "Every tool or action the agent can actually invoke, named specifically enough to reason about risk individually — 'email access' hides whether it can only draft or can actually send, which is exactly the distinction that matters for safety.",
+          "examples": [
+            "read customer records, draft email replies, send email, update order status",
+            "search knowledge base, create support ticket, post to internal Slack channel",
+            "read calendar, draft meeting invite, send calendar invite, cancel existing meeting"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Writing instructions before the agent exists",
+          "whenToUse": "Use this when you're designing an agent from your process map before building anything, so safety constraints get built in from the start instead of retrofitted.",
+          "prompt": "I'm designing an agent based on this process map: [PASTE YOUR PROCESS MAP FROM AN EARLIER LESSON].\n\nDraft standing instructions for this agent that:\n1. State its single, specific job in one sentence.\n2. List which of its planned actions are safe to run automatically versus require human approval.\n3. Include explicit boundaries — things it must never do regardless of what it decides mid-task.\n4. Define what it should do when required information is missing or the situation doesn't match any case I described.\nBase this only on the process map I gave you, and flag anywhere you had to guess at a boundary I didn't specify."
+        },
+        {
+          "label": "Revising after a near-miss or real mistake",
+          "whenToUse": "Use this after an agent has already done something wrong or nearly wrong, to close the specific gap that caused it rather than doing a generic review.",
+          "prompt": "This agent made a mistake. Here's what happened: [DESCRIBE THE INCIDENT SPECIFICALLY]. Here are its current instructions:\n[PASTE YOUR DRAFT INSTRUCTIONS]\n\nIt has access to these tools: [LIST TOOLS].\n\n1. Identify exactly which instruction, or absence of one, allowed this to happen.\n2. Rewrite the specific section of the instructions that would have prevented it.\n3. Check whether the same gap could cause a different but related mistake, and close that too.\nCite the exact instruction text you're changing and why."
+        },
+        {
+          "label": "Multi-agent handoff boundary",
+          "whenToUse": "Use this when one agent's output feeds into another agent, and you need the handoff point itself to be a safety boundary, not just each agent's internal instructions.",
+          "prompt": "I have two agents that hand off work to each other. Agent A's job: [DESCRIBE]. Agent B's job: [DESCRIBE]. Agent A hands off with: [DESCRIBE THE HANDOFF, e.g. a drafted decision plus supporting data].\n\nAct as a skeptical reviewer of the handoff itself:\n1. What could Agent A pass to Agent B that Agent B would trust without re-verifying, and shouldn't?\n2. Should Agent B ever be allowed to act on Agent A's output without a human checkpoint in between? Under what conditions, if any?\n3. Suggest an explicit instruction for Agent B defining what it must independently verify rather than trust from Agent A."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Turn the boundaries into a pasteable list",
+          "prompt": "Write the 'never do X' boundaries you identified as a short, separate bullet list I can paste at the very top of the instructions, above everything else."
+        },
+        {
+          "label": "Design one more worked example",
+          "prompt": "Write one concrete worked example, in the format the agent will actually see, showing the correct behavior for the specific scenario you just flagged as risky."
+        },
+        {
+          "label": "Stress-test the ask-a-human fallback",
+          "prompt": "Look at the 'what to do when uncertain' instruction again. Is it specific enough that the agent would actually know when to pause and ask, or is it vague enough that the agent could talk itself into proceeding anyway? Suggest a tighter version if needed."
+        },
+        {
+          "label": "Find the worst single failure",
+          "prompt": "If every rule in these instructions somehow failed to apply at once, due to a bug or an unanticipated input, what is the single worst action this agent could still technically take given its tool access? Suggest one hard constraint that would prevent that specific worst case regardless of everything else."
+        }
+      ],
+      "walkthrough": "Grace owns a small subscription box business and is deploying an agent to draft replies to billing questions, with access to reading customer records and sending email. Her first draft of instructions reads: 'Respond to customer billing questions professionally. Look up their account, explain any charges, and offer a refund if it seems reasonable.'\n\nShe pastes this into Claude along with her tool list — read customer records, draft email replies, send email, update order status — using the red-team prompt from the lesson. Claude comes back with specific findings, citing her exact text: 'offer a refund if it seems reasonable' has no defined dollar limit, meaning the agent could technically issue a refund of any size without approval. It also flags that 'send email' has no human-review step before sending, so a wrong explanation of a charge would go straight to the customer. It constructs a realistic scenario: a customer falsely claims they were double-charged, and the agent, trying to be helpful, issues a refund without verifying the claim against actual transaction records.\n\nGrace revises the instructions: refunds over $50 now require her approval via a Slack message before the agent sends anything, and every reply must quote the specific charge from the customer's actual transaction record, not just the customer's claim about it, before it's allowed to be treated as true.\n\nShe sends a follow-up asking Claude to write the 'never do X' boundaries as a short list she pastes at the top: never refund without a matching transaction record, never refund over $50 without approval, never confirm a charge as an 'error' without checking the record first.\n\nThe whole review and revision takes Grace about twenty-five minutes, and she now has a dated instructions file with two closed gaps and a much narrower blast radius if the agent ever misjudges a situation."
+    },
+    "auto-a2-human-in-the-loop-error-handling": {
+      "placeholders": [
+        {
+          "name": "DESCRIBE THE STEP, e.g. an AI step that classifies a support ticket and a following step that sends an automated reply email",
+          "what": "The specific step, or pair of steps, you're hardening, described concretely enough that its failure modes are specific to it rather than generic. Naming both the AI step and what happens right after it matters, since the risk usually lives in that handoff.",
+          "examples": [
+            "an AI step that classifies a support ticket and a following step that sends an automated reply email",
+            "an AI step that drafts a refund decision and a following step that issues the refund through Stripe",
+            "an AI step that summarizes a sales call and a following step that updates the deal stage in the CRM"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Money-touching step, stricter handling",
+          "whenToUse": "Use this for any step where the action involves charging, refunding, or paying, where you want a stricter default than a normal step.",
+          "prompt": "I'm adding error handling to this financial automation step: [DESCRIBE THE STEP].\n\nHelp me design:\n1. Every condition that should force a human approval before any money moves, not just after an error — treat this as approval-required by default, not error-triggered.\n2. What the approval message needs to show a human to approve confidently in under a minute, including the exact amount and the reasoning behind it.\n3. A hard dollar or percentage ceiling above which approval is always required regardless of how confident the AI step is.\nBe specific to the step I described, including realistic dollar thresholds if I haven't given you one, and note that you're estimating if so."
+        },
+        {
+          "label": "Permanent data-deletion step",
+          "whenToUse": "Use this for any step that deletes or permanently removes records, where an error can't simply be corrected by re-running the automation.",
+          "prompt": "I'm adding error handling to this automation step, which can permanently delete data: [DESCRIBE THE STEP].\n\nHelp me design:\n1. Whether this step should ever run without human approval at all, given that deletion isn't easily reversible, or whether a soft-delete/archive alternative would be safer.\n2. What conditions should block the deletion entirely and escalate instead, such as ambiguous matching criteria or a record that doesn't clearly match expectations.\n3. What confirmation or backup step should exist before the delete actually executes.\nBe specific to the step I described."
+        },
+        {
+          "label": "Lighter-touch handling for internal-only automations",
+          "whenToUse": "Use this for automations that only touch internal systems and never reach a customer, where you want proportionate handling instead of over-engineering.",
+          "prompt": "I'm adding lightweight error handling to this internal-only automation step: [DESCRIBE THE STEP].\n\nHelp me design:\n1. What failure modes are actually worth catching for an internal-only step like this, versus which ones are low-stakes enough to just log and move on.\n2. A simple alert path for the failures that do matter, without requiring a full human-approval workflow.\n3. A reasonable retry policy for any external API calls involved.\nKeep the recommendations proportionate — this doesn't need the same rigor as a customer-facing or money-touching step."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Write the actual approval message template",
+          "prompt": "Write the exact text template for the Slack or email approval request for this step, including which specific fields or values it should show the reviewer."
+        },
+        {
+          "label": "Get concrete retry numbers",
+          "prompt": "Give me an actual reasonable retry count and backoff timing for the external API calls in this specific step, in plain numbers I can enter into the platform, not general advice."
+        },
+        {
+          "label": "Check the error handling itself for new risks",
+          "prompt": "What could go wrong with the error handling and approval system itself, such as alert fatigue from too many notifications, or approvals piling up unanswered? Suggest one safeguard against that."
+        },
+        {
+          "label": "Define 'low confidence' concretely",
+          "prompt": "Make 'low confidence' concrete for this specific AI step — what exact signal, score, or output pattern should count as low confidence and trigger the human-review path, instead of a vague, subjective judgment?"
+        }
+      ],
+      "walkthrough": "Renee is an operations manager who built a Claude Code script earlier in the course that classifies support tickets and auto-issues small refunds for common billing complaints through the Stripe API. It's worked fine in testing, but she knows testing isn't the same as production.\n\nShe opens Claude and describes the step: 'an AI step that drafts a refund decision and a following step that issues the refund through Stripe.' Using the copyable prompt, she asks for specific failure modes, what a reviewer needs to see, and a retry policy.\n\nClaude identifies three concrete failure modes specific to this step: the AI step's output isn't valid JSON, the requested refund amount exceeds what the original charge actually was, or the AI's stated confidence is low. It recommends every refund over $30 route to a Slack approval message showing the customer's name, the original charge amount, the AI's reasoning, and the requested refund amount, so Renee's team can approve in seconds without opening Stripe separately. For the Stripe API call itself, it recommends up to 3 retries with exponential backoff, then an alert instead of endless silent retrying.\n\nRenee adds a Claude Code hook that blocks the script's refund-issuing step from calling Stripe directly whenever the amount exceeds $30, routing it to the Slack approval message instead, and wraps the Stripe API call in a try/catch with the recommended retry policy. She then deliberately breaks the script by testing it with a malformed test payload missing the charge amount, to confirm the error path actually fires — it does, correctly routing to a 'needs review' Slack message instead of attempting a refund with bad data.\n\nShe sends a follow-up asking Claude to define 'low confidence' concretely for this step, and gets a specific rule: any output where the AI's reasoning includes hedging language like 'possibly' or 'unclear' should route to review regardless of the dollar amount. Building the checkpoint, the error path, and testing both takes Renee about thirty-five minutes."
+    },
+    "auto-a3-cross-tool-pipeline": {
+      "placeholders": [
+        {
+          "name": "CONTENT TYPE, e.g. 600-word blog post section",
+          "what": "The exact format and rough length of what the drafting stage needs to produce, specific enough that the output slots directly into wherever it's headed next, whether that's a blog CMS, a sales email, or an internal report.",
+          "examples": [
+            "600-word blog post section",
+            "one-page internal research brief",
+            "3 bullet talking points for a sales call"
+          ]
+        },
+        {
+          "name": "AUDIENCE",
+          "what": "Who will actually read or use the draft, described specifically enough to shape tone and depth — a technical audience and a general public audience need very different drafts from the same research.",
+          "examples": [
+            "small business owners with no technical background",
+            "our sales team prepping for outbound calls",
+            "the marketing director reviewing before publishing"
+          ]
+        },
+        {
+          "name": "PASTE STRUCTURED RESEARCH OUTPUT FROM THE PREVIOUS STAGE",
+          "what": "The bullet-point findings, with sources, produced by your pipeline's research stage. Pasting the actual structured output, not a rough paraphrase, is what lets the drafting stage stay grounded instead of inventing supporting detail.",
+          "examples": [
+            "- 68% of small accounting firms report using at least one AI tool in daily work (Source: Industry Survey 2026)\n- Adoption is highest for bookkeeping automation, lowest for client-facing advice (Source: same survey)\n- Firms citing 'lack of training time' as the top adoption barrier (Source: same survey)\n- No data found on typical implementation cost for firms under 10 employees",
+            "- Competitor A launched a mobile app in Q1 2026 with a 4.2-star rating (Source: App Store listing)\n- Competitor A's pricing starts at $29/month for the base tier (Source: competitor pricing page)\n- No public data found on Competitor A's customer retention rate",
+            "- Company X's latest funding round was $12M Series A, closed March 2026 (Source: press release)\n- Company X's stated use of funds is international expansion (Source: same press release)\n- Company X has 3 open engineering roles posted this month (Source: careers page)"
+          ]
+        },
+        {
+          "name": "DESCRIBE TONE, e.g. direct, practical, no hype",
+          "what": "The voice and style constraint for the draft, described concretely enough to actually shape word choice, not just a vague adjective like 'professional.'",
+          "examples": [
+            "direct, practical, no hype",
+            "warm and conversational, like explaining to a friend",
+            "formal and data-driven, for an executive audience"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Sales research and outreach version",
+          "whenToUse": "Use this when the pipeline researches a prospect company and drafts a personalized outreach note, instead of a marketing content piece.",
+          "prompt": "Using only the research findings below, draft a [CONTENT TYPE, e.g. 4-sentence cold outreach email] for [AUDIENCE, e.g. the VP of Operations at the prospect company].\n\nResearch findings:\n[PASTE STRUCTURED RESEARCH OUTPUT FROM THE PREVIOUS STAGE]\n\nRules:\n- Reference only facts contained in the research findings above. Do not invent details about the company not present in the findings.\n- If the findings don't include something needed to personalize the outreach well, write [NEEDS RESEARCH: topic] inline instead of guessing.\n- Match this tone: [DESCRIBE TONE].\n- End with one specific, low-pressure call to action based on what the research suggests this company might actually need."
+        },
+        {
+          "label": "Internal operational reporting version",
+          "whenToUse": "Use this when the pipeline produces an internal report or dashboard summary instead of external-facing marketing content.",
+          "prompt": "Using only the research or data findings below, draft a [CONTENT TYPE, e.g. one-page operational report] for [AUDIENCE, e.g. the operations leadership team].\n\nFindings:\n[PASTE STRUCTURED RESEARCH OUTPUT FROM THE PREVIOUS STAGE]\n\nRules:\n- Use only facts contained in the findings above. Do not invent numbers or trends not present in the findings.\n- If the findings don't cover something needed for a complete report, write [NEEDS DATA: topic] inline instead of estimating.\n- Match this tone: [DESCRIBE TONE].\n- End with a short list of the specific data points that support the report's main conclusion."
+        },
+        {
+          "label": "Short-form social post version",
+          "whenToUse": "Use this when the drafting stage needs to produce a short social media post instead of a longer piece of content.",
+          "prompt": "Using only the research findings below, draft [CONTENT TYPE, e.g. 3 short social media post options, under 280 characters each] for [AUDIENCE].\n\nResearch findings:\n[PASTE STRUCTURED RESEARCH OUTPUT FROM THE PREVIOUS STAGE]\n\nRules:\n- Use only facts contained in the research findings above. Do not invent statistics or claims not present in the findings.\n- If a strong post idea would require a fact not in the findings, write [NEEDS RESEARCH: topic] instead of inventing it.\n- Match this tone: [DESCRIBE TONE].\n- Label each option clearly (Option 1, Option 2, Option 3)."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Re-verify every claim one more time",
+          "prompt": "Go through this draft one more time and confirm every factual claim traces directly back to a specific line in the research findings I pasted. Flag anything that doesn't match exactly, even if it sounds plausible."
+        },
+        {
+          "label": "Turn research flags into follow-up searches",
+          "prompt": "Take every [NEEDS RESEARCH] flag in this draft and turn each one into a specific, searchable follow-up question the research stage should answer next."
+        },
+        {
+          "label": "Adjust the tone",
+          "prompt": "Rewrite this draft with the tone dialed [more casual / more formal], keeping every fact and citation exactly the same."
+        },
+        {
+          "label": "Draft the reviewer message",
+          "prompt": "Write a short Slack or email message to send the human reviewer along with this draft, summarizing what it's for, what needs their approval, and flagging any [NEEDS RESEARCH] gaps clearly."
+        }
+      ],
+      "walkthrough": "Priyanka handles content marketing at a small accounting software company and wants to automate the slow part of her workflow: researching a topic, drafting a blog section from it, and getting it in front of her editor, without ever publishing anything unreviewed.\n\nShe builds a three-stage pipeline as a Claude Code script: a cron job pulls the next topic from a queue file, a first `claude -p` call with web search enabled researches it with a tightly scoped brief, and the structured findings feed into a second `claude -p` call for drafting, landing as a Slack message to her editor for approval, sent through a Slack MCP server connection, before anything touches the CMS.\n\nFor a real test, she queues the topic 'AI adoption in small accounting firms.' The research stage returns four sourced bullets, including adoption rate and top adoption barrier, but nothing on typical implementation cost. The drafting stage receives this as [PASTE STRUCTURED RESEARCH OUTPUT], with [CONTENT TYPE] set to '600-word blog post section,' [AUDIENCE] set to 'small accounting firm owners with no technical background,' and [DESCRIBE TONE] set to 'direct, practical, no hype.'\n\nThe draft comes back citing the real adoption statistics naturally, and includes one visible line: [NEEDS RESEARCH: typical implementation cost for firms under 10 employees] exactly where a cost figure would have strengthened the piece. It lands in Priyanka's Slack as a draft attached to an approval request.\n\nBefore approving, she sends the re-verification follow-up to double check every claim against the pasted research, confirming nothing drifted. She then turns the flagged gap into a follow-up search task for next week's research run instead of guessing a plausible cost figure herself.\n\nBuilding the script took Priyanka roughly two hours the first time; running it end to end on a new topic now takes about ten minutes of her own review time, down from the half-day this used to cost her."
+    },
+    "auto-a4-evaluate-maintain-automations": {
+      "placeholders": [
+        {
+          "name": "TIME PERIOD",
+          "what": "The window of run history you're analyzing, stated concretely enough to pull the right data from your platform's run history or logs.",
+          "examples": [
+            "the last 30 days",
+            "the past week",
+            "since it launched 3 months ago"
+          ]
+        },
+        {
+          "name": "PASTE OR DESCRIBE: number of runs, number of errors, number of human-review escalations, any error messages you've seen repeated",
+          "what": "A real summary pulled from your automation platform's actual run history or logs — total runs, how many errored, how many got escalated to a human, and the exact wording of any repeated error message, since the exact wording is often the biggest diagnostic clue.",
+          "examples": [
+            "140 runs, 6 errors, all with the message 'invalid_grant', 0 human-review escalations",
+            "312 runs, 0 hard errors, but 41 human-review escalations flagged 'low-confidence classification', up from about 10 last month",
+            "89 runs, 14 errors, message 'rate_limit_exceeded', mostly clustered between 2-3pm each day"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Zero errors but something feels off",
+          "whenToUse": "Use this when the automation shows no hard errors in the logs, but you suspect the AI's output quality has quietly drifted rather than failed outright.",
+          "prompt": "This automation has run [TIME PERIOD] with no hard errors logged. Here's a sample of 5 recent real outputs I spot-checked against reality: [PASTE OR DESCRIBE THE 5 OUTPUTS AND WHETHER EACH WAS ACTUALLY CORRECT].\n\nAnalyze this and tell me:\n1. Does this sample suggest quality drift even though nothing errored, and what specifically looks off.\n2. What's the most likely cause of subtle drift like this, such as a model update, a change in the type of input coming in, or an edge case becoming more common.\n3. How many more outputs I should spot-check before deciding whether this is a real pattern.\nBase your analysis only on what I've given you, and say if the sample is too small to conclude anything yet."
+        },
+        {
+          "label": "Cost and volume growth review",
+          "whenToUse": "Use this when you're checking whether an automation's cost still makes sense as its volume has grown, rather than diagnosing errors.",
+          "prompt": "Here's the volume and cost history for one of my automations over [TIME PERIOD]: [DESCRIBE: starting volume and cost, current volume and cost, pricing model — task-based, per-operation, or per-API-token].\n\nAnalyze this and tell me:\n1. How cost is scaling relative to volume, and whether that scaling looks sustainable if volume keeps growing at this rate.\n2. Whether this looks like a case where switching platforms or pricing tiers now would likely pay for itself, based on the numbers I gave you.\n3. What additional number I should gather before making that switching decision, if what I've given you isn't enough.\nBase your analysis only on the data I've given you."
+        },
+        {
+          "label": "Portfolio review across several automations",
+          "whenToUse": "Use this when you're reviewing multiple live automations at once and need to prioritize which one to dig into first, not just analyzing a single automation's logs.",
+          "prompt": "Here's a quick summary of several automations I run: [LIST EACH ONE WITH: name, approximate run volume over TIME PERIOD, error or escalation rate, last time it was reviewed].\n\nBased only on this summary, tell me:\n1. Which one most urgently needs a real review first, and why.\n2. Which ones look healthy enough to check only at their normal scheduled cadence.\n3. Any automation here that hasn't been reviewed in concerningly long relative to how customer-facing or money-touching it is."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Get the exact first thing to check",
+          "prompt": "You suspect [ROOT CAUSE]. What is the single exact setting, log, or dashboard I should check first to confirm or rule this out, as specifically as possible?"
+        },
+        {
+          "label": "Draft the message to the account owner",
+          "prompt": "Draft a short message I can send to whoever owns the connected account, explaining that this automation's errors suggest a possibly expired or revoked credential, and asking them to check it."
+        },
+        {
+          "label": "Decide if this justifies a platform switch",
+          "prompt": "Based on this pattern, does it look like it's worth evaluating a different platform or pricing tier, or is this more likely a one-off issue not worth a bigger change yet? Explain your reasoning."
+        },
+        {
+          "label": "Suggest a metric I'm not tracking",
+          "prompt": "Based on everything in this log summary, suggest one specific metric about this automation that I'm clearly not tracking today but should start tracking, and explain why it would have helped here."
+        }
+      ],
+      "walkthrough": "Felix is an operations manager who built the overdue-invoice-reminder automation from earlier in this course about three months ago and hasn't looked at it since it started running smoothly. As part of building a maintenance habit, he decides to actually check it.\n\nHe lists every live automation he and his team run in one place, and is mildly surprised to count seven, several of which nobody has reviewed since launch. He picks the invoice-reminder automation to review first, since it touches customers directly and hasn't been checked in three months.\n\nHe pulls the run history from the platform: 140 runs, 6 errors, all showing the message 'invalid_grant,' and 0 human-review escalations. He pastes this into Claude using the diagnostic prompt, filling in [TIME PERIOD] with 'the last 30 days.'\n\nClaude's analysis: 6 errors out of 140 runs is a meaningful rate worth investigating, not a rounding error to ignore. The 'invalid_grant' message strongly suggests an expired or revoked OAuth token on one connected MCP server, rather than a data formatting issue or rate limit, though it notes it can't be fully certain without seeing which specific connection is throwing the error. It recommends checking that MCP server's connection status in the AI tool's settings first.\n\nFelix checks and finds the accounting software connection's token expired three weeks earlier after a routine password reset nobody thought to reconnect. He reauthorizes it, and asks Claude to draft a short message to his finance colleague explaining what happened and asking her to flag future password changes so this doesn't recur.\n\nHe schedules a monthly recurring review for this automation on his actual calendar going forward. The whole review, diagnosis, and fix takes Felix about twenty-five minutes — considerably less than the customer complaints that would have eventually surfaced the same problem."
+    }
+  }
+}

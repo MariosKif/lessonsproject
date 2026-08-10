@@ -1,0 +1,665 @@
+{
+  "enrichment": {
+    "acc-b1-summarize-financial-document-safely": {
+      "placeholders": [
+        {
+          "name": "PASTE DE-IDENTIFIED DOCUMENT TEXT",
+          "what": "The full text of the document you want summarized, with any client names, account numbers, addresses, or tax IDs already replaced with placeholders like [CLIENT] before you paste it in. Never paste an unredacted client file — this should be a public standard, a bulletin, your firm's own material, or a document you've personally stripped of identifying details. Paste the whole document, not an excerpt, so the summary isn't quietly missing a section.",
+          "examples": [
+            "SECTION 4.2 — LEASE CLASSIFICATION: Under the revised standard, a lease is classified as an operating lease if it does not transfer substantially all risks and rewards of ownership. Entities must recognize a right-of-use asset and a lease liability at the commencement date, measured at the present value of lease payments not yet paid. This standard applies to annual reporting periods beginning on or after January 1, 2027, with earlier application permitted. [full document continues for remaining sections]",
+            "MEMO TO STAFF — RE: NEW EXPENSE APPROVAL WORKFLOW. Effective the first of next month, all expense reports over $500 require two approvals instead of one: the employee's direct manager, then the finance director. Reports under $500 remain single-approval. Reimbursements will be processed on the 15th and last day of each month rather than weekly. Any report submitted more than 60 days after the expense date will require a written explanation attached. [memo continues]",
+            "[CLIENT] TRIAL BALANCE SUMMARY, PERIOD ENDING [DATE]: Cash and equivalents [AMOUNT], Accounts receivable [AMOUNT], Accounts payable [AMOUNT], Retained earnings [AMOUNT]. Notes: AR balance includes three invoices over 90 days past due totaling [AMOUNT]. No unusual journal entries identified in this period. [document continues with full account listing]"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Very short executive summary only",
+          "whenToUse": "Use when you need a one-paragraph gist before a meeting in five minutes, not the full five-section breakdown.",
+          "prompt": "Summarize the following document in a single paragraph (5-6 sentences max) for a busy accounting professional who needs the gist before a meeting. Use ONLY facts explicitly stated in the text — do not infer, estimate, or add anything not written here. If the single most important fact or deadline is unclear from the text, say so in one sentence at the end rather than guessing.\n\nDocument:\n[PASTE DE-IDENTIFIED DOCUMENT TEXT]"
+        },
+        {
+          "label": "Comparing this document to a prior version",
+          "whenToUse": "Use when a standard, bulletin, or policy has been updated and you need to know specifically what changed from the version you already know, not a summary from scratch.",
+          "prompt": "I'm going to give you two versions of a document — an earlier one and an updated one. Compare them and tell me, using ONLY what's explicitly stated in the text of each:\n1. What sections are new in the updated version\n2. What specific figures, dates, or requirements changed, quoting the exact old and new text for each\n3. What stayed the same that a reader might assume changed\n\nDo not infer the reason for any change unless the document states it. If something is ambiguous, say \"unclear from the text\" rather than guessing.\n\nEarlier version:\n[PASTE DE-IDENTIFIED EARLIER VERSION]\n\nUpdated version:\n[PASTE DE-IDENTIFIED UPDATED VERSION]"
+        },
+        {
+          "label": "Summarizing for a specific audience (a client, not yourself)",
+          "whenToUse": "Use when the summary needs to go straight to a client rather than serve as your own reading notes, which changes the tone and how much jargon is acceptable.",
+          "prompt": "Summarize the following document for [CLIENT], a client with no technical accounting background. Use ONLY facts explicitly stated in the text below — do not infer, estimate, or add any figure, date, or fact not written here. If something is unclear or missing, say \"not stated in the document\" rather than guessing.\n\nStructure your summary as:\n1. One-paragraph plain-language overview (what this means for them)\n2. Key facts and figures they need to know, explained in plain terms\n3. Any deadline or action required of them, stated clearly\n4. A note that I'm available to answer questions\n\nDocument:\n[PASTE DE-IDENTIFIED DOCUMENT TEXT]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Double-check no client data leaked through",
+          "prompt": "Reread the document text I pasted and the summary you produced. Confirm neither contains any name, account number, address, or other identifying detail that isn't a placeholder like [CLIENT]. Flag anything that looks like it could identify a real person or business."
+        },
+        {
+          "label": "Verify every figure against the source",
+          "prompt": "List every number, date, and dollar figure in your summary as a checklist, one per line, so I can tick each one off against the original document myself."
+        },
+        {
+          "label": "It skipped something — check for gaps",
+          "prompt": "Reread the full document again and tell me if there's anything in sections you haven't summarized yet, or any part of the text your summary doesn't reflect at all."
+        },
+        {
+          "label": "Too much jargon still",
+          "prompt": "Rewrite the overview paragraph only, replacing any remaining technical term with a plain-English explanation, without changing or adding any fact."
+        }
+      ],
+      "walkthrough": "Priya Nakamura, a senior accountant at a mid-sized firm, had a 12-page draft update to a lease-accounting standard land in her inbox the same morning she had three client calls scheduled. She needed to know what changed before her 2pm call with a client who leased most of their retail space.\n\nSince this was a public accounting standard with no client names or figures in it, there was nothing to redact. She opened Claude, pasted the full text of the update in place of [PASTE DE-IDENTIFIED DOCUMENT TEXT], and used the summary prompt exactly as written.\n\nClaude returned a one-paragraph overview explaining the standard changed how operating leases get recognized on the balance sheet, a bullet list quoting the exact new capitalization threshold and the January 1, 2027 effective date as written in the text, a deadlines section restating that date, an obligations section noting which entities must restate prior comparative periods, and a final note flagging that the transition guidance for short-term leases wasn't fully covered in the 12-page excerpt and needed a second read of the full standard.\n\nPriya sent the follow-up asking Claude to list every number and date as a checklist so she could verify each one against the PDF herself. She checked all four and they matched. The transition-guidance gap Claude flagged turned out to matter — a different section of the standard did cover it, so she read that part herself before the call rather than relying on the summary.\n\nThe whole process took about six minutes, and she walked into her 2pm call able to answer the client's first question about the effective date without hesitation."
+    },
+    "acc-b2-notes-to-client-explanation": {
+      "placeholders": [
+        {
+          "name": "CLIENT",
+          "what": "A placeholder standing in for the client's real name while the notes pass through the AI tool — use the literal word [CLIENT] rather than typing their actual business or personal name. You add their real name back in only after the text has left the AI chat, when you paste it into your actual email or document.",
+          "examples": [
+            "[CLIENT]",
+            "[CLIENT]",
+            "[CLIENT]"
+          ]
+        },
+        {
+          "name": "PASTE ROUGH NOTES",
+          "what": "Your actual shorthand notes from the bookkeeping or review session, written exactly as you jotted them during or after the work — abbreviations, fragments, and accounting shorthand are fine. A good example includes real figures and specific observations; a weak one is too vague to translate into anything useful for the client.",
+          "examples": [
+            "AR up 18% MoM, 3 invoices >90d overdue ($4,200 total), COGS margin slipped 2pt in Q2 due to supplier price increase, cash runway ~5mo at current burn",
+            "Payroll now 42% of revenue, up from 36% last quarter after two new hires started in May. Owner's draw increased to $6,000/mo starting April. No red flags on expense categorization this period.",
+            "Inventory turnover slowed to 4.2x annualized from 5.8x last year. $18,000 tied up in slow-moving stock over 6 months old. Gross margin held steady at 41% despite the slowdown."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Very short version for a text message or quick portal message",
+          "whenToUse": "Use when the client just needs the headline takeaway in a couple of sentences, not a full 3-5 paragraph explanation — for example, a quick portal message rather than an email.",
+          "prompt": "I have rough working notes from a bookkeeping/review session. Turn them into a 2-3 sentence plain-language message for [CLIENT], a small business owner with no accounting background — short enough for a text or portal message.\n\nRules:\n- Use every number and fact exactly as given below — do not round, recalculate, or add anything not present.\n- No jargon at all, even with a definition — keep it conversational.\n- End with a one-sentence takeaway.\n\nMy notes:\n[PASTE ROUGH NOTES]"
+        },
+        {
+          "label": "For a more financially literate client",
+          "whenToUse": "Use for clients who are comfortable with basic financial terms (a CFO-adjacent owner, or a client you've worked with for years) where over-explaining every term would feel condescending.",
+          "prompt": "I have rough working notes from a bookkeeping/review session. Rewrite them as a clear, professional explanation for [CLIENT], who is financially literate but not an accountant — they understand terms like revenue, margin, and cash flow, but not more technical accounting terminology.\n\nRules:\n- Use every number and fact exactly as given below — do not round, recalculate, or add any figure not present in my notes.\n- You can use basic financial terms without defining them, but still define more technical accounting terms (like accrual, amortization, or deferred revenue) briefly on first use.\n- Keep a professional, direct tone, 2-4 short paragraphs.\n- End with one clear \"what this means for you\" takeaway.\n\nMy notes:\n[PASTE ROUGH NOTES]"
+        },
+        {
+          "label": "Explaining bad news that needs careful framing",
+          "whenToUse": "Use when the notes contain a genuinely concerning figure (cash running low, a compliance issue) and you need the explanation to be honest but not alarming.",
+          "prompt": "I have rough working notes from a bookkeeping/review session, including some concerning findings. Rewrite them as a clear, honest explanation for [CLIENT], a small business owner with no accounting background.\n\nRules:\n- Use every number and fact exactly as given below — do not round, recalculate, minimize, or add any figure not present in my notes. Do not soften a genuinely concerning figure into something reassuring.\n- Explain any accounting term in plain English the first time it appears.\n- Tone: calm and direct, not alarmist, but do not hide the seriousness of what the numbers show.\n- End with one clear, constructive next step, not just a warning.\n\nMy notes:\n[PASTE ROUGH NOTES]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Confirm no number was changed",
+          "prompt": "List every number in your explanation, one per line, next to the exact number from my original notes it corresponds to, so I can confirm none were rounded, recalculated, or altered."
+        },
+        {
+          "label": "Still too jargon-heavy",
+          "prompt": "Go through this again and flag any word a small business owner with no accounting background might not know. For each one, either replace it with plain English or add a same-sentence definition."
+        },
+        {
+          "label": "Check the client's real name isn't anywhere",
+          "prompt": "Confirm that [CLIENT] is the only identifier used throughout this draft, and that no real name, account number, or other identifying detail appears anywhere in it."
+        },
+        {
+          "label": "Adjust the tone for this specific client",
+          "prompt": "This client tends to get anxious about financial updates. Rewrite it leading with what's going well before mentioning any concern, while keeping every number and fact exactly the same."
+        }
+      ],
+      "walkthrough": "Devon Osei, a bookkeeper working with several small retail clients, had just finished a review session for a cafe client and needed to turn four lines of shorthand into something the owner could actually understand. His notes read: \"AR up 18% MoM, 3 invoices >90d overdue ($4,200 total), COGS margin slipped 2pt in Q2 due to supplier price increase, cash runway ~5mo at current burn.\"\n\nBefore opening Claude, Devon replaced the client's actual business name with [CLIENT] in his own notes, since he shares this Claude account across a small team and wanted to keep the habit consistent regardless of which client it was.\n\nHe pasted the notes-to-explanation prompt, filled in [CLIENT] as the audience, and pasted his four lines of shorthand. Claude returned three short paragraphs: one explaining that customers were taking a little longer to pay this month and naming the $4,200 in invoices over 90 days overdue, one explaining in plain terms that supplier costs had risen and squeezed profit margin slightly in the second quarter, and one noting that at the current spending rate, the business had about five months of cash before needing more funding — closing with a takeaway to prioritize collecting the overdue invoices first.\n\nDevon sent the follow-up asking Claude to list every number next to his original notes so he could confirm nothing had drifted. All four matched exactly. He then swapped [CLIENT] for the real business name in his email draft, added a warmer opening line since this client tended to worry, and sent it.\n\nThe whole task took under five minutes, down from the fifteen or so he used to spend translating his own shorthand by hand."
+    },
+    "acc-b3-client-reminders-and-requests": {
+      "placeholders": [
+        {
+          "name": "friendly first reminder / firm follow-up after 2 prior reminders",
+          "what": "Pick whichever tone actually matches where you are in the conversation with this client. A friendly first reminder assumes good faith and a simple oversight; a firm follow-up after repeated silence needs to convey that a deadline is now genuinely close without becoming unprofessional.",
+          "examples": [
+            "friendly first reminder",
+            "firm follow-up after 2 prior reminders",
+            "friendly first reminder"
+          ]
+        },
+        {
+          "name": "CLIENT NAME",
+          "what": "The client's actual name (or their business name) as you'd normally address them — this is a live send, not a redacted draft, so use their real name here if you're comfortable, or a placeholder if you're testing the prompt first.",
+          "examples": [
+            "Meridian Cafe Ltd",
+            "Raj Patel",
+            "the Whitfield family trust"
+          ]
+        },
+        {
+          "name": "LIST EXACTLY WHAT IS MISSING, e.g. \"March and April bank statements, signed engagement letter, list of fixed asset purchases over $500\"",
+          "what": "The specific, named items still outstanding — not a category. Naming the exact document and time period is what makes a client actually go find it, rather than being unsure what you mean and setting the email aside.",
+          "examples": [
+            "March and April bank statements, signed engagement letter, list of fixed asset purchases over $500",
+            "2023 mileage log, receipts for the home office expense claimed on last year's return",
+            "Signed W-9 form, most recent quarterly payroll report, void check for direct deposit setup"
+          ]
+        },
+        {
+          "name": "DATE",
+          "what": "The actual deadline you need the item by, as a specific date rather than a vague \"soon.\" This should be a real date you can stand behind, not a padded one meant to create false urgency.",
+          "examples": [
+            "Friday, August 21",
+            "end of day next Wednesday",
+            "September 1, to leave time before the filing deadline"
+          ]
+        },
+        {
+          "name": "e.g. \"needed to file the quarterly return on time and avoid a late filing penalty\"",
+          "what": "The real, specific reason this matters — what actually happens if the deadline is missed. Only state a consequence you can actually back up; don't let this become a vague or exaggerated threat.",
+          "examples": [
+            "needed to file the quarterly return on time and avoid a late filing penalty",
+            "needed to close out last month's books before we can send this quarter's financials to your lender",
+            "needed to finish payroll setup before the next pay run so no one's paycheck is delayed"
+          ]
+        },
+        {
+          "name": "friendly / firm",
+          "what": "This is the second tone selector in the prompt, matching whichever option you chose at the top — it keeps the requirements section consistent with the opening instruction.",
+          "examples": [
+            "friendly",
+            "firm",
+            "friendly"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Multiple outstanding items across several clients (batch version)",
+          "whenToUse": "Use when you have a list of several clients each missing different items and want to generate all the reminder emails in one pass instead of one prompt run per client.",
+          "prompt": "Write a friendly first reminder email for each client below requesting their outstanding items. Use the same rules for every email:\n- Keep each under 120 words.\n- State the specific items and deadline clearly, as a short list.\n- Do not state any penalty amount or legal consequence I haven't given you for that client.\n- End each with a single clear call to action.\n\nClient 1: [CLIENT NAME] — outstanding: [LIST ITEMS] — deadline: [DATE] — why it matters: [REASON]\nClient 2: [CLIENT NAME] — outstanding: [LIST ITEMS] — deadline: [DATE] — why it matters: [REASON]\nClient 3: [CLIENT NAME] — outstanding: [LIST ITEMS] — deadline: [DATE] — why it matters: [REASON]"
+        },
+        {
+          "label": "Final notice before you have to pause work",
+          "whenToUse": "Use as a last-resort message when repeated reminders have failed and you genuinely need to tell the client that work will pause or be delayed without the missing items — a more serious step than a firm follow-up.",
+          "prompt": "Write a final-notice email to a client named [CLIENT NAME] regarding outstanding items, after [NUMBER] prior reminders have gone unanswered.\n\nOutstanding items:\n[LIST EXACTLY WHAT IS MISSING]\n\nDeadline: [DATE]\nWhat happens if this deadline passes: [REAL CONSEQUENCE, e.g. \"I will need to pause work on your return until these are received\" — only state what you will actually do]\n\nRequirements:\n- Under 150 words.\n- Direct and clear, not aggressive — state the situation and the real consequence plainly, without exaggerating it.\n- Reference that this follows prior reminders, factually, without sounding accusatory.\n- Do not state any penalty or legal consequence I haven't given you — only reference what I specify.\n- End with a single clear call to action and an offer to discuss if there's a reason for the delay."
+        },
+        {
+          "label": "Requesting information rather than documents",
+          "whenToUse": "Use when what's missing is a decision or a piece of information from the client (a choice, a confirmation) rather than a document to upload.",
+          "prompt": "Write a [friendly first reminder / firm follow-up after 2 prior reminders] email to a client named [CLIENT NAME] requesting a decision or piece of information, not a document.\n\nWhat I need from them: [SPECIFIC QUESTION OR DECISION NEEDED, e.g. \"whether they want to elect S-corp status this year\"]\n\nDeadline: [DATE]\nWhy it matters: [REAL REASON]\n\nRequirements:\n- Keep it under 120 words.\n- State the specific question clearly, and briefly explain in plain language what each option means if relevant.\n- Match the tone to: [friendly / firm].\n- Do not state any consequence I haven't given you.\n- End with a single clear call to action (reply with their choice, or schedule a call)."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check it didn't overstate a consequence",
+          "prompt": "Reread the email and confirm it only states the exact consequence I gave you, with no added penalty amount, legal claim, or exaggeration."
+        },
+        {
+          "label": "Too vague — make the ask more specific",
+          "prompt": "The outstanding items list still isn't specific enough. Rewrite the list to be as concrete as possible — exact document names, exact date ranges — so the client knows exactly what to go find."
+        },
+        {
+          "label": "Soften the tone slightly",
+          "prompt": "This is a bit firmer than I want for a first reminder. Soften the tone while keeping the same specific items and deadline — I want it to read as helpful, not pointed."
+        },
+        {
+          "label": "Shorten for a text or portal message",
+          "prompt": "Condense this into a 2-sentence version I could send as a text or client-portal message instead of a full email, keeping the specific items and deadline."
+        }
+      ],
+      "walkthrough": "Emma Castellano, who runs a small bookkeeping practice, needed to send a reminder to Meridian Cafe Ltd, a client who hadn't yet uploaded two months of bank statements or signed the renewed engagement letter. The quarterly VAT return was due the following Friday, and Emma had already mentioned it verbally once without effect.\n\nShe opened Claude and used the client reminder prompt, selecting \"friendly first reminder\" since this was her first written request, filling in \"Meridian Cafe Ltd\" as the client name, listing \"March and April bank statements, signed engagement letter\" as the outstanding items, setting the deadline to the end of the following week, and noting the reason was needed to file the quarterly VAT return on time.\n\nClaude's draft opened with a light, warm greeting, listed the two outstanding items as a short bulleted list, explained in one line that these were needed to file the quarterly return on schedule, stated the deadline once clearly, and closed asking Meridian to reply or upload the documents by then. It was under 100 words.\n\nBefore sending, Emma ran the follow-up asking Claude to confirm it hadn't overstated any consequence beyond what she'd actually given it. Claude confirmed the email only mentioned the filing deadline she'd specified, with no invented penalty figure or legal language.\n\nEmma sent the email that afternoon. Meridian's owner replied within the hour with the bank statements attached and a promise to sign the engagement letter by end of day. What used to take Emma ten minutes of finding the right words took under three, and the specific item list — rather than a vague \"please send your documents\" — seemed to be exactly what got the fast response."
+    },
+    "acc-b4-explain-financial-concepts-plain-language": {
+      "placeholders": [
+        {
+          "name": "CONCEPT, e.g. \"why accrual-basis profit differs from cash in the bank\"",
+          "what": "The specific financial or tax concept the client actually asked about, stated as a clear question or topic — not a broad textbook chapter title. Being specific about what confused them produces a much more useful explanation than a generic definition would.",
+          "examples": [
+            "why accrual-basis profit differs from cash in the bank",
+            "what depreciation actually means for their tax bill this year",
+            "why they owe estimated tax on income they haven't received as cash yet"
+          ]
+        },
+        {
+          "name": "1-2 sentences, e.g. \"runs a small cafe, sells mostly cash/card same-day, but has a few supplier invoices on 30-day terms\"",
+          "what": "A short, concrete description of this specific client's business, so the analogy and explanation actually fit their situation instead of reading like a generic example. Include whatever detail is relevant to the concept being explained.",
+          "examples": [
+            "runs a small cafe, sells mostly cash/card same-day, but has a few supplier invoices on 30-day terms",
+            "owns a small landscaping business, bought a new truck this year, wants to understand how that purchase affects this year's taxes",
+            "freelance graphic designer, invoices clients on net-30 terms, just registered as an LLC this year"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Written FAQ entry instead of a one-off explanation",
+          "whenToUse": "Use when you want to build a reusable FAQ answer for a concept that comes up repeatedly across many clients, rather than a one-time personalized explanation.",
+          "prompt": "Explain [CONCEPT] in plain English for a general FAQ page aimed at small business clients with no accounting background, not tied to one specific client's situation.\n\nRequirements:\n- Use one simple, everyday analogy to illustrate the idea.\n- Avoid technical jargon; if you must use a term, define it in the same sentence.\n- Keep it to 3 short paragraphs maximum.\n- Do not state specific tax rates, thresholds, or rules — note instead that clients should confirm current figures with their accountant since these vary and change.\n- End with one sentence inviting the reader to ask their accountant how this applies to their specific situation."
+        },
+        {
+          "label": "Explaining a concept the client got wrong",
+          "whenToUse": "Use when a client has a specific misunderstanding you need to gently correct, rather than explaining a concept from scratch.",
+          "prompt": "A client has a misunderstanding I need to correct gently. Explain [CONCEPT] in plain English, specifically addressing this misunderstanding: [DESCRIBE WHAT THE CLIENT BELIEVES THAT ISN'T ACCURATE].\n\nClient context: [1-2 sentences about their business]\n\nRequirements:\n- Start by acknowledging why their assumption made sense, before explaining what's actually true — don't make them feel foolish for asking.\n- Use one simple, everyday analogy.\n- Avoid jargon; define any necessary term in the same sentence.\n- Keep it to 3 short paragraphs maximum.\n- Do not state specific tax rates or thresholds — I will verify and add those myself.\n- End with one sentence connecting the corrected concept back to their specific business."
+        },
+        {
+          "label": "Longer version with a worked example",
+          "whenToUse": "Use when a quick analogy isn't landing and the client would benefit from seeing simplified made-up numbers walked through step by step, in addition to the plain-language explanation.",
+          "prompt": "Explain [CONCEPT] to a client in plain English, including a simple worked example with made-up round numbers (clearly labeled as an illustrative example, not their actual figures).\n\nClient context: [1-2 sentences]\n\nRequirements:\n- Start with a one-paragraph plain-English explanation using one everyday analogy.\n- Follow with a short worked example using clearly fictional, round numbers labeled \"Example only — not your actual figures.\"\n- Avoid jargon; define any necessary term in the same sentence.\n- Do not state specific tax rates, thresholds, or rules — I will verify and add those myself.\n- End with one sentence connecting the concept back to their specific business."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check no tax rate or rule was stated",
+          "prompt": "Reread the explanation and confirm it doesn't state any specific tax rate, percentage, dollar threshold, or rule as fact. Flag anything that reads like a specific figure I'd need to verify before sending."
+        },
+        {
+          "label": "The analogy doesn't quite fit — try again",
+          "prompt": "The analogy doesn't fit this client's actual business well. Here's more context: [ADDITIONAL CONTEXT]. Try a different, more fitting analogy while keeping everything else the same."
+        },
+        {
+          "label": "Still too simplified — check for accuracy",
+          "prompt": "Is there anything in this explanation that's simplified to the point of being technically incorrect, even if it reads clearly? Flag anything I should tighten up before sending this to a client."
+        },
+        {
+          "label": "Make the closing takeaway more concrete",
+          "prompt": "The closing sentence is too generic. Rewrite it to tie the concept to one specific, concrete implication for this client's business, based only on the context I already gave you."
+        }
+      ],
+      "walkthrough": "Wei Chen, an accountant with several small-business clients, got a message from the owner of a cafe asking why her profit and loss statement showed a healthy profit for the month when her bank balance told a different story. Wei had answered a version of this question dozens of times but never had a clean, ready explanation on hand.\n\nHe opened Claude and used the plain-language explanation prompt, filling in the concept as \"why accrual-basis profit differs from cash in the bank\" and describing the client as running a small cafe that sells mostly cash and card same-day but pays some suppliers on 30-day terms.\n\nClaude's response compared the bank balance to a wallet showing exactly what's available right now, while explaining that accrual profit works more like a scoreboard that also counts food already delivered by suppliers but not yet paid for — which is why the profit figure can look different from the cash sitting in the account. It closed by noting that for this specific client, unpaid supplier invoices from the month were the likely reason the two numbers diverged.\n\nBefore sending it, Wei ran the follow-up checking that no specific tax rate or rule had been stated as fact — there wasn't one, since the explanation only covered accrual versus cash timing. He also asked whether anything was oversimplified to the point of being wrong; Claude noted the explanation held up but suggested he mention that accrual accounting is required for compliance depending on her jurisdiction and revenue level, which Wei added himself since it depended on facts specific to her situation.\n\nHe sent the explanation eight minutes after opening the chat, and the client replied that it finally made sense."
+    },
+    "acc-b5-internal-checklists-and-process-docs": {
+      "placeholders": [
+        {
+          "name": "NAME, e.g. \"month-end close for a small business client\"",
+          "what": "The name of the recurring process you're documenting, specific enough that a new hire would know exactly which task this checklist covers. Avoid a name so broad it could mean several different processes at your firm.",
+          "examples": [
+            "month-end close for a small business client",
+            "new client onboarding for a bookkeeping engagement",
+            "quarterly payroll tax filing"
+          ]
+        },
+        {
+          "name": "PASTE ROUGH DESCRIPTION OR BULLET NOTES",
+          "what": "Your own description of how you actually do this process, in order, written the way you'd explain it out loud to a new hire — informal notes are fine, but don't skip steps just because they feel obvious to you.",
+          "examples": [
+            "reconcile bank accounts in QuickBooks, review AR aging report and flag anything over 60 days, post accrual entries for the month, review P&L against budget and note variances over 10%, lock the period once everything ties out",
+            "send new client a welcome email with engagement letter link, once signed set them up in our practice management software, request read-only access to their bank feeds and prior year tax returns, schedule an intro call to review their bookkeeping needs, create their folder in our shared drive",
+            "pull payroll data from the payroll system for the quarter, verify total wages match the general ledger, calculate the tax liability using the current rate tables, file the quarterly form through the state portal, save confirmation number in the client file, set a calendar reminder for next quarter's deadline"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Very short quick-reference version for experienced staff",
+          "whenToUse": "Use once you already have a full checklist and want a condensed version for staff who just need the step order as a memory jog, not the reasoning behind each step.",
+          "prompt": "Turn this full process description into a short quick-reference checklist for experienced staff who already know the reasoning — just the step order, one line per step, no explanations or callouts.\n\nProcess: [NAME]\nFull description:\n[PASTE ROUGH DESCRIPTION OR BULLET NOTES]\n\nOutput just a numbered list of single-line steps, nothing else. Do not add steps I did not describe."
+        },
+        {
+          "label": "Checklist with role assignments for a team process",
+          "whenToUse": "Use when the process involves more than one person and you need the checklist to show who's responsible for each step, not just the step order.",
+          "prompt": "Turn my rough description of a recurring process into a clear, numbered internal checklist that also assigns each step to a role.\n\nProcess: [NAME]\nMy rough description of the steps, in order, including who does each one: [PASTE ROUGH DESCRIPTION OR BULLET NOTES]\n\nRequirements:\n- Number each step; each step should be a single, clear action.\n- Add a \"Responsible role\" next to each step, using only roles I mentioned — if I didn't specify who does a step, mark it \"role not specified — confirm.\"\n- After the checklist, add a \"common failure points\" section flagging steps where mistakes are most likely, based only on what I described.\n- Do not add steps I did not describe — list anything you think is missing separately under \"possible gaps to review.\""
+        },
+        {
+          "label": "Checklist for a process that varies by client type",
+          "whenToUse": "Use when the same general process has small but important variations depending on the client (e.g. cash-basis vs. accrual-basis clients), and the checklist needs to flag where the path diverges.",
+          "prompt": "Turn my rough description of a recurring process into a numbered checklist, and flag any step where the process differs depending on client type.\n\nProcess: [NAME]\nMy rough description, including where it varies by client type: [PASTE ROUGH DESCRIPTION OR BULLET NOTES]\nClient types this applies to: [e.g., \"cash-basis vs. accrual-basis clients\" or \"clients with employees vs. sole proprietors with no staff\"]\n\nRequirements:\n- Number each step; mark clearly with \"[VARIES BY CLIENT TYPE — see note]\" any step that isn't identical across client types, and briefly note the variation using only what I described.\n- After the checklist, add a \"common failure points\" section based only on what I described.\n- Do not add steps or variations I did not describe — list anything you think is missing under \"possible gaps to review.\""
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Don't merge suggested gaps into the real checklist",
+          "prompt": "Confirm that everything in the \"possible gaps to review\" section is kept clearly separate from the main numbered checklist, and hasn't been folded into it anywhere."
+        },
+        {
+          "label": "Split a multi-action step into single actions",
+          "prompt": "Step [NUMBER] combines more than one action into a single step. Split it into separate numbered steps, each a single clear action, without changing the order of anything else."
+        },
+        {
+          "label": "Add the software used at each step",
+          "prompt": "Go through the checklist and add which software or tool is used at each step, based only on what I described — for any step where I didn't mention a tool, leave it blank rather than guessing."
+        },
+        {
+          "label": "This doesn't match how we actually work",
+          "prompt": "Step [NUMBER] isn't quite right — here's what actually happens: [CORRECTED DESCRIPTION]. Update just that step to match, keeping everything else the same."
+        }
+      ],
+      "walkthrough": "Marcus Delgado, a senior bookkeeper, had trained three new hires on month-end close over the years, always the same way: sitting next to them and explaining it out loud. Nothing was ever written down, and when he took a week of vacation, the process usually stalled until he got back.\n\nHe decided to finally document it. He opened Claude and used the checklist prompt, naming the process \"month-end close for a small business client\" and describing his rough steps: reconcile bank accounts in QuickBooks, review the AR aging report and flag anything over 60 days, post accrual entries, review the P&L against budget and note variances over 10%, then lock the period.\n\nClaude turned this into a five-step numbered checklist, noted QuickBooks as the tool for the reconciliation and period-lock steps since Marcus had mentioned it, and added a \"common failure points\" section flagging that bank reconciliations and accrual postings are the most common source of errors that get missed before a period is locked. In a separate \"possible gaps to review\" section, it suggested Marcus might want to add a fixed-asset review step, clearly marked as a suggestion rather than something he'd actually described.\n\nMarcus reviewed the checklist against how he really works and confirmed all five steps matched. He decided the fixed-asset suggestion was worth adding for larger clients, so he asked Claude to insert it as step three with a note that it only applies to clients with capital purchases that quarter.\n\nThe finished checklist went into the firm's shared training folder. Two weeks later, when Marcus was out sick, a new hire followed it successfully without needing to call him — the first time that had happened."
+    },
+    "acc-i1-analyze-variance-narrative": {
+      "placeholders": [
+        {
+          "name": "PASTE LINE ITEMS: ACCOUNT | ACTUAL | BUDGET/PRIOR | VARIANCE $ | VARIANCE % | NOTES",
+          "what": "Your account-by-account variance data, with the actual, budget or prior-period figure, dollar variance, and percentage variance already calculated by your own accounting system or spreadsheet — never let the AI calculate these. Include your own notes on the reason where you already know it, and leave the notes column blank for lines where you don't.",
+          "examples": [
+            "Repairs & Maintenance | $6,200 | $1,500 | +$4,700 | +313% | one-off HVAC repair, non-recurring\nOffice Supplies | $890 | $600 | +$290 | +48% | (no note)\nAdvertising | $3,100 | $3,000 | +$100 | +3% | (no note)\nUtilities | $1,450 | $1,200 | +$250 | +21% | rate increase mid-quarter, applies going forward",
+            "Payroll | $42,000 | $38,000 | +$4,000 | +11% | two new hires started mid-quarter\nCOGS | $61,500 | $58,000 | +$3,500 | +6% | (no note)\nRent | $5,000 | $5,000 | $0 | 0% | (no note)\nProfessional Fees | $2,800 | $1,000 | +$1,800 | +180% | one-time legal fee for lease renewal",
+            "Travel | $410 | $2,000 | -$1,590 | -80% | travel budget unused, conference cancelled\nInsurance | $1,100 | $1,100 | $0 | 0% | (no note)\nEquipment Lease | $890 | $600 | +$290 | +48% | (no note)"
+          ]
+        },
+        {
+          "name": "threshold, e.g. \"10% or $[X]\"",
+          "what": "Replace this whole bracket with the actual materiality cutoff you or your firm uses — a percentage, a dollar amount, or both. This should be a number you or your client's policy has already decided on, not one you want the AI to invent for you.",
+          "examples": [
+            "10% or $1,000, whichever is lower",
+            "15%",
+            "$2,500 regardless of percentage"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Revenue variances instead of expense variances",
+          "whenToUse": "Use when the variance report is about revenue lines (by product, region, or customer segment) rather than expense accounts, which usually calls for a slightly different narrative framing.",
+          "prompt": "Below is a list of revenue lines with actual, budget (or prior period), variance amount, variance %, and my notes on the reason where known. All calculations are already done — do not recalculate, re-derive, or adjust any number. Use the figures exactly as given.\n\nData:\n[PASTE LINE ITEMS: SEGMENT | ACTUAL | BUDGET/PRIOR | VARIANCE $ | VARIANCE % | NOTES]\n\nTasks:\n1. Rank the lines by materiality (largest $ and % impact) and separate into \"material — needs explanation\" vs. \"immaterial — no narrative needed,\" using a [threshold] materiality cutoff.\n2. For each material variance, write a 1-2 sentence explanation using ONLY the notes I provided. If I gave no note for a material variance, list it under \"needs explanation from me\" instead of inventing a reason.\n3. Note whether the overall pattern suggests underperformance or overperformance against budget, using only the totals given, not a prediction of future trend."
+        },
+        {
+          "label": "Board-level summary instead of a detailed writeup",
+          "whenToUse": "Use when the audience is a board or senior leadership who need a very condensed, top-line narrative rather than a line-by-line writeup.",
+          "prompt": "Below is a list of account/budget lines with actual, budget (or prior period), variance amount, variance %, and my notes on the reason where known. All calculations are already done — do not recalculate, re-derive, or adjust any number.\n\nData:\n[PASTE LINE ITEMS: ACCOUNT | ACTUAL | BUDGET/PRIOR | VARIANCE $ | VARIANCE % | NOTES]\n\nWrite a board-level summary (under 120 words) covering only the 2-3 most material variances by dollar impact, using a [threshold] materiality cutoff to decide what counts as material. Use ONLY the notes I provided for explanations — if a top variance has no note, say plainly that the reason needs to be confirmed rather than guessing. End with one sentence on the overall net variance."
+        },
+        {
+          "label": "Multi-period trend narrative",
+          "whenToUse": "Use when you want the narrative to note whether a variance is a one-time event or part of a pattern across several periods, not just this single period in isolation.",
+          "prompt": "Below is variance data for the same accounts across three consecutive periods. All calculations are already done — do not recalculate, re-derive, or adjust any number.\n\nPeriod 1:\n[PASTE LINE ITEMS: ACCOUNT | ACTUAL | BUDGET/PRIOR | VARIANCE $ | VARIANCE % | NOTES]\n\nPeriod 2:\n[PASTE LINE ITEMS]\n\nPeriod 3:\n[PASTE LINE ITEMS]\n\nTasks:\n1. Using a [threshold] materiality cutoff, identify which accounts show a material variance in the most recent period.\n2. For each, note whether it appears to be a one-time event or a recurring pattern across the three periods, based only on the figures given — do not predict future periods.\n3. Write explanations only using notes I provided; list any material variance without a note under \"needs explanation from me.\""
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Confirm no recalculation happened",
+          "prompt": "List every dollar figure and percentage in your narrative next to the exact figure from my original data it corresponds to, so I can confirm nothing was recalculated, re-derived, or rounded differently."
+        },
+        {
+          "label": "Double-check the materiality cutoff was applied correctly",
+          "prompt": "Show me your work for which lines you classified as material versus immaterial — list each line with its variance % and $ next to the threshold I gave you, so I can confirm the classification is correct."
+        },
+        {
+          "label": "Don't let it guess at a missing reason",
+          "prompt": "Reread the \"needs explanation from me\" section and confirm every line there genuinely had no note from me. Also check the material-variance narrative itself doesn't contain any explanation I didn't actually provide."
+        },
+        {
+          "label": "Tighten the narrative language",
+          "prompt": "Tighten the wording of each explanation to one sentence maximum, keeping every fact and figure exactly the same, for a version I can paste directly into a management report."
+        }
+      ],
+      "walkthrough": "Anita Ferreira, a controller doing monthly reporting for a small manufacturing client, had eight expense lines to write up for the month-end variance report, but she knew only three or four actually mattered enough to explain to the client's ownership. She had already calculated every variance herself in the spreadsheet: actual, budget, dollar variance, and percentage, along with notes for five of the eight lines where she knew the reason.\n\nShe opened Claude and used the variance narrative prompt, pasting her eight lines exactly as calculated, including one line where Repairs & Maintenance had come in at $6,200 against a $1,500 budget — a 313% overage she'd already noted was a one-off HVAC repair. She set her materiality threshold to 10% or $1,000, whichever was lower, matching what she and the client had agreed on months earlier.\n\nClaude ranked the lines and identified four as material under that threshold. For Repairs & Maintenance, it wrote a one-sentence explanation drawn directly from her note about the one-off HVAC repair. For a line where Anita hadn't left a note, it correctly listed it under \"needs explanation from me\" instead of guessing at a plausible reason. The remaining four immaterial lines were listed without narrative.\n\nBefore finalizing, Anita sent the follow-up asking Claude to list every figure next to her original data so she could confirm nothing had been recalculated. Everything matched exactly. She then found the missing explanation herself — a one-time software subscription renewal — and added a short note to that line.\n\nThe report went to the client that afternoon, about fifteen minutes after she'd started, versus the forty-five minutes she used to spend writing variance narratives from scratch."
+    },
+    "acc-i2-meeting-agendas-followup-summaries": {
+      "placeholders": [
+        {
+          "name": "MEETING TYPE, e.g. \"quarterly financial review\"",
+          "what": "What kind of meeting this is, since the right agenda structure differs a lot between a quarterly review, a year-end planning session, and a new-client onboarding call.",
+          "examples": [
+            "quarterly financial review",
+            "year-end tax planning session",
+            "new client onboarding call"
+          ]
+        },
+        {
+          "name": "CLIENT",
+          "what": "The client's name as you'd want it to appear in the agenda you send them, or a placeholder if you're preparing a template before you have the real client details filled in.",
+          "examples": [
+            "Meridian Cafe Ltd",
+            "Raj Patel",
+            "[CLIENT]"
+          ]
+        },
+        {
+          "name": "DURATION",
+          "what": "How long the meeting is actually scheduled for, so the agenda's time allocations are realistic rather than optimistic.",
+          "examples": [
+            "30 minutes",
+            "45 minutes",
+            "60 minutes"
+          ]
+        },
+        {
+          "name": "LIST TOPICS",
+          "what": "The actual topics you need to cover, as a plain list — Claude will order and time-box them, but it needs the real content from you first.",
+          "examples": [
+            "Q2 financial results, cash flow projection for Q3, discussion of the new hire's impact on payroll budget, upcoming equipment purchase and its tax treatment",
+            "review of last year's return, changes in this year's income, retirement contribution options, estimated tax payment schedule",
+            "introduction and firm overview, review of their current bookkeeping setup, list of documents needed to get started, timeline for first deliverable"
+          ]
+        },
+        {
+          "name": "PASTE RAW MEETING NOTES",
+          "what": "Your actual notes taken during the meeting, in whatever shorthand you used — decisions, numbers, and who owns what, even if messy. If a meeting-logging AI account is shared or logged by your firm, replace the client's real name with a placeholder before pasting.",
+          "examples": [
+            "agreed to move to monthly bookkeeping starting next month, client will send May bank statement by Friday, we'll draft new engagement letter, discussed but didn't decide on switching accounting software",
+            "reviewed Q2 numbers, client concerned about rising COGS, agreed to get 2 supplier quotes before next meeting, I'll send updated cash flow projection by next Tuesday, client wants to revisit pricing strategy in Q3",
+            "client confirmed they want to proceed with S-corp election, I need to file the paperwork by the deadline, client will send updated payroll numbers, no other action items, next check-in scheduled for next quarter"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Very short version for a quick check-in call",
+          "whenToUse": "Use for a brief 15-minute call that doesn't need a formal time-boxed agenda or a full four-section follow-up — just the essentials.",
+          "prompt": "PART A — Agenda: List 2-3 bullet points to cover in a quick [DURATION] check-in call with [CLIENT] about: [LIST TOPICS]. No time-boxing needed, just the order to cover them in.\n\nPART B — Follow-up (use after the call): Turn my raw notes below into a short recap, under 80 words, covering only what was decided and any single action item with an owner. Use only what is written in the notes — do not invent any decision, figure, or commitment not stated.\n\nMy raw notes:\n[PASTE RAW MEETING NOTES]"
+        },
+        {
+          "label": "Internal team meeting instead of client meeting",
+          "whenToUse": "Use for a recurring internal team meeting (staff check-in, weekly review) where the audience is your own team, not a client.",
+          "prompt": "PART A — Agenda: Create a time-boxed agenda for a [MEETING TYPE, e.g. \"weekly team check-in\"] with [TEAM/DEPARTMENT], lasting [DURATION]. Topics to cover: [LIST TOPICS]. Order them logically, allocate minutes to each, and leave 5 minutes at the end for open questions.\n\nPART B — Follow-up (use after the meeting): Turn my raw meeting notes below into an internal follow-up summary. Use only what is written in the notes — do not invent any decision, figure, or commitment not stated.\n\nStructure:\n1. Brief recap (2-3 sentences)\n2. Decisions made (bullet list)\n3. Action items (bullet list, format: action — owner — due date, using \"TBD\" if I didn't specify one)\n4. Open questions / items for next meeting\n\nMy raw notes:\n[PASTE RAW MEETING NOTES]"
+        },
+        {
+          "label": "Follow-up summary that includes next meeting's pre-agenda",
+          "whenToUse": "Use when you want the follow-up summary to also set up the agenda for the next meeting, based on the open questions from this one, so you don't have to write that separately later.",
+          "prompt": "Turn my raw meeting notes below into a follow-up summary that also drafts a starting agenda for the next meeting. Use only what is written in the notes — do not invent any decision, figure, or commitment not stated.\n\nStructure:\n1. Brief recap (2-3 sentences)\n2. Decisions made (bullet list)\n3. Action items (bullet list, format: action — owner — due date, using \"TBD\" if I didn't specify one)\n4. Open questions / items for next meeting\n5. Suggested agenda for next meeting, built from section 4's open items plus any follow-up needed on this meeting's action items\n\nMy raw notes:\n[PASTE RAW MEETING NOTES]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check no commitment was invented",
+          "prompt": "Reread the follow-up summary against my raw notes and confirm every decision and action item is something I actually wrote. Flag anything that reads like it was inferred rather than stated."
+        },
+        {
+          "label": "Fix an owner or date that's wrong",
+          "prompt": "The action item about [ITEM] should be owned by [CORRECT OWNER] with a due date of [CORRECT DATE], not what you have. Update just that line."
+        },
+        {
+          "label": "Too many topics for the time — trim the agenda",
+          "prompt": "This agenda has too many topics for [DURATION]. Cut it down to the 3-4 most important topics and drop or shorten the rest, keeping the time allocations realistic."
+        },
+        {
+          "label": "Separate discussion from actual decisions",
+          "prompt": "Go through the follow-up again and double-check that anything listed under \"Decisions made\" was actually agreed to, not just discussed. Move anything that was only discussed into the open questions section instead."
+        }
+      ],
+      "walkthrough": "Renee Okafor, an accountant handling a growing roster of small-business clients, had a quarterly financial review coming up with Meridian Cafe Ltd and wanted to send an agenda in advance, something she knew improved how prepared clients showed up.\n\nShe opened Claude, used Part A of the meeting prompt, filled in \"quarterly financial review\" as the meeting type, \"Meridian Cafe Ltd\" as the client, 30 minutes as the duration, and listed her topics: Q2 results, a Q3 cash flow projection, the payroll impact of a recent hire, and an upcoming equipment purchase.\n\nClaude returned a time-boxed agenda: five minutes on Q2 results, ten minutes on the cash flow projection, eight minutes on payroll impact, seven minutes on the equipment purchase and its tax treatment, with five minutes reserved for open questions. Renee sent it to the client the day before.\n\nDuring the actual meeting, she jotted rough notes: they'd agreed to move to monthly bookkeeping starting the next month, the client would send May's bank statement by Friday, Renee needed to draft a new engagement letter, and they'd discussed switching accounting software but hadn't decided.\n\nAfter the call, she pasted those notes into Part B. Claude's summary correctly separated the monthly-bookkeeping decision from the still-undecided software question, listed the bank statement and engagement letter as action items with the right owners and the Friday deadline, and put the software discussion under open questions rather than treating it as settled.\n\nRenee ran the follow-up check confirming nothing had been invented, found the summary accurate, and sent it to the client. The whole cycle — agenda plus follow-up — took about seven minutes of her own time."
+    },
+    "acc-i3-reusable-prompt-templates-client-comms": {
+      "placeholders": [
+        {
+          "name": "MESSAGE TYPE, e.g. \"monthly client financial update emails\"",
+          "what": "The category of message you want to templatize — pick something you send often enough that a reusable template will actually save you time, not a one-off message you'll never send again.",
+          "examples": [
+            "monthly client financial update emails",
+            "late-payment notice for overdue invoices",
+            "year-end tax planning invitation"
+          ]
+        },
+        {
+          "name": "PASTE YOUR BEST EXISTING EXAMPLE OF THIS MESSAGE TYPE",
+          "what": "A real message you've actually sent before and were happy with — not something written for this exercise. Starting from your genuine best work is what keeps the resulting template in your real voice instead of a generic AI voice.",
+          "examples": [
+            "Hi Meridian team, here's your update for June. Revenue came in at $28,400, up 6% from May. Expenses were steady, with the main driver being a seasonal ingredient cost increase we discussed last month. Cash balance sits at $19,200, giving you roughly 4 months of runway at the current burn rate. Nothing urgent to flag this month. Let me know if you'd like to hop on a call to go over any of this in more detail. Best, Renee",
+            "Hi Raj, following up on the March and April bank statements and the signed engagement letter we discussed. I still need both to keep your quarterly filing on track for the deadline on the 30th. Could you send these over by Friday? Happy to hop on a quick call if anything's unclear. Thanks, Devon",
+            "Hi there, it's that time of year again — I'd like to schedule your year-end tax planning session before December 31st, since a few strategies (retirement contributions, equipment purchases) only work if we act before year-end. Are you free sometime in the next two weeks? A few times that could work for me: [times]. Let me know what fits your schedule."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Building a template from scratch (no existing example yet)",
+          "whenToUse": "Use when you don't have a strong existing example to start from and need Claude to draft a first version for you to react to and edit, rather than templatize something you already wrote.",
+          "prompt": "I need a reusable template for [MESSAGE TYPE], but I don't have a strong existing example to start from. Draft a first version for me to react to and edit — I'll treat this as a starting point, not a final template.\n\nContext on what this message needs to cover: [DESCRIBE THE TYPICAL CONTENT AND PURPOSE]\nTone I want: [e.g., warm and professional / direct and brief]\n\nWrite it with clearly labeled placeholders in [BRACKETS] for anything client-specific or period-specific. After the draft, ask me 2-3 questions about what you weren't sure how to handle, so I can refine it into something I'd actually send."
+        },
+        {
+          "label": "Building a template with two tone versions (soft and firm)",
+          "whenToUse": "Use for message types where you sometimes need a gentler version and sometimes a firmer one — like reminders — and want both templates built from the same real example at once.",
+          "prompt": "Turn the message below into two reusable templates for recurring [MESSAGE TYPE] — one softer/friendlier version and one firmer version for repeat situations.\n\nMy example message:\n[PASTE YOUR BEST EXISTING EXAMPLE OF THIS MESSAGE TYPE]\n\nTasks:\n1. Create a \"soft\" template close to the tone of my example, with client-specific or period-specific details replaced by clearly labeled placeholders in [BRACKETS].\n2. Create a \"firm\" template covering the same structure but with a more direct tone appropriate for a repeat request, still professional.\n3. After both templates, add a \"before you fill this in\" checklist listing what information I need to gather each time.\n4. Note any placeholder where using a wrong or outdated figure would be especially risky."
+        },
+        {
+          "label": "Template that adapts to different client segments",
+          "whenToUse": "Use when the same message type needs slightly different framing depending on client type — for example, a monthly update for a cash-tight startup client versus an established, stable client.",
+          "prompt": "Turn the message below into a reusable template for recurring [MESSAGE TYPE], with a note on how to adapt it for different client segments.\n\nMy example message:\n[PASTE YOUR BEST EXISTING EXAMPLE OF THIS MESSAGE TYPE]\n\nTasks:\n1. Rewrite it as a template with client-specific or period-specific details replaced by clearly labeled placeholders in [BRACKETS].\n2. Keep the tone, structure, and length of my original example.\n3. After the template, add a short section titled \"Adapting this for different clients\" noting where and how the tone or emphasis might shift for [CLIENT SEGMENT A, e.g. \"a cash-tight early-stage client\"] versus [CLIENT SEGMENT B, e.g. \"an established, stable client\"] — based on general communication judgment, clearly separate from the template itself.\n4. Add a \"before you fill this in\" checklist and flag any high-risk placeholder."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Placeholders too vague — make them specific",
+          "prompt": "Some of these placeholders are too vague, like [DETAILS]. Go through the template and make every placeholder specific about exactly what should go there, like [REVENUE FIGURE] or [DUE DATE]."
+        },
+        {
+          "label": "Check the tone still matches my original",
+          "prompt": "Compare the template's tone and sentence rhythm against my original example message. Flag anywhere it drifted toward a more generic or more formal voice than what I actually wrote."
+        },
+        {
+          "label": "Add a risk flag I think is missing",
+          "prompt": "I think the placeholder [PLACEHOLDER NAME] should also be flagged as high-risk, because [REASON]. Add it to the risk-flag list with a brief note on why it needs double-checking each time."
+        },
+        {
+          "label": "Shorten the fill-in checklist",
+          "prompt": "The \"before you fill this in\" checklist is longer than I need. Cut it down to just the 3-4 items that are genuinely necessary to gather every time, not nice-to-haves."
+        }
+      ],
+      "walkthrough": "Renee Okafor sent a monthly financial update email to every one of her twelve small-business clients, and she'd noticed she was rewriting the same structure from scratch each time — a habit that ate up most of a Friday afternoon every month.\n\nShe picked her strongest recent example: the update she'd sent Meridian Cafe Ltd in June, which covered revenue, expenses, and a cash position note in a tone she was genuinely happy with. She opened Claude, used the template-building prompt, set the message type to \"monthly client financial update emails,\" and pasted the full June email as her example.\n\nClaude rewrote it as a template opening with \"Hi [CLIENT NAME], here's your update for [MONTH],\" a revenue section with [REVENUE FIGURE] and [REVENUE VS PRIOR MONTH % CHANGE], an expenses section with [KEY EXPENSE CHANGE + REASON], and a cash position line with [CASH BALANCE] and [RUNWAY IN MONTHS]. It kept her original closing line about being available for a call, unchanged. Below the template, it added a \"before you fill this in\" checklist listing which reports to pull each figure from, and flagged the cash balance and runway figures as the highest-risk placeholders to double-check every time, since they change fastest and a stale number could mislead a client about how much room they have.\n\nRenee sent the follow-up asking whether any placeholder was too vague; Claude confirmed they were all specific already. She saved the finished template to her firm's shared drive.\n\nThe next month, filling in the template for all twelve clients took under twenty minutes total, replacing what used to be most of an afternoon."
+    },
+    "acc-i4-structure-data-cleaning-instructions": {
+      "placeholders": [
+        {
+          "name": "LIST COLUMN NAMES",
+          "what": "The actual column headers from your export, exactly as they appear in row one of the file. This tells Claude what fields it's working with before it sees any data.",
+          "examples": [
+            "Date, Description, Amount, Category",
+            "Transaction Date, Payee, Debit, Credit, Memo",
+            "Employee Name, Pay Period, Gross Pay, Deductions, Net Pay"
+          ]
+        },
+        {
+          "name": "LIST ISSUES, e.g. \"dates in 3 different formats, some rows duplicated, category column blank for ~15% of rows, amount column mixes '$1,200.00' and '1200' formats\"",
+          "what": "The specific data-quality problems you can see when you scroll through the export — described precisely, not just \"the data is messy.\" The more exactly you describe the pattern of the mess, the more useful and correct the resulting formulas will be.",
+          "examples": [
+            "dates in 3 different formats (MM/DD/YYYY, DD-MM-YY, and some as text like 'Jan 5'), about 10% of rows are exact duplicates from a re-export, amount column mixes '$1,200.00' and '1200.00' as plain text",
+            "some payee names have trailing whitespace causing them to not match against a vendor list, a handful of rows have negative amounts that should be positive refunds, category column is blank for about 20% of rows",
+            "employee names are sometimes 'Last, First' and sometimes 'First Last', pay period column has some rows as date ranges and some as a single date, a few gross pay values are stored as text with a trailing space"
+          ]
+        },
+        {
+          "name": "PASTE 3-5 FAKE SAMPLE ROWS",
+          "what": "Made-up rows that follow the exact same pattern as your real messy data, but with fabricated names, amounts, and dates — never actual client transactions. This lets Claude see the problem concretely without any real financial data ever touching the AI tool.",
+          "examples": [
+            "01/05/2024, Office Depot, $84.50, Supplies\n5-01-24, Verizon, 120.00, Utilities\nJan 6 2024, Office Depot, $84.50, Supplies\n01/07/2024, Unknown Vendor,, \n01/08/24, City Water, $45.00, Utilities",
+            "2024-03-01, ABC Supplier , -250.00, \n2024-03-02, XYZ Corp, 1500.00, Consulting\n2024-03-02, XYZ Corp, 1500.00, Consulting\n2024-03-04, ABC Supplier, 250.00,",
+            "Smith, John, 2024-06-01 to 2024-06-15, 3200.00 , 640.00, 2560.00\nDoe, Jane, 06/16/2024, 2800.00, 560.00, 2240.00"
+          ]
+        },
+        {
+          "name": "SPREADSHEET TOOL, e.g. Excel/Google Sheets",
+          "what": "The specific spreadsheet program you'll actually be doing the cleanup in, since formula syntax differs between them in small but breaking ways.",
+          "examples": [
+            "Excel",
+            "Google Sheets",
+            "Excel (Microsoft 365 version, if that matters for any newer functions)"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Cleaning a smaller, single-issue export",
+          "whenToUse": "Use when the export only has one specific problem to fix (like inconsistent date formats) rather than several issues stacked together, so you don't need the full multi-step procedure.",
+          "prompt": "I have a data export with one specific problem I need to fix. Do not ask for or expect the real data — work only from this description and the sample rows, which use fake data.\n\nColumns: [LIST COLUMN NAMES]\nThe one issue: [DESCRIBE THE SINGLE ISSUE, e.g. \"the date column has 3 different formats mixed together\"]\nSample rows (fake data, same pattern as real file):\n[PASTE 3-5 FAKE SAMPLE ROWS]\n\nGive me:\n1. The exact formula or function to fix this in [SPREADSHEET TOOL], step by step if more than one formula is needed.\n2. One simple check to confirm the fix worked correctly on all rows, not just the sample."
+        },
+        {
+          "label": "Building a repeatable macro/script instead of manual formulas",
+          "whenToUse": "Use once you've confirmed a cleaning procedure works manually and want it turned into something more automated for next month's identical export.",
+          "prompt": "I have a data-cleaning procedure that works manually in [SPREADSHEET TOOL] for a recurring export. I'd like it turned into something more automated. Do not ask for or expect the real data — work only from this description and the sample rows, which use fake data.\n\nColumns: [LIST COLUMN NAMES]\nProblems observed: [LIST ISSUES]\nSample rows (fake data, same pattern as real file):\n[PASTE 3-5 FAKE SAMPLE ROWS]\n\nGive me:\n1. A [Google Apps Script / Excel macro, matching my tool] that performs the same cleaning steps a numbered manual procedure would, with comments explaining each step.\n2. A note on what to check manually before trusting the script's output the first time.\n3. A final reconciliation check comparing the original row count/total to the cleaned row count/total, built into the script's output if possible."
+        },
+        {
+          "label": "Reconciling two exports against each other",
+          "whenToUse": "Use when the cleaning task is really about matching and reconciling two different data exports (like a bank feed and a POS system export) rather than cleaning a single file.",
+          "prompt": "I have two data exports that need to be reconciled against each other. Do not ask for or expect the real data — work only from this description and the fake sample rows.\n\nExport A columns: [LIST COLUMN NAMES]\nExport B columns: [LIST COLUMN NAMES]\nHow they should match up: [DESCRIBE, e.g. \"Export A's Amount should match Export B's Total, but Export A dates are a day behind due to processing delay\"]\nProblems observed: [LIST ISSUES]\nSample rows from each (fake data, same pattern as real files):\nExport A:\n[PASTE 3-5 FAKE SAMPLE ROWS]\nExport B:\n[PASTE 3-5 FAKE SAMPLE ROWS]\n\nGive me:\n1. A numbered, ordered procedure to reconcile the two in [SPREADSHEET TOOL], with exact formulas for matching rows and flagging mismatches.\n2. One verification check after the main matching step.\n3. A final summary check showing how many rows matched, how many didn't, and the total dollar difference, if any."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Double-check no real data was implied",
+          "prompt": "Confirm your instructions don't reference or assume any specific real transaction, name, or figure beyond the fake sample rows I gave you — this needs to stay generalizable to the real file I'll run it on myself."
+        },
+        {
+          "label": "Add the before/after reconciliation check",
+          "prompt": "Add a final step comparing the total row count and a control total (like sum of the amount column) before and after the full cleaning procedure, so I can confirm nothing was silently lost or duplicated."
+        },
+        {
+          "label": "Formula doesn't match my spreadsheet version",
+          "prompt": "The formula for step [NUMBER] isn't working in my version of [SPREADSHEET TOOL] — here's the error I'm getting: [ERROR OR DESCRIPTION]. Give me an alternative formula that should work."
+        },
+        {
+          "label": "Too many steps — can this be simplified",
+          "prompt": "This procedure has more steps than I expected for this level of mess. Is there a way to combine any of these steps without losing the verification checks? Show me the simplified version."
+        }
+      ],
+      "walkthrough": "Tom Whitfield, a bookkeeper for several small retail clients, dreaded the monthly ritual of cleaning up a client's bank export before he could reconcile it — dates in three different formats, duplicate rows from a re-export, and an amount column mixing currency-formatted text with plain numbers.\n\nRather than upload the real file anywhere, Tom described the problem: columns were Date, Description, Amount, Category; the issues were mixed date formats, roughly 10% duplicate rows, and inconsistent amount formatting. He typed five fake sample rows that mimicked the exact pattern — including a duplicate entry and a couple of differently formatted dates — using made-up vendor names and round numbers.\n\nHe pasted this into the data-cleaning prompt in Claude, specifying Excel as his spreadsheet tool. Claude returned a five-step numbered procedure: a formula combination to standardize the mixed date formats, a duplicate-detection formula comparing concatenated key fields with a count, a cleanup formula to strip currency symbols and convert the amount column to numbers, a row-count check after each major step, and a final reconciliation comparing the sum of the amount column before and after cleaning.\n\nBefore running it on the real file, Tom sent the follow-up asking Claude to confirm nothing in its instructions assumed any specific real data beyond his fake samples — it confirmed the procedure was fully generalized to the pattern he'd described, not any specific transaction.\n\nHe applied the procedure to the actual export in Excel, checking the row count and control total at each step exactly as instructed. The final reconciliation matched to the cent. What used to take him nearly an hour of manual, ad hoc cleanup took about twenty minutes, and he saved the formulas for next month's identical export."
+    },
+    "acc-i5-procedure-docs-and-staff-training": {
+      "placeholders": [
+        {
+          "name": "NAME, e.g. \"reconciling client bank feeds in [software]\"",
+          "what": "The name of the specific procedure you're training someone on, specific enough to know exactly which task it covers — including naming the software if it's central to the procedure.",
+          "examples": [
+            "reconciling client bank feeds in QuickBooks Online",
+            "processing a new client's first payroll run",
+            "preparing a 1099 filing for a contractor"
+          ]
+        },
+        {
+          "name": "e.g. \"new hire, familiar with basic bookkeeping but new to our firm's tools\"",
+          "what": "A short description of who this documentation is for, since the level of detail and assumed background knowledge should change depending on whether the reader is brand new to the field or just new to your firm's specific way of doing things.",
+          "examples": [
+            "new hire, familiar with basic bookkeeping but new to our firm's tools",
+            "brand-new hire with no prior bookkeeping experience",
+            "experienced staff member moving from tax prep into our bookkeeping team, new to this specific process"
+          ]
+        },
+        {
+          "name": "PASTE ROUGH EXPLANATION / NOTES / TRANSCRIPT",
+          "what": "Your own explanation of the procedure the way you'd actually say it out loud to a new hire, including the reasoning behind key decisions — not just the mechanical steps. If you have a recording, a rough transcript works well too; if you're typing it from scratch, don't worry about polish.",
+          "examples": [
+            "So basically every day I pull the bank feed and match transactions against what's in the books. If something doesn't match, I never just force-match it — that can hide a real error, like a duplicate charge or something the client forgot to tell us about. I investigate first: check the date, check if there's a similar amount nearby, check if it's a known recurring charge. Only after I understand what happened do I either match it or flag it for the client.",
+            "When we onboard a new payroll client, the first thing I do is get their prior payroll provider's year-to-date report, because if we don't carry that over correctly, the employee's W-2 at year end will be wrong. I enter that YTD data before running their first live payroll with us, never after. Then I verify their tax IDs are correct in the system before the first live run, because a wrong ID causes a rejected filing later that's a pain to fix.",
+            "For 1099 prep, the biggest thing new people get wrong is not double-checking whether a vendor should even get one — corporations generally don't need one except for legal and medical payments, but LLCs might depending on how they're taxed. I always check the W-9 on file first, because guessing based on the vendor name is how you either send one that isn't needed or miss one that is."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Very short quick-start guide instead of full documentation",
+          "whenToUse": "Use when a new hire needs to get started on a simplified version of the task today, before there's time for the full reasoning-based document.",
+          "prompt": "Turn my rough explanation into a very short quick-start guide for a new team member — just enough to get started safely today, not the full training documentation.\n\nProcedure: [NAME]\nAudience: [AUDIENCE DESCRIPTION]\nMy rough explanation: [PASTE ROUGH EXPLANATION / NOTES / TRANSCRIPT]\n\nStructure as:\n1. The 3-5 most critical steps only, numbered\n2. One \"if in doubt, stop and ask\" note for the single riskiest part of the process, based only on what I described\n\nDo not add steps I did not describe."
+        },
+        {
+          "label": "Documentation with a self-check quiz for certification",
+          "whenToUse": "Use when your firm wants new hires to formally demonstrate understanding before being allowed to do the task unsupervised, not just read a document.",
+          "prompt": "Turn my rough explanation of a procedure into structured training documentation with a short certification quiz at the end.\n\nProcedure: [NAME]\nAudience: [AUDIENCE DESCRIPTION]\nMy rough explanation (include reasoning, not just steps): [PASTE ROUGH EXPLANATION / NOTES / TRANSCRIPT]\n\nStructure the output as:\n1. Purpose (1-2 sentences)\n2. Numbered steps\n3. \"Why this matters\" callouts under any step where a mistake would cause a real problem, based only on the reasoning I gave you\n4. A 5-question quiz testing understanding of the reasoning, not just step order (multiple choice or short answer), based only on what I described\n\nDo not add steps, tools, or reasoning I did not describe — list anything you think is missing under \"gaps to confirm with the author.\""
+        },
+        {
+          "label": "Documenting a procedure from a recorded training session",
+          "whenToUse": "Use when you have a rough transcript from recording yourself training someone live, rather than typing out notes from scratch.",
+          "prompt": "I have a rough transcript from a recorded training session where I walked a new hire through a procedure live. Turn it into structured training documentation.\n\nProcedure: [NAME]\nAudience: [AUDIENCE DESCRIPTION]\nRough transcript (may include back-and-forth, questions, and tangents — please extract just the procedural content and reasoning):\n[PASTE ROUGH EXPLANATION / NOTES / TRANSCRIPT]\n\nStructure the output as:\n1. Purpose (1-2 sentences)\n2. Numbered steps, cleaned up from the conversational transcript into clear single actions\n3. \"Why this matters\" callouts under any step where the transcript included reasoning about why a mistake would be a problem\n4. A short \"check your understanding\" section with 2-3 practice questions\n\nDo not add steps or reasoning that weren't actually said in the transcript — list anything you think is missing under \"gaps to confirm with the author.\""
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Confirm suggested gaps are separate from official steps",
+          "prompt": "Confirm everything in the \"gaps to confirm with the author\" section is clearly separate from the main numbered procedure, and hasn't been merged into it anywhere."
+        },
+        {
+          "label": "Add the reasoning I forgot to mention",
+          "prompt": "I left out an important reason for step [NUMBER]: [REASON]. Add this as a \"why this matters\" callout under that step, without changing the step itself."
+        },
+        {
+          "label": "The practice scenario is unrealistic — fix it",
+          "prompt": "The practice scenario in the check-your-understanding section doesn't reflect a realistic situation a new hire would actually face. Rewrite it to be more true to how this actually comes up in practice."
+        },
+        {
+          "label": "This step is now outdated — update it",
+          "prompt": "Step [NUMBER] describes how we used to do this, but our process changed: [WHAT'S DIFFERENT NOW]. Update just that step and its \"why this matters\" note if relevant, keeping everything else the same."
+        }
+      ],
+      "walkthrough": "Marcus Delgado had trained four new hires on reconciling client bank feeds over the years, always explaining the same core rule out loud each time: never force-match a transaction you don't understand, because that can hide a real error. He'd never written it down.\n\nHe opened Claude and used the training documentation prompt, naming the procedure \"reconciling client bank feeds in QuickBooks Online,\" describing the audience as a new hire familiar with basic bookkeeping but new to the firm's tools, and explaining his process out loud in rough notes — pulling the daily bank feed, matching transactions, and specifically never force-matching an unclear transaction without first checking the date, a similar nearby amount, and whether it might be a known recurring charge.\n\nClaude structured this into a purpose statement noting the procedure protects against errors and fraud going undetected, four numbered steps covering pulling the feed, matching, and handling exceptions, and a \"why this matters\" callout specifically on the force-matching step, explaining in Marcus's own reasoning that skipping the investigation step can hide a real error like a duplicate charge. It added a short practice scenario describing an unmatched $340 transaction and asking the trainee what they should check first. In a separate \"gaps to confirm with the author\" section, it noted the document didn't specify how to escalate an unresolved discrepancy, which Marcus hadn't actually covered.\n\nMarcus reviewed the document, confirmed the steps and reasoning matched his real process, and added an escalation step himself based on the flagged gap: unresolved discrepancies over $100 get flagged to him directly.\n\nHe saved it to the firm's training folder. The next new hire followed it and, for the first time, asked Marcus a genuinely good clarifying question about the escalation threshold instead of getting stuck on the basics."
+    }
+  }
+}

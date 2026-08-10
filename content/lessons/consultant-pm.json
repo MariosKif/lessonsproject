@@ -1,0 +1,518 @@
+{
+  "lessons": [
+    {
+      "slug": "con-b1-synthesize-client-documents-briefing",
+      "title": "Turn a stack of client documents into a one-page briefing",
+      "summary": "Synthesize multiple client documents into a sourced, structured briefing using a Claude Project, before a kickoff meeting, without letting the AI blend documents into unflagged inferences.",
+      "difficulty": "beginner",
+      "minutes": 9,
+      "isFree": true,
+      "goal": "Produce an accurate, source-tagged briefing document from multiple client source documents before starting engagement work.",
+      "whyItMatters": "Consultants start every engagement buried in documents — annual reports, org charts, prior consultant decks, internal memos, meeting minutes. Reading all of it before the kickoff call is unrealistic under time pressure, but walking in unprepared undermines credibility on day one. Claude's long context window and Projects feature — where you upload documents once as project knowledge and every chat in that project can draw on them — make it well suited to building a reliable first-pass briefing quickly, as long as you verify claims against the actual source and don't let the model blend documents into inferences that aren't there.",
+      "beforeYouStart": "A Claude account on Pro or higher (Projects requires a paid plan), and the client documents you're cleared to use (annual report, prior decks, public materials, or internal materials your firm has permission to use).",
+      "steps": [
+        "Gather the documents you're allowed to use for this stage (public annual report, prior consulting deck, client website content, internal briefing memo) and note which is which.",
+        "Create a Claude Project for this engagement and upload each document to the project's knowledge, or paste each document directly in the chat, clearly labeled with its name and date.",
+        "Ask for a structured briefing: company overview, key facts, stated priorities, prior initiatives, and open questions, with every claim tied to a specific source document.",
+        "Instruct the tool not to combine facts from two different documents into a new inferred claim without flagging it explicitly as an inference.",
+        "Check every source-tagged claim against the original document, especially anything that will appear in front of the client.",
+        "Note contradictions between documents (e.g. differing revenue figures) as a specific flagged item rather than letting the AI silently pick one.",
+        "Save the verified briefing back into the Claude Project's knowledge so it becomes the working reference for the rest of the engagement."
+      ],
+      "prompt": "You are helping me build a briefing document from multiple client-related sources before an engagement kickoff. I will label each source below with a name. Use ONLY information contained in these sources — do not add outside knowledge about the company or industry, and do not infer a fact by combining two sources unless you explicitly label it as an inference and name which sources it came from.\n\nSources:\n[SOURCE: Annual Report 2025]\n[PASTE TEXT]\n\n[SOURCE: Prior Consulting Deck 2024]\n[PASTE TEXT]\n\n[SOURCE: Kickoff Memo]\n[PASTE TEXT]\n\nProduce a briefing with these sections:\n1. Company overview (2-3 sentences)\n2. Key facts and figures (bullet list, each tagged with its [SOURCE])\n3. Stated priorities / goals (bullet list, tagged with [SOURCE])\n4. Prior initiatives or relevant history (tagged with [SOURCE])\n5. Contradictions between sources, if any (explicit list)\n6. Open questions I should ask in the kickoff meeting, based on gaps in these sources\n\nDo not state anything as fact unless it is tagged with a source.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Tagging each claim to its source is the guardrail against hallucination and silent blending, which is the single biggest risk when synthesizing several documents at once. The contradictions section surfaces real inconsistencies instead of letting the model quietly resolve them — a genuine risk when, say, an annual report and an old deck disagree on a revenue figure. The open-questions section turns the exercise from passive summarizing into active kickoff preparation, which is the actual point of doing this before day one.",
+      "example": "Input: an annual report, a prior consulting deck from a different firm, and an internal kickoff memo, each labeled as a separate source.\n\nOutput: a two-sentence company overview citing the annual report; a bulleted facts list with figures each tagged [Annual Report 2025] or [Kickoff Memo]; a priorities section quoting the client's own stated goals from the memo; a contradictions entry flagging that the annual report and the prior deck cite different headcount figures for the same period; and four sharp opening questions for the kickoff meeting based on what none of the three sources actually explain.",
+      "exercise": "In your own Claude account, gather 2-3 real client-related documents you're cleared to use, add them to a Claude Project, and generate a tagged briefing with this prompt.",
+      "expectedResult": "A one-to-two-page briefing where every fact is traceable to its source, contradictions are called out explicitly, and you have a short list of sharp opening questions for the client.",
+      "commonMistakes": [
+        "Pasting confidential materials into an account that isn't covered by your firm's data-handling agreement.",
+        "Letting the AI blend two sources into an inferred claim without flagging it as an inference.",
+        "Treating an unflagged contradiction as resolved instead of raising it in the kickoff meeting.",
+        "Skipping verification of source-tagged claims because the tagging itself feels like proof."
+      ],
+      "proTip": "Keep this Claude Project scoped to a single engagement, and add new documents to its knowledge as the engagement progresses — every future chat in the project automatically has access to everything already verified, without you needing to re-paste sources each time.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "consultant"
+      ],
+      "skills": [
+        "research",
+        "analysis"
+      ]
+    },
+    {
+      "slug": "con-b2-structure-deliverable-storyline",
+      "title": "Turn scattered findings into a structured deliverable storyline",
+      "summary": "Turn a list of disconnected findings into a defensible storyline structure for a client deliverable before writing any content.",
+      "difficulty": "beginner",
+      "minutes": 9,
+      "isFree": true,
+      "goal": "Turn a list of raw findings into a logical, evidence-honest storyline structure for a client deliverable before writing content.",
+      "whyItMatters": "The biggest quality gap between a junior and senior consulting deliverable usually isn't the individual findings — it's the storyline connecting them into an argument a client can act on. Consultants often have a pile of good findings and no clear narrative arc, then write the document in the order the analysis happened rather than the order that persuades. AI is a strong thinking partner for stress-testing storyline structure once you feed it your actual findings, because it can propose alternate groupings and flag where the logic doesn't hold, but the consultant owns which storyline framing is true to the analysis performed.",
+      "steps": [
+        "List your raw findings as short, factual bullet points, not yet in any order.",
+        "State the single decision or action the client needs to take at the end of the deliverable.",
+        "Ask the AI to propose 2-3 alternative storyline structures (e.g. situation-complication-resolution, problem-cause-solution, a MECE issue tree) that connect the findings to that decision.",
+        "For each proposed structure, ask it to map which findings belong in which section, and flag any finding that doesn't fit cleanly anywhere.",
+        "Pick the structure that most honestly represents your analysis, not necessarily the most dramatic one.",
+        "Ask for a one-page storyline outline: section headers plus a one-sentence \"so what\" for each section.",
+        "Sanity-check the outline against your findings list to be sure no finding was quietly dropped or overstated."
+      ],
+      "prompt": "I have a list of raw findings from a consulting engagement and need help structuring them into a deliverable storyline — not writing the content yet, just the structure.\n\nThe decision the client needs to make at the end: [STATE THE DECISION/ACTION]\n\nRaw findings (factual, unordered):\n[PASTE BULLET LIST OF FINDINGS]\n\nTasks:\n1. Propose 2-3 alternative storyline structures that could organize these findings toward that decision (e.g. situation-complication-resolution, problem-cause-solution, an issue-tree structure). Name each structure.\n2. For each structure, map every finding to the section it belongs in. If a finding doesn't fit any section, list it separately as \"doesn't fit — reconsider.\"\n3. Recommend which structure you'd use and why, based only on how well the findings actually support it — not which sounds most compelling.\n4. For your recommended structure, write a one-page outline: section headers plus a single \"so what\" sentence per section.\n\nDo not invent new findings or strengthen a finding's claim to make it fit a section better.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Asking for multiple structural options first, rather than one straight-to-outline draft, keeps you treating structure as a genuine choice instead of accepting the model's first framing. The \"doesn't fit\" list matters because forcing every finding into a tidy structure is a common way real deliverables end up misrepresenting or overreaching on evidence. The explicit ban on strengthening a finding to fit is a directed guardrail against the AI upgrading a finding's confidence level just to make the storyline read better.",
+      "example": "Input: five findings about a client's declining customer retention, target decision is \"invest in a loyalty program or not.\"\n\nOutput: two proposed structures (problem-cause-solution and situation-complication-resolution), a mapping table for each, one finding flagged as not fitting either cleanly, a recommendation for problem-cause-solution because the findings are strongly causal, and a one-page outline with section headers and so-what lines.",
+      "exercise": "In your own Claude or ChatGPT account, take real findings from a current or past engagement (or a case study) and generate storyline options with this prompt.",
+      "expectedResult": "A one-page storyline outline built from your actual findings, with a defensible structure and no finding silently dropped, inflated, or invented.",
+      "commonMistakes": [
+        "Accepting the first structure offered instead of comparing alternatives.",
+        "Letting a finding get reframed as stronger evidence than it actually is just to fit the narrative.",
+        "Building the storyline around what's most dramatic rather than what the findings actually support.",
+        "Moving straight to slide-writing without locking the outline first, causing rework later."
+      ],
+      "proTip": "Pressure-test the chosen storyline by asking the AI to argue the opposite conclusion using the same findings — if it can build a plausible counter-narrative, your storyline may need stronger evidence, not just better wording.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "consultant"
+      ],
+      "skills": [
+        "writing",
+        "analysis"
+      ]
+    },
+    {
+      "slug": "con-i1-industry-research-before-proposal",
+      "title": "Research a client's industry fast before writing a proposal",
+      "summary": "Produce a sourced, current industry-context briefing to strengthen a proposal, using Gemini's Deep Research to retrieve and cite current sources.",
+      "difficulty": "intermediate",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Produce a sourced, current industry-context briefing to ground a proposal, verifying every citation before it reaches the client.",
+      "whyItMatters": "Proposals that show real understanding of a client's market, competitors, and current pressures win more often than generic ones, but a consultant rarely has days to research a new industry before a pitch. Gemini's Deep Research mode browses and cites current web sources — and can pull directly from your own Gmail, Docs, and Drive content alongside the public web — rather than relying on a static training cutoff, which makes it well suited to this task. But every fact that goes into a client-facing proposal still needs a citation you can independently check, since even sourced answers can misread or overstate what a source actually says.",
+      "beforeYouStart": "A Gemini account (Deep Research runs on the free Flash tier, with higher quotas on Google AI Pro/Ultra), and clarity on the client's industry, geography, and the specific proposal angle you're preparing.",
+      "steps": [
+        "Define exactly what you need to know: industry trends, named competitors, recent regulatory changes, market size, or a specific angle relevant to the proposal.",
+        "Open Deep Research in the Gemini app and enter a focused research brief with scope, geography, and the specific angle — Gemini proposes a research plan before it runs, so review and adjust that plan rather than accepting it blindly.",
+        "Let Deep Research run (it can take several minutes as it browses and reads dozens of sources) and require citations for every claim in the report.",
+        "Open the report's cited sources to confirm they say what the summary claims, especially anything that will be quoted directly.",
+        "Ask follow-up questions inside the same research thread to narrow anything too generic (e.g. which trends apply specifically to mid-size regional players, not just market leaders).",
+        "Cross-check any statistic that will appear in the proposal against the primary source, not just Gemini's paraphrase.",
+        "Compile the verified points into a short \"industry context\" section for the proposal, keeping source links in your own file even if not shown to the client."
+      ],
+      "prompt": "I'm preparing a consulting proposal for a client in the [INDUSTRY] industry, [GEOGRAPHY/MARKET] market. Use Deep Research to find current, sourced context — not general knowledge — for the following:\n\n1. The 3-4 biggest trends or pressures affecting companies in this industry right now (last 12-18 months).\n2. Who the client's likely key competitors are, at a similar scale (specify: [COMPANY SIZE/TYPE]).\n3. Any recent regulatory, technology, or economic changes specifically relevant to [SPECIFIC ANGLE, e.g. \"supply chain\" or \"customer acquisition costs\"].\n\nFor every claim, cite the specific source. Prioritize sources from the last 12 months. If you're not confident in a figure or trend, say so rather than presenting it with unwarranted certainty.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Reviewing Gemini's proposed research plan before letting it run — rather than accepting a broad brief blindly — is what keeps the resulting report's sourcing traceable and reduces vague, uncited generalizations. Explicitly requesting recency matters because industry proposals lose credibility fast when they cite outdated trends as current. The instruction to flag low-confidence claims rather than stating them with false certainty is the key guardrail, since a wrong statistic in a client-facing proposal is a credibility risk the consultant, not the AI, will own.",
+      "example": "Input: industry is \"regional grocery retail,\" market is US Midwest, angle is \"customer acquisition costs.\"\n\nOutput: a sourced list of 3-4 current trends (e.g. rising loyalty-program investment, private-label expansion) each with a citation, a short list of comparable regional competitors, a note on a recent regulatory change relevant to private-label sourcing, and one flagged low-confidence figure the consultant is told to verify independently before using.",
+      "exercise": "In your own Gemini account, run this Deep Research brief for a real or upcoming proposal and open at least three of the cited sources in the report to confirm the summary is accurate.",
+      "expectedResult": "A short, sourced industry-context section with verifiable citations, ready to strengthen a proposal's opening, with any shaky figures caught before they reach the client.",
+      "commonMistakes": [
+        "Giving Deep Research one broad, vague brief instead of a specific, bounded one, and skipping the step of reviewing its proposed research plan before it runs.",
+        "Dropping a statistic into the proposal without opening its cited source to confirm it's represented accurately.",
+        "Ignoring the recency of sources, using data that's now out of date for a fast-moving industry.",
+        "Treating \"sourced\" as automatically \"correct\" and skipping independent verification of the highest-stakes claims."
+      ],
+      "proTip": "Keep a running research log per client with the exact Deep Research briefs and sources used — if a client later asks where a claim came from, you can answer immediately instead of trying to reconstruct it. If your firm uses Google Workspace, enable Deep Research's Workspace grounding so it can also pull relevant context from your own Drive and Gmail history with the client, not just the public web.",
+      "tools": [
+        "gemini"
+      ],
+      "professions": [
+        "consultant"
+      ],
+      "skills": [
+        "research",
+        "analysis"
+      ]
+    },
+    {
+      "slug": "con-i2-slide-narratives-executive-summaries",
+      "title": "Draft slide narratives and executive summaries clients actually read",
+      "summary": "Turn finished findings into conclusion-driven slide titles and a tight executive summary, without letting the language overstate the evidence.",
+      "difficulty": "intermediate",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Produce a tight slide-by-slide narrative flow and a one-page executive summary from a finished set of findings and recommendations.",
+      "whyItMatters": "Executives skim. If the headline of each slide and the executive summary don't carry the argument on their own, the deliverable fails regardless of how good the underlying analysis is. Writing \"action titles\" that state a conclusion, not a topic, and a genuinely tight executive summary is a distinct skill from the analysis itself, and it's exactly the kind of tight, structured writing task AI handles well once it has your real content and structure to work from — the consultant's job is to make sure it never restates a finding more strongly than the evidence supports.",
+      "steps": [
+        "Provide your locked storyline/outline and the actual content for each planned slide (data point, chart description, or finding).",
+        "Ask for an \"action title\" for each slide — a headline stating the conclusion of that slide, not its topic.",
+        "Ask the AI to flag any slide where the proposed action title overstates what the underlying data actually shows.",
+        "Separately, ask for a one-page executive summary: situation, key findings, recommendation, and next steps, using only the confirmed content.",
+        "Check every number and claim in both the slide titles and executive summary against your source data.",
+        "Read the sequence of action titles alone, without the slide bodies, to confirm they tell a coherent story end to end."
+      ],
+      "prompt": "I have a set of consulting slides with locked content. Help me write action titles and an executive summary.\n\nStoryline / section order: [PASTE OUTLINE]\n\nFor each slide, here is the content (data point, chart, or finding):\n[SLIDE 1 – LABEL]: [CONTENT]\n[SLIDE 2 – LABEL]: [CONTENT]\n...(continue for all slides)\n\nTasks:\n1. Write an 'action title' for each slide — a single sentence stating the conclusion the slide supports, not a description of its topic. Keep each under 15 words.\n2. Flag any slide where the content doesn't clearly support the action title you wrote, so I can revise the title or the content.\n3. Write a one-page executive summary (situation, 2-3 key findings, recommendation, next steps) using ONLY the slide content provided above — no new claims.\n4. List the action titles alone, in order, so I can read them as a standalone narrative.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "The \"action title, not topic title\" instruction is a high-leverage change in consulting slide writing — \"Customer Retention Analysis\" tells the reader nothing, while a title stating retention dropped 12% and where tells them what to do with the slide. Asking the model to flag titles that overstate their supporting content is a direct check against a real risk: an AI-written headline that sounds punchier than the underlying evidence justifies. Listing the action titles alone at the end lets you read the whole deck's argument in 30 seconds, which is close to how a rushed executive will actually experience it.",
+      "example": "Input: five slides of retention/pricing findings and a problem-cause-solution storyline.\n\nOutput: five action titles, one stating retention fell fastest in the SMB segment within 60 days of a pricing change; one slide flagged because its data only showed correlation while the drafted title implied causation; a one-page executive summary built strictly from the provided slide content; and a standalone list of the five titles read in sequence as a mini-narrative.",
+      "exercise": "In your own Claude or ChatGPT account, take a real or draft deck's content and generate action titles plus an executive summary using this prompt, then read the standalone title list out loud to check it holds together.",
+      "expectedResult": "Slide titles that each state a real, evidence-backed conclusion, a tight one-page executive summary with zero new claims beyond your source content, and any overstated titles caught before the deck goes to the client.",
+      "commonMistakes": [
+        "Accepting an action title that implies causation when the underlying data only shows correlation.",
+        "Writing topic titles (\"Market Overview\") instead of conclusion titles, wasting the reader's attention.",
+        "Letting the executive summary quietly introduce a stronger recommendation than the slides actually support.",
+        "Skipping the standalone title readthrough, missing that the sequence doesn't actually tell a coherent story."
+      ],
+      "proTip": "Ask the AI to also rate each action title's confidence level (strong/moderate/weak evidence) based on the content you gave it — weak-evidence titles are the ones most worth softening before client review.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "consultant"
+      ],
+      "skills": [
+        "writing",
+        "communication"
+      ]
+    },
+    {
+      "slug": "con-i3-workshop-interview-preparation",
+      "title": "Prepare sharper stakeholder interviews and workshops",
+      "summary": "Build a hypothesis-driven interview or workshop guide with rehearsed follow-up probes, tailored to the specific stakeholder and time available.",
+      "difficulty": "intermediate",
+      "minutes": 9,
+      "isFree": false,
+      "goal": "Produce a tailored interview or workshop guide with strong questions sequenced to surface the information the engagement actually needs.",
+      "whyItMatters": "Stakeholder interviews and workshops are where consultants get the real information behind the org chart, but generic questions waste limited time with senior stakeholders. A guide built around the specific hypotheses you're testing and the specific person's role gets sharper answers in the same 45 minutes. AI can draft a strong first-pass guide quickly once you supply your real hypotheses and the interviewee's context, but the consultant needs to trim it to what actually fits the time available and adjust for how candid this particular stakeholder is likely to be.",
+      "steps": [
+        "State what hypothesis or open question this interview or workshop needs to help answer.",
+        "Describe the interviewee's role and what they're likely to know, or be defensive about.",
+        "Note the time available and whether this is a 1:1 interview or a group workshop.",
+        "Ask for a sequenced question guide: warm-up, core probing questions tied to the hypothesis, and a closing question that invites anything you haven't asked about.",
+        "Ask for 1-2 likely deflective or vague answers per core question, with a follow-up probe to get past them.",
+        "Trim the guide to fit the actual time available, prioritizing the questions most tied to your open hypothesis.",
+        "For a workshop, ask separately for a facilitation structure (timing, breakout format, how to capture output) rather than just a question list."
+      ],
+      "prompt": "I'm preparing for a [1:1 interview / group workshop] as part of a consulting engagement.\n\nOpen hypothesis / question this needs to help answer: [STATE IT]\nInterviewee(s) role and context: [ROLE, WHAT THEY LIKELY KNOW OR ARE SENSITIVE ABOUT]\nTime available: [MINUTES]\nFormat: [1:1 interview / group workshop, and group size if applicable]\n\nGive me:\n1. A sequenced guide: 1-2 warm-up questions, 4-6 core questions directly tied to the hypothesis above, and one closing open question.\n2. For each core question, one likely vague or deflective answer and a specific follow-up probe to get a more concrete response.\n3. If time is under [X minutes], mark which questions to cut first, keeping only what's most load-bearing for the hypothesis.\n4. If this is a workshop, add a short facilitation structure: timing per segment, how to handle disagreement in the room, and how output will be captured.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Anchoring every core question to the specific hypothesis prevents the interview from drifting into generic small talk that eats the limited time senior stakeholders will give you. Pre-drafting the likely deflective answer and its follow-up probe actually improves real-time performance — most interviewers hesitate slightly when they get a vague non-answer, and having a rehearsed probe ready closes that gap. Marking which questions to cut under time pressure, ranked by relevance to the hypothesis, protects the interview's core purpose if it runs short, rather than losing the most important question to a tangent.",
+      "example": "Input: hypothesis is \"operations leadership believes the new ERP rollout caused fulfillment delays, but frontline staff may disagree\"; interviewee is a warehouse shift supervisor, likely defensive about their team's performance; 30 minutes, 1:1.\n\nOutput: two warm-up questions, five core questions probing the ERP transition and workflow changes without directly accusing the team, a predicted deflective answer like \"we've just been short-staffed\" paired with a follow-up probe asking for a specific week's staffing numbers, a note on which two questions to cut if time runs to 20 minutes, and no workshop section since the format is 1:1.",
+      "exercise": "In your own Claude or ChatGPT account, prepare a guide for a real upcoming stakeholder conversation using this prompt, including the deflection/probe pairs.",
+      "expectedResult": "A time-bounded, hypothesis-driven interview or workshop guide with rehearsed follow-up probes, ready to use with only light personalization.",
+      "commonMistakes": [
+        "Writing questions that are interesting in general but don't connect to the specific hypothesis being tested.",
+        "Not preparing a follow-up probe, so a vague answer goes unchallenged in the room.",
+        "Bringing more questions than the time allows without a clear cut-list, so the most important question gets rushed or skipped.",
+        "Using the same generic guide for every stakeholder regardless of role or likely candor."
+      ],
+      "proTip": "After the interview, feed your raw notes back to the AI and ask which parts of the original hypothesis were confirmed, contradicted, or still unclear — this turns interview notes into a structured input for your next analysis step.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "consultant"
+      ],
+      "skills": [
+        "communication",
+        "research"
+      ]
+    },
+    {
+      "slug": "con-a1-repeatable-engagement-workflow",
+      "title": "Build a repeatable AI-assisted workflow for your engagements",
+      "summary": "Design a documented, stage-by-stage engagement workflow that specifies exactly where AI tools help, what must be verified, and what data is safe to use where.",
+      "difficulty": "advanced",
+      "minutes": 13,
+      "isFree": false,
+      "goal": "Design a documented, stage-by-stage workflow that specifies exactly where and how AI tools support a typical consulting engagement, from kickoff to final deliverable.",
+      "whyItMatters": "Individually, AI-assisted document synthesis, storyline structuring, research, slide writing, and interview prep are useful; used ad hoc, they save time inconsistently and different team members end up reinventing the same prompts every engagement. A written engagement workflow — which stage uses which tool, what must always be human-verified, and what a junior team member is and isn't allowed to paste into a given tool — turns individual tricks into a firm capability that scales across engagements and can be taught to new hires.",
+      "beforeYouStart": "Familiarity with the individual AI workflows for document synthesis, research, storyline structuring, slide writing, and interview prep, since this lesson combines them rather than introducing them.",
+      "steps": [
+        "List your typical engagement stages in order (e.g. kickoff/document review, research, analysis, storyline, deliverable drafting, client review, close-out).",
+        "For each stage, note which AI-assisted task from your own practice fits there (document synthesis, research, storyline structuring, slide drafting, interview prep).",
+        "For each task, define the required human verification step in one sentence, e.g. every source-tagged claim confirmed against the original document.",
+        "Note any stage where confidential client data must never be pasted into a given tool, based on your firm's data policy.",
+        "Ask the AI to turn this into a formal workflow document: stage, AI-assisted task, tool used, required verification, and confidentiality note, in a table.",
+        "Review the table for completeness against a real recent engagement, adding any stage the draft missed.",
+        "Circulate the draft to a colleague to check it matches how the team actually works, then adopt it as the firm's standard reference."
+      ],
+      "prompt": "Turn my rough workflow notes into a formal engagement workflow document our consulting team can reuse across projects.\n\nMy stages and how AI currently helps at each one:\n[PASTE ROUGH NOTES, e.g.:\n- Kickoff/document review: synthesize client documents into a briefing using [TOOL]\n- Research: industry/competitor research using [TOOL]\n- Storyline: structure findings into a narrative using [TOOL]\n- Deliverable drafting: slide action titles and executive summary using [TOOL]\n- Interview/workshop prep: question guides using [TOOL]\n- Client review: (describe if AI is used here)\n- Close-out: (describe if AI is used here)]\n\nFor each stage, produce a table row with these columns: Stage | AI-Assisted Task | Tool Used | Required Human Verification | Confidentiality Rule.\n\nRequirements:\n- Do not invent a stage or task I did not describe.\n- The 'Required Human Verification' column must state a specific, checkable action (e.g. 'confirm every source-tagged claim against original document'), not a vague instruction like 'review carefully.'\n- The 'Confidentiality Rule' column should state whether real client data, de-identified data, or no client data at all is safe to use in that tool, based on what I specify below.\n\nOur data-handling policy: [PASTE OR STATE POLICY, e.g. \"no real client-identifying data in any consumer AI account; de-identified excerpts only\"]",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Building the workflow as a table with a mandatory, specific verification action per row makes it usable as an actual quality-control document rather than a vague aspiration — \"review carefully\" means nothing to a new team member, while \"confirm every source-tagged claim against the original document\" is checkable. Tying a confidentiality rule to every stage, driven by the firm's actual policy rather than a generic assumption, matters because different stages carry very different data-exposure risk. Restricting the AI to only formalize stages you actually described, rather than inventing a fuller-looking workflow, keeps the document honest about how the team currently works.",
+      "example": "Input: six rough stage notes including which tool is used for document synthesis, research, storyline, and slide drafting, plus a policy statement that only de-identified data may enter any AI tool.\n\nOutput: a six-row table, each with a specific verification action (e.g. for research, \"open and confirm at least the top 3 cited sources before use in a client-facing document\"), a confidentiality column consistently applying the \"de-identified only\" rule, and the client-review and close-out stages listed as \"no AI-assisted task currently\" since none were described.",
+      "exercise": "In your own Claude or ChatGPT account, write your own rough stage-by-stage notes for a real recent engagement and generate the formal workflow table using this prompt, then have a colleague review it against how the team actually works.",
+      "expectedResult": "A one-page workflow table your whole team can follow, with a specific verification action and confidentiality rule for every AI-assisted stage, ready to circulate as a standard reference.",
+      "commonMistakes": [
+        "Writing verification steps too vague to actually check (\"review for accuracy\") instead of a specific, checkable action.",
+        "Applying one confidentiality rule to every stage instead of matching it to that stage's real data exposure.",
+        "Letting the AI add a stage or tool the team doesn't actually use, making the document aspirational rather than accurate.",
+        "Creating the document once and never updating it as the team's tools or engagement types change."
+      ],
+      "proTip": "Revisit the workflow document after every few engagements and ask a junior team member to follow it literally on their next project — gaps in what's specified usually surface fastest when someone without the senior team's tacit knowledge tries to use it as written.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "consultant"
+      ],
+      "skills": [
+        "productivity",
+        "automation"
+      ]
+    },
+    {
+      "slug": "pm-b1-meeting-notes-to-decisions-actions-owners",
+      "title": "Turn meeting notes into decisions, actions and owners",
+      "summary": "Convert raw meeting notes into a clean record of decisions made, action items with owners and due dates, and open issues, without letting the AI invent an owner or deadline.",
+      "difficulty": "beginner",
+      "minutes": 7,
+      "isFree": true,
+      "goal": "Convert raw meeting notes into a clean record of decisions made, action items with owners and due dates, and open issues.",
+      "whyItMatters": "Project meetings generate decisions and commitments that evaporate if they're not captured cleanly and distributed fast — \"I thought you were doing that\" is one of the most common and preventable sources of project delay. Typing up notes into a structured decisions/actions/owners format by hand is tedious enough that PMs often skip it or do it late, by which point details are already fuzzy. AI can restructure raw notes into this format in seconds, as long as the PM supplies the actual notes and doesn't let the model invent an owner or deadline that wasn't actually agreed.",
+      "steps": [
+        "Take raw notes during the meeting in whatever shorthand is fastest for you, including who said what for anything that sounds like a decision or commitment.",
+        "Right after the meeting, paste the raw notes into the prompt while the context is still fresh.",
+        "Ask for three separate sections: decisions made, action items (action, owner, due date), and open issues/parking lot.",
+        "Instruct the AI to use \"TBD\" or \"unassigned\" rather than guessing an owner or date that wasn't stated.",
+        "Read the output against your raw notes and correct anything misattributed.",
+        "Send the structured summary to attendees within the same day, while the meeting is still fresh for everyone."
+      ],
+      "prompt": "Turn my raw meeting notes into a structured record. Use ONLY what is written below — do not invent a decision, owner, or deadline that isn't stated. If an action item has no clear owner or date in my notes, write \"TBD\" rather than guessing.\n\nMeeting: [MEETING NAME/TOPIC], [DATE]\nAttendees: [LIST]\n\nRaw notes:\n[PASTE RAW NOTES]\n\nStructure the output as:\n1. Decisions made (bullet list, one sentence each)\n2. Action items (table or list: Action | Owner | Due date — use \"TBD\" where not stated)\n3. Open issues / parking lot (things discussed but not resolved)\n4. One-sentence meeting summary at the top for anyone who wasn't there",
+      "promptLabel": "Copyable prompt",
+      "explanation": "The instruction to write \"TBD\" instead of guessing an owner or date is the most important line in this prompt — an AI that quietly assigns an action item to whoever seems most relevant, rather than who actually agreed to it, creates false accountability that causes real friction later. Splitting decisions from action items from open issues mirrors how project governance actually works: decisions are settled, action items are commitments with owners, and open issues need to come back on a future agenda. The one-sentence summary at the top makes the whole document skimmable for a stakeholder who only has ten seconds.",
+      "example": "Input notes: \"agreed to push launch to March 15, Sarah will update the timeline doc by Friday, still need to decide on vendor for the integration — Tom to get 2 more quotes, discussed budget overrun but no resolution.\"\n\nOutput: decisions listing \"launch date moved to March 15\"; action items listing \"Update timeline doc — Sarah — Friday\" and \"Get 2 more vendor quotes — Tom — TBD\" (no date was given for that one); open issues listing \"vendor selection for integration\" and \"budget overrun, unresolved\"; and a one-sentence summary noting the launch date shift and outstanding vendor decision.",
+      "exercise": "In your own Claude or ChatGPT account, take raw notes from a real recent project meeting and generate the structured summary using this prompt, then send it to that meeting's attendees.",
+      "expectedResult": "A short, structured record with correctly separated decisions, owned action items, and open issues that matches your raw notes exactly, ready to send the same day.",
+      "commonMistakes": [
+        "Letting the AI assign an owner or due date that wasn't actually agreed in the meeting.",
+        "Mixing settled decisions in with still-open issues, creating false certainty about what was actually decided.",
+        "Waiting days to generate and send the summary, by which point memory of the details has faded.",
+        "Sending the summary without checking it against your raw notes first."
+      ],
+      "proTip": "Keep the same section headers and order every time you send a meeting summary — stakeholders learn to scan straight to \"action items\" for their name, which increases how quickly they respond.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "project-manager"
+      ],
+      "skills": [
+        "productivity",
+        "communication"
+      ]
+    },
+    {
+      "slug": "pm-b2-status-reports-stakeholders-read",
+      "title": "Write status reports stakeholders actually read",
+      "summary": "Produce a short, honest status report structured so a busy stakeholder gets the real picture in under a minute.",
+      "difficulty": "beginner",
+      "minutes": 8,
+      "isFree": true,
+      "goal": "Produce a short, honest status report structured so a busy stakeholder gets the real picture in under a minute.",
+      "whyItMatters": "Most status reports are either ignored (too long, too vague, \"on track\" every week regardless of reality) or create alarm without context (a red flag with no explanation of what's being done about it). A tight report that leads with status, names the real risk in plain language, and states exactly what's needed from the reader builds trust with stakeholders and gets faster responses when you actually need help. AI is good at enforcing this structure and trimming rambling draft notes into something scannable, but the PM has to supply the honest assessment — the model can't tell you if the project is actually at risk.",
+      "steps": [
+        "Decide the honest overall status (on track / at risk / off track) before drafting — don't let AI infer it from vague notes.",
+        "List what happened this period, what's planned next period, and any blockers or risks in your own rough words.",
+        "Note exactly what you need from the reader, if anything (a decision, an approval, awareness only).",
+        "Feed this into the prompt and ask for a short report structured for a skim-first reader.",
+        "Check that the stated status (on track / at risk / off track) matches the actual content — a report can't say \"on track\" while listing three blockers.",
+        "Trim anything that isn't decision-relevant before sending; save more detail for a linked doc rather than the report itself."
+      ],
+      "prompt": "Write a short project status report for stakeholders who will skim it in under a minute.\n\nProject: [NAME]\nReporting period: [DATES]\nOverall status: [ON TRACK / AT RISK / OFF TRACK] — I am telling you this; do not infer or change it based on the content.\n\nWhat happened this period: [ROUGH NOTES]\nWhat's planned next period: [ROUGH NOTES]\nBlockers/risks: [ROUGH NOTES, or \"none\"]\nWhat I need from the reader: [DECISION NEEDED / APPROVAL NEEDED / FYI ONLY, be specific]\n\nStructure:\n1. Status line at the top (the status I gave you, plus one sentence why)\n2. This period (3-4 bullets max, only decision-relevant items)\n3. Next period (3-4 bullets max)\n4. Risks/blockers (bullet list; if none, say \"none this period\")\n5. What I need from you (one clear line, or \"nothing — for your awareness\")\n\nKeep the whole report under 200 words. Do not soften or exaggerate the stated status.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Requiring the PM to state the actual status rather than letting the AI infer it prevents an amber-vs-green judgment call — the part that actually requires project knowledge — from being outsourced to a model that only has your rough notes. The instruction not to soften or exaggerate the given status is a direct guardrail against a common failure mode: an AI making an \"at risk\" report read more reassuring than intended. The strict word limit and \"what I need from you\" line are what turn the report from a status dump into something a stakeholder can act on immediately.",
+      "example": "Input: status is \"at risk,\" this period covered completing two of three integration milestones, next period is the vendor's remaining deliverable, blocker is the vendor is two weeks behind with no committed recovery date, need is stakeholder approval to escalate to the vendor's account manager.\n\nOutput: a status line reading \"AT RISK — vendor delivery slippage threatens the March 15 launch,\" concise this-period and next-period bullets, a blockers section naming the vendor delay specifically, and a closing line: \"Need: your approval to escalate to [Vendor]'s account manager this week\" — all under 200 words.",
+      "exercise": "In your own Claude or ChatGPT account, write a real status report for a current project using this prompt, being honest about the actual status before you start.",
+      "expectedResult": "A status report under 200 words that a stakeholder can read in under a minute, with a status line that honestly matches the content and a clear ask if one exists.",
+      "commonMistakes": [
+        "Reporting \"on track\" out of habit or to avoid a hard conversation, when the content actually shows risk.",
+        "Letting the report run long with detail that belongs in a linked project doc, not the status update itself.",
+        "Burying the actual ask (\"what I need from you\") inside a paragraph instead of stating it as its own line.",
+        "Listing a blocker without any indication of what's being done about it, which reads as an unmanaged risk."
+      ],
+      "proTip": "If a project stays \"at risk\" for more than two reporting periods with the same blocker, that's a sign the status report itself isn't driving action — escalate the blocker directly rather than repeating it in the next report.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "project-manager"
+      ],
+      "skills": [
+        "communication",
+        "writing"
+      ]
+    },
+    {
+      "slug": "pm-i1-project-plans-work-breakdowns-from-goal",
+      "title": "Draft a project plan and work breakdown from a goal",
+      "summary": "Produce a first-draft, phased work breakdown structure from a stated project goal, with typical-pattern assumptions clearly separated from your own input.",
+      "difficulty": "intermediate",
+      "minutes": 11,
+      "isFree": false,
+      "goal": "Produce a first-draft work breakdown structure and sequenced task list from a stated project goal and constraints.",
+      "whyItMatters": "Turning a stated goal into a full work breakdown — phases, tasks, dependencies, rough sequencing — is foundational PM work, but building the first draft from a blank page is slow, especially for a project type you haven't run before. AI can produce a strong, genuinely useful first-pass breakdown by asking clarifying questions and drawing on common project patterns, but the PM must treat it as a first draft to be corrected against real constraints (actual team capacity, real dependencies, true resourcing) rather than a finished plan.",
+      "beforeYouStart": "A clear goal statement, target date, and a rough sense of the team/resources involved, since a vague goal produces a vague plan.",
+      "steps": [
+        "State the goal in one sentence, with the target date and any hard constraints (budget, team size, fixed dependencies on other teams).",
+        "Ask the AI to first list the clarifying questions it would need answered to build an accurate plan, before generating the plan itself.",
+        "Answer those clarifying questions as specifically as you can.",
+        "Ask for a phased work breakdown structure: phases, major tasks under each phase, and rough sequencing/dependencies.",
+        "Ask it to flag any task that seems to be a guess based on typical projects of this type rather than something you specified.",
+        "Review the breakdown against your team's actual capacity and known constraints, and correct sequencing and effort estimates accordingly.",
+        "Convert the corrected breakdown into your actual project management tool, using the draft as the starting structure, not the final plan."
+      ],
+      "prompt": "I need a first-draft work breakdown structure for a project, to correct and refine myself — not a final plan.\n\nGoal: [ONE-SENTENCE GOAL]\nTarget date: [DATE]\nConstraints: [BUDGET / TEAM SIZE / FIXED EXTERNAL DEPENDENCIES]\n\nStep 1: Before building the plan, list the clarifying questions you'd need answered to make this breakdown realistic rather than generic (e.g. team composition, existing systems, approval processes). I will answer them.\n\n[AFTER I ANSWER:] Step 2: Using my answers, produce a phased work breakdown structure:\n- Phases in logical order\n- Major tasks under each phase\n- Rough sequencing/dependencies between tasks (what must finish before what starts)\n- For each task, mark it \"[from my input]\" if based on something I told you, or \"[typical pattern — verify]\" if it's a reasonable assumption based on common projects of this type that I should confirm or remove.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Requiring clarifying questions before the plan itself keeps the output from being a generic template dressed up as your specific project — the questions surface the constraints that actually shape a real plan before any task list gets written. Tagging every task as either drawn from your input or a typical-pattern assumption is the core guardrail: it stops a plausible-sounding but unverified task or dependency from being silently treated as fact, and gives you a fast way to scan the draft for exactly what needs your judgment. Framing the whole output as a first draft to correct, not a final plan, sets the right expectation from the start.",
+      "example": "Input goal: \"launch a redesigned customer portal by end of Q3,\" constraints: team of 6, fixed dependency on a third-party auth vendor.\n\nOutput: clarifying questions about current portal architecture, whether design is already underway, and vendor SLA terms; after answers, a five-phase breakdown (discovery, design, build, integration, launch) with major tasks under each, a dependency noting integration testing can't start until the vendor delivers their sandbox environment, and several tasks marked \"[typical pattern — verify]\" such as a two-week UAT period, flagged for the PM to confirm against actual team capacity.",
+      "exercise": "In your own Claude or ChatGPT account, run this two-step prompt for a real upcoming project, answer the clarifying questions honestly, and then correct the resulting breakdown against your team's actual capacity.",
+      "expectedResult": "A phased, tagged first-draft work breakdown you can import into your actual planning tool, with typical-pattern assumptions clearly separated from what you actually specified.",
+      "commonMistakes": [
+        "Skipping the clarifying-questions step and going straight to a generic plan that doesn't reflect real constraints.",
+        "Treating \"typical pattern\" tasks as confirmed instead of verifying or removing them.",
+        "Accepting AI-estimated task durations without checking them against your actual team's historical velocity.",
+        "Using the draft breakdown as the final plan without ever importing and adjusting it in your real PM tool."
+      ],
+      "proTip": "Once you have a solid breakdown for a project type you run repeatedly (e.g. a client onboarding project), save it as a template and only ask the AI to adjust it for what's different this time, rather than rebuilding from scratch.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "project-manager"
+      ],
+      "skills": [
+        "productivity",
+        "analysis"
+      ]
+    },
+    {
+      "slug": "pm-i2-risk-registers-mitigation-drafts",
+      "title": "Build a risk register with realistic mitigation drafts",
+      "summary": "Produce a structured risk register with specific, trigger-based mitigations, keeping AI-suggested risks clearly separate from your own known risks.",
+      "difficulty": "intermediate",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Produce a structured risk register — risk, likelihood, impact, mitigation, owner — from a project's known risk factors.",
+      "whyItMatters": "Risk registers are one of the most commonly skipped or box-checked PM artifacts, usually because building one from scratch feels like busywork until a risk actually hits. A good register names risks specifically enough to act on, rates them consistently, and pairs each with a real mitigation rather than a vague \"monitor closely.\" AI is useful for drafting mitigation language quickly and for surfacing risk categories a PM might not think of unprompted, but the PM must supply the project's actual risk factors and reject any generic-sounding risk or mitigation that doesn't truly apply.",
+      "steps": [
+        "Describe the project briefly: scope, timeline, team, and any known sensitive areas (new vendor, tight deadline, dependency on another team).",
+        "List the specific risks you already know about, in your own words.",
+        "Ask the AI to draft the register from your list, plus propose 2-3 additional risk categories common to this type of project that you may not have listed, clearly separated as suggestions.",
+        "For each risk, ask for a likelihood and impact rating using your own scale (e.g. low/medium/high), a specific mitigation action, and an owner field left blank for you to assign.",
+        "Reject or edit any AI-suggested risk that doesn't genuinely apply to this project instead of including it just because it was offered.",
+        "Assign real owners and add the register to your regular project review cadence."
+      ],
+      "prompt": "Build a risk register for my project. Use a Likelihood/Impact scale of Low/Medium/High.\n\nProject summary: [SCOPE, TIMELINE, TEAM SIZE, KEY SENSITIVE AREAS]\n\nRisks I already know about:\n[LIST YOUR KNOWN RISKS]\n\nTasks:\n1. Build a register (table) from my listed risks: Risk | Likelihood | Impact | Mitigation | Owner (leave Owner blank).\n2. Write a specific, actionable mitigation for each — not a vague phrase like \"monitor closely.\" A mitigation should state a concrete action and, where relevant, a trigger for when to act.\n3. Separately, propose 2-3 additional risk categories common to projects like this one that I didn't list, clearly under a \"risks to consider adding\" heading — do not merge these into the main register.\n4. Do not rate a risk's likelihood or impact based on generic assumptions about this project type; base ratings only on what I told you in the project summary.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Requiring a specific, action-plus-trigger mitigation instead of accepting vague phrases like \"monitor closely\" is what makes a risk register actually useful when a risk starts to materialize — a mitigation with a defined trigger tells the team exactly when to act. Keeping AI-suggested risk categories in a clearly separate section, rather than merged into the main register, respects that only the PM knows which risks genuinely apply to this specific project. Basing likelihood/impact ratings only on the stated project summary, rather than generic assumptions, keeps the ratings honest to this project's actual situation instead of a stereotype of it.",
+      "example": "Input: project summary describing a six-month system migration with a new external vendor and a hard regulatory deadline; known risks include vendor delivery delay and data migration errors.\n\nOutput: a register with those two risks rated (vendor delay: Medium likelihood/High impact, with a mitigation specifying a biweekly vendor checkpoint and a trigger to escalate if two milestones slip), and a separate \"risks to consider adding\" section suggesting key-person dependency and regulatory approval delay as categories common to this project type, clearly not merged into the scored table.",
+      "exercise": "In your own Claude or ChatGPT account, build a real risk register for a current project using this prompt, then assign actual owners and add it to your next project review.",
+      "expectedResult": "A risk register with specific, trigger-based mitigations and honestly-scoped ratings, plus a short separate list of risk categories worth considering, ready to review with your team.",
+      "commonMistakes": [
+        "Accepting a vague mitigation (\"monitor closely\") instead of pushing for a specific action and trigger.",
+        "Merging AI-suggested generic risks into the register without confirming they actually apply to this project.",
+        "Leaving the owner field blank in the actual working register instead of just in the draft.",
+        "Building the register once at kickoff and never revisiting it as the project's real risk profile changes."
+      ],
+      "proTip": "Revisit the register at each major milestone and explicitly close out risks that no longer apply — a register that only ever grows loses credibility with the team faster than one that's actively maintained.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "project-manager"
+      ],
+      "skills": [
+        "analysis",
+        "productivity"
+      ]
+    },
+    {
+      "slug": "pm-i3-stakeholder-communications-difficult-moments",
+      "title": "Draft stakeholder communications for difficult project moments",
+      "summary": "Produce a clear, accountable communication for a hard project moment — a slipped deadline, a scope change, a budget overrun — without letting AI invent a commitment you haven't confirmed.",
+      "difficulty": "intermediate",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Produce a clear, accountable communication for a hard project moment that states the situation honestly and what happens next.",
+      "whyItMatters": "Every project eventually has a moment that's hard to communicate: the deadline is slipping, the budget is over, a scope decision has to be walked back. How that message is delivered — vague and defensive versus clear and accountable — has an outsized effect on whether stakeholders trust the PM's next update. AI can help structure the message quickly and strip out reflexive hedging or corporate-speak, but the PM must supply the real facts and own the judgment call about tone and what commitment to make next, since an AI-generated reassurance the PM can't actually deliver on does real damage.",
+      "steps": [
+        "State the hard fact plainly to yourself first: what changed, and why, in one or two honest sentences.",
+        "Note what you're doing about it (the concrete next step or recovery plan), even if it's partial.",
+        "Decide what you're asking the reader for, if anything (patience, a decision, additional resource).",
+        "Feed the facts into the prompt and ask for a direct, accountable draft — not a defensive or over-apologetic one.",
+        "Check the draft doesn't promise a specific new date or outcome you haven't actually confirmed you can deliver.",
+        "Read it once as the recipient would, checking whether it actually answers \"what happened, what now, what do you need from me.\""
+      ],
+      "prompt": "Help me draft a message to stakeholders about a difficult project update. I want it direct and accountable — not defensive, not over-apologetic, and not vague.\n\nWhat happened: [STATE THE FACTS PLAINLY, e.g. \"the vendor's delivery slipped 3 weeks, pushing our integration testing start\"]\nWhy (briefly, factually): [REASON, without excessive justification]\nWhat we're doing about it: [CONCRETE NEXT STEP OR RECOVERY PLAN]\nWhat I'm asking the reader for: [e.g. \"awareness only\" / \"approval to shift the launch date\" / \"additional budget approval\"]\nAudience: [e.g. \"executive sponsor\" / \"full stakeholder group\"]\n\nRequirements:\n- Lead with the fact, not an apology or a long buildup.\n- State only commitments and dates I've given you — do not add a new promised date or outcome I haven't confirmed.\n- End with a single clear line stating what I need from the reader.\n- Keep it under 150 words. Plain language, no corporate hedging (\"circling back,\" \"leveraging synergies,\" etc.).",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Leading with the fact rather than an apology is a deliberate structural choice — burying bad news under three sentences of preamble reads as evasive and makes the reader search for the actual point. The instruction not to add a new promised date or outcome is the critical guardrail: an AI trying to make the message sound more reassuring might draft in a recovery date or commitment the PM never actually confirmed, which turns a hard-but-honest update into a promise the PM now has to explain breaking later. Banning corporate hedging phrases directly targets the pattern where a difficult message gets diluted into vague language that technically says something happened without actually saying what.",
+      "example": "Input: vendor delivery slipped three weeks, reason is a component shortage on the vendor's side, recovery plan is running two integration phases in parallel to recover ten of the twenty-one days, asking the executive sponsor for approval to notify downstream teams of a revised go-live window.\n\nOutput: a roughly 120-word message opening with \"The vendor's delivery has slipped three weeks due to a component shortage on their side,\" a factual next-step section describing the parallel-phase plan and that it recovers roughly ten of the twenty-one days, no new specific date stated beyond what was given, and a closing line: \"I need your approval to notify downstream teams of a revised go-live window this week.\"",
+      "exercise": "In your own Claude or ChatGPT account, draft a message for a real difficult moment on a current project using this prompt, and check it doesn't commit to anything beyond what you've actually confirmed.",
+      "expectedResult": "A short, direct message under 150 words that states the fact plainly, avoids invented commitments, and ends with a clear ask, ready to send with minimal editing.",
+      "commonMistakes": [
+        "Letting the draft promise a specific recovery date or outcome that hasn't actually been confirmed.",
+        "Burying the hard fact under excessive apology or context, making the reader dig for the actual news.",
+        "Using corporate hedging language that technically communicates nothing concrete.",
+        "Sending the message without a clear closing ask, leaving the reader unsure what's expected of them."
+      ],
+      "proTip": "For genuinely high-stakes messages, draft with AI, then read it out loud to yourself as if you were the recipient — anything that sounds evasive or overly soft out loud usually reads the same way in writing.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "project-manager"
+      ],
+      "skills": [
+        "communication",
+        "writing"
+      ]
+    },
+    {
+      "slug": "pm-a1-pm-operating-system-templates-workflows",
+      "title": "Build your PM operating system: templates and recurring workflows",
+      "summary": "Assemble your individual AI-assisted PM prompts into one documented system with cadence, verification, and output destination for each recurring task.",
+      "difficulty": "advanced",
+      "minutes": 13,
+      "isFree": false,
+      "goal": "Design a documented set of reusable templates and recurring AI-assisted workflows covering the PM tasks you repeat on every project.",
+      "whyItMatters": "A PM who has individually useful AI prompts for meeting notes, status reports, work breakdowns, risk registers, and stakeholder messages is still rebuilding each one from scratch every time unless they're captured as a reusable system. Turning your best version of each recurring task into a documented template — with the specific verification step required each time — creates consistency across projects, makes it possible to hand the system to a new PM on the team, and reduces the chance that a shortcut taken under time pressure causes a real mistake.",
+      "beforeYouStart": "Your own working versions of the individual prompts for meeting notes, status reports, work breakdowns, risk registers, and stakeholder communications, since this lesson assembles them into one system rather than creating them from scratch.",
+      "steps": [
+        "List the recurring PM tasks you already use AI for (meeting notes, status reports, work breakdowns, risk registers, difficult-moment messages, or others specific to your role).",
+        "For each task, note the prompt or approach you currently use and the specific check you always do before sending the output onward.",
+        "Note how often each task recurs (weekly status report, per-meeting notes, per-project work breakdown) to prioritize what's worth fully templating first.",
+        "Ask the AI to organize this into a PM operating system document: task, cadence, template/prompt reference, required verification, and where the output goes.",
+        "Identify any recurring task you haven't yet templated and draft a first version following the same pattern as your existing ones.",
+        "Test the assembled system on a real live project for one full cycle (e.g. one sprint or one reporting period) before treating it as final.",
+        "Store the finished system somewhere your team can find and reuse it, with a review date to update it as your projects or tools change."
+      ],
+      "prompt": "Help me assemble my individual AI-assisted PM tasks into one documented operating system.\n\nMy recurring tasks, current approach, and verification step for each:\n[PASTE YOUR NOTES, e.g.:\n- Meeting notes → decisions/actions/owners: use [PROMPT/TOOL]; verify by checking against raw notes before sending\n- Weekly status report: use [PROMPT/TOOL]; verify status line matches actual content\n- Work breakdown at project kickoff: use [PROMPT/TOOL]; verify against team capacity\n- Risk register: use [PROMPT/TOOL]; verify mitigations are specific, not vague\n- Difficult stakeholder messages: use [PROMPT/TOOL]; verify no invented commitments]\n\nBuild a table: Task | Cadence | Tool/Prompt Reference | Required Verification Before Sending | Output Destination.\n\nRequirements:\n- Do not invent a task I did not list.\n- The verification column must be a specific, checkable action, not a general instruction like 'review it.'\n- Flag any task in my list where I didn't specify a verification step, under a 'needs a defined verification step' note, rather than inventing one for me.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Building this as a single reference table with cadence and destination columns, not just a list of prompts, is what makes it usable day-to-day — a PM under deadline pressure needs to know at a glance which template to reach for and where the result goes. Flagging tasks where the PM didn't specify a verification step, instead of the AI inventing a plausible-sounding one, protects the integrity of the whole system: a verification step that was quietly made up rather than genuinely practiced would give false confidence. Testing the assembled system on one real full cycle before finalizing it catches gaps that only show up under real project conditions.",
+      "example": "Input: notes on five recurring tasks with current prompts and verification steps, but the risk-register entry missing a stated verification step.\n\nOutput: a five-row table with cadence (per-meeting, weekly, per-project-kickoff, per-project, ad hoc), tool/prompt references, verification actions pulled directly from the input for four rows, an output-destination column (shared drive, stakeholder email, PM tool), and a flagged note under the risk-register row reading \"needs a defined verification step — not specified,\" prompting the PM to define one rather than the AI guessing.",
+      "exercise": "In your own Claude or ChatGPT account, list your own real recurring PM tasks, current prompts, and verification habits, and generate the operating-system table using this prompt, then run it for one full project cycle before treating it as final.",
+      "expectedResult": "A single-page reference table covering your recurring PM tasks with cadence, tool reference, a specific verification action, and output destination for each, tested on one real project cycle and ready to share with your team.",
+      "commonMistakes": [
+        "Letting the AI invent a verification step for a task where the PM hadn't actually defined one, creating false rigor.",
+        "Building the system in the abstract and never testing it against a real, live project cycle.",
+        "Treating the document as finished and never updating it as tools, templates, or project types change.",
+        "Skipping the cadence and destination columns, leaving teammates unsure when and where each template actually gets used."
+      ],
+      "proTip": "Once the operating system is stable, hand it to a new or junior PM on your team and watch where they get stuck — the gaps they hit are usually the exact places the document needs to be more specific.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "project-manager"
+      ],
+      "skills": [
+        "productivity",
+        "automation"
+      ]
+    }
+  ]
+}

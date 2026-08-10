@@ -1,0 +1,424 @@
+{
+  "quizzes": {
+    "biz-b1-delegate-first-task": [
+      {
+        "q": "You're choosing your first task to delegate to AI. Which criterion set does the lesson say to prioritize?",
+        "options": [
+          "A task with a clear right answer, a fast check, and real time cost — not the hardest or most important task",
+          "The most important, highest-stakes task you can think of",
+          "A task that requires your personal judgment or a specific relationship",
+          "Whatever task takes the least time to describe"
+        ],
+        "answer": 0,
+        "why": "The lesson recommends picking the first delegation based on a clear right answer, fast checkability, and real time cost, not the hardest task you can think of."
+      },
+      {
+        "q": "The prompt instructs: if something needed to do the task well is missing from the source material, list it under 'Questions before I finalize this' instead of guessing. Why does this matter?",
+        "options": [
+          "It makes the output shorter",
+          "It stops a task with gaps from turning into a confident-sounding draft with invented details",
+          "It's required for the AI to process the source material",
+          "It guarantees the draft will be approved without edits"
+        ],
+        "answer": 1,
+        "why": "This rule keeps a task with missing information from becoming a confident-sounding draft with invented facts — you get an honest list of gaps instead."
+      },
+      {
+        "q": "After delegating a task and getting a draft back, what should you do before using it?",
+        "options": [
+          "Paste it straight into the client-facing document since it already matches your brief",
+          "Immediately ask for a completely different task",
+          "Check that every fact traces to the source material, the format is right, and nothing is invented",
+          "Judge the tool as reliable after one good result without further checks"
+        ],
+        "answer": 2,
+        "why": "The lesson's check step requires verifying facts trace to the source, the format is correct, and nothing was invented, before the draft is used."
+      }
+    ],
+    "biz-b2-customer-communication": [
+      {
+        "q": "You're drafting a reply to a customer complaint. According to the lesson, what's the biggest actual risk of using AI here?",
+        "options": [
+          "The grammar will be poor",
+          "The AI will refuse to draft anything about complaints",
+          "The message will be too short",
+          "The draft might promise something (a discount, timeline, exception) you didn't actually authorize"
+        ],
+        "answer": 3,
+        "why": "The real risk isn't wording quality — it's AI being generous with your business on your behalf by promising a commitment you never actually decided on."
+      },
+      {
+        "q": "Why does the prompt ban generic corporate phrases like 'we take this very seriously' unless you've used them yourself?",
+        "options": [
+          "It keeps the message sounding like you instead of a template, which matters most when a customer is already frustrated",
+          "Those phrases are considered legal admissions of fault",
+          "They make the message too long",
+          "AI tools are incapable of generating them accurately"
+        ],
+        "answer": 0,
+        "why": "Banning generic corporate phrases by default keeps the message sounding like you, which matters most exactly when a customer is already upset."
+      },
+      {
+        "q": "Before sending a difficult-message draft, what should you specifically re-read it for?",
+        "options": [
+          "Spelling errors only",
+          "Overcommitment — anything promised that wasn't in your stated facts — and a defensive or over-apologetic tone",
+          "Whether it's long enough",
+          "Whether it uses your brand's logo colors"
+        ],
+        "answer": 1,
+        "why": "The lesson's check step specifically calls for reading once for overcommitment and once for tone against the situation."
+      }
+    ],
+    "biz-i1-market-competitor-research-perplexity": [
+      {
+        "q": "Why is Gemini's Deep Research well-suited to competitor/market research compared to a general chat model?",
+        "options": [
+          "It's free to use unlike other tools",
+          "It only searches your own uploaded documents",
+          "It runs a multi-step research plan across live sources and answers with cited, dated results, letting you verify claims instead of trusting an unverifiable paragraph",
+          "It doesn't require an account"
+        ],
+        "answer": 2,
+        "why": "Deep Research answers with sources by default, giving you a citation trail you can defend to a partner or lender, unlike a confident-sounding paragraph you can't verify."
+      },
+      {
+        "q": "The prompt asks Gemini to flag if it had to widen the search beyond your specified region or segment. What problem does this prevent?",
+        "options": [
+          "Running out of search credits",
+          "The report being too short",
+          "Citing too many sources",
+          "Unknowingly treating a broad national trend as if it were specific evidence about your local market"
+        ],
+        "answer": 3,
+        "why": "This instruction stops you from unknowingly treating broader, widened-search data as if it were specific to your exact market."
+      },
+      {
+        "q": "What should you do with the cited sources before using a figure in a real business decision?",
+        "options": [
+          "Open at least two or three yourself and confirm they're recent and specific to your market",
+          "Trust the summary paragraph without opening any citations",
+          "Only check citations older than 12 months",
+          "Ignore citations entirely since Deep Research verifies them for you"
+        ],
+        "answer": 0,
+        "why": "The lesson explicitly recommends personally opening several citations to confirm they're recent and actually relevant before relying on a figure."
+      }
+    ],
+    "biz-i2-standard-operating-procedures": [
+      {
+        "q": "You're turning a task into an SOP. What should you feed the AI as the raw input?",
+        "options": [
+          "A generic industry-standard version of the task",
+          "Your actual messy walkthrough of the task, including exceptions and judgment calls, not a cleaned-up version",
+          "Only the ideal-case steps, skipping exceptions",
+          "A list of tools you use, without describing the steps"
+        ],
+        "answer": 1,
+        "why": "Starting from a raw, unedited walkthrough is what captures the exceptions and judgment calls that make a task hard to hand off, which a tidy description misses."
+      },
+      {
+        "q": "Why does the prompt instruct the AI to flag gaps as '[NEEDS CLARIFICATION]' instead of filling them in with a plausible-sounding step?",
+        "options": [
+          "It makes the SOP look more professional",
+          "Clarification tags are required by SOP software",
+          "A wrong invented step is worse than a missing one — someone will follow it confidently and get it wrong",
+          "It shortens the document"
+        ],
+        "answer": 2,
+        "why": "Flagging gaps instead of inventing steps matters because a confidently wrong invented step in an SOP is worse than an honestly flagged gap."
+      },
+      {
+        "q": "After drafting the SOP, what's the recommended way to validate it?",
+        "options": [
+          "Assume it's clear because you, the author, understand it",
+          "Publish it immediately without testing",
+          "Have the same person who wrote the walkthrough review it alone",
+          "Have a teammate attempt the task using only the document while you observe where they get stuck, then revise based on that"
+        ],
+        "answer": 3,
+        "why": "The lesson recommends a real test run with a teammate, revising the SOP based specifically on where they hesitated or asked a question."
+      }
+    ],
+    "biz-i3-financial-narratives": [
+      {
+        "q": "Your P&L shows margin dropped two points. The AI drafts: 'this is likely due to a pricing change.' You never told it about a pricing change. What should you do?",
+        "options": [
+          "Flag and remove it — the rule against inventing a business reason means it should only describe what the numbers show or use context you actually gave it",
+          "Keep it since it's a plausible-sounding explanation",
+          "Ask the AI to make the explanation more specific",
+          "Move it into the confirmed changes section"
+        ],
+        "answer": 0,
+        "why": "The prompt's core rule bans inventing a business reason for a change unless it's stated in the data or you supplied it, so an unverified guess should be removed."
+      },
+      {
+        "q": "Why does the prompt include a section titled 'Changes I can't explain from the numbers alone'?",
+        "options": [
+          "It's required financial reporting terminology",
+          "It separates confirmed changes from unexplained ones, turning the exercise into useful pre-meeting prep instead of a source of confidently wrong talking points",
+          "It makes the report look more thorough for investors",
+          "It replaces the need to talk to a bookkeeper entirely"
+        ],
+        "answer": 1,
+        "why": "This section keeps confirmed changes separate from unexplained ones, which is what makes the exercise useful rather than a source of confidently wrong talking points."
+      },
+      {
+        "q": "Before pasting a financial export into a general consumer AI account, what does the lesson recommend?",
+        "options": [
+          "Nothing — general accounts are always safe for financial data",
+          "Convert all numbers to percentages first",
+          "Redact or generalize sensitive details like customer names or account numbers first, or use business-tier data settings",
+          "Only paste data older than one year"
+        ],
+        "answer": 2,
+        "why": "The lesson recommends redacting sensitive details or using business-tier data settings before pasting financial exports into a general AI account."
+      }
+    ],
+    "biz-a1-ai-operations-layer": [
+      {
+        "q": "You're designing an automation that emails customers about order delays. According to the lesson, what must the first version include?",
+        "options": [
+          "Full autonomy from day one, to prove the system works",
+          "No fallback plan, since AI rarely fails",
+          "A cheaper AI model to reduce cost",
+          "An explicit human-approval checkpoint before anything external (sending, spending) happens, since it's customer-facing"
+        ],
+        "answer": 3,
+        "why": "The lesson requires a human checkpoint on anything external, like customer-facing sends, and warns against automating this with no checkpoint on the first version."
+      },
+      {
+        "q": "Why does the workflow spec separate 'mechanical' steps from steps needing 'AI judgment'?",
+        "options": [
+          "Mechanical steps should go to a simpler MCP connector or scheduled action, reserving AI for genuine judgment, which keeps the system simpler and cheaper to run",
+          "AI can't perform mechanical steps at all",
+          "It's required by Claude's and ChatGPT's pricing tiers",
+          "Mechanical steps always need more approval"
+        ],
+        "answer": 0,
+        "why": "Separating mechanical from AI-judgment steps keeps the system simpler and cheaper by reserving AI for genuine judgment tasks only."
+      },
+      {
+        "q": "What is one of the most common ways these automations quietly go wrong, according to the lesson?",
+        "options": [
+          "The workflow runs too infrequently",
+          "The workflow has no assigned owner responsible for periodically checking its output",
+          "Too many human checkpoints slow it down",
+          "The trigger event is too specific"
+        ],
+        "answer": 1,
+        "why": "An automation with no owner is called out as the most common way these workflows quietly go wrong, since no one notices a silent failure."
+      }
+    ],
+    "fl-b1-proposals-that-win": [
+      {
+        "q": "Why does the prompt require pasting the client's brief verbatim rather than your summary of it?",
+        "options": [
+          "Verbatim text is required for copyright reasons",
+          "Summaries take longer to process",
+          "It lets the model mirror the client's own language back, which reads as far more tailored than generic industry terms",
+          "It reduces the total word count of the proposal"
+        ],
+        "answer": 2,
+        "why": "Feeding in the brief verbatim lets the model mirror the client's own wording, and proposals that echo a client's specific language read as far more tailored."
+      },
+      {
+        "q": "The prompt blocks the AI from filling in a specific price, timeline, or scope. Why?",
+        "options": [
+          "Clients prefer proposals without any numbers",
+          "It's illegal to state a price in a first draft",
+          "It makes the proposal shorter",
+          "Those are business decisions you should make deliberately, not accept because a plausible number appeared in a first draft"
+        ],
+        "answer": 3,
+        "why": "Blocking price, timeline, and scope from the draft is deliberate, since those are decisions you should make yourself rather than accept from a plausible-sounding draft."
+      },
+      {
+        "q": "Which of these is a mistake the lesson warns against?",
+        "options": [
+          "Letting the draft list every skill you have instead of the 2-3 that match this specific brief",
+          "Reading the brief yourself first to note the client's top priorities",
+          "Pulling 2-4 real proof points from past work",
+          "Editing the opening line by hand"
+        ],
+        "answer": 0,
+        "why": "The lesson lists listing every skill instead of the 2-3 that match the specific brief as a common mistake that makes a proposal read as generic."
+      }
+    ],
+    "fl-b2-client-onboarding-docs": [
+      {
+        "q": "Why does the prompt ask you to list your actual requirements and week-one commitments instead of asking for generic onboarding advice?",
+        "options": [
+          "Generic advice is against platform policy",
+          "It produces a packet clients can follow without emailing back to ask what you meant, unlike generic advice",
+          "It's faster to generate generic advice",
+          "Clients prefer longer documents"
+        ],
+        "answer": 1,
+        "why": "Feeding in your real requirements and commitments, instead of generic advice, is what makes the packet something clients can actually follow without follow-up questions."
+      },
+      {
+        "q": "What's the benefit of building the kickoff email as a template with bracketed placeholders?",
+        "options": [
+          "Placeholders are required by email clients",
+          "It makes the email look more formal",
+          "It saves real time on the next client, not just this one, instead of rewriting the whole document each time",
+          "It prevents the client from replying directly"
+        ],
+        "answer": 2,
+        "why": "Building it as a reusable template with placeholders is what actually saves time on future clients, not just the current one."
+      },
+      {
+        "q": "Which is a common mistake this lesson calls out?",
+        "options": [
+          "Listing exactly what you need from the client before starting",
+          "Adding a note on how fast you typically respond",
+          "Saving the documents as reusable templates",
+          "Making the packet too long, when a new client is more likely to read a short, specific one"
+        ],
+        "answer": 3,
+        "why": "The lesson explicitly warns that a packet that's too long is less likely to actually be read than a short, specific one."
+      }
+    ],
+    "fl-i1-scope-quote-contract-drafts": [
+      {
+        "q": "The prompt explicitly states the AI is 'not a lawyer' and instructs it to flag certain clauses. What should you do with those flagged clauses before signing?",
+        "options": [
+          "Have them reviewed by a qualified professional or checked against a trusted template — they are not the finish line",
+          "Sign immediately since the AI already drafted reasonable language",
+          "Delete them since they're too risky to include",
+          "Ask the AI to make them more binding"
+        ],
+        "answer": 0,
+        "why": "The lesson stresses this produces a starting point for sensitive clauses, not a finished one — professional review is required before anything is signed."
+      },
+      {
+        "q": "Why should the quote be itemized into line items instead of a single lump sum?",
+        "options": [
+          "Itemized quotes are legally required",
+          "It's easier for the client to see, and agree to, what they're actually paying for",
+          "It reduces the total price",
+          "It hides the total cost from the client"
+        ],
+        "answer": 1,
+        "why": "An itemized quote lets the client see exactly what they're paying for, which is easier to agree to than a single lump-sum figure."
+      },
+      {
+        "q": "Which of these is a mistake this lesson specifically warns against?",
+        "options": [
+          "Sending the scope and quote for written approval before the contract",
+          "Using only the payment terms you actually offer",
+          "Sending an AI-drafted contract straight to a client for signature without professional review of IP, liability, or termination clauses",
+          "Itemizing the quote by deliverable"
+        ],
+        "answer": 2,
+        "why": "The lesson explicitly warns against sending an AI-drafted contract for signature without professional review of legally sensitive clauses."
+      }
+    ],
+    "fl-i2-marketing-yourself-portfolio-outreach": [
+      {
+        "q": "You didn't get a hard metric confirmed for a past project. What should the case study prompt do?",
+        "options": [
+          "Estimate a plausible-sounding percentage to make the case study stronger",
+          "Skip that project entirely",
+          "Ask the client to confirm a number before writing anything",
+          "Describe the qualitative outcome honestly instead of inventing a number"
+        ],
+        "answer": 3,
+        "why": "The prompt explicitly instructs not to invent a metric if none was given, describing the qualitative outcome honestly instead."
+      },
+      {
+        "q": "Why does the outreach message reference only one relevant result from the case study, not the whole thing?",
+        "options": [
+          "It produces a sharper, more targeted message than trying to summarize your entire career in three sentences",
+          "Longer messages are penalized by email spam filters",
+          "The case study format only allows one result",
+          "It's required by cold outreach best practices"
+        ],
+        "answer": 0,
+        "why": "Referencing one relevant result produces a sharper message than trying to cram an entire career summary into a short cold outreach note."
+      },
+      {
+        "q": "Which mistake most commonly makes a cold outreach message read as templated, even if the copy is well-written?",
+        "options": [
+          "Using a real project as the case study source",
+          "Sending it without a genuinely personalized opening line explaining the specific reason for reaching out",
+          "Ending with a low-pressure next step",
+          "Targeting one specific client type"
+        ],
+        "answer": 1,
+        "why": "A missing personalized opening line is called out as the single biggest tell that a cold message wasn't actually personalized."
+      }
+    ],
+    "fl-i3-client-updates-difficult-conversations": [
+      {
+        "q": "Before drafting a rate-increase message, what does the lesson say you must decide first?",
+        "options": [
+          "The exact word count of the final message",
+          "Which AI tool to use",
+          "Your actual position — the boundary, ask, or decision — since only you should make that business call",
+          "The client's likely emotional reaction"
+        ],
+        "answer": 2,
+        "why": "Deciding your actual position before drafting keeps the real business decision — what you're conceding or holding firm on — in your hands, not the AI's."
+      },
+      {
+        "q": "Why does the prompt explicitly instruct against over-apologizing in a scope-pushback message?",
+        "options": [
+          "Apologies are considered legally binding admissions",
+          "It makes the message too long to read",
+          "Clients prefer messages with zero emotional language",
+          "Piling on apologetic language can actually weaken your position by making it read like you're not confident in your own ask"
+        ],
+        "answer": 3,
+        "why": "Over-apologizing is a specific failure mode the lesson targets, since it weakens your position by suggesting you're not confident in your own ask."
+      },
+      {
+        "q": "What should a difficult-conversation message end with, according to the prompt's rules?",
+        "options": [
+          "A clear next step or specific ask, not a vague 'let me know your thoughts'",
+          "A long list of alternative options for the client to choose from",
+          "An open-ended apology",
+          "A summary of the entire project history"
+        ],
+        "answer": 0,
+        "why": "Ending with a specific next step, rather than an open-ended question, is what moves the conversation forward instead of leaving the client unsure."
+      }
+    ],
+    "fl-a1-productize-your-service": [
+      {
+        "q": "When building standing instructions for a reusable AI project, what's the core design decision the lesson emphasizes?",
+        "options": [
+          "Choosing between Claude Projects and Custom GPTs",
+          "Separating the reusable pattern (your repeatable process) from what must be custom per client every time",
+          "Deciding how many words the deliverable should be",
+          "Picking a price for the productized offer first"
+        ],
+        "answer": 1,
+        "why": "Getting the split between reusable pattern and required customization right is the core decision — get it wrong and you either save nothing or lose the client-specific quality."
+      },
+      {
+        "q": "Why does the prompt instruct the assistant to ask for missing checklist items rather than filling them in generically?",
+        "options": [
+          "It speeds up the process",
+          "Checklists are required by Claude Projects",
+          "It prevents the system from quietly producing lower-quality work when you forget to paste in client-specific context",
+          "It reduces the number of client questions"
+        ],
+        "answer": 2,
+        "why": "This guardrail prevents the system from silently degrading into generic output whenever a piece of client-specific context is missing."
+      },
+      {
+        "q": "How should you determine the price for a fixed-scope productized version of your service, according to the lesson?",
+        "options": [
+          "Match whatever your closest competitor charges",
+          "Use the AI's suggested price from the draft",
+          "Set it based on how long the first draft took only",
+          "Time yourself running the workflow on 2-3 real projects and use that real measured time cost, not a guess"
+        ],
+        "answer": 3,
+        "why": "The lesson recommends pricing off real measured time across a few actual runs, not a guess, to define a fixed-scope offer."
+      }
+    ]
+  }
+}

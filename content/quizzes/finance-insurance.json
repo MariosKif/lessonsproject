@@ -1,0 +1,424 @@
+{
+  "quizzes": {
+    "fin-b1-explain-variance-narrative": [
+      {
+        "q": "You paste a budget variance table but only gave context for 2 of the 15 line items. What should the prompt force the AI to do for the other 13?",
+        "options": [
+          "Invent a plausible driver so the report reads as complete",
+          "Write \"driver not provided — confirm with [owner]\" instead of guessing a cause",
+          "Recalculate the variance using its own estimate of typical business drivers",
+          "Skip those line items entirely without any note"
+        ],
+        "answer": 1,
+        "why": "The \"driver not provided\" instruction is the core anti-hallucination guardrail — it stops the model from inventing a plausible-sounding cause for a variance you never explained."
+      },
+      {
+        "q": "A variance table has 15 line items but only 2 are actually significant. Why set a materiality threshold before drafting the narrative?",
+        "options": [
+          "So the narrative focuses only on variances above a meaningful dollar or percent amount, instead of treating a $200 rounding gap the same as a $50,000 miss",
+          "So every line item gets equal word count in the summary",
+          "So the AI can skip verifying any numbers",
+          "So the report only needs one sentence total"
+        ],
+        "answer": 0,
+        "why": "Without a materiality threshold, the narrative buries the two variances that actually matter under a dozen trivial ones."
+      },
+      {
+        "q": "Before sending an AI-drafted variance narrative to management, what should the analyst do?",
+        "options": [
+          "Nothing — the numbers were pasted verbatim so they must be correct",
+          "Independently recompute at least two of the variance percentages against the source table",
+          "Ask the AI to double-check its own math one more time",
+          "Only check that the tone sounds professional"
+        ],
+        "answer": 1,
+        "why": "Independently recomputing a couple of figures catches transcription or computation errors before the narrative reaches anyone else."
+      }
+    ],
+    "fin-b2-summarize-filings-for-briefing": [
+      {
+        "q": "Why require the AI to note which section (e.g., \"MD&A\", \"Q3 highlights\") each cited number came from?",
+        "options": [
+          "It's required by SEC formatting rules",
+          "It turns verification into a quick lookup instead of a full re-read of the whole filing",
+          "It lets the AI recalculate the number more accurately",
+          "It makes the summary sound more authoritative"
+        ],
+        "answer": 1,
+        "why": "Naming the source section is what makes checking every number fast and practical under time pressure before a briefing."
+      },
+      {
+        "q": "An excerpt says revenue was \"up 6% year over year, driven primarily by higher unit volumes.\" How should the summary treat the stated driver versus an AI-added explanation for the guidance raise?",
+        "options": [
+          "Treat both as equally reliable since they came from the same document",
+          "Quote the stated driver directly, and label anything the AI infers (like an unstated cause for the guidance raise) as \"inference, not stated directly\"",
+          "Omit both since neither can be fully trusted",
+          "Rewrite the driver in the analyst's own words for clarity"
+        ],
+        "answer": 1,
+        "why": "Separating what's explicitly stated from what's inferred prevents a briefing from including an unlabeled inference as if it were a quoted management fact."
+      },
+      {
+        "q": "Which of these is the biggest confidentiality risk when using this workflow?",
+        "options": [
+          "Pasting content from a paid, licensed research terminal or non-public data into a general AI tool",
+          "Using bullet points instead of paragraphs",
+          "Summarizing a public 10-K excerpt",
+          "Structuring the output into five labeled sections"
+        ],
+        "answer": 0,
+        "why": "Public filings are generally safe to paste, but paid vendor research or non-public data usually is not and should be checked against firm policy first."
+      }
+    ],
+    "fin-i1-analysis-framework-checklist": [
+      {
+        "q": "Why should you build this checklist as a fully generic template with no real company or deal data?",
+        "options": [
+          "It's faster to type",
+          "It's itself a confidentiality guardrail — the checklist-building conversation never needs to touch sensitive information at all",
+          "The AI performs worse with specific data",
+          "Generic templates are required by SEC rules"
+        ],
+        "answer": 1,
+        "why": "Keeping the request generic means no real company or deal data ever has to enter the AI tool while you build the reusable framework."
+      },
+      {
+        "q": "Why ask the AI to mark each checklist item as needing verified external data versus data you can reason from your own figures?",
+        "options": [
+          "To make the checklist look longer",
+          "It builds a verification checkpoint directly into the structure of the framework itself",
+          "It's a formatting requirement for compliance software",
+          "It tells you which items to skip entirely"
+        ],
+        "answer": 1,
+        "why": "Separating verified-data items from reasoned items embeds a checkpoint into the framework instead of leaving verification as an afterthought."
+      },
+      {
+        "q": "What's wrong with asking the AI to build this checklist using details from a real, current deal you're working on?",
+        "options": [
+          "It makes the checklist more accurate",
+          "It turns a reusable template request into a one-off analysis of sensitive data",
+          "The AI will produce a shorter checklist",
+          "It's slower than using generic examples"
+        ],
+        "answer": 1,
+        "why": "Using real deal details defeats the purpose of a reusable, generic template and unnecessarily exposes sensitive information."
+      }
+    ],
+    "fin-i2-sector-research-cited-sources": [
+      {
+        "q": "You ask Gemini Deep Research \"Tell me about the semiconductor industry.\" Why is this the wrong way to use it for research?",
+        "options": [
+          "Gemini doesn't support broad questions",
+          "It's too broad and returns a generic synthesized narrative instead of scoped, checkable sources",
+          "It should be asked in Claude instead",
+          "It will return only outdated sources"
+        ],
+        "answer": 1,
+        "why": "A specific question with sector, geography, and timeframe triggers retrieval of specific, checkable sources rather than a generic narrative."
+      },
+      {
+        "q": "Why explicitly instruct Gemini Deep Research to show disagreements between sources rather than resolve them into one answer?",
+        "options": [
+          "It's more interesting to read",
+          "A confidently unified answer can hide a genuine split between analysts or data providers you need to know about before citing it",
+          "Gemini is technically incapable of resolving disagreements",
+          "It reduces the number of citations shown"
+        ],
+        "answer": 1,
+        "why": "Silently resolving disagreement into a single confident answer can hide exactly the kind of split you need to know about before using a claim."
+      },
+      {
+        "q": "Before using a citation from a Gemini Deep Research report in a research brief, what must you do?",
+        "options": [
+          "Trust the synthesized answer as the source itself",
+          "Click through and confirm the source actually supports what's claimed",
+          "Only check the publish date",
+          "Nothing — citations from Deep Research are pre-verified"
+        ],
+        "answer": 1,
+        "why": "Deep Research's synthesized answer is a pointer to the real source, not the source itself, so every citation you plan to use should be opened and confirmed."
+      }
+    ],
+    "fin-i3-investment-memo-drafting": [
+      {
+        "q": "A memo section would normally need a competitor market-share figure, but it isn't in your verified notes. What should the AI do?",
+        "options": [
+          "Estimate a reasonable industry figure",
+          "Insert a [VERIFY] placeholder instead of estimating",
+          "Leave that part of the section blank with no note",
+          "Omit the entire section silently"
+        ],
+        "answer": 1,
+        "why": "The [VERIFY] placeholder makes every unverified figure visibly incomplete instead of letting the model fill the gap with a plausible-sounding estimate."
+      },
+      {
+        "q": "Why does the prompt require a dedicated \"key risks and what would change my mind\" section?",
+        "options": [
+          "It's required by regulators",
+          "It counters confirmation bias by arguing against your own thesis using only the risks you've noted",
+          "It pads out the memo's length",
+          "It replaces the need for a firm's sign-off process"
+        ],
+        "answer": 1,
+        "why": "Drafting from notes you already believe support your conclusion is a real confirmation-bias risk that this section is designed to catch."
+      },
+      {
+        "q": "What kind of data should you paste into this prompt?",
+        "options": [
+          "Raw, unredacted deal or client data for maximum accuracy",
+          "Your own already-verified figures and analysis notes, not raw deal data",
+          "A competitor's non-public research note",
+          "Whatever data is fastest to copy"
+        ],
+        "answer": 1,
+        "why": "Drafting from your own pre-verified, summarized notes keeps sensitive information out of the AI tool while still getting AI-assisted structuring speed."
+      }
+    ],
+    "fin-a1-monthly-reporting-workflow": [
+      {
+        "q": "When mapping your monthly reporting process, which steps must the SOP mark as \"must stay manual\"?",
+        "options": [
+          "Drafting narratives and first-pass summaries",
+          "Source data extraction, figure verification, and final sign-off",
+          "Checklist review",
+          "Formatting the narrative into board deck language"
+        ],
+        "answer": 1,
+        "why": "Keeping AI out of source data extraction, verification, and sign-off protects both accuracy and confidentiality at the stages where a mistake matters most."
+      },
+      {
+        "q": "Why does each verification checkpoint in the SOP need a named owner?",
+        "options": [
+          "It's needed for payroll tracking",
+          "So checks don't get quietly skipped when the close calendar gets tight",
+          "It's a legal filing requirement",
+          "So credit can be assigned after an error"
+        ],
+        "answer": 1,
+        "why": "Without a named owner, verification steps are the first thing to slip under deadline pressure during a busy close."
+      },
+      {
+        "q": "You write the SOP but never run it end-to-end on a real reporting cycle before finalizing it. What's the risk?",
+        "options": [
+          "None — a well-written SOP works the same either way",
+          "It looks good on paper but doesn't match reality under deadline pressure",
+          "The AI-generated SOP will be legally invalid",
+          "It becomes impossible to revise later"
+        ],
+        "answer": 1,
+        "why": "Testing the workflow against one real cycle is what surfaces gaps between the documented process and what actually happens under deadline pressure."
+      }
+    ],
+    "ins-b1-explain-policy-plain-language": [
+      {
+        "q": "The AI's plain-language draft mentions coverage prominently but buries the exclusions in one brief line at the end. What should you do?",
+        "options": [
+          "Accept it — exclusions are secondary to coverage",
+          "Rewrite it so exclusions are given equal prominence to coverage, not buried or softened",
+          "Delete the exclusions section entirely to keep it simple",
+          "Ask the AI to make the explanation shorter overall"
+        ],
+        "answer": 1,
+        "why": "A plain-language rewrite that softens an exclusion is exactly the kind of error that leads a client to believe they're covered when they're not."
+      },
+      {
+        "q": "Why should the AI flag ambiguous policy wording instead of picking one interpretation?",
+        "options": [
+          "Flagging takes less effort than resolving it",
+          "A confidently wrong interpretation of unclear wording is worse than an honest \"this could be read two ways\"",
+          "Clients prefer ambiguous answers",
+          "All state insurance regulators require it"
+        ],
+        "answer": 1,
+        "why": "Resolving genuine ambiguity on the client's behalf risks giving them a false sense of certainty about coverage that isn't actually clear."
+      },
+      {
+        "q": "What should never happen with the AI's plain-language policy explanation?",
+        "options": [
+          "Using it as your talking-points draft for a client conversation",
+          "Sending it directly to a client as a substitute for the actual policy document",
+          "Reading it against the source wording before use",
+          "Flagging anticipated client questions from it"
+        ],
+        "answer": 1,
+        "why": "The explanation is a talking-points draft; the actual policy document governs and must remain what the client relies on."
+      }
+    ],
+    "ins-b2-client-followups-renewal-reminders": [
+      {
+        "q": "Why does the prompt require exactly one call-to-action per message?",
+        "options": [
+          "Shorter messages are always preferred by clients",
+          "Messages asking for two or three different things tend to get partial or no responses",
+          "Email platforms limit the number of links allowed",
+          "It reduces the message's character count for SMS delivery"
+        ],
+        "answer": 1,
+        "why": "A single, clear next step is what actually gets a response, compared to a message asking the client to do several things at once."
+      },
+      {
+        "q": "You don't yet know the exact premium change for a renewing client. What should the drafted message do?",
+        "options": [
+          "Estimate the increase based on typical past renewals",
+          "Use only the facts explicitly provided, never inventing or approximating a figure not given",
+          "Omit the premium topic with no mention at all",
+          "Guess a round number as a placeholder"
+        ],
+        "answer": 1,
+        "why": "Forcing every date and dollar figure to come verbatim from what you supplied is the anti-hallucination guardrail — a wrong premium figure has real downstream consequences."
+      },
+      {
+        "q": "Which of these is a real risk this lesson warns against?",
+        "options": [
+          "Requesting 2-3 tone variants to match the client relationship",
+          "Sending a message with more than one call-to-action, which lowers response rates",
+          "Using [CLIENT NAME] as a placeholder when the name wasn't given",
+          "Checking the renewal date against the system of record before sending"
+        ],
+        "answer": 1,
+        "why": "Piling multiple asks into one message is a common mistake that measurably reduces how often clients respond."
+      }
+    ],
+    "ins-i1-compare-two-policy-documents": [
+      {
+        "q": "Two clauses in the current policy and the renewal offer are worded differently but seem to describe similar coverage. What should the comparison table do?",
+        "options": [
+          "Mark them as equivalent since the wording sounds similar",
+          "Write \"cannot confirm from wording — needs manual review\" rather than guessing they're equivalent",
+          "Pick whichever interpretation is more favorable to the client",
+          "Leave that row blank"
+        ],
+        "answer": 1,
+        "why": "This instruction is the key guardrail against false reassurance — it stops the model from declaring two differently-worded clauses equivalent when it can't actually be sure."
+      },
+      {
+        "q": "Why require the AI to flag gaps in both directions — present in Document A but not B, and vice versa?",
+        "options": [
+          "It makes the table look symmetrical",
+          "It catches coverage quietly dropped in a renewal, which is the change most likely to matter and go unnoticed",
+          "It's a required CRM formatting rule",
+          "It reduces the total number of table rows"
+        ],
+        "answer": 1,
+        "why": "Bidirectional gap-flagging catches a dropped endorsement or coverage in a renewal offer, which is exactly what a client needs to know before signing."
+      },
+      {
+        "q": "Which rows in the comparison table are the highest priority to manually verify?",
+        "options": [
+          "Rows where coverage appears identical in both documents",
+          "Rows flagged as differences, especially anything marked \"missing in the other document\"",
+          "Only the deductible rows",
+          "Only the rows with the shortest text"
+        ],
+        "answer": 1,
+        "why": "Flagged differences are the highest-stakes items because a missed or misstated flag directly translates into an errors-and-omissions risk."
+      }
+    ],
+    "ins-i2-claims-communication": [
+      {
+        "q": "A claim is partially denied due to a gradual-leak exclusion. How should the message be structured?",
+        "options": [
+          "State the denial reason immediately with no acknowledgment of the client's situation",
+          "Lead with genuine acknowledgment of the client's situation, then state the confirmed facts plainly, then give next steps",
+          "Apologize extensively for the exclusion existing in the policy",
+          "Avoid stating the actual denial reason to reduce liability"
+        ],
+        "answer": 1,
+        "why": "A stressed client who feels dismissed stops absorbing information, so acknowledgment before facts is what makes the message actually land."
+      },
+      {
+        "q": "Why must denial language avoid anything that could read as admitting fault or promising coverage beyond what's confirmed?",
+        "options": [
+          "It's purely a style preference",
+          "Claims communication often becomes part of a dispute record, so overstated language can create real liability",
+          "It makes the message shorter",
+          "Clients rarely reread denial explanations"
+        ],
+        "answer": 1,
+        "why": "Because claims messages can end up as part of a dispute record, language that reads as an admission or an unconfirmed promise creates real legal exposure."
+      },
+      {
+        "q": "What's a common mistake to avoid when drafting claims communication?",
+        "options": [
+          "Verifying every fact against the claims system before sending",
+          "Letting the AI infer or soften the denial reason instead of stating the confirmed, actual reason",
+          "Leading with acknowledgment before facts",
+          "Offering a direct way for the client to reach you with questions"
+        ],
+        "answer": 1,
+        "why": "Softening or inferring a denial reason instead of stating the confirmed one is a factual error in an already sensitive situation."
+      }
+    ],
+    "ins-i3-objection-handling-needs-analysis": [
+      {
+        "q": "You're preparing needs-analysis questions for a first-time homeowner. Should the questions lead toward a specific product you want to sell?",
+        "options": [
+          "Yes, leading questions get to a sale faster",
+          "No — open-ended, non-leading questions surface the client's actual coverage gaps rather than confirming a product you already had in mind",
+          "It doesn't matter as long as the facts stated are accurate",
+          "Leading questions are required for compliance documentation"
+        ],
+        "answer": 1,
+        "why": "Leading questions produce answers that confirm a predetermined product, not the client's actual needs, defeating the purpose of a needs analysis."
+      },
+      {
+        "q": "Why does the prompt ask the AI to flag anything in its own response that could be read as overpromising?",
+        "options": [
+          "It's a compliance and trust guardrail that catches drift toward overstating coverage or pressure tactics before you use it",
+          "It makes the response shorter",
+          "It's optional and rarely changes anything",
+          "It replaces the need for any human review of the content"
+        ],
+        "answer": 0,
+        "why": "Self-flagging pushes the model to catch itself if a response angle drifts toward overstating coverage, rather than leaving that entirely to your review."
+      },
+      {
+        "q": "What should an agent avoid doing with AI-prepared objection responses?",
+        "options": [
+          "Practicing them in their own words before the conversation",
+          "Reading them verbatim to a client instead of internalizing and personalizing them",
+          "Grounding them in real product facts",
+          "Refining them after the real conversation based on what worked"
+        ],
+        "answer": 1,
+        "why": "Reading a script verbatim makes the conversation sound unnatural and means the agent doesn't truly own what they say if the client asks an unrehearsed follow-up."
+      }
+    ],
+    "ins-a1-client-communication-template-library": [
+      {
+        "q": "Why organize your existing good drafts into an indexed library rather than just keeping them scattered?",
+        "options": [
+          "It looks more professional to clients",
+          "It solves the real failure mode of having good drafts you can't find fast enough under time pressure",
+          "Indexing is required by most CRM software",
+          "It reduces the total number of templates you need"
+        ],
+        "answer": 1,
+        "why": "Without a searchable index, an agent under deadline pressure ends up writing from scratch anyway, defeating the purpose of the library."
+      },
+      {
+        "q": "Why should every template entry in the library include a stated verification checkpoint?",
+        "options": [
+          "Templates look incomplete without one",
+          "It keeps the accuracy and confidentiality discipline intact as the library scales past a handful of messages",
+          "It's a marketing requirement for insurance websites",
+          "It removes the need to ever review a new draft"
+        ],
+        "answer": 1,
+        "why": "Baking the checkpoint into every entry preserves the same discipline from the earlier one-off prompts as the library grows."
+      },
+      {
+        "q": "What happens if you let the AI invent template types you didn't actually describe when building this library?",
+        "options": [
+          "It saves time building the library",
+          "It bloats the library with template types you'll never actually use",
+          "It automatically improves accuracy",
+          "It better matches insurance industry standards"
+        ],
+        "answer": 1,
+        "why": "The prompt explicitly restricts the AI to organizing and completing what you gave it, keeping the library scoped to situations you actually handle."
+      }
+    ]
+  }
+}

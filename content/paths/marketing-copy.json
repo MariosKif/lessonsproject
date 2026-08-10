@@ -1,0 +1,44 @@
+{
+  "paths": [
+    {
+      "slug": "ai-for-marketers",
+      "title": "AI for Marketers",
+      "tagline": "From a product description to a full campaign — briefs, ad angles, landing pages, email, social, and repurposing.",
+      "description": "An eight-lesson path covering the AI-assisted workflow of a working marketer end to end: turning a product description into a structured campaign brief, generating and shortlisting 20 ad angles, systematically testing and improving ad variants, writing landing-page copy and building a working page with Codex, building a 5-email sequence from one offer, planning a full month of social content, researching competitor messaging with Perplexity, and repurposing one source asset into ten formats.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "marketer",
+      "sortOrder": 5,
+      "lessons": [
+        "mkt-b1-campaign-brief-from-product",
+        "mkt-b2-product-brief-to-20-ad-angles",
+        "mkt-b3-generate-improve-ad-variants",
+        "mkt-b4-landing-page-copy-that-converts",
+        "mkt-i1-email-sequence-from-core-offer",
+        "mkt-i2-monthly-social-content-calendar",
+        "mkt-i3-analyze-competitor-messaging",
+        "mkt-a1-repurpose-asset-into-ten-formats"
+      ]
+    },
+    {
+      "slug": "ai-for-copywriters",
+      "title": "AI for Copywriters",
+      "tagline": "First drafts, tight edits, headline systems, research-backed claims, client revisions, and your own reusable style guide.",
+      "description": "A six-lesson path for professional copywriters using Claude and ChatGPT as a real production tool: generating three genuinely distinct first-draft directions from a brief, editing and tightening text without flattening the writer's voice, building and scoring headline systems, gathering verifiable facts with Perplexity before writing claims, applying client revision rounds fast and consistently, and turning your own writing into a reusable personal style guide.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "copywriter",
+      "sortOrder": 26,
+      "lessons": [
+        "copy-b1-three-draft-directions",
+        "copy-b2-edit-tighten-preserve-voice",
+        "copy-b3-headline-systems",
+        "copy-i1-research-backed-copy",
+        "copy-i2-client-revision-rounds",
+        "copy-a1-personal-style-guide-asset"
+      ]
+    }
+  ]
+}

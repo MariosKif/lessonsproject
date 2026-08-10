@@ -1,0 +1,23 @@
+{
+  "paths": [
+    {
+      "slug": "ai-video-academy",
+      "title": "AI Video Academy",
+      "tagline": "Go from a blank prompt to a finished, publishable clip with Veo in the Gemini app",
+      "description": "A ladder from understanding what Veo 3.1 can and cannot do right now, through writing motion-first (and sound-first) prompts, planning multi-shot storyboards with ChatGPT, producing product and promo clips for social, iterating on flawed output, and finishing with a realistic production workflow that combines Veo clips with simple editing and a Claude-powered review pass. Built around Veo 3.1 in the Gemini app, today's rated all-round leader in AI video.",
+      "kind": "tool-course",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": null,
+      "sortOrder": 14,
+      "lessons": [
+        "vid-b1-what-ai-video-can-do-first-clip",
+        "vid-b2-motion-first-prompts",
+        "vid-i1-storyboard-prompts",
+        "vid-i2-product-promo-clips-social",
+        "vid-i3-iterate-extend-retime-fix",
+        "vid-a1-production-workflow"
+      ]
+    }
+  ]
+}

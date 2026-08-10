@@ -1,0 +1,342 @@
+{
+  "enrichment": {
+    "cur-b1-setup-tab-autocomplete": {
+      "variations": [
+        {
+          "label": "Quick 2-minute warm-up on a throwaway file",
+          "whenToUse": "Use this the very first time you open Cursor, before touching any real project code, to see how Tab behaves with zero risk.",
+          "prompt": "Create a new scratch file called scratch.js in this project. Type a few lines defining a variable `cnt` used three times (a declaration and two increments), then rename `cnt` to `counter` at the declaration by hand and use Tab to accept the predicted follow-on renames at the other two usages. Delete the file when done."
+        },
+        {
+          "label": "Harder version: renaming among similarly-named variables",
+          "whenToUse": "Use this once you're comfortable with the basic accept/reject flow and want to practice catching a suggestion that overreaches.",
+          "prompt": "In a file that has both a variable `usr` and an unrelated variable `usrList` or `usrCount`, rename only `usr` to `user` by hand at its first appearance, then use Tab to step through the remaining suggestions — deliberately press Esc on any suggestion that would incorrectly rename `usrList` or `usrCount` too."
+        },
+        {
+          "label": "Practicing in a non-JavaScript file",
+          "whenToUse": "Use this if your day-to-day project is Python, CSS, Go, or another language, so you calibrate Tab's suggestion quality on the language you'll actually use.",
+          "prompt": "Open a file in your project's primary language with a repeated identifier used at least three times (a Python variable, a CSS custom property, a Go struct field). Rename it by hand at the first occurrence, then use Tab to accept or reject each predicted follow-on edit at the remaining occurrences."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Confirm nothing was missed",
+          "prompt": "Search this file for every remaining instance of `usr` and confirm none were missed, and that every `user` reference is consistent with the original meaning."
+        },
+        {
+          "label": "Understand a suggestion that jumped somewhere unexpected",
+          "prompt": "I just used Tab to rename `usr` to `user` in this file. One suggestion jumped to a location I didn't expect. Explain, based on this file's actual code, why that location was flagged as a related edit."
+        },
+        {
+          "label": "Level up to a harder practice pattern",
+          "prompt": "Suggest one small, real edit in this file that would touch 3 or more locations, so I can practice reading and accepting or rejecting Tab suggestions again."
+        },
+        {
+          "label": "Turn a recurring wrong suggestion into a Rules file",
+          "prompt": "Tab keeps suggesting a naming style that doesn't match this project's actual convention. Help me draft a short .cursor/rules/*.mdc rule documenting the correct convention, based on how it's actually used elsewhere in this codebase."
+        }
+      ],
+      "walkthrough": "Dana just installed Cursor to try it on a personal project, a small Next.js app she's maintained for a year. She opens the project with File → Open Folder and picks a file she knows well: OrderSummary.tsx, where a variable `usr` appears as a function parameter and is used three more times in the same function.\n\nShe places her cursor at the parameter declaration and types `user` over `usr`, by hand, one character at a time. As soon as she finishes that first edit, gray ghost text appears at the next usage of `usr` a few lines down, showing `user` in its place.\n\nShe reads it before doing anything: the ghost text proposes renaming `usr.email` to `user.email`, which matches what she wants. She presses Tab. Her cursor jumps to the next `usr` reference, four lines further down, again showing the same rename as ghost text. She reads it, presses Tab again.\n\nThe third jump surprises her: Tab now suggests renaming `usrCount`, a completely different variable in the same function that happens to share the `usr` substring. She reads it carefully, recognizes it's wrong, and presses Esc to reject it.\n\nShe saves the file and runs `git diff` in the terminal. The diff shows exactly three renamed lines, no accidental fourth change. The whole exercise takes about four minutes, and she now trusts herself to read a suggestion before accepting it instead of Tab-mashing through changes."
+    },
+    "cur-b2-chat-with-codebase": {
+      "placeholders": [
+        {
+          "name": "paste folder or key files",
+          "what": "This is where you tell Chat exactly which part of the codebase to ground its answer in, using Cursor's @ symbol followed by a folder or file path. Find real paths in your project's file tree in the sidebar — pick the folder most likely to contain the logic you're asking about, or the whole top-level source folder if you're not sure yet. A good value is a specific, existing path; a bad one is leaving it blank or guessing a path that doesn't exist.",
+          "examples": ["@src/checkout", "@src/api @src/lib/auth.ts", "@src"]
+        },
+        {
+          "name": "describe one real flow, e.g. 'a user submits the signup form'",
+          "what": "Name one concrete, specific action or event that actually happens in this application, in one short plain-language sentence, so Chat traces a real path through the code instead of describing the architecture in the abstract. Pick something a real user or system would actually do, not a vague concept like 'the main logic'. The more specific the action, the more checkable the resulting trace will be.",
+          "examples": ["a user submits the signup form", "an admin approves a pending order", "a scheduled job sends the weekly digest email"]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Faster sanity-check version",
+          "whenToUse": "Use this when you just need a quick orientation before a small task, not a full onboarding tour.",
+          "prompt": "Using only what's in this codebase (@[paste folder or key files]), give me a two-sentence summary of what this does and the exact file path of its main entry point. If you're not confident, say so instead of guessing."
+        },
+        {
+          "label": "Scoped to one module you're about to touch",
+          "whenToUse": "Use this when you already know which folder your task lives in and want depth on just that area, not the whole app.",
+          "prompt": "Using only @[paste folder or key files], explain: 1) what this module is responsible for, 2) every other part of the codebase that calls into it (with file paths), and 3) what would break elsewhere if its public interface changed. If you're not confident about something, say so instead of guessing."
+        },
+        {
+          "label": "When you're not sure a test suite even exists",
+          "whenToUse": "Use this on an inherited or open-source project where you don't yet know if there's real test coverage.",
+          "prompt": "Using only what's in this codebase, tell me: 1) whether a test suite actually exists and where, 2) the exact command to run it if it does, 3) roughly what percentage of the main logic in @[paste folder or key files] appears to have test coverage, based on what you can see. If you're not confident about something, say so instead of guessing."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Go deeper on one specific file",
+          "prompt": "That was too high-level. Open the file you cited for step 4 that seems most central to this flow, and walk me through it function by function, quoting the actual relevant lines rather than just describing them."
+        },
+        {
+          "label": "Double-check the trace is accurate",
+          "prompt": "Before I trust this, re-verify part 4 yourself: open each file you cited, quote the actual line or function that supports each step of the trace, and flag anything you can't confirm."
+        },
+        {
+          "label": "Ask about error handling in the traced flow",
+          "prompt": "In the flow you just traced, what happens if any step fails — which errors are caught, where, and what does the user actually see? Cite the specific files."
+        },
+        {
+          "label": "Turn this into durable documentation",
+          "prompt": "Turn the summary and trace you just gave me into a short markdown section suitable for a README or wiki page, including the file paths as a bullet list, so I don't have to re-derive this next time."
+        }
+      ],
+      "walkthrough": "Marcus just joined a mid-size e-commerce company and has been handed a ticket to fix a bug in the checkout flow, in a codebase he's never opened before. Rather than guessing at the code's structure, he opens Cursor, waits for the small indexing status indicator in the corner to finish (about a minute for this repo), then opens the Chat panel with Cmd+L.\n\nHe pastes the codebase-tour prompt, filling in @src/checkout for the folder and \"a shopper completes checkout\" for the flow, and sends it.\n\nChat responds with a paragraph explaining this is a Next.js storefront, names app/checkout/page.tsx and app/api/checkout/route.ts as entry points, lists five top-level folders with one-line descriptions each, then traces the flow: the client-side form in CheckoutForm.tsx calls the /api/checkout route, which validates the cart in lib/cart/validate.ts, charges the card via lib/payments/stripe.ts, and writes the order in lib/db/orders.ts. It names npm test as the test command, and flags that it's not fully confident about an older lib/legacy/orderSync.ts file it saw referenced but couldn't trace clearly.\n\nMarcus opens CheckoutForm.tsx and lib/payments/stripe.ts himself and confirms both match the explanation. Since the legacy file matters for his ticket, he sends a follow-up asking Chat to re-verify that specific file by quoting its actual lines rather than describing it.\n\nChat returns the real function names and confirms the file does get called during checkout, correcting its earlier hedge. The whole tour, including his own verification, takes about twelve minutes, and Marcus starts his fix with an accurate map instead of a guess."
+    },
+    "cur-i1-inline-edit-multi-file": {
+      "variations": [
+        {
+          "label": "Inline edit for a quick bug fix",
+          "whenToUse": "Use this when you've found a small, localized bug in one function and know exactly what needs to change.",
+          "prompt": "Inline edit (Cmd+K), with the buggy function selected: \"This function returns an off-by-one result when `items` is empty — fix the loop bounds so an empty array returns 0 instead of throwing, and don't change behavior for any non-empty case.\""
+        },
+        {
+          "label": "Multi-file edit with a hard exclusion boundary",
+          "whenToUse": "Use this for a broader change where some folders must not be touched, like legacy or vendored code.",
+          "prompt": "Multi-file edit — no selection needed: \"Update every usage of the deprecated `apiClient.get()` method to the new `apiClient.fetch()` method across the project, matching its new signature. Do not touch anything under src/legacy/ or node_modules/. List every file you touched when done.\""
+        },
+        {
+          "label": "When you're not sure which tool fits",
+          "whenToUse": "Use this to get a scope estimate from Chat first, before committing to inline edit or a multi-file edit.",
+          "prompt": "Without changing anything yet, tell me: if I rename the function `getUserData` to `fetchUserProfile`, how many files and call sites would that touch? List them. Based on that count, would you recommend I do this as a single inline edit or a multi-file edit?"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Scope crept beyond what you asked",
+          "prompt": "This touched files outside what I asked for. Revert any change to files not directly related to the requested rename/edit, and show me the corrected, narrower diff."
+        },
+        {
+          "label": "One file in the multi-file batch is wrong",
+          "prompt": "The change in one of the files is incorrect — it modified an unrelated variable that happens to share the old name. Tell me which file you're fixing, reject just that file's change, and redo it correctly, leaving the other files as they are."
+        },
+        {
+          "label": "Inline edit missed an edge case",
+          "prompt": "This works for the normal case but doesn't handle when the input is null or undefined. Add that case without changing anything else about the function's behavior."
+        },
+        {
+          "label": "Verify the coordinated change is actually consistent",
+          "prompt": "Run the project's build and test commands now and show me the real output, so I can confirm this change is consistent across every file it touched, not just individually correct."
+        }
+      ],
+      "walkthrough": "Priya is cleaning up a shared TypeScript type, UserRecord, used in 11 files across a mid-size app, and separately needs a one-line fix to a date-formatting function.\n\nShe starts with the small fix. She opens DateDisplay.tsx, selects the formatDate function, and presses Cmd+K. She types: \"Add an optional `locale` parameter defaulting to 'en', and use it to format the returned date string instead of the hardcoded format.\" Cursor shows an inline diff right in the editor — four changed lines. She reads it, confirms it only touches this function, and accepts.\n\nFor the type rename, she doesn't want to repeat that 11 times by hand. She opens the multi-file edit view and describes the full scope: rename the exported type UserRecord to UserProfile everywhere it's defined, imported, or used, without changing its shape, and list every file touched.\n\nCursor proposes changes across all 11 files and lists them. Priya reviews the diff file by file rather than trusting the summary. Ten are clean renames. In the eleventh, UserContext.tsx, she notices the edit also renamed a local variable called userRecord that had nothing to do with the type — a coincidental name match. She rejects just that file and sends a one-line correction asking it to only rename the type import and its usages, leaving the local variable alone.\n\nCursor fixes just that file. She accepts it, then runs the project's build. It passes. The whole task, small fix plus coordinated rename across 11 files, takes about fifteen minutes, most of it spent reading diffs rather than writing code."
+    },
+    "cur-i2-agent-mode-whole-tasks": {
+      "variations": [
+        {
+          "label": "Bug fix instead of a new feature",
+          "whenToUse": "Use this when you have a specific, described bug rather than a feature to add.",
+          "prompt": "Task: Fix the bug where the cart total displays as NaN when a product's discount field is missing.\n\nGoal: cart total always renders a valid currency value, using 0 discount when the field is absent.\n\nAcceptance criteria:\n- Products without a discount field show the full price with no NaN.\n- Products with a discount field behave exactly as before.\n- No change to the discount field's shape or the pricing API.\n\nConstraints: only touch the cart total calculation and its existing tests. Do not touch the pricing API.\n\nDefinition of done: existing tests still pass, and a new test covers a product missing the discount field.\n\nRun the actual test command when you're done and show me the output, not a summary."
+        },
+        {
+          "label": "Architecture-sensitive task needing a flagship model",
+          "whenToUse": "Use this for a task that touches how data flows through the app, not just a local fix — worth spending a stronger model on.",
+          "prompt": "Task: Introduce a shared `useDebouncedValue` hook and use it in the search input so API calls fire at most once every 400ms while typing.\n\nGoal: reduce redundant search API calls without changing what the user sees or how fast results feel.\n\nAcceptance criteria:\n- The hook is generic (not search-specific) and lives in a shared hooks folder if one exists.\n- The search input's existing behavior (loading state, empty state, error state) is unchanged.\n- No more than 1 API call fires per 400ms of continuous typing, verified by a test.\n\nConstraints: don't introduce a new dependency — implement the debounce with plain React/JS.\n\nDefinition of done: existing tests still pass, and a new test verifies the debounce timing.\n\nUse a flagship model for this one, since it touches shared logic other components may reuse. Run the actual test command when done and show me the output."
+        },
+        {
+          "label": "Small UI task with a visual acceptance criterion",
+          "whenToUse": "Use this for a task where correctness includes how something looks, not just how it behaves.",
+          "prompt": "Task: Add a loading spinner to the \"Save\" button on the profile settings form while the save request is in flight.\n\nGoal: the user gets visible feedback during the save request and can't double-submit.\n\nAcceptance criteria:\n- The button shows a spinner and is disabled from the moment it's clicked until the request resolves or fails.\n- On failure, the button re-enables and an existing error message pattern is used to show the failure.\n- No change to the save request itself.\n\nConstraints: only touch the profile settings form component and its existing styles — reuse any spinner component that already exists in this codebase before creating a new one.\n\nDefinition of done: existing tests still pass, and a new test covers both the disabled-during-save state and the error-recovery state.\n\nRun the actual test command when you're done and show me the output, not a summary."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Agent expanded scope beyond the task",
+          "prompt": "This touched files or logic outside what the spec asked for. List everything you changed that wasn't required by the acceptance criteria, then revert those specific changes and show me the narrower diff."
+        },
+        {
+          "label": "Acceptance criteria were too vague, ask for a tighter spec",
+          "prompt": "Before implementing, restate this task back to me as a numbered spec with goal, acceptance criteria, constraints, and definition of done, and flag anything ambiguous you'd need me to clarify first."
+        },
+        {
+          "label": "Redirect mid-task instead of waiting for the finished diff",
+          "prompt": "Stop — this direction doesn't match the constraint about not touching the submission API. Back out of that approach and re-plan using only the existing validation utility."
+        },
+        {
+          "label": "Verify tests actually ran, don't accept a claim",
+          "prompt": "Run the exact test command for this project right now (not a related one) and paste the complete raw output, including the pass/fail count — not a summary of it."
+        }
+      ],
+      "walkthrough": "Tomás needs to add email validation to a newsletter signup form on a marketing site he half-remembers the structure of. Rather than doing it by hand, he opens the Agent view with Cmd+I.\n\nHe pastes the structured task: goal (reject invalid emails client-side before submission), acceptance criteria (specific error message, no page reload, valid emails unaffected, no new dependency, check for an existing validation pattern first), constraints (only touch the signup component and its validation utility), and definition of done (existing tests pass plus a new test for both cases). He ends with a request for real test output, not a summary.\n\nAgent starts working. Tomás watches it search the codebase, then run a terminal command to check for existing validation helpers. It finds isValidEmail already used in the contact form. It's about to also touch the contact form \"for consistency\" — Tomás notices this drifting outside scope and interrupts, telling it to only touch the signup form as specified.\n\nAgent backs out of that part, reuses isValidEmail in just the signup component, adds a new test file, and reports 14 passing tests, 2 new. Tomás reviews the diff file by file: 22 lines, all inside the signup component and one new test file — no scope creep this time.\n\nHe asks it to confirm the exact test command was run, and it pastes the real terminal output showing all 14 tests passing. He accepts the changes and commits. The whole task, including catching and redirecting the one moment of scope creep, takes about eighteen minutes — most of it spent reading the diff and the real test output rather than writing code himself."
+    },
+    "cur-i3-rules-files-conventions": {
+      "variations": [
+        {
+          "label": "Backend/API error-handling convention",
+          "whenToUse": "Use this when your team has a specific way API routes should handle and report errors, and Agent keeps inventing its own.",
+          "prompt": "Example .cursor/rules/api.mdc:\n---\ndescription: API route conventions\nglobs: [\"src/api/**/*.ts\"]\n---\n# API routes\n- Every route handler returns errors using the shared `apiError(status, message)` helper (see src/lib/apiError.ts) — never a raw `throw` or a hand-built JSON error object.\n- Successful responses always use the shape `{ data: ... }`, never a bare object or array at the top level.\n- Input validation happens with the shared `validate()` helper before any database call, not inline `if` checks."
+        },
+        {
+          "label": "Scoped styling convention for one file type",
+          "whenToUse": "Use this when only your CSS/Tailwind files need a specific rule and you don't want it applied to unrelated logic files.",
+          "prompt": "Example .cursor/rules/styling.mdc:\n---\ndescription: Styling conventions for component styles\nglobs: [\"**/*.css\", \"**/*.module.css\"]\n---\n# Styling\n- Use CSS custom properties from src/styles/tokens.css for color and spacing — never hardcoded hex values or pixel numbers.\n- Class names follow BEM (block__element--modifier); no camelCase class names.\n- Do not add new global styles — scope everything to a component's own CSS module."
+        },
+        {
+          "label": "Migrating a legacy .cursorrules file",
+          "whenToUse": "Use this when a project has an old root .cursorrules file that Agent mode is silently ignoring, and you need to port its content into the modern format.",
+          "prompt": "Read the existing root .cursorrules file in this project and rewrite its contents as one or more properly split .cursor/rules/*.mdc files, each with correct YAML frontmatter (a description, and either alwaysApply: true or an appropriate globs pattern based on what the rule actually concerns). Then tell me which original .cursorrules lines, if any, were too vague to convert into a concrete rule, so I can rewrite those myself."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Rule isn't actually being applied",
+          "prompt": "Give Agent a task that would normally violate this rule and check whether it followed the rule without being told again. If it didn't, check the frontmatter — is the globs pattern actually matching the files this task touched, or is alwaysApply missing?"
+        },
+        {
+          "label": "Rule is too vague to be useful",
+          "prompt": "Rewrite this rule to remove any vague language like 'clean code' or 'good practices' and replace each line with a concrete, checkable convention, referencing a real example file from this codebase wherever possible."
+        },
+        {
+          "label": "One giant rule file needs splitting",
+          "prompt": "This rules file covers more than one concern. Split it into separate .mdc files by topic, each with its own accurate description and scope (alwaysApply or globs), and tell me the new filenames."
+        },
+        {
+          "label": "Two rules seem to conflict",
+          "prompt": "Check whether any of my current .cursor/rules/*.mdc files give contradictory instructions for the same situation, and tell me exactly which two rules conflict and how."
+        }
+      ],
+      "walkthrough": "Elena's team keeps getting Agent-generated code that uses default exports and swallows errors silently, even though both violate conventions the team has agreed on verbally for months. She decides to stop repeating this in every prompt and encode it once.\n\nShe creates a .cursor/rules/ folder at the project root, then a new file .cursor/rules/style.mdc. She writes YAML frontmatter — description: Core project conventions for all code, and alwaysApply: true — followed by three concrete bullet points: named exports only, all async functions must use the team's existing logError() pattern from src/lib/logging.ts, and no new npm dependencies without flagging it first. She saves the file.\n\nTo test it, she opens Agent with Cmd+I and asks for something that would normally trigger both bad habits: a function that fetches the user's saved preferences from the API and handles any failure gracefully.\n\nAgent's response defines the function with a named export, and wraps the fetch in a try/catch using logError() exactly as documented in the rule, without her mentioning either convention in this prompt. She opens the generated file and confirms both patterns are actually followed, not just claimed.\n\nShe then checks whether an old root .cursorrules file exists in the repo from before the team switched tools — it does, listing outdated advice nobody had updated in a year. Since Agent mode ignores that file entirely, she deletes it so nobody mistakes it for still being read.\n\nThe whole setup, writing the rule, testing it, and cleaning up the stale legacy file, takes about ten minutes, and the next several tasks the team runs through Agent stop needing the same correction repeated by hand."
+    },
+    "cur-i4-debugging-workflows": {
+      "placeholders": [
+        {
+          "name": "PASTE FULL ERROR AND STACK TRACE",
+          "what": "This is the complete, unedited error message and stack trace exactly as your terminal, test runner, or browser console printed it — not a paraphrase, not a screenshot description, and not just the first line. Find it by scrolling up in the terminal after a failing test run, or opening the browser console (F12) for a runtime error, and copying the whole block including file names and line numbers. A good value includes every line down to where the trace bottoms out in your own code; a bad one is a single sentence like 'the test fails'.",
+          "examples": [
+            "FAIL src/utils/currency.test.ts\n  ● formatCurrency › handles null input\n\n    TypeError: Cannot read properties of null (reading 'toFixed')\n      at formatCurrency (src/utils/currency.ts:14:22)\n      at Object.<anonymous> (src/utils/currency.test.ts:31:5)",
+            "Uncaught TypeError: order.items is not iterable\n    at renderCart (cart.js:88:19)\n    at CartPage (CartPage.tsx:42:11)\n    at renderWithHooks (react-dom.development.js:16305:18)",
+            "1) API signup route > returns 400 for invalid email:\n   AssertionError: expected 500 to equal 400\n      at Context.<anonymous> (test/signup.test.js:19:24)"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "You have wrong UI behavior, not a stack trace",
+          "whenToUse": "Use this when nothing throws an error but the app visibly behaves wrong — a value is missing, a button doesn't respond, a page shows stale data.",
+          "prompt": "The discount total shows $0.00 even when a valid code is applied, on the checkout page, with no error in the console. First, reproduce it yourself by running the app and following the same steps, and confirm you see the same wrong result. Then state your root-cause hypothesis in plain language, citing the specific line(s) responsible, and do not propose a fix yet. Once I confirm the hypothesis makes sense, implement the minimal fix — nothing else. Finally, run the full test suite and show me the complete output."
+        },
+        {
+          "label": "Failure is intermittent, not reliably reproducible",
+          "whenToUse": "Use this when a test or bug only fails sometimes, which makes the usual reproduce-first step harder.",
+          "prompt": "This test fails intermittently, not every run:\n\n[PASTE FULL ERROR AND STACK TRACE FROM A FAILING RUN]\n\nFirst, run it 10 times in a row and report the actual pass/fail count you observed — don't estimate. Then, based on the failures you saw, state a root-cause hypothesis for what's non-deterministic (timing, shared state between tests, unmocked randomness), citing the specific line(s) responsible, before proposing any fix. Once I confirm the hypothesis, implement the minimal fix, then rerun it 10 times again and report the new pass/fail count."
+        },
+        {
+          "label": "Failure appeared right after a dependency upgrade",
+          "whenToUse": "Use this when the bug started after running npm update or similar, and the likely cause is a changed dependency, not your own code.",
+          "prompt": "This started failing right after a dependency update:\n\n[PASTE FULL ERROR AND STACK TRACE]\n\nFirst, check package.json / package-lock.json (or the equivalent) for what actually changed versions recently. Reproduce the failure by running the command in the terminal and confirm you see it. Then state a root-cause hypothesis citing whether a specific upgraded package's changed behavior is responsible, before proposing any fix. If the fix is pinning a version rather than changing our code, say so explicitly and explain why."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Push back on a fix that touches an existing test",
+          "prompt": "You said this fix requires changing an existing test. Explain exactly what that test expected before, why that expectation was actually wrong (not just inconvenient), and show me the old and new assertion side by side before I approve it."
+        },
+        {
+          "label": "Fix looks broader than minimal",
+          "prompt": "This diff touches more than the root cause you identified. Strip it back to the smallest change that fixes the confirmed cause, and revert anything else."
+        },
+        {
+          "label": "Check for the same bug elsewhere",
+          "prompt": "Now that you've confirmed the root cause, search the codebase for any other place the same pattern or mistake appears, and tell me if the same bug exists there too — don't fix it yet, just report it."
+        },
+        {
+          "label": "Triage an automated review comment on the fix",
+          "prompt": "BugBot (or the automated review) left a comment on this fix. Tell me plainly whether it's a real issue or a false positive, and if it's real, propose the smallest correction — if not, give me a one-line reason I can use to dismiss it."
+        }
+      ],
+      "walkthrough": "Sam's test suite has one failing test after a colleague's merge: formatCurrency throws a TypeError when given null. Instead of guessing at a fix, Sam opens Agent and pastes the full error block copied straight from the terminal, stack trace and all, followed by the reproduce-hypothesize-fix-rerun instructions from the debugging prompt.\n\nAgent runs the actual test command in its own terminal session first and confirms the same TypeError at the same line. It states its hypothesis: a recent change to the checkout summary component removed a null check before calling formatCurrency, so a missing discount now reaches the formatter as null instead of 0. It cites the exact line in CheckoutSummary.tsx where the check used to be, and does not propose a fix yet, as instructed.\n\nSam reads the hypothesis, confirms it matches what he'd expect given the recent merge, and replies that it's confirmed to go ahead.\n\nAgent implements the minimal fix — restoring the null check at the source in CheckoutSummary.tsx — rather than adding a defensive check inside formatCurrency itself, which would have masked the real bug elsewhere. It reports that no existing test needed to change. Sam double-checks this claim by asking directly whether the fix touched any test; the answer is no, consistent with the diff he can see.\n\nAgent reruns the full suite, not just the one failing test, and pastes 47 passing, 0 failing. Sam reviews the two-line diff, confirms it matches the confirmed root cause exactly, and merges. From pasting the error to merging the fix takes about nine minutes, most of it spent reading the hypothesis and the two verification runs rather than writing code."
+    },
+    "cur-a1-background-cloud-agents": {
+      "variations": [
+        {
+          "label": "Two tasks in the same repo, different folders",
+          "whenToUse": "Use this when both tasks live in one repository but touch completely separate areas, so they're still safe to run in parallel.",
+          "prompt": "Background task 1: Add loading and error states to the src/components/Notifications/ panel, matching the pattern already used in src/components/Inbox/. Do not touch the Inbox component itself. Definition of done: new states covered by a test, existing tests unaffected.\n\nBackground task 2: Add rate limiting to the src/api/webhooks/ endpoint using the existing `rateLimiter` middleware already used on src/api/uploads/. Do not touch the uploads endpoint. Definition of done: new tests confirm requests over the limit are rejected with a 429, existing tests unaffected."
+        },
+        {
+          "label": "Tasks across multiple connected repositories",
+          "whenToUse": "Use this when you have more than one repo connected to Cursor and independent work to do in each.",
+          "prompt": "Cloud task, repo A (frontend): Update the error boundary component to log caught errors to the existing analytics client instead of only console.error. Definition of done: existing tests pass, one new test confirms the analytics client is called on a thrown error.\n\nCloud task, repo B (backend): Add a health-check endpoint at /healthz that returns 200 with the current git commit hash and uptime in seconds, no auth required. Definition of done: a new test hits the endpoint and asserts the response shape."
+        },
+        {
+          "label": "Overnight batch: dispatch before leaving, review in the morning",
+          "whenToUse": "Use this when you want to queue several well-scoped tasks at the end of the day and review finished diffs the next morning instead of waiting live.",
+          "prompt": "Background task 1: Add missing alt text to every <img> tag in src/pages/marketing/ based on the surrounding content, without changing any layout or styling. Definition of done: no visual or behavioral change, only alt attributes added.\n\nBackground task 2: Convert the remaining class-based components in src/components/legacy/ to function components with hooks, preserving exact existing behavior and props. Definition of done: existing tests pass unmodified, no new dependency added."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Task drifted from spec, send it back with a targeted correction",
+          "prompt": "This result went beyond what the spec asked for. List every file it touched that the spec didn't call for, then redo the task from the original spec with those files explicitly excluded this time."
+        },
+        {
+          "label": "Dependency bump broke a test",
+          "prompt": "One of the updated dependencies broke an existing test. Tell me exactly which package and version change caused it, and whether the right fix is to update our code, pin that one package back, or exclude it from this update — don't guess, check the changelog if you can."
+        },
+        {
+          "label": "Don't trust the cloud agent's own 'tests passed' claim",
+          "prompt": "Show me the complete, real output of running the test suite yourself, right now, in this environment — not a restatement of what the background agent reported."
+        },
+        {
+          "label": "Ask for a PR instead of a raw diff next time",
+          "prompt": "For future background tasks like this, open a pull request with a description of what changed and why, instead of just reporting a diff, so it's easier for me to review and merge."
+        }
+      ],
+      "walkthrough": "Jordan has three independent chores queued up on a Friday afternoon: adding test coverage to a currency utility, a minor dependency bump, and JSDoc comments across an API folder. None of them touch the same files, so instead of doing them one at a time, Jordan writes each as a tight, self-contained spec and dispatches all three as background agents rather than sitting through three live sessions.\n\nEach spec states a clear boundary: do not modify the functions themselves for the test-coverage task, do not touch major-version bumps for the dependency update, do not change any function's behavior for the documentation task — since there's no one watching to catch scope creep mid-run the way there would be in a live Agent session.\n\nJordan closes the laptop and checks back Monday morning. All three have finished. The test-coverage and documentation tasks look clean: Jordan opens each diff, confirms nothing outside the stated scope changed, and merges both directly.\n\nThe dependency-bump task reports a passing test run, but Jordan doesn't take that claim at face value — pulling the branch down locally and rerunning the suite turns up one real failure the cloud environment's own report didn't surface clearly. Rather than assuming the whole update needs redoing, Jordan sends it back with a specific note: one named package's minor version bump changed a default and broke one test; fix just that one dependency's usage or pin it back.\n\nBy Monday afternoon, two of the three tasks are merged and the third has a targeted correction in progress — three days of unattended work compressed into about twenty-five minutes of Jordan's actual review time, split across dispatching the specs and checking the results."
+    },
+    "cur-a2-feature-delivery-workflow": {
+      "placeholders": [
+        {
+          "name": "PASTE TICKET TITLE AND DESCRIPTION",
+          "what": "This is the actual, verbatim text of the ticket, issue, or bug report you're implementing — copied exactly as written in your tracker (Jira, Linear, GitHub Issues), title and full description together, including any acceptance criteria the reporter already wrote. Don't summarize or clean it up yourself first; let Agent work from the real, sometimes-messy original so nothing gets lost in your own paraphrase. A good value is the complete ticket text; a bad one is a one-line guess at what the ticket probably means.",
+          "examples": [
+            "Title: Pagination breaks on last page\nDescription: When a user is on the last page of the orders table and it has fewer items than a full page, clicking 'Next' shows a blank table instead of disabling the button. Expected: 'Next' should be disabled once there are no more pages. Reported by 3 users this week via support.",
+            "Title: Add CSV export to the reports dashboard\nDescription: Finance team needs to download the monthly revenue report as a CSV instead of only viewing it in the browser. Should include the same columns currently shown on screen: date, product, revenue, refunds. Button should live next to the existing 'Print' button.",
+            "Title: Session expires silently, user loses unsaved form data\nDescription: When a session times out while a user is mid-way through the settings form, the page redirects to login with no warning and any unsaved changes are lost. Need a warning before redirect, or a way to preserve the draft. Acceptance: user sees a modal at least 60 seconds before forced logout."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "No formal ticket — a Slack message or verbal request",
+          "whenToUse": "Use this when the request came as an informal message rather than a written ticket, and you need Agent to help formalize it first.",
+          "prompt": "Here's the raw request I got, not a formal ticket: \"[PASTE THE INFORMAL REQUEST, e.g. a Slack message or verbal summary]\"\n\nFirst, turn this into a full spec — goal, acceptance criteria, constraints, definition of done — flagging anything ambiguous you'd need me to confirm before implementing. Show me the spec before implementing anything.\n\nOnce I approve it: implement it, following the conventions in .cursor/rules/ and any AGENTS.md in this repo. Then run the full test suite, the build, and the linter, and paste the complete output of each. Finally, draft a pull request description mapped to each acceptance criterion."
+        },
+        {
+          "label": "Ticket describes a bug, not a new feature",
+          "whenToUse": "Use this when the ticket is a bug report rather than a feature request — the workflow is the same, but the spec should include a reproduction step.",
+          "prompt": "Ticket: [PASTE TICKET TITLE AND DESCRIPTION]\n\nFirst, write this as a full spec — reproduction steps, expected vs actual behavior, acceptance criteria for the fix, constraints, definition of done — and show it to me before implementing anything.\n\nOnce I approve the spec: reproduce the bug yourself in the terminal or running app first and confirm you see it. Then implement the fix, following the conventions in .cursor/rules/ and any AGENTS.md in this repo. Run the full test suite, the build, and the linter, and paste the complete output of each. Tell me explicitly whether any existing test was modified and why. Finally, draft a pull request description stating the root cause and the fix."
+        },
+        {
+          "label": "Task exposes a convention that isn't documented yet",
+          "whenToUse": "Use this when you realize partway through that a real project convention isn't captured in any Rules file yet, before letting Agent implement from an incomplete picture.",
+          "prompt": "Ticket: [PASTE TICKET TITLE AND DESCRIPTION]\n\nBefore writing a spec, check whether .cursor/rules/ or AGENTS.md already document the convention this task will need most (state which convention you think that is). If it isn't documented, draft the missing rule as a short .mdc file first and show it to me for approval alongside the spec. Once I approve both: implement it, run the full test suite, build, and linter with complete output, and draft a pull request description mapped to each acceptance criterion."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Spec was approved too fast — tighten it before implementation",
+          "prompt": "Before you implement, go back over the spec you wrote and flag anything that's still ambiguous or assumes something not stated in the ticket, so I can confirm it explicitly before you touch any code."
+        },
+        {
+          "label": "PR description is too generic",
+          "prompt": "This PR description is too generic. Rewrite it so each acceptance criterion from the spec has its own bullet explaining specifically what changed to satisfy it, referencing the actual file(s)."
+        },
+        {
+          "label": "Triage an automated review comment",
+          "prompt": "Go through every comment the automated reviewer left on this PR one at a time. For each, tell me plainly: fix it now, or reject it with a one-line reason — don't leave any comment untriaged."
+        },
+        {
+          "label": "Capture the lesson learned in Rules before moving on",
+          "prompt": "Now that this is merged, was there anything you had to figure out or that I had to explain that should already have been documented? Draft one short addition to the relevant .cursor/rules/*.mdc file capturing it."
+        }
+      ],
+      "walkthrough": "Aisha picks up a support ticket: pagination breaks on the last page of the orders table, and the Next button doesn't disable itself, leaving users on a blank screen. She opens Agent with Cmd+I and pastes the full end-to-end delivery prompt, filling the ticket placeholder with the verbatim title and description from the tracker rather than her own summary.\n\nAgent first writes a spec: goal, acceptance criteria (Next disables when no more pages exist, existing pagination on earlier pages is unchanged), constraints (only touch the pagination component and its existing hook), and a definition of done. It shows this to Aisha before touching any code, as instructed. She reads it, confirms it matches the ticket, and approves.\n\nAgent implements the fix, referencing the project's existing .cursor/rules/pagination.mdc rule for how page-count logic works elsewhere in the app, so she doesn't have to re-explain that convention. It runs the test suite, build, and linter, pasting all three real outputs, and confirms no existing test was modified. It drafts a PR description mapping the fix directly to each acceptance criterion.\n\nAisha opens the PR. An automated review bot flags one comment about a missed loading state; she triages it as a real issue and asks Agent to fix it, then rejects a second comment as a known pattern used elsewhere with a one-line reason. She does a final personal read of the 18-line diff herself, confirms it's exactly what she expects, and merges.\n\nAfterward she notices the ticket exposed a page-count edge case not yet documented, so she adds one line to the pagination rule file. Ticket to merged PR takes about twenty-five minutes."
+    }
+  }
+}

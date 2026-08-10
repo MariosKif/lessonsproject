@@ -1,0 +1,354 @@
+{
+  "quizzes": {
+    "html-i01-semantic-layout": [
+      {
+        "q": "You are marking up a blog post teaser that will also appear in the site's RSS feed and on a category page. Which wrapper is correct?",
+        "options": [
+          "<section>, because it is a section of the listing page",
+          "<article>, because the teaser is self-contained and makes sense republished elsewhere",
+          "<aside>, because teasers are secondary content",
+          "<main>, because the teaser is the important content of the card"
+        ],
+        "answer": 1,
+        "why": "The syndication test decides it: content that still makes sense distributed on its own — feed entries, posts, cards — is an article, regardless of where it currently appears."
+      },
+      {
+        "q": "A template accidentally renders two <main> elements: one around the page content and one inside the article. What is the correct fix?",
+        "options": [
+          "Keep both — HTML allows any number of main elements",
+          "Keep the inner one and delete the outer one",
+          "Keep the single outer main for the page's unique content and change the inner one to article or a div",
+          "Replace both with <section> to avoid the conflict"
+        ],
+        "answer": 2,
+        "why": "A page gets exactly one main, wrapping its unique content; anything nested inside an article that needs grouping is a job for article internals, section or a plain div."
+      },
+      {
+        "q": "You want the post's title and publish date grouped at the top of the article, while the site logo and menu sit at the top of the page. What markup expresses both?",
+        "options": [
+          "Two <header> elements: one inside body for the site, one inside the article for the post",
+          "One <header> only — a second header element is invalid",
+          "A <header> for the site and a <nav> for the post title",
+          "A <section> for the site banner and a <header> for the post"
+        ],
+        "answer": 0,
+        "why": "header attaches to its nearest ancestor, so a page-level header and an article-level header coexist correctly — each introduces its own container."
+      }
+    ],
+    "html-i02-why-semantics": [
+      {
+        "q": "A screen-reader user complains they must listen through your entire menu on every page before reaching the content. Which change fixes the root cause?",
+        "options": [
+          "Add more descriptive class names like class=\"main-content\"",
+          "Wrap the unique content in <main> so it becomes a jumpable landmark",
+          "Move the menu below the content in the source",
+          "Reduce the number of menu items"
+        ],
+        "answer": 1,
+        "why": "Landmarks come from semantic elements, not class names — a real <main> lets screen-reader users jump straight past the repeated chrome with one keystroke."
+      },
+      {
+        "q": "During a refactor you meet <div class=\"card-wrapper\"> whose only purpose is to carry the card's border and shadow styles. What should you do?",
+        "options": [
+          "Convert it to <section> — every div should become semantic",
+          "Convert it to <article> since it wraps a card",
+          "Leave it as a div — purely presentational grouping is exactly what div is for",
+          "Delete it and move the styles to body"
+        ],
+        "answer": 2,
+        "why": "Semantic markup means choosing meaningful elements where meaning exists; a styling-only wrapper has none, so div is the correct, honest choice."
+      },
+      {
+        "q": "Inside <main><article>...</article></main> on a page whose h1 is the site title, what level should the article's title heading be?",
+        "options": [
+          "h1 — each article restarts the outline at h1",
+          "h2 — the document has one outline and the article title sits one level under the page h1",
+          "h3 — one level per wrapper element (main, then article)",
+          "Any level, because sectioning elements renumber headings automatically"
+        ],
+        "answer": 1,
+        "why": "The HTML5 outline algorithm was never implemented and is gone from the standard: heading levels are numbered explicitly across the whole document, so a title directly under the h1 is an h2."
+      }
+    ],
+    "html-i03-tables-basics": [
+      {
+        "q": "Your rendered table shows a gap: the third row is missing its last cell. What is the most likely cause?",
+        "options": [
+          "The table element is missing a columns attribute",
+          "That tr contains fewer cells than the other rows",
+          "A th was used where a td belongs",
+          "The table needs border-collapse in CSS"
+        ],
+        "answer": 1,
+        "why": "HTML tables are row-major and every row must supply the same number of cell positions; a short row leaves a visible hole in the grid."
+      },
+      {
+        "q": "In a nutrition table each row starts with the nutrient name (Protein, Fat, Sugar) labelling the numbers to its right. How should those first cells be marked up?",
+        "options": [
+          "<td> with bold styling so they stand out",
+          "<th scope=\"col\"> because they are in the first column",
+          "<th scope=\"row\"> because each labels the cells of its own row",
+          "<caption> elements, one per row"
+        ],
+        "answer": 2,
+        "why": "They are header cells for their rows, so th with scope=\"row\" — scope describes the direction a header applies, not where the cell happens to sit."
+      },
+      {
+        "q": "A colleague proposes using a table to place the sidebar next to the article, 'like the old days'. What is the right assessment?",
+        "options": [
+          "Fine — tables render reliably in every browser",
+          "Wrong tool: layout belongs to CSS, and a layout table is announced to screen readers as data that is not there",
+          "Acceptable if every cell gets scope attributes",
+          "Only wrong if the table has visible borders"
+        ],
+        "answer": 1,
+        "why": "Tables assert 'this is tabular data' to every consumer of the page; using one for positioning misleads assistive technology and forfeits the better CSS layout tools."
+      }
+    ],
+    "html-i04-tables-structure": [
+      {
+        "q": "A 30-page expense report prints with column labels visible only on page one. Which markup change fixes the printout?",
+        "options": [
+          "Move the header row into a <thead>, which browsers repeat on every printed page",
+          "Add a <caption> above the table",
+          "Duplicate the header row every 40 data rows",
+          "Set scope=\"col\" on the header cells"
+        ],
+        "answer": 0,
+        "why": "Print engines repeat thead rows at the top of each page of a split table — but only if the rows are actually grouped in a thead."
+      },
+      {
+        "q": "You want the whole 'Amount' column shaded without touching every cell. Where can that styling hook live in the markup?",
+        "options": [
+          "On the tr elements, since they contain the cells",
+          "On a <col> inside <colgroup> positioned to cover that column",
+          "On the tfoot element",
+          "Nowhere — columns cannot be addressed in HTML at all"
+        ],
+        "answer": 1,
+        "why": "colgroup/col exist precisely to describe columns in row-major markup; a col accepts background, width, border and visibility, so a background shade hangs on it cleanly."
+      },
+      {
+        "q": "document.querySelector('table > tr') returns null even though your table clearly has rows written directly inside it. Why?",
+        "options": [
+          "querySelector cannot traverse into tables",
+          "The parser wrapped your bare rows in an implicit tbody, so no tr is a direct child of table",
+          "Rows only match selectors when a thead exists",
+          "The > combinator is invalid for table elements"
+        ],
+        "answer": 1,
+        "why": "Browsers auto-insert tbody around stray rows during parsing; writing tbody explicitly keeps the source truthful and your selectors predictable."
+      }
+    ],
+    "html-i05-tables-spanning": [
+      {
+        "q": "You add rowspan=\"3\" to a category cell, and now each of the next two rows shows a cell jutting past the table's right edge. What went wrong?",
+        "options": [
+          "rowspan values above 2 are invalid",
+          "The next two rows still contain a cell for that column, whose position the rowspan already reserved",
+          "The table is missing a colgroup",
+          "rowspan must also be declared on the table element"
+        ],
+        "answer": 1,
+        "why": "A rowspan pre-claims the same column position in following rows, so those rows must omit that cell — supplying it anyway pushes every cell rightward and overhangs the grid."
+      },
+      {
+        "q": "A 'Contact details' header spans the Phone and Email columns. Which scope value does it take?",
+        "options": [
+          "scope=\"col\" — it is in the header row",
+          "scope=\"row\" — it spans horizontally",
+          "scope=\"colgroup\" — it labels a group of columns",
+          "No scope — spanned headers cannot take one"
+        ],
+        "answer": 2,
+        "why": "A header covering several columns describes the group, not a single column, so colgroup is the correct scope (rowgroup being the vertical mirror)."
+      },
+      {
+        "q": "A table's header geometry is too irregular for scope to describe which headers apply to which cells. What is the standard HTML mechanism to keep it accessible?",
+        "options": [
+          "Give each header an id and list the applicable ids in each data cell's headers attribute",
+          "Add aria-label to the table element summarising the layout",
+          "Repeat the header text inside every data cell",
+          "Wrap each irregular block in its own tfoot"
+        ],
+        "answer": 0,
+        "why": "The headers/id technique wires every data cell to its headers explicitly, covering relationships scope cannot express — at the cost of maintaining the id lists truthfully."
+      }
+    ],
+    "html-i06-forms-basics": [
+      {
+        "q": "A login form was built with method=\"get\" and now passwords appear in the server's access logs. Why, and what is the fix?",
+        "options": [
+          "GET encrypts weakly; switch the site to HTTPS and keep GET",
+          "GET puts the data in the URL, which servers log; switch the form to method=\"post\" so it travels in the request body",
+          "The name attributes leaked; rename the fields",
+          "The action URL was absolute; make it relative"
+        ],
+        "answer": 1,
+        "why": "GET serialises all pairs into the query string — visible in history, logs and shared links — so credentials and any private data must travel by POST."
+      },
+      {
+        "q": "A user fills in a styled input and submits, but the server never receives that field at all. The input has an id, a label and a placeholder. What is missing?",
+        "options": [
+          "A value attribute",
+          "The required attribute",
+          "The name attribute — without it the browser skips the control entirely when building the submission",
+          "An enctype on the form"
+        ],
+        "answer": 2,
+        "why": "Only named controls contribute name=value pairs; id serves the page internally, but the server keys everything off name."
+      },
+      {
+        "q": "Your product filter form should produce results users can bookmark and share with colleagues. Which method fits and why?",
+        "options": [
+          "POST, because filters may contain several values",
+          "GET, because the parameters become part of the URL, making the result page bookmarkable and shareable",
+          "POST, because GET forms cannot have submit buttons",
+          "Either — method only affects encoding speed"
+        ],
+        "answer": 1,
+        "why": "GET's defining property is that the submission is the URL: reloading or sharing it reproduces the same read-only query, exactly right for searches and filters."
+      }
+    ],
+    "html-i07-labels-inputs": [
+      {
+        "q": "Clicking the 'Email' text does nothing, though the markup has <label for=\"email\"> and an input with name=\"email\". What is wrong?",
+        "options": [
+          "The label must come after the input in the source",
+          "for pairs with the input's id, not its name — the input needs id=\"email\"",
+          "Labels only work inside fieldsets",
+          "The input needs a placeholder to activate the label"
+        ],
+        "answer": 1,
+        "why": "The pairing contract is for ↔ id, exactly matched; a name attribute plays no part, and a dangling for fails silently."
+      },
+      {
+        "q": "A designer wants minimal forms: no visible labels, just grey hint text inside each field. What is the professional objection?",
+        "options": [
+          "Grey text renders differently across browsers",
+          "The hint disappears once typing starts, may not be announced by assistive tech, and typically fails contrast — placeholder cannot be the only label",
+          "Placeholders slow down form submission",
+          "Hints inside fields prevent autofill entirely"
+        ],
+        "answer": 1,
+        "why": "placeholder is an optional format hint, not a field name; if the design demands the look, a real label restyled with CSS keeps accessibility intact."
+      },
+      {
+        "q": "Adding a <button> that toggles password visibility suddenly makes the login form submit whenever it is clicked. Why?",
+        "options": [
+          "Buttons may not contain icons",
+          "Inside a form, a button without an explicit type defaults to type=\"submit\"",
+          "JavaScript click handlers always trigger submission",
+          "The button must be moved outside the form to work"
+        ],
+        "answer": 1,
+        "why": "The default type of button inside a form is submit — every script-only button needs an explicit type=\"button\" to stay inert."
+      }
+    ],
+    "html-i08-input-types-choice": [
+      {
+        "q": "Users can somehow select Small, Medium and Large simultaneously in your size chooser built from three radio inputs. What is the bug?",
+        "options": [
+          "Radios need JavaScript to enforce exclusivity",
+          "The three radios have different name attributes, so each is its own group of one",
+          "The checked attribute is missing",
+          "Radios must live inside a select element"
+        ],
+        "answer": 1,
+        "why": "Radio exclusivity comes solely from a shared name within the form; differing names create independent groups that can all be active at once."
+      },
+      {
+        "q": "The server receives size=on instead of the chosen size. Which attribute was forgotten on the radio inputs?",
+        "options": [
+          "value — without it a selected control submits the literal default 'on'",
+          "id — the server cannot resolve the element",
+          "label — unlabeled controls submit placeholders",
+          "checked — unchecked groups send 'on'"
+        ],
+        "answer": 0,
+        "why": "The submitted pair is name=value; with no value attribute the browser falls back to 'on', which tells the server that something was picked but not what."
+      },
+      {
+        "q": "A screen-reader user hears 'Medium, radio button' but has no idea what question Medium answers. What markup provides that context?",
+        "options": [
+          "A heading element directly above the radios",
+          "A title attribute on each input",
+          "A fieldset around the group with a legend stating the question, announced together with each option",
+          "Longer label text on every option"
+        ],
+        "answer": 2,
+        "why": "legend is the programmatic name of the group: assistive technology announces it with each option's label, turning 'Medium' into 'Size, Medium'."
+      }
+    ],
+    "html-i09-input-types-modern": [
+      {
+        "q": "Users typing Greek postal codes report that '01234' becomes '1234' and the field shows spinner arrows. What went wrong in the markup?",
+        "options": [
+          "The maxlength attribute is missing",
+          "type=\"number\" was used for digit-like data that is not a quantity — leading zeros vanish; use text or tel with validation",
+          "The min attribute defaults to 1",
+          "Postal codes require type=\"search\""
+        ],
+        "answer": 1,
+        "why": "number treats input as a mathematical value, normalising away leading zeros and offering steppers; codes and ids are digit strings, not numbers."
+      },
+      {
+        "q": "With min=\"0\", max=\"10\" and step=\"2\" on a number input, a user types 7 and the form refuses to submit. Why?",
+        "options": [
+          "7 exceeds the permitted number of characters",
+          "Steps count from min, so only even values are on the validity grid — 7 falls between steps",
+          "max must be a multiple of step",
+          "Typed values bypass validation; only spinner values are checked"
+        ],
+        "answer": 1,
+        "why": "step defines a grid anchored at min (0, 2, 4, 6, 8, 10 here); values off the grid are invalid even when inside the range — use step=\"any\" to allow all."
+      },
+      {
+        "q": "A checkout page stores the price in <input type=\"hidden\" name=\"price\" value=\"49.90\"> and charges whatever comes back. What is the security assessment?",
+        "options": [
+          "Safe — hidden inputs cannot be seen or edited by users",
+          "Safe if the form uses POST",
+          "Vulnerable — hidden means not rendered, not protected; anyone can change the value, so the server must derive the price itself",
+          "Vulnerable only over HTTP, safe over HTTPS"
+        ],
+        "answer": 2,
+        "why": "Hidden fields are plainly editable in DevTools or a crafted request; they may carry identifiers to look up, never values the server trusts blindly."
+      }
+    ],
+    "html-i10-input-types-datetime": [
+      {
+        "q": "You preset a date field with value=\"20/08/2026\" and the field renders empty. What is the rule you violated?",
+        "options": [
+          "value cannot be preset on date inputs",
+          "The wire format is always ISO YYYY-MM-DD regardless of locale — value=\"2026-08-20\" is required",
+          "Dates must be set via the min attribute",
+          "The slash separator needs URL-encoding"
+        ],
+        "answer": 1,
+        "why": "Display is localised but the machine format is fixed: value, min, max and the submitted data all use YYYY-MM-DD, so non-ISO strings are simply ignored."
+      },
+      {
+        "q": "A global webinar signup uses <input type=\"datetime-local\"> alone, and attendees from other timezones join an hour off. Why?",
+        "options": [
+          "datetime-local rounds to the nearest hour",
+          "The value deliberately carries no timezone — the server needs the user's zone captured separately to compute the true instant",
+          "The T separator corrupts the value in transit",
+          "Browsers convert the value to UTC inconsistently"
+        ],
+        "answer": 1,
+        "why": "datetime-local means 'this wall-clock time, zone unspecified' — perfect for local appointments, insufficient for global instants without a separately captured timezone."
+      },
+      {
+        "q": "In a browser without month-input support, <input type=\"month\"> renders as a plain text box. What keeps the form usable there?",
+        "options": [
+          "Nothing — the form cannot submit in that browser",
+          "The browser downloads a picker automatically",
+          "The field still submits as text, so document the YYYY-MM format near the label and validate format and range on the server",
+          "Adding required forces the browser to render a picker"
+        ],
+        "answer": 2,
+        "why": "Unknown types degrade to text inputs that still submit under their name; visible format hints plus server-side validation make the degraded path safe."
+      }
+    ]
+  }
+}

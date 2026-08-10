@@ -1,0 +1,517 @@
+{
+  "lessons": [
+    {
+      "slug": "rest-b1-menu-descriptions-that-sell",
+      "title": "Write menu descriptions that make dishes sell with Claude",
+      "summary": "Turn a dish's ingredients and prep notes into appetizing, accurate menu copy that increases orders without over-promising.",
+      "difficulty": "beginner",
+      "minutes": 8,
+      "isFree": true,
+      "goal": "Turn a dish's ingredients, sourcing, and prep method into a menu description that makes people want to order it, using only real facts about the dish.",
+      "whyItMatters": "Menu copy is one of the highest-leverage things a restaurant writes — the same dish sells at a different rate depending on how it's described, and specific sensory language (\"seared,\" \"charred,\" \"slow-braised\") consistently outsells vague words like \"delicious\" or \"tasty.\" But menus are also a legal and trust surface: invented ingredients, wrong allergen claims, or exaggerated sourcing (\"locally sourced\" when it isn't) can trigger refunds, health complaints, or a bad review that sticks. A prompt that writes vividly but never invents a fact turns menu writing from a dreaded task into a fast, repeatable one.",
+      "beforeYouStart": "Have a Claude account open. Gather your dish list: ingredients, prep or cooking method, any sourcing detail worth mentioning (local, house-made, imported), price, and known allergens.",
+      "steps": [
+        "Open a new chat in Claude (a Project named after your menu works well if you're doing this for the whole menu).",
+        "List one dish at a time with its real ingredients, prep method, and any sourcing detail — don't skip the prep method, it's what makes descriptions specific instead of generic.",
+        "Use the guardrail prompt below, which restricts Claude to the facts you gave it and asks it to flag allergens plainly rather than guess.",
+        "Specify the menu format (printed menu, online ordering, QR-code menu) since length and tone differ.",
+        "Read the draft against your ingredient list and cut anything that wasn't in your notes, especially sourcing claims like \"organic\" or \"local.\"",
+        "Ask for a second, shorter version if you also need a board or app listing with a tighter character limit.",
+        "Save the approved copy in your menu file and reuse the same prompt for the next dish."
+      ],
+      "prompt": "You are helping me write a menu description for a restaurant dish.\n\nSTRICT RULES:\n- Use only the ingredients, prep method, and sourcing details I give you below. Do not add ingredients, cooking techniques, or sourcing claims (e.g., \"organic,\" \"locally sourced,\" \"grass-fed\") that I did not state.\n- If I list an allergen-relevant ingredient (nuts, shellfish, dairy, gluten), mention it plainly in a separate \"Contains\" note rather than working around it.\n- Do not use empty adjectives like \"delicious,\" \"amazing,\" or \"mouthwatering\" — replace them with specific, sensory details about texture, technique, or flavor that come from the facts I gave you.\n\nDish name: [DISH NAME]\nIngredients: [LIST]\nPrep/cooking method: [E.G., \"pan-seared,\" \"slow-braised 6 hours,\" \"wood-fired\"]\nSourcing detail (only if true): [E.G., \"from Miller Family Farm\" or leave blank]\nPrice: [PRICE]\nKnown allergens: [LIST OR \"none stated\"]\nMenu format: [printed menu / online ordering / QR menu / social post]\n\nWrite:\n1. A menu description of 15-25 words in an appetizing, specific tone.\n2. A \"Contains\" note listing any allergens I stated.\n3. A shorter 8-10 word version for a board or app listing.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Naming the specific forbidden claims — \"organic,\" \"locally sourced,\" \"grass-fed\" — works better than a general \"stick to the facts\" instruction, because those are exactly the words a model reaches for when it's trying to make a description sound more premium. Banning empty adjectives and asking for sensory detail instead is what makes the copy actually sell: \"tasty\" describes nothing, but \"charred at the edges, finished with brown butter\" gives the reader something to picture. Separating the allergen note from the main description keeps it visible and consistent instead of buried inside a sentence where a guest could miss it.",
+      "example": "Input: Dish name: Braised Short Rib. Ingredients: beef short rib, red wine, root vegetables, garlic, fresh thyme. Prep: braised 6 hours, finished with pan jus. Sourcing: none stated. Price: $28. Allergens: none stated. Format: printed menu.\n\nExpected output: something like \"Beef short rib, braised six hours in red wine with garlic and thyme, finished with pan jus and root vegetables\" (18 words, specific to the actual prep) plus a shorter version like \"6-hour braised short rib, red wine jus\" for a board listing. It should not add \"grass-fed,\" \"farm-raised,\" or a wine pairing suggestion unless those facts were given.",
+      "exercise": "In your own Claude account, pick three real dishes from your current menu and run each through this prompt using their actual ingredients and prep methods.",
+      "expectedResult": "Three specific, appetizing menu descriptions with correct allergen notes, where every word in the description traces back to a real ingredient or technique you provided.",
+      "commonMistakes": [
+        "Letting a sourcing claim like \"locally sourced\" slip into copy for an ingredient you actually buy wholesale.",
+        "Skipping the prep method in your notes, which forces the model to write generically instead of specifically.",
+        "Accepting empty adjectives (\"delicious,\" \"amazing\") instead of pushing for a second draft with more sensory specifics.",
+        "Forgetting to update a dish's allergen note after a recipe change."
+      ],
+      "proTip": "Build a running ingredient-and-prep reference sheet for your whole menu once — after that, rewriting descriptions for a seasonal menu change becomes a 10-minute swap-and-regenerate task instead of starting from scratch.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "restaurant-owner"
+      ],
+      "skills": [
+        "writing",
+        "marketing"
+      ]
+    },
+    {
+      "slug": "rest-b2-review-responses-praise-complaints-unfair",
+      "title": "Reply to restaurant reviews — praise, complaints, and unfair ones — with ChatGPT",
+      "summary": "Draft a calibrated response for a glowing review, a legitimate complaint, or an unfair or inaccurate review, without sounding defensive or robotic.",
+      "difficulty": "beginner",
+      "minutes": 8,
+      "isFree": false,
+      "goal": "Draft a review response matched to the actual situation — genuine thanks for praise, an accountable response to a fair complaint, or a calm, non-defensive response to an unfair or inaccurate one.",
+      "whyItMatters": "Review responses are read far more by future customers deciding whether to book a table than by the person who wrote the review. A generic \"Thank you for your feedback!\" wastes a positive review's momentum, an overly defensive reply to a fair complaint reads as un-trustworthy, and arguing publicly with an unfair review usually does more damage than the review itself. Most owners write these late at night after a long shift, which is exactly when tone control slips — a structured prompt keeps the response professional even when the owner is frustrated.",
+      "steps": [
+        "Paste the review text exactly as written.",
+        "Tell the tool which category it is: praise, legitimate complaint, or unfair/inaccurate — your own judgment call, not the AI's.",
+        "For a complaint, give the real facts of what happened (or \"unclear, need to look into it\") so the response doesn't admit fault that isn't established.",
+        "Use the response prompt, which adjusts tone and structure per category.",
+        "Read the draft for defensiveness — cut any sentence that argues with the customer rather than addressing the situation.",
+        "For a complaint, add a genuine offline next step (a phone number, an invitation to return) before posting.",
+        "Post the final response yourself on the review platform."
+      ],
+      "prompt": "Help me write a public response to this restaurant review.\n\nReview: [PASTE REVIEW TEXT]\nCategory (my judgment): [praise / legitimate complaint / unfair or inaccurate]\nWhat actually happened (only if a complaint, and only real facts — write \"unclear, will look into it\" if you don't know): [FACTS OR \"UNCLEAR\"]\nMy restaurant's name and my role: [NAME / owner or manager]\n\nRules by category:\n- If PRAISE: thank them for something specific they mentioned (don't write a generic \"thanks for your feedback\"), keep it under 60 words, warm and not salesy.\n- If LEGITIMATE COMPLAINT: acknowledge the specific issue without over-apologizing or admitting something I haven't confirmed, briefly note what we're doing about it (only if I gave you that detail), and invite them to contact us directly. Do not sound scripted or defensive. Under 100 words.\n- If UNFAIR OR INACCURATE: stay calm and factual, correct only the specific inaccuracy using facts I provide, do not argue with their opinion or get sarcastic, and still invite them to reach out directly. Do not admit fault we don't actually have. Under 90 words.\n\nDo not invent details about what happened that I haven't given you.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Making the owner classify the review first — rather than asking the model to judge whether a complaint is fair — keeps the human judgment call where it belongs, since only the owner actually knows what happened. The per-category rules matter because the three situations need opposite instincts: praise needs specificity and warmth, a fair complaint needs accountability without over-apologizing, and an unfair review needs calm correction without an argument. Explicitly banning invented facts about the incident stops the model from writing an apology for something that was never confirmed, which is the single biggest way a review response backfires.",
+      "example": "Review (unfair/inaccurate): \"Waited an hour and the food was cold, terrible service, never going back.\" Facts: table records show 22-minute wait, no other complaints that night, kitchen closed on time.\n\nExpected output for the unfair category: a calm response thanking them for taking the time to write, gently noting the actual wait time based on the restaurant's records without accusing them of lying, expressing genuine interest in what went wrong with their specific experience, and inviting them to contact the restaurant directly — with no sarcasm and no argument about their opinion of the food.",
+      "exercise": "In your own ChatGPT account, take one real recent review of each type you have (or the most recent one if you only have one type) and draft a response using this prompt before posting it.",
+      "expectedResult": "A response appropriate to the review's category — warm for praise, accountable but not over-apologetic for a fair complaint, calm and factual for an unfair one — that you'd be comfortable having every future customer read.",
+      "commonMistakes": [
+        "Using the same generic template for every review regardless of what it actually said.",
+        "Over-apologizing for a complaint before confirming what actually happened.",
+        "Arguing with an unfair review's opinion instead of just correcting the specific factual claim.",
+        "Posting without adding a genuine offline contact option for legitimate complaints."
+      ],
+      "proTip": "Keep a short internal note of common complaint types (wait times, a specific dish, noise level) and how you've chosen to respond to each — feeding that pattern into future prompts keeps your responses consistent across different staff members who might be posting them.",
+      "tools": [
+        "chatgpt"
+      ],
+      "professions": [
+        "restaurant-owner"
+      ],
+      "skills": [
+        "writing",
+        "communication"
+      ]
+    },
+    {
+      "slug": "rest-i1-social-posts-seasonal-promotions",
+      "title": "Plan social posts and seasonal promotions with Claude and ChatGPT's GPT Image 2",
+      "summary": "Turn a seasonal theme or limited-time special into a week of social captions plus matching AI-generated image prompts for ChatGPT's GPT Image 2, ready to schedule together.",
+      "difficulty": "intermediate",
+      "minutes": 11,
+      "isFree": false,
+      "goal": "Produce a week's worth of on-theme social captions and matching image-generation prompts for a seasonal promotion, ready to post as a coordinated set.",
+      "whyItMatters": "Seasonal promotions (a holiday menu, a summer patio special, a fall drink lineup) only work if they're visible consistently across the weeks they run, but writing captions and sourcing visuals separately is where most restaurants' social calendars quietly fall apart. Pairing a caption-writing pass in Claude with a matching image-prompt pass in ChatGPT (GPT Image 2) lets you build a coordinated week of posts in one sitting instead of scrambling for content the morning of.",
+      "beforeYouStart": "Have a Claude account for captions and a ChatGPT account (Plus or higher, for GPT Image 2) for visuals. Know your promotion's real details: the dish or offer, dates it runs, and price.",
+      "steps": [
+        "Write one short brief: the promotion, the dishes or offers involved, the dates it runs, and the price if you're stating one publicly.",
+        "Use Part 1 of the prompt below in Claude to generate a week of platform-appropriate captions from that brief.",
+        "Review each caption against your brief and cut anything that oversells a dish beyond what it actually is.",
+        "Use Part 2 of the prompt in ChatGPT to generate a matching GPT Image 2 prompt for each caption's post.",
+        "Paste each image prompt into ChatGPT one at a time, generate with GPT Image 2, and pick the result that matches your brand's actual food styling.",
+        "Pair each caption with its image and schedule the set across the promotion's run, not all on day one.",
+        "Swap in a real photo instead of an AI image for any post featuring the actual dish, if food accuracy matters more than style for that post."
+      ],
+      "prompt": "PART 1 — CAPTIONS (use in Claude)\nWrite a week of social media captions announcing a seasonal promotion, using only the facts below. Do not invent menu items, prices, or dates.\n\nPromotion: [E.G., \"Fall harvest menu\" or \"Patio happy hour, weekdays 4-6pm\"]\nDishes/offers involved: [LIST]\nDates it runs: [DATES]\nPrice (only if public): [PRICE OR \"not stated\"]\nPlatforms: [Instagram / Facebook / both]\n\nWrite 5 captions across the week, each under 60 words, each highlighting a different angle (a specific dish, the atmosphere, a limited-time reminder, a customer-facing benefit, a last-chance post near the end date). Include 3-5 relevant hashtags per post and one clear call to action (visit, order, reserve). Do not use urgency language that isn't true (e.g., \"almost sold out\") unless I've told you it's actually true.\n\nPART 2 — IMAGE PROMPTS (use in ChatGPT with GPT Image 2)\nFor each caption above, write a matching image-generation prompt using this structure: [SUBJECT — the specific dish or scene], [SETTING], [COMPOSITION — shot type/angle], [LIGHTING], [STYLE — e.g., warm photorealistic food photography], [MOOD/COLOR PALETTE], [ASPECT RATIO for the target platform]. Base the subject only on the dishes/offers I listed above — do not invent a dish that wasn't in my list.",
+      "promptLabel": "Copyable prompt (two parts — Claude for captions, ChatGPT for images)",
+      "explanation": "Splitting the workflow into a captions pass in Claude and an image-prompt pass in ChatGPT keeps each output high quality — asking one model call to write great copy and design a great visual at once usually produces mediocre versions of both. Requiring five different angles across the week (dish, atmosphere, urgency, benefit, last-chance) is what prevents a seasonal promo from turning into the same post reposted five times, which is the most common way restaurant social calendars go stale. Restricting the image prompts to only the dishes actually in the promotion keeps the visuals honest — GPT Image 2 renders realistic food photography and in-image text well enough that a customer could take a generated dish at face value, so an image of something you don't serve is a fast way to disappoint them.",
+      "example": "Brief: \"Fall harvest menu,\" featuring a butternut squash risotto and a spiced apple cocktail, running October 1-31, no public pricing.\n\nExpected output: five captions such as a launch post introducing the harvest menu, a mid-run post spotlighting the risotto with a texture-focused description, an atmosphere post about the restaurant's fall decor, a happy-hour-style post about the cocktail, and a last-week reminder post — each with 3-5 hashtags and one CTA. The matching GPT Image 2 prompts would specify the risotto or cocktail as the subject with fall-toned lighting and styling, never inventing a dish like a \"pumpkin spice latte\" that wasn't on the actual menu list.",
+      "exercise": "In your own Claude and ChatGPT accounts, brief a real upcoming promotion at your restaurant, generate the five captions in Claude and their matching image prompts, and produce at least two finished images in ChatGPT with GPT Image 2.",
+      "expectedResult": "A ready-to-schedule week of five captions paired with five on-brief AI-generated (or real-photo) visuals, spaced across the promotion's actual run dates.",
+      "commonMistakes": [
+        "Posting all five captions on the same day instead of spacing them across the promotion's run.",
+        "Using an AI-generated image of a dish that doesn't match how the actual plate looks, which sets a false expectation.",
+        "Including urgency language (\"almost gone!\") that isn't actually true.",
+        "Skipping the review pass and posting a caption that oversells a dish beyond its real ingredients."
+      ],
+      "proTip": "Keep a running folder of GPT Image 2 prompts that produced visuals close to your actual plating style — reusing the same lighting and composition language across promotions keeps your feed looking consistent instead of like five different restaurants.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "restaurant-owner"
+      ],
+      "skills": [
+        "marketing",
+        "creative",
+        "writing"
+      ]
+    },
+    {
+      "slug": "rest-i2-staff-training-documents-and-checklists",
+      "title": "Turn your know-how into staff training documents and checklists with ChatGPT",
+      "summary": "Convert what's in your head — how you want opening, closing, or a specific station run — into a clear training document and a checklist a new hire can actually follow.",
+      "difficulty": "intermediate",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Produce a structured training document and matching checklist for a specific role or task, built from your own explanation of how it should be done.",
+      "whyItMatters": "Restaurant knowledge mostly lives in the owner's or manager's head and gets passed on verbally, which means it's retaught from scratch with every new hire and drifts a little each time it's explained differently. A written training document with a companion checklist turns a 20-minute verbal walkthrough into a reusable asset, reduces mistakes during a new hire's first weeks, and gives you something concrete to reference when a standard slips.",
+      "steps": [
+        "Pick one role or task to document at a time (e.g., opening the bar, closing the kitchen, running the host stand) — don't try to cover everything in one pass.",
+        "Talk through the process out loud or in rough notes, in whatever order it comes to mind — the prompt will organize it.",
+        "Use the training-document prompt below with your raw explanation.",
+        "Review the generated steps against how you actually want it done, and correct anything the model inferred that wasn't in your notes.",
+        "Ask for the checklist version formatted for a clipboard or laminated card.",
+        "Walk a current staff member through the document and checklist and note anything unclear before giving it to a new hire.",
+        "Update the document whenever your actual process changes — an outdated checklist is worse than none."
+      ],
+      "prompt": "Turn my raw explanation of a restaurant task into a training document and a checklist, using only what I describe below. Do not add steps, safety rules, or best practices that I didn't mention — if you think something important is missing, list it separately under \"Questions to confirm with the owner,\" don't add it into the steps.\n\nRole/task: [E.G., \"Opening the bar\" or \"Closing side work for servers\"]\nMy raw explanation (any order, rough notes are fine): [PASTE YOUR EXPLANATION]\n\nProduce:\n1. A training document with a short intro (why this task matters, 1-2 sentences), then numbered steps in the correct logical order, each step one clear action.\n2. A one-page checklist version of the same steps, formatted as short checkable items suitable for a clipboard or laminated card.\n3. A \"Questions to confirm with the owner\" list for anything that seemed like it needed a rule but that I didn't specify (e.g., who checks the checklist, what happens if a step is missed).",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Restricting the document to only what you actually described — and routing anything it thinks is missing into a separate questions list — is the key guardrail, because a training document that quietly adds a plausible-sounding but wrong safety step or procedure can cause real problems on the floor. Reordering your rough, out-of-order explanation into correct logical sequence is where the model earns its keep: most owners explain a process the way they remember exceptions to it, not the way a new hire needs to learn it step by step. Producing both a full document and a checklist matters because new hires reference the checklist daily but need the fuller document once, during onboarding.",
+      "example": "Task: \"Closing side work for servers.\" Raw explanation (rough, out of order): \"tables need to be wiped and reset, ketchups and condiments refilled and wiped down, someone rolls silverware, floor gets swept under booths, high chairs wiped, POS drawer counted by the closing manager not the server, trash from the server station taken out.\"\n\nExpected output: a logically ordered document (e.g., clear/wipe/reset tables, then condiment refill, then silverware, then floor, then high chairs, then station trash, with the POS drawer step assigned specifically to the closing manager) plus a matching checkbox checklist, and a questions list asking things like \"should there be a specific person who signs off that closing side work is complete?\" since that wasn't stated.",
+      "exercise": "In your own ChatGPT account, pick one real task you currently only explain verbally to new hires and run it through this prompt, then review the output against how you actually want it done.",
+      "expectedResult": "A clear training document and a one-page checklist for one specific role or task, with any gaps in your original explanation surfaced as questions rather than silently filled in.",
+      "commonMistakes": [
+        "Documenting an entire role in one pass instead of breaking it into separate tasks, which produces an unusably long document.",
+        "Accepting an inferred step (like a safety rule) without confirming it's actually how you want it done.",
+        "Skipping the checklist version and only using the longer document day to day.",
+        "Never updating the document after your actual process changes, so staff start ignoring it."
+      ],
+      "proTip": "Record yourself explaining the task on your phone during a real shift and paste the transcript in — a natural, in-the-moment explanation usually surfaces details a written summary misses.",
+      "tools": [
+        "chatgpt"
+      ],
+      "professions": [
+        "restaurant-owner"
+      ],
+      "skills": [
+        "writing",
+        "productivity"
+      ]
+    },
+    {
+      "slug": "rest-i3-event-and-catering-proposals",
+      "title": "Write event and catering proposals that win bookings with Claude",
+      "summary": "Turn a prospective client's event details into a clear, specific proposal with menu options and pricing that reads as professional, not generic.",
+      "difficulty": "intermediate",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Draft a specific, professional event or catering proposal from a client's stated event details and your own real menu and pricing options.",
+      "whyItMatters": "Private events and catering are high-margin business, but the proposal is often the deciding factor between two restaurants with similar food — a generic, copy-pasted proposal reads as an afterthought, while one that clearly reflects the client's actual event (guest count, date, occasion, dietary needs) reads as attentive and increases the close rate. Writing a tailored proposal from scratch for every inquiry is where owners run out of time and fall back on a stale template that doesn't fit the event.",
+      "steps": [
+        "Gather the client's actual event details from their inquiry: date, guest count, occasion, budget range if given, and any dietary restrictions mentioned.",
+        "Pull your real menu/catering package options and pricing that fit that guest count and occasion.",
+        "Use the proposal prompt with both sets of details.",
+        "Review the proposal against your actual pricing and package terms — check nothing was rounded or approximated incorrectly.",
+        "Confirm any dietary accommodation claims are things your kitchen can actually deliver before they go in the proposal.",
+        "Personalize the opening line by hand if it reads too generic for this specific client.",
+        "Send from your own email or proposal template, attaching your standard contract/deposit terms."
+      ],
+      "prompt": "Write an event or catering proposal for a prospective client, using only the facts below. Do not invent menu items, prices, packages, or policies that I haven't given you.\n\nClient event details: [DATE, GUEST COUNT, OCCASION (e.g., corporate lunch, wedding rehearsal dinner, birthday), BUDGET RANGE IF STATED, DIETARY RESTRICTIONS MENTIONED]\nOur relevant packages/options: [PASTE: package names, what's included, per-person or flat pricing, minimum guest count if any]\nOur standard policies to mention (only what applies): [DEPOSIT REQUIREMENT / CANCELLATION POLICY / SETUP TIME NEEDED]\n\nWrite a proposal with:\n1. A brief personalized opening referencing their specific event (not generic \"thank you for your interest\").\n2. 1-2 recommended package options that best fit their guest count and occasion, with clear per-person or flat pricing.\n3. How stated dietary restrictions would be handled, using only what I've told you our kitchen can accommodate — if I haven't told you, write \"we'll confirm accommodations for this with our kitchen\" instead of promising something specific.\n4. Next steps (how to book, deposit info if I gave you one).\n\nProfessional, warm tone. Under 300 words.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Requiring the opening line to reference the client's specific event, rather than a generic thank-you, is what makes a proposal feel considered instead of templated — clients comparing multiple venues notice this immediately. Restricting dietary accommodation language to only what you've confirmed your kitchen can do (with a safe fallback phrase when you haven't told it) prevents a promise your kitchen can't actually keep from ending up in a signed proposal, which is a much worse outcome than a slightly less impressive-sounding line. Capping the length keeps it something a busy event planner will actually read in full rather than skim past.",
+      "example": "Client details: corporate lunch, March 14, 40 guests, budget not stated, one guest with a gluten allergy. Packages: \"Business Lunch Package,\" $28/person, includes three entree choices, salad, dessert, minimum 20 guests; kitchen confirmed gluten-free entree option available.\n\nExpected output: a proposal opening that references the March 14 corporate lunch for 40 guests specifically, recommends the Business Lunch Package at $28/person with its included items, states the gluten-free entree option since that was confirmed, and closes with booking next steps — with no invented package, price, or accommodation beyond what was provided.",
+      "exercise": "In your own Claude account, take a real recent catering or event inquiry (or a realistic practice one) and draft the proposal using this prompt with your actual packages and pricing.",
+      "expectedResult": "A specific, professional proposal tailored to one real event's details, with accurate pricing and honest dietary-accommodation language, ready to send after your own review.",
+      "commonMistakes": [
+        "Sending a proposal with pricing that doesn't match your current rate sheet because it wasn't updated in the prompt.",
+        "Promising a dietary accommodation your kitchen hasn't actually confirmed it can do.",
+        "Leaving the opening generic enough that it could apply to any event, undercutting the personalization advantage.",
+        "Forgetting to attach deposit or cancellation terms separately if they weren't included in the proposal itself."
+      ],
+      "proTip": "Keep your catering packages and current pricing in one reusable reference block you paste into every proposal prompt — updating it once when prices change keeps every future proposal accurate automatically.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "restaurant-owner"
+      ],
+      "skills": [
+        "writing",
+        "sales",
+        "communication"
+      ]
+    },
+    {
+      "slug": "rest-a1-weekly-marketing-routine",
+      "title": "Build a weekly marketing routine you can actually keep up with ChatGPT",
+      "summary": "Design a repeatable weekly system — a fixed set of prompts run on a fixed schedule — that keeps your reviews, social posts, and promotions consistent without becoming a daily burden.",
+      "difficulty": "advanced",
+      "minutes": 13,
+      "isFree": false,
+      "goal": "Build a documented, repeatable weekly marketing routine — a short list of tasks, each paired with a ready prompt — that you or a staff member can run consistently in under an hour a week.",
+      "whyItMatters": "Every individual marketing task covered so far — review responses, social posts, promotions — is easy to do once and easy to abandon after two weeks once service gets busy. The restaurants that keep marketing consistent don't rely on motivation; they run a fixed weekly routine with the thinking already done, so the only remaining work is filling in this week's specifics and hitting send. Building that routine once, as a real document with saved prompts, is what turns scattered effort into a habit that survives a busy month.",
+      "beforeYouStart": "Have your ChatGPT account ready, and gather a rough sense of what you're currently doing for marketing (even if inconsistently) — review responses, social posts, email list, any promotions — so the routine reflects your real capacity, not an idealized one.",
+      "steps": [
+        "List your actual current marketing tasks and how often each realistically needs doing (e.g., reviews checked twice a week, one social post 3x a week, one promotion planned monthly).",
+        "Be honest about your actual available time per week — a routine that assumes two hours you don't have will get abandoned by week three.",
+        "Use the routine-building prompt below to turn that into a fixed weekly schedule with a specific task assigned to each day.",
+        "Ask for the saved prompt for each recurring task (pulling from your review-response, social-post, and promotion prompts from earlier lessons) bundled into one reference document.",
+        "Assign an owner for each day's task if you have staff who can share the load, not just yourself.",
+        "Run the routine for two full weeks exactly as written before changing anything.",
+        "After two weeks, cut or adjust whichever single task was hardest to keep up with, rather than redesigning the whole routine."
+      ],
+      "prompt": "Help me design a realistic weekly marketing routine for my restaurant that I can actually sustain.\n\nMy current marketing tasks and rough frequency: [LIST WHAT YOU CURRENTLY DO, EVEN INCONSISTENTLY, e.g., \"reply to reviews when I remember,\" \"post on Instagram maybe twice a week,\" \"no regular email or promotion planning\"]\nRealistic time I can commit per week: [E.G., \"about 2 hours total, in short blocks\"]\nStaff who could help (if any): [NAMES/ROLES OR \"just me\"]\n\nBuild:\n1. A fixed weekly schedule assigning one specific marketing task to each day it needs doing (not every day needs a task) — keep total time within what I said I can commit.\n2. For each recurring task, a short reusable prompt template I can fill in each week (e.g., a review-response prompt, a social-caption prompt) so I'm not rewriting instructions from scratch every time.\n3. One clear \"if I only have 15 minutes this week\" fallback version of the routine that still keeps the most important task (whichever you judge highest-impact based on what I described) from lapsing entirely.\n\nKeep the whole routine realistic for a small, busy restaurant team — do not assume dedicated marketing staff or software beyond a phone and a chat AI account.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Starting from your actual current behavior and real available time, rather than an idealized marketing calendar, is what keeps the resulting routine something you'll still be doing in month three instead of week two — most marketing routines fail not from bad ideas but from being sized for time nobody has. Bundling each recurring task's prompt into the routine document removes the friction of hunting for the right prompt each week, which is often the real reason a good habit quietly stops. The \"15 minutes\" fallback version matters because a routine with no degraded mode tends to go to zero entirely during a bad week, instead of just shrinking.",
+      "example": "Input: currently posts on Instagram \"maybe twice a week,\" replies to reviews inconsistently, no promotion planning; 2 hours a week available; one part-time staff member willing to help with social posts.\n\nExpected output: a schedule like Monday (15 min: check and respond to new reviews), Wednesday (30 min: write and schedule 2-3 social posts for the week, delegated to the staff member), and one day monthly (30 min: plan next month's promotion using the seasonal-promotion prompt) — each paired with its reusable prompt template, plus a fallback that says if only 15 minutes are available, reviews get answered and everything else waits until next week.",
+      "exercise": "In your own ChatGPT account, build your real weekly routine using this prompt with your actual current habits and time, then run it exactly as written for two weeks.",
+      "expectedResult": "A written weekly marketing routine, sized to your real available time, with a ready prompt for each recurring task and a fallback plan for a low-time week — something you can hand to a staff member, not just something in your own head.",
+      "commonMistakes": [
+        "Designing a routine around the time you wish you had instead of the time you actually have.",
+        "Skipping the fallback version and having the whole routine collapse the first busy week.",
+        "Changing the entire routine after one bad week instead of adjusting the single hardest task.",
+        "Never delegating a task to staff even when someone is available to help, keeping the whole routine dependent on one person."
+      ],
+      "proTip": "Put the finished routine and its prompt templates in a single pinned note or document everyone with marketing responsibility can access — a routine that lives only in the owner's head disappears the moment the owner is out sick or on vacation.",
+      "tools": [
+        "chatgpt"
+      ],
+      "professions": [
+        "restaurant-owner"
+      ],
+      "skills": [
+        "marketing",
+        "productivity"
+      ]
+    },
+    {
+      "slug": "hot-b1-guest-messages-booking-to-post-stay",
+      "title": "Write guest messages for every stage of the stay with Claude",
+      "summary": "Draft booking confirmations, pre-arrival details, in-stay check-ins, and post-stay follow-ups that feel personal and match your property's actual details and policies.",
+      "difficulty": "beginner",
+      "minutes": 9,
+      "isFree": true,
+      "goal": "Draft a guest message appropriate to each stage of the stay — booking confirmation, pre-arrival, in-stay, or post-stay — using only your property's real details and policies.",
+      "whyItMatters": "Guests form their impression of a property well before check-in and long after checkout, based almost entirely on messages — a confirmation that's warm but vague, a pre-arrival message missing the door code, an in-stay message that ignores a stated issue, or a post-stay message that feels like a mass blast. Handling every stage well by hand, for every booking, doesn't scale past a handful of rooms; a prompt that adapts to the stage while staying grounded in your property's real policies keeps messaging both fast and accurate.",
+      "beforeYouStart": "Have a Claude account open and your property's real details on hand: check-in/checkout times, access instructions (door code, key pickup), house rules, and any amenities worth mentioning.",
+      "steps": [
+        "Identify which stage you're writing for: booking confirmation, pre-arrival (1-3 days out), in-stay, or post-stay.",
+        "Gather the real facts for that message: guest name, dates, any specific detail from their booking or a message they sent you.",
+        "Use the staged-message prompt below, filling in the stage and the relevant facts.",
+        "Review for anything invented — access codes, policies, or amenities you didn't confirm.",
+        "Personalize one line by hand if the guest mentioned something specific (an occasion, a request) that the draft should reference directly.",
+        "Send through your actual booking platform or messaging tool.",
+        "Save strong drafts as your own templates for that stage, editing only the guest-specific details each time."
+      ],
+      "prompt": "Write a guest message for the stage below, using only the facts I provide. Do not invent access codes, policies, prices, or amenities I haven't stated.\n\nStage: [booking confirmation / pre-arrival / in-stay / post-stay]\nGuest name: [NAME]\nDates: [CHECK-IN — CHECK-OUT]\nProperty facts relevant to this stage: [FOR CONFIRMATION: room type, what's included. FOR PRE-ARRIVAL: check-in time, access instructions, parking info. FOR IN-STAY: anything the guest mentioned or asked about. FOR POST-STAY: anything specific about their actual stay if known]\nAnything the guest specifically said or asked (optional, for personalization): [PASTE]\n\nRules:\n- Booking confirmation: warm, confirms the key details, sets expectations for what's next (when they'll hear from you again). Under 100 words.\n- Pre-arrival: practical and complete — must include check-in time and access instructions if I gave them, plus one welcoming line. Under 120 words.\n- In-stay: responsive to what the guest actually said or asked; if nothing specific was given, write a brief, non-intrusive check-in offering help. Under 60 words.\n- Post-stay: genuine thanks referencing something specific about their stay if I gave you a detail, with a low-pressure review request. Under 80 words. Do not sound like a mass template.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Naming the stage explicitly is what lets one prompt serve four genuinely different jobs — a pre-arrival message that omits access instructions is far more damaging than a confirmation that's slightly generic, so each stage gets its own completeness bar rather than one-size-fits-all rules. Requiring personalization from an actual guest detail (when available) rather than a name-swap is what separates a message that reads as attentive from one that reads as automated, which guests notice immediately in a review. Banning invented access codes or policies is the critical guardrail — a wrong door code sent confidently is worse than no message at all.",
+      "example": "Stage: pre-arrival. Guest: the Patel family, arriving Friday, checking out Sunday. Facts: check-in from 3pm, door code sent morning of arrival by separate text, free parking in Lot B, guest mentioned traveling with a toddler.\n\nExpected output: a message confirming the Friday-Sunday dates, stating check-in from 3pm, noting the door code will follow by text the morning of arrival, mentioning Lot B parking, and adding a brief warm note relevant to traveling with a toddler (e.g., pointing out where a crib or extra towels can be requested) only if that accommodation was actually confirmed as available — otherwise omitting it rather than promising it.",
+      "exercise": "In your own Claude account, pick one upcoming or recent real booking and draft the pre-arrival and post-stay messages for it using this prompt with your property's actual details.",
+      "expectedResult": "Two stage-appropriate messages — pre-arrival and post-stay — that are complete, accurate to your property's real policies, and personalized enough that they wouldn't read as automated to the guest who receives them.",
+      "commonMistakes": [
+        "Sending a pre-arrival message that's warm but missing a critical practical detail like the access code or check-in time.",
+        "Reusing the exact same post-stay message for every guest with only the name changed.",
+        "Letting the model invent an amenity or policy (a late checkout, a free upgrade) that you never actually confirmed.",
+        "Writing an in-stay message so generic it doesn't actually respond to what the guest said."
+      ],
+      "proTip": "Save one finished, well-reviewed message per stage as your baseline template — future prompts get faster once you're editing a known-good draft instead of generating from scratch every time.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "hotel-tourism"
+      ],
+      "skills": [
+        "writing",
+        "communication"
+      ]
+    },
+    {
+      "slug": "hot-b2-listing-descriptions-for-otas-and-your-site",
+      "title": "Write listing descriptions for OTAs and your own site with ChatGPT",
+      "summary": "Adapt one property's real facts into a listing description matched to each platform's format — Airbnb or Booking.com style, and your own website — without changing what's actually true about the property.",
+      "difficulty": "beginner",
+      "minutes": 9,
+      "isFree": false,
+      "goal": "Produce a listing description for an OTA (Airbnb, Booking.com, or similar) and a longer version for your own website, from the same set of real property facts.",
+      "whyItMatters": "The same property needs different listing copy on different platforms — an OTA listing competes in a search-and-filter grid where the first line has to earn a click, while a property's own website can afford a longer, more atmospheric description since the visitor already chose to be there. Writing both from scratch, and keeping every fact consistent between them, is where a lot of listing copy either goes stale or quietly drifts out of accuracy over time.",
+      "beforeYouStart": "Have your property's current, accurate facts ready: room/unit type, capacity, amenities, location detail, and any policy worth stating (check-in window, pets, smoking).",
+      "steps": [
+        "Gather your property's real facts in one place — don't rely on memory of what an old listing says, since it may already be outdated.",
+        "Use the listing prompt below to generate both the OTA-style and website versions in one pass.",
+        "Check the OTA version against that platform's actual character limits before pasting it in.",
+        "Check the website version doesn't repeat the OTA version word-for-word — search engines and repeat visitors both notice.",
+        "Verify every amenity and policy listed is still accurate, especially if it's been a while since the listing was last updated.",
+        "Publish the OTA version through that platform's listing editor and the website version through your CMS."
+      ],
+      "prompt": "Write listing descriptions for a property using only the facts below. Do not invent amenities, views, distances, or policies I haven't stated.\n\nProperty type: [E.G., \"boutique hotel room,\" \"2-bedroom vacation rental,\" \"guesthouse\"]\nCapacity: [GUESTS/BEDS]\nKey amenities: [LIST]\nLocation detail (only real, verified distances/landmarks): [LIST]\nPolicies: [CHECK-IN/OUT TIMES, PETS, SMOKING, MINIMUM STAY IF ANY]\nWhat makes this property distinct (real, specific): [E.G., \"only unit with a private rooftop terrace,\" \"walking distance to the old town gate\"]\n\nWrite:\n1. An OTA-style listing (Airbnb/Booking.com format): a headline under 50 characters, then a description under 500 characters that leads with the most distinctive real feature, in a direct, scannable style suited to a search results grid.\n2. A website version: 150-200 words, more atmospheric and descriptive, using the same facts but not copied word-for-word from the OTA version, suited to a visitor already on your site.\n\nBoth versions must be traceable to the facts given — flag anything you think is missing under \"Facts to confirm\" rather than guessing.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Generating both versions from a single fact set in one pass is what keeps them consistent with each other even though the tone and length differ — a common failure mode is an OTA listing and a website page for the same room that quietly contradict each other after separate edits. Leading the OTA version with the most distinctive real feature matters because guests scan search-grid listings in seconds; a generic opening line gets scrolled past regardless of how good the rest of the copy is. Requiring the website version to avoid repeating the OTA copy word-for-word keeps your own site from reading like a copy-paste job to a returning guest comparing both.",
+      "example": "Property: 2-bedroom vacation rental, sleeps 4, amenities include a private rooftop terrace, full kitchen, and washer/dryer, 8-minute walk to the old town gate, check-in 3pm/checkout 11am, no pets, distinctive feature is the private rooftop terrace with a town view.\n\nExpected output: an OTA headline like \"2BR with Private Rooftop Terrace — Old Town, 8 Min Walk\" with a scannable under-500-character description leading with the terrace, and a longer website version that opens more atmospherically (describing an evening on the terrace, for instance) while stating the same facts — sleeps 4, full kitchen, 8-minute walk, no pets — without repeating the OTA sentence structure.",
+      "exercise": "In your own ChatGPT account, use your real property's current facts to generate both versions with this prompt, then check the OTA version against your actual platform's character limit before publishing.",
+      "expectedResult": "Two accurate, platform-appropriate listing descriptions for the same property, consistent with each other in fact but distinct in tone and length, ready to publish after a final accuracy check.",
+      "commonMistakes": [
+        "Exceeding the OTA platform's actual character limit and having the listing cut off mid-sentence.",
+        "Letting a distance or view claim go unverified before publishing.",
+        "Copying the OTA description directly onto the website, missing the chance to say more to an already-interested visitor.",
+        "Forgetting to update either version after a real change (a renovated amenity, a new policy) and letting them go out of sync."
+      ],
+      "proTip": "Re-run this prompt any time a real fact about the property changes — an outdated listing that still says \"no washer/dryer\" after you've added one is a lost booking to a guest who filtered it out.",
+      "tools": [
+        "chatgpt"
+      ],
+      "professions": [
+        "hotel-tourism"
+      ],
+      "skills": [
+        "writing",
+        "marketing"
+      ]
+    },
+    {
+      "slug": "hot-i1-review-responses-that-win-future-bookings",
+      "title": "Write review responses that win future bookings with Claude",
+      "summary": "Turn a guest review — glowing, mixed, or unfair — into a public response that reassures the next guest reading it, not just the one who wrote it.",
+      "difficulty": "intermediate",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Draft a review response calibrated to the review's actual content that speaks credibly to future guests deciding whether to book, not only to the original reviewer.",
+      "whyItMatters": "On OTAs, a property's review responses are part of the sales page — a prospective guest reads the review, then reads how the property responded, and the response often matters more to their decision than the review itself, especially for a negative one. A defensive or dismissive response to a fair criticism can cost more future bookings than the original review did; a specific, accountable one can turn a 3-star review into a reason to book anyway.",
+      "steps": [
+        "Read the review fully and classify it honestly: positive, a fair mixed/negative review, or one that's inaccurate or unreasonable.",
+        "For any negative point, note the real facts — what happened, what's already been fixed or is being addressed, if anything.",
+        "Use the response prompt below with the review and your classification.",
+        "Check that the response would make sense to a stranger reading it later, not just to the original guest.",
+        "For a fair complaint, make sure the response states a concrete action, not just an apology.",
+        "For an inaccurate review, confirm the correction is stated as fact, not as a dispute with the guest's character or honesty.",
+        "Post the response on the platform where the review appears."
+      ],
+      "prompt": "Write a public response to this guest review for my property, written primarily for future guests who will read it, not just the original reviewer.\n\nReview: [PASTE REVIEW TEXT]\nMy classification: [positive / fair mixed or negative / inaccurate or unreasonable]\nReal facts relevant to any negative point (only true facts, or \"still investigating\" if unclear): [FACTS]\nAny concrete action already taken or planned (only if true): [ACTION OR \"none yet\"]\n\nRules:\n- Positive: thank them for something specific they mentioned, keep it warm and under 60 words, avoid generic phrasing a future guest would skim past.\n- Fair mixed/negative: acknowledge the specific issue honestly, state the concrete action taken or planned if I gave you one, and close with a genuine invitation to return — a future reader should come away trusting the property takes feedback seriously. Under 110 words.\n- Inaccurate/unreasonable: correct the specific factual point calmly and without disputing the guest's character, still thank them for staying, and do not argue with subjective opinions (only correct verifiable facts). Under 90 words.\n\nWrite for a stranger reading this response six months from now who is deciding whether to book, not only for the person who wrote the review. Do not invent facts about what happened or what's being fixed.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Explicitly framing the audience as a future stranger, not the original reviewer, changes what the response needs to do — it needs to demonstrate the property takes feedback seriously and fixes real problems, which matters far more to a future booking decision than winning an argument with the person who already stayed. Requiring a concrete action for a fair complaint (rather than an apology alone) is what actually reassures a future reader; \"we're sorry\" with nothing else reads as empty, while \"we've since added extra towels to every room after this feedback\" reads as evidence. Keeping the correction of an inaccurate review strictly factual, without disputing the guest's honesty or character, avoids a public back-and-forth that damages the property's image more than the original review did.",
+      "example": "Review (fair, mixed): \"Great location and friendly staff, but the room was noisy from the street all night, barely slept.\" Facts: rooms facing the street don't yet have soundproofed windows; the property has since started offering interior-facing rooms by request at booking. Action taken: interior-room request option now offered at booking.\n\nExpected output: a response thanking them for the specific positive notes (location, staff), acknowledging the street noise honestly without minimizing it, stating that interior-facing rooms can now be requested at booking as a direct result of feedback like theirs, and inviting them back — written so a future guest reading it would feel reassured they could avoid the same issue by requesting an interior room.",
+      "exercise": "In your own Claude account, take one real recent review of each type you have and draft a response using this prompt, reading each one back as if you were a stranger deciding whether to book.",
+      "expectedResult": "A response for each review type that would credibly reassure a future guest reading it later, with any fair complaint answered by a real, concrete action rather than an apology alone.",
+      "commonMistakes": [
+        "Writing the response only to satisfy the original reviewer, missing the chance to reassure future readers.",
+        "Apologizing for a fair complaint without stating any concrete action, which reads as empty to a skeptical future guest.",
+        "Disputing a guest's character or honesty when correcting an inaccurate review, instead of calmly correcting only the fact.",
+        "Letting responses pile up unanswered for weeks — an unanswered negative review reads worse than almost any response would."
+      ],
+      "proTip": "When the same negative point shows up in more than one review, that's worth fixing operationally, not just responding to well — mention the pattern to whoever handles that part of the property and reference the real fix in your next response to that type of complaint.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "hotel-tourism"
+      ],
+      "skills": [
+        "writing",
+        "communication"
+      ]
+    },
+    {
+      "slug": "hot-i2-local-guides-and-experience-recommendations",
+      "title": "Create local guides and experience recommendations with ChatGPT",
+      "summary": "Turn your own firsthand knowledge of the area into a guest-facing local guide — recommendations grounded in what you actually know, not generic tourist-site copy.",
+      "difficulty": "intermediate",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Produce a local guide document for guests — restaurants, activities, transit tips — built from your own firsthand knowledge, clearly separating what you can personally vouch for from anything that still needs checking.",
+      "whyItMatters": "A local guide is one of the highest-value things a property can hand a guest, but it only works if it reflects real, current, firsthand knowledge — a restaurant that closed last year or a generic \"top 10 attractions\" list copied from a travel site actively damages trust in a way a guest notices immediately. The value guests are actually paying for with a personal recommendation is that a local vetted it; a guide that leans on an AI's general knowledge of a city instead of the host's own knowledge defeats the purpose.",
+      "beforeYouStart": "Gather your own real, current knowledge: places you or your staff have actually visited or verified recently, categorized by type (food, activities, transit, day trips).",
+      "steps": [
+        "List what you personally know firsthand — places you've been, verified are still open, and would genuinely recommend — rather than starting from a general \"best of the city\" idea.",
+        "Note anything you're recommending secondhand (a guest or colleague's tip you haven't personally verified) as a separate category.",
+        "Use the local-guide prompt below to organize your raw list into a structured, guest-ready document.",
+        "Review to ensure nothing was generalized into a claim you didn't make (\"best in the city,\" \"a must-see\") beyond your actual opinion.",
+        "Add practical logistics (walking distance, transit line, typical wait) only where you actually know them.",
+        "Set a reminder to re-verify the guide every few months, since restaurants and hours change.",
+        "Format as a printable guide or digital welcome-packet page."
+      ],
+      "prompt": "Organize my local recommendations into a guest-facing guide, using only what I actually list below. Do not add attractions, restaurants, or tips from general knowledge of this city — only organize and write up what I give you.\n\nCity/area: [LOCATION]\nPlaces I personally recommend (with why, in my own words): [LIST: name, type, what I actually like about it, distance/logistics if known]\nSecondhand recommendations I haven't personally verified: [LIST, OR \"none\"]\n\nOrganize into categories that fit what I gave you (e.g., \"Food & Drink,\" \"Things to Do,\" \"Getting Around,\" \"Day Trips\"). For each item, write 1-2 sentences based on my actual reasons, not generic praise (\"amazing,\" \"a must-visit\") — keep language specific to what I said I liked about it. Clearly separate the secondhand list under its own heading, \"Recommended by others — not yet personally verified,\" so guests know the distinction. Note if any item is missing logistics (distance, hours) I should add.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Explicitly banning the model from adding places from its own general knowledge of the city is the entire point of this prompt — an AI asked to write a \"local guide\" will otherwise happily fill in well-known tourist attractions it knows about, which produces exactly the generic, could-be-any-guide-for-this-city document that undercuts the value of a host's personal recommendation. Keeping secondhand tips in their own clearly labeled section, rather than blending them in as equally vetted, protects your credibility if one of them turns out to be outdated or wrong — the guest knows which claims are yours to stand behind. Writing each entry from your actual stated reason, rather than generic superlatives, is what makes the guide read as personally curated rather than AI-generated boilerplate.",
+      "example": "Input: \"Cafe Luna, 5-minute walk, I go every morning, best espresso I've had in the neighborhood, small and gets busy after 9am\" and \"heard from a guest that the rooftop bar on Calle Mayor is great, haven't been myself.\"\n\nExpected output: under \"Food & Drink,\" an entry for Cafe Luna noting the 5-minute walk, the host's own daily habit, the espresso quality, and the after-9am crowding tip — all traceable to what was actually said. The rooftop bar appears only under \"Recommended by others — not yet personally verified,\" clearly separated, with no invented detail about it beyond what the guest mentioned.",
+      "exercise": "In your own ChatGPT account, list 6-10 real places or tips you personally know and run them through this prompt to produce your property's first structured local guide.",
+      "expectedResult": "A guest-ready local guide organized by category, entirely traceable to your own firsthand knowledge, with any secondhand tips clearly separated so guests know which recommendations you personally stand behind.",
+      "commonMistakes": [
+        "Letting the model fill gaps with generic \"top attraction\" knowledge instead of only your own verified list.",
+        "Blending secondhand tips into the main list without the separate heading, so guests can't tell what's personally vetted.",
+        "Publishing a guide with outdated hours or a since-closed business because it wasn't re-verified recently.",
+        "Using generic superlatives (\"a must-see\") instead of the specific reason you actually like a place."
+      ],
+      "proTip": "Ask a staff member with different tastes or a different neighborhood knowledge than you to contribute their own list — a single-person guide reflects one person's routine; a small team's combined list covers a wider range of what guests actually ask about.",
+      "tools": [
+        "chatgpt"
+      ],
+      "professions": [
+        "hotel-tourism"
+      ],
+      "skills": [
+        "writing",
+        "research"
+      ]
+    },
+    {
+      "slug": "hot-i3-upsell-and-package-copy",
+      "title": "Write upsell and package copy that increases average booking value with Claude",
+      "summary": "Turn real add-ons and packages — room upgrades, late checkout, breakfast, experiences — into specific, non-pushy copy that increases attach rate without feeling like a hard sell.",
+      "difficulty": "intermediate",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Write upsell and package copy for real add-ons (room upgrades, late checkout, breakfast, curated experiences) that increases attach rate while staying honest about what's included and avoiding pushy language.",
+      "whyItMatters": "Upsells are one of the most direct levers on revenue per booking, but the line between a helpful, well-timed offer and something that feels like a pressure tactic is thin — and guests who feel pushed leave that impression in their review. Copy that's specific about what's actually included, priced clearly, and framed around a real benefit converts better than generic \"upgrade now!\" language, and it doesn't cost the property any goodwill.",
+      "steps": [
+        "List the real add-ons or packages you're offering: what's included, the price or price difference, and when in the guest journey it's offered (at booking, pre-arrival, at check-in).",
+        "Use the upsell prompt below for each offer, specifying where it will appear.",
+        "Review for pushy language — cut anything that creates false urgency (\"only a few left\") unless it's genuinely true.",
+        "Check the price and inclusions in the draft match your actual offer exactly.",
+        "Ask for a version timed to pre-arrival messaging and a separate shorter version for an at-check-in verbal prompt for staff.",
+        "Test the copy for a few weeks and note which offers actually convert before writing more."
+      ],
+      "prompt": "Write upsell copy for a hotel/property add-on or package, using only the facts below. Do not invent inclusions, prices, or availability claims I haven't stated.\n\nOffer: [E.G., \"room upgrade to a sea-view room,\" \"late checkout until 2pm,\" \"breakfast package,\" \"guided city tour add-on\"]\nWhat's included: [LIST]\nPrice or price difference: [PRICE]\nWhen this will be shown to the guest: [at booking / pre-arrival email / at check-in / in-room]\nGenuine reason a guest would want this (not generic): [E.G., \"most guests on short trips want the extra hours before a late flight\"]\n\nWrite:\n1. A short version (1-2 sentences) for the context specified, framed around the genuine benefit I gave you, not generic excitement language.\n2. Clear, exact pricing stated plainly, no vague \"special price\" language.\n3. One line of what's included, specific enough that a guest knows exactly what they're paying for.\n\nDo not use false urgency (\"limited availability,\" \"today only\") unless I've told you it's genuinely true. Tone: helpful, not pushy — offering something useful, not pressuring a sale.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Requiring a genuine, specific reason for the offer — rather than letting the model default to generic excitement language — is what makes upsell copy actually convert; \"most guests on short trips want extra hours before a late flight\" targets a real guest situation, while \"treat yourself to late checkout!\" targets no one in particular. Banning false urgency unless it's genuinely true protects the property's credibility for every future offer — a guest who catches one fake \"limited availability\" claim discounts every offer after it, including real ones. Stating exact pricing plainly, instead of vague \"special rate\" language, respects that guests comparing an upsell against its cost make a faster, more confident yes when the math is obvious.",
+      "example": "Offer: late checkout until 2pm, $25 flat, offered in the pre-arrival email, genuine reason: many guests have evening flights and don't want to store luggage.\n\nExpected output: something like \"Have a later flight? Keep your room until 2pm for $25 — no need to store luggage or rush your last morning.\" stated plainly with the exact price and inclusion (checkout time), with no invented urgency (\"limited rooms available for this\") unless that was actually true.",
+      "exercise": "In your own Claude account, write copy for two real add-ons or packages your property currently offers (or wants to start offering) using this prompt, targeted at the specific point in the guest journey where each would actually appear.",
+      "expectedResult": "Specific, honestly priced upsell copy for real add-ons, framed around a genuine guest benefit rather than generic sales language, ready to place at the right point in the booking or stay.",
+      "commonMistakes": [
+        "Using false scarcity or urgency language that isn't actually true, which damages trust in future offers too.",
+        "Writing a generic benefit (\"treat yourself\") instead of the actual specific reason a guest in that situation would want the add-on.",
+        "Vague pricing language (\"special rate\") instead of stating the exact price.",
+        "Offering every add-on everywhere instead of matching each one to the point in the journey where it's actually relevant."
+      ],
+      "proTip": "Track which upsell offers actually convert over a month and only keep writing copy for the ones that work — a shorter list of well-targeted offers outperforms a long list guests learn to scroll past.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "hotel-tourism"
+      ],
+      "skills": [
+        "writing",
+        "marketing",
+        "sales"
+      ]
+    },
+    {
+      "slug": "hot-a1-multilingual-guest-communication-workflow",
+      "title": "Build a multilingual guest communication workflow with ChatGPT",
+      "summary": "Design a repeatable process for translating and adapting your core guest messages into other languages — accurately, and with a clear check step before anything goes out.",
+      "difficulty": "advanced",
+      "minutes": 13,
+      "isFree": false,
+      "goal": "Build a documented workflow for translating and culturally adapting your core guest messages (pre-arrival, house rules, local guide) into the languages your guests actually speak, with a built-in accuracy check before anything is sent.",
+      "whyItMatters": "Properties that host international guests lose real bookings and create real friction when key information — access instructions, house rules, safety information — is only available in one language. Machine translation is fast but can silently produce a wrong or confusing instruction in a language the host can't personally verify, which is a much bigger risk for something like a fire exit note or a check-in code than for casual chat. A workflow, not just a one-off translation, is what makes this sustainable and checkable across every language a property actually needs.",
+      "beforeYouStart": "Have your core guest documents ready in your primary language (pre-arrival instructions, house rules, local guide) and a list of the languages your guests most commonly need, based on real booking history if you have it.",
+      "steps": [
+        "Identify your 2-4 most-needed languages based on actual guest nationality data, not a guess.",
+        "Separate your guest documents into two risk tiers: high-stakes (safety info, access instructions, house rules with real consequences) and lower-stakes (welcome notes, local guide, casual messages).",
+        "Use the translation prompt below for a first-pass translation of one document at a time.",
+        "For high-stakes documents, have a native or fluent speaker (staff, a guest, or a professional service) verify the translation before it's used — do not skip this step for anything safety- or access-related.",
+        "For lower-stakes documents, a careful self-check using the model's own back-translation (translating it back to your language) is an acceptable lighter check.",
+        "Store the verified versions as your standing templates per language, not something regenerated each time.",
+        "Set a review cadence (e.g., every 6 months) to re-check translations after any change to the original document."
+      ],
+      "prompt": "Translate the following guest document into [TARGET LANGUAGE], preserving the exact meaning — this is a [high-stakes: safety/access instructions / lower-stakes: welcome or general information] document, so accuracy matters more than natural-sounding flourish.\n\nOriginal document ([SOURCE LANGUAGE]):\n[PASTE DOCUMENT]\n\nRules:\n- Translate for clarity and correctness first, natural phrasing second — do not simplify or drop any specific instruction, number, time, or safety detail.\n- Keep all numbers, codes, times, and proper nouns (property name, street names) exactly as given, not converted or altered.\n- After the translation, provide a back-translation (translate your [TARGET LANGUAGE] version back into [SOURCE LANGUAGE]) so I can compare it against the original and check nothing was lost or changed in meaning.\n- Flag any phrase where a direct translation might be ambiguous or culturally confusing, and suggest an alternative phrasing.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Requiring a back-translation alongside the forward translation is the core safety mechanism here — it lets you, without speaking the target language yourself, compare the back-translated version against your original and catch a meaning that drifted, which is invaluable for exactly the safety and access instructions where an error matters most. Separating documents into high-stakes and lower-stakes tiers is what keeps the workflow realistic — requiring a native-speaker review of every casual welcome note isn't sustainable, but skipping that review for a fire-exit instruction is a real risk, so the tiering matches effort to actual consequence. Locking numbers, codes, and proper nouns from being altered addresses the specific, common failure mode where a translation model \"helpfully\" reformats a time or a door code in a way that changes its meaning.",
+      "example": "High-stakes document: house rules stating \"Check-out is strictly by 11:00 AM. The door code is 4471#, valid only during your stay dates.\" Target language: Spanish.\n\nExpected output: a Spanish translation preserving \"11:00 AM\" and \"4471#\" exactly, plus a back-translation into English that a host can compare against the original to confirm the checkout time and code weren't altered or reformatted, and a flag if any phrase (like \"strictly by\") has a more natural but equally firm Spanish equivalent worth using instead.",
+      "exercise": "In your own ChatGPT account, translate one high-stakes document (like house rules or access instructions) into your most-needed second language using this prompt, then have a fluent speaker verify it before it's used with a real guest.",
+      "expectedResult": "A documented, repeatable workflow with verified translations for your core guest documents in your 2-4 most-needed languages, with high-stakes documents checked by a fluent speaker and a clear back-translation record for every version.",
+      "commonMistakes": [
+        "Sending a machine-translated safety or access document to a real guest without any human verification.",
+        "Picking languages to support based on assumption rather than actual guest booking data.",
+        "Skipping the back-translation step, which is the easiest way to self-check without knowing the target language.",
+        "Letting translated documents go stale after the original is updated, so the two versions quietly diverge."
+      ],
+      "proTip": "Once a high-stakes document is verified in a language, store it as a locked reference template rather than re-translating from scratch each time — re-translating repeatedly reintroduces the risk of a new error slipping through unchecked.",
+      "tools": [
+        "chatgpt"
+      ],
+      "professions": [
+        "hotel-tourism"
+      ],
+      "skills": [
+        "communication",
+        "automation"
+      ]
+    }
+  ]
+}

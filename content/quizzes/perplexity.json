@@ -1,0 +1,284 @@
+{
+  "quizzes": {
+    "pplx-b1-cited-research-questions": [
+      {
+        "q": "You type \"tell me about EU data residency rules\" into ChatGPT and get a smooth but hard-to-verify narrative with no citations. What's the most likely fix?",
+        "options": [
+          "Switch to a different AI tool entirely",
+          "Explicitly turn on web search and ask a specific, scoped question with a timeframe and preferred source type instead of a broad topic",
+          "Ask the same question five times and compare the answers",
+          "Turn off web search so it answers faster"
+        ],
+        "answer": 1,
+        "why": "A broad topic question with search off triggers a generic answer from training data; forcing web search and naming the exact fact plus scope constraints (timeframe, source type, geography) is what makes ChatGPT retrieve real, checkable sources."
+      },
+      {
+        "q": "You get a ChatGPT answer with five inline citations on a claim you plan to use in a client report. What should you do before trusting it?",
+        "options": [
+          "Nothing further — five citations is already strong evidence",
+          "Click through at least a couple of the citations to confirm the sources actually support the claim",
+          "Ask ChatGPT to remove the citations to make the answer shorter",
+          "Assume the claim is correct because ChatGPT's tone sounds confident"
+        ],
+        "answer": 1,
+        "why": "Citations lower but don't eliminate hallucination risk; the lesson's habit is to click through a few citations and confirm they actually support what's claimed rather than trusting the presence of a link."
+      },
+      {
+        "q": "A colleague asks ChatGPT a research question without clicking the search icon first. Why does this matter?",
+        "options": [
+          "It doesn't matter — ChatGPT always searches the web automatically regardless",
+          "Without explicitly forcing search, ChatGPT may answer fluently from training data with nothing to cite or click",
+          "ChatGPT will refuse to answer without search enabled",
+          "Search only affects response speed, not sourcing"
+        ],
+        "answer": 1,
+        "why": "The lesson's common mistake is not explicitly telling ChatGPT to search the web, which leaves it free to answer from memory with no citations attached at all."
+      }
+    ],
+    "pplx-b2-evaluate-and-verify-sources": [
+      {
+        "q": "A ChatGPT answer cites an industry report for a specific SaaS churn percentage. What's the fastest way to check whether that number is trustworthy before quoting it in a memo?",
+        "options": [
+          "Count the total number of citations in the answer",
+          "Ask ChatGPT to quote the exact sentence from the source that supports the claim",
+          "Assume it's correct since it came with a citation",
+          "Search for a completely different topic to compare tone"
+        ],
+        "answer": 1,
+        "why": "Asking ChatGPT to quote the exact supporting sentence forces a self-audit — a claim it can quote cleanly is well-grounded, while one it can only loosely paraphrase is the one worth double-checking yourself."
+      },
+      {
+        "q": "You notice a ChatGPT answer has ten citations attached to it. Why shouldn't a high citation count alone be treated as proof of quality?",
+        "options": [
+          "Because ChatGPT limits citations to low-quality sources on purpose",
+          "Because ten citations can still mean zero truly independent confirmations of the specific claim you actually care about",
+          "Because citation count always correlates inversely with accuracy",
+          "Because web search caps citations at ten regardless of source quality"
+        ],
+        "answer": 1,
+        "why": "A high citation count can mask the fact that none of those sources independently confirm the specific claim in question — this is explicitly listed as a common mistake to avoid."
+      },
+      {
+        "q": "You're about to forward a ChatGPT-sourced answer to a financial decision-maker, and one key claim rests on a single, older source. What's the right move?",
+        "options": [
+          "Forward it as-is since it already has a citation attached",
+          "Delete the claim entirely rather than deal with it",
+          "Flag it as risky and ask Gemini the same question with Deep Research to check whether an independent source set lands on the same figure",
+          "Rewrite the claim in your own words to make it sound more current"
+        ],
+        "answer": 2,
+        "why": "A claim resting on a single weak or old source should be flagged as risky to repeat as-is; the lesson's proTip is to cross-check high-stakes numbers against an independently retrieved source set before relying on them."
+      }
+    ],
+    "pplx-i1-focused-market-research": [
+      {
+        "q": "You're deciding whether to launch a $49/month pricing tier. What's the better way to structure your Gemini Deep Research?",
+        "options": [
+          "Run one broad Deep Research brief asking Gemini to \"research SaaS pricing\"",
+          "Break the decision into 3-4 sourced sub-questions and run each as its own focused Deep Research brief",
+          "Ask Gemini to guess what competitors likely charge based on general knowledge",
+          "Only research the single largest competitor and extrapolate"
+        ],
+        "answer": 1,
+        "why": "Anchoring research to the actual decision and splitting it into focused sub-questions, each run as its own Deep Research brief, produces sharper, more actionable answers than one sprawling or generic prompt."
+      },
+      {
+        "q": "Before a Gemini Deep Research run starts browsing, what does the interface show you, and what should you do with it?",
+        "options": [
+          "Nothing — Deep Research starts browsing immediately with no preview step",
+          "A research plan you should review and edit if it's missing an angle you need, before approving it",
+          "A list of past reports you must delete first",
+          "A price quote you must accept before the run begins"
+        ],
+        "answer": 1,
+        "why": "Gemini drafts a research plan before it starts browsing; approving it without reading it is a listed common mistake, since that's your cheapest opportunity to add a missing sub-topic."
+      },
+      {
+        "q": "One of your sub-questions comes back with a vague, low-confidence answer that Gemini couldn't source well. What should you do?",
+        "options": [
+          "Include the vague answer in the brief anyway since it's better than nothing",
+          "Note that this sub-question wasn't confidently answered and flag it for another research method",
+          "Delete the sub-question from the decision brief without comment",
+          "Rerun the exact same brief repeatedly until it produces a confident-sounding answer"
+        ],
+        "answer": 1,
+        "why": "The lesson explicitly calls for noting anything Gemini couldn't answer with confidence and flagging it, rather than silently dropping it or letting the gap get discovered too late."
+      }
+    ],
+    "pplx-i2-competitive-analysis-workflow": [
+      {
+        "q": "You're comparing three competitors for a positioning refresh. Why should you use one identical Deep Research prompt template for each competitor rather than writing a custom prompt per competitor?",
+        "options": [
+          "Identical prompts run faster in ChatGPT's queue",
+          "It keeps the outputs directly comparable in a combined table afterward",
+          "ChatGPT blocks varying prompts within the same Project",
+          "It reduces the number of citations returned per competitor"
+        ],
+        "answer": 1,
+        "why": "Using an identical template per competitor is what makes the results genuinely comparable side by side later; different prompts per competitor produce differently-shaped write-ups that resist direct comparison."
+      },
+      {
+        "q": "Your competitor research prompt didn't isolate \"recent moves\" as its own explicit ask. What's the likely consequence?",
+        "options": [
+          "ChatGPT will refuse to answer the prompt",
+          "The answer will surface older, better-indexed content instead of last week's actual news",
+          "The citations will disappear from the answer",
+          "The comparison table will fail to generate"
+        ],
+        "answer": 1,
+        "why": "A general \"tell me about X\" query tends to surface older, better-indexed content over recent news, which is why the lesson calls for requesting \"recent moves\" (last 3-6 months) as its own explicit ask."
+      },
+      {
+        "q": "Why does the lesson recommend running each competitor's Deep Research report inside the same ChatGPT Project rather than separate, unrelated chats?",
+        "options": [
+          "Projects are the only place Deep Research can run",
+          "The Project's shared custom instructions keep every competitor report consistently formatted and easy to refresh together",
+          "Separate chats delete their citations after 24 hours",
+          "Projects automatically merge reports without being asked"
+        ],
+        "answer": 1,
+        "why": "Setting the Project's custom instructions once (e.g. always require a source and date) removes the need to retype that constraint into every new Deep Research brief and keeps the whole competitor set easy to rerun together."
+      }
+    ],
+    "pplx-i3-deep-research-long-form-reports": [
+      {
+        "q": "A team lead types \"solar panel installation market\" into Gemini Deep Research expecting a sharp, decision-ready report. What went wrong with this approach?",
+        "options": [
+          "Deep Research only accepts single-word topics",
+          "A one-line topic instead of a scoped brief produces a generic, unfocused report",
+          "Deep Research doesn't work on market topics",
+          "The topic should have been submitted through Gems instead"
+        ],
+        "answer": 1,
+        "why": "Deep Research quality depends heavily on the brief, not just the question; submitting a one-line topic instead of a brief with audience, scope, and exclusions is a listed common mistake that yields a generic report."
+      },
+      {
+        "q": "Why does the lesson emphasize reviewing Gemini's research plan before clicking \"Start research\"?",
+        "options": [
+          "It's a formatting requirement with no functional purpose",
+          "It's the cheapest point to add a missing sub-topic, since editing the plan is far easier than re-running the finished report",
+          "It reduces the number of sources Deep Research needs to browse",
+          "It's required to unlock the export-to-Docs feature"
+        ],
+        "answer": 1,
+        "why": "The research plan is shown before browsing starts specifically so you can edit it; approving it without reading it is a listed common mistake because it's your one real, cheap editing window."
+      },
+      {
+        "q": "A finished Deep Research report includes a note that two sources disagree on a specific figure. What's the smartest way to handle that when presenting to leadership?",
+        "options": [
+          "Delete the note so the report looks more confident",
+          "Pick whichever number sounds more precise and present it as fact",
+          "Circulate the report with the disagreement flagged rather than presenting either number as certain",
+          "Re-run the exact same brief hoping the disagreement disappears"
+        ],
+        "answer": 2,
+        "why": "Requesting a \"risks and open questions\" section forces honesty about the report's own limits; the lesson's example shows a founder circulating the flagged disagreement rather than presenting an uncertain number as settled."
+      }
+    ],
+    "pplx-i4-spaces-for-ongoing-research": [
+      {
+        "q": "A consultant is researching three unrelated clients but keeps everything in one general ChatGPT Project for convenience. What's the risk?",
+        "options": [
+          "Nothing — Projects don't retain any context between chats",
+          "Instructions and files from unrelated projects bleed into each other's answers",
+          "The Project will automatically split into separate Projects",
+          "File uploads will be rejected past the first client"
+        ],
+        "answer": 1,
+        "why": "Using a single Project for everything is a listed common mistake — instructions and uploaded files from unrelated projects bleed into each other, undermining the grounded, consistent context a Project is meant to provide."
+      },
+      {
+        "q": "What is the main advantage of writing custom instructions at the Project level instead of repeating context in every new chat?",
+        "options": [
+          "Custom instructions increase the file upload limit",
+          "They apply automatically to every chat started inside the Project, so you stop re-explaining context each time",
+          "They disable citation requirements to speed up answers",
+          "They are required before any file can be uploaded"
+        ],
+        "answer": 1,
+        "why": "Project-level custom instructions apply automatically to every chat started inside it, which is the core benefit over a plain chat where context must be re-explained each time."
+      },
+      {
+        "q": "A real estate agent's Project holds the inspection report and HOA documents for a specific deal. What happens when she opens that same Project weeks later?",
+        "options": [
+          "She has to re-upload every document from scratch",
+          "The Project still reflects her standing custom instructions and uploaded documents with no re-briefing needed",
+          "The custom instructions expire automatically after a few days",
+          "Only new chats can see the uploaded files, not the standing instructions"
+        ],
+        "answer": 1,
+        "why": "A Project bundles files and custom instructions into one persistent workspace, so a new chat inside it draws on the same grounded context weeks later without anything being re-explained."
+      }
+    ],
+    "pplx-a1-research-to-deliverable": [
+      {
+        "q": "Before asking ChatGPT to turn a research thread into a client deck, what should you do first?",
+        "options": [
+          "Nothing — ChatGPT will automatically verify its own claims when generating the deck",
+          "Verify the underlying research's facts and sources are already checked",
+          "Delete the citations to make the deck cleaner",
+          "Ask for the longest possible deck to cover every angle"
+        ],
+        "answer": 1,
+        "why": "A formatting mistake is easy to catch, but a fabricated-sounding claim buried in a finished deck is easy to miss and easy to present to a client by accident — verifying research before generating the deliverable is the safeguard."
+      },
+      {
+        "q": "You ask ChatGPT to \"make a deck from this research\" without specifying slide-by-slide structure. What's the likely result?",
+        "options": [
+          "ChatGPT will refuse the request until structure is provided",
+          "A generic outline that may not fit the actual audience or purpose",
+          "A deck with no citations at all",
+          "An error message since structure is mandatory"
+        ],
+        "answer": 1,
+        "why": "Leaving the structure open is a listed common mistake — it produces a generic outline chosen by ChatGPT rather than one that fits the specific audience and message you need."
+      },
+      {
+        "q": "Your data analysis tool generates a downloadable deck with all requested sections and sources intact. What's the last step before sending it to a client?",
+        "options": [
+          "Send it immediately since the generation step already verified everything",
+          "Do a final polish pass in the native app (PowerPoint, Excel) before sending",
+          "Regenerate the entire deliverable from scratch as a double-check",
+          "Remove the sources slide so the deck looks cleaner"
+        ],
+        "answer": 1,
+        "why": "The lesson calls for treating the generated file as a draft, not final output — a last polish pass in the native app catches formatting or content gaps before it goes out."
+      }
+    ],
+    "pplx-a2-recurring-research-routine": [
+      {
+        "q": "A financial analyst wants a sustainable weekly research habit instead of starting from scratch each Monday. What's the key structural choice that makes this work?",
+        "options": [
+          "Researching a completely different set of questions every week to stay current",
+          "Fixing 3-5 recurring questions in advance and running them automatically on a Scheduled Action",
+          "Manually re-triggering a new chat every week and hoping to remember",
+          "Asking for a full report every week instead of a short update"
+        ],
+        "answer": 1,
+        "why": "Fixing the questions in advance removes the actual time sink — deciding what to research each time — and a Scheduled Action is what turns that fixed prompt set into a habit that runs itself instead of one you have to remember."
+      },
+      {
+        "q": "The recurring-check prompt asks Gemini to compare the new run to the previous one and flag what's changed. Why does this matter for sustainability?",
+        "options": [
+          "It reduces the number of citations needed per run",
+          "It keeps the update to a short, readable delta instead of a full report to re-read every time",
+          "It is required for a Scheduled Action to be created at all",
+          "It automatically deletes the previous run"
+        ],
+        "answer": 1,
+        "why": "Asking for a short bulleted delta rather than a full report each time is what keeps a 15-minute habit from turning into an hour of reading — this only works because the comparison references the prior run's results."
+      },
+      {
+        "q": "Six months into a recurring research routine, one of the original five tracked questions no longer matters to the analyst's role. What should happen?",
+        "options": [
+          "Keep tracking it indefinitely since removing questions breaks the Scheduled Action",
+          "Review the routine quarterly and retire questions that stopped being useful",
+          "Stop the entire routine and start a completely new one",
+          "Add the question to a separate, untracked chat"
+        ],
+        "answer": 1,
+        "why": "The lesson calls for reviewing the routine itself quarterly, retiring questions that stopped being useful and adding new ones as the role changes, rather than letting stale questions accumulate or abandoning the habit."
+      }
+    ]
+  }
+}

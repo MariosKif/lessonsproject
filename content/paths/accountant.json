@@ -1,0 +1,27 @@
+{
+  "paths": [
+    {
+      "slug": "ai-for-accountants",
+      "title": "AI for Accountants & Bookkeepers",
+      "tagline": "From safely summarizing dense documents to building your own client-communication system.",
+      "description": "A ladder of 10 hands-on lessons for accountants and bookkeepers covering the AI workflows that save real time without risking confidentiality or accuracy: summarizing long financial and policy documents safely, turning rough notes into client-ready explanations, drafting reminders and information requests, explaining financial concepts in plain language, documenting internal processes, writing variance narratives, running better client meetings, building reusable communication templates, structuring data-cleaning work before spreadsheets, and creating staff training material.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "accountant",
+      "sortOrder": 2,
+      "lessons": [
+        "acc-b1-summarize-financial-document-safely",
+        "acc-b2-notes-to-client-explanation",
+        "acc-b3-client-reminders-and-requests",
+        "acc-b4-explain-financial-concepts-plain-language",
+        "acc-b5-internal-checklists-and-process-docs",
+        "acc-i1-analyze-variance-narrative",
+        "acc-i2-meeting-agendas-followup-summaries",
+        "acc-i3-reusable-prompt-templates-client-comms",
+        "acc-i4-structure-data-cleaning-instructions",
+        "acc-i5-procedure-docs-and-staff-training"
+      ]
+    }
+  ]
+}

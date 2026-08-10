@@ -1,0 +1,25 @@
+{
+  "paths": [
+    {
+      "slug": "ai-image-academy",
+      "title": "AI Image Creation Academy",
+      "tagline": "From your first sharp prompt to a repeatable creative pipeline, using the two AI tools you already have open: ChatGPT and Gemini.",
+      "description": "An 8-lesson path covering the full AI image generation workflow inside ChatGPT (GPT Image 2) and Gemini's native image generation: writing effective prompts, choosing which of the two tools to lead with for a given job, iterating through conversational refinement and variation, generating accurate product photos and mockups, keeping social and marketing visuals on-brand with saved ChatGPT Projects and Gemini Gems, handling text in images and graphic design work, understanding commercial safety across plan tiers, and building a documented pipeline that ties it all together.",
+      "kind": "tool-course",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": null,
+      "sortOrder": 13,
+      "lessons": [
+        "img-b1-first-effective-image-prompts",
+        "img-b2-choose-the-right-image-tool",
+        "img-b3-iterate-refine-vary-upscale",
+        "img-i1-product-photos-and-mockups",
+        "img-i2-social-marketing-visuals-brand-style",
+        "img-i3-text-in-images-graphic-design",
+        "img-a1-commercial-safety-licensing",
+        "img-a2-repeatable-creative-pipeline"
+      ]
+    }
+  ]
+}

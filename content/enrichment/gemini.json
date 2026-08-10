@@ -1,0 +1,497 @@
+{
+  "enrichment": {
+    "gem-b1-first-professional-result": {
+      "placeholders": [
+        {
+          "name": "role, e.g. senior marketing copywriter",
+          "what": "Tell Gemini which expert it should act as while writing your draft. This isn't decoration — it changes vocabulary, judgment calls, and what the model assumes you already know. Pick the role a human would actually hire for this exact task, not a vague label like 'writer'.",
+          "examples": ["senior marketing copywriter", "small business operations manager", "HR onboarding specialist"]
+        },
+        {
+          "name": "deliverable",
+          "what": "Name the exact thing you want produced — not the topic, the output itself. A beginner mistake is describing the subject ('our new pricing') instead of the artifact ('an email announcing our new pricing'). Be as specific about the format as you would be asking a colleague to write it for you.",
+          "examples": ["a 3-email onboarding sequence for new clients", "a one-page project status update", "a product description for an online store listing"]
+        },
+        {
+          "name": "audience/purpose",
+          "what": "State exactly who will read this and what they need to do or decide after reading it. This is what stops Gemini from writing something generic — an email to a first-time customer reads nothing like one to a manager who already trusts you.",
+          "examples": ["a first-time customer deciding whether to book a consultation", "my manager who needs a quick status check before a Friday meeting", "cold leads who downloaded our pricing guide last week"]
+        },
+        {
+          "name": "2-3 sentences of background",
+          "what": "Give the facts a human doing this task would need before they could write a single word — what happened, what's already been said, any numbers or dates that matter. Pull this from the actual situation, not a generic description of your industry.",
+          "examples": ["We sell custom office furniture. This customer requested a quote 3 days ago for a 12-desk order worth about €9,000 and hasn't replied since. They're an existing client, not a cold lead.", "Our SaaS product had a 4-hour outage yesterday affecting the reporting dashboard only. Support tickets are running about 30% above normal today.", "This is a second-round interview candidate for a senior designer role. The team liked her portfolio but had concerns about her availability starting in September."]
+        },
+        {
+          "name": "requirement",
+          "what": "List the specific things the result must contain — facts, mentions, or actions — not stylistic wishes. Each numbered requirement should be something you could check off with a yes/no once you read the draft.",
+          "examples": ["reference the specific quote number and the 3-day timeline", "offer a 15-minute call as the next step", "mention our 30-day money-back guarantee"]
+        },
+        {
+          "name": "length/structure, e.g. 150 words, 3 short paragraphs",
+          "what": "Give a real word or sentence count and describe the shape of the output. Without this, Gemini guesses, and it usually guesses longer and more formal than you need.",
+          "examples": ["150 words, 3 short paragraphs", "under 100 words, single paragraph, no subject line", "500 words with 3 subheadings"]
+        },
+        {
+          "name": "things to avoid",
+          "what": "Name specific words, phrases, tones, or content that must not appear. This closes off the laziest generic answers before they happen, and matters most for words that sound like AI filler or promises you're not authorized to make.",
+          "examples": ["the words 'just checking in' or 'circling back'", "any specific pricing or delivery date promises", "exclamation marks and corporate buzzwords like 'synergy'"]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Fast version for a low-stakes daily task",
+          "whenToUse": "Use this when the task is quick and internal — a Slack message to a teammate, a note to yourself — and the full template would take longer than the task is worth.",
+          "prompt": "You are a [role]. Write [deliverable] for [audience/purpose] in [length, e.g. 3 sentences]. Key point: [point]. Keep it casual."
+        },
+        {
+          "label": "Client-facing version with extra guardrails",
+          "whenToUse": "Use this for anything going to an external client or a stranger, where an over-promise or wrong tone actually costs you something.",
+          "prompt": "You are a [role, e.g. senior marketing copywriter] writing on behalf of a company, not a chatbot. I need [deliverable] for [audience/purpose] — this will go out under our name, so it must read as professionally written by a human. Context: [2-3 sentences of background]. Requirements: 1) [requirement], 2) [requirement], 3) [requirement]. Format: [length/structure, e.g. 150 words, 3 short paragraphs]. Do not include [things to avoid]. Do not promise anything not explicitly stated in the context above."
+        },
+        {
+          "label": "Rewriting a rough draft instead of starting from scratch",
+          "whenToUse": "Use this when you already wrote something messy yourself and want Gemini to professionalize it rather than generate from nothing.",
+          "prompt": "You are a [role, e.g. senior marketing copywriter]. Rewrite the draft below into [deliverable] for [audience/purpose], keeping my original points but fixing tone, clarity, and structure. Requirements: 1) [requirement], 2) [requirement]. Format: [length/structure]. Do not include [things to avoid].\n\nMy draft:\n[PASTE YOUR ROUGH DRAFT]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Too generic? Force in real specifics",
+          "prompt": "This still reads generically. Rewrite it using only the specific facts I gave you in the context — pull in the actual numbers, names, and dates instead of general phrasing."
+        },
+        {
+          "label": "Wrong length? Cut it down",
+          "prompt": "This is too long. Cut it to [X] words while keeping all 3 numbered requirements intact — trim explanation, not substance."
+        },
+        {
+          "label": "Sounds robotic? Humanize it",
+          "prompt": "This sounds like it was written by AI. Rewrite it in a more natural, human voice — shorter sentences, no stiff transitions, like I actually typed this myself."
+        },
+        {
+          "label": "Check it didn't invent anything",
+          "prompt": "Go through this line by line and tell me which sentences are based on facts I gave you versus anything you added or assumed on your own."
+        }
+      ],
+      "walkthrough": "Maria runs a small interior design studio and has a lead who asked for a quote on a living-room refresh four days ago and hasn't replied. She usually types something like \"write a follow up email to a client\" into Gemini and gets back three stiff, generic paragraphs she has to rewrite anyway.\n\nThis time she opens a new Gemini chat and pastes: \"You are a small business owner's assistant. I need a follow-up email for a client who requested a quote 4 days ago and hasn't replied. Context: we're an interior design studio, the quote was for a living-room refresh worth about €3,200, and this is a warm lead who reached out first. Requirements: 1) reference the specific quote and the 4-day gap, 2) offer a quick 10-minute call as the next step, 3) keep it low-pressure. Format: under 90 words, plain email, no subject line. Do not use the words 'just checking in' or 'circling back'.\"\n\nGemini returns a tight draft: it opens by naming the living-room quote directly, notes it's been a few days without sounding pushy, offers a short call, and closes without asking for a decision outright. It's close, but the second sentence sounds stiff — \"I trust this correspondence finds you well\" — which isn't how Maria talks to clients.\n\nShe sends a follow-up: \"Sounds like it was written by AI. Rewrite it in a more natural, human voice — shorter sentences, like I actually typed this myself.\" Gemini rewrites that one sentence into something warmer and drops the filler entirely.\n\nMaria copies the result into her email client, changes one word to match her usual sign-off, and sends it. Total time: about four minutes, versus the ten-plus minutes she used to spend rewriting a generic first draft from scratch."
+    },
+    "gem-b2-prompting-fundamentals-multimodal": {
+      "placeholders": [
+        {
+          "name": "specific expert role",
+          "what": "State the exact kind of expert Gemini should act as for this task. This shapes what it pays attention to first — an operations manager and a graphic designer would notice completely different things in the same photo.",
+          "examples": ["operations manager reviewing supplier paperwork", "certified public accountant reviewing an expense report", "real estate agent reviewing a property listing"]
+        },
+        {
+          "name": "background facts relevant to this task",
+          "what": "Give the facts someone in that role would already know walking in — what the file is, where it came from, and anything unusual about it (poor quality, handwriting, an unusual format). This prevents Gemini from treating a messy real-world file as a clean example.",
+          "examples": ["This is a delivery note photographed at the warehouse dock; some handwriting is hard to read.", "This is a scanned receipt from a restaurant, slightly crumpled, for a client dinner expense.", "This is a screenshot of a competitor's pricing page taken this morning."]
+        },
+        {
+          "name": "one specific action — including what to do with the attached file, e.g. 'extract every line item and total from the attached PDF' or 'describe what's wrong in the attached photo'",
+          "what": "Write one sentence stating exactly what to do, and explicitly say what role the attached file plays — extract from it, compare it to your text, describe a problem in it. Without this, Gemini will describe a file in vague general terms instead of doing the actual task you need.",
+          "examples": ["Read the attached photo of the delivery note and list every item, quantity, and any handwriting you're not confident about.", "Extract every line item, quantity, and total from the attached PDF invoice into a table.", "Compare the attached screenshot of the competitor's pricing page against the 3 tiers I described above and note every difference."]
+        },
+        {
+          "name": "length, structure, headings, or table expected",
+          "what": "Describe the shape of the answer — a table, a bulleted list, a short paragraph. Naming a table explicitly is especially useful for anything involving line items, quantities, or comparisons, since it forces Gemini into a scannable structure instead of a wall of text.",
+          "examples": ["a table with columns Item, Quantity, Confidence (high/low)", "a short bulleted list, one bullet per issue found", "3 short paragraphs, no headings"]
+        },
+        {
+          "name": "required elements",
+          "what": "List anything the answer must contain no matter what — a specific field, a caveat, a category. Think of this as the checklist you'd hand a new employee doing this task for the first time.",
+          "examples": ["a confidence flag on any item you're not fully certain about", "the total number of items found at the bottom of the table", "a one-line summary of the single biggest issue"]
+        },
+        {
+          "name": "things to exclude",
+          "what": "State what the answer should leave out — general commentary, pricing opinions, anything not asked for. This keeps Gemini from padding a focused answer with generic advice you didn't ask for.",
+          "examples": ["general commentary on supplier quality", "any pricing recommendations — I only asked for extraction", "restating information that's identical across every row"]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Text-only version, no file attached",
+          "whenToUse": "Use this when the task is really about information you can type out yourself and there's no photo, PDF, or recording to attach.",
+          "prompt": "Role: You are a [specific expert role].\nContext: [background facts relevant to this task].\nTask: [one specific action].\nFormat: [length, structure, headings, or table expected].\nConstraints: Include [required elements]. Avoid [things to exclude]."
+        },
+        {
+          "label": "Comparing two attached files against each other",
+          "whenToUse": "Use this when you have two files — say a PDF and a photo, or two photos — and the task is really about reconciling them, not just describing one.",
+          "prompt": "Role: You are a [specific expert role].\nContext: [background facts relevant to this task].\nTask: Compare the two attached files. [one specific action, e.g. 'flag every point where the second file contradicts or is missing from the first'].\nFormat: [length, structure, headings, or table expected].\nConstraints: Include [required elements]. Avoid [things to exclude]. If the files disagree, say so explicitly instead of picking one."
+        },
+        {
+          "label": "Voice memo or short recording as input",
+          "whenToUse": "Use this when you have a voice memo, a recorded call snippet, or a short video with audio you need turned into structured text instead of a written document.",
+          "prompt": "Role: You are a [specific expert role].\nContext: [background facts relevant to this task].\nTask: Listen to the attached audio and [one specific action, e.g. 'transcribe it and pull out every action item mentioned, with who owns each one'].\nFormat: [length, structure, headings, or table expected].\nConstraints: Include [required elements]. Avoid [things to exclude]. Note any part of the audio that was unclear or hard to make out instead of guessing at it."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Only described the file instead of doing the task",
+          "prompt": "You just described the file in general terms. I need you to actually do the task — go through it and produce the exact output I asked for in the Format line."
+        },
+        {
+          "label": "Missed uncertain or hard-to-read details",
+          "prompt": "Go back through the attached file and flag anything you weren't fully confident about — blurry text, ambiguous handwriting, or anything you guessed at — instead of presenting everything with equal certainty."
+        },
+        {
+          "label": "Answer is unstructured — turn it into a table",
+          "prompt": "Reformat your last answer as a table with clear column headers so I can scan it quickly instead of reading paragraphs."
+        },
+        {
+          "label": "Check it used the file, not outside knowledge",
+          "prompt": "For each point in your answer, tell me whether it came directly from the attached file or from general knowledge — I want to know which parts I actually need to verify against the source."
+        }
+      ],
+      "walkthrough": "Tom manages a warehouse and gets a stack of delivery notes photographed at the dock every morning, some in handwriting that's hard to read. He used to retype them by hand into the tracking spreadsheet, which took him twenty minutes a day and produced typos.\n\nHe opens Gemini, attaches a photo of one delivery note, and types: \"Role: You are an operations manager reviewing supplier paperwork. Context: this is a delivery note photographed at the warehouse dock; some handwriting is hard to read. Task: Read the attached photo and list every item, quantity, and any item where the handwriting is ambiguous. Format: a table with columns Item, Quantity, Confidence (high/low). Constraints: flag anything you're not fully certain about instead of guessing silently.\"\n\nGemini returns a table with eight rows. Six show high confidence, and two are marked low confidence — one because a quantity looks like it could be a 7 or a 1, the other because a product code is smudged. Tom checks those two lines against the physical note on his desk and confirms the quantity is a 1.\n\nHe sends one follow-up: \"For each point in your answer, tell me whether it came directly from the photo or from general knowledge about typical deliveries.\" Gemini confirms every row came directly from the image, with no assumptions filled in — which matters to Tom because this table feeds directly into the inventory system.\n\nHe pastes the confirmed table into the tracking sheet. What used to take twenty minutes of squinting and retyping took under three minutes, with the two uncertain items caught and checked instead of silently guessed at."
+    },
+    "gem-b3-gmail-docs-daily-communication": {
+      "placeholders": [
+        {
+          "name": "e.g. friendly but professional",
+          "what": "Describe the tone the reply should have. Pick a description you could actually picture someone speaking in, not an abstract word — 'professional' alone means very different things to different readers.",
+          "examples": ["friendly but professional", "warm and apologetic", "direct and brief, for a busy executive"]
+        },
+        {
+          "name": "point",
+          "what": "List the actual facts or messages the reply must hit, in the order that matters. These should be things specific to this exact thread, not generic email advice like 'be polite'.",
+          "examples": ["confirm we received their payment yesterday", "explain the 2-day shipping delay is due to a customs hold", "offer a 10% discount code for the inconvenience"]
+        },
+        {
+          "name": "anything you're not ready to promise, e.g. a specific delivery date",
+          "what": "Name anything Gemini should not commit to on your behalf — a date, a price, a policy exception. Gemini doesn't know your real authority or constraints, so this is the guardrail that stops a sent email from over-promising.",
+          "examples": ["a specific delivery date", "a discount percentage without manager approval", "refund eligibility before I've checked the return policy"]
+        },
+        {
+          "name": "X",
+          "what": "Give the maximum number of sentences you want the reply to be. Shorter than you'd expect usually reads better in email — most first drafts come back too long unless you cap it explicitly.",
+          "examples": ["4", "6", "3"]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Long thread — summarize before replying",
+          "whenToUse": "Use this when the email thread is long and you want to make sure Gemini (and you) have the full context before drafting a reply.",
+          "prompt": "First, summarize this entire thread in 3-4 bullet points so I have the full context. Then draft a reply. Tone: [e.g. friendly but professional]. Key points to include: 1) [point], 2) [point]. Do not commit to [anything you're not ready to promise]. Keep it under [X] sentences."
+        },
+        {
+          "label": "Docs 'Help me write' version for a full document",
+          "whenToUse": "Use this in Google Docs, not Gmail, when you need a first draft of a whole document from a short brief rather than a reply.",
+          "prompt": "Write a first draft of [document type, e.g. a one-page project brief]. Audience: [who will read it]. Tone: [e.g. friendly but professional]. It must include: 1) [point], 2) [point], 3) [point]. Length: under [X] words. Do not include [anything you're not ready to promise]."
+        },
+        {
+          "label": "Refining one section instead of the whole document",
+          "whenToUse": "Use this in Docs when only one paragraph or section needs work — select it first so Gemini edits in place instead of regenerating everything.",
+          "prompt": "Rewrite just this selected section. Tone: [e.g. friendly but professional]. It needs to make this point clearly: [point]. Keep the length roughly the same and don't touch the rest of the document."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Too generic? Tie it to the actual thread",
+          "prompt": "This feels generic. Rewrite it referencing the specific details from this thread — the actual dates, numbers, or names mentioned, not general phrasing."
+        },
+        {
+          "label": "Check it didn't over-promise",
+          "prompt": "Read this back and tell me if it commits to anything specific — a date, a price, or a scope — that I didn't explicitly approve in my instructions."
+        },
+        {
+          "label": "Tone is off — adjust it",
+          "prompt": "This reads too [formal/casual/defensive] for this relationship. Rewrite it to sound more [desired tone] while keeping the same key points."
+        },
+        {
+          "label": "Too long? Cut it down",
+          "prompt": "Cut this to [X] sentences maximum, keeping the most important point and dropping the rest."
+        }
+      ],
+      "walkthrough": "Priya handles customer support for a small e-commerce brand and has an email thread from a customer who's annoyed that their order arrived two days late. She's behind on replies and doesn't want to write a defensive-sounding email by accident when she's tired.\n\nShe opens the thread in Gmail, clicks the Gemini icon in the side panel, and types: \"Draft a reply to this email thread. Tone: warm and apologetic, not defensive. Key points to include: 1) acknowledge the 2-day delay was due to a carrier issue, not our warehouse, 2) offer a 15% discount code on their next order. Do not commit to a specific reason the carrier gave, since I don't have that confirmed yet. Keep it under 5 sentences.\"\n\nGemini drafts a five-sentence reply: it opens with a direct apology, explains the delay was on the carrier's side without inventing a specific cause, offers the discount code with a placeholder for Priya to fill in, and closes without sounding scripted. It's close, but one sentence sounds a little stiff — \"We deeply regret any inconvenience this may have caused you.\"\n\nPriya sends a follow-up: \"This reads too formal for this relationship — the customer has emailed us casually before. Rewrite it to sound warmer while keeping the same key points.\" Gemini softens that one sentence and the overall greeting.\n\nShe reads the final draft against the actual thread, swaps in the real discount code, and hits send. The whole exchange, including reading the thread first, took under four minutes — compared to the ten minutes she'd normally spend second-guessing her own wording on a complaint email."
+    },
+    "gem-i1-analyzing-documents-and-images": {
+      "placeholders": [
+        {
+          "name": "YOUR QUESTION",
+          "what": "Write one specific, narrow question that actually requires comparing the document and the image together — not a broad 'what do you see' request. The more specific the question, the more useful and checkable the answer will be.",
+          "examples": ["Does the visible damage in the photos fall under the coverage described in the policy?", "Does the quantity on the receipt photo match the line items listed in the invoice PDF?", "Do the room dimensions in the listing sheet match what's visible in the property photos?"]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Multiple images against one document",
+          "whenToUse": "Use this when you have several photos (not just one) that all need to be checked against the same document, like a set of damage photos against one policy.",
+          "prompt": "Using only the attached document and the attached image(s), answer the following. If something isn't shown in either file, say so explicitly — do not guess or use outside knowledge. Question: [YOUR QUESTION]. Go through each image individually and note which one supports or contradicts each part of your answer. If the document and any image appear to disagree, flag it clearly instead of resolving it silently. Cite the page/section of the document and describe which image you're referencing for each part of your answer."
+        },
+        {
+          "label": "Comparing two images, no document",
+          "whenToUse": "Use this when there's no document at all — just two photos or screenshots that need to be checked against each other, like a before-and-after or two versions of the same page.",
+          "prompt": "Using only the two attached images, answer the following. If something isn't clearly visible in either image, say so explicitly — do not guess. Question: [YOUR QUESTION]. If the two images appear to disagree on any point, flag it clearly instead of resolving it silently. Describe which image you're referencing for each part of your answer."
+        },
+        {
+          "label": "Quick single-fact check",
+          "whenToUse": "Use this for a fast, narrow lookup rather than a full comparison — when you just need one fact confirmed against the files, not a structured report.",
+          "prompt": "Using only the attached document and image, tell me only: [YOUR QUESTION]. Answer in one sentence, and say 'not shown in either file' if you can't confirm it from what's attached."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Drill into a specific flagged item",
+          "prompt": "You flagged a disagreement between the document and the image. Explain exactly what each source says on that specific point, side by side."
+        },
+        {
+          "label": "Ask for a confidence level, not just an answer",
+          "prompt": "For each part of your answer, add a confidence level (high/medium/low) based on how clearly it's supported by the attached files."
+        },
+        {
+          "label": "Check it didn't blend in outside knowledge",
+          "prompt": "Go through your answer and tell me which parts came directly from the attached document or image, versus any general knowledge you used to fill a gap."
+        },
+        {
+          "label": "Expand into a full checklist for follow-up",
+          "prompt": "Turn the points you flagged as uncertain or disagreeing into a short checklist I can use to manually verify each one."
+        }
+      ],
+      "walkthrough": "Elena is a claims adjuster reviewing a water damage claim: a six-page insurance policy PDF and three phone photos of a flooded kitchen. Normally she reads the policy, then flips back and forth to the photos on her phone, trying to hold both in her head at once.\n\nShe uploads the PDF and all three photos into one Gemini chat and types: \"Using only the attached policy and photos, does the visible damage in the photos fall under the coverage described in the policy? If the policy and photos appear to disagree on anything (like the likely cause of damage), flag it clearly. Cite the page/clause and describe which photo you're referencing for each part of your answer.\"\n\nGemini responds with a structured answer: it cites the specific clause covering \"sudden and accidental water discharge,\" notes that photo 2 shows damage consistent with a burst pipe rather than gradual leakage, but flags that photo 3 shows staining that looks older than the reported incident date — a potential conflict worth a second look.\n\nElena sends a follow-up: \"You flagged a disagreement about photo 3. Explain exactly what the policy says about pre-existing damage, and what specifically in photo 3 looks inconsistent with the reported date.\" Gemini pulls the exact exclusion clause and describes the specific staining pattern that looks inconsistent, in one paragraph.\n\nElena checks photo 3 herself, confirms the concern is legitimate, and flags the claim for a follow-up inspection instead of approving it outright. What used to take fifteen minutes of manual cross-referencing, and risked missing the older staining entirely, took about five minutes and caught a detail she might have skimmed past."
+    },
+    "gem-i2-deep-research-grounded-reports": {
+      "placeholders": [
+        {
+          "name": "specific question, e.g. 'Compare the top 4 project management tools for a 15-person creative agency'",
+          "what": "State the exact question the report needs to answer — specific enough that two different people would produce comparably scoped reports from it. A vague topic produces a vague, unfocused report.",
+          "examples": ["Compare the top 4 project management tools for a 15-person creative agency", "What pricing model should we use for our new onboarding add-on?", "Which 3 competitors pose the biggest threat to our mid-market SaaS product in 2026?"]
+        },
+        {
+          "name": "who will read this report and what they'll decide from it",
+          "what": "Name the actual reader and the decision this report feeds into. This changes how technical, how long, and how hedged the report should be — a report for a board decision reads differently than one for your own personal research.",
+          "examples": ["our leadership team deciding at next week's planning meeting", "me, to decide which vendor to recommend to a client by Friday", "the marketing team choosing a campaign platform for next quarter"]
+        },
+        {
+          "name": "specific angles, e.g. pricing, integrations, learning curve",
+          "what": "List the specific dimensions the report should focus on, so Deep Research doesn't spend time on angles you don't care about. Think of this as the outline you'd give a research assistant.",
+          "examples": ["pricing, integrations, and learning curve", "market size, competitor share, and growth trend over the last 2 years", "vendor reliability, contract terms, and customer support quality"]
+        },
+        {
+          "name": "anything out of scope, e.g. enterprise-only tools",
+          "what": "Name what the report should explicitly not cover, so it doesn't burn time and length on irrelevant material. This is especially useful for filtering by market, price tier, or company size.",
+          "examples": ["enterprise-only tools priced above $50/seat/month", "markets outside the US and EU", "anything published before 2024"]
+        },
+        {
+          "name": "name",
+          "what": "Give the exact name of the Google Drive folder you want Deep Research to check, spelled and capitalized as it appears in Drive. If you're not sure of the exact name, open Drive first and copy it directly rather than guessing.",
+          "examples": ["Customer Feedback 2026", "Q3 Vendor Contracts", "Client X Research"]
+        },
+        {
+          "name": "timeframe",
+          "what": "State how far back Deep Research should look through your emails for relevant context. A tighter window keeps the internal-findings section focused on what's actually current.",
+          "examples": ["6 months", "90 days", "since January 2026"]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Pure web research, no Workspace sources",
+          "whenToUse": "Use this for public market or competitor research where you don't need anything from your own Drive or Gmail — the fastest version to set up.",
+          "prompt": "Research brief: [specific question]. Audience: [who will read this report and what they'll decide from it]. Scope: focus on [specific angles]. Exclude: [anything out of scope]. Use only public web sources."
+        },
+        {
+          "label": "Vendor or competitor head-to-head comparison",
+          "whenToUse": "Use this when the report needs to end in a clear recommendation between named options, not just a general overview.",
+          "prompt": "Research brief: Compare [option A], [option B], and [option C] for [specific use case]. Audience: [who will read this report and what they'll decide from it]. Scope: focus on [specific angles]. Exclude: [anything out of scope]. End the report with a recommendation and the top reason for it."
+        },
+        {
+          "label": "Recurring monthly briefing using Workspace sources",
+          "whenToUse": "Use this when this is a repeating report and you want each cycle to combine current web data with your team's own internal notes and emails.",
+          "prompt": "Research brief: [specific question]. Audience: [who will read this report and what they'll decide from it]. Scope: focus on [specific angles]. Exclude: [anything out of scope]. Also check my Drive folder [name] and relevant emails from the last [timeframe] for internal context, and clearly separate internal findings from public-web findings in the final report."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Expand one section instead of starting over",
+          "prompt": "Expand the section on [specific angle] with more detail and at least 2 more sources — leave the rest of the report as is."
+        },
+        {
+          "label": "Spot-check citations before sharing",
+          "prompt": "List every claim in the executive summary along with the exact source it came from, so I can spot-check the 3 most important ones before I share this."
+        },
+        {
+          "label": "Separate internal from external findings more clearly",
+          "prompt": "Reformat the report so internal (Drive/Gmail) findings and public-web findings are in clearly labeled separate sections, not blended together in the same paragraphs."
+        },
+        {
+          "label": "Too long? Turn it into an executive summary",
+          "prompt": "Condense this into a one-page executive summary: the top 3 findings, the recommendation, and one supporting source per finding — cut everything else."
+        }
+      ],
+      "walkthrough": "Daniel is a consultant whose client wants to know what pricing model to use for a new onboarding add-on before a planning meeting next week. Researching competitor pricing manually would normally eat an afternoon he doesn't have.\n\nHe opens the Gemini app, selects Deep Research, and enters: \"Research brief: what pricing model should we use for our new onboarding add-on? Audience: the client's leadership team deciding at next week's planning meeting. Scope: focus on competitor pricing models (flat-fee vs. per-seat vs. usage-based) and what the client's own past customer feedback says about pricing sensitivity. Exclude: markets outside the US and EU. Also check my Drive folder 'Client X Research' and emails mentioning 'pricing' from the last 6 months, and clearly separate internal findings from public-web findings.\"\n\nGemini shows a research plan first — six sub-questions it intends to investigate. Daniel notices it's missing anything about contract length, adds that as a seventh angle, then lets it run. Twelve minutes later it returns a report with two clearly labeled sections: a competitor pricing comparison sourced from six public sources, and a summary of internal customer feedback pulled from three Drive documents and two email threads, noting that past customers pushed back specifically on per-seat pricing.\n\nDaniel sends one follow-up: \"List every claim in the executive summary along with its exact source, so I can spot-check the top 3.\" He verifies the three biggest claims against the linked sources in under two minutes and finds them accurate.\n\nHe exports the report to Google Docs and shares it with the client. Total time from brief to shareable report: about eighteen minutes, versus what would normally have been a half-day of manual research."
+    },
+    "gem-i3-sheets-data-workflows": {
+      "placeholders": [
+        {
+          "name": "exact calculation, e.g. 'computes year-over-year growth using column C (this year) and column D (last year)'",
+          "what": "Describe the exact math using the real column headers from your sheet, not vague descriptions like 'the growth number'. Naming the actual columns is what keeps Gemini from guessing which data to use.",
+          "examples": ["computes year-over-year growth using column C (this year) and column D (last year)", "converts column B from USD to EUR using a fixed rate of 0.92", "computes what percentage of the budget in column F has been used from column E"]
+        },
+        {
+          "name": "exact condition, e.g. 'growth is negative or drops more than 10% versus last month'",
+          "what": "State the precise numeric rule that should trigger a flag — a threshold, a comparison, a blank check. Vague terms like 'a big change' get interpreted arbitrarily, and that's exactly the kind of error that's easy to miss in a large spreadsheet.",
+          "examples": ["growth is negative or drops more than 10% versus last month", "the value in column G is blank", "spend in column H exceeds 90% of the allocated budget in column I"]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Formula only, no flagging",
+          "whenToUse": "Use this when you just need a calculated column and don't need anything highlighted or flagged yet.",
+          "prompt": "In this sheet, add a column that [exact calculation]. Use column headers exactly as they appear. Explain the formula in one sentence after inserting it."
+        },
+        {
+          "label": "Flagging missing or inconsistent data",
+          "whenToUse": "Use this for a data-cleaning pass — finding blanks, duplicates, or rows that don't match a pattern the rest of the sheet follows.",
+          "prompt": "In this sheet, check column [column name] for missing or inconsistent values. Flag any row where [exact condition, e.g. 'the value is blank or doesn't match the format used in the other rows']. Use column headers exactly as they appear. List the flagged rows and explain why each was flagged."
+        },
+        {
+          "label": "Pulling data from another tab",
+          "whenToUse": "Use this when the calculation needs to reference a different sheet or tab, like a lookup table, rather than just columns in the current one.",
+          "prompt": "In this sheet, add a column that looks up [value] from the tab named [tab name] and [exact calculation]. Flag any row where [exact condition]. Use column and tab names exactly as they appear. Explain the formula in one sentence after inserting it."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Spot-check found an error — fix it",
+          "prompt": "I checked row [row number] by hand and the formula's result doesn't match my calculation. Here's what I expected: [expected value]. Find and fix the issue."
+        },
+        {
+          "label": "Explain the formula in plainer language",
+          "prompt": "Explain what this formula is doing in plain language, one step at a time, as if I've never seen this function before."
+        },
+        {
+          "label": "Adjust the threshold",
+          "prompt": "Change the flagging condition to [new exact condition] and update the formula accordingly."
+        },
+        {
+          "label": "Make it survive being copied to a new tab",
+          "prompt": "Rewrite this formula using absolute references (or a named range) so it still works correctly if I copy this sheet as a template for next month."
+        }
+      ],
+      "walkthrough": "Sofia is an accountant who tracks monthly expenses in a Google Sheet with columns for Category, This Month, and Last Month. She's not confident writing formulas beyond basic addition, so she used to calculate percentage changes by hand in a calculator and type them in one row at a time.\n\nShe opens the Gemini side panel in the sheet and types: \"In this sheet, add a column that computes the percentage change between This Month and Last Month. Flag any row where the increase is more than 20%. Use column headers exactly as they appear. Explain the formula in one sentence after inserting it.\"\n\nGemini inserts a new column, computes the percentage change for every row, highlights three rows where spending jumped more than 20%, and adds a note: \"This uses (This Month minus Last Month) divided by Last Month, shown as a percentage, and flags anything above 20%.\"\n\nSofia picks one flagged row — Office Supplies, up 34% — and checks it by hand: This Month is 670, Last Month is 500, so the increase is 34%. It matches. She then asks a follow-up: \"Rewrite this formula using absolute references so it still works if I copy this sheet as a template for next month.\" Gemini updates the formula and confirms it will now hold its column references correctly when pasted into a new tab.\n\nSofia saves the sheet as her template for future months. The whole task — inserting the formula, spot-checking it, and making it copy-safe — took about six minutes, compared to the twenty-plus minutes she used to spend manually calculating and flagging each row by hand."
+    },
+    "gem-a1-notebooklm-vs-gemini": {
+      "variations": [
+        {
+          "label": "Ask Gemini to route the task for you",
+          "whenToUse": "Use this when you're genuinely unsure and want a quick recommendation instead of running the checklist yourself.",
+          "prompt": "I have this task: [TASK DESCRIPTION]. Based on whether it needs a fixed, closed set of documents versus current web information or an action inside a Google app, tell me whether I should use NotebookLM or Gemini for this, and give me the single main reason why."
+        },
+        {
+          "label": "Written policy version for a team",
+          "whenToUse": "Use this when you want to roll the decision rule out to a whole team as a standing reference, not just apply it yourself once.",
+          "prompt": "Turn this into a short, pinned team policy (3-4 sentences) for when to use NotebookLM versus Gemini: use NotebookLM when an answer must come only from a specific, fixed set of documents with a citation trail; use Gemini when the task needs current web information, content generation, or an action inside Gmail, Docs, or Sheets. Write it in plain language a new team member could follow without further explanation."
+        },
+        {
+          "label": "Mid-task check when the current tool feels wrong",
+          "whenToUse": "Use this when you've already started working in one tool and it's giving you results that feel off, so you want a quick check on whether to switch.",
+          "prompt": "I'm currently using [Gemini/NotebookLM] for [TASK DESCRIPTION] and it's [not giving me a citation trail back to a specific document / giving generic answers not grounded in my sources / missing current information it should know]. Based on that symptom, should I switch tools, and which one should I move to?"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Recommendation feels off? Ask it to weigh the specific risk",
+          "prompt": "Before I follow that recommendation, tell me specifically what goes wrong if I use the other tool instead for this exact task — what's the actual failure mode I'd hit?"
+        },
+        {
+          "label": "Need a hybrid answer",
+          "prompt": "This task seems to need both a citation trail and current web information. Walk me through exactly how to combine NotebookLM and Gemini Deep Research for this specific case, in order."
+        },
+        {
+          "label": "Get a concrete next step, not just a recommendation",
+          "prompt": "Now tell me exactly what to do first — what to name the NotebookLM notebook (or the Gemini chat), and what the very first prompt should say."
+        },
+        {
+          "label": "Turn this into a standing rule for next time",
+          "prompt": "Write a one-paragraph rule I can save for myself so I don't have to re-run this decision process every time I have a task like this one."
+        }
+      ],
+      "walkthrough": "Robert is a project manager who just got two unrelated requests in the same afternoon: review whether a new vendor contract conflicts with the company's standard terms, and put together a briefing on a competitor's product launch that happened this week. He used to default to whichever tab was already open, usually Gemini, for both.\n\nFor the contract task, he runs through the decision checklist in his head: does this need an answer grounded only in specific documents, with zero outside knowledge blending in? Yes — it's a legal comparison between two specific files. He opens NotebookLM, uploads both the vendor contract and the company's standard terms document as sources, and asks: \"Does clause 4.2 in the vendor contract conflict with our standard terms?\" NotebookLM answers with a direct comparison and citation chips pointing to the exact paragraph in each document, so Robert can click through and verify it himself in under a minute.\n\nFor the competitor briefing, the checklist points the other way — this needs current web information NotebookLM doesn't have access to. He switches to Gemini and asks it to research the competitor's launch, using the same specificity habits from the Deep Research lesson: audience, scope, and what to exclude.\n\nWhen the NotebookLM answer feels incomplete — it flags that clause 4.2 doesn't fully address a scenario he's asking about — he sends the follow-up: \"Tell me specifically what goes wrong if I try to get this same answer from Gemini instead.\" The response reminds him Gemini would guess at contract-law conventions instead of citing the actual clause, confirming NotebookLM was the right call.\n\nBoth tasks finish within the hour, each in the tool actually built for it."
+    },
+    "gem-a2-google-ecosystem-workflow": {
+      "placeholders": [
+        {
+          "name": "recurring task name, e.g. 'Monthly competitor pricing review'",
+          "what": "Name the recurring cycle you're setting up, in a way you'd recognize months later in a list of documents or notebooks. This name gets reused as the anchor for the Doc title, the tracker, and the NotebookLM archive, so pick one and keep it consistent.",
+          "examples": ["Monthly Competitor Pricing Review", "Weekly Client Status Report", "Quarterly Policy Compliance Review"]
+        },
+        {
+          "name": "specific question, audience, scope, exclusions — see Deep Research lesson",
+          "what": "This is the same fully-specified research brief from the Deep Research lesson: the exact question, who reads the report, which angles to focus on, and what to leave out. Reuse that same discipline here since this step feeds everything downstream.",
+          "examples": ["What are our top 3 competitors charging for similar service tiers this quarter? Audience: sales leadership deciding Q3 pricing. Scope: US market, mid-tier plans only. Exclude: enterprise custom contracts.", "What did the client's team say in our last 3 status calls about satisfaction with delivery speed? Audience: our account lead preparing next week's check-in. Scope: delivery speed and communication only. Exclude: pricing discussions.", "Which of our documented compliance controls haven't been reviewed in the last 12 months? Audience: our compliance officer. Scope: data-handling and access controls only. Exclude: physical security controls."]
+        },
+        {
+          "name": "Task name",
+          "what": "The short title used in the Google Doc's name. Usually the same as the recurring task name, but written the way you'd want it to sort and search cleanly in Drive.",
+          "examples": ["Monthly Competitor Pricing Review", "Weekly Client Status", "Quarterly Compliance Review"]
+        },
+        {
+          "name": "Month/Year",
+          "what": "The specific period this cycle's document covers, so each month's Doc has a unique, sortable title instead of overwriting or duplicating the last one.",
+          "examples": ["March 2026", "Q2 2026", "August 2026"]
+        },
+        {
+          "name": "tracker sheet name",
+          "what": "The exact name of the Google Sheet you're logging results into. If it doesn't exist yet, create it first and give it this name so Gemini's Sheets side panel can find and use it.",
+          "examples": ["Competitor Pricing Tracker", "Client Status Log", "Compliance Review Log"]
+        },
+        {
+          "name": "date, key metric(s), decision made",
+          "what": "The actual row of data being logged this cycle — today's date, the specific number(s) that came out of the research, and what was decided as a result. This is what makes the tracker useful later, instead of just a pile of reports nobody can quickly scan.",
+          "examples": ["2026-08-10, average competitor price €420/mo, decided to hold our price steady", "2026-03-14, client satisfaction score 8.2/10, decided to add a monthly check-in call", "2026-Q2, 2 compliance gaps found, decided to update the access-control training doc"]
+        },
+        {
+          "name": "condition worth watching",
+          "what": "A specific numeric or categorical trigger that means someone should look closer next cycle, so the tracker isn't just a log but an early-warning system.",
+          "examples": ["any competitor price drop greater than 10%", "a client status marked red for two cycles in a row", "any compliance gap not closed within 30 days"]
+        },
+        {
+          "name": "Subject",
+          "what": "The name of the ongoing topic this NotebookLM archive covers — usually a client name, a recurring subject area, or a product line. One notebook per subject, reused every cycle, is what makes the archive searchable later.",
+          "examples": ["Competitor Pricing", "Client X", "Data Compliance"]
+        },
+        {
+          "name": "recipient/audience",
+          "what": "Who receives the summary email and what they need from it. This should match the audience named in the research brief, since the email is the compressed version of the same report.",
+          "examples": ["the sales leadership team", "the client's project sponsor, Maria Chen", "our compliance officer"]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Lightweight version for solo use",
+          "whenToUse": "Use this when you're running the workflow alone and don't need a tracker or long-term archive yet — just research, a doc, and an email.",
+          "prompt": "Workflow brief for [recurring task name]:\n1) Deep Research brief: [specific question, audience, scope, exclusions].\n2) Doc handoff: export to Docs titled '[Task name] – [Month/Year]'.\n3) Email draft: summarize the top 2-3 takeaways for [recipient/audience], linking to the full Doc rather than repeating it."
+        },
+        {
+          "label": "Team handoff version with owners per step",
+          "whenToUse": "Use this when more than one person runs parts of this cycle, so ownership of each handoff is explicit and nothing falls through the cracks.",
+          "prompt": "Workflow brief for [recurring task name] (team version):\n1) Deep Research brief (owner: [name]): [specific question, audience, scope, exclusions].\n2) Doc handoff (owner: [name]): export to Docs titled '[Task name] – [Month/Year]', keep the internal-vs-external source split visible, tag [name] for review.\n3) Sheet tracking (owner: [name]): in [tracker sheet name], add a row with [date, key metric(s), decision made], and flag [condition worth watching].\n4) NotebookLM archive (owner: [name]): add this cycle's Doc and source files to notebook '[Subject] Archive'.\n5) Email draft (owner: [name]): summarize the top 2-3 takeaways for [recipient/audience]."
+        },
+        {
+          "label": "Client-facing recurring report version",
+          "whenToUse": "Use this when the final output of the cycle goes to an external client rather than staying internal, which changes what gets shared versus kept internal-only.",
+          "prompt": "Workflow brief for [recurring task name]:\n1) Deep Research brief: [specific question, audience, scope, exclusions].\n2) Doc handoff: export to Docs titled '[Task name] – [Month/Year]', remove any internal-only notes before this goes external.\n3) Sheet tracking: in [tracker sheet name], add a row with [date, key metric(s), decision made], and flag [condition worth watching] for internal use only.\n4) NotebookLM archive: add this cycle's Doc and source files to notebook '[Subject] Archive' for internal reference.\n5) Client email draft: summarize the top 2-3 takeaways for [recipient/audience] in client-safe language, linking to a shareable version of the Doc."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "A step broke or got skipped — diagnose it",
+          "prompt": "This cycle, the [step name, e.g. 'Sheet tracking'] step didn't happen the way I described. Look at what I actually did and tell me exactly which instruction was missing or unclear so I can fix the brief before next cycle."
+        },
+        {
+          "label": "Archive isn't finding old cycles — fix the gap",
+          "prompt": "I asked a question in the NotebookLM notebook about a past cycle and it said the information isn't in the sources. Tell me what to check — did I actually add that cycle's Doc and source files to this notebook?"
+        },
+        {
+          "label": "Tracker rows are inconsistent — standardize them",
+          "prompt": "Look at the last 3 rows I added to the tracker and tell me if they're formatted consistently. Rewrite them into a standard format I can reuse every cycle."
+        },
+        {
+          "label": "Email is too long — force it to just the takeaways",
+          "prompt": "This email is basically the whole report. Cut it down to exactly 2-3 takeaways in plain sentences, with one link to the full Doc, and nothing else."
+        }
+      ],
+      "walkthrough": "Nadia is a consultant who runs a monthly retainer review for one client, pulling together competitor data, logging key numbers, and sending a short update — a process she used to redo from memory each month, which meant she sometimes forgot a step or couldn't find what she'd said three months earlier.\n\nShe writes a workflow brief once: \"Workflow brief for Monthly Client X Pricing Review: 1) Deep Research brief: what are competitors charging for similar retainer packages this quarter? Audience: the client's project sponsor deciding on renewal terms. Scope: pricing and contract length. Exclude: enterprise-only vendors. 2) Doc handoff: export to Docs titled 'Client X Pricing Review – August 2026'. 3) Sheet tracking: in 'Client X Pricing Tracker', add a row with today's date, the average competitor price found, and the recommendation made, and flag any competitor price drop greater than 10%. 4) NotebookLM archive: add this cycle's Doc to notebook 'Client X Archive'. 5) Email draft: summarize the top 2 takeaways for the project sponsor, linking to the full Doc.\"\n\nGemini runs the Deep Research step, exports the report to a titled Doc, and Nadia reviews it, cutting one section that didn't apply this quarter. She logs the result in the tracker, adds the Doc to the NotebookLM archive, and drafts the client email, which she trims down after noticing it repeated too much of the report.\n\nTwo months later, a colleague covering for Nadia asks the NotebookLM archive what was decided about pricing in June and gets a cited, accurate answer in seconds — without needing to search old emails or ask Nadia directly. The full monthly cycle now takes about 40 minutes instead of the half-day it used to take piecing it together from scratch."
+    }
+  }
+}

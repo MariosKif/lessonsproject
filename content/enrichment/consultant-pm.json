@@ -1,0 +1,920 @@
+{
+  "enrichment": {
+    "con-b1-synthesize-client-documents-briefing": {
+      "placeholders": [
+        {
+          "name": "SOURCE: Annual Report 2025",
+          "what": "This is the label for your first source document — replace \"Annual Report 2025\" with the real name and date/year of whatever document you're pasting first. Keep the word \"SOURCE:\" so the AI knows this line marks a new document starting, and use a name specific enough that you'd recognize it in a list of ten documents six months from now.",
+          "examples": [
+            "SOURCE: Annual Report 2025",
+            "SOURCE: Client Website – About Us page, accessed Jan 2026",
+            "SOURCE: Board Meeting Minutes, Nov 12 2025"
+          ]
+        },
+        {
+          "name": "PASTE TEXT",
+          "what": "Paste the actual text of that source document here — not a summary of it, the real content (copy from the PDF, the deck, the memo, or the webpage). The more complete the paste, the more the briefing can actually cite from it instead of guessing at what the document says.",
+          "examples": [
+            "Revenue for FY2025 was $42.3M, up 11% from FY2024. Gross margin held steady at 38%. The board approved a new regional expansion into the Midwest, expected to launch Q3 2026. Headcount grew from 210 to 248 employees.",
+            "The client's stated top priority for this engagement is reducing customer churn, currently running at 14% annually, which leadership considers unsustainable given their growth targets. A secondary goal is streamlining the onboarding process, which currently takes an average of 19 days.",
+            "Prior consultant (2024) recommended a phased rollout of a new CRM system, estimated at 6 months and $180K. Client leadership deferred this recommendation citing budget constraints, but flagged it as a 2026 priority in the closing memo."
+          ]
+        },
+        {
+          "name": "SOURCE: Prior Consulting Deck 2024",
+          "what": "The label for your second source document, following the same [SOURCE: name] format as the first one. Use whatever this document actually is — a prior firm's deck, an internal strategy memo, a set of board minutes — with enough detail in the name to tell it apart from your other sources.",
+          "examples": [
+            "SOURCE: Prior Consulting Deck 2024",
+            "SOURCE: Internal Strategy Memo, Q4 2025",
+            "SOURCE: Competitor Analysis Deck, McKinsey engagement 2023"
+          ]
+        },
+        {
+          "name": "SOURCE: Kickoff Memo",
+          "what": "The label for your third source document — commonly the internal memo your own team or the client wrote ahead of the kickoff call, laying out what the engagement is supposed to cover. Add as many additional [SOURCE: name] / [PASTE TEXT] pairs as you need beyond the three shown if you have more documents.",
+          "examples": [
+            "SOURCE: Kickoff Memo",
+            "SOURCE: Engagement Kickoff Memo, prepared by client CFO",
+            "SOURCE: Internal Scoping Notes from Partner Call, Jan 5 2026"
+          ]
+        },
+        {
+          "name": "SOURCE",
+          "what": "You don't type anything here yourself — this is part of the instructions telling the AI how to tag every fact in the briefing (for example, a fact should be tagged [Annual Report 2025] rather than left untagged). It's shown in brackets in the prompt so the AI reproduces that exact tagging format in its answer.",
+          "examples": [
+            "[Annual Report 2025]",
+            "[Kickoff Memo]",
+            "[Prior Consulting Deck 2024]"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Single-document quick briefing",
+          "whenToUse": "You only have one document so far (say, just the annual report) and want a fast first-pass briefing rather than waiting to gather every source before the kickoff call.",
+          "prompt": "You are helping me build a briefing document from one client source before an engagement kickoff. Use ONLY information contained in the source below — do not add outside knowledge about the company or industry, and do not infer anything the document doesn't actually state.\n\n[SOURCE: NAME AND DATE OF THE DOCUMENT]\n[PASTE TEXT]\n\nProduce a briefing with these sections:\n1. Company overview (2-3 sentences)\n2. Key facts and figures (bullet list)\n3. Stated priorities / goals, if mentioned\n4. Gaps this single document leaves — what I still don't know that I'll need before the kickoff call\n\nDo not state anything as fact unless it's actually in the source text above."
+        },
+        {
+          "label": "Claude Project version for an ongoing engagement",
+          "whenToUse": "You're setting this up as a Claude Project rather than a single chat, so every future conversation in this engagement can reference the same verified sources without re-pasting them.",
+          "prompt": "Create a new Claude Project for this engagement. Upload each client document to the project's knowledge, labeled clearly with its name and date. Then, in a new chat within the project, ask: \"Using only the documents in this project's knowledge, build a briefing with these sections: company overview, key facts and figures, stated priorities/goals, prior initiatives, and open questions for the kickoff meeting. Tag every claim with its source document. Do not combine facts from two documents into a new claim unless you clearly label it as an inference and name both sources. If sources disagree on a fact, list it as a contradiction instead of picking one.\""
+        },
+        {
+          "label": "Mid-engagement update briefing",
+          "whenToUse": "You already built an initial briefing weeks ago and now have new documents (updated financials, a new stakeholder memo) — you want an updated briefing that shows what changed, not a briefing built from scratch.",
+          "prompt": "I previously built a briefing from earlier client sources. Here is that original briefing:\n[PASTE YOUR EXISTING BRIEFING]\n\nHere are new sources I've received since then:\n[SOURCE: NAME AND DATE]\n[PASTE TEXT]\n\nUpdate the briefing using ONLY the original briefing plus the new source(s) above. Specifically:\n1. Flag any fact in the new source that contradicts or updates something in the original briefing.\n2. Add any genuinely new key facts, priorities, or initiatives, tagged with the new source.\n3. Do not remove or silently alter anything from the original briefing — mark changes explicitly as \"UPDATED\" rather than deleting the old version."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify a specific claim against the source",
+          "prompt": "For the fact you listed under \"[Kickoff Memo]\" about their stated priorities, quote the exact sentence from that source that supports it, word for word. If you can't find an exact supporting sentence, say so instead of paraphrasing something close to it."
+        },
+        {
+          "label": "Add a list of documents I'm missing",
+          "prompt": "Based on the gaps and open questions you flagged, list the specific documents or data (e.g. \"most recent org chart,\" \"last two years of churn data\") that would close those gaps, so I know what to request before or during the kickoff call."
+        },
+        {
+          "label": "Resolve a flagged contradiction",
+          "prompt": "You flagged a contradiction between the annual report and the prior consulting deck on headcount. Lay out both figures side by side with their exact source, and suggest two or three plausible, non-speculative reasons they might differ (e.g. different reporting periods) without picking which one is correct."
+        },
+        {
+          "label": "Compress to a one-minute verbal briefing",
+          "prompt": "Condense this into five spoken sentences I could say out loud in the first minute of the kickoff call to show I've done my homework — no bullet points, just plain sentences, and keep every fact tagged so I know what I can say with confidence."
+        }
+      ],
+      "walkthrough": "Dana is a consultant starting a six-week engagement with a regional healthcare staffing company. The kickoff call is in ninety minutes, and Dana has three documents sitting unread: last year's annual report, a prior consultant's 2024 deck, and the internal kickoff memo her own partner wrote after the sales call.\n\nDana opens Claude, creates a new Project for the engagement, and uploads three sources to its knowledge: [SOURCE: Annual Report 2025] with the report's key paragraphs, [SOURCE: Prior Consulting Deck 2024] with a few slides' worth of text, and [SOURCE: Kickoff Memo] with her partner's two-paragraph summary of what the client wants.\n\nIn a chat inside the project, she pastes the briefing prompt. Claude returns a structured briefing: a two-sentence company overview tagged to the annual report, a bullet list of facts (revenue, headcount, the client's stated churn problem), a priorities section quoting the client's own words from the kickoff memo, and — importantly — a contradictions section flagging that the annual report lists 340 employees while the prior deck cites 310, a discrepancy nobody had noticed. It closes with four open questions, including whether the earlier consultant's CRM recommendation was ever revisited.\n\nDana sends a follow-up asking Claude to quote the exact sentence behind the churn-priority claim, just to be sure nothing was paraphrased loosely. The quote checks out. She also asks for the whole thing condensed into five spoken sentences she can say naturally to open the call.\n\nTwenty-five minutes after starting, Dana walks into the kickoff call able to reference the headcount discrepancy directly, ask about the deferred CRM recommendation, and open with a summary that makes clear she read everything — without having actually read all forty pages herself. The verified briefing stays in the project's knowledge for the rest of the engagement, so the next chat starts from the same confirmed baseline."
+    },
+    "con-b2-structure-deliverable-storyline": {
+      "placeholders": [
+        {
+          "name": "STATE THE DECISION/ACTION",
+          "what": "Name the single concrete thing the client needs to decide or do after reading the finished deliverable — not the topic of the engagement, the actual decision. A good version is specific enough that you could imagine the client saying yes or no to it directly.",
+          "examples": [
+            "Approve a $2M investment in automating the claims-processing workflow",
+            "Decide whether to exit the underperforming Northeast retail region by end of year",
+            "Choose between three vendor finalists for the new logistics platform"
+          ]
+        },
+        {
+          "name": "PASTE BULLET LIST OF FINDINGS",
+          "what": "Paste your raw findings as short, factual, unordered bullets — the things you actually found in the data or interviews, not yet grouped into any argument. Each bullet should be a specific, checkable fact, not a vague theme.",
+          "examples": [
+            "- Customer churn is 22% among accounts under $10K ARR, vs. 6% above $50K ARR\n- Support ticket volume doubled in the last 2 quarters without headcount growth\n- Exit interviews cite \"slow response time\" as the top complaint in 60% of cases\n- Competitor X launched a self-serve tier 8 months ago at a lower price point\n- Average time-to-first-response is 14 hours, up from 5 hours a year ago",
+            "- Warehouse A is running at 94% capacity; Warehouse B is at 61%\n- Shipping costs from Warehouse A rose 18% due to a new carrier contract\n- Two of the three largest customers are geographically closer to Warehouse B\n- Lead time from Warehouse A averages 3.2 days; from B, 2.1 days",
+            "- Only 40% of new hires complete onboarding training within the first 30 days\n- Managers report spending 6+ hours/week on manual onboarding paperwork\n- Employee engagement scores are 15 points lower for hires who take longer than 60 days to onboard\n- HR has no automated tracking system for onboarding completion"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "When you already have a storyline hunch",
+          "whenToUse": "You already suspect which narrative structure fits best and mainly want the AI to stress-test that one option rather than propose alternatives from scratch.",
+          "prompt": "I have a list of raw findings and a storyline structure I think fits, and I want you to pressure-test it rather than propose new ones.\n\nThe decision the client needs to make at the end: [STATE THE DECISION/ACTION]\nMy proposed storyline structure: [NAME THE STRUCTURE, e.g. \"problem-cause-solution\"]\n\nRaw findings (factual, unordered):\n[PASTE BULLET LIST OF FINDINGS]\n\nTasks:\n1. Map every finding into a section of my proposed structure. Flag any finding that doesn't fit cleanly.\n2. Tell me honestly whether this structure is the strongest fit for these findings, or whether a different structure would represent the evidence more faithfully — and why.\n3. If you recommend keeping my structure, write the one-page outline (section headers plus a \"so what\" sentence per section). If you recommend switching, explain the alternative before outlining it.\n\nDo not invent new findings or strengthen a finding's claim to make it fit my proposed structure."
+        },
+        {
+          "label": "Team-facing version with open questions flagged",
+          "whenToUse": "You're building the storyline for internal team alignment before the client sees anything, and want the model to also surface where the findings are still too thin to support a strong storyline.",
+          "prompt": "I have a list of raw findings from a consulting engagement. Before proposing a storyline, tell me honestly where the evidence is currently too thin to support a strong argument.\n\nThe decision the client needs to make at the end: [STATE THE DECISION/ACTION]\n\nRaw findings (factual, unordered):\n[PASTE BULLET LIST OF FINDINGS]\n\nTasks:\n1. Flag any area where the findings are suggestive but not yet strong enough to build a confident storyline section around — name what additional data or evidence would strengthen it.\n2. Propose 2 storyline structures that work with the evidence as it currently stands, not the evidence you'd want to have.\n3. Recommend one, and note explicitly which sections currently rest on the strongest vs. weakest evidence.\n\nThis is for internal team discussion before anything goes to the client, so be direct about weaknesses rather than smoothing over them."
+        },
+        {
+          "label": "Fast single-structure version for a routine deliverable",
+          "whenToUse": "The deliverable is low-stakes or highly routine (an internal update, a recurring monthly readout) and you don't need to compare multiple storyline structures — you just want one clean outline quickly.",
+          "prompt": "I have a list of raw findings and need a single storyline outline quickly — no need to compare alternative structures.\n\nThe decision or takeaway this needs to land: [STATE THE DECISION/ACTION]\n\nRaw findings (factual, unordered):\n[PASTE BULLET LIST OF FINDINGS]\n\nPropose the single storyline structure you think best fits these findings, map every finding into a section (flagging anything that doesn't fit), and write a one-page outline: section headers plus a one-sentence \"so what\" for each. Do not invent new findings or overstate what any finding shows."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Argue the opposite conclusion",
+          "prompt": "Using only the same findings, build the strongest plausible case for the opposite conclusion. If you can build a genuinely convincing counter-narrative, tell me specifically which findings are doing the most work in your original storyline, since those are the ones I need stronger evidence behind."
+        },
+        {
+          "label": "Check for overstated 'so what' lines",
+          "prompt": "Go back through the one-page outline and check each \"so what\" sentence against the findings mapped to that section. Flag any \"so what\" that claims more certainty or a stronger causal link than the underlying findings actually support."
+        },
+        {
+          "label": "Shorten to a 3-section version",
+          "prompt": "Compress this into a 3-section version of the same storyline for a shorter meeting slot, keeping the strongest findings and the decision squarely in focus. Tell me which findings you're dropping so I can decide if any of them are too important to cut."
+        },
+        {
+          "label": "Sanity-check nothing was dropped",
+          "prompt": "Go back through my original bullet list of findings one more time and confirm every single one is either mapped into a section of the outline or explicitly listed as 'doesn't fit.' List any finding that's missing from both."
+        }
+      ],
+      "walkthrough": "Marcus is two weeks into a retail-operations engagement and has eleven solid findings from data pulls and interviews, but no clear sense of how they add up to an argument. The client's steering committee meeting is Thursday, and he needs a deck outline by tomorrow morning.\n\nHe opens a blank document and first writes the one thing the committee actually needs to decide: whether to consolidate two regional warehouses into one. Then he lists his eleven findings as plain bullets — capacity numbers, shipping cost changes, customer proximity data, lead times — without trying to organize them yet.\n\nHe pastes both into the storyline prompt in Claude. The response proposes three structures: problem-cause-solution, situation-complication-resolution, and a straight cost-benefit comparison. For each, it maps his eleven findings into sections, and flags one finding — a minor note about a software licensing renewal — as not fitting cleanly anywhere. It recommends situation-complication-resolution, arguing the findings tell a clear before/after story rather than a single-cause narrative, and delivers a one-page outline with six section headers and a one-sentence so-what for each.\n\nMarcus isn't fully convinced the recommended structure is the strongest read, so he sends a follow-up asking Claude to argue the opposite conclusion — keep both warehouses open — using the same findings. The counter-argument turns out to lean heavily on the lead-time difference, which makes Marcus realize that finding needs a second data pull to confirm before Thursday, rather than being restated confidently in a slide title.\n\nTotal time: about twenty minutes, plus a same-day request to his analyst to double-check the lead-time numbers before he finalizes the outline."
+    },
+    "con-i1-industry-research-before-proposal": {
+      "placeholders": [
+        {
+          "name": "INDUSTRY",
+          "what": "Name the specific industry your prospective client operates in — the more specific, the sharper the research. \"Retail\" is too broad to produce useful trends; \"mid-size regional grocery retail\" gives Gemini's Deep Research something concrete to search against.",
+          "examples": [
+            "regional grocery retail",
+            "commercial property insurance",
+            "B2B SaaS for healthcare scheduling"
+          ]
+        },
+        {
+          "name": "GEOGRAPHY/MARKET",
+          "what": "State the geography or market the client actually competes in — national, a specific region, or a country — since trends and competitors differ a lot by geography and a generic national answer can mislead a locally-focused client.",
+          "examples": [
+            "US Midwest",
+            "UK and Ireland",
+            "Southeast Asia, primarily Singapore and Malaysia"
+          ]
+        },
+        {
+          "name": "COMPANY SIZE/TYPE",
+          "what": "Describe the scale and type of company you want competitors compared against — a regional player, an enterprise chain, a specific revenue band — so the competitor list is actually relevant to your client's size rather than dominated by market leaders who aren't real comparables.",
+          "examples": [
+            "regional chains with 20-80 locations",
+            "mid-market companies with $50M-$200M revenue",
+            "venture-backed startups under 100 employees"
+          ]
+        },
+        {
+          "name": "SPECIFIC ANGLE, e.g. \"supply chain\" or \"customer acquisition costs\"",
+          "what": "Name the specific business function or issue the proposal needs to speak to — this is what keeps the research tightly relevant to your pitch instead of a broad industry overview that touches everything and lands nothing.",
+          "examples": [
+            "supply chain resilience",
+            "customer acquisition costs",
+            "regulatory compliance costs"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Fast single-question version",
+          "whenToUse": "You need one sharp, sourced fact quickly — for example to open a cold email — rather than a full Deep Research report. Ask this in a regular Gemini chat with web search rather than launching a full Deep Research run, which is built for broader multi-source briefs.",
+          "prompt": "Give me the single most significant, current (last 12 months) trend or pressure affecting [COMPANY SIZE/TYPE] companies in the [INDUSTRY] industry in [GEOGRAPHY/MARKET], specifically related to [SPECIFIC ANGLE]. Cite the source and its publish date. If you're not highly confident in this being the single most significant trend, say so and give me the runner-up as well."
+        },
+        {
+          "label": "Competitor-deep-dive version",
+          "whenToUse": "The proposal hinges specifically on how the client compares to two or three named competitors, not the industry broadly, and you need a focused comparison rather than general trends.",
+          "prompt": "I'm preparing a proposal for a client in the [INDUSTRY] industry, [GEOGRAPHY/MARKET] market, competing directly with: [NAME 2-3 COMPETITORS].\n\nFor each competitor, with a cited source and date:\n1. Their current positioning or main value proposition\n2. Any recent (last 12 months) strategic move — a launch, pricing change, expansion, or public statement\n3. Anything publicly known about their performance or market share trend\n\nThen summarize in 2-3 sentences what a client competing against all of them would need to differentiate on. Flag any competitor where you couldn't find recent, reliable information rather than filling the gap with speculation."
+        },
+        {
+          "label": "Slide-ready summary version",
+          "whenToUse": "You've already run the initial research and verified the sources, and now want the confirmed points reformatted into short, proposal-ready sentences instead of a research writeup.",
+          "prompt": "Using only the following verified research points, write 3-4 short, proposal-ready sentences I can drop into the \"why now\" section of a client proposal. Each sentence should state one trend or fact plainly, in a confident but not salesy tone, without a citation in the sentence itself (I'll keep citations in my own backup notes).\n\nVerified points:\n[PASTE YOUR CONFIRMED RESEARCH POINTS, WITH SOURCES, FROM THE EARLIER RESEARCH STEP]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Narrow to the client's exact size and region",
+          "prompt": "That's still broader than my client's actual situation. Narrow this specifically to [COMPANY SIZE/TYPE] companies in [GEOGRAPHY/MARKET] — if the data doesn't exist at that specific scope, tell me clearly rather than presenting the broader answer as if it applies directly."
+        },
+        {
+          "label": "Push back on a confident-sounding figure",
+          "prompt": "You stated [SPECIFIC FIGURE OR CLAIM] with what sounds like high confidence. Open the actual source and quote the exact sentence that supports this figure, and tell me if the source itself expresses any uncertainty about it."
+        },
+        {
+          "label": "Turn findings into proposal-ready language",
+          "prompt": "Turn the verified findings above into 3 short sentences I can use in the proposal's opening section, written plainly and confidently, without citation markers in the sentence text."
+        },
+        {
+          "label": "Flag anything that's now out of date",
+          "prompt": "Review the sources you cited and flag any that are older than 12 months, or where a more recent source might have superseded the trend or figure. I'd rather cut a stale point than use it."
+        }
+      ],
+      "walkthrough": "Priya is putting together a proposal for a prospective client, a mid-size commercial property insurance broker with about 40 offices across the US Midwest. She has a good sense of their business from the intro call but no current read on the industry pressures they're facing right now.\n\nShe opens Gemini, starts a new Deep Research session, and enters the industry-research prompt: INDUSTRY is \"commercial property insurance brokerage,\" GEOGRAPHY/MARKET is \"US Midwest,\" COMPANY SIZE/TYPE is \"regional brokers with 20-60 offices,\" and SPECIFIC ANGLE is \"rising reinsurance costs and their effect on client retention.\"\n\nBefore running, Gemini shows Priya its proposed research plan — a short list of the sub-questions and source types it intends to check. She edits one step that was drifting toward national data instead of Midwest-specific data, then lets it run.\n\nA few minutes later, Deep Research returns three cited trends — reinsurance rate increases passed through to commercial clients, a wave of consolidation among regional brokers, and a shift toward digital-first client onboarding — each with a source and publish date, plus two named regional competitors and a note flagging that one figure about market consolidation came from a national dataset rather than a Midwest-specific one.\n\nPriya opens two of the cited sources herself to confirm they're accurate and recent. One, from eight months ago, checks out; the other, on the consolidation trend, turns out to cover the Southeast, not the Midwest, so she drops that point rather than using it. She asks a follow-up inside the same research thread to narrow the consolidation trend specifically to Midwest data, and gets a clearer, smaller but genuinely regional answer back.\n\nShe compiles the two solid trends into a three-sentence \"why now\" section for the proposal. Total time: about twenty minutes, including reviewing the research plan and opening source links."
+    },
+    "con-i2-slide-narratives-executive-summaries": {
+      "placeholders": [
+        {
+          "name": "PASTE OUTLINE",
+          "what": "Paste your already-locked storyline outline here — the section order you decided on earlier (for example, from the storyline-structuring step), not a new structure. This tells the AI what order the slides need to build toward, so the action titles connect logically rather than reading as disconnected headlines.",
+          "examples": [
+            "1. Situation: retention has declined steadily for 3 quarters\n2. Complication: the drop is concentrated in one segment and one channel\n3. Resolution: a targeted retention program for that segment, with a rollout plan",
+            "1. Problem: fulfillment costs from Warehouse A are rising\n2. Cause: capacity imbalance and an unfavorable new carrier contract\n3. Solution: partial consolidation into Warehouse B with a phased timeline"
+          ]
+        },
+        {
+          "name": "SLIDE 1 – LABEL",
+          "what": "A short internal label for the first slide so you and the AI both know which slide you're referring to — this isn't the final slide title, just a working name like \"Retention trend\" or \"Cost comparison.\"",
+          "examples": [
+            "Retention trend by segment",
+            "Warehouse capacity comparison",
+            "Onboarding completion rates"
+          ]
+        },
+        {
+          "name": "CONTENT",
+          "what": "The actual data point, chart description, or finding that slide is built around — specific numbers and facts, not a vague topic description. This is what the AI checks the action title against, so vague content here produces an action title that can't be trusted.",
+          "examples": [
+            "Chart shows monthly churn rate by segment over 6 quarters. Churn in the under-$10K ARR segment rose from 9% to 22%; churn in the $50K+ segment stayed flat at 5-6% throughout.",
+            "Table comparing Warehouse A and B: A is at 94% capacity with an 18% shipping cost increase this year; B is at 61% capacity with flat shipping costs.",
+            "Bar chart of onboarding completion by week: only 40% of new hires finish onboarding within 30 days; average time to complete is 52 days."
+          ]
+        },
+        {
+          "name": "SLIDE 2 – LABEL",
+          "what": "The working label for your second slide, following the same short naming pattern as the first. Continue adding a [SLIDE N – LABEL]: [CONTENT] pair for every additional slide in your deck beyond the two shown in the template.",
+          "examples": [
+            "Root cause: support response time",
+            "Carrier contract cost breakdown",
+            "Manager time spent on manual onboarding"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Executive summary only, no slide titles",
+          "whenToUse": "You already have solid slide titles you're happy with and just need the one-page executive summary written from the locked content — a common case when the deck was mostly finished before you thought to write the cover summary.",
+          "prompt": "I have a finished set of consulting slides with locked titles and content. Write only a one-page executive summary — no slide titles needed.\n\nStoryline / section order: [PASTE OUTLINE]\n\nSlide titles and content:\n[SLIDE 1 TITLE]: [CONTENT]\n[SLIDE 2 TITLE]: [CONTENT]\n...(continue for all slides)\n\nWrite a one-page executive summary: situation, 2-3 key findings, recommendation, next steps — using ONLY the content provided, no new claims. Keep it under 300 words and written for someone who will only read this page, not the full deck."
+        },
+        {
+          "label": "Confidence-rated version",
+          "whenToUse": "You want to know, before the deck goes to review, which action titles rest on strong evidence versus which ones are the shakiest, so you know exactly where to spend your limited review time.",
+          "prompt": "I have a set of consulting slides with locked content. Write action titles and rate each one's evidence strength.\n\nStoryline / section order: [PASTE OUTLINE]\n\nFor each slide, here is the content:\n[SLIDE 1 – LABEL]: [CONTENT]\n[SLIDE 2 – LABEL]: [CONTENT]\n...(continue for all slides)\n\nFor each slide: write an action title under 15 words stating the conclusion, then rate the evidence behind it as Strong / Moderate / Weak based only on the content given, with one sentence explaining the rating. List the Weak-rated titles separately at the end as \"revisit before sending.\""
+        },
+        {
+          "label": "One-liner version for a status update, not a full deck",
+          "whenToUse": "You're writing a short recurring update (a weekly readout, a steering committee one-pager) rather than a full slide deck, and just need the same conclusion-first discipline applied to a shorter format.",
+          "prompt": "I have findings for a short status update, not a full slide deck. Help me write it with the same discipline as good slide titles: lead with the conclusion, not the topic.\n\nFindings: [PASTE FINDINGS]\n\nWrite 4-5 bullet points, each leading with the conclusion in the first few words (not \"Update on X\" but the actual finding), followed by one supporting detail. Flag any bullet where the conclusion is stronger than what the finding actually supports."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check for causation vs. correlation",
+          "prompt": "Go through each action title again and specifically check: does any of them imply that one thing caused another, when the underlying content only shows they happened at the same time or moved together? Flag those and suggest a more accurate, still punchy alternative title."
+        },
+        {
+          "label": "Read the titles as a standalone story",
+          "prompt": "List just the action titles, in order, with no other text. Read them as if they were the only thing a rushed executive saw. Does the sequence tell a coherent, complete story from problem to recommendation? If there's a logical gap between any two titles, point out exactly where."
+        },
+        {
+          "label": "Tighten the executive summary further",
+          "prompt": "Cut the executive summary to under 120 words without losing the recommendation or the strongest supporting finding. If something has to go, drop supporting detail before dropping the recommendation or next steps."
+        },
+        {
+          "label": "Make the titles punchier without overstating them",
+          "prompt": "Rewrite the action titles to be more direct and specific — cut hedge words like 'may' or 'could indicate' only where the underlying content genuinely supports a firmer claim. Where the content is genuinely uncertain, keep the hedge rather than remove it just for punchiness."
+        }
+      ],
+      "walkthrough": "Rosa has finished the analysis for a customer-retention engagement and has seven slides of finished charts and data, but every slide currently has a placeholder title like \"Retention Analysis\" and \"Segment Breakdown\" — accurate about the topic, useless as a headline.\n\nShe opens Claude and pastes her locked storyline outline (situation, complication, resolution) followed by all seven slides, each as a [SLIDE N – LABEL]: [CONTENT] pair, with the actual chart data and numbers typed out under each one — not just \"chart showing churn,\" but the real figures: churn by segment, response-time data, the proposed program's projected cost.\n\nClaude returns seven action titles. One reads \"Churn among small accounts nearly tripled in three quarters, from 9% to 22%.\" Another gets flagged: the drafted title implied that slow support response time caused the churn increase, but the underlying content only shows the two trends moved together in the same period — a real distinction Rosa hadn't caught while deep in the analysis. It also produces a one-page executive summary and lists all seven titles alone at the end.\n\nRosa reads the standalone title list out loud, and it holds together as a story. She sends the causation/correlation follow-up as a final check, and Claude confirms the one flagged title was the only issue — the rest are supported. She rewrites that one title to say the two trends \"moved together,\" not that one caused the other, before the deck goes to her partner for review.\n\nThe whole pass, from pasting the seven slides to a corrected title list, took about eighteen minutes — considerably faster than the usual half-day spent staring at a blank title bar per slide."
+    },
+    "con-i3-workshop-interview-preparation": {
+      "placeholders": [
+        {
+          "name": "1:1 interview / group workshop",
+          "what": "State which format this is — a one-on-one conversation with a single stakeholder, or a group session with multiple people at once. This changes the whole shape of the guide: a 1:1 can go deeper on one person's perspective, while a workshop needs facilitation structure to manage the room.",
+          "examples": [
+            "1:1 interview",
+            "group workshop"
+          ]
+        },
+        {
+          "name": "STATE IT",
+          "what": "Name the specific hypothesis or open question this conversation needs to help answer — not the general topic of the engagement, but the actual thing you're trying to find out or confirm. A sharp hypothesis produces sharp, non-generic questions.",
+          "examples": [
+            "Operations leadership believes the new ERP rollout caused fulfillment delays, but frontline staff may see a different root cause",
+            "Sales leadership suspects the new pricing tier is confusing prospects during the sales cycle, but the sales team hasn't confirmed this directly",
+            "We think onboarding delays are driven by a bottleneck in manager approvals, not a lack of training materials"
+          ]
+        },
+        {
+          "name": "ROLE, WHAT THEY LIKELY KNOW OR ARE SENSITIVE ABOUT",
+          "what": "Describe who you're talking to and be honest about what they're likely to be defensive or guarded about — this is what lets the AI predict realistic deflective answers and prepare you a genuinely useful follow-up probe instead of a generic one.",
+          "examples": [
+            "Warehouse shift supervisor, likely defensive about their team's performance and unlikely to volunteer staffing problems unprompted",
+            "VP of Sales, protective of the current pricing strategy since they championed it, may downplay early confusion signals",
+            "Frontline customer support rep, candid about workload but nervous about criticizing their manager directly"
+          ]
+        },
+        {
+          "name": "MINUTES",
+          "what": "State how much time you actually have for this conversation, in minutes — this determines how many questions the guide should realistically include and which ones get marked for cutting first if time runs short.",
+          "examples": [
+            "30",
+            "45",
+            "60"
+          ]
+        },
+        {
+          "name": "1:1 interview / group workshop, and group size if applicable",
+          "what": "Restate the format, and if it's a workshop, add roughly how many people will be in the room — group size changes the facilitation approach significantly (5 people versus 20 need very different structures).",
+          "examples": [
+            "1:1 interview",
+            "group workshop, approximately 8 participants",
+            "group workshop, approximately 20 participants across 3 breakout tables"
+          ]
+        },
+        {
+          "name": "X minutes",
+          "what": "This is a threshold you set for the AI to use when deciding what to cut if the conversation runs short — for example, telling it \"if time is under 20 minutes\" so it knows which questions are safe to drop first without you having to decide live, under pressure, mid-conversation.",
+          "examples": [
+            "20",
+            "15",
+            "30"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Follow-up debrief after the interview",
+          "whenToUse": "You've already run the interview and have raw notes, and want to turn those notes into a structured read on what was confirmed, contradicted, or still unclear relative to your original hypothesis.",
+          "prompt": "I just finished a stakeholder interview. Here's the original hypothesis it was meant to test: [STATE THE HYPOTHESIS]\n\nHere are my raw notes from the conversation:\n[PASTE YOUR RAW NOTES]\n\nGo through the notes and tell me: 1) what confirms the hypothesis, 2) what contradicts it, 3) what's still genuinely unclear and needs another source to resolve. Use only what's in my notes — do not infer beyond what was actually said."
+        },
+        {
+          "label": "Sensitive-topic version with extra care on framing",
+          "whenToUse": "The interview touches something the stakeholder may be personally sensitive about (a mistake their team made, a decision they championed that isn't working) and you need extra care in how questions are framed to get an honest answer without putting them on the defensive.",
+          "prompt": "I'm preparing for a [1:1 interview / group workshop] on a sensitive topic as part of a consulting engagement.\n\nOpen hypothesis / question this needs to help answer: [STATE IT]\nInterviewee role and context: [ROLE, WHAT THEY LIKELY KNOW OR ARE SENSITIVE ABOUT]\nWhy this is sensitive: [E.G. \"THEY CHAMPIONED THE DECISION WE'RE NOW QUESTIONING\"]\nTime available: [MINUTES]\n\nGive me a sequenced guide where every core question is framed to invite an honest answer without sounding like an accusation — for example, asking about the conditions and constraints they were working under rather than asking directly why something didn't work. For each question, include the deflective answer most likely given the sensitivity, and a specific, non-confrontational follow-up probe."
+        },
+        {
+          "label": "Quick pre-call refresher, five minutes before you walk in",
+          "whenToUse": "You already prepared a full guide earlier, but you're walking into the room in five minutes and want a condensed, glanceable version, not the full document.",
+          "prompt": "Condense this interview guide into a single half-page cheat sheet I can glance at right before I walk in: the hypothesis in one line, the 3 highest-priority questions only, and the single most likely deflection with its probe for each. Cut everything else.\n\n[PASTE YOUR FULL GUIDE]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Add a second layer of probes",
+          "prompt": "For the two questions most central to the hypothesis, give me a second follow-up probe in case the first one also gets deflected — I want a backup, not just one attempt at getting a concrete answer."
+        },
+        {
+          "label": "Tighten for a shorter slot",
+          "prompt": "My time slot just got cut to [NEW MINUTES] minutes. Rebuild the cut list — tell me exactly which questions to drop first, and confirm the remaining ones still let me test the core hypothesis."
+        },
+        {
+          "label": "Make the opening warm-up less generic",
+          "prompt": "The warm-up questions feel generic. Rewrite them to reference something specific about this person's actual role or the current situation, so the conversation doesn't open on autopilot small talk."
+        },
+        {
+          "label": "Turn my notes into a hypothesis update after the interview",
+          "prompt": "Here are my raw notes from the interview: [PASTE NOTES]. Tell me which parts of the original hypothesis were confirmed, contradicted, or still unclear, using only what's actually in these notes."
+        }
+      ],
+      "walkthrough": "Kevin is a consultant investigating why a client's new ERP rollout coincided with a spike in fulfillment delays. Operations leadership is convinced the ERP is the cause. Kevin isn't sure, and he has a 30-minute 1:1 scheduled with a warehouse shift supervisor who, from what he's heard, tends to get defensive when performance comes up.\n\nHe opens Claude and fills in the prompt: format is 1:1 interview, the hypothesis is that leadership believes the ERP rollout caused the delays but frontline staff may see it differently, the interviewee is a warehouse shift supervisor likely defensive about their team's numbers, and time available is 30 minutes.\n\nThe guide comes back with two warm-up questions, five core questions probing the transition period without directly blaming the team, and one closing open question. For a question about whether the new system slowed down daily workflows, it predicts the supervisor might deflect with something like \"we've just been short-staffed lately\" and supplies a specific probe: ask for the exact week staffing levels changed, to separate a staffing issue from a system issue. It also marks which two questions to cut first if the conversation runs past 20 minutes.\n\nKevin walks in with the guide open on his laptop. Sure enough, the supervisor's first answer is close to the predicted deflection about staffing. Kevin uses the rehearsed probe, asking for the specific week, and gets a concrete answer: staffing had actually been stable, but two of the four warehouse terminals stopped supporting the new ERP's barcode scanner, forcing manual entry.\n\nAfter the call, Kevin pastes his raw notes back into Claude asking what was confirmed versus contradicted relative to the original hypothesis — the ERP theory holds, but the specific mechanism turns out to be a hardware compatibility gap, not a training or workflow problem. Preparation and debrief together took about twenty-five minutes."
+    },
+    "con-a1-repeatable-engagement-workflow": {
+      "placeholders": [
+        {
+          "name": "PASTE ROUGH NOTES, e.g.:\n- Kickoff/document review: synthesize client documents into a briefing using [TOOL]\n- Research: industry/competitor research using [TOOL]\n- Storyline: structure findings into a narrative using [TOOL]\n- Deliverable drafting: slide action titles and executive summary using [TOOL]\n- Interview/workshop prep: question guides using [TOOL]\n- Client review: (describe if AI is used here)\n- Close-out: (describe if AI is used here)",
+          "what": "List your engagement's actual stages in order, and for each one, note in plain language whether and how AI currently helps — the example format shows one line per stage. Keep the stages honest to how your team actually works today, not an idealized version; leave a stage's description blank or write \"no AI used here\" if that's the truth.",
+          "examples": [
+            "- Kickoff/document review: synthesize client documents into a briefing using Claude\n- Research: industry/competitor research using Gemini Deep Research\n- Storyline: structure findings into a narrative using Claude\n- Deliverable drafting: slide action titles and executive summary using Claude\n- Interview/workshop prep: question guides using ChatGPT\n- Client review: no AI used, all manual partner review\n- Close-out: no AI used currently",
+            "- Kickoff/document review: not yet using AI for this, done manually by the engagement lead\n- Research: competitor and market research using Gemini Deep Research\n- Storyline: no AI used, whiteboarded by the team\n- Deliverable drafting: slide titles and exec summary drafted with Claude, then heavily edited\n- Interview/workshop prep: question guides drafted with ChatGPT\n- Client review: no AI\n- Close-out: lessons-learned memo drafted with Claude from raw notes"
+          ]
+        },
+        {
+          "name": "PASTE OR STATE POLICY, e.g. \"no real client-identifying data in any consumer AI account; de-identified excerpts only\"",
+          "what": "State your firm's actual data-handling rule for AI tools — what's allowed in a consumer AI account versus what requires de-identifying first or isn't allowed at all. If your firm doesn't have a written policy yet, state the rule you're personally applying until one exists, and flag internally that a real policy is needed.",
+          "examples": [
+            "No real client-identifying data in any consumer AI account; only de-identified excerpts or publicly available material may be pasted in",
+            "Client-approved enterprise AI accounts (with a signed data processing agreement) may use real client data; personal/free-tier accounts may only use de-identified or public data",
+            "No client financial data or personal employee information in any AI tool under any circumstances; general findings and structure only"
+          ]
+        },
+        {
+          "name": "TOOL",
+          "what": "Name the specific AI tool your team uses at that stage — this doesn't need to be the same tool for every stage, and it's fine to leave a stage's tool blank if no AI is used there yet.",
+          "examples": [
+            "Claude",
+            "Gemini Deep Research",
+            "ChatGPT"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Single-stage deep dive",
+          "whenToUse": "You don't want to formalize the whole engagement yet — you just want one specific stage (say, research) written up properly with verification and confidentiality rules before rolling it out team-wide.",
+          "prompt": "Turn my notes on one engagement stage into a formal row I can add to our workflow document.\n\nStage: [NAME THE STAGE, e.g. \"Research\"]\nHow AI currently helps: [DESCRIBE]\nTool used: [TOOL]\n\nProduce: Stage | AI-Assisted Task | Tool Used | Required Human Verification | Confidentiality Rule.\nThe verification column must be a specific, checkable action, not a vague instruction like \"review carefully.\" The confidentiality column should state, based on this policy — [PASTE OR STATE POLICY] — exactly what data is safe to use in this tool at this stage."
+        },
+        {
+          "label": "Gap-analysis version",
+          "whenToUse": "You want to specifically identify which stages of the engagement have NO defined AI workflow or verification step yet, rather than formalize what's already working — useful before a team meeting about where to invest next.",
+          "prompt": "Here are my rough notes on our engagement stages and how AI currently helps (or doesn't) at each:\n[PASTE ROUGH NOTES]\n\nOur data-handling policy: [PASTE OR STATE POLICY]\n\nInstead of building the full table, first tell me: which stages have no AI-assisted workflow at all, which stages use AI but have no defined verification step, and which stages have both a workflow and clear verification. Rank the gaps by how much time or risk you'd guess is at stake, based only on what I've described — flag clearly that this ranking is your estimate, not a confirmed fact."
+        },
+        {
+          "label": "New-hire training version",
+          "whenToUse": "The workflow document already exists and you want it rewritten as an onboarding walkthrough for a new team member, rather than a reference table for people who already know the context.",
+          "prompt": "Here is our finished engagement workflow table:\n[PASTE YOUR WORKFLOW TABLE]\n\nRewrite this as a short onboarding walkthrough for a new team member who has never used any of these tools professionally — explain, in plain language, what to do at each stage, why the verification step matters (not just what it is), and what happens if the confidentiality rule is skipped. Keep it under 500 words."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check verification steps aren't vague",
+          "prompt": "Go back through every row's \"Required Human Verification\" column and flag any that isn't a specific, checkable action a new team member could actually perform without guessing what \"review carefully\" means in practice."
+        },
+        {
+          "label": "Stress-test against a real recent engagement",
+          "prompt": "Here's a summary of a real engagement we just ran: [DESCRIBE ENGAGEMENT]. Walk through the workflow table stage by stage and tell me anywhere this real engagement didn't actually match the documented workflow — either a stage we skipped, a tool we didn't use, or a verification step we didn't actually do."
+        },
+        {
+          "label": "Add a stage we missed",
+          "prompt": "We also have a [STAGE NAME] stage that I didn't originally describe. Here's how it works: [DESCRIBE]. Add it to the table in the right position, following the same format and level of specificity as the other rows."
+        },
+        {
+          "label": "Simplify for a one-page poster version",
+          "prompt": "Condense this into a one-page version simple enough to post near a shared desk — just stage name, tool, and the single most important verification action per stage, dropping the confidentiality column into a separate short list below the table."
+        }
+      ],
+      "walkthrough": "Elena leads a five-person consulting team where everyone has picked up their own AI habits — she uses Claude for briefings, one analyst swears by Gemini Deep Research, another still writes storylines by hand. Nothing is written down, and a new analyst joining next month will have to learn all of it by osmosis.\n\nElena blocks 30 minutes and writes rough notes on six stages: kickoff/document review (Claude, for briefings), research (Gemini Deep Research), storyline (Claude, sometimes skipped in favor of whiteboarding), deliverable drafting (Claude, for slide titles and exec summaries), interview prep (ChatGPT), and client review and close-out, both currently done with no AI at all. She also writes down the firm's actual, if informal, data rule: no real client-identifying data in anyone's personal AI account, de-identified excerpts only.\n\nShe pastes both into the prompt. The output comes back as a six-row table (client review and close-out both correctly marked \"no AI-assisted task currently\" instead of inventing one), each row with a genuinely specific verification action — for research, \"open and confirm the top 3 cited sources before use in a client-facing document\"; for storyline, \"confirm no finding was reframed as stronger evidence than the raw data supports.\" Every row's confidentiality column consistently applies the de-identified-only rule.\n\nElena runs the stress-test follow-up against last month's actual engagement and catches one gap: the team used Claude for interview prep on that project, not ChatGPT as she'd assumed, so she corrects the table. She circulates the finished one-pager to the team and pins it above the storyline-structuring lesson as the team's new shared reference. Total time: about 35 minutes."
+    },
+    "pm-b1-meeting-notes-to-decisions-actions-owners": {
+      "placeholders": [
+        {
+          "name": "MEETING NAME/TOPIC",
+          "what": "A short name identifying which meeting this is — useful mainly so the summary is easy to find and reference later, especially if you run this same process weekly.",
+          "examples": [
+            "Weekly Sprint Planning",
+            "Vendor Integration Kickoff",
+            "Q1 Budget Review with Finance"
+          ]
+        },
+        {
+          "name": "DATE",
+          "what": "The date the meeting happened, so the record is unambiguous later when someone asks \"which meeting was that decision made in.\"",
+          "examples": [
+            "2026-02-10",
+            "March 3, 2026",
+            "Jan 14"
+          ]
+        },
+        {
+          "name": "LIST",
+          "what": "The names of everyone who attended the meeting, so the AI can correctly attribute actions to actual people mentioned in your notes rather than guessing who was in the room.",
+          "examples": [
+            "Sarah Chen, Tom Reyes, Priya Nair, you",
+            "Full engineering team + Product (6 people)",
+            "Client: Mark Douglas (CFO); Internal: you, Lena"
+          ]
+        },
+        {
+          "name": "PASTE RAW NOTES",
+          "what": "Your actual raw notes from the meeting, in whatever shorthand you naturally use — messy is fine, and even preferred, since a cleaned-up summary loses the specific details (who said what) that the AI needs to correctly assign owners and dates.",
+          "examples": [
+            "agreed to push launch to March 15, Sarah will update the timeline doc by Friday, still need to decide on vendor for the integration - Tom to get 2 more quotes, discussed budget overrun but no resolution",
+            "reviewed Q1 numbers, revenue on target but marketing spend over by 8%. Priya to send breakdown by EOD Thurs. Decided to pause the paid ads test. Open question: do we reallocate budget to email or hold it.",
+            "client wants 2 extra dashboard views added, we said yes but flagged it needs a separate change order - Mark to send updated SOW, no date given. Also agreed current sprint stays as-is, no scope change mid-sprint."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick voice-memo version",
+          "whenToUse": "You didn't take structured notes and instead have a rough voice memo transcript or a stream-of-consciousness recap you typed right after the meeting ended.",
+          "prompt": "I recorded a quick voice memo recap right after a meeting instead of taking notes during it. Turn this into a structured record. Use ONLY what's stated below — do not invent a decision, owner, or deadline that isn't mentioned. If an action item has no clear owner or date, write \"TBD.\"\n\nMeeting: [MEETING NAME/TOPIC], [DATE]\n\nMy recap (rough, spoken style):\n[PASTE YOUR ROUGH RECAP OR TRANSCRIPT]\n\nStructure the output as: 1) Decisions made, 2) Action items (Action | Owner | Due date), 3) Open issues, 4) One-sentence summary at the top."
+        },
+        {
+          "label": "Recurring meeting with a previous action-item check-in",
+          "whenToUse": "This is a recurring meeting (weekly standup, biweekly steering committee) and you want the new summary to also flag whether previous action items were closed out, not just capture new ones.",
+          "prompt": "Turn my raw meeting notes into a structured record, and also check the status of last meeting's open action items.\n\nMeeting: [MEETING NAME/TOPIC], [DATE]\nAttendees: [LIST]\n\nLast meeting's open action items:\n[PASTE PREVIOUS ACTION ITEMS: ACTION | OWNER | DUE DATE]\n\nThis meeting's raw notes:\n[PASTE RAW NOTES]\n\nStructure the output as:\n1. Status of previous action items (Done / Still open / No update given — based only on what's in this meeting's notes, don't assume completion without evidence)\n2. New decisions made\n3. New action items (Action | Owner | Due date, use \"TBD\" where not stated)\n4. Open issues / parking lot\n5. One-sentence summary at the top"
+        },
+        {
+          "label": "Owner-specific extract",
+          "whenToUse": "You need to quickly pull out just one person's action items to paste into a direct message to them, rather than sending the whole meeting summary to everyone.",
+          "prompt": "From these raw meeting notes, pull out only the action items belonging to [PERSON'S NAME] — nothing else. Use ONLY what's stated; if no clear due date was given, write \"TBD\" rather than guessing one.\n\nRaw notes:\n[PASTE RAW NOTES]\n\nFormat as a short numbered list I can paste directly into a Slack or email message to this person, with a one-sentence friendly opener."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check nothing was misattributed",
+          "prompt": "Go back through my raw notes line by line and confirm every action item's owner is actually the person named in the notes, not inferred from who seems most relevant to the task. List any action item where you had to guess."
+        },
+        {
+          "label": "Separate settled decisions from ones that still need sign-off",
+          "prompt": "Look again at the 'Decisions made' section — are any of these actually still pending a final sign-off or approval rather than fully settled? If so, move them to open issues instead, since listing something as decided when it isn't creates false certainty."
+        },
+        {
+          "label": "Draft the send-out message",
+          "prompt": "Write a short email or Slack message to send this summary to the attendees — 2-3 sentences introducing it, then paste the structured summary below. Keep the tone brief and neutral, not overly formal."
+        },
+        {
+          "label": "Flag anything ambiguous I should double check",
+          "prompt": "Reread my raw notes and flag anything that was genuinely ambiguous — where you weren't fully sure if something was a firm decision, a suggestion, or just a comment in passing — so I can clarify it with the room before sending this out."
+        }
+      ],
+      "walkthrough": "James runs a weekly cross-functional sync for a product launch and, like most PMs, is bad about writing up notes afterward — they usually sit in a notebook until someone asks \"wait, who owns that?\"\n\nRight after this week's meeting, while it's still fresh, he opens ChatGPT and pastes the prompt. Meeting name is \"Launch Readiness Sync,\" date is today, attendees are Sarah, Tom, and Priya. His raw notes, typed exactly as scrawled during the call: \"agreed to push launch to March 15, Sarah will update the timeline doc by Friday, still need to decide on vendor for the integration - Tom to get 2 more quotes, discussed budget overrun but no resolution.\"\n\nThe output comes back in under ten seconds: a one-sentence summary at the top noting the launch date moved and vendor selection is still open; a decisions section with one bullet, \"Launch date moved to March 15\"; an action items table with two rows — \"Update timeline doc — Sarah — Friday\" and \"Get 2 more vendor quotes — Tom — TBD,\" correctly leaving the date blank since James never gave one; and an open issues section listing the vendor decision and the unresolved budget overrun.\n\nJames reads it against his raw notes in about thirty seconds — everything matches. He sends a quick follow-up asking ChatGPT to draft the Slack message to send it out, and gets a short two-sentence opener plus the summary formatted for Slack, ready to paste. He posts it in the team channel four minutes after the meeting ended, while everyone else is still at their desks — instead of the usual next-day (or never) writeup that made people ask what they were supposed to be doing."
+    },
+    "pm-b2-status-reports-stakeholders-read": {
+      "placeholders": [
+        {
+          "name": "NAME",
+          "what": "The name of the project this status report is about — use whatever name your stakeholders already recognize, so there's no confusion about which initiative this covers.",
+          "examples": [
+            "Customer Portal Redesign",
+            "Q2 Vendor Migration",
+            "Regional Expansion – Phase 1"
+          ]
+        },
+        {
+          "name": "DATES",
+          "what": "The specific date range this report covers, so stakeholders know exactly what period the update reflects and can tell if a report is late or current.",
+          "examples": [
+            "Feb 3 - Feb 9, 2026",
+            "January 2026",
+            "Sprint 14 (Jan 26 - Feb 8)"
+          ]
+        },
+        {
+          "name": "ON TRACK / AT RISK / OFF TRACK",
+          "what": "Your own honest judgment of the project's status — not something to let the AI infer from your notes. Decide this first, based on your actual assessment, since this single word sets the tone stakeholders will read the rest of the report through.",
+          "examples": [
+            "ON TRACK",
+            "AT RISK",
+            "OFF TRACK"
+          ]
+        },
+        {
+          "name": "ROUGH NOTES",
+          "what": "Your own quick, unpolished notes on what actually happened or what's actually planned — bullet fragments are fine, full sentences aren't required. This appears twice in the prompt: once for what happened this period, once for what's planned next period.",
+          "examples": [
+            "finished 2 of 3 integration milestones, vendor testing started late, held the design review Tuesday, got sign-off on the new nav",
+            "start UAT with 5 pilot users, finalize the rollout comms plan, vendor delivers remaining API by Friday (their commitment, not confirmed yet)"
+          ]
+        },
+        {
+          "name": "ROUGH NOTES, or \"none\"",
+          "what": "Your rough notes on any current blockers or risks — or literally the word \"none\" if there genuinely aren't any this period. Don't invent a risk just to fill the section; an honest \"none this period\" is a valid and useful answer.",
+          "examples": [
+            "vendor is 2 weeks behind with no committed recovery date, this threatens the March 15 launch",
+            "none",
+            "one pilot user reported a login bug, engineering is investigating, not yet clear if it's isolated"
+          ]
+        },
+        {
+          "name": "DECISION NEEDED / APPROVAL NEEDED / FYI ONLY, be specific",
+          "what": "State exactly what you need from the person reading this report — a specific decision, a specific approval, or nothing at all beyond awareness. Vague asks like \"let me know your thoughts\" get ignored; a specific ask gets a faster response.",
+          "examples": [
+            "Need your approval to escalate the vendor delay to their account manager this week",
+            "FYI only — no action needed, just keeping you informed of the milestone completion",
+            "Need a decision by Friday on whether to delay launch 1 week or launch with the known bug and patch after"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Ultra-short version for a busy exec sponsor",
+          "whenToUse": "Your stakeholder genuinely only wants 3 lines, not even the standard 200-word format — common for a very senior sponsor who gets a dozen of these a week.",
+          "prompt": "Write an extremely short project status update — no more than 3 lines total — for a busy executive sponsor.\n\nProject: [NAME]\nOverall status: [ON TRACK / AT RISK / OFF TRACK] — use exactly this, do not soften it.\nMost important thing that happened: [ONE FACT]\nMost important thing needed from the reader, if anything: [STATE IT, OR \"nothing\"]\n\nLine 1: status + one-sentence reason. Line 2: the most important fact. Line 3: the ask, or \"No action needed.\" Nothing else — no headers, no bullet list."
+        },
+        {
+          "label": "Multi-project rollup version",
+          "whenToUse": "You manage several projects and need one combined report covering all of them for a stakeholder who oversees the portfolio, not a single-project deep dive.",
+          "prompt": "Write a combined status report covering multiple projects for a portfolio-level stakeholder, skimmable in under two minutes.\n\nReporting period: [DATES]\n\nFor each project, I'll give you: name, status, and one line on what matters.\n[PROJECT 1 NAME]: [ON TRACK/AT RISK/OFF TRACK] — [ONE-LINE WHY]\n[PROJECT 2 NAME]: [ON TRACK/AT RISK/OFF TRACK] — [ONE-LINE WHY]\n...(continue for all projects)\n\nStructure: one line per project, status-flagged clearly at the start of each line (use the status I gave you, don't infer or soften it), sorted with AT RISK and OFF TRACK projects at the top. End with a single line noting which projects need something from the reader, if any."
+        },
+        {
+          "label": "Detailed internal version for your own team",
+          "whenToUse": "You want a more detailed version for internal team visibility (not the external stakeholder-facing report) that includes more granular detail than the 200-word external version allows.",
+          "prompt": "Write a more detailed internal status update for the project team (not external stakeholders) — this can be longer and more granular than a stakeholder report.\n\nProject: [NAME]\nReporting period: [DATES]\nOverall status: [ON TRACK / AT RISK / OFF TRACK]\n\nWhat happened this period (detailed): [ROUGH NOTES]\nWhat's planned next period (detailed): [ROUGH NOTES]\nBlockers/risks, with who's working on each: [ROUGH NOTES]\n\nStructure: status line, then a fuller \"this period\" section (up to 8 bullets), a fuller \"next period\" section, a risks section with an owner noted per risk, and a short \"decisions/help needed\" section. Do not soften the stated status. This version can run longer than 200 words since it's for the team, not external stakeholders."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check the status line actually matches the content",
+          "prompt": "Reread the risks/blockers section you wrote. Does it genuinely support the status I gave you, or does the content actually read more serious (or less serious) than the status label suggests? Tell me honestly, don't just agree with my stated status."
+        },
+        {
+          "label": "Cut it down further",
+          "prompt": "This is still too long. Cut it to under 120 words total without losing the status line or the specific ask. Cut supporting detail first, not the ask."
+        },
+        {
+          "label": "Make the ask impossible to miss",
+          "prompt": "Move the 'what I need from you' line to the very top of the report, right after the status line, instead of the bottom — for a stakeholder skimming fast, the ask needs to be one of the first things they see."
+        },
+        {
+          "label": "Write the one-line version for a subject line",
+          "prompt": "Give me a single email subject line, under 10 words, that captures this report's status and most important point — something a stakeholder could act on just from their inbox preview without opening the email."
+        }
+      ],
+      "walkthrough": "Amir manages a customer portal redesign project and it's Friday, report day. The project has genuinely slipped this week — a vendor delivery is two weeks late — and Amir has caught himself in the past writing \"on track\" out of habit because admitting risk feels like inviting a hard conversation. This week he decides not to do that.\n\nHe opens Claude and fills in the prompt honestly: project name is \"Customer Portal Redesign,\" reporting period is this week's dates, and — deliberately, before touching anything else — he types the status as AT RISK. His rough notes: this period covered finishing two of three integration milestones and a design review sign-off; next period covers starting UAT with pilot users, pending the vendor; the blocker is the vendor's remaining API delivery, now two weeks late with no committed recovery date, threatening the March 15 launch date; and what he needs is the executive sponsor's approval to escalate to the vendor's account manager.\n\nClaude returns a report under 200 words: a status line reading \"AT RISK — vendor delivery slippage threatens the March 15 launch,\" three bullets on what happened, three on what's next, a blockers section naming the vendor delay specifically with the two-week figure, and a closing line: \"Need: your approval to escalate to the vendor's account manager this week.\"\n\nAmir sends a follow-up asking Claude to check honestly whether the content matches the AT RISK label — it confirms the content is consistent, maybe even understated. He sends the report as-is. The sponsor replies within the hour approving the escalation — the fastest response he's gotten to a status report in months. Total time: nine minutes."
+    },
+    "pm-i1-project-plans-work-breakdowns-from-goal": {
+      "placeholders": [
+        {
+          "name": "ONE-SENTENCE GOAL",
+          "what": "State the project's actual goal in one clear sentence — the outcome, not the process. This is what everything else in the plan gets built around, so a vague goal here produces a vague, unusable plan.",
+          "examples": [
+            "Launch a redesigned customer self-service portal by end of Q3",
+            "Migrate all customer data from the legacy CRM to the new platform with zero data loss",
+            "Open and staff a second regional warehouse capable of handling 40% of current order volume"
+          ]
+        },
+        {
+          "name": "DATE",
+          "what": "The target completion date for the whole project — the deadline you're planning backward from, not a milestone date.",
+          "examples": [
+            "September 30, 2026",
+            "End of Q3 2026",
+            "March 15, 2026"
+          ]
+        },
+        {
+          "name": "BUDGET / TEAM SIZE / FIXED EXTERNAL DEPENDENCIES",
+          "what": "Your real, hard constraints — the things that aren't negotiable and will shape what's actually feasible. Naming these upfront keeps the plan grounded in reality instead of an idealized version with unlimited resources.",
+          "examples": [
+            "Team of 6 (2 engineers, 1 designer, 1 PM, 2 support), budget capped at $85K for external vendors, hard dependency on a third-party auth vendor's API which won't be ready until June",
+            "No dedicated engineering resource until Q2, must use existing warehouse management software (no new procurement approved), fixed launch date tied to a signed customer contract",
+            "Team of 3, no external budget approved yet (pending a separate approval), dependent on Legal's review which typically takes 3-4 weeks"
+          ]
+        },
+        {
+          "name": "AFTER I ANSWER:",
+          "what": "This isn't a value you type in — it's a stage marker built into the prompt telling both you and the AI that Step 2 (building the actual breakdown) only happens after you've answered the Step 1 clarifying questions. Think of the prompt as two messages, not one: send everything up through Step 1 first, wait for the questions back, then continue.",
+          "examples": [
+            "Paste the prompt as-is (Step 1 only will run, since you haven't answered anything yet), read the clarifying questions the AI asks, then reply in the same conversation with your answers to trigger Step 2",
+            "If the AI tries to jump straight to a full breakdown without asking questions, reply \"Please ask your clarifying questions first before building the plan\" to force it back to Step 1",
+            "Keep this as one continuous conversation rather than two separate chats — Step 2 needs the context of your Step 1 answers to build an accurate breakdown"
+          ]
+        },
+        {
+          "name": "from my input",
+          "what": "You don't fill this in either — it's a tag the AI attaches to individual tasks in its output to mark which ones came directly from something you actually told it (your goal, your constraints, or your answers to the clarifying questions), as opposed to a guess. Seeing this tag next to a task means you can trust it without double-checking it against your own knowledge.",
+          "examples": [
+            "Integrate with [Vendor Name]'s auth API — [from my input]",
+            "Complete UAT with the 6-person pilot group you named — [from my input]",
+            "Launch by September 30 per your target date — [from my input]"
+          ]
+        },
+        {
+          "name": "typical pattern — verify",
+          "what": "The paired tag for tasks the AI added on its own, based on what's common for this type of project, rather than something you specifically told it. It's a flag, not a fact — you're expected to confirm each one against your team's real capacity and process, or delete it if it doesn't actually apply.",
+          "examples": [
+            "Two-week UAT period — [typical pattern — verify]",
+            "One-week buffer before launch for final QA — [typical pattern — verify]",
+            "Stakeholder sign-off checkpoint at end of design phase — [typical pattern — verify]"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Skip clarifying questions, generate directly",
+          "whenToUse": "You already know the project type well (you've run something similar before) and don't need the AI to ask clarifying questions first — you just want a fast first-draft breakdown to correct.",
+          "prompt": "I need a first-draft work breakdown structure for a project, to correct and refine myself — not a final plan. Skip clarifying questions and generate directly from what I give you.\n\nGoal: [ONE-SENTENCE GOAL]\nTarget date: [DATE]\nConstraints: [BUDGET / TEAM SIZE / FIXED EXTERNAL DEPENDENCIES]\nAdditional context: [ANYTHING ELSE RELEVANT — team composition, existing systems, prior similar projects]\n\nProduce a phased work breakdown structure: phases in logical order, major tasks under each phase, rough sequencing/dependencies. Mark each task \"[from my input]\" or \"[typical pattern — verify]\" so I know which parts to double-check against my own experience with this type of project."
+        },
+        {
+          "label": "Comparison against a similar past project",
+          "whenToUse": "You've run a similar project before and want the new plan built by comparison to that one, flagging what's genuinely different this time rather than starting from a generic template.",
+          "prompt": "I need a work breakdown for a new project, and I want it built by comparing it to a similar one we ran before, not from a generic template.\n\nNew project goal: [ONE-SENTENCE GOAL]\nTarget date: [DATE]\nConstraints: [BUDGET / TEAM SIZE / FIXED EXTERNAL DEPENDENCIES]\n\nHere's how a similar past project actually went, phases and what took longer or shorter than expected:\n[DESCRIBE THE PAST PROJECT AND WHAT ACTUALLY HAPPENED]\n\nBuild the new breakdown using the past project's real phases and sequencing as your primary reference point, adjusting only for what's explicitly different about this new project. Flag anywhere you're deviating from the past project's pattern and why."
+        },
+        {
+          "label": "Just the clarifying questions, no plan yet",
+          "whenToUse": "You're at the very start of scoping and genuinely don't have enough information yet to build even a first draft — you want a sharp list of questions to bring to a scoping conversation with your sponsor or team first.",
+          "prompt": "I'm scoping a new project and want a list of clarifying questions to bring into a scoping conversation, before attempting any plan.\n\nGoal (rough, may be incomplete): [ONE-SENTENCE GOAL]\n\nList the specific questions you'd need answered to build a realistic work breakdown for this — covering team composition, existing systems, approval processes, external dependencies, and anything else genuinely load-bearing for planning this type of project. Group them by category so I can bring an organized list into the conversation."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Push back on an unrealistic-sounding task duration",
+          "prompt": "The [TASK NAME] task is estimated at [DURATION]. Based only on what I've told you about our team, does that estimate seem realistic, or is it a generic typical-pattern assumption? If it's a generic assumption, say so plainly rather than defending it."
+        },
+        {
+          "label": "Re-sequence around a hard external dependency",
+          "prompt": "The [EXTERNAL DEPENDENCY] can't be resolved until [DATE], which is later than your current sequencing assumes. Rebuild the sequencing so nothing that depends on it is scheduled to start before then, and tell me what that does to the overall timeline."
+        },
+        {
+          "label": "Convert to my PM tool's format",
+          "prompt": "Reformat this breakdown as a flat task list suitable for importing into [YOUR PM TOOL, e.g. Asana/Jira/Monday] — one row per task, with phase as a tag or section, and dependencies noted in a separate column."
+        },
+        {
+          "label": "Strip out everything not yet verified",
+          "prompt": "Give me a version of this plan with every task still marked \"[typical pattern — verify]\" removed entirely, so I can see exactly what's left from what I actually specified myself, before I decide which of the removed ones to add back in."
+        }
+      ],
+      "walkthrough": "Nadia is a project manager who just got asked to lead a customer portal redesign — a project type she's never personally run before, though her company has done similar web projects.\n\nShe opens ChatGPT and starts the two-step prompt. Goal: \"launch a redesigned customer self-service portal by end of Q3.\" Target date: September 30. Constraints: a team of 6 (2 engineers, 1 designer, 1 PM, 2 support), and a fixed dependency on a third-party authentication vendor whose new API won't be ready until June.\n\nBefore building anything, the AI asks clarifying questions: is design work already underway, what's the current portal's tech stack, and what are the vendor's actual SLA terms for the June API delivery. Nadia answers each — design hasn't started, the current portal runs on an older framework that will need partial rebuilding, and the vendor's SLA has no penalty clause for delay, which she flags as a real risk.\n\nThe resulting breakdown has five phases: discovery, design, build, integration, and launch. Under integration, there's an explicit dependency noting that integration testing can't start until the vendor delivers their sandbox environment in June — which, given the no-penalty SLA, Nadia now recognizes as the plan's biggest single risk. Several tasks are tagged \"[typical pattern — verify],\" including a two-week UAT period and a one-week buffer before launch, both flagged for her to check against her team's real track record.\n\nShe reviews it against her team's actual capacity, cuts the UAT period to one week based on past projects, and pastes the corrected structure into Jira. Total time from blank page to an importable plan: about 30 minutes, versus a full afternoon she'd normally spend structuring this from scratch."
+    },
+    "pm-i2-risk-registers-mitigation-drafts": {
+      "placeholders": [
+        {
+          "name": "SCOPE, TIMELINE, TEAM SIZE, KEY SENSITIVE AREAS",
+          "what": "A brief project summary covering what it involves, how long it runs, how many people are on it, and anything unusually sensitive about it (a new vendor, a tight deadline, a dependency on another team) — this grounds the AI's ratings in your actual project instead of generic assumptions about projects like it.",
+          "examples": [
+            "Six-month system migration to a new ERP, involving a new external vendor we haven't worked with before, team of 8, hard regulatory deadline tied to a compliance filing",
+            "Three-month website relaunch, internal team of 4, no new vendors, but tight timeline overlapping with the busiest sales season",
+            "Twelve-month facility expansion, cross-functional team of 15 across construction, ops, and IT, dependent on permitting from the local municipality"
+          ]
+        },
+        {
+          "name": "LIST YOUR KNOWN RISKS",
+          "what": "The specific risks you already know about for this project, in your own words — real, specific concerns you've actually thought about, not a generic risk checklist. These become the core of the register; the AI only adds to this list in a clearly separate section.",
+          "examples": [
+            "Vendor may not deliver the integration API on time based on their track record with another client; our internal SME on the legacy system is planning to leave the company mid-project; the regulatory filing deadline is fixed and cannot move",
+            "Construction permitting could be delayed by the municipality (their average review time has been running long lately); a key contractor is also working another large job that could pull their crew away",
+            "Our email migration vendor has had two prior data-loss incidents reported by other customers; the project timeline overlaps with our fiscal year-end close, which usually pulls finance team attention away"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Post-mortem to living register",
+          "whenToUse": "A risk you didn't have registered actually happened, and you want to add it (plus similar risks it suggests) to the register going forward, learning from the miss.",
+          "prompt": "A risk that wasn't in our register actually happened on this project. I want to add it and think about what else it suggests we might be missing.\n\nWhat happened: [DESCRIBE THE RISK THAT MATERIALIZED]\nOur current register:\n[PASTE YOUR EXISTING REGISTER]\n\nTasks:\n1. Add this risk to the register with a Likelihood/Impact rating (Low/Medium/High) and a specific, trigger-based mitigation, marked as \"added retroactively.\"\n2. Based only on what actually happened (not generic speculation), suggest 1-2 related risks in the same category that we should consider adding, clearly separated as suggestions to evaluate, not automatically included."
+        },
+        {
+          "label": "Milestone review and close-out pass",
+          "whenToUse": "You're at a major milestone and want to review the existing register to close out risks that no longer apply, rather than build a new one from scratch.",
+          "prompt": "Review our existing risk register at this project milestone and help me close out what no longer applies.\n\nCurrent register:\n[PASTE YOUR EXISTING REGISTER]\nWhat's changed since it was built: [DESCRIBE — e.g. \"vendor contract signed with penalty clause,\" \"key person did not leave after all\"]\n\nFor each existing risk, tell me whether it should stay open, be closed (with a one-line reason based on what changed), or be re-rated given the new information. Do not close a risk unless the update I gave you genuinely resolves it — flag anything ambiguous instead of guessing."
+        },
+        {
+          "label": "Executive-level risk summary",
+          "whenToUse": "You need a short, non-technical version of the top risks to include in a steering committee deck, not the full working register with every row.",
+          "prompt": "From this full risk register, create a short executive summary version for a steering committee deck — just the top 3 risks by combined likelihood and impact.\n\nFull register:\n[PASTE YOUR REGISTER]\n\nFor each of the top 3: one plain-language sentence describing the risk (no jargon), the mitigation in one sentence, and whether it needs any decision or resource from the steering committee right now. Skip anything Low/Low — this is for people with five minutes, not the full team."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Push back on a vague mitigation",
+          "prompt": "The mitigation for [RISK NAME] just says to monitor it. Give me a specific action and a concrete trigger — what exactly should happen, and at what point (a date, a missed milestone, a specific signal) should it kick in?"
+        },
+        {
+          "label": "Verify a risk-suggestion actually applies",
+          "prompt": "You suggested [SUGGESTED RISK] as a risk to consider adding. Based only on the project details I gave you, does this genuinely apply to my project, or is it a generic risk for this project type that may not actually fit my situation? Be honest, don't just defend your own suggestion."
+        },
+        {
+          "label": "Rank by what needs attention first",
+          "prompt": "Rank the risks in this register by which ones need action this week versus which can wait for the next milestone review, based on the likelihood, impact, and mitigation triggers already defined."
+        },
+        {
+          "label": "Assign draft owners based on role",
+          "prompt": "For each risk, suggest which role (not a specific person, since I'll assign that myself) would logically own monitoring and acting on it — e.g. the vendor manager, the tech lead, the PM — based on what the risk and mitigation actually involve."
+        }
+      ],
+      "walkthrough": "Deshawn is kicking off a six-month ERP migration with a new vendor the company hasn't worked with before, a team of eight, and a regulatory filing deadline that genuinely cannot move. He knows he should build a risk register but has always found the exercise turns into either a checklist nobody reads or a blank document he never finishes.\n\nHe opens Claude and gives it the project summary — six-month ERP migration, new external vendor, team of 8, hard regulatory deadline — plus three risks he already knows about: the vendor's API delivery might slip based on their track record with another client, his internal subject-matter expert on the legacy system is planning to leave mid-project, and the filing deadline itself is fixed.\n\nThe register comes back with all three risks rated using Low/Medium/High: the vendor delay as Medium likelihood/High impact, with a mitigation specifying a biweekly vendor checkpoint call and a trigger to escalate formally if two consecutive milestones slip; the SME departure as High likelihood/High impact, with a mitigation to start documenting their institutional knowledge immediately rather than waiting for a resignation date. Separately, under a clearly marked \"risks to consider adding\" section, it suggests two categories he hadn't listed: regulatory approval delay and data-migration rollback capability.\n\nDeshawn reviews the two suggestions — the regulatory one genuinely applies, given the fixed deadline, so he adds it to the real register with his own rating. The rollback-capability suggestion doesn't really fit his specific migration approach, so he leaves it out rather than including it just because it was offered.\n\nHe assigns real owners to all four risks and adds the register to his biweekly project review. Total time: about fifteen minutes, versus the half-finished document he'd normally have."
+    },
+    "pm-i3-stakeholder-communications-difficult-moments": {
+      "placeholders": [
+        {
+          "name": "STATE THE FACTS PLAINLY, e.g. \"the vendor's delivery slipped 3 weeks, pushing our integration testing start\"",
+          "what": "State exactly what happened, in plain factual language — no softening, no over-explaining. This is the core fact the whole message is built around, so get it right and specific before anything else.",
+          "examples": [
+            "the vendor's delivery slipped 3 weeks, pushing our integration testing start",
+            "we discovered a scope gap during build: the reporting module wasn't included in the original estimate, adding roughly 3 weeks of work",
+            "the current sprint's budget burn is 18% over plan due to unplanned overtime approved to hit last month's deadline"
+          ]
+        },
+        {
+          "name": "REASON, without excessive justification",
+          "what": "The factual reason behind what happened, stated briefly — one sentence, not a defense of the decision or a long justification. Over-explaining here tends to read as making excuses rather than informing.",
+          "examples": [
+            "a component shortage on the vendor's side",
+            "the original scoping session didn't include a stakeholder who later flagged the reporting requirement as mandatory",
+            "we approved overtime last month specifically to avoid missing the client demo date"
+          ]
+        },
+        {
+          "name": "CONCRETE NEXT STEP OR RECOVERY PLAN",
+          "what": "What you're actually doing about the situation — a real, concrete action, even if it's partial or doesn't fully solve the problem. This is what turns a bad-news message into an update rather than just a complaint.",
+          "examples": [
+            "running two integration phases in parallel to recover roughly 10 of the 21 lost days",
+            "re-scoping the reporting module as a fast-follow release 2 weeks after the main launch, rather than delaying the whole launch",
+            "capping overtime for the remainder of the project and reforecasting the budget with the finance team this week"
+          ]
+        },
+        {
+          "name": "e.g. \"awareness only\" / \"approval to shift the launch date\" / \"additional budget approval\"",
+          "what": "State exactly what you need from the reader, if anything — a specific approval, a specific decision, or genuinely nothing beyond keeping them informed. A vague or missing ask is one of the most common reasons these messages stall instead of getting resolved.",
+          "examples": [
+            "awareness only, no action needed",
+            "approval to notify downstream teams of a revised go-live window this week",
+            "additional budget approval of $15K to cover the reporting module fast-follow"
+          ]
+        },
+        {
+          "name": "e.g. \"executive sponsor\" / \"full stakeholder group\"",
+          "what": "Who the message is going to — this affects tone and how much background detail is appropriate (an executive sponsor may need less operational detail than the full stakeholder group).",
+          "examples": [
+            "executive sponsor",
+            "full stakeholder group",
+            "client's project lead only"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Verbal talking points instead of a written message",
+          "whenToUse": "You need to deliver this news live on a call rather than in writing, and want short talking points you can speak from rather than a message you'd send as-is.",
+          "prompt": "Help me prepare talking points for delivering difficult project news live on a call, not a written message.\n\nWhat happened: [STATE THE FACTS PLAINLY]\nWhy (briefly, factually): [REASON, without excessive justification]\nWhat we're doing about it: [CONCRETE NEXT STEP OR RECOVERY PLAN]\nWhat I'm asking for: [WHAT YOU NEED FROM THE READER]\nAudience: [WHO'S ON THE CALL]\n\nGive me 4-5 short spoken talking points, not full sentences to read verbatim — phrases and key facts I can glance at while speaking naturally. Lead with the fact. Include one likely question this audience might ask and a one-line answer for it. No corporate hedging language."
+        },
+        {
+          "label": "Pre-announcement heads-up to one key stakeholder",
+          "whenToUse": "Before sending the full message to the whole stakeholder group, you want a shorter, more personal heads-up to one key person first so they're not blindsided in front of others.",
+          "prompt": "I'm about to send difficult project news to a full stakeholder group, but first I want a short, personal heads-up message to one key stakeholder so they're not surprised in the group message.\n\nWhat happened: [STATE THE FACTS PLAINLY]\nWhat we're doing about it: [CONCRETE NEXT STEP OR RECOVERY PLAN]\nThis specific person: [NAME/ROLE, AND WHY THEY NEED ADVANCE NOTICE]\n\nWrite a short, direct, personal message (under 80 words) giving them advance notice before the full group message goes out, with a one-line offer to talk it through before it's sent more broadly if they want to."
+        },
+        {
+          "label": "Written follow-up after a difficult live conversation",
+          "whenToUse": "You already delivered the news verbally (in a call or meeting) and now need a short written follow-up confirming what was said and agreed, for the record.",
+          "prompt": "I already delivered this news verbally in a meeting. Write a short written follow-up confirming what was discussed and agreed, for the record — not breaking the news again as if it's new.\n\nWhat was discussed: [STATE THE FACTS PLAINLY]\nWhat we agreed on the call: [CONCRETE NEXT STEP OR RECOVERY PLAN, PLUS ANY DECISIONS MADE LIVE]\nAudience: [WHO WAS ON THE CALL]\n\nWrite it as a brief recap, not a fresh announcement — open with something like \"Following up on today's call\" rather than restating the bad news as if they haven't heard it. Confirm the agreed next steps and any dates discussed, using only what was actually agreed."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check for an invented commitment",
+          "prompt": "Reread this draft carefully and confirm it doesn't state any specific date, number, or outcome beyond what I actually gave you. If it invented or implied a recovery date I didn't confirm, point out exactly which sentence and I'll fix it."
+        },
+        {
+          "label": "Make it sound less defensive",
+          "prompt": "Read this back as the recipient would. Does any part of it sound defensive or like it's over-justifying what happened rather than just stating it? Rewrite anything that reads that way to be more direct and matter-of-fact."
+        },
+        {
+          "label": "Sharpen the ask",
+          "prompt": "The closing ask still feels a bit soft. Rewrite the final line so it's impossible to misread as optional — state exactly what you need and by when, if there's a deadline for the response."
+        },
+        {
+          "label": "Shorten further",
+          "prompt": "Cut this to under 100 words without losing the fact, the recovery plan, or the ask. If something has to go, cut the reason/context line before cutting the ask or the recovery plan."
+        }
+      ],
+      "walkthrough": "Fatima is managing a system integration project and just learned the vendor's delivery has slipped three weeks due to a component shortage on their end. She needs to tell the executive sponsor before he hears it secondhand, and she's aware her instinct under pressure is to over-explain and apologize, which she knows tends to read as less confident, not more considerate.\n\nShe opens Claude and fills in the difficult-message prompt directly: what happened is the vendor slip pushing integration testing back three weeks; the reason is the component shortage, stated in one clause, not a paragraph; what they're doing about it is running two integration phases in parallel to recover roughly ten of the twenty-one lost days; what she's asking for is approval to notify downstream teams of a revised go-live window; and the audience is the executive sponsor.\n\nThe draft comes back at about 120 words. It opens with the fact directly: \"The vendor's delivery has slipped three weeks due to a component shortage on their side.\" It states the recovery plan in one clear sentence, doesn't invent a new specific recovery date beyond what she gave it, and closes with: \"I need your approval to notify downstream teams of a revised go-live window this week.\"\n\nFatima reads it once as the sponsor would and sends a follow-up asking Claude to check specifically that it didn't invent any commitment — it confirms nothing beyond what she supplied. She sends the message as written. The sponsor replies within twenty minutes with approval, and separately thanks her for being direct instead of burying the news. Total time from finding out about the vendor slip to sending: about twelve minutes."
+    },
+    "pm-a1-pm-operating-system-templates-workflows": {
+      "placeholders": [
+        {
+          "name": "PASTE YOUR NOTES, e.g.:\n- Meeting notes → decisions/actions/owners: use [PROMPT/TOOL]; verify by checking against raw notes before sending\n- Weekly status report: use [PROMPT/TOOL]; verify status line matches actual content\n- Work breakdown at project kickoff: use [PROMPT/TOOL]; verify against team capacity\n- Risk register: use [PROMPT/TOOL]; verify mitigations are specific, not vague\n- Difficult stakeholder messages: use [PROMPT/TOOL]; verify no invented commitments",
+          "what": "List your own recurring PM tasks, which tool or prompt you currently use for each, and what you actually check before sending the output onward — following the example format, one line per task. Be honest about tasks where you don't currently have a defined verification step, rather than inventing one to look thorough.",
+          "examples": [
+            "- Meeting notes: use Claude with the decisions/actions/owners prompt; verify by checking against raw notes before sending\n- Weekly status report: use Claude; verify the status line actually matches the content described\n- Work breakdown at kickoff: use ChatGPT; verify against team capacity and past project timelines\n- Risk register: use Claude; verify every mitigation names a specific action and trigger, not \"monitor closely\"\n- Difficult stakeholder messages: use Claude; no defined verification step yet, usually just re-read once",
+            "- Meeting notes: use ChatGPT; verify owners against attendee list\n- Weekly status report: no AI used currently, written by hand\n- Work breakdown: use Claude with clarifying-questions prompt; verify against actual resourcing\n- Risk register: use Claude; verify against last quarter's actual incidents\n- Difficult stakeholder messages: use Claude; verify it doesn't add a date or number I didn't confirm"
+          ]
+        },
+        {
+          "name": "PROMPT/TOOL",
+          "what": "The specific AI tool and/or saved prompt you personally use for that task — naming it precisely means a teammate reading this later knows exactly what to open, not just that \"AI\" was involved somehow.",
+          "examples": [
+            "Claude, meeting-notes prompt",
+            "ChatGPT",
+            "Claude Project: \"Status Reports\""
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "New-PM starter version",
+          "whenToUse": "You're a newer PM without years of accumulated prompts and verification habits yet — you want a starter operating system built from best-practice defaults rather than assembling your own existing patterns.",
+          "prompt": "I'm a newer PM and don't yet have my own set of AI-assisted PM prompts and verification habits. Help me build a starter operating system covering the standard recurring PM tasks: meeting notes, status reports, work breakdowns, risk registers, and difficult stakeholder messages.\n\nFor each task, propose: a recommended cadence, a suggested tool (Claude or ChatGPT), a one-sentence description of the core prompting principle to follow (e.g. \"never let AI guess an owner or date\"), and a specific, checkable verification step. Clearly note that this is a starting template I should adjust once I have real experience with what actually needs checking on my own projects — not a finished system."
+        },
+        {
+          "label": "Team rollout version with adoption plan",
+          "whenToUse": "You've already built your personal operating system and now want to roll it out to a whole PM team, which needs an adoption plan, not just the reference table itself.",
+          "prompt": "I have a working PM operating system I use personally, and want to roll it out to my whole team, not just document it for myself.\n\nMy operating system:\n[PASTE YOUR ASSEMBLED TABLE]\n\nHelp me build a short rollout plan: how to introduce this to the team (a working session vs. just sharing the doc), which task to have people adopt first (pick the lowest-risk, highest-frequency one), how to collect feedback on where the templates don't fit someone's specific project type, and a suggested review cadence for updating the document as a team, not just as an individual."
+        },
+        {
+          "label": "Gap-audit version",
+          "whenToUse": "Before assembling the full system, you want to specifically identify which of your recurring tasks have no consistent AI-assisted approach at all yet, to prioritize which to build first.",
+          "prompt": "Before I build a full operating system document, help me audit where I'm inconsistent. Here are my recurring PM tasks and how I currently handle each, in rough terms:\n[PASTE YOUR NOTES]\n\nFor each task, tell me: do I have a consistent tool/prompt I use every time, or does it vary? Do I have any defined verification step, or am I relying on gut-check review? Rank the tasks by how much a documented, consistent approach would likely help, based only on what I've described — and flag this ranking clearly as your estimate, not a measured fact."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Fill in a missing verification step honestly",
+          "prompt": "You flagged that my [TASK NAME] row has no defined verification step. Here's what I actually do, even if it's informal: [DESCRIBE YOUR REAL HABIT]. Turn that into a specific, checkable verification action rather than leaving it as a vague gap or inventing something I don't actually do."
+        },
+        {
+          "label": "Test it against a real project cycle",
+          "prompt": "I just ran this system for one full sprint/reporting period. Here's what actually happened: [DESCRIBE WHAT WORKED, WHAT YOU SKIPPED, WHAT TOOK LONGER THAN EXPECTED]. Update the table based on this real experience — remove or revise anything that didn't actually hold up in practice."
+        },
+        {
+          "label": "Add the output-destination column",
+          "prompt": "Add an 'Output Destination' column to the table if it's missing — where does each task's finished output actually go (a shared drive, a specific Slack channel, direct email to a stakeholder, the PM tool)? Base it only on what I actually do, not a generic assumption."
+        },
+        {
+          "label": "Simplify into a quick-reference card",
+          "prompt": "Condense this into a single-page quick-reference card: just task name, cadence, and the one most important verification action per task, dropping the fuller detail into a separate linked appendix instead."
+        }
+      ],
+      "walkthrough": "Grace has been a PM for three years and has, without ever writing it down, developed her own working system: a specific prompt for meeting notes, a status report format she trusts, a way of building work breakdowns. None of it is documented, and when a new PM joined her team last month, she realized she'd been explaining the same habits verbally, differently, three separate times.\n\nShe opens Claude and writes out her real notes on five recurring tasks: meeting notes (Claude, verified against raw notes before sending), weekly status reports (Claude, verified that the status line matches the actual content), work breakdowns at kickoff (Claude with the clarifying-questions approach, verified against team capacity), risk registers (Claude, verified that mitigations are specific rather than \"monitor closely\"), and difficult stakeholder messages (Claude, but she admits she doesn't have a defined verification step — she just rereads it once).\n\nThe assembled table comes back with five rows, cadence and tool columns filled in from her notes, and four rows with the exact verification actions she described. The fifth row, for difficult stakeholder messages, is flagged clearly: \"needs a defined verification step — not specified,\" rather than the AI inventing a plausible-sounding one on her behalf.\n\nGrace decides on a real verification step for that row — check that no invented date or commitment appears — and adds it herself. She runs the assembled system for one full sprint, and it holds up except that her risk-register cadence turns out to be monthly in practice, not per-project as she'd first written, so she corrects it. She saves the final one-pager to the team drive and walks the new PM through it in one fifteen-minute session instead of three scattered conversations. Total build time: about 25 minutes, plus one sprint of real-world testing before calling it final."
+    }
+  }
+}

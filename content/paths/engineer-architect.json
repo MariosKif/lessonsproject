@@ -1,0 +1,42 @@
+{
+  "paths": [
+    {
+      "slug": "ai-for-engineers",
+      "title": "AI for Engineers",
+      "tagline": "Faster reports, reviews, and communication - with codes, calculations, and stamped judgment always left to you.",
+      "description": "A ladder of 6 hands-on lessons for engineers using Claude, ChatGPT, and Perplexity: turning field notes into structured technical report drafts, explaining technical concepts to non-technical stakeholders, building reusable review checklists for documents and drawings, researching codes and standards with citations, drafting meeting minutes and RFI/change-order communications, and building reusable documentation templates for your discipline. Every lesson treats AI output as a non-final draft or research aid - never a substitute for engineering judgment, code compliance review, or stamped calculations.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "engineer",
+      "sortOrder": 16,
+      "lessons": [
+        "eng-b1-field-notes-to-technical-report-draft",
+        "eng-b2-explain-technical-concepts-to-stakeholders",
+        "eng-i1-review-checklists-for-documents-and-drawings",
+        "eng-i2-research-standards-and-precedents-with-citations",
+        "eng-i3-meeting-minutes-rfi-change-order-communications",
+        "eng-a1-reusable-documentation-templates-for-your-discipline"
+      ]
+    },
+    {
+      "slug": "ai-for-architects",
+      "title": "AI for Architects",
+      "tagline": "Faster proposals, narratives, and client communication - with design judgment and code compliance always yours to verify.",
+      "description": "A ladder of 6 hands-on lessons for architects using Claude, ChatGPT, and AI image tools: turning meeting notes into project proposals and fee letters, writing concept narratives that sell a design, exploring visual concepts with AI image tools, drafting client-facing project documentation and updates, drafting planning and consent documents with compliance guardrails, and writing portfolio and case-study copy for practice marketing. Every lesson treats AI output as a non-final draft or illustrative aid - never a substitute for design judgment, zoning and code compliance, or the architect's own stamped work.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "architect",
+      "sortOrder": 17,
+      "lessons": [
+        "arc-b1-project-proposals-and-fee-letters-from-meeting-notes",
+        "arc-b2-concept-narratives-that-sell-a-design",
+        "arc-i1-visual-concept-exploration-with-ai-image-tools",
+        "arc-i2-client-facing-project-documentation-and-updates",
+        "arc-i3-planning-and-consent-document-drafts-with-compliance-guardrails",
+        "arc-a1-portfolio-and-case-study-copy-for-your-practice"
+      ]
+    }
+  ]
+}

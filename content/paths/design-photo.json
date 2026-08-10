@@ -1,0 +1,42 @@
+{
+  "paths": [
+    {
+      "slug": "ai-for-designers",
+      "title": "AI for Designers",
+      "tagline": "Explore concepts faster, write the copy and rationale around your work, and keep AI in its place without losing your craft.",
+      "description": "A 6-lesson path for designers covering the AI workflows that support real design work without replacing the judgment clients are paying for: generating mood boards and concept directions with AI image tools, turning vague client asks into clear briefs, drafting UX copy and microcopy, writing design rationale documents and presentation notes, iterating on an approved visual direction without losing consistency, and setting a deliberate policy for where AI helps and where it stays hands-off. Every lesson is built around the same discipline — use AI to move faster on the repeatable parts of the process, and keep the parts that require your taste and judgment firmly your own.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "designer",
+      "sortOrder": 15,
+      "lessons": [
+        "des-b1-moodboards-concept-exploration",
+        "des-b2-client-brief-intake",
+        "des-i1-ux-copy-microcopy",
+        "des-i2-design-rationale-presentation-notes",
+        "des-i3-iterate-visual-directions-systematically",
+        "des-a1-integrate-ai-without-losing-craft"
+      ]
+    },
+    {
+      "slug": "ai-for-photographers",
+      "title": "AI for Photographers",
+      "tagline": "Reply faster, prep smarter, price clearly, and market year-round — all in your own voice.",
+      "description": "A 6-lesson path for photographers covering the AI workflows that save the most time around the actual shoot: turning inquiries into warm booking replies, building shot lists and mood boards before a session, writing clear pricing and package descriptions, marketing your work through website copy and social captions, delivering client galleries with honest print and album upsells, and building a season-proof marketing routine that keeps leads coming in during your slow months. Every lesson is built around real client communication and your real pricing, availability, and work — never invented claims or generic templates.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "photographer",
+      "sortOrder": 25,
+      "lessons": [
+        "ph-b1-inquiry-replies-booking-flows",
+        "ph-b2-shoot-prep-shot-lists-moodboards",
+        "ph-i1-pricing-package-descriptions",
+        "ph-i2-marketing-site-copy-social-captions",
+        "ph-i3-client-gallery-delivery-upsells",
+        "ph-a1-season-proof-marketing-routine"
+      ]
+    }
+  ]
+}

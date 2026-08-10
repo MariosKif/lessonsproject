@@ -1,0 +1,354 @@
+{
+  "quizzes": {
+    "cx-b1-sign-in-first-task": [
+      {
+        "q": "Why does the lesson recommend signing in to Codex with your ChatGPT account rather than an API key for typical use?",
+        "options": [
+          "API keys are inherently less secure than ChatGPT sign-in",
+          "It draws usage from your existing ChatGPT plan's rolling 5-hour window instead of billing per token on a separate developer account",
+          "API keys are not supported by the Codex CLI at all",
+          "There is no practical difference between the two options"
+        ],
+        "answer": 1,
+        "why": "Signing in with ChatGPT bills against your plan's shared usage window, while an API key bills per token against a separate account - a common early mistake is not realizing this before racking up token charges."
+      },
+      {
+        "q": "What's the recommended approval mode for your very first Codex session in a project?",
+        "options": [
+          "Full-access/auto-approve mode, to see everything Codex can do immediately",
+          "Disable all approval prompts to move faster",
+          "A conservative mode like read-only or 'suggest,' so changes are proposed before anything is written",
+          "There is no approval mode setting to configure"
+        ],
+        "answer": 2,
+        "why": "Starting in a conservative mode lets Codex propose changes without writing files until you approve, which is how you learn its behavior before trusting it with real, unreviewed edits."
+      },
+      {
+        "q": "The example first-task prompt explicitly says 'do not modify or delete any existing files.' Why include that guardrail on a first task?",
+        "options": [
+          "It evaluates Codex's judgment on something low-risk while you're still learning how it behaves",
+          "It's a hard technical limitation - Codex literally cannot delete files",
+          "Codex cannot create new files without this instruction",
+          "It's unnecessary boilerplate with no real effect"
+        ],
+        "answer": 0,
+        "why": "A narrow, low-risk first task with an explicit guardrail against touching existing files lets you evaluate Codex's judgment safely before delegating anything higher-stakes."
+      }
+    ],
+    "cx-b2-understand-a-repository": [
+      {
+        "q": "Why does the lesson insist on exploring a new repository in read-only mode before any edit task?",
+        "options": [
+          "Read-only mode runs noticeably faster than edit mode",
+          "It prevents changes based on a wrong mental model - you verify your understanding before trusting it enough to edit",
+          "Codex cannot technically explore and edit in the same session",
+          "It's required to display the directory structure at all"
+        ],
+        "answer": 1,
+        "why": "Doing exploration in read-only mode first, before any edit task, prevents changes based on a wrong mental model of the codebase."
+      },
+      {
+        "q": "Codex gives you a repo tour with cited file paths. What should you do before trusting the whole summary?",
+        "options": [
+          "Nothing further - Codex's citations are inherently accurate",
+          "Open at least two of the cited files yourself to confirm they say what Codex claims",
+          "Ask a colleague to independently redo the same tour",
+          "Immediately have Codex begin editing based on the tour"
+        ],
+        "answer": 1,
+        "why": "Trusting the summary without opening any cited file is listed as a common mistake - spot-checking two files takes a minute and confirms the claims are grounded in the real code."
+      },
+      {
+        "q": "The repository you're exploring has no AGENTS.md file. What does the lesson recommend?",
+        "options": [
+          "Skip it entirely - AGENTS.md is optional and rarely provides real value",
+          "Copy an AGENTS.md from an unrelated project as a starting point",
+          "Ask Codex to draft one based only on what it found in the repo, then review and edit it yourself before committing",
+          "Write one from scratch without involving Codex at all"
+        ],
+        "answer": 2,
+        "why": "The lesson treats the exploration session as the ideal moment to draft an AGENTS.md from what was actually found - but warns not to accept it unread."
+      }
+    ],
+    "cx-b3-writing-specs-for-agents": [
+      {
+        "q": "Which of these is written as a checkable acceptance criterion, per the lesson's spec template?",
+        "options": [
+          "\"User sees an error message if the field is empty\"",
+          "\"Better UX for the search feature\"",
+          "\"Clean, maintainable code\"",
+          "\"Search should feel intuitive\""
+        ],
+        "answer": 0,
+        "why": "The lesson warns against writing criteria as adjectives ('better UX', 'clean', 'intuitive') and requires specific, checkable statements instead."
+      },
+      {
+        "q": "Why does the spec template include explicit constraints and non-goals, like 'do not add a new backend endpoint'?",
+        "options": [
+          "It's required formatting for Codex to parse the spec",
+          "It prevents the agent from 'helpfully' touching unrelated code or adding infrastructure you didn't ask for",
+          "It makes the spec appear more professional to reviewers",
+          "It replaces the need to write acceptance criteria"
+        ],
+        "answer": 1,
+        "why": "Omitting constraints and non-goals is listed as a common mistake because it lets the agent scope-creep into unrelated code or unwanted infrastructure."
+      },
+      {
+        "q": "Per the lesson's proTip, what's the difference between a task spec and an AGENTS.md file?",
+        "options": [
+          "They serve exactly the same purpose and can be used interchangeably",
+          "A spec is task-specific; AGENTS.md is standing, repo-wide context that applies to every future task",
+          "AGENTS.md fully replaces the need for writing specs",
+          "Specs are for bug fixes only, and AGENTS.md is for features only"
+        ],
+        "answer": 1,
+        "why": "The proTip draws a clean line: anything true for every future task belongs in AGENTS.md so you stop repeating it in every individual spec."
+      }
+    ],
+    "cx-i1-implement-a-feature": [
+      {
+        "q": "Why does the workflow require Codex to present an implementation plan before writing any code?",
+        "options": [
+          "It's a formality with little practical benefit",
+          "Codex technically cannot generate code without a written plan first",
+          "It catches a wrong architectural choice, like violating a stated constraint, before any code exists - far cheaper to fix at that point",
+          "Plans are only useful for large, multi-week features"
+        ],
+        "answer": 2,
+        "why": "The plan-first checkpoint catches problems like proposing a new database table when a constraint forbids it, while it's still cheap to redirect."
+      },
+      {
+        "q": "Codex reports 'all tests pass' after implementing a feature. What should you do next?",
+        "options": [
+          "Accept the claim and merge, since Codex ran the command",
+          "Ask for the actual, pasted command output - not just the claim",
+          "Assume it's true and move on to the next task",
+          "Re-run the tests yourself silently, without telling Codex"
+        ],
+        "answer": 1,
+        "why": "Accepting 'tests pass' as a claim instead of asking for actual command output is listed as a common mistake - the pasted output closes the gap between claim and demonstrated fact."
+      },
+      {
+        "q": "For a genuinely hard or ambiguous implementation task, what does the lesson's proTip suggest?",
+        "options": [
+          "Simply implement whichever approach Codex proposes first",
+          "Skip the planning step entirely to save time",
+          "Always send it to a cloud task instead of working locally",
+          "Ask Codex to try more than one approach and compare trade-offs before committing to a full implementation"
+        ],
+        "answer": 3,
+        "why": "Comparing approaches before committing is cheaper than discovering the wrong one only after a full implementation has already been built."
+      }
+    ],
+    "cx-i2-debug-a-failing-build": [
+      {
+        "q": "Why does the debugging prompt require pasting the full error output and stack trace instead of a paraphrase?",
+        "options": [
+          "Paraphrasing violates Codex's terms of service",
+          "A paraphrase forces Codex to guess at context it actually needs to diagnose the failure correctly",
+          "Full stack traces are technically required before Codex will start any session",
+          "It makes no real difference either way"
+        ],
+        "answer": 1,
+        "why": "Pasting only the error message instead of the full trace is a listed common mistake - it forces Codex to guess at details it needs for an accurate diagnosis."
+      },
+      {
+        "q": "Codex proposes wrapping the failing code in a try/catch that swallows the error, and the test now passes. How should this be judged?",
+        "options": [
+          "This is a valid, acceptable minimal fix",
+          "It's fine as long as the overall suite is green afterward",
+          "This fixes the symptom, not the bug, and can quietly reintroduce the same failure later - the root cause must be verified first",
+          "This is the fastest and therefore preferred approach"
+        ],
+        "answer": 2,
+        "why": "The lesson warns that under pressure to 'just make it pass,' an agent may take the fastest route rather than fixing the actual root cause - which is why hypothesis verification comes before any fix."
+      },
+      {
+        "q": "If a fix genuinely requires changing an existing test, what should Codex be asked to do?",
+        "options": [
+          "Change it silently so the diff stays small and clean",
+          "Explain the old expectation and why the new one is correct, ideally recorded in the commit message",
+          "Delete the test file entirely rather than modify it",
+          "Skip the test with a TODO comment and revisit it later"
+        ],
+        "answer": 1,
+        "why": "The proTip says the reasoning behind a legitimate test change should be documented in the commit message, not just chat, so it survives for the next reviewer."
+      }
+    ],
+    "cx-i3-code-review-with-codex": [
+      {
+        "q": "A Codex review comment flags a variable naming inconsistency that your linter already enforces. What should you do?",
+        "options": [
+          "Fix it anyway, since Codex specifically flagged it",
+          "Tell Codex to skip style/formatting comments already enforced by the linter, and focus on correctness, security, and edge cases",
+          "Disable Codex code review on the repository entirely",
+          "Treat every comment Codex produces as mandatory, without exception"
+        ],
+        "answer": 1,
+        "why": "The lesson explicitly scopes review to correctness, security, and missed edge cases, and instructs Codex to skip style already covered by the linter to avoid noise."
+      },
+      {
+        "q": "Why does the review prompt require a concrete 'why' for each flagged issue, not just a bare flag?",
+        "options": [
+          "It's simply a formatting requirement enforced by GitHub",
+          "Comments lacking a stated reason are automatically deleted by Codex",
+          "It makes the pull request appear longer and more thorough",
+          "It's what lets you triage quickly - you can evaluate the reasoning instead of re-deriving whether the comment is even right"
+        ],
+        "answer": 3,
+        "why": "A concrete explanation per comment turns triage into evaluating given reasoning rather than reverse-engineering whether the flagged issue is real."
+      },
+      {
+        "q": "What's the risk of treating every automated Codex review comment as mandatory to fix?",
+        "options": [
+          "There is no real risk - more fixes are always strictly better",
+          "Teams either drown in noise or learn to ignore the tool entirely; the actual skill is judgment about which comments matter",
+          "It guarantees the resulting code will ship with zero bugs",
+          "It eliminates the need for any human sign-off on the change"
+        ],
+        "answer": 1,
+        "why": "The lesson frames Codex review as a second opinion, not a verdict - blanket compliance either overwhelms the team or trains them to dismiss the tool altogether."
+      }
+    ],
+    "cx-i4-landing-page-from-spec": [
+      {
+        "q": "Why does the landing page spec supply the literal headline, contact details, and CTA text instead of describing them in general terms?",
+        "options": [
+          "It's simply good formatting practice with no functional effect",
+          "It prevents Codex from inventing a phone number, price, or testimonial that doesn't actually exist",
+          "Codex requires exact text or it will refuse the entire task",
+          "It reduces the file size of the generated HTML output"
+        ],
+        "answer": 1,
+        "why": "Supplying real content in the spec is what prevents Codex from fabricating facts - a real risk with an under-specified brief, as the lesson's example scenario illustrates."
+      },
+      {
+        "q": "The spec explicitly requires 'static HTML/CSS/JS only, no framework, no backend, no database' for a one-page open house site. Why include this constraint?",
+        "options": [
+          "Static pages are the only kind of output Codex is technically capable of producing",
+          "It keeps the build proportional to a one-page brief instead of scaffolding infrastructure you don't need and can't maintain",
+          "Frameworks always load noticeably slower in every browser",
+          "It's a technical requirement for the mailto: link to function"
+        ],
+        "answer": 1,
+        "why": "Without this constraint, a vague brief risks an over-engineered setup with a framework and database for what should be a single HTML file."
+      },
+      {
+        "q": "Why is checking the page at a 375px mobile viewport part of the lesson's definition of done?",
+        "options": [
+          "Most visitors to a page like an open house listing will actually view it on a phone",
+          "It's an arbitrary technical box to check with no real-world reason",
+          "375px is the only screen width any browser supports",
+          "It's optional and not actually part of the definition of done"
+        ],
+        "answer": 0,
+        "why": "The lesson highlights mobile-width verification specifically because most real visitors to this kind of page open it on a phone, so approving without checking is a listed common mistake."
+      }
+    ],
+    "cx-a1-cloud-tasks-vs-local": [
+      {
+        "q": "Which of these is the best fit for a Codex cloud task rather than a live local session?",
+        "options": [
+          "Exploratory debugging of an unfamiliar production incident",
+          "A well-specified, bounded, lower-stakes task like a dependency bump or adding tests to an already-understood module",
+          "An ambiguous architecture decision with several open questions",
+          "Anything touching code you don't fully trust yet"
+        ],
+        "answer": 1,
+        "why": "The lesson reserves cloud tasks for well-specified, bounded, lower-stakes work, while defaulting to local sessions for anything ambiguous, exploratory, or touching code you don't yet trust."
+      },
+      {
+        "q": "Why do explicit constraints matter even more in a cloud-task spec than in a local session's spec?",
+        "options": [
+          "They don't - constraints matter identically in both settings",
+          "Cloud tasks ignore any stated constraints by default",
+          "Cloud task billing scales with the number of constraints listed",
+          "There is no one present during an unsupervised cloud run to catch an overreach mid-task, so constraints are what prevent judgment calls you'd have vetoed live"
+        ],
+        "answer": 3,
+        "why": "Cloud tasks run unsupervised, so constraints do more work than in a local back-and-forth session where you could interrupt and redirect in real time."
+      },
+      {
+        "q": "A cloud task returns a pull request with all checks green. What should you do before merging?",
+        "options": [
+          "Merge it directly from the GitHub UI since the checks already passed",
+          "Pull it down locally and run the full test suite yourself before merging",
+          "Trust the cloud environment's own report and skip local verification",
+          "Deploy the change to production immediately"
+        ],
+        "answer": 1,
+        "why": "Merging a cloud-produced PR straight from GitHub without rerunning the suite locally is listed as a common mistake - the cloud claim is not proof."
+      }
+    ],
+    "cx-a2-tests-and-verification-habits": [
+      {
+        "q": "Codex reports 'all tests are passing' after a change. Per the lesson's core habit, what should you require?",
+        "options": [
+          "Nothing further - a written claim from Codex is sufficient",
+          "A screenshot of a green checkmark",
+          "The actual test command and its full pasted output, not a summary",
+          "A verbal confirmation restated in the next chat message"
+        ],
+        "answer": 2,
+        "why": "The lesson's rule is to never accept 'the tests pass' as a sentence - always require the actual command and its output, since a summary can be optimistic in a way raw output rarely is."
+      },
+      {
+        "q": "Codex explicitly flags that it could not verify how a new discount badge renders visually. What's the correct next step?",
+        "options": [
+          "Build a short manual verification checklist and check it yourself, since Codex can't literally see a rendered page",
+          "Ignore the flag since the automated tests already passed",
+          "Ask Codex to describe what it thinks the badge probably looks like",
+          "Skip visual verification entirely - it's rarely worth the time"
+        ],
+        "answer": 0,
+        "why": "For anything Codex can't literally verify itself - visual layout, real API behavior, cross-browser rendering - the lesson calls for a manual checklist run by a human."
+      },
+      {
+        "q": "Why does the verification prompt specifically ask whether any existing test was modified, and require a justification if so?",
+        "options": [
+          "Modified tests are always evidence of improved coverage",
+          "It's purely a documentation nicety with no functional purpose",
+          "Existing tests can never legitimately be changed under any circumstance",
+          "It surfaces the failure mode where a suite goes green because an assertion was weakened rather than because the code was actually fixed"
+        ],
+        "answer": 3,
+        "why": "This question is designed to catch the specific risk of a quietly loosened or skipped test making a failure disappear without the underlying bug being fixed."
+      }
+    ],
+    "cx-a3-delivery-workflow-end-to-end": [
+      {
+        "q": "Why does the end-to-end pipeline have Codex draft the PR description itself, tied to the spec's acceptance criteria?",
+        "options": [
+          "It's purely to save the developer some typing time",
+          "It produces a reviewable artifact that explains intent for the next person, not just a diff with no stated reasoning",
+          "GitHub technically requires PR descriptions to be agent-generated",
+          "It replaces the need to write acceptance criteria in the original spec"
+        ],
+        "answer": 1,
+        "why": "A PR description mapped back to acceptance criteria turns the pull request into a reviewable artifact, rather than a diff a future reader has to reverse-engineer for intent."
+      },
+      {
+        "q": "After a change merges, where does the lesson say you should verify it actually works?",
+        "options": [
+          "Nowhere further - passing test output is sufficient on its own",
+          "In the real running environment, not just in test output",
+          "Only by reviewing the CI logs a second time",
+          "Only in the PR's diff view on GitHub"
+        ],
+        "answer": 1,
+        "why": "The pipeline explicitly includes 'merge, then verify the change in the real running environment, not just in test output' as its own step."
+      },
+      {
+        "q": "A delivery reveals that Codex had to be told a convention or command it should already have known. What should happen?",
+        "options": [
+          "Nothing - just re-explain it again the next time it comes up",
+          "Mention it once informally in a team chat message",
+          "Add it to AGENTS.md before moving on to the next task, so the pipeline improves over time",
+          "Keep it as unwritten, tribal knowledge among senior developers"
+        ],
+        "answer": 2,
+        "why": "The lesson treats AGENTS.md as a living document - each delivery is a chance to capture what had to be re-explained so it's never re-taught again."
+      }
+    ]
+  }
+}

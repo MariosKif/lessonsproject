@@ -1,0 +1,1033 @@
+{
+  "enrichment": {
+    "biz-b1-delegate-first-task": {
+      "placeholders": [
+        {
+          "name": "DESCRIBE THE TASK IN ONE SENTENCE",
+          "what": "State the actual task you picked from your scored list of five, in a single plain sentence. Don't write a vague label like \"clean up notes\" — name exactly what needs to happen so the AI (and you, later, when judging the result) know what success means.",
+          "examples": [
+            "Summarize this week's five customer support email threads into one paragraph per customer for my Monday huddle.",
+            "Turn my rough handwritten notes from today's supplier call into a clean recap email.",
+            "Draft a first-pass reply to this vendor's contract renewal email."
+          ]
+        },
+        {
+          "name": "PASTE OR DESCRIBE THE INPUT — e.g., an email thread, notes, a data export",
+          "what": "The real material the AI needs to do the task — paste the actual text whenever you can, rather than describing it in your own words. A description forces the AI to guess at details a direct paste would have given it for free.",
+          "examples": [
+            "Thread 1 (Jane R.): \"My order #4482 arrived with the wrong size, size M instead of L.\" Reply: \"So sorry! Sending correct size overnight, no charge, keep the M.\" Jane: \"Thank you, that's great service.\"\nThread 2 (Tom K.): \"Still no shipping confirmation after 6 days.\" Reply: \"Checking with warehouse now.\" No further reply from Tom yet.",
+            "Notes from call w/ Riverside Supply 8/9: they're raising unit price 6% starting Oct 1, said it's due to freight costs, offered to lock current price if we commit to 12-month contract, need answer by 8/20",
+            "Vendor email: \"Your annual contract renews Sept 1 at $4,200/year, a 3% increase from last year. Let us know by Aug 15 if you'd like to discuss terms.\""
+          ]
+        },
+        {
+          "name": "e.g., \"a 200-word email\", \"a bulleted list\", \"a short table\"",
+          "what": "The exact shape the output needs to take, based on where it's going next (a Slack message, an email, a doc you'll paste into a meeting). Naming this precisely avoids the most common source of wasted rework: a good draft in the wrong format.",
+          "examples": [
+            "A 150-word email ready to send",
+            "A bulleted list, one bullet per customer, under 40 words each",
+            "A short table with three columns: Customer, Issue, Status"
+          ]
+        },
+        {
+          "name": "e.g., \"matches our usual tone\", \"covers all three items\", \"flags anything ambiguous instead of guessing\"",
+          "what": "One sentence describing what a genuinely good result looks like, written before you see any draft. This gives you a fixed standard to check the output against, instead of judging it against a feeling you never wrote down.",
+          "examples": [
+            "Sounds like something I'd actually say out loud to a customer, not corporate-sounding",
+            "Covers all five customer threads with nothing left out",
+            "Flags any thread where the resolution status isn't clear instead of guessing it was resolved"
+          ]
+        },
+        {
+          "name": "DESCRIBE — e.g., direct and friendly, formal, concise",
+          "what": "The tone you want, matched to who's actually reading this. Naming it explicitly stops the AI from defaulting to a generic, overly formal register.",
+          "examples": [
+            "Direct and friendly — for regular customers",
+            "Formal and precise — for a legal or compliance-sensitive message",
+            "Warm but brief — for a quick update to a longtime client"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a small daily task",
+          "whenToUse": "Use this for genuinely low-stakes, low-risk items — formatting notes, drafting a routine internal message — where the full brief ceremony is overkill and would slow you down more than it helps.",
+          "prompt": "Do this task for me: [DESCRIBE THE TASK IN ONE SENTENCE]\n\nHere's what you need:\n[PASTE THE SOURCE MATERIAL]\n\nGive it to me as [FORMAT]. Use only what's in the source material — don't invent anything. If something's missing, just note it briefly at the end instead of guessing."
+        },
+        {
+          "label": "When you're stuck picking which task to delegate first",
+          "whenToUse": "Use this before the delegation prompt itself, if you have a list of candidate tasks but aren't sure which one scores best on clarity, speed to check, and time saved.",
+          "prompt": "I'm choosing my first task to delegate to AI. Here are five candidates from my past week:\n[LIST YOUR FIVE TASKS, ONE LINE EACH]\n\nFor each one, score it 1-5 on: (1) how clear the 'right answer' is, (2) how fast I could check the output against a source, (3) how much real time it costs me to do it myself. Then recommend which one I should delegate first, and explain why in two sentences — favor a task that's easy to verify over one that just seems important."
+        },
+        {
+          "label": "Recurring version — turn it into a reusable template",
+          "whenToUse": "Use this once your first delegation of a task type worked well and you know you'll repeat it weekly or monthly — it saves you from rewriting the brief from scratch every time.",
+          "prompt": "Based on this successful brief and result, help me turn it into a reusable template I can fill in fast next time.\n\nOriginal brief and source: [PASTE YOUR ORIGINAL BRIEF]\nWhat worked well about the result: [NOTE WHAT WAS GOOD]\nWhat I had to fix by hand: [NOTE ANY EDITS YOU MADE]\n\nGive me a fill-in-the-blank version of this brief with clear bracketed fields, so next time I only need to swap in new source material and a couple of details."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check nothing was invented",
+          "prompt": "Before I use this, go back through your draft line by line and confirm every fact, name, date, and number traces directly back to my source material. List anything that doesn't, or anything you inferred rather than found stated directly."
+        },
+        {
+          "label": "Wrong format? Reshape it",
+          "prompt": "This is close, but reformat it as [the format you actually need] — keep the same content and facts, just restructure how it's presented."
+        },
+        {
+          "label": "Sounds too generic or robotic",
+          "prompt": "This reads too generic. Rewrite it in a more [direct / casual / formal] tone — like I'd actually say it out loud, not like a template anyone could have written."
+        },
+        {
+          "label": "Cut it down",
+          "prompt": "Cut this down by about half without losing any of the required facts. Tighten the wording — don't just delete sentences and leave gaps."
+        }
+      ],
+      "walkthrough": "Dana runs a five-person landscaping supply business and wants to try delegating something small before trusting AI with anything bigger.\n\nShe lists five tasks from the past week: writing a supplier follow-up email, summarizing customer support threads for Monday's team meeting, drafting a job posting, reconciling a spreadsheet, and writing a thank-you note to a longtime client. She scores each on how clear the right answer is, how fast she can check it, and how much time it actually costs her — the support-thread summary wins, because she can check it in about two minutes against the real emails.\n\nShe opens Claude, pastes the delegation prompt, and fills in the brackets: TASK becomes \"Summarize this week's five customer support email threads into one bullet per customer for Monday's huddle.\" SOURCE MATERIAL is the actual five email threads, copied straight out of her inbox. FORMAT is \"a bulleted list, one bullet per customer, under 40 words each.\" DONE WELL is \"covers the issue, the resolution status, and whether the customer seems at risk of leaving.\" TONE is \"direct, the way I'd say it in the meeting.\"\n\nClaude returns five bullets. Four are solid and clearly grounded in the emails. The fifth flags a genuine gap: one thread never actually confirmed whether a refund was processed, so instead of guessing, Claude lists it under \"Questions before I finalize this\" rather than stating it as resolved.\n\nDana sends the follow-up \"Check nothing was invented.\" Claude re-confirms the four solid bullets and leaves the flagged question exactly as it was. Dana checks the real email thread herself, finds the answer was buried in a later message, and adds one line by hand.\n\nTotal time: about twelve minutes, against the twenty-five minutes this summary usually eats out of her Sunday night."
+    },
+    "biz-b2-customer-communication": {
+      "placeholders": [
+        {
+          "name": "announcement / routine reply / difficult message — describe: complaint, mistake, price change, delay, etc.",
+          "what": "Which of the three message types this is, and if it's a difficult message, the specific kind. This one choice reshapes the whole structure of the draft — a price-change announcement and a complaint reply need very different openings.",
+          "examples": [
+            "Difficult message — a shipping delay, replying to a customer who already emailed twice asking where their order is",
+            "Announcement — a price increase taking effect next month for all subscribers",
+            "Routine reply — a customer asking about our return policy"
+          ]
+        },
+        {
+          "name": "e.g., all customers, one specific customer, a customer who left a negative review",
+          "what": "Who actually receives this message — determines whether the draft is personalized to one person's situation or written to work for a broad list of recipients.",
+          "examples": [
+            "One specific customer — the one who emailed twice this week about a late order",
+            "All active subscribers on our email list",
+            "A customer who left a 2-star Google review mentioning slow service"
+          ]
+        },
+        {
+          "name": "email, SMS, review reply, social post",
+          "what": "The channel this message goes out on, which changes the expected length and formality.",
+          "examples": [
+            "Email",
+            "Public review reply (Google/Yelp)",
+            "SMS — must fit in 2-3 short sentences"
+          ]
+        },
+        {
+          "name": "WHAT HAPPENED",
+          "what": "The plain facts of the situation, stated neutrally — not a spun version, just what actually occurred.",
+          "examples": [
+            "Our fulfillment partner had a system outage that delayed all orders placed May 3-5 by about 4 days.",
+            "A customer received the wrong item size in their order.",
+            "We're raising our monthly subscription price from $29 to $34 starting next billing cycle."
+          ]
+        },
+        {
+          "name": "WHAT WE'RE DOING ABOUT IT",
+          "what": "Your actual response or fix, described plainly — the concrete action already underway or decided, not a vague promise.",
+          "examples": [
+            "We're proactively emailing every affected customer with an updated delivery estimate.",
+            "We're shipping the correct size overnight at no charge and providing a prepaid label to return the wrong item.",
+            "Nothing needed from the customer — the new price applies automatically at their next renewal."
+          ]
+        },
+        {
+          "name": "WHAT I CAN ACTUALLY OFFER OR COMMIT TO, IF ANYTHING",
+          "what": "A real, already-decided offer — a discount, a refund, or genuinely nothing. This is the single most important field in the whole prompt: never leave it blank and let the AI improvise something you'll have to honor.",
+          "examples": [
+            "A 10% discount code on their next order",
+            "A full refund of shipping costs for this order",
+            "Nothing beyond the fix already described — no discount is being offered"
+          ]
+        },
+        {
+          "name": "e.g., warm and direct, formal and brief, apologetic without being defensive",
+          "what": "The tone that fits both the situation and the channel — an apology and a routine reply should not sound the same.",
+          "examples": [
+            "Apologetic without being defensive — for a mistake we caused",
+            "Warm and direct — for a routine policy reply",
+            "Formal and brief — for a price-increase announcement to all customers"
+          ]
+        },
+        {
+          "name": "LENGTH",
+          "what": "The target length, matched to the channel — a review reply and an email have very different reasonable lengths.",
+          "examples": [
+            "Under 120 words",
+            "3-4 sentences",
+            "Under 300 characters, for SMS"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a routine one-line reply",
+          "whenToUse": "Use this for simple, low-stakes replies — a policy question, a shipping-status check-in — where the full facts-and-tone structure is more ceremony than the situation needs.",
+          "prompt": "Write a quick, [TONE] reply to this customer message: [PASTE THEIR MESSAGE]\n\nHere's the actual answer: [YOUR ANSWER/FACTS]\n\nKeep it under [LENGTH]. Don't add a commitment, discount, or explanation beyond what I've given you."
+        },
+        {
+          "label": "Public review reply version",
+          "whenToUse": "Use this when responding to a negative public review, where the real audience is both the reviewer and everyone else who will read the reply later.",
+          "prompt": "Help me reply to this public review. Remember other potential customers will read this reply too, not just the reviewer.\n\nTHE REVIEW: [PASTE THE REVIEW TEXT]\nWHAT ACTUALLY HAPPENED (our side, factually): [FACTS]\nWHAT WE'RE DOING ABOUT IT: [FIX OR RESPONSE]\nWHAT I CAN OFFER, IF ANYTHING: [OFFER OR \"NOTHING\"]\n\nWrite a short, professional public reply under [LENGTH] that acknowledges the experience without being defensive, states our side factually without arguing, and shows future readers we take feedback seriously — without generic phrases like \"we take this very seriously.\""
+        },
+        {
+          "label": "Multi-channel announcement version",
+          "whenToUse": "Use this when the same announcement needs to go out as both a longer email and a shorter social post, so the core facts stay consistent across both.",
+          "prompt": "Help me write the same announcement in two formats using these facts.\n\nFACTS (use only these): [WHAT HAPPENED] / [WHAT WE'RE DOING ABOUT IT] / [WHAT I CAN OFFER, IF ANYTHING]\nTONE: [TONE]\n\n1. An email version, under [LENGTH], with a clear subject line.\n2. A social post version, under 280 characters, same core facts, no invented details.\n\nBoth versions must state the exact same facts — don't add anything to one version that isn't in the other."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check for overcommitment",
+          "prompt": "Go back through this draft and highlight anything it states as a commitment — a discount, a timeline, an exception — that I didn't explicitly give you in the facts. I want to catch anything invented before I send this."
+        },
+        {
+          "label": "Too defensive or over-apologetic",
+          "prompt": "Read this back for tone. Does it sound defensive, or apologize more than the situation calls for? Rewrite it to state the situation plainly once and move to the resolution, without over-apologizing."
+        },
+        {
+          "label": "Needs to be shorter for SMS or social",
+          "prompt": "Cut this down to under [target length/character count] while keeping the core fact, the fix, and the offer (if any) intact. Drop anything else first."
+        },
+        {
+          "label": "Add my own opening line",
+          "prompt": "Leave the body as is, but suggest two different personalized opening lines I could hand-write myself to replace the generic opener — one warmer, one more brief and direct."
+        }
+      ],
+      "walkthrough": "Marcus owns a small online kitchenware store. A fulfillment partner's system outage delayed every order placed between May 3rd and 5th by about four days, and one customer, Priya, has already emailed twice asking where her order is.\n\nBefore opening any AI tool, Marcus writes down the three facts in plain language: what happened (the outage delayed shipments by about four days), what he's doing about it (proactively emailing every affected customer with a new estimate), and what he can actually offer (a 10% discount code on their next order — he already cleared this with his bookkeeper). He identifies this as a difficult message: a delay complaint, one-to-one, to a customer who already emailed twice.\n\nHe pastes the customer-message prompt into Claude and fills in: MESSAGE TYPE — difficult message, delay, replying to someone who's already followed up twice; AUDIENCE — Priya specifically; CHANNEL — email; the three FACTS fields with his exact notes; TONE — apologetic without being defensive; LENGTH — under 120 words.\n\nThe draft opens by acknowledging the delay and her frustration directly, states the outage reason in one sentence without over-explaining, gives the new expected delivery window, and offers the discount as a bracketed [DISCOUNT CODE] placeholder rather than inventing a percentage.\n\nMarcus reads it and it's close, but the second sentence still feels a little stiff. He sends the follow-up \"Too defensive or over-apologetic,\" and the rewrite trims one apologetic phrase and gets more direct. He swaps in his real discount code, adds Priya's name to the opening by hand, and sends it.\n\nTotal time: about eight minutes, and Priya replies within the hour thanking him for the update."
+    },
+    "biz-i1-market-competitor-research-perplexity": {
+      "placeholders": [
+        {
+          "name": "MARKET/INDUSTRY, with region and customer segment — e.g., \"small-business bookkeeping services for companies under 20 employees in [CITY/REGION]\"",
+          "what": "A precise description of your market — industry, region, and the type of customer you serve — not just an industry label. This is the single biggest lever on whether the research comes back useful or so broad it's meaningless.",
+          "examples": [
+            "Boutique fitness studios (yoga/pilates) serving adults 25-45 in Portland, Oregon",
+            "Freelance graphic design services for early-stage SaaS startups, US-based clients",
+            "Residential HVAC repair and maintenance for homeowners in the Dallas-Fort Worth metro area"
+          ]
+        },
+        {
+          "name": "YOUR DECISION IN ONE SENTENCE",
+          "what": "The actual decision this research needs to support — not the general topic you're curious about, but the specific call you're about to make.",
+          "examples": [
+            "Whether to raise my web-design retainer from $1,800 to $2,200/month",
+            "Whether to open a second studio location in the suburbs",
+            "Whether to add a rush-service tier and what to charge for it"
+          ]
+        },
+        {
+          "name": "NAMED COMPETITORS, if any",
+          "what": "Two or three specific competitors you already know of, by name, so Gemini grounds its answer in your actual competitive set instead of a generic industry overview.",
+          "examples": [
+            "Riverside Fitness Co. and Sunrise Yoga Studio",
+            "None known yet — please identify 3 likely competitors in this niche and segment",
+            "BrightPath Design Co. and Halo Creative"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick single-question gut-check",
+          "whenToUse": "Use this when you just need one fast data point — for example, before a call today — rather than the full four-part research brief.",
+          "prompt": "Quick check, with cited sources: what are typical prices right now for [SERVICE/PRODUCT] among businesses like [NAMED COMPETITORS OR MARKET DESCRIPTION]? Cite the source and date for each figure, and flag if you had to widen beyond my specific market to find an answer."
+        },
+        {
+          "label": "When you don't have any named competitors yet",
+          "whenToUse": "Use this first, before the main research prompt, if you're scoping a market you don't know well and can't yet name specific competitors.",
+          "prompt": "I'm researching [MARKET/INDUSTRY, WITH REGION AND SEGMENT]. I don't have specific competitor names yet. Identify 3-5 businesses that would realistically compete with a business like mine in this exact niche and region, with a cited source for each (their website, a directory listing, a review site). Once I have this list, I'll use it to run deeper pricing and positioning research."
+        },
+        {
+          "label": "Pricing-only deep dive",
+          "whenToUse": "Use this when the decision is specifically about pricing (a rate increase, a new tier) and you want more numeric depth than the general four-part research prompt gives you.",
+          "prompt": "I'm deciding: [YOUR PRICING DECISION IN ONE SENTENCE]. Research current pricing specifically, with a cited source and date for each figure:\n1. What do [NAMED COMPETITORS] charge for the closest comparable offering, broken down by tier if they have one?\n2. What's the actual price range across this market segment, low to high, not just an average?\n3. Has pricing in this market moved in the last 12 months, and in which direction?\n4. What would a customer likely perceive as the 'expected' price point before they even ask?\n\nFlag any figure you're not confident in rather than stating it with false precision."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Open and verify the sources",
+          "prompt": "For the top 3 most important figures in your answer, give me the direct link to the source and the exact sentence in that source the figure came from, so I can verify it myself."
+        },
+        {
+          "label": "Narrow to my exact situation",
+          "prompt": "That's broader than I need. Narrow this specifically to businesses at my scale and price point — [YOUR SCALE/PRICE POINT] — and tell me if the answer changes when you exclude larger or much smaller players."
+        },
+        {
+          "label": "Turn it into a decision memo",
+          "prompt": "Compile everything above into a short decision memo I could show a co-founder or lender: the decision, the 3-4 key findings with sources, and a one-line recommendation. Keep the source links visible."
+        },
+        {
+          "label": "Argue the other side",
+          "prompt": "Now argue against the decision I'm leaning toward, using only what this research actually shows. What's the strongest case for NOT doing this, based on the data you found?"
+        }
+      ],
+      "walkthrough": "Priya runs a solo web design business and is weighing whether to raise her retainer from $1,800 to $2,200 a month, but she hasn't checked what comparable designers actually charge in over a year.\n\nShe opens the Gemini app and selects Deep Research. For the decision, she states it in one sentence: \"Whether to raise my web-design retainer from $1,800 to $2,200/month.\" For the market field, she writes \"freelance web design retainers for small B2B service businesses, US-based clients.\" She doesn't have specific named competitors, so she leaves that field noting she isn't sure of exact competitors at her scale.\n\nShe pastes the full research prompt, asking for cited, dated sources on what comparable providers charge, whether the broader market has moved recently, any notable shifts, and what a prospective client would compare her offer against — with a flag if Gemini had to widen beyond her segment to find data. Deep Research shows her a short research plan before running; she skims it, confirms it's searching recent freelance-pricing sources, and lets it proceed.\n\nThe answer comes back citing four sources: two freelancer rate surveys from the past year, a pricing page from a small studio, and a blog post on agency pricing trends. It notes that retainers in her segment commonly run $1,800-$2,600 depending on scope, that rates have trended up roughly 8-10% over the past year due to demand, and flags that one figure came from a broader freelance-market survey not specific to web design.\n\nPriya sends the follow-up \"Open and verify the sources\" and personally checks two of the four links — both hold up. She then asks it to compile a short decision memo. With the cited range in hand, she decides $2,200 is reasonable and not out of step with the market.\n\nTotal time: about eighteen minutes, including opening the source links herself."
+    },
+    "biz-i2-standard-operating-procedures": {
+      "placeholders": [
+        {
+          "name": "PASTE OR DESCRIBE THE TASK STEP BY STEP, AS MESSY AS IT ACTUALLY IS",
+          "what": "Your real, unfiltered walkthrough of how you actually do this task — written or dictated like you're explaining it to a new hire standing next to you, including the exceptions and judgment calls, not a cleaned-up idealized version.",
+          "examples": [
+            "When a new client signs, I check if they came from referral or the website form — referrals skip the qualification call. I send the welcome email, but if it's a rush project I call first same day. I add them to the project tracker and tag by service type. If they haven't sent a deposit within 3 days I follow up once, then loop in my business partner if still nothing after a week.",
+            "Every Friday I pull the week's sales numbers from the POS system into a spreadsheet. If a category is down more than 10% from last week I flag it in yellow. I email the summary to the owner by end of day, unless it's a holiday week, in which case I send it Monday instead.",
+            "When a refund request comes in, I check the order date first — anything past 30 days gets a store credit instead of a cash refund unless the item arrived damaged, which always gets a full cash refund regardless of date. I process it in the system, then send a confirmation email."
+          ]
+        },
+        {
+          "name": "N",
+          "what": "This isn't something you type into the prompt — it's a token that appears inside the AI's generated SOP output, not something you fill in beforehand. [N] marks a step number the AI references inside a decision-point instruction, like \"do Y instead of continuing to step 4.\" You don't need to do anything with it beyond understanding what it means when you read the finished SOP.",
+          "examples": [
+            "\"If the client already paid, skip ahead to step 6.\"",
+            "\"If the item arrived damaged, process the full refund instead of continuing to step 3.\"",
+            "\"If it's a rush order, call the client immediately instead of continuing to step 2.\""
+          ]
+        },
+        {
+          "name": "NEEDS CLARIFICATION: ...",
+          "what": "Also not something you fill in — it's a tag the AI uses inside its own generated SOP to flag a real gap in your walkthrough, instead of guessing at a step you never actually described. When this tag shows up in the output, it's telling you to go back and either explain that part yourself or fill it in by hand.",
+          "examples": [
+            "\"[NEEDS CLARIFICATION: What happens if the customer never responds to the follow-up after one week?]\"",
+            "\"[NEEDS CLARIFICATION: Who approves the refund if it's over $200?]\"",
+            "\"[NEEDS CLARIFICATION: What tag should be used if the client doesn't fit clearly into one service category?]\""
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a short, simple task",
+          "whenToUse": "Use this for a task with only a handful of steps and no real decision points, where the full six-section SOP structure would be overkill.",
+          "prompt": "Turn this short process into a simple numbered checklist, not a full SOP:\n\n[PASTE THE TASK, AS MESSY AS IT ACTUALLY IS]\n\nJust give me: numbered steps, and a one-line note on what 'done' looks like. Use only what I described — don't add steps I didn't mention."
+        },
+        {
+          "label": "When you're documenting a teammate's process, not your own",
+          "whenToUse": "Use this when you're interviewing someone else on your team about how they do a task, rather than writing up your own process.",
+          "prompt": "I interviewed a team member about how they do a task and I'm going to paste their raw explanation below, in their own words (not mine). Turn this into a clear SOP using the same structure as before.\n\nTeam member's raw walkthrough: [PASTE THEIR DESCRIPTION]\n\nUse the same 6-section structure: purpose, when to use/not use, numbered steps, decision points, common mistakes, and what 'done' looks like. If anything in their explanation is ambiguous or contradicts itself, flag it as \"[NEEDS CLARIFICATION: ...]\" rather than guessing what they meant — I'll follow up with them directly."
+        },
+        {
+          "label": "Decision-tree-first version",
+          "whenToUse": "Use this for a task with several branching decision points, where a visual-style decision summary at the top would help someone scan faster than reading every numbered step.",
+          "prompt": "Turn this raw walkthrough into an SOP, but lead with a short decision-tree summary before the full steps.\n\nMy raw walkthrough: [PASTE OR DESCRIBE THE TASK STEP BY STEP, AS MESSY AS IT ACTUALLY IS]\n\nFirst, give me a short 'decision tree at a glance' section: each decision point as a simple if/then line, in the order someone would hit them. Then give me the full 6-section SOP as before. Use only what I described."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Fold in gaps found during the real test",
+          "prompt": "I had a teammate test this SOP and they got stuck at [DESCRIBE WHERE THEY HESITATED OR ASKED A QUESTION]. Revise that section to close the gap, based only on how I actually handle that situation: [YOUR ANSWER]."
+        },
+        {
+          "label": "Shorten it to a one-page quick reference",
+          "prompt": "Condense this into a one-page quick-reference version — just the numbered steps and decision points, no purpose/mistakes sections — for someone who's already read the full SOP once and just needs a refresher."
+        },
+        {
+          "label": "Strengthen the common-mistakes section",
+          "prompt": "Expand the common mistakes section with 2-3 more specific mistakes people are likely to make on this exact task, based only on the decision points and exceptions I described — not generic advice."
+        },
+        {
+          "label": "Double-check nothing was added",
+          "prompt": "Go back through the SOP and list any step, tool, or best practice that isn't something I explicitly described in my raw walkthrough. I want to catch anything you added before I hand this to my team."
+        }
+      ],
+      "walkthrough": "Renata runs a small marketing agency and wants to hand off new-client onboarding to her office manager, but she's never written down exactly how she does it.\n\nShe opens Claude and, instead of trying to write something tidy, types out her real process as messily as it actually happens: how she checks whether a client came from a referral or the website form (referrals skip the qualification call), how she sends the welcome email but calls first same-day if it's a rush project, how she tags them in the project tracker, and the exact sequence for chasing an unpaid deposit — one follow-up after 3 days, then looping in her business partner after a week if there's still nothing.\n\nShe pastes this into the SOP prompt exactly as written, typos and all, as the raw walkthrough. Claude returns a structured document: a one-sentence purpose, a \"when to use / when not to\" section noting this only applies to new signed clients (not renewals), numbered steps with the referral-vs-form decision clearly marked as its own branch, the rush-project exception called out explicitly rather than buried in a paragraph, and the 3-day/1-week follow-up sequence as its own numbered mini-process.\n\nRenata reads it against what she actually does — it matches. She hands it to her office manager, Beth, and watches her attempt the next real client signup using only the document. Beth hesitates at one point: the SOP doesn't say what tag to use for a client who doesn't clearly fit one service category.\n\nRenata sends the follow-up \"Fold in gaps found during the real test,\" describing what she actually does in that situation, and the SOP gets a one-line fix. She saves the final version in the shared drive with a six-month review reminder.\n\nTotal time: about twenty minutes, plus the real test run with Beth the following week."
+    },
+    "biz-i3-financial-narratives": {
+      "placeholders": [
+        {
+          "name": "PASTE YOUR TABLE — e.g., line items with this period vs. last period, or vs. same period last year",
+          "what": "Your actual figures, pasted as a simple table or list — line items with this period's number next to the comparison period's number. Redact customer names or account details you don't need for the narrative before pasting.",
+          "examples": [
+            "Revenue: $84,200 (this quarter) vs. $76,500 (last quarter)\nCOGS: 43% of revenue (this quarter) vs. 38% (last quarter)\nMarketing spend: $6,100 (this quarter) vs. $6,000 (last quarter)\nNet profit margin: 11% (this quarter) vs. 15% (last quarter)",
+            "March revenue: $22,400 vs. February: $18,900\nMarch new customers: 31 vs. February: 19\nMarch refunds: $1,800 vs. February: $600",
+            "Payroll: $41,000 (Q2) vs. $38,500 (Q1)\nRent: $6,000 flat both quarters\nSoftware/subscriptions: $2,300 (Q2) vs. $1,900 (Q1)"
+          ]
+        },
+        {
+          "name": "E.G., \"WE RAN A PROMOTION IN MARCH\" OR LEAVE BLANK",
+          "what": "Any real, known reason behind a number change that you can state with confidence — optional, and only include something you actually know happened, never a guess dressed up as fact.",
+          "examples": [
+            "We ran a 20%-off promotion for the first two weeks of March",
+            "Our biggest client paused their contract in April",
+            "(leave blank — I don't have additional context to add)"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for one specific number",
+          "whenToUse": "Use this when you only need to explain a single line item — for example, right before a meeting where you know someone will ask about one specific number — rather than a full narrative.",
+          "prompt": "I need to explain one number change in plain English. Here's the data: [THIS PERIOD'S FIGURE] vs. [LAST PERIOD'S FIGURE] for [LINE ITEM].\n\nDescribe the size and direction of the change in one or two sentences a non-finance person could follow. Do not invent a reason for the change unless I tell you one: [KNOWN REASON, OR LEAVE BLANK]. If you can't explain it from the numbers alone, say so directly."
+        },
+        {
+          "label": "Multi-period trend version",
+          "whenToUse": "Use this when you have three or more periods of data and want to see the trend line, not just a single period-over-period comparison.",
+          "prompt": "I'm going to give you the same line items across several periods. Write a plain-English trend narrative, not just a single comparison.\n\nFigures across periods:\n[PASTE YOUR TABLE, WITH ONE COLUMN PER PERIOD]\n\nRULES: Only describe what the numbers show. Do not invent a business reason for a trend unless I've told you one below. Known context: [OPTIONAL CONTEXT OR LEAVE BLANK]\n\nStructure: 1) overall trend summary, 2) the line item with the most consistent movement across periods, 3) any period that breaks the trend and is worth a closer look, 4) changes I can't explain from the numbers alone, 5) three questions for my bookkeeper or accountant."
+        },
+        {
+          "label": "For a specific external audience",
+          "whenToUse": "Use this when the narrative needs to go to someone outside your team — an investor, a lender, a bank — where the framing and level of detail needs to match that specific audience.",
+          "prompt": "I'm preparing to explain these numbers to [AUDIENCE, e.g. \"a bank loan officer\" or \"a potential investor\"], who needs [WHAT THEY CARE ABOUT, e.g. \"confidence I can service new debt\" or \"evidence of growth trajectory\"].\n\nFigures:\n[PASTE YOUR TABLE]\n\nWrite a narrative appropriate for this audience: only describe what the numbers show, don't invent a reason for any change unless I state one, and flag anything I should be ready to explain if asked a follow-up question. Known context: [OPTIONAL, OR LEAVE BLANK]."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Challenge an explanation that sounds invented",
+          "prompt": "In the summary above, point out any sentence that sounds like it's explaining WHY a number changed rather than just describing THAT it changed. I want to check each one is something I actually confirmed, not an inferred cause."
+        },
+        {
+          "label": "Turn it into talking points",
+          "prompt": "Turn this narrative into 4-5 short talking points I could say out loud in a meeting without reading off a script, in plain conversational language."
+        },
+        {
+          "label": "Compare to last period's narrative",
+          "prompt": "Here's the narrative I generated last period: [PASTE PRIOR NARRATIVE]. Compare it to this period's and tell me if any trend from last time continued, reversed, or resolved."
+        },
+        {
+          "label": "Turn the gaps into an email for my bookkeeper",
+          "prompt": "Turn the 'changes I can't explain from the numbers alone' list and the three questions into a short, direct email I can send to my bookkeeper or accountant asking for clarification."
+        }
+      ],
+      "walkthrough": "Oskar owns a small specialty coffee roasting business and has a call with his business partner tomorrow where he knows he'll be asked why margin dropped this quarter, and he doesn't have a confident answer yet.\n\nHe pulls his quarterly P&L export and redacts anything beyond the aggregate line items. He opens ChatGPT and pastes the financial-narrative prompt, filling in the figures table: revenue $84,200 this quarter versus $76,500 last quarter, cost of goods sold at 43% of revenue versus 38%, and marketing spend essentially flat. He leaves the known-context field blank because he genuinely doesn't know why COGS moved.\n\nThe response opens with a one-paragraph summary: revenue grew about 10%, but gross margin compressed roughly 5 points, driven by the jump in COGS as a share of revenue. It states this plainly as fact, backed by the actual figures. Under \"changes I can't explain from the numbers alone,\" it flags the COGS increase directly and doesn't guess at a cause. It closes with three questions for his bookkeeper: did a supplier raise prices, did product mix shift toward higher-cost items, or was there a one-off inventory write-off this quarter.\n\nOskar reads it and sends the follow-up \"Turn it into talking points,\" since he wants to say this out loud tomorrow rather than read from a document. He gets five short, plain-language points back, practices them once, and emails his bookkeeper the three questions before the call.\n\nBy the time he's on the call, he can state the revenue growth and margin compression confidently, and honestly says the cause is still being confirmed rather than guessing at one.\n\nTotal time: about fifteen minutes."
+    },
+    "biz-a1-ai-operations-layer": {
+      "placeholders": [
+        {
+          "name": "DESCRIBE WHAT HAPPENS TODAY, STEP BY STEP, INCLUDING WHO DOES WHAT",
+          "what": "The manual process exactly as it runs right now, naming every person and system involved — this is what the AI will use to figure out which steps are mechanical and which need real judgment.",
+          "examples": [
+            "Inbound leads land in a shared Gmail inbox. Someone on the team reads each one, decides which service line it's for, and manually types it into a Google Sheet before following up by email within a day.",
+            "Every evening, the shift lead counts the till, writes the total on a paper log, and texts a photo of the log to the owner. The owner manually enters it into a spreadsheet once a week.",
+            "When a customer submits a support form, it emails the support inbox. Someone reads it, decides if it's a refund, a shipping issue, or a general question, and forwards it to the right team member."
+          ]
+        },
+        {
+          "name": "WHAT STARTS THIS — e.g., \"a new form submission\", \"an inbound email\", \"end of day\"",
+          "what": "The exact event that kicks off this workflow — be specific, since the trigger determines what the automation platform actually watches for.",
+          "examples": [
+            "A new email arriving in the leads@ inbox",
+            "A new row added to the daily sales Google Sheet",
+            "A form submission on the website contact page"
+          ]
+        },
+        {
+          "name": "E.G., GMAIL, GOOGLE SHEETS, SLACK, CRM NAME",
+          "what": "Every tool or system currently involved in the manual process, by name — this tells the AI what needs to be connected via an MCP connector (Claude) or a connected app/action (ChatGPT).",
+          "examples": [
+            "Gmail, Google Sheets, and Slack",
+            "Typeform, Airtable, and HubSpot",
+            "Shared inbox (Outlook), a spreadsheet, and our CRM (Pipedrive)"
+          ]
+        },
+        {
+          "name": "Claude with MCP connectors + Cowork / ChatGPT with Agent mode + Scheduled tasks",
+          "what": "Which tool you're actually building this in — determines whether the spec should reference Claude's MCP connectors and Cowork check-ins, or ChatGPT's Agent mode and Scheduled tasks — since the available connectors and how the approval step surfaces differ between them.",
+          "examples": [
+            "Claude with MCP connectors to Gmail and Google Sheets, plus Cowork for the check-in step",
+            "ChatGPT with Agent mode and a daily Scheduled task",
+            "Claude with Cowork connected to Slack and our CRM's MCP server"
+          ]
+        },
+        {
+          "name": "DOES THIS TOUCH MONEY, CUSTOMER-FACING COMMUNICATION, OR STAY FULLY INTERNAL?",
+          "what": "An honest statement of how much is at stake if this automation makes a mistake — this single field drives how conservative the AI should be about requiring a human checkpoint before anything happens automatically.",
+          "examples": [
+            "Fully internal only — no customer contact and no money involved at this stage",
+            "Customer-facing — this workflow would send an automated email directly to customers",
+            "Touches money — this workflow would trigger a refund or a payment"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Low-risk internal-only version",
+          "whenToUse": "Use this for your first automation build, where the workflow stays fully internal and doesn't touch money or customer communication — a safer starting point than anything customer-facing.",
+          "prompt": "I want to design a fully internal, low-risk AI-assisted automation. This will never send anything to a customer or move money.\n\nMANUAL PROCESS TODAY: [DESCRIBE WHAT HAPPENS TODAY, STEP BY STEP]\nTRIGGER: [WHAT STARTS THIS]\nTOOLS: [TOOLS INVOLVED]\nBUILDING THIS IN: [Claude with MCP connectors + Cowork / ChatGPT with Agent mode + Scheduled tasks]\n\nDesign a simple workflow spec: trigger, mechanical steps vs. AI-judgment steps, what happens if the AI step is uncertain, and a lightweight fallback if a tool errors out. Since this is internal-only, a human checkpoint isn't required before each run, but note where a periodic spot-check makes sense."
+        },
+        {
+          "label": "Customer-facing, higher-risk version",
+          "whenToUse": "Use this when the workflow will eventually send something directly to a customer or touch money — it puts extra weight on the checkpoint and fallback sections.",
+          "prompt": "I want to design a customer-facing or money-touching AI-assisted automation. Be conservative — assume every external action needs a human check unless I say otherwise.\n\nMANUAL PROCESS TODAY: [DESCRIBE WHAT HAPPENS TODAY, STEP BY STEP]\nTRIGGER: [WHAT STARTS THIS]\nTOOLS: [TOOLS INVOLVED]\nBUILDING THIS IN: [Claude with MCP connectors + Cowork / ChatGPT with Agent mode + Scheduled tasks]\nWHAT EXTERNAL ACTION IS INVOLVED: [e.g., \"sends an email to the customer\", \"issues a refund\"]\n\nDesign the workflow spec with an explicit human-approval step before anything external happens, a defined confidence threshold for when the AI step should route to a human instead of acting, a fallback for tool failures, and a suggested owner role. Do not propose removing the human checkpoint even after a successful pilot period, unless I explicitly ask."
+        },
+        {
+          "label": "Auditing an existing automation",
+          "whenToUse": "Use this to review a workflow you (or someone else) already built without designing it from scratch first — useful for retrofitting a missing safety checkpoint onto something already live.",
+          "prompt": "I already have this automation running. Help me audit it for missing safeguards, not build it from scratch.\n\nHOW IT WORKS TODAY: [DESCRIBE THE LIVE WORKFLOW, STEP BY STEP, INCLUDING ANY AI STEPS]\nRISK LEVEL: [DOES THIS TOUCH MONEY, CUSTOMER-FACING COMMUNICATION, OR STAY FULLY INTERNAL?]\n\nReview it and tell me: (1) whether it currently has a human checkpoint before anything external happens, and whether that's appropriate given the risk level, (2) what happens today if the AI step is uncertain or wrong, and whether that's a gap, (3) whether there's a defined fallback if a connected tool fails, (4) whether it has an assigned owner. Flag anything missing as a specific risk, not a vague suggestion."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Tighten the fallback",
+          "prompt": "The fallback section is too vague. For each step, be specific: what exactly happens if that step fails or the connected tool errors out, and who gets notified, by what channel (Slack, email, text)?"
+        },
+        {
+          "label": "Assign a real owner",
+          "prompt": "Suggest what this owner role should actually check, and how often — daily, weekly, or per-run — so this doesn't become an automation nobody is really watching."
+        },
+        {
+          "label": "Stress-test the risk level",
+          "prompt": "I said this was internal-only, but play devil's advocate: is there any indirect way this workflow could still affect a customer or spend money that I might be underestimating? Be specific."
+        },
+        {
+          "label": "Get implementation-specific",
+          "prompt": "Now translate this spec into concrete setup steps for [Claude with MCP connectors + Cowork / ChatGPT with Agent mode + Scheduled tasks]: which MCP connector or connected app to enable, what the AI step's instructions should look like, and exactly where the human-approval checkpoint appears in that tool."
+        }
+      ],
+      "walkthrough": "Felix runs a three-person digital marketing agency and wants his first real automation to be something safe to get wrong while he's still learning the tools.\n\nHe lists a few candidate workflows and picks the lowest-risk one: inbound leads land in a shared Gmail inbox, and someone manually reads each one, decides which service line it's for, and types it into a Google Sheet before following up. It happens daily, costs about fifteen minutes a day combined across the team, and if it goes wrong, nothing customer-facing breaks — it's purely internal.\n\nHe opens Claude, since his Pro plan includes MCP connectors and Cowork, and uses the design prompt. MANUAL PROCESS: he describes the read-classify-log sequence exactly as above. TRIGGER: \"a new email arriving in the leads@ inbox.\" TOOLS INVOLVED: \"Gmail, Google Sheets, and Slack.\" BUILDING THIS IN: \"Claude with MCP connectors to Gmail and Google Sheets, plus Cowork for the check-in.\" RISK LEVEL: \"fully internal only — no customer contact and no money involved at this stage.\"\n\nClaude returns a spec: the trigger is the new email, detected via the Gmail MCP connector; a mechanical step pulls the raw lead data; an AI step classifies which service line it's for and drafts a one-line summary; a mechanical step, via the Sheets MCP connector, logs it to the spreadsheet. Because the risk level is internal-only, it doesn't require a human approval checkpoint before logging — but it does require any low-confidence classification to route to a Slack message for a teammate to tag manually instead of guessing. The fallback section is thin, just \"notify if it fails.\"\n\nFelix sends the follow-up \"Tighten the fallback,\" and gets back a specific version: if the Gmail-to-Sheets step errors out, Cowork should post a Slack alert within five minutes, tagging Felix directly, since a silent failure here means leads quietly stop being logged.\n\nHe connects the Gmail and Sheets MCP connectors in Claude's settings over the next hour, sets his own name as the monitoring owner, and runs it for two weeks watching the Slack channel daily before trusting it unattended."
+    },
+    "fl-b1-proposals-that-win": {
+      "placeholders": [
+        {
+          "name": "PASTE THE JOB POST OR BRIEF",
+          "what": "The client's brief or job post, copied word for word — not your summary of it. Their exact phrasing is what lets the AI mirror their language back convincingly.",
+          "examples": [
+            "\"We're a seed-stage SaaS company (project management tool) looking for a landing page rewrite. Our current page converts poorly — under 2% signup rate. Ideally looking for someone who's worked with early-stage SaaS before and understands B2B conversion copy. Budget flexible for the right fit.\"",
+            "\"Looking for a bookkeeper to take over monthly reconciliation and quarterly reports for a 12-person e-commerce business. Must be comfortable with Shopify and QuickBooks Online. Prior experience with inventory-heavy businesses a plus.\"",
+            "\"Need a logo and basic brand kit for a new boutique coffee roastery opening in Q4. Looking for something warm, artisanal, not corporate. Should work well on packaging and a simple website.\""
+          ]
+        },
+        {
+          "name": "LIST 2-4 REAL PROJECTS OR RESULTS, WITH SPECIFICS",
+          "what": "Two to four things you've genuinely done that relate to this brief, with real specifics (a number, a similar client type, a concrete outcome) — never a project you didn't actually do or a result you can't back up.",
+          "examples": [
+            "1) Rewrote the landing page for a Series A SaaS scheduling tool; signups increased from 1.8% to 3.4% within 6 weeks. 2) Wrote conversion copy for a B2B onboarding email sequence for a fintech startup. 3) Client testimonial: \"Our new page finally explains what we do in one glance.\"",
+            "1) Managed monthly bookkeeping for a 15-person Shopify apparel brand for 2 years, including inventory reconciliation. 2) Cleaned up a backlog of 8 months of unreconciled transactions for a new client within their first month. 3) QuickBooks Online certified.",
+            "1) Designed brand identity and packaging for a small-batch hot sauce company, now sold in 40 stores. 2) Created a logo and brand kit for a local bakery that's been used unchanged for 3 years. 3) Comfortable with print-ready packaging files."
+          ]
+        },
+        {
+          "name": "YOUR OWN 2-3 NOTES ON WHAT THIS CLIENT SEEMS TO CARE ABOUT MOST",
+          "what": "Your own read, after actually reading the brief, on the client's top priorities — written by you, not inferred by the AI, since this judgment call is the core of tailoring the proposal.",
+          "examples": [
+            "1) They care most about proven SaaS-specific experience, not general design skill. 2) The conversion rate number matters more to them than the visual design. 3) They mention 'budget flexible for the right fit' which suggests they value expertise over lowest price.",
+            "1) Comfort with their specific tools (Shopify + QBO) is a hard requirement, not a nice-to-have. 2) Inventory experience seems like a genuine pain point, not boilerplate. 3) They didn't mention urgency, so timeline isn't the top concern.",
+            "1) 'Warm and artisanal, not corporate' is the single most repeated theme. 2) Packaging application matters as much as the logo itself. 3) They're a new business, so budget is likely a real constraint even if unstated."
+          ]
+        },
+        {
+          "name": "WORD COUNT",
+          "what": "A realistic target length for the whole proposal — shorter usually wins with busy clients, but match it to how the brief was submitted (a quick job post vs. a formal RFP).",
+          "examples": [
+            "250 words",
+            "400 words",
+            "150 words — this was a short job post, so keep the proposal short too"
+          ]
+        },
+        {
+          "name": "PRICE",
+          "what": "This is left blank in the generated proposal draft, not something you type into the prompt beforehand — the prompt tells the AI not to guess a price and to leave [PRICE] as a placeholder instead. You fill it in yourself afterward, based on your own rate and this project's actual scope, not a number the AI suggests.",
+          "examples": [
+            "$2,400 flat fee",
+            "$95/hour, estimated 20 hours",
+            "$1,800/month retainer"
+          ]
+        },
+        {
+          "name": "TIMELINE",
+          "what": "Left blank in the AI's draft for the same reason as PRICE — your delivery timeline is a business commitment only you should make, based on your real availability and this project's scope, not a guess baked into the first draft.",
+          "examples": [
+            "3 weeks from contract signing",
+            "Delivery by March 15",
+            "Ongoing, starting within 5 business days of deposit"
+          ]
+        },
+        {
+          "name": "SCOPE",
+          "what": "Left blank so you can state the exact scope you're actually committing to, in your own words, instead of letting a generic-sounding scope slip into a proposal before you've agreed on it with the client.",
+          "examples": [
+            "Includes 2 rounds of revisions, excludes hosting setup and ongoing maintenance",
+            "Landing page copy only — does not include design or development",
+            "Full brand identity package: logo, color palette, and one-page style guide"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a small, low-stakes gig",
+          "whenToUse": "Use this for smaller jobs (a quick freelance platform post, a short one-off task) where a full tailored proposal is more effort than the opportunity justifies.",
+          "prompt": "Write a short proposal for this job post: [PASTE THE JOB POST]\n\nMy relevant experience (use only this, don't invent anything): [1-2 REAL PROOF POINTS]\n\nKeep it under 100 words, reference their specific need directly, and end with a simple next step. Leave [PRICE] and [TIMELINE] as placeholders for me to fill in."
+        },
+        {
+          "label": "When you have no directly matching past project",
+          "whenToUse": "Use this when the brief is for something slightly outside your usual work and you don't have a perfectly matching past project to cite — it's honest about the gap instead of stretching a weak match.",
+          "prompt": "Help me write a proposal for this brief, even though I don't have a project that's a perfect match.\n\nCLIENT BRIEF (verbatim): [PASTE THE JOB POST OR BRIEF]\nMY CLOSEST RELEVANT EXPERIENCE (use only this, do not overstate the match): [DESCRIBE YOUR CLOSEST REAL EXPERIENCE, EVEN IF NOT A PERFECT FIT]\nMY RELEVANT TRANSFERABLE SKILLS: [LIST]\n\nWrite a proposal that's honest about being adjacent rather than a dead-on match, but makes a genuine case for the transferable skills, without implying I've done exactly this before if I haven't. Leave [PRICE], [TIMELINE], and [SCOPE] as placeholders."
+        },
+        {
+          "label": "For a platform with a strict character limit",
+          "whenToUse": "Use this for proposal platforms like Upwork that enforce a hard character limit, where every sentence has to earn its place.",
+          "prompt": "Write a proposal tailored to this brief that fits in under [CHARACTER LIMIT] characters total — this is for a platform with a strict limit, so be ruthless about cutting anything non-essential.\n\nCLIENT BRIEF (verbatim): [PASTE THE JOB POST]\nMY RELEVANT PAST WORK (use only these): [2-3 REAL PROOF POINTS]\n\nOpen by addressing their stated need directly, cite one proof point (not two or three), and end with a one-line next step. Leave [PRICE], [TIMELINE], and [SCOPE] as placeholders. No filler phrases."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check for overcommitment",
+          "prompt": "Scan this draft for anything that implies a specific price, timeline, or scope commitment beyond the [PRICE], [TIMELINE], and [SCOPE] placeholders. Flag anything I need to remove."
+        },
+        {
+          "label": "Personalize the opening line",
+          "prompt": "Give me three alternate opening lines, each referencing something specific from the client's brief in a different way, so I can pick the one that sounds most like me and rewrite it by hand."
+        },
+        {
+          "label": "Cut generic phrases",
+          "prompt": "Go through this and flag any phrase that could apply to literally any freelancer proposal, not just this one. Suggest a more specific replacement for each, grounded in what I actually told you about this client."
+        },
+        {
+          "label": "Make it shorter",
+          "prompt": "Cut this to about two-thirds the current length. Keep the opening line, the strongest proof point, and the closing next step — trim everything else first."
+        }
+      ],
+      "walkthrough": "Tanya is a freelance copywriter who just found a job post from a seed-stage SaaS company asking for a landing page rewrite, and she wants to send a proposal today before the post gets buried.\n\nShe reads the brief herself first and notices two things it emphasizes: proven experience with early-stage SaaS specifically, and the current page's weak 2% signup rate. She doesn't let AI make this call for her — she writes it down as her own note before opening Claude.\n\nShe pastes the client brief verbatim into the tailoring prompt. For proof points, she lists a real project: rewriting a landing page for a Series A scheduling tool that raised signups from 1.8% to 3.4% in six weeks, plus a short testimonial quote from that client. For her stated priorities note, she writes: \"they care about proven SaaS experience over general design skill, and the conversion number matters more to them than visual polish.\" She sets the word count at 250.\n\nThe draft opens by referencing their exact phrase \"converts poorly\" and their 2% figure, cites the matching SaaS project and the testimonial (not her full portfolio), and closes with a low-friction next step suggesting a 15-minute call. [PRICE], [TIMELINE], and [SCOPE] are left as placeholders, exactly as instructed.\n\nTanya reads it and the opening still feels slightly stiff, so she sends \"Personalize the opening line\" and gets three options back. She picks one, tweaks two words to sound more like her own voice, and sets her price and timeline separately based on her own rate sheet.\n\nTotal time: about fourteen minutes, and she sends it the same afternoon."
+    },
+    "fl-b2-client-onboarding-docs": {
+      "placeholders": [
+        {
+          "name": "LIST — e.g., logo files, brand guidelines, website access, a signed contract, a deposit",
+          "what": "Everything you genuinely need from a new client before you can start work — your real checklist, not a generic industry list.",
+          "examples": [
+            "Signed contract, 50% deposit, brand guidelines or logo files if they have them, and login access to their website hosting",
+            "Access to their existing QuickBooks Online account, a signed engagement letter, and their last 3 months of bank statements",
+            "A completed intake questionnaire, any existing brand assets, and access to their current website's admin panel"
+          ]
+        },
+        {
+          "name": "LIST — e.g., a kickoff call within 2 business days, a project timeline by day 3, weekly Friday updates",
+          "what": "What you actually commit to delivering in the first week — real commitments you can keep, not aspirational ones.",
+          "examples": [
+            "A kickoff call within 2 business days of receiving the deposit, a project timeline by day 3, and weekly Friday email updates",
+            "First draft of the bookkeeping cleanup plan within 5 business days, and a standing biweekly check-in call",
+            "A mood board and 3 initial logo directions within one week of receiving the completed questionnaire"
+          ]
+        },
+        {
+          "name": "e.g., friendly and casual, formal and structured",
+          "what": "How you actually talk to clients, matched to your real working style — not an aspirational tone you don't normally use.",
+          "examples": [
+            "Friendly and casual — I text as much as I email",
+            "Formal and structured — my clients are mostly corporate finance teams",
+            "Warm but efficient — brief messages, no small talk, but not cold"
+          ]
+        },
+        {
+          "name": "CLIENT NAME",
+          "what": "A blank left in the reusable kickoff email template, not something you fill into this prompt — you fill it in by hand with the actual new client's name each time you send the email to someone new.",
+          "examples": [
+            "Jordan Ellis",
+            "Priya Patel",
+            "the Riverside Bakery team"
+          ]
+        },
+        {
+          "name": "PROJECT NAME",
+          "what": "A blank in the template for the specific project name or short description, filled in fresh each time you send it to a new client.",
+          "examples": [
+            "Website Redesign",
+            "Q4 Brand Refresh",
+            "Onboarding Email Sequence"
+          ]
+        },
+        {
+          "name": "START DATE",
+          "what": "A blank in the template for the actual date this specific project starts, filled in by hand each time you send the email.",
+          "examples": [
+            "September 9, 2026",
+            "next Monday, August 17",
+            "upon receipt of your signed contract and deposit"
+          ]
+        },
+        {
+          "name": "FIRST DELIVERABLE/MILESTONE",
+          "what": "A blank in the template describing what the client should expect first and roughly when, filled in based on your real week-one commitment for this specific project.",
+          "examples": [
+            "your project timeline, by Wednesday",
+            "the first logo concepts, within 5 business days",
+            "a kickoff call confirmation within 2 business days"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a very small project",
+          "whenToUse": "Use this for small, short-timeline projects where a full welcome packet is more formality than the engagement needs.",
+          "prompt": "Write a short welcome message (not a full packet) for a small project.\n\nWhat I need from the client before starting: [LIST]\nWhat happens in the first few days: [LIST]\nMy tone: [TONE]\n\nKeep it to one short email, under 150 words, covering what I need and what happens next. No generic onboarding filler."
+        },
+        {
+          "label": "For a small team, not a solo freelancer",
+          "whenToUse": "Use this if you work with one or two collaborators and the onboarding packet needs to introduce who does what, not just you.",
+          "prompt": "Help me build a client onboarding welcome packet and kickoff email for a small team, not a solo freelancer.\n\nTeam and roles: [e.g., \"me (project lead), plus a designer and a developer\"]\nWhat we need from a new client before starting: [LIST]\nWhat we commit to in week one: [LIST]\nOur communication style: [TONE]\n\nWrite the welcome packet covering what happens next, what's needed from the client, who on the team they'll interact with and for what, and what to expect in week one — using only what I listed. Include a short kickoff email template with placeholders for [CLIENT NAME], [PROJECT NAME], [START DATE], and [FIRST DELIVERABLE/MILESTONE]."
+        },
+        {
+          "label": "Include a client-facing FAQ",
+          "whenToUse": "Use this if new clients tend to ask the same handful of questions early on, and you want a short FAQ included alongside the welcome packet.",
+          "prompt": "Help me build a welcome packet, a kickoff email, and a short FAQ, based on my real process.\n\nWhat I need from a new client before starting: [LIST]\nWhat I commit to in week one: [LIST]\nMy communication style: [TONE]\nQuestions clients commonly ask early on: [LIST 3-5 REAL RECURRING QUESTIONS]\n\nWrite the welcome packet and kickoff email as before, plus a short FAQ answering only the questions I listed, in plain language, using only information I've provided — flag with [NEED MY ANSWER] any question you don't have enough information to answer."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Cut generic filler",
+          "prompt": "Go through the welcome packet and cut anything that sounds like generic onboarding advice rather than something specific to how I actually work."
+        },
+        {
+          "label": "Shorten the packet",
+          "prompt": "This is too long. Cut it by about a third, keeping only what a new client actually needs to act on in the first week."
+        },
+        {
+          "label": "Check all reusable placeholders are there",
+          "prompt": "Review the kickoff email and confirm it has bracketed placeholders for every detail that would change per client (name, project, dates, deliverables). Add any I'm missing."
+        },
+        {
+          "label": "Add a response-time expectation line",
+          "prompt": "Add one short line to the welcome packet stating how I can be reached and roughly how fast I typically respond, in a tone that matches the rest of the document."
+        }
+      ],
+      "walkthrough": "Leo is a solo freelance web designer who keeps starting new client projects with a slightly different, half-remembered onboarding message each time, and he wants one document he can reuse.\n\nHe writes down, roughly, what he actually needs before starting: a signed contract, a 50% deposit, and either brand guidelines or logo files if the client has them. Then he writes what he commits to in week one: a kickoff call within two business days of the deposit clearing, and a project timeline by day three.\n\nHe opens ChatGPT and pastes the onboarding prompt, filling in both lists exactly as he wrote them, and sets his communication style as \"friendly and casual — I text as much as I email.\"\n\nThe output includes a welcome packet stating plainly what happens next, listing the three things he needs and by when, describing the kickoff call and timeline commitment, and a short kickoff email with [CLIENT NAME], [PROJECT NAME], [START DATE], and [FIRST DELIVERABLE/MILESTONE] as placeholders.\n\nLeo reads the packet and one paragraph feels like generic onboarding advice he never actually says — something about \"our collaborative design process.\" He sends the follow-up \"Cut generic filler,\" and that paragraph gets removed, leaving only the three concrete items he actually listed.\n\nHe adds one more follow-up based on his proTip habit: \"Add a response-time expectation line,\" and gets a short sentence added noting he typically replies within one business day.\n\nHe saves both documents in a folder called \"Client Templates,\" and sends the kickoff email to his next new client three days later, filling in just the four bracketed fields.\n\nTotal time: about ten minutes to build, saving him roughly fifteen minutes of rewriting on every project going forward."
+    },
+    "fl-i1-scope-quote-contract-drafts": {
+      "placeholders": [
+        {
+          "name": "DESCRIBE THE PROJECT",
+          "what": "A short description of the actual project — what it is, for whom, in your own words.",
+          "examples": [
+            "A 4-week brand identity project for a new boutique coffee roastery, including logo, color palette, and brand guidelines.",
+            "A 3-month bookkeeping cleanup and ongoing monthly reconciliation for a 12-person e-commerce business.",
+            "A landing page redesign and copy rewrite for a seed-stage SaaS company's signup page."
+          ]
+        },
+        {
+          "name": "LIST",
+          "what": "This exact bracket appears twice in the prompt: once for DELIVERABLES and once for EXCLUSIONS. Each time, replace it with the relevant real list — what you're actually delivering, or what's explicitly not included — not a generic industry-standard list.",
+          "examples": [
+            "Deliverables: logo files (vector + PNG), a one-page brand guideline PDF, and 3 rounds of revisions",
+            "Exclusions: does not include website implementation, printed materials, or social media templates",
+            "Deliverables: monthly reconciled books, a quarterly P&L summary, and one 30-minute review call per quarter"
+          ]
+        },
+        {
+          "name": "NUMBER",
+          "what": "The actual number of revision rounds you're including — a specific figure, not \"a few\" or \"reasonable amount.\"",
+          "examples": [
+            "2",
+            "3",
+            "1 round of minor revisions only"
+          ]
+        },
+        {
+          "name": "DATES OR DURATION",
+          "what": "The real timeline — either specific start/end dates or a duration like \"4 weeks from signed contract.\"",
+          "examples": [
+            "4 weeks from signed contract and deposit received",
+            "Start September 1, target completion October 15",
+            "Ongoing monthly engagement, no fixed end date"
+          ]
+        },
+        {
+          "name": "E.G., 50% DEPOSIT, NET 15, LATE FEE POLICY",
+          "what": "Your actual, already-established payment terms — the amounts and timing you really use, not an industry-standard guess.",
+          "examples": [
+            "50% deposit before work begins, remaining 50% due on delivery, net 15",
+            "Net 30, 1.5% late fee per month on overdue balances",
+            "Monthly retainer of $2,500, due on the 1st of each month, work paused if payment is more than 10 days late"
+          ]
+        },
+        {
+          "name": "DESCRIBE",
+          "what": "How you actually price this type of work — flat fee, hourly, retainer — described plainly.",
+          "examples": [
+            "Flat project fee of $3,200, broken into the line items above",
+            "Hourly rate of $95/hour, estimated 20-25 hours total",
+            "Monthly retainer of $1,800 for up to 15 hours of work"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Scope-only version, no contract clauses",
+          "whenToUse": "Use this for a fast, low-stakes quote where you don't need contract language yet — for example, an early conversation before the client has committed.",
+          "prompt": "Help me draft just a scope of work and an itemized quote for this project — no contract clauses yet.\n\nPROJECT BRIEF: [DESCRIBE THE PROJECT]\nDELIVERABLES: [LIST]\nTIMELINE: [DATES OR DURATION]\nEXCLUSIONS: [LIST]\nMY RATE/PRICING STRUCTURE: [DESCRIBE]\n\nProduce a plain-language scope of work and an itemized quote broken into line items, not a single lump sum. Use only what I've given you — don't invent deliverables or pricing."
+        },
+        {
+          "label": "Hourly, not fixed-price, version",
+          "whenToUse": "Use this when the engagement is billed hourly rather than a fixed project fee, since the quote and clauses need to reflect ongoing, variable billing instead of one fixed total.",
+          "prompt": "Help me draft a scope of work, a rate sheet (not a fixed quote), and standard contract clauses for hourly-billed work. You are not a lawyer — flag anything needing professional review.\n\nPROJECT BRIEF: [DESCRIBE THE PROJECT]\nESTIMATED HOURS RANGE: [e.g., \"20-25 hours\"]\nHOURLY RATE: [YOUR RATE]\nBILLING FREQUENCY: [e.g., \"invoiced biweekly\"]\nEXCLUSIONS: [LIST]\nMY USUAL PAYMENT TERMS: [E.G., NET 15, LATE FEE POLICY]\n\nProduce a scope of work, a rate/billing explanation instead of an itemized fixed quote, and standard clauses covering payment terms, an estimate-vs-actual-hours disclosure, and timeline, using only the terms I gave you. Separately list clauses needing professional review before signing (IP/ownership, liability, termination)."
+        },
+        {
+          "label": "Tiered pricing options version",
+          "whenToUse": "Use this when you want to offer the client a choice between a few scope/price tiers rather than a single fixed quote.",
+          "prompt": "Help me draft a scope of work with tiered pricing options for this project.\n\nPROJECT BRIEF: [DESCRIBE THE PROJECT]\nTIER OPTIONS AND WHAT'S DIFFERENT ABOUT EACH: [DESCRIBE 2-3 TIERS, e.g., \"Basic: logo only. Standard: logo + guidelines. Premium: logo + guidelines + packaging design\"]\nPRICE PER TIER: [LIST]\nTIMELINE: [DATES OR DURATION]\n\nProduce a scope of work presenting each tier's deliverables clearly side by side, and an itemized quote for each tier. Use only the tiers and prices I described — don't invent a tier or feature I didn't list."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Reminder: flag for lawyer review",
+          "prompt": "Before I send this anywhere, list every clause in this draft that touches IP ownership, liability, or termination, so I have a clear checklist of exactly what needs professional review before signature."
+        },
+        {
+          "label": "Itemize further",
+          "prompt": "Break the quote into more granular line items — right now [ITEM] is one lump sum, but split it into the actual components that make it up."
+        },
+        {
+          "label": "Check payment terms match exactly",
+          "prompt": "Compare the payment-terms clause against what I actually specified: [RESTATE YOUR REAL TERMS]. Flag any wording that doesn't match exactly."
+        },
+        {
+          "label": "Tighten the exclusions",
+          "prompt": "Review the exclusions list and suggest 2-3 additional things that are commonly assumed to be included in a project like this but aren't part of my scope — so I can head off scope-creep questions before they happen."
+        }
+      ],
+      "walkthrough": "Ingrid is a freelance brand designer who just had a call with a new client, a coffee roastery, about a four-week brand identity project, and needs to send a scope, quote, and contract before the client commits to another designer.\n\nShe opens Claude and pastes the scope/quote/contract prompt. PROJECT BRIEF: \"a brand identity project for a new boutique coffee roastery, including logo, color palette, and brand guidelines.\" DELIVERABLES: \"logo files (vector + PNG), a one-page brand guideline PDF, and 3 rounds of revisions.\" REVISIONS INCLUDED: \"2.\" TIMELINE: \"4 weeks from signed contract and deposit received.\" EXCLUSIONS: \"does not include website implementation, printed materials, or packaging design.\" PAYMENT TERMS: \"50% deposit before work begins, remaining 50% due on delivery, net 15.\" PRICING STRUCTURE: \"flat project fee of $3,200.\"\n\nThe draft comes back with a plain-language scope stating exactly what's included and explicitly what's excluded, a quote broken into line items — logo design, brand guidelines, and revisions, not one lump total — and standard payment clauses matching her 50%/net-15 structure exactly. It also produces a clearly separated section titled \"Have a professional review before signing,\" covering IP/ownership transfer, liability limitation, and termination terms, with starting language drafted but explicitly marked as needing review.\n\nIngrid notices the deliverables list says \"3 rounds of revisions\" while she'd said 2 in the revisions field — a small inconsistency from typing it into the wrong field. She sends the follow-up \"Check payment terms match exactly\" style correction directly, restating \"2 rounds of revisions,\" and it's fixed.\n\nShe sends the scope and quote to the client for written approval first, and only after they confirm, sends the flagged clauses to a lawyer for a quick review before the contract goes out for signature.\n\nTotal time: about twenty minutes drafting, plus a short paid lawyer review before signing."
+    },
+    "fl-i2-marketing-yourself-portfolio-outreach": {
+      "placeholders": [
+        {
+          "name": "WHAT THEY NEEDED / THE PROBLEM",
+          "what": "The client's actual situation or problem before you started — stated plainly, the way you'd explain it to another freelancer.",
+          "examples": [
+            "A small e-commerce client's checkout completion rate was low and they suspected slow page load times were the cause.",
+            "A local bakery had no consistent brand identity across their packaging, signage, and Instagram.",
+            "A startup's onboarding emails had a high unsubscribe rate in the first week after signup."
+          ]
+        },
+        {
+          "name": "YOUR ACTUAL WORK",
+          "what": "What you specifically did — real actions you took, not a vague description like \"improved their website.\"",
+          "examples": [
+            "Optimized product images for faster load times and simplified the checkout flow from 4 steps to 2.",
+            "Designed a cohesive brand identity — logo, color palette, and packaging templates — and applied it across their Instagram and physical packaging.",
+            "Rewrote the 5-email onboarding sequence to lead with a single clear next action instead of multiple competing calls-to-action."
+          ]
+        },
+        {
+          "name": "REAL OUTCOME — A NUMBER, A SPECIFIC CHANGE, A QUOTE — OR STATE IF THERE'S NO HARD METRIC",
+          "what": "The genuine result, exactly as you know it — a real number if you have one, a specific observed change if you don't, or an honest statement that there's no hard metric to cite.",
+          "examples": [
+            "Checkout completion rate went up; the client reported roughly 15% more completed orders over the following month, per their own analytics.",
+            "No hard metric available, but the client said their packaging finally 'looks like a real brand' and re-ordered the same packaging design for a second product line.",
+            "Unsubscribe rate in the first week dropped from about 8% to 3%, based on their email platform's reporting."
+          ]
+        },
+        {
+          "name": "TARGET CLIENT TYPE/INDUSTRY",
+          "what": "The specific type of client you want more of right now — narrow enough that the outreach message can speak directly to their situation.",
+          "examples": [
+            "Small e-commerce businesses with under $2M in annual revenue",
+            "Local food and beverage brands preparing to launch a new product line",
+            "Early-stage B2B SaaS companies with under 10,000 monthly signups"
+          ]
+        },
+        {
+          "name": "SPECIFIC REASON FOR REACHING OUT TO THIS PERSON",
+          "what": "Left blank in the outreach message on purpose — the prompt tells the AI to leave this as a placeholder so you personalize it by hand afterward. A generic-sounding cold message is the biggest tell it wasn't tailored, so this line should reference something real and specific about the person or company you're contacting.",
+          "examples": [
+            "I saw your team just launched a new product page and noticed the checkout flow could use the same treatment I did for [past client]",
+            "Came across your recent LinkedIn post about scaling customer onboarding — that's exactly the kind of problem I helped [past client] solve",
+            "Noticed you're hiring for a marketing role, which usually means content/design bandwidth is stretched thin — thought this might be useful timing"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a project with no hard metric",
+          "whenToUse": "Use this when the real result is qualitative — a relationship win, a client quote, a repeat engagement — rather than a number, so the case study leans honestly into that instead of forcing a metric.",
+          "prompt": "Help me write a short case study and outreach message for a project with no hard metric to cite.\n\nCLIENT SITUATION: [WHAT THEY NEEDED]\nWHAT I DID: [YOUR ACTUAL WORK]\nQUALITATIVE OUTCOME (no number available): [DESCRIBE HONESTLY — e.g., a client quote, a repeat engagement, a specific observed change]\n\nWrite a 150-200 word case study built around the qualitative outcome, described honestly and specifically — do not invent a number to make it sound more impressive. Then write a short outreach message (under 100 words) for [TARGET CLIENT TYPE], referencing the qualitative result, ending with a low-pressure next step."
+        },
+        {
+          "label": "Batch version — build multiple case studies at once",
+          "whenToUse": "Use this when you have several past projects and want to build a small set of case studies for different types of results in one pass, rather than one at a time.",
+          "prompt": "Help me write short case studies for multiple past projects at once, each using only the real facts given — no invented metrics.\n\nProject 1: Situation: [...] What I did: [...] Result: [...]\nProject 2: Situation: [...] What I did: [...] Result: [...]\nProject 3: Situation: [...] What I did: [...] Result: [...]\n\nFor each, write a 150-200 word case study (situation, approach, result). If a project has no hard metric, describe the qualitative outcome honestly rather than inventing one. Label each case study by the type of result it demonstrates (e.g. 'growth metric,' 'efficiency win,' 'relationship win') so I can pick the most relevant one per pitch."
+        },
+        {
+          "label": "LinkedIn outreach version",
+          "whenToUse": "Use this for outreach on LinkedIn specifically, where norms and length expectations differ from a cold email.",
+          "prompt": "Using this case study, write a short LinkedIn connection request note and a longer follow-up message, aimed at [TARGET CLIENT TYPE/INDUSTRY].\n\nCase study: [PASTE YOUR CASE STUDY]\n\n1. A connection request note under 300 characters, referencing something specific and low-pressure — not a pitch.\n2. A follow-up message (to send after they accept) under 100 words, referencing the case study's relevant result and ending with a low-pressure next step. Leave [SPECIFIC REASON FOR REACHING OUT TO THIS PERSON] as a placeholder for me to fill in by hand."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check no metric was rounded up or invented",
+          "prompt": "Go back through the case study and flag any number or claim that sounds more precise or more impressive than what I actually told you. I want to catch anything that got rounded up or inferred."
+        },
+        {
+          "label": "Tighten the outreach to under 100 words",
+          "prompt": "This outreach message is too long. Cut it to under 100 words, keeping the specific result reference and the low-pressure next step — trim everything else."
+        },
+        {
+          "label": "Give me alternate opening lines",
+          "prompt": "Give me three different opening lines for the outreach message, each taking a different angle (one referencing the result, one referencing their likely current challenge, one referencing something specific about their company), so I can pick or blend."
+        },
+        {
+          "label": "Draft a no-reply follow-up",
+          "prompt": "Write a short, low-pressure follow-up message I could send if this person doesn't reply within a week — under 50 words, not pushy, adding one small new piece of value or information rather than just 'checking in.'"
+        }
+      ],
+      "walkthrough": "Devon is a freelance web developer who wants to land more e-commerce clients but hasn't written up any of his past work in a way he could actually send to a prospect.\n\nHe picks one real project: a small e-commerce client whose checkout completion rate was low, suspected to be tied to slow page load times. He opens Claude and works through Part 1 of the case-study prompt. CLIENT SITUATION: the slow-load, low-completion problem, stated plainly. WHAT I DID: he optimized product images and simplified checkout from four steps to two. RESULT: checkout completion went up, with the client reporting roughly 15% more completed orders over the following month, based on their own analytics — he's careful to note it's the client's reported figure, not his own independently verified number.\n\nThe case study comes back at about 180 words, describing the situation, his specific approach, and the 15% figure attributed clearly to the client's reporting, not stated as an absolute guarantee.\n\nFor Part 2, he sets TARGET CLIENT TYPE as \"small e-commerce businesses with under $2M in annual revenue,\" and gets a short outreach message referencing the checkout-completion result specifically, ending with a low-pressure suggestion to share a quick two-minute audit rather than \"let's hop on a call.\"\n\nDevon reads it and it's a touch long for a cold message, so he sends \"Tighten the outreach to under 100 words.\" The revised version keeps the core result and the low-pressure ask, dropping a redundant sentence about his general experience.\n\nHe adds his own specific reason for reaching out — he noticed the prospect's site had a similarly slow checkout — and sends it to three prospects that afternoon.\n\nTotal time: about sixteen minutes for both the case study and the outreach message."
+    },
+    "fl-i3-client-updates-difficult-conversations": {
+      "placeholders": [
+        {
+          "name": "routine status update / scope creep pushback / missed deadline / rate increase / other difficult message",
+          "what": "The specific type of message this is — this single choice shapes the whole structure, since a routine update and a rate increase need very different registers.",
+          "examples": [
+            "Scope creep pushback — client asked for two additional pages beyond the agreed scope",
+            "Rate increase — first increase in two years for a long-term retainer client",
+            "Routine status update — weekly check-in on a project that's on track"
+          ]
+        },
+        {
+          "name": "WHAT'S ACTUALLY HAPPENED — PROJECT STATUS, WHAT CHANGED, WHAT WAS ASKED",
+          "what": "The plain facts of the situation, stated neutrally — what the current status is, what changed, or what was requested.",
+          "examples": [
+            "Client asked for two additional landing pages beyond the agreed 3-page scope in the signed contract.",
+            "I haven't raised my rate in two years; costs have gone up and my calendar has been consistently full for the last six months.",
+            "Design phase is complete and on schedule; development starts Monday as planned."
+          ]
+        },
+        {
+          "name": "WHAT I'M ASKING FOR, OFFERING, OR HOLDING FIRM ON — e.g., \"I will do this extra request but it needs a separate quote\", \"new rate is $X starting [DATE]\"",
+          "what": "Your actual, already-decided position — the boundary, ask, or decision you've made before drafting. This is a business call only you should make; never let the draft invent or soften it for you.",
+          "examples": [
+            "Happy to build the two extra pages, but as a separate quote, not folded into the current project timeline or price.",
+            "New rate is $110/hour, up from $85/hour, starting with projects booked after October 1st.",
+            "No ask — this update is for awareness only, nothing needed from the client."
+          ]
+        },
+        {
+          "name": "e.g., warm but firm, brief and factual, appreciative",
+          "what": "The tone that matches how direct you actually want to be — a boundary-setting message and a routine update call for different registers.",
+          "examples": [
+            "Warm but firm — for the scope pushback, since this is a good long-term client",
+            "Brief and factual — for a routine status update",
+            "Appreciative but clear — for the rate increase, acknowledging the relationship while being direct about the number"
+          ]
+        },
+        {
+          "name": "LENGTH",
+          "what": "The target length, matched to how much the situation actually needs said.",
+          "examples": [
+            "Under 100 words",
+            "4-5 short paragraphs",
+            "2-3 sentences"
+          ]
+        },
+        {
+          "name": "EMAIL/MESSAGE PLATFORM",
+          "what": "Where this message will actually be sent, since email and a quick platform message (Slack, project-tool comment) call for different formality.",
+          "examples": [
+            "Email",
+            "Slack direct message",
+            "A comment inside our project management tool (Asana)"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a routine update",
+          "whenToUse": "Use this for a simple, low-stakes routine status update, where the full facts-and-position structure is more than the message needs.",
+          "prompt": "Write a quick status update for [CLIENT/PROJECT]. Status: [ON TRACK / MINOR DELAY / OTHER]. What's happened: [BRIEF FACTS]. What's next: [BRIEF FACTS].\n\nKeep it under [LENGTH], factual and brief, suitable for [EMAIL/MESSAGE PLATFORM]. No filler."
+        },
+        {
+          "label": "Rate increase, relationship-specific version",
+          "whenToUse": "Use this specifically for a rate increase to an existing, valued client, where acknowledging the relationship matters more than in a one-off scope pushback.",
+          "prompt": "Help me write a rate increase message to a long-term client. I want it appreciative of the relationship but clear and direct about the number — not apologetic, not vague.\n\nHOW LONG WE'VE WORKED TOGETHER: [e.g., \"2 years\"]\nCURRENT RATE: [RATE]\nNEW RATE: [RATE]\nEFFECTIVE DATE: [DATE]\nREASON (brief, factual, optional): [REASON OR LEAVE BLANK]\n\nRULES: State the new rate and effective date plainly, once. Do not over-justify or apologize for raising my rate. Acknowledge the relationship in one genuine sentence, not three generic ones. End with a clear next step (e.g. confirming they'd like to continue at the new rate). Keep it under [LENGTH]."
+        },
+        {
+          "label": "Quick Slack/platform-message version",
+          "whenToUse": "Use this when the message is going into a quick chat platform or project-tool comment rather than a formal email, where the register is naturally more casual and shorter.",
+          "prompt": "Write a short message for [SLACK/PROJECT TOOL], not an email.\n\nMESSAGE TYPE: [TYPE]\nFACTS: [WHAT'S ACTUALLY HAPPENED]\nMY POSITION: [WHAT I'M ASKING FOR OR HOLDING FIRM ON]\n\nKeep it to 2-3 short sentences, casual but clear, no email-style greeting or sign-off. State the fact plainly and end with what I need from them, if anything."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Remove any invented concession",
+          "prompt": "Check this draft for anything that reads as a concession — a discount, an extended deadline, an apology beyond one brief line — that I didn't actually decide to offer. Flag and remove it."
+        },
+        {
+          "label": "Firm up the ask",
+          "prompt": "The closing line is too vague. Rewrite it as one specific, direct ask or statement, not an open-ended 'let me know your thoughts.'"
+        },
+        {
+          "label": "Make it shorter",
+          "prompt": "Cut this down to under [target length], keeping the fact, my position, and the closing ask — trim any repeated or softening language first."
+        },
+        {
+          "label": "Check the tone isn't too soft",
+          "prompt": "Read this back specifically for firmness. Does it clearly state my position, or does it sound like I might be talked out of it? Tighten any line that sounds wishy-washy."
+        }
+      ],
+      "walkthrough": "Amara is a freelance brand strategist who hasn't raised her rate in two years, even though her calendar has been consistently full for the last six months, and she's decided it's time to notify her longest-standing retainer client.\n\nBefore opening any AI tool, she decides her actual position first: the new rate is $110/hour, up from $85, effective for projects booked after October 1st. She isn't offering to grandfather in the old rate, and she isn't apologizing for the increase — she's simply informing.\n\nShe opens Claude and uses the rate-increase variation of the prompt. MESSAGE TYPE: rate increase. FACTS: she hasn't raised her rate in two years, costs have gone up, and demand for her time has grown steadily. POSITION: new rate is $110/hour starting October 1st. TONE: appreciative but clear. LENGTH: under 100 words.\n\nThe first draft states the new rate plainly in the second sentence, includes one genuine line acknowledging their two years of working together, and closes by asking her to confirm she'd like to continue at the new rate for upcoming projects. It's solid, but the closing line reads a little open-ended: \"Let me know if you have any questions.\"\n\nAmara sends the follow-up \"Firm up the ask,\" and the closing becomes more direct: a request to confirm by a specific date whether she wants to continue booking at the new rate, so Amara can plan her calendar accordingly.\n\nShe reads the whole thing once more, adds the client's name to the opening by hand, and sends it.\n\nTotal time: about nine minutes, and the client replies the next day agreeing to the new rate."
+    },
+    "fl-a1-productize-your-service": {
+      "placeholders": [
+        {
+          "name": "E.G., \"A LANDING PAGE COPY REWRITE\", \"A BRAND VOICE AUDIT\", \"AN ONBOARDING EMAIL SEQUENCE\"",
+          "what": "The specific type of deliverable you repeat regularly — narrow enough that a standing instruction set can actually be built around it.",
+          "examples": [
+            "A landing page copy rewrite",
+            "A brand voice audit",
+            "A 5-email onboarding sequence"
+          ]
+        },
+        {
+          "name": "DESCRIBE THE SECTIONS, STEPS, OR FORMAT YOU ALWAYS FOLLOW",
+          "what": "Your real, repeatable structure for this deliverable — the sections or steps you follow on essentially every project of this type, described specifically enough that someone else could recognize your work from it.",
+          "examples": [
+            "Hero headline + subhead, three benefit sections, one objection-handling section, one CTA block — always in that order.",
+            "Voice audit always covers: current tone assessment, 3 example rewrites in the target voice, a one-page style guide summary, and 5 dos/don'ts.",
+            "Sequence is always: welcome + set expectations, quick-win tutorial, social proof, common objection handled, upgrade/next-step nudge."
+          ]
+        },
+        {
+          "name": "E.G., TONE, LENGTH LIMITS, THINGS YOU ALWAYS AVOID",
+          "what": "Your actual quality bar — the specific style rules and things you always avoid, based on real habits you've developed, not generic best practices.",
+          "examples": [
+            "Direct, conversational tone; hero headline always under 10 words; never use the word 'revolutionary' or 'seamless.'",
+            "Never write in passive voice; each email under 150 words; always end with exactly one call to action, never two.",
+            "Style is warm but not cutesy; avoid exclamation points except in subject lines; always include one concrete number or specific detail per section."
+          ]
+        },
+        {
+          "name": "E.G., CLIENT'S BRAND VOICE SAMPLE, TARGET AUDIENCE, SPECIFIC GOALS",
+          "what": "What genuinely must be custom every time, per client — the inputs you should never assume or fill in generically, because getting them wrong makes the output feel off-brand.",
+          "examples": [
+            "The client's product facts, their target audience description, and a sample of their existing brand voice (an email, a page, anything they've already written).",
+            "Their current tone (via 3 example pieces of existing content), their target reader's biggest objection, and their business goals for this quarter.",
+            "Their audience's pain points in their own words, any brand words they always/never use, and the specific action they want the reader to take."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a simpler deliverable",
+          "whenToUse": "Use this for a deliverable type with a simple, short structure — where a full standing-instructions document is more than the task needs.",
+          "prompt": "Help me write a short, reusable prompt template for a deliverable I produce often: [DELIVERABLE TYPE].\n\nMy repeatable format: [DESCRIBE THE FORMAT/STRUCTURE]\nWhat must be custom every time: [LIST]\n\nGive me a single reusable prompt with bracketed placeholders for the custom parts, ready to paste into a new chat each time — not a full saved-project instruction set."
+        },
+        {
+          "label": "Shared with a small team version",
+          "whenToUse": "Use this when more than one person on a small team will use the same productized workflow, so the instructions need to work consistently across people, not just for you personally.",
+          "prompt": "Help me write standing instructions for a reusable AI project that multiple team members will use, for a deliverable type we produce repeatedly.\n\nDELIVERABLE TYPE: [DELIVERABLE TYPE]\nOUR REPEATABLE PROCESS/STRUCTURE: [DESCRIBE]\nOUR QUALITY BAR / STYLE RULES: [DESCRIBE]\nWHAT MUST BE CUSTOM EVERY TIME: [LIST]\nWHO ON THE TEAM WILL USE THIS AND FOR WHAT: [DESCRIBE ROLES]\n\nWrite standing instructions clear enough for any team member to use consistently (not just me), an input checklist, and a guardrail instruction to ask for missing checklist items rather than guessing. Note anywhere the process might need a role-specific adjustment."
+        },
+        {
+          "label": "Platform-specific setup version",
+          "whenToUse": "Use this once you already have the standing instructions drafted and want them adapted specifically for how Claude Projects or a Custom GPT structures its settings.",
+          "prompt": "I have these standing instructions for a reusable AI workflow: [PASTE YOUR STANDING INSTRUCTIONS]\n\nAdapt this specifically for [CLAUDE PROJECTS / A CUSTOM GPT], following that platform's actual settings structure (e.g., project instructions vs. knowledge files for Claude Projects, or instructions vs. conversation starters for a Custom GPT). Tell me exactly what to paste into which field, and whether any part of my instructions should be split into an uploaded reference document instead of the main instructions field."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Test it against a real past project",
+          "prompt": "Here's a past project I actually completed: [PASTE THE ORIGINAL CLIENT INPUTS]. Run your standing instructions against this exact input and show me the output, so I can compare it to what I actually delivered."
+        },
+        {
+          "label": "Tighten the checklist to essentials only",
+          "prompt": "The input checklist has too many items. Cut it down to the 3 things that would most change the output if missing — the ones most worth insisting on every time."
+        },
+        {
+          "label": "Suggest a price based on real time",
+          "prompt": "I ran this workflow on [NUMBER] real projects and it took me [X] hours each time including review. Based on that real time cost and my hourly rate of [RATE], suggest a fixed price for a productized version of this offer."
+        },
+        {
+          "label": "Check for generic best-practice creep",
+          "prompt": "Review the standing instructions and flag anything that sounds like generic industry best practice rather than something I specifically described as my own process. I want to catch anything that crept in that isn't actually how I work."
+        }
+      ],
+      "walkthrough": "Nadia is a freelance copywriter who has rewritten landing page copy for six different SaaS clients over the past year, and each time she starts from a blank page even though her process barely changes.\n\nShe opens Claude and uses the productize prompt. DELIVERABLE TYPE: \"a landing page copy rewrite.\" Her repeatable structure: hero headline plus subhead, three benefit sections, one objection-handling section, one CTA block, always in that order, in a direct conversational tone under a specific word count per section. Her quality bar: never uses the word \"revolutionary,\" headlines always under 10 words. What must be custom every time: the client's actual product facts, their target audience description, and any existing brand voice sample.\n\nThe output gives her a standing-instructions block describing that exact five-section structure and her tone rules as the reusable pattern, plus a three-item input checklist — product facts, audience, voice sample — with an explicit instruction to ask rather than assume if any of the three is missing when a new project starts.\n\nShe saves this as a Claude Project. Before trusting it on a live client, she runs the follow-up \"Test it against a real past project,\" pasting in the actual inputs from a project she completed two months ago. The output is close to what she actually delivered, but misses that she always writes two headline options, not one — a detail she'd never written down because it was just habit. She adds that line to the instructions.\n\nShe then times herself on the next two real client projects: about 40 minutes each including her review pass, down from roughly two hours starting from scratch. Using that real number and her hourly rate, she asks for a price suggestion and sets a $450 fixed price for a \"landing page rewrite\" package.\n\nTotal setup time: about twenty-five minutes, plus the two test runs."
+    }
+  }
+}

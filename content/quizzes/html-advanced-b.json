@@ -1,0 +1,284 @@
+{
+  "quizzes": {
+    "html-a09-svg": [
+      {
+        "q": "Your 24x24 icon looks blurry when the design team scales it to 96x96 in the hero section. Which change fixes it for every size at once?",
+        "options": [
+          "Export the icon as a 96x96 PNG and swap files per breakpoint",
+          "Rebuild the icon as SVG with a viewBox, and let width/height or CSS set the rendered size",
+          "Add image-rendering: crisp-edges to the existing PNG",
+          "Double the PNG's width and height attributes in the HTML"
+        ],
+        "answer": 1,
+        "why": "A vector with a viewBox is re-rendered from geometry at any output size, so one asset stays sharp everywhere; raster tricks only shuffle the blur around."
+      },
+      {
+        "q": "You inline an informational SVG chart legend. What is the correct way to make it accessible to screen readers?",
+        "options": [
+          "Add a <title> element as the svg's first child and role=\"img\" on the svg",
+          "Add alt=\"chart legend\" to the svg element",
+          "Wrap the svg in a <figure> — that alone announces it",
+          "Set aria-hidden=\"true\" so the reader skips the raw shapes"
+        ],
+        "answer": 0,
+        "why": "Inline SVG has no alt attribute; the accessible-name mechanism is a first-child <title> (plus role=\"img\" so the drawing is treated as one image). aria-hidden is for decorative graphics only."
+      },
+      {
+        "q": "A polyline sparkline renders as a solid black blob instead of a thin line. What went wrong?",
+        "options": [
+          "polyline requires closePath() before rendering",
+          "The points attribute must use semicolons between pairs",
+          "fill defaults to black and stroke defaults to none — you need fill=\"none\" and a stroke color",
+          "polyline only works inside a <path> element"
+        ],
+        "answer": 2,
+        "why": "Shapes fill black by default and have no stroke; an open trace must explicitly set fill=\"none\" and give the outline a stroke color."
+      }
+    ],
+    "html-a10-canvas": [
+      {
+        "q": "A canvas styled with CSS to 600x300 shows blurry, stretched drawings. Why?",
+        "options": [
+          "The GPU compositor rounds coordinates on large canvases",
+          "The bitmap is still the default 300x150; CSS merely stretches it — set width/height attributes to 600 and 300",
+          "getContext(\"2d\") was called before the styles loaded",
+          "fillRect antialiases unless lineWidth is set to 1"
+        ],
+        "answer": 1,
+        "why": "Attribute width/height define the bitmap's real resolution; CSS only scales the rendered box, so a small bitmap gets stretched like a low-res photo."
+      },
+      {
+        "q": "You call ctx.arc(100, 75, 50, 0, Math.PI * 2) but nothing appears on screen. What is missing?",
+        "options": [
+          "A stroke() or fill() call — path commands only define geometry",
+          "The angles must be given in degrees, not radians",
+          "arc() requires a preceding closePath()",
+          "The canvas must have tabindex to receive drawing commands"
+        ],
+        "answer": 0,
+        "why": "arc, moveTo and lineTo build an invisible path; pixels change only when stroke() or fill() executes it."
+      },
+      {
+        "q": "You must render a live scatter plot with 50,000 points updating each second, and separately a static 12-node architecture diagram with clickable nodes. Which technology split is right?",
+        "options": [
+          "Canvas for both — it is always faster",
+          "SVG for both — it is always more maintainable",
+          "SVG for the scatter plot, canvas for the diagram",
+          "Canvas for the scatter plot, SVG for the diagram"
+        ],
+        "answer": 3,
+        "why": "Tens of thousands of frequently redrawn points overwhelm the DOM, so canvas wins there; a small interactive diagram gets events, CSS and accessibility for free as SVG."
+      }
+    ],
+    "html-a11-template-slot": [
+      {
+        "q": "Your script appends tpl.content to the page directly. The first card appears, but every later attempt stamps nothing. Why?",
+        "options": [
+          "Templates self-destruct after one use by specification",
+          "Inserting a DocumentFragment MOVES its children out, emptying the template — clone with tpl.content.cloneNode(true) instead",
+          "The template needs a refresh() call between stamps",
+          "document.querySelector locked the template after the first read"
+        ],
+        "answer": 1,
+        "why": "A fragment's nodes relocate on insertion, so appending the content itself drains the blueprint; deep-cloning preserves the original for every subsequent stamp."
+      },
+      {
+        "q": "A third-party widget must keep its internal styles safe from any host page's CSS (and vice versa). Which mechanism provides that isolation?",
+        "options": [
+          "Wrapping the widget in a <template> element",
+          "Using only named slots for all content",
+          "Attaching a shadow root and rendering the widget's markup inside it",
+          "Prefixing every class name with the vendor's name"
+        ],
+        "answer": 2,
+        "why": "Shadow DOM is the boundary: outer selectors do not reach in and inner styles do not leak out. Templates are inert storage and prefixes are only a convention."
+      },
+      {
+        "q": "You register a component with customElements.define(\"card\", CardElement) and nothing upgrades. What is wrong?",
+        "options": [
+          "define() must be called before the class is declared",
+          "Custom element names require a hyphen — \"team-card\" works, \"card\" is rejected",
+          "The class must extend HTMLDivElement, not HTMLElement",
+          "Custom elements only upgrade inside a <template>"
+        ],
+        "answer": 1,
+        "why": "The hyphen is how the parser separates author-defined tags from current and future built-ins; hyphen-less names throw at registration."
+      }
+    ],
+    "html-a12-drag-drop-geolocation": [
+      {
+        "q": "Your drop handler on a kanban column never fires, though dragstart works and the ghost image follows the cursor. What is the most likely cause?",
+        "options": [
+          "The dragged card is missing an id attribute",
+          "The column's dragover handler does not call e.preventDefault(), so the browser keeps rejecting the drop",
+          "dataTransfer.setData used \"text/plain\" instead of \"text/html\"",
+          "drop events only fire on <form> elements"
+        ],
+        "answer": 1,
+        "why": "Every element rejects drops by default; cancelling dragover's default action is the required opt-in, and skipping it silently suppresses drop."
+      },
+      {
+        "q": "In dragstart you try dataTransfer.setData(\"element\", cardNode) to pass the card itself. What is the correct approach?",
+        "options": [
+          "Use setData(\"text/plain\", cardNode.id) and re-find the element with getElementById in the drop handler",
+          "Serialize the node with cardNode.toString() first",
+          "Attach the node to e.dataTransfer.files instead",
+          "Pass the node through a global variable — dataTransfer is only for files"
+        ],
+        "answer": 0,
+        "why": "dataTransfer carries strings only; the idiom is to transfer an identifier and resolve it back to the live element on drop."
+      },
+      {
+        "q": "A store finder works on localhost but on the deployed http:// site the location button does nothing. What explains it?",
+        "options": [
+          "Production servers must whitelist the Geolocation API in robots.txt",
+          "getCurrentPosition needs enableHighAccuracy in production",
+          "Geolocation requires a secure context — HTTPS in production (localhost is exempt for development)",
+          "The permission prompt only appears for domains with a favicon"
+        ],
+        "answer": 2,
+        "why": "Powerful APIs like geolocation are HTTPS-only; localhost counts as secure for development, which is exactly why the bug appears only after deployment."
+      }
+    ],
+    "html-a13-storage-workers-sse": [
+      {
+        "q": "A user's saved filters must survive browser restarts, but the currently-open report tab should reset per tab. Where does each belong?",
+        "options": [
+          "Both in localStorage with different keys",
+          "Filters in localStorage, open-report state in sessionStorage",
+          "Filters in sessionStorage, open-report state in localStorage",
+          "Both in cookies so the server can restore them"
+        ],
+        "answer": 1,
+        "why": "localStorage persists across restarts and is shared by all tabs; sessionStorage is scoped to one tab and cleared when it closes — exactly the two lifetimes described."
+      },
+      {
+        "q": "After localStorage.setItem(\"cart\", cartObject), reading the value back gives the string \"[object Object]\". What went wrong?",
+        "options": [
+          "The cart exceeded the 5 MB quota and was truncated",
+          "setItem requires a third argument declaring the type",
+          "Storage stores strings only — the object was coerced; use JSON.stringify on write and JSON.parse on read",
+          "Objects must be stored in sessionStorage, not localStorage"
+        ],
+        "answer": 2,
+        "why": "Any non-string value is stringified by coercion, and objects coerce to \"[object Object]\"; the JSON round-trip is the standard fix."
+      },
+      {
+        "q": "A live sports-score page only ever receives updates from the server and must survive flaky hotel Wi-Fi with minimal code. Best transport?",
+        "options": [
+          "A WebSocket connection with a hand-written reconnect loop",
+          "Server-Sent Events via EventSource — one-way push over HTTP with automatic reconnection",
+          "Polling fetch() every two seconds",
+          "A Web Worker that holds the connection open"
+        ],
+        "answer": 1,
+        "why": "The traffic is strictly server-to-client, which is SSE's exact use case — and EventSource reconnects by itself, the code WebSocket would make you write."
+      }
+    ],
+    "html-a14-style-guide": [
+      {
+        "q": "A page renders fine for you, but the client's CMS mangles it and the validator reports dozens of errors. The markup uses unquoted attributes like class=hero box. What is the root cause?",
+        "options": [
+          "The CMS requires XHTML 1.0 doctype declarations",
+          "Unquoted values end at the first space — class=hero box is class=\"hero\" plus a junk attribute box; browsers guess, stricter tools do not",
+          "class attributes may not contain two words",
+          "The validator is misconfigured; unquoted attributes are invalid HTML5"
+        ],
+        "answer": 1,
+        "why": "An unquoted value terminates at whitespace, silently splitting the intended value; forgiving browsers hide the bug that stricter parsers expose."
+      },
+      {
+        "q": "During a code review you find <center><font color=\"red\">Special offer</font></center>. What is the correct modernization?",
+        "options": [
+          "Replace with <div align=\"center\"><span style=\"color:red\">Special offer</span></div>",
+          "Keep it — browsers still render both elements",
+          "Replace with a semantic element carrying a class, and move centering and color into a stylesheet rule",
+          "Replace <font> with <big> since font sizing was the issue"
+        ],
+        "answer": 2,
+        "why": "The fix is separation of concerns: structure in HTML (a heading or paragraph with a class), presentation in CSS. align and inline styles just relocate the same anti-pattern."
+      },
+      {
+        "q": "Accented characters on a deployed page display as strange symbol pairs, though everything looked right locally. Which missing line is the prime suspect?",
+        "options": [
+          "<meta name=\"viewport\" content=\"width=device-width\">",
+          "<meta charset=\"UTF-8\"> early in the head",
+          "<html lang=\"en\"> on the root element",
+          "<!DOCTYPE html> on line one"
+        ],
+        "answer": 1,
+        "why": "Without a declared encoding the browser guesses, and a wrong guess turns multi-byte UTF-8 characters into mojibake; the charset meta pins the decoding."
+      }
+    ],
+    "html-a15-debugging-validation": [
+      {
+        "q": "Your CSS rule 'table > tr' matches nothing, though the source clearly shows tr elements directly inside the table. What happened?",
+        "options": [
+          "tr elements cannot be styled directly",
+          "The parser inserted a tbody between table and tr during repair — the DOM differs from your source",
+          "The rule needs !important to beat browser defaults",
+          "Tables must have an id before child selectors work"
+        ],
+        "answer": 1,
+        "why": "Browsers auto-insert tbody while parsing tables, so selectors run against a repaired tree; 'table tr' or 'tbody > tr' matches the reality."
+      },
+      {
+        "q": "The W3C validator returns 52 errors on your page. What is the professional next step?",
+        "options": [
+          "Fix all 52 from the bottom up so line numbers stay valid",
+          "Ignore it — the page renders correctly in Chrome",
+          "Fix only the first one or two errors, then re-validate — early errors cascade into phantom ones",
+          "Switch the validator to warning-only mode"
+        ],
+        "answer": 2,
+        "why": "A single early malformation (an unclosed quote or tag) generates dozens of downstream messages; fixing top-down and re-checking collapses the list fast."
+      },
+      {
+        "q": "An element sits inside a different parent in the DevTools Elements panel than in view-source. What does that tell you?",
+        "options": [
+          "DevTools renders a cached copy of the page",
+          "The server sent different HTML to DevTools",
+          "The parser repaired a markup error somewhere above it and adopted the element elsewhere — the difference is your bug report",
+          "The element has position: absolute in CSS"
+        ],
+        "answer": 2,
+        "why": "View-source shows the bytes you wrote; the Elements panel shows the repaired tree. A parent mismatch is the signature of a parser fix, usually caused by an unclosed or misplaced tag earlier in the source."
+      }
+    ],
+    "html-a16-project-full-site": [
+      {
+        "q": "Shared in a chat app, your landing page unfurls as a bare URL although you added <meta name=\"og:title\" ...>. What is wrong?",
+        "options": [
+          "og tags must appear in the body, not the head",
+          "Open Graph requires the property attribute — property=\"og:title\", not name",
+          "The page also needs a <link rel=\"social\"> element",
+          "Chat apps only unfurl pages with an RSS feed"
+        ],
+        "answer": 1,
+        "why": "Open Graph is read from meta elements with property=\"og:*\"; the name attribute variant is silently ignored by social crawlers."
+      },
+      {
+        "q": "A keyboard user visiting your landing page must press Tab eleven times before reaching the hero content. What is the standard structural fix?",
+        "options": [
+          "Reduce the navigation to fewer links",
+          "Add tabindex=\"-1\" to every nav link",
+          "Move the nav element below main in the source",
+          "Make the first focusable element a skip link — an anchor targeting main's id"
+        ],
+        "answer": 3,
+        "why": "A skip link (<a href=\"#main\">) lets keyboard and screen-reader users bypass repeated navigation in one action; it is the expected first tab stop on professional sites."
+      },
+      {
+        "q": "In the features section you must present two product models rated against six features. Which markup is correct?",
+        "options": [
+          "A table with a caption and th cells using scope=\"col\" and scope=\"row\"",
+          "A CSS grid of divs — tables are deprecated for layout",
+          "Nested ul lists, one per model",
+          "A dl with each feature as dt and both ratings in one dd"
+        ],
+        "answer": 0,
+        "why": "This is genuinely two-dimensional data — each value means something only at the intersection of a feature row and a model column — which is exactly what table, caption and scoped headers express. The deprecation applies to tables for page layout, not for data."
+      }
+    ]
+  }
+}

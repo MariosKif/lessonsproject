@@ -1,0 +1,424 @@
+{
+  "quizzes": {
+    "con-b1-synthesize-client-documents-briefing": [
+      {
+        "q": "You're building a kickoff briefing from three client documents. Why does the prompt require every claim to be tagged with its source?",
+        "options": [
+          "It's the guardrail against hallucination and silent blending of facts across documents, the biggest risk when synthesizing multiple sources at once",
+          "It's a formatting requirement for uploading files to a Claude Project",
+          "It makes the briefing look more thorough",
+          "Tags are needed to sort the document alphabetically"
+        ],
+        "answer": 0,
+        "why": "Tagging each claim to its source is the direct guardrail against hallucination and silently blending facts from different documents into unflagged inferences."
+      },
+      {
+        "q": "The annual report and a prior consulting deck report different headcount figures for the same period. What should the briefing do?",
+        "options": [
+          "Average the two figures together",
+          "Flag it explicitly as a contradiction rather than letting the AI silently pick one figure",
+          "Use whichever figure appears in the more recent-looking document",
+          "Omit headcount from the briefing entirely"
+        ],
+        "answer": 1,
+        "why": "The contradictions section exists to surface real inconsistencies explicitly, rather than letting the model quietly resolve them on its own."
+      },
+      {
+        "q": "Which of these is a mistake this lesson specifically warns against?",
+        "options": [
+          "Uploading each document as a separate file into a Claude Project",
+          "Checking source-tagged claims against the original document",
+          "Pasting confidential materials into an account not covered by your firm's data-handling agreement",
+          "Asking for open questions to raise at the kickoff meeting"
+        ],
+        "answer": 2,
+        "why": "The lesson explicitly lists pasting confidential materials into an account outside your firm's data-handling agreement as a common mistake."
+      }
+    ],
+    "con-b2-structure-deliverable-storyline": [
+      {
+        "q": "Why does the prompt ask for 2-3 alternative storyline structures instead of one straight-to-outline draft?",
+        "options": [
+          "Clients require multiple structures to be presented",
+          "It reduces the total number of findings needed",
+          "Alternative structures are faster to generate",
+          "It keeps structure a genuine choice you make, instead of accepting the model's first framing"
+        ],
+        "answer": 3,
+        "why": "Asking for multiple options first keeps the consultant treating storyline structure as a real choice, rather than defaulting to the model's first framing."
+      },
+      {
+        "q": "A finding doesn't fit cleanly into any proposed section. What should happen to it?",
+        "options": [
+          "List it separately as 'doesn't fit — reconsider' rather than forcing it in or dropping it silently",
+          "Delete it from the findings list",
+          "Strengthen its wording so it fits the strongest section",
+          "Merge it into the closest-matching section regardless of fit"
+        ],
+        "answer": 0,
+        "why": "The 'doesn't fit' list matters because forcing every finding into a tidy structure is how real deliverables end up misrepresenting or overreaching on evidence."
+      },
+      {
+        "q": "The prompt explicitly bans which behavior?",
+        "options": [
+          "Proposing more than one storyline structure",
+          "Inventing new findings or strengthening a finding's claim just to make it fit a section better",
+          "Writing a one-sentence 'so what' per section",
+          "Recommending a structure based on how well findings support it"
+        ],
+        "answer": 1,
+        "why": "The explicit ban is against strengthening a finding's claim or inventing new findings just to make the storyline fit better, protecting evidence integrity."
+      }
+    ],
+    "con-i1-industry-research-before-proposal": [
+      {
+        "q": "Why does the lesson recommend reviewing and narrowing Gemini's proposed research plan before letting Deep Research run, rather than accepting a broad brief as-is?",
+        "options": [
+          "Gemini charges extra for revising a research plan",
+          "Vague research briefs return fewer sources",
+          "It keeps the resulting report's sourcing traceable, rather than producing vague, uncited generalizations",
+          "Reviewing the plan is required by Gemini's interface before any run"
+        ],
+        "answer": 2,
+        "why": "Reviewing and narrowing the research brief before Deep Research runs keeps the report's sourcing traceable and reduces vague, uncited generalizations."
+      },
+      {
+        "q": "Before a statistic from a Gemini Deep Research report goes into a client-facing proposal, what must happen?",
+        "options": [
+          "Nothing further — citations guarantee accuracy",
+          "Convert it into a percentage",
+          "Remove the citation to keep the proposal clean",
+          "Cross-check it against the primary source, not just Gemini's paraphrase"
+        ],
+        "answer": 3,
+        "why": "Even sourced answers can misread or overstate what a source says, so any statistic going into the proposal must be cross-checked against the primary source."
+      },
+      {
+        "q": "Which is a mistake this lesson specifically calls out?",
+        "options": [
+          "Treating 'sourced' as automatically 'correct' and skipping independent verification of high-stakes claims",
+          "Prioritizing sources from the last 12 months",
+          "Giving Deep Research a specific, bounded research brief",
+          "Asking follow-up questions to narrow overly generic answers"
+        ],
+        "answer": 0,
+        "why": "The lesson warns against treating citations as proof of accuracy on their own, since even sourced answers need independent verification for high-stakes claims."
+      }
+    ],
+    "con-i2-slide-narratives-executive-summaries": [
+      {
+        "q": "What's the key difference between a 'topic title' and an 'action title' for a consulting slide?",
+        "options": [
+          "Action titles are always longer than 15 words",
+          "An action title states the conclusion the slide supports, not just a description of its topic",
+          "Topic titles are used only for appendix slides",
+          "Action titles require a chart, topic titles don't"
+        ],
+        "answer": 1,
+        "why": "An action title states a conclusion (what to do with the slide), while a topic title like 'Customer Retention Analysis' tells the reader nothing actionable."
+      },
+      {
+        "q": "A slide's data only shows correlation, but the drafted action title implies causation. What should happen?",
+        "options": [
+          "Keep the title since it's more persuasive",
+          "Delete the underlying data from the slide",
+          "The AI should flag the slide so the consultant can revise the title or the content",
+          "Move the slide to the appendix"
+        ],
+        "answer": 2,
+        "why": "The prompt specifically asks the AI to flag any slide where the action title overstates what the underlying data actually shows, such as implying causation from correlation."
+      },
+      {
+        "q": "Why does the prompt ask for the action titles to also be listed alone, in sequence, at the end?",
+        "options": [
+          "It's required for slide numbering",
+          "It replaces the need for an executive summary",
+          "It shortens the overall deck",
+          "It lets you read the whole deck's argument in about 30 seconds, close to how a rushed executive will actually experience it"
+        ],
+        "answer": 3,
+        "why": "Reading the standalone title list is close to how a rushed executive actually experiences the deck, so it's a fast check that the argument holds together."
+      }
+    ],
+    "con-i3-workshop-interview-preparation": [
+      {
+        "q": "Why does the prompt ask for a likely 'vague or deflective answer' and a follow-up probe for each core question?",
+        "options": [
+          "It rehearses a probe in advance, closing the hesitation gap that happens when an interviewer gets a non-answer in real time",
+          "It's required for workshop facilitation software",
+          "It makes the interview guide longer",
+          "It replaces the need for warm-up questions"
+        ],
+        "answer": 0,
+        "why": "Pre-drafting the likely deflective answer and its follow-up probe improves real-time performance by closing the hesitation gap interviewers feel when they get a vague answer."
+      },
+      {
+        "q": "If the interview runs short on time, how should questions be cut according to the prompt?",
+        "options": [
+          "Cut the warm-up questions only, keep everything else",
+          "Cut the questions least tied to the interview's core hypothesis first, keeping what's most load-bearing",
+          "Cut questions randomly to save time",
+          "Cut the closing open question only"
+        ],
+        "answer": 1,
+        "why": "The prompt ranks cuts by relevance to the hypothesis, protecting the interview's core purpose rather than losing the most important question to a tangent."
+      },
+      {
+        "q": "Which is a mistake this lesson specifically warns against?",
+        "options": [
+          "Anchoring core questions to a specific hypothesis",
+          "Preparing a follow-up probe for vague answers",
+          "Using the same generic guide for every stakeholder regardless of role or likely candor",
+          "Requesting a facilitation structure for a group workshop"
+        ],
+        "answer": 2,
+        "why": "The lesson warns against reusing the same generic guide for every stakeholder, since role and likely candor should shape the questions."
+      }
+    ],
+    "con-a1-repeatable-engagement-workflow": [
+      {
+        "q": "Why must the 'Required Human Verification' column state a specific, checkable action instead of something like 'review carefully'?",
+        "options": [
+          "Specific actions are required by consulting industry regulation",
+          "It makes the table shorter",
+          "Vague instructions take longer to write",
+          "A vague instruction means nothing to a new team member, while a specific action is checkable and actually enforces quality control"
+        ],
+        "answer": 3,
+        "why": "A specific, checkable action is usable as real quality control, while a vague instruction like 'review carefully' means nothing to a new team member."
+      },
+      {
+        "q": "The prompt instructs the AI not to invent a stage or task the consultant didn't describe. Why?",
+        "options": [
+          "It keeps the workflow document honest about how the team actually currently works, rather than aspirational",
+          "Inventing stages would violate confidentiality rules",
+          "It reduces the number of tools needed",
+          "It's faster to generate a shorter document"
+        ],
+        "answer": 0,
+        "why": "Restricting the AI to only formalize described stages keeps the document honest about actual current practice instead of an aspirational, fuller-looking workflow."
+      },
+      {
+        "q": "How should the workflow document be validated before becoming the firm's standard reference?",
+        "options": [
+          "Publish it immediately once the AI generates it",
+          "Review it against a real recent engagement and circulate it to a colleague to confirm it matches how the team actually works",
+          "Have only the person who wrote it review it",
+          "Skip review since the table format is self-explanatory"
+        ],
+        "answer": 1,
+        "why": "The lesson recommends reviewing the draft against a real engagement and having a colleague confirm it before adopting it as the standard reference."
+      }
+    ],
+    "pm-b1-meeting-notes-to-decisions-actions-owners": [
+      {
+        "q": "An action item in your raw notes has no clearly stated owner. What should the structured summary do?",
+        "options": [
+          "Assign it to whoever spoke most in the meeting",
+          "Assign it to the project manager by default",
+          "Write 'TBD' rather than guessing an owner",
+          "Omit the action item entirely"
+        ],
+        "answer": 2,
+        "why": "The instruction to write 'TBD' instead of guessing is the most important line in this prompt, preventing false accountability from an invented owner."
+      },
+      {
+        "q": "Why does the prompt separate 'decisions made' from 'open issues / parking lot' into different sections?",
+        "options": [
+          "It's a formatting requirement of most PM tools",
+          "It makes the document longer",
+          "Decisions and open issues can't be discussed in the same meeting",
+          "It mirrors how project governance actually works — decisions are settled, open issues still need to come back on a future agenda"
+        ],
+        "answer": 3,
+        "why": "Splitting decisions from open issues mirrors real project governance: decisions are settled while open issues need to return to a future agenda."
+      },
+      {
+        "q": "Which is a mistake this lesson specifically warns against?",
+        "options": [
+          "Letting the AI assign an owner or due date that wasn't actually agreed in the meeting",
+          "Sending the summary to attendees the same day",
+          "Reading the output against your raw notes before sending",
+          "Using consistent section headers every time"
+        ],
+        "answer": 0,
+        "why": "The lesson explicitly warns against letting the AI invent an owner or due date that wasn't actually agreed in the meeting."
+      }
+    ],
+    "pm-b2-status-reports-stakeholders-read": [
+      {
+        "q": "Who decides whether the project's overall status is 'on track,' 'at risk,' or 'off track' in this workflow?",
+        "options": [
+          "The AI infers it from the rough notes provided",
+          "The PM decides and states it explicitly; the AI is told not to infer or change it based on the content",
+          "The stakeholder decides after reading the report",
+          "It's calculated automatically from the project timeline"
+        ],
+        "answer": 1,
+        "why": "Requiring the PM to state the actual status prevents the amber-vs-green judgment call, which requires real project knowledge, from being outsourced to the AI."
+      },
+      {
+        "q": "A report lists three active blockers but the status line says 'on track.' What does this violate?",
+        "options": [
+          "The 200-word limit",
+          "The requirement to name what's needed from the reader",
+          "The instruction not to soften or exaggerate the stated status — the status line must honestly match the content",
+          "The instruction to use bullet points"
+        ],
+        "answer": 2,
+        "why": "The prompt directly guards against a report reading more reassuring than the actual content warrants — the status line must match reality."
+      },
+      {
+        "q": "Why does the prompt cap the report at under 200 words?",
+        "options": [
+          "Email clients truncate longer reports",
+          "It's a hard technical limit of the AI tool",
+          "Shorter reports are required for legal reasons",
+          "It turns the report from a status dump into something a busy stakeholder can skim and act on in under a minute"
+        ],
+        "answer": 3,
+        "why": "The strict word limit is what makes the report something a stakeholder can act on immediately, rather than a status dump nobody reads fully."
+      }
+    ],
+    "pm-i1-project-plans-work-breakdowns-from-goal": [
+      {
+        "q": "Before generating the work breakdown structure, what does the prompt ask the AI to do first?",
+        "options": [
+          "List the clarifying questions it would need answered to make the breakdown realistic, which the PM then answers",
+          "Generate three alternative breakdowns immediately",
+          "Estimate the total project budget",
+          "Ask the PM to choose a PM software tool"
+        ],
+        "answer": 0,
+        "why": "Requiring clarifying questions before the plan itself keeps the output from being a generic template dressed up as your specific project."
+      },
+      {
+        "q": "Why does the prompt require every task to be tagged as either '[from my input]' or '[typical pattern — verify]'?",
+        "options": [
+          "It's a formatting requirement of most project tools",
+          "It stops a plausible-sounding but unverified task from being silently treated as fact, and lets the PM scan quickly for what needs judgment",
+          "It shortens the overall task list",
+          "Tags are needed to calculate the project budget"
+        ],
+        "answer": 1,
+        "why": "Tagging every task by its source is the core guardrail against treating an unverified assumption as a confirmed fact in the plan."
+      },
+      {
+        "q": "Which is a mistake this lesson specifically warns against?",
+        "options": [
+          "Answering the clarifying questions before generating the plan",
+          "Treating the output as a first draft to correct",
+          "Accepting AI-estimated task durations without checking them against your team's actual historical velocity",
+          "Importing the corrected breakdown into your real PM tool"
+        ],
+        "answer": 2,
+        "why": "The lesson warns against accepting AI-estimated durations without verifying them against your team's actual historical velocity and capacity."
+      }
+    ],
+    "pm-i2-risk-registers-mitigation-drafts": [
+      {
+        "q": "The AI drafts a mitigation that just says 'monitor closely.' What does the lesson say about this?",
+        "options": [
+          "It's an acceptable default for low-impact risks",
+          "It should be used for every risk to save time",
+          "It's the correct mitigation for high-likelihood risks",
+          "It's too vague to be useful — a mitigation should state a concrete action and, where relevant, a trigger for when to act"
+        ],
+        "answer": 3,
+        "why": "Vague phrases like 'monitor closely' are exactly what the prompt requires the AI to avoid, in favor of a concrete action and trigger for when to act."
+      },
+      {
+        "q": "Why are AI-suggested additional risk categories kept in a separate 'risks to consider adding' section instead of merged into the main register?",
+        "options": [
+          "Only the PM knows which risks genuinely apply to this specific project, so suggestions shouldn't be treated as confirmed without review",
+          "Merging them would exceed the table's column limit",
+          "The main register can only contain risks with assigned owners",
+          "Separate sections are required by most risk-management software"
+        ],
+        "answer": 0,
+        "why": "Keeping AI-suggested risks separate respects that only the PM can confirm which risks genuinely apply, rather than treating suggestions as automatically valid."
+      },
+      {
+        "q": "Which is a mistake this lesson specifically warns against?",
+        "options": [
+          "Leaving the owner field blank in the initial AI draft",
+          "Building the register once at kickoff and never revisiting it as the project's real risk profile changes",
+          "Rating risks only based on what was stated in the project summary",
+          "Proposing additional risk categories separately from the main list"
+        ],
+        "answer": 1,
+        "why": "The lesson warns that a register built once at kickoff and never revisited loses credibility and misses the project's evolving actual risk profile."
+      }
+    ],
+    "pm-i3-stakeholder-communications-difficult-moments": [
+      {
+        "q": "The prompt instructs the AI to lead the message with the fact, not an apology or a long buildup. Why?",
+        "options": [
+          "It's shorter to write that way",
+          "Apologies are considered unprofessional in all business writing",
+          "Burying bad news under preamble reads as evasive and makes the reader search for the actual point",
+          "It matches most corporate style guides"
+        ],
+        "answer": 2,
+        "why": "Leading with the fact rather than an apology is a deliberate structural choice, since burying bad news reads as evasive and forces the reader to hunt for the point."
+      },
+      {
+        "q": "What is the critical guardrail regarding dates and commitments in this prompt?",
+        "options": [
+          "The AI must always include a specific recovery date",
+          "Dates should be omitted from all difficult messages",
+          "The AI should ask the reader to propose a new date",
+          "The AI must not add a new promised date or outcome the PM hasn't actually confirmed"
+        ],
+        "answer": 3,
+        "why": "This is the critical guardrail: an AI trying to sound reassuring might invent a recovery date the PM never confirmed, turning an honest update into a broken promise."
+      },
+      {
+        "q": "Which is a mistake this lesson specifically warns against?",
+        "options": [
+          "Using corporate hedging language that technically communicates nothing concrete",
+          "Ending the message with a single clear ask",
+          "Stating the reason for the issue briefly and factually",
+          "Keeping the message under 150 words"
+        ],
+        "answer": 0,
+        "why": "Corporate hedging phrases are directly targeted by the lesson because they dilute a difficult message into vague language that says nothing concrete."
+      }
+    ],
+    "pm-a1-pm-operating-system-templates-workflows": [
+      {
+        "q": "One of your five recurring tasks (the risk register) doesn't have a defined verification step in your notes. What should the AI do?",
+        "options": [
+          "Invent a plausible verification step so the table looks complete",
+          "Flag it under a 'needs a defined verification step' note rather than inventing one for the PM",
+          "Leave that row out of the table entirely",
+          "Copy the verification step from a different task"
+        ],
+        "answer": 1,
+        "why": "Flagging missing verification steps instead of inventing one protects the integrity of the whole system — a made-up step would give false confidence."
+      },
+      {
+        "q": "Why does the operating-system table include 'Cadence' and 'Output Destination' columns, not just the task and tool?",
+        "options": [
+          "Those columns are required by most spreadsheet templates",
+          "They replace the need for a verification column",
+          "A PM under deadline pressure needs to know at a glance which template to reach for and where the result goes",
+          "They're only relevant for weekly tasks"
+        ],
+        "answer": 2,
+        "why": "Cadence and destination columns are what make the table usable day-to-day, letting a PM under pressure know at a glance which template applies and where output goes."
+      },
+      {
+        "q": "Before treating the assembled operating system as final, what does the lesson recommend?",
+        "options": [
+          "Publish it immediately since the AI already validated it",
+          "Have only the PM who wrote it review it once",
+          "Skip testing since the individual prompts were already proven",
+          "Test it on a real live project for one full cycle, such as one sprint or reporting period"
+        ],
+        "answer": 3,
+        "why": "Testing the assembled system on one real full cycle catches gaps that only show up under real project conditions, before it's treated as final."
+      }
+    ]
+  }
+}

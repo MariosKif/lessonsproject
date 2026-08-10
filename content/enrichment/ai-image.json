@@ -1,0 +1,640 @@
+{
+  "enrichment": {
+    "img-b1-first-effective-image-prompts": {
+      "placeholders": [
+        {
+          "name": "SUBJECT — who or what, with specific identifying details",
+          "what": "Describe who or what is the star of the image with enough specific detail that two different readers would picture the same thing. Include approximate age, role, species, or object type — not just \"a woman\" or \"a shoe.\" Vague subjects force the model to invent generic details that may not match what you actually need.",
+          "examples": [
+            "A golden retriever puppy, about 3 months old",
+            "A male chef in his 40s with a graying beard, wearing a white double-breasted jacket",
+            "A weathered brown leather messenger bag with brass buckles"
+          ]
+        },
+        {
+          "name": "KEY ACTION OR POSE",
+          "what": "One clear thing the subject is doing or how it's positioned — not several actions strung together. This is what makes the image feel alive rather than a static portrait, and it needs to be simple enough to render in a single frame.",
+          "examples": [
+            "mid-laugh with head tilted back",
+            "kneading dough with both hands, flour dusted on the counter",
+            "sitting cross-legged, looking directly at the camera"
+          ]
+        },
+        {
+          "name": "SETTING/BACKGROUND",
+          "what": "Where the scene takes place — the physical environment around the subject. Be specific about the location type and any notable background elements, since \"outside\" or \"a room\" leaves the model to guess and usually produces a generic or clashing backdrop.",
+          "examples": [
+            "a sunlit farmers market with wooden produce stalls",
+            "a minimalist white studio with no visible background elements",
+            "a cluttered home office with bookshelves and a warm desk lamp"
+          ]
+        },
+        {
+          "name": "COMPOSITION — shot type and camera angle",
+          "what": "The framing of the shot — how much of the subject is visible and from what angle, using photography terms both ChatGPT and Gemini recognize (close-up, medium shot, wide shot, eye level, low angle, overhead). This controls what actually fills the frame.",
+          "examples": [
+            "close-up shot at eye level",
+            "wide shot from a slightly elevated angle",
+            "medium shot, camera at chest height looking slightly up"
+          ]
+        },
+        {
+          "name": "LIGHTING",
+          "what": "The quality, direction, and source of light in the scene — this affects mood more than almost any other single word in the prompt. Name a time of day, light source, or lighting style rather than just writing \"good lighting.\"",
+          "examples": [
+            "golden-hour side lighting",
+            "soft overcast diffused light",
+            "dramatic single-source studio light from the left"
+          ]
+        },
+        {
+          "name": "ART STYLE OR PHOTOGRAPHIC STYLE",
+          "what": "Whether the image should look like a photograph (and what kind) or an illustration (and what kind). This one phrase decides the overall visual language, so it needs to be specific rather than left implicit.",
+          "examples": [
+            "photorealistic editorial photography",
+            "flat vector illustration with clean lines",
+            "watercolor painting with soft bleeding edges"
+          ]
+        },
+        {
+          "name": "MOOD/COLOR PALETTE",
+          "what": "The emotional tone you want the viewer to feel, paired with the actual colors that should dominate the image. Naming both together, instead of just \"happy\" or \"moody,\" gives the model something concrete to render.",
+          "examples": [
+            "cozy and inviting, warm amber and brown tones",
+            "clinical and calm, cool blues and whites",
+            "energetic and bold, high-contrast orange and navy"
+          ]
+        },
+        {
+          "name": "ASPECT RATIO / FORMAT NOTES",
+          "what": "The exact shape and destination of the final image, stated as a ratio or platform name, so you don't have to crop it afterward. Different platforms expect different shapes, and cropping loses detail you already generated.",
+          "examples": [
+            "square 1:1 format for Instagram feed",
+            "16:9 for a website hero banner",
+            "vertical 9:16 for Instagram or TikTok Stories"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a low-stakes, fast image",
+          "whenToUse": "Use this when you need something usable in under a minute — an internal mockup or a placeholder for a draft document — and don't need to polish lighting or mood.",
+          "prompt": "[SUBJECT], [ACTION], [SETTING], simple photorealistic style, [ASPECT RATIO]\n\nExample: A red ceramic mug on a wooden desk, steam rising from the coffee inside, in a bright home office, simple photorealistic style, square 1:1"
+        },
+        {
+          "label": "Advanced version with camera and lens language",
+          "whenToUse": "Use this when you need a highly specific photographic look for client work or paid advertising, and want to control depth of field and lens character explicitly.",
+          "prompt": "[SUBJECT], [ACTION], [SETTING], shot on an 85mm lens at f/1.8 for shallow depth of field, [LIGHTING], [MOOD/COLOR PALETTE], hyper-realistic commercial photography, [ASPECT RATIO]\n\nExample: A senior software engineer in her 50s typing at a standing desk, mid-focus with a slight smile, in a modern open-plan office with soft bokeh in the background, shot on an 85mm lens at f/1.8 for shallow depth of field, warm afternoon window light, professional and approachable mood with soft neutral tones, hyper-realistic commercial photography, 16:9 for a website hero"
+        },
+        {
+          "label": "Stylized illustration version for brand or editorial content",
+          "whenToUse": "Use this when photorealism isn't the goal — brand illustration, blog headers, or editorial graphics that need a distinct art style instead of a photo look.",
+          "prompt": "[SUBJECT], [ACTION], [SETTING], flat vector illustration with [COLOR PALETTE] and [LINE STYLE], [ASPECT RATIO]\n\nExample: A young woman journaling at a cafe table, writing thoughtfully with a warm cup beside her, in a cozy corner cafe with a window view, flat vector illustration with a muted pastel palette of dusty blue and terracotta and thin rounded outlines, 4:5 for a blog header"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Image looks generic? Push for more specific detail",
+          "prompt": "The result feels generic. Rewrite only the subject and style lines with much more specific, concrete detail — real distinguishing features, not adjectives like \"beautiful\" or \"professional\" — and keep every other line of the prompt exactly the same."
+        },
+        {
+          "label": "Wrong mood or lighting? Fix that one line",
+          "prompt": "The lighting and mood aren't right. Rewrite only the lighting and mood/color palette lines to be [DESCRIBE WHAT YOU ACTUALLY WANT, e.g., \"brighter and more energetic, with cool blue tones instead of warm\"] — keep the subject, setting, and composition lines exactly as they are."
+        },
+        {
+          "label": "Composition is off? Isolate the framing",
+          "prompt": "The framing isn't working. Rewrite only the composition line to specify a different shot type and angle (for example, a closer crop or a lower camera angle) — leave every other line of the prompt untouched so I can see what the framing change alone does."
+        },
+        {
+          "label": "Ready to reuse — turn it into a template",
+          "prompt": "This version works. Repeat back this exact prompt as a labeled template for me, and tell me which single line I'd need to change to reuse it for a different subject next time."
+        }
+      ],
+      "walkthrough": "Maria runs a small neighborhood bakery and needs a hero image for her new website, but she has no product photos worth using and no budget this month for a photo shoot.\n\nShe opens ChatGPT and pastes the template prompt, filling in each bracket herself: subject — \"a wooden pastry case filled with croissants and sourdough loaves\"; action — \"arranged as if just placed for the morning\"; setting — \"a small independent bakery with warm wood shelving\"; composition — \"close-up shot at a slight downward angle\"; lighting — \"soft window light from the left\"; style — \"photorealistic food photography\"; mood/color — \"warm and rustic, golden-brown tones\"; format — \"16:9 for a website hero banner.\"\n\nThe first image comes back close: the pastry case and lighting look right, but the composition is too tight and cuts off the top of the loaves awkwardly. Instead of starting a new chat, Maria sends the follow-up that isolates the framing, right in the same conversation: \"Rewrite only the composition line to specify a different shot type and angle — leave every other line untouched.\" ChatGPT suggests a medium shot at eye level instead of the tight downward angle.\n\nShe regenerates with just that one line changed. The second version keeps the same warm lighting and rustic mood but now shows the full case with better framing — exactly what she needed for the header.\n\nTotal time: about twelve minutes, including reading the template once and comparing the two versions side by side. She saves the final prompt in a notes file so she can reuse the same style block for her seasonal menu photos later."
+    },
+    "img-b2-choose-the-right-image-tool": {
+      "placeholders": [
+        {
+          "name": "DESCRIBE THE IMAGE TASK — e.g., \"a polished hero banner for an ecommerce site that needs a legible headline baked into the image\"",
+          "what": "One or two sentences describing the actual image you need — what it's for, who'll see it, and any hard requirement like legible text or an exact product match. Figure this out by asking \"what is this image supposed to accomplish,\" not by describing what it should look like — that comes later. A bad value is just \"a picture of a shoe\"; a good one names the purpose and any non-negotiable requirement.",
+          "examples": [
+            "a polished hero banner for an ecommerce site that needs a legible headline baked into the image",
+            "a labeled infographic comparing three subscription tiers for a pitch deck slide",
+            "a product photo of my hand-poured candle that needs to match the real jar exactly for a marketplace listing"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick check for a single low-stakes image",
+          "whenToUse": "Use this when you just need a fast gut-check for one internal or personal image and don't need the full comparison reasoning.",
+          "prompt": "For this image job: [DESCRIBE THE IMAGE TASK], should I use ChatGPT or Gemini? Give me one tool and one sentence why, no backup needed."
+        },
+        {
+          "label": "Team decision for a recurring job type",
+          "whenToUse": "Use this when you're setting a standing default for a job type your team does repeatedly, like every weekly social post, not just a one-off image.",
+          "prompt": "My team regularly needs this type of image: [DESCRIBE THE RECURRING JOB TYPE — e.g., \"weekly Instagram carousel graphics with a headline and subtext\"]. Based only on the tool strengths I list below, recommend ONE default tool — ChatGPT or Gemini — we should standardize on for every instance of this job, with reasoning we could put in a team doc.\n\nTool strengths:\n- ChatGPT (GPT Image 2): best prompt adherence and instruction-following, strong at text placement, easiest for conversational edits, works with saved ChatGPT Project instructions.\n- Gemini: best-in-class for infographics, diagrams, and mockups, edits conversationally, integrates with Google Workspace and saved Gems."
+        },
+        {
+          "label": "High-stakes client or paid-campaign job",
+          "whenToUse": "Use this when the image is for a paying client or a paid ad campaign, where getting the layout and text right on the first pass matters as much as aesthetics.",
+          "prompt": "I need to generate an image for a PAID CLIENT CAMPAIGN. Job: [DESCRIBE THE IMAGE TASK]. Based only on the tool strengths listed below, tell me which tool — ChatGPT or Gemini — is the safer choice for getting the layout and any required text right on the first or second attempt, and explain the specific reason.\n\nTool strengths:\n- ChatGPT (GPT Image 2): reasoning-based model that plans composition and text layout before rendering; leads on instruction-following and text placement.\n- Gemini: best-in-class for infographics, diagrams, and mockups; strong conversational editing; integrated with Google Workspace."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Not sure the recommendation fits your plan",
+          "prompt": "Before I commit, tell me what plan or tier I'd need for your top recommendation (free vs. paid) so I can check it fits what I actually have access to for this job."
+        },
+        {
+          "label": "Want a fallback if the primary tool is unavailable",
+          "prompt": "If the primary tool you recommended is down or I can't access it right now, walk me through how I'd adapt the same job for the other tool instead."
+        },
+        {
+          "label": "Double-check against your actual constraint",
+          "prompt": "One more constraint I didn't mention: [ADD THE MISSING CONSTRAINT — e.g., \"this needs to slot directly into a Google Slides deck\" or \"I only have a free-tier account\"]. Does that change your recommendation? If so, tell me the new pick and why."
+        },
+        {
+          "label": "Turn the answer into a reusable rule",
+          "prompt": "Turn this recommendation into a one-line rule I can save, in the format: \"For [this job type], default to [ChatGPT or Gemini], because [reason].\""
+        }
+      ],
+      "walkthrough": "Devon runs marketing for a small skincare brand and needs a new homepage hero banner that has to include the words \"Summer Glow Sale\" baked directly into the image, since the web developer won't be free to add text overlays for another week.\n\nDevon opens ChatGPT and pastes the lesson's tool-comparison prompt, filling in the job line with: \"a polished hero banner for an ecommerce site that needs a legible headline baked into the image.\" The reference list of tool strengths from the template goes in unchanged below it.\n\nChatGPT responds that the primary choice is ChatGPT itself (GPT Image 2), since it has the strongest text placement and instruction-following for a headline that has to render correctly inside the image, and notes he'd reach for Gemini instead if this were becoming a labeled infographic rather than a photographic banner.\n\nDevon isn't sure his ChatGPT plan generates images fast enough for a same-day deadline, so he sends the follow-up asking about a fallback if the primary tool isn't available. The AI explains how to adapt the same headline instructions for Gemini instead, in case he needs a second option.\n\nDevon generates the banner directly in ChatGPT using the recommended approach, gets a clean, legible \"Summer Glow Sale\" headline on the first try, and exports it at 16:9 for the website.\n\nTotal time: about eight minutes from opening the chat to having an exportable banner, instead of guessing at a tool and wasting a regeneration cycle on the wrong one."
+    },
+    "img-b3-iterate-refine-vary-upscale": {
+      "placeholders": [
+        {
+          "name": "SPECIFIC ELEMENT TO CHANGE",
+          "what": "The one specific thing in the image you want different — a single element, not a general complaint. Naming it precisely, such as the background or one object, is what lets ChatGPT or Gemini change only that piece instead of regenerating everything.",
+          "examples": [
+            "the background",
+            "the color of the subject's jacket",
+            "the shadow direction on the left side of the product"
+          ]
+        },
+        {
+          "name": "ELEMENTS TO PRESERVE — e.g., \"composition, subject pose, color palette, overall style\"",
+          "what": "Everything about the current image that already works and that you don't want touched. This is the single most important line in a refinement prompt, since both tools will otherwise sometimes treat any instruction as permission to regenerate more of the scene.",
+          "examples": [
+            "composition, subject pose, color palette, overall style",
+            "the product's shape, size, and label placement, plus the studio lighting setup",
+            "the framing, camera angle, and background — only the model's outfit should change"
+          ]
+        },
+        {
+          "name": "SPECIFIC CHANGE — e.g., \"replace the background with a plain white studio backdrop\" / \"make the lighting brighter and remove the shadow on the left side of the subject\"",
+          "what": "The exact instruction for what should happen to the element you named above, written as a concrete, actionable edit rather than a vague wish. A good instruction describes the end state you want to see, not just the problem.",
+          "examples": [
+            "replace the background with a plain white studio backdrop",
+            "make the lighting brighter and remove the shadow on the left side of the subject",
+            "change the mug's color from blue to a warm terracotta orange"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Generating variations of a keeper (not a change)",
+          "whenToUse": "Use this once you have a version you like and want 2-4 close alternatives to choose from, rather than fixing a flaw.",
+          "prompt": "Generate 3 variations of this exact image. Keep the composition, subject, and overall style identical — only vary [WHAT SHOULD VARY, e.g., \"the exact pose and minor background details\"] slightly between each version, so I have a small set of close alternatives to pick the strongest one from."
+        },
+        {
+          "label": "Multiple fixes at once (batching small changes)",
+          "whenToUse": "Use this when you've spotted two or three small, unrelated flaws in one image and want to fix them together in one pass instead of three separate rounds.",
+          "prompt": "Keep everything about this image the same except these specific changes:\n1. [FIRST SPECIFIC CHANGE]\n2. [SECOND SPECIFIC CHANGE]\nDo not change anything else, including composition, subject pose, color palette, and overall style."
+        },
+        {
+          "label": "Final quality pass before export",
+          "whenToUse": "Use this only once you've picked the single best version and are ready to export — never before the composition is finalized.",
+          "prompt": "Give me this exact image at the highest resolution and quality you can produce, with no change to content, composition, or color — this is a resolution-only pass, not a content edit."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "The 'preserve' instruction got ignored",
+          "prompt": "The result changed more than I asked for — [DESCRIBE WHAT CHANGED THAT SHOULDN'T HAVE]. Please redo this, and this time keep [ELEMENTS TO PRESERVE] pixel-for-pixel identical, changing only [SPECIFIC ELEMENT TO CHANGE]."
+        },
+        {
+          "label": "The fix overshot — dial it back",
+          "prompt": "That change went too far. Redo it with a smaller, subtler version of the same edit — for example, lighten the shadow by about half as much as you just did, don't remove it entirely."
+        },
+        {
+          "label": "Check for new artifacts before exporting",
+          "prompt": "Before I export this, look closely at the full-resolution version for any artifacts — warped hands, garbled text, odd seams, or texture repeats — and tell me exactly where they are if you see any."
+        },
+        {
+          "label": "Pick up this thread again later",
+          "prompt": "Summarize this image's final prompt and the changes we made to get here, so I can paste it back into a new conversation if I need another variation of it later."
+        }
+      ],
+      "walkthrough": "Priya sells handmade ceramic mugs and generated a flat-lay product shot last week in ChatGPT that's almost right — good composition and lighting, but the background is a distracting wood-grain pattern that clashes with her shop's clean look.\n\nInstead of writing a brand-new prompt in a new chat, Priya returns to the same conversation and sends the refinement template as a follow-up message. She fills in: element to change — \"the background\"; elements to preserve — \"composition, subject pose, color palette, overall style\"; specific change — \"replace the background with a plain white studio backdrop.\"\n\nThe regenerated image keeps her mug in the exact same position and lighting, now sitting on clean white instead of the busy wood grain — exactly the fix she needed, with nothing else disturbed.\n\nLooking closer at full size, she notices a faint double-edge artifact where the mug's handle meets the new background. She sends the follow-up asking ChatGPT to check for artifacts before export, and it confirms the seam and offers to regenerate just that region. She accepts, and the second pass removes it cleanly.\n\nBefore moving to her next product, she asks for a summary of the final prompt and changes so she can pick the thread back up later if she needs another background variation, and pastes it into a notes doc next to the mug's product code.\n\nTotal time: about six minutes for two targeted regenerations, compared to the fifteen minutes she'd spent the first time writing and rewriting a full prompt from scratch to get a comparable result."
+    },
+    "img-i1-product-photos-and-mockups": {
+      "placeholders": [
+        {
+          "name": "PRODUCT NAME",
+          "what": "The actual name of your product, exactly as you'd want it recognized, not a generic category. Use the name you'd put on a listing or invoice, not a placeholder like \"my product.\"",
+          "examples": [
+            "Amber Glow Soy Candle",
+            "Heritage Leather Crossbody Bag",
+            "Bamboo Fiber Travel Mug"
+          ]
+        },
+        {
+          "name": "MATERIAL/COLOR/KEY FEATURES — be exact, include only what is true of the real product",
+          "what": "A precise, factual list of what the product is actually made of, its real color, and its distinguishing features, checked against the physical item in front of you rather than what you wish it looked like. This is the guardrail that stops the generated image from inventing a feature your product doesn't have.",
+          "examples": [
+            "clear amber glass jar, 8oz, natural cotton wick, no visible label text",
+            "full-grain tan leather with brass hardware and a 24-inch adjustable strap",
+            "matte black bamboo-fiber exterior with a stainless steel interior and a silicone grip band"
+          ]
+        },
+        {
+          "name": "e.g., \"held in a hand against a neutral studio background\" / \"on a rustic wooden table with morning light\" / \"flat lay on a marble surface with 2-3 complementary props\"",
+          "what": "The real-world scene or context the product photo should be set in — this should match how you actually plan to sell or display it. A marketplace primary image needs a plain background; a social post can use a styled lifestyle context.",
+          "examples": [
+            "held in a hand against a neutral studio background",
+            "on a rustic wooden table with soft morning light coming from the left",
+            "flat lay on a light marble surface with a folded linen napkin and a sprig of eucalyptus as props"
+          ]
+        },
+        {
+          "name": "BACKGROUND COLOR/TYPE",
+          "what": "The specific background your destination requires — many marketplaces mandate a pure white background for the main listing photo, while social or lifestyle content allows textured or colored backdrops. Check your platform's photo requirements before choosing.",
+          "examples": [
+            "pure white background (#FFFFFF)",
+            "soft light-gray seamless studio backdrop",
+            "natural wood table surface, no added background"
+          ]
+        },
+        {
+          "name": "ASPECT RATIO for your platform, e.g., 1:1 for a marketplace listing",
+          "what": "The exact image shape your destination platform requires, so you don't crop and lose part of the product after generating. Marketplaces commonly want square images; websites and social vary.",
+          "examples": [
+            "1:1 for a marketplace listing",
+            "4:5 for an Instagram feed post",
+            "16:9 for a website product banner"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Multiple angles of the same product in one pass",
+          "whenToUse": "Use this when you need a full listing gallery — front, side, and detail shots — instead of just one hero image.",
+          "prompt": "Using the exact same product description and attached reference photo as before — [PRODUCT NAME], a [MATERIAL/COLOR/KEY FEATURES] — generate three angles: a straight-on front view, a 45-degree angle view, and a close-up detail shot of [SPECIFIC DETAIL, e.g., \"the stitching on the strap\"]. Keep the same background, lighting, and style across all three so they read as one photoshoot."
+        },
+        {
+          "label": "On-model or in-use context instead of a plain product shot",
+          "whenToUse": "Use this for social or lifestyle content where showing the product in use builds more trust than an isolated studio shot.",
+          "prompt": "Create a lifestyle photo of [PRODUCT NAME], a [MATERIAL/COLOR/KEY FEATURES], being used naturally by [WHO — e.g., \"a person in their 30s\"] in [REALISTIC USE CONTEXT, e.g., \"a cozy living room, curled up on a couch with a book\"]. Style: candid, natural light, photorealistic. Rules: do not add any feature, color, logo, or accessory the product does not actually have. Format: [ASPECT RATIO]."
+        },
+        {
+          "label": "Seasonal or promotional mockup variant",
+          "whenToUse": "Use this to reuse an accurate product description for a seasonal campaign visual, without redoing the factual product-listing steps.",
+          "prompt": "Create a promotional mockup for [PRODUCT NAME], a [MATERIAL/COLOR/KEY FEATURES], styled for [SEASON/CAMPAIGN, e.g., \"an autumn holiday gift guide\"] with seasonal props such as [PROPS, e.g., \"dried leaves and a warm knit blanket, no text overlay\"]. Rules: do not add any feature, color, logo, or accessory the product does not actually have, and keep any seasonal styling to the background and props only, not the product itself. Format: [ASPECT RATIO]."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check accuracy against the real product",
+          "prompt": "Compare this generated image against these exact real product specs: [PASTE YOUR MATERIAL/COLOR/KEY FEATURES LIST AGAIN]. Point out anything in the image that doesn't match — wrong proportions, an invented feature, or a color that's off — so I can regenerate just that part."
+        },
+        {
+          "label": "Background doesn't match platform rules",
+          "prompt": "The background isn't matching my platform's requirement. Regenerate with the exact same product, pose, and lighting, but change only the background to [REQUIRED BACKGROUND, e.g., \"pure white, #FFFFFF, no shadow gradient\"]."
+        },
+        {
+          "label": "Invented logo or label appeared",
+          "prompt": "The image added a logo or label text that doesn't exist on my real product. Regenerate with that area left completely blank, and don't add any text or branding unless I explicitly describe it."
+        },
+        {
+          "label": "Need it resized for a second platform",
+          "prompt": "I need this same image reformatted for a second platform. Recrop or regenerate at [NEW ASPECT RATIO] while keeping the product, background, and lighting identical to this version."
+        }
+      ],
+      "walkthrough": "Tomas makes small-batch leather wallets and sells them on an online marketplace that requires a pure white background for the main listing photo, but he doesn't own a lightbox or studio setup.\n\nHe writes down his wallet's exact facts first: full-grain brown leather, bifold, hand-stitched edges, no visible logo. He takes one clear phone photo of the actual wallet on his kitchen table, then opens ChatGPT, attaches the photo, and pastes the product-photo template, filling it in: product name — \"Classic Bifold Wallet\"; material/color/key features — \"full-grain dark brown leather, bifold, visible hand stitching along the edges, no logo or embossing\"; context — \"held in a hand against a neutral studio background\"; background — \"pure white background\"; format — \"1:1 for a marketplace listing.\"\n\nThe first image looks close, but the leather renders slightly reddish instead of the real chestnut brown, and there's a faint embossed logo the wallet doesn't actually have.\n\nTomas sends the follow-up about an invented logo, pasting his same feature list and asking ChatGPT to remove the branding and correct the color. The regenerated version comes back with no logo and a more accurate brown tone.\n\nHe holds his actual wallet next to the screen to double-check — the stitching, shape, and color now match closely enough that a customer wouldn't be misled.\n\nTotal time: about eleven minutes across two generations, compared to the cost and scheduling of a real product photo shoot, and with a description he can reuse for every wallet color he adds to the shop later."
+    },
+    "img-i2-social-marketing-visuals-brand-style": {
+      "placeholders": [
+        {
+          "name": "e.g., \"flat illustration, muted pastel palette (dusty blue, terracotta, cream), soft rounded shapes, minimal shadows, warm and approachable mood\"",
+          "what": "The fixed description of your brand's visual identity — palette, art style, shapes, lighting, mood — written once and reused word-for-word across every image in a campaign. This is the one piece of text you should never paraphrase between generations, and the best candidate for saving as a ChatGPT Project instruction or a Gemini Gem.",
+          "examples": [
+            "flat illustration, muted pastel palette (dusty blue, terracotta, cream), soft rounded shapes, minimal shadows, warm and approachable mood",
+            "bold flat illustration, high-contrast orange and navy palette, thick black outlines, playful geometric shapes, energetic mood",
+            "photorealistic editorial photography, warm neutral tones (cream, camel, walnut), soft natural window light, minimalist uncluttered framing"
+          ]
+        },
+        {
+          "name": "SPECIFIC SUBJECT FOR THIS POST — e.g., \"a person unboxing a package at their kitchen table\"",
+          "what": "The one thing this specific image is about — the only part of the prompt that changes from post to post. Keep it to one clear scene or subject, since the style block above is doing the brand-consistency work, not this line.",
+          "examples": [
+            "a person unboxing a package at their kitchen table",
+            "a customer scanning a QR code on a coffee cup sleeve",
+            "a small team celebrating around a laptop showing a sales dashboard"
+          ]
+        },
+        {
+          "name": "ASPECT RATIO for platform, e.g., 4:5 for Instagram feed / 9:16 for Stories",
+          "what": "The fixed output shape for this platform, kept identical across the whole batch of posts so the feed or story sequence doesn't look mismatched in size.",
+          "examples": [
+            "4:5 for Instagram feed",
+            "9:16 for Instagram or TikTok Stories",
+            "1:1 for a LinkedIn feed post"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Locking style with a reference image instead of text alone",
+          "whenToUse": "Use this when you want the style locked even more tightly than text description alone can guarantee, by attaching an approved example image in the same ChatGPT or Gemini chat.",
+          "prompt": "Use the attached reference image as the exact style guide for color palette, linework, and mood — do not deviate from it. Generate a new image of: [SPECIFIC SUBJECT FOR THIS POST]. Format: [ASPECT RATIO for platform]. Do not introduce any new colors, styles, or moods outside what's shown in the reference."
+        },
+        {
+          "label": "Multi-platform batch from one style block",
+          "whenToUse": "Use this when the same campaign needs to run across two platforms with different aspect ratios, and you want to confirm the style block still holds at both sizes.",
+          "prompt": "Use this exact style block for every image in this set — do not vary it:\nStyle block: [STYLE BLOCK]\n\nGenerate the same subject — [SPECIFIC SUBJECT FOR THIS POST] — twice: once at 4:5 for Instagram feed, once at 9:16 for Stories. Keep the composition adapted sensibly to each shape, but the style, palette, and mood must match exactly."
+        },
+        {
+          "label": "New campaign, adapting an existing style block",
+          "whenToUse": "Use this when launching a new campaign that should feel related to, but distinct from, an existing brand style — not a full rebrand.",
+          "prompt": "Here is our existing brand style block: [EXISTING STYLE BLOCK]. For this new [CAMPAIGN NAME] campaign, adapt it with one deliberate change: [THE ONE CHANGE, e.g., \"swap the palette to include a seasonal deep red accent, keep everything else identical\"]. Write out the new complete style block first, then generate an image of: [SPECIFIC SUBJECT FOR THIS POST]. Format: [ASPECT RATIO]."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Palette drifted from the style block",
+          "prompt": "The colors in this image don't match my style block exactly. Regenerate using this exact style block with no changes: [PASTE YOUR STYLE BLOCK], and double check the output palette matches it before showing me the result."
+        },
+        {
+          "label": "Compare against the rest of the set",
+          "prompt": "Here's the style block again: [STYLE BLOCK]. Compare this new image against the last one you generated for me in this set and tell me specifically what, if anything, is visually inconsistent between them."
+        },
+        {
+          "label": "Aspect ratio doesn't match the rest of the batch",
+          "prompt": "This one came out at the wrong aspect ratio. Regenerate at exactly [REQUIRED ASPECT RATIO], keeping the subject, style block, and composition otherwise identical."
+        },
+        {
+          "label": "Turn it into a saved Project or Gem",
+          "prompt": "Repeat back the exact style block wording you used for this image, formatted so I can save it as a ChatGPT Project's custom instructions (or as a Gemini Gem) and never retype it for this brand again."
+        }
+      ],
+      "walkthrough": "Amara manages Instagram for a small stationery brand and has been posting inconsistent-looking graphics for months — some illustrated, some photographic, none clearly related to each other.\n\nShe sits down to plan a week of five posts and first writes a style block: \"flat illustration, muted pastel palette (dusty blue, terracotta, cream), soft rounded shapes, minimal shadows, warm and approachable mood.\" She saves this exact wording as a new ChatGPT Project's custom instructions so she never retypes it from memory.\n\nFor post one, she opens a chat inside that Project and pastes the template with subject — \"a person unboxing a package at their kitchen table\" — and format — \"4:5 for Instagram feed.\" The result matches her intended look closely. For posts two through five, she opens new chats inside the same Project, changing only the subject line each time: a hand writing in a notebook, a desk flat lay, a person mailing a package, a close-up of washi tape.\n\nLaying all five out side by side afterward, post four looks slightly more saturated than the rest. She sends the follow-up asking ChatGPT to compare it against the last image in the set, which confirms the color drift and regenerates it using the exact saved style block, bringing it back in line.\n\nTotal time: about twenty-five minutes for five on-brand, visually matching posts — versus the usual hour of one-off prompting and after-the-fact editing to make mismatched images look related."
+    },
+    "img-i3-text-in-images-graphic-design": {
+      "placeholders": [
+        {
+          "name": "POSTER / QUOTE GRAPHIC / SOCIAL GRAPHIC",
+          "what": "The type of text-bearing graphic you're making — this sets the layout convention the model leans on, since a poster has different proportions and text hierarchy than a square social quote card. Pick the single closest match to what you're actually producing.",
+          "examples": [
+            "POSTER",
+            "QUOTE GRAPHIC",
+            "SOCIAL GRAPHIC"
+          ]
+        },
+        {
+          "name": "EXACT TEXT",
+          "what": "The precise wording that must appear in the image, spelled exactly as you want it to render — this same placeholder is used for both the headline and the subtext lines in the prompt. Write it exactly as it should look, including capitalization and punctuation, since the model copies what you type and a typo here becomes a typo in the image.",
+          "examples": [
+            "NEW SEASON, NEW YOU",
+            "20% off all classes this week",
+            "Small steps, every day."
+          ]
+        },
+        {
+          "name": "DESCRIBE — color palette, imagery, typography feel, e.g., \"bold sans-serif lettering, high-contrast navy and gold, minimalist geometric background\"",
+          "what": "The visual direction for everything except the words themselves — colors, background imagery, and the general feel of the lettering. This is where your brand or campaign look lives, separate from the exact wording above.",
+          "examples": [
+            "bold sans-serif lettering, high-contrast navy and gold, minimalist geometric background",
+            "hand-lettered script feel, soft blush pink and cream palette, watercolor floral accents",
+            "clean modern serif type, black and white with one bold red accent color, plenty of negative space"
+          ]
+        },
+        {
+          "name": "e.g., \"centered text over a plain background, generous margins\"",
+          "what": "How the text and imagery should be arranged on the page — centered, aligned to one side, stacked, and how much breathing room surrounds it. This controls whether the final graphic feels cluttered or clean.",
+          "examples": [
+            "centered text over a plain background, generous margins",
+            "headline top-left, image filling the right two-thirds of the frame",
+            "text stacked bottom-third over a full-bleed background image, dark gradient behind the text for legibility"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Background-only version (add text manually after)",
+          "whenToUse": "Use this for client-facing or high-stakes work where any spelling risk is unacceptable — generate the visual only, then add real vector text in a design tool.",
+          "prompt": "Design a background and imagery only, with NO text, watermark, or logo anywhere in the image, for a [POSTER / QUOTE GRAPHIC / SOCIAL GRAPHIC]. Visual style: [DESCRIBE — color palette, imagery, typography feel]. Layout: leave clear open space in the [LOCATION, e.g., \"top third\"] for text to be added afterward in a design tool. Format: [ASPECT RATIO]."
+        },
+        {
+          "label": "Single short callout instead of headline + subtext",
+          "whenToUse": "Use this when you only need one short line of text — a badge, a sticker, a single stat callout — rather than a full headline-and-subtext layout.",
+          "prompt": "Design a [POSTER / QUOTE GRAPHIC / SOCIAL GRAPHIC] with exactly one short line of text rendered exactly as written, no spelling changes: \"[EXACT TEXT]\" — no more than 4 words. Visual style: [DESCRIBE — color palette, imagery, typography feel]. Layout: [DESCRIBE LAYOUT]. Do not add any additional text, watermark, or logo."
+        },
+        {
+          "label": "Labeled infographic instead of a headline poster",
+          "whenToUse": "Use this in Gemini when the deliverable is closer to an infographic or diagram with several short text labels, rather than one big headline.",
+          "prompt": "Design an infographic-style [SOCIAL GRAPHIC] with 3-4 short labeled sections, each with a short heading rendered exactly as written: \"[EXACT TEXT FOR EACH LABEL]\". Visual style: [DESCRIBE — color palette, imagery, typography feel]. Layout: clean, evenly spaced sections that read left-to-right or top-to-bottom, generous margins. Do not add any additional text, watermark, or logo beyond the labels specified."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Proofread flagged a spelling error",
+          "prompt": "The text says [WHAT IT ACTUALLY SAYS] but it should say exactly \"[EXACT TEXT]\". Regenerate with that exact wording, keeping the visual style and layout identical."
+        },
+        {
+          "label": "Text is illegible or too small",
+          "prompt": "The text is too small or hard to read. Regenerate with the headline noticeably larger and higher contrast against its background, keeping the same wording, style, and layout otherwise."
+        },
+        {
+          "label": "Model added unwanted extra text",
+          "prompt": "The image added extra text or a watermark I didn't ask for. Regenerate with only the exact text I specified — no additional words, logos, or watermarks anywhere in the image."
+        },
+        {
+          "label": "Text still failing after two tries — fall back to manual",
+          "prompt": "This text still isn't rendering reliably. Generate the same background and imagery with no text at all this time, and leave clear open space in the [LOCATION] so I can add the real text myself in a design tool."
+        }
+      ],
+      "walkthrough": "Kenji runs a boutique fitness studio and needs a promo graphic for this week's class discount, due out on social within the hour.\n\nHe opens ChatGPT and pastes the text-in-image template, filling in: graphic type — \"SOCIAL GRAPHIC\"; headline — \"NEW SEASON, NEW YOU\"; subtext — \"20% off all classes this week\"; visual style — \"bold sans-serif lettering, high-contrast teal and white, minimalist geometric background\"; layout — \"centered text over a plain background, generous margins.\"\n\nThe first result looks strong at a glance — bold teal background, big centered headline — but reading it letter by letter, Kenji notices the subtext says \"20% off all classes this weak\" instead of \"week.\"\n\nHe sends the follow-up flagging the spelling error, quoting the correct wording exactly, and asks for a regeneration with the same style and layout in the same conversation. The second version comes back with the subtext spelled correctly and the same clean design otherwise unchanged.\n\nKenji proofreads the corrected version character by character one more time before posting — a habit the lesson pushed him to build, since even a strong text-rendering model can still slip.\n\nTotal time: about seven minutes, including the proofread and one regeneration, well within his deadline. He notes in his campaign folder that ChatGPT handled this short two-line layout reliably, so he knows to reach for it again next time rather than testing a different tool under time pressure."
+    },
+    "img-a1-commercial-safety-licensing": {
+      "placeholders": [
+        {
+          "name": "e.g., \"paid Instagram ad campaign\" / \"internal slide deck\" / \"printed retail packaging\"",
+          "what": "The actual context the image will be used in — this is what determines how much commercial risk applies. An internal draft carries almost no risk; a paid ad or printed packaging carries real legal exposure if the plan tier or content isn't right.",
+          "examples": [
+            "paid Instagram ad campaign",
+            "internal slide deck for a board meeting",
+            "printed retail packaging for a product launching in three months"
+          ]
+        },
+        {
+          "name": "ChatGPT or Gemini",
+          "what": "The specific tool you used to generate the image, named precisely rather than just \"an AI tool,\" since the commercial-safety guidance below differs meaningfully by plan tier within each.",
+          "examples": [
+            "ChatGPT",
+            "Gemini",
+            "ChatGPT (used inside a Business workspace)"
+          ]
+        },
+        {
+          "name": "e.g., \"ChatGPT Plus\" / \"ChatGPT Business\" / \"Gemini Free\" / \"Google AI Pro\" / \"Workspace Enterprise\"",
+          "what": "The exact plan or subscription tier you're on for that tool, not just the tool name — data-handling and governance guarantees frequently differ between a free tier, a personal paid plan, and a Business or Enterprise plan for the same product.",
+          "examples": [
+            "ChatGPT Plus",
+            "ChatGPT Business",
+            "Google AI Pro",
+            "Workspace Enterprise"
+          ]
+        },
+        {
+          "name": "yes/no",
+          "what": "A direct yes or no answer to each of the three risk questions above it in the prompt — whether the image shows a recognizable real person, a real brand's logo or product, or a likely-copyrighted or named-artist-style reference. Answer all three honestly, since these are the three most common sources of an actual legal claim.",
+          "examples": [
+            "no",
+            "yes — includes a competitor's product visible in the background",
+            "no to a real person, no to a real logo, yes — the prompt referenced a named living illustrator's style"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick check for internal, low-stakes use",
+          "whenToUse": "Use this shortened version for a fast gut-check on something low-risk, like an internal deck or a personal project, where you don't need the full checklist depth.",
+          "prompt": "I generated an image with [ChatGPT or Gemini] on [YOUR PLAN/TIER] for internal use only: [INTENDED USE]. Is there any obvious risk I should know about even for internal-only use? One or two sentences is fine."
+        },
+        {
+          "label": "Full legal-team handoff for a paid campaign",
+          "whenToUse": "Use this expanded version when the asset needs to go to a legal or brand review team before a paid campaign ships, and you need a documented answer rather than just a quick check.",
+          "prompt": "I need a documented risk summary for legal/brand review before this ships. Based only on the facts below, write a short memo listing: (1) the specific risks, (2) what documentation or licensing check is needed, and (3) whether you'd recommend a plan-tier change given the stakes.\n\nIntended use: [INTENDED USE]\nTool used: [ChatGPT or Gemini]\nPlan/tier: [YOUR PLAN/TIER]\nContains a recognizable real person? [yes/no]\nContains a real brand's logo or product? [yes/no]\nContains a likely-copyrighted character or named-artist style reference? [yes/no]\nBudget/timeline constraint, if any: [CONSTRAINT]"
+        },
+        {
+          "label": "Re-checking an asset that's already published",
+          "whenToUse": "Use this if you're auditing images that already shipped, to catch and correct any risk before it becomes a real problem.",
+          "prompt": "This image already shipped and I'm auditing it after the fact. Based only on the facts below, tell me how urgent it is to address, and what my options are — leave it, replace it, or add documentation retroactively.\n\nIntended use (already live): [INTENDED USE]\nTool used: [ChatGPT or Gemini]\nPlan/tier: [YOUR PLAN/TIER]\nContains a recognizable real person? [yes/no]\nContains a real brand's logo or product? [yes/no]\nContains a likely-copyrighted character or named-artist style reference? [yes/no]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Asked for a next step, not just risks",
+          "prompt": "You've listed the risks. Now give me the single most important next action I should take before this ships, ranked first, and why it matters more than the others you listed."
+        },
+        {
+          "label": "Uncertain about your own plan tier",
+          "prompt": "I'm not sure exactly what my plan tier includes. Tell me the specific account or admin setting where I can check my actual commercial usage and data-handling terms, so I'm not guessing."
+        },
+        {
+          "label": "Considering a plan-tier upgrade",
+          "prompt": "Given these risks, would moving this account to a Business or Enterprise tier meaningfully reduce the risk, or is the risk coming from something a plan change wouldn't fix, like the named-artist reference? Explain which."
+        },
+        {
+          "label": "Need this in writing for a records file",
+          "prompt": "Summarize this entire risk check in three short bullet points I can paste into our asset log, including the tool, plan tier, date, and the specific risk finding."
+        }
+      ],
+      "walkthrough": "Elena runs marketing for a mid-sized furniture retailer and generated a product-styling image in ChatGPT last week for an upcoming paid ad. Before it goes live, her manager asks whether it's actually safe to run.\n\nElena opens a new chat and pastes the commercial-safety checklist prompt. She fills in: intended use — \"paid Instagram and Facebook ad campaign\"; tool used — \"ChatGPT\"; plan/tier — \"ChatGPT Plus\"; real person — \"no\"; real logo — \"no\"; copyrighted character or named-artist style — \"yes, the prompt included the phrase in the style of a specific living illustrator I follow on Instagram.\"\n\nThe response flags the named-artist reference as the main concrete risk, independent of which tool generated it, and notes that a personal ChatGPT Plus plan doesn't carry the data-exclusion or admin governance of a Business or Enterprise plan, which is worth documenting for an ongoing paid campaign. It recommends removing the named-artist phrase and, if paid campaigns like this become routine, considering a move to ChatGPT Business.\n\nElena sends the follow-up asking for the single most important next action. The AI ranks removing the named-artist reference first, since it's the concrete, fixable risk, ahead of the more general plan-tier concern.\n\nShe regenerates the image without that phrase, logs the tool, plan tier, and generation date in her asset tracking sheet, and clears it with her manager before the campaign launches.\n\nTotal time: about ten minutes, cheap insurance against a dispute that could have cost far more later."
+    },
+    "img-a2-repeatable-creative-pipeline": {
+      "placeholders": [
+        {
+          "name": "ROLE/BUSINESS",
+          "what": "Your job title or the name and type of your business — this frames the whole document around your actual context rather than a generic template.",
+          "examples": [
+            "freelance social media manager for small local businesses",
+            "in-house marketing designer at a 12-person ecommerce startup",
+            "Etsy shop owner selling handmade jewelry"
+          ]
+        },
+        {
+          "name": "LIST YOUR JOB TYPES AND PREFERRED TOOLS, e.g., \"product photos: ChatGPT; infographics and diagrams: Gemini; headline-driven posters: ChatGPT\"",
+          "what": "A short list mapping the recurring types of images you generate to ChatGPT or Gemini as the default for each, pulled from your own experience or the tool-selection lesson earlier in this path, not invented on the spot.",
+          "examples": [
+            "product photos: ChatGPT; infographics and diagrams: Gemini; headline-driven posters: ChatGPT",
+            "concept art and mood boards: ChatGPT; anything already in a Google Slides deck: Gemini",
+            "everything starts in ChatGPT for drafts; Gemini only when it needs to slot into a Doc or Slide"
+          ]
+        },
+        {
+          "name": "PASTE YOUR STYLE BLOCK(S) AND NOTE WHETHER IT'S A CHATGPT PROJECT OR A GEMINI GEM",
+          "what": "The exact, saved style-block wording you use for brand-consistent visuals, pasted verbatim, plus where it lives (a ChatGPT Project or a Gemini Gem), so the pipeline document preserves your real, working setup instead of a paraphrase.",
+          "examples": [
+            "flat illustration, muted pastel palette (dusty blue, terracotta, cream), soft rounded shapes, minimal shadows, warm and approachable mood — saved as a ChatGPT Project called \"Bakery Brand\"",
+            "bold flat illustration, high-contrast orange and navy palette, thick outlines, playful geometric shapes, energetic mood — saved as a Gemini Gem called \"Campaign Style\"",
+            "photorealistic editorial photography, warm neutral tones, soft natural light, minimalist uncluttered framing — not yet saved anywhere, typed fresh each time"
+          ]
+        },
+        {
+          "name": "DESCRIBE YOUR STEPS, e.g., \"draft, refine in the same chat, generate 3 variations, export at highest quality\"",
+          "what": "Your actual iteration sequence — the order you move from first draft to finished asset — stated as a short list of steps, not a philosophy.",
+          "examples": [
+            "draft, refine in the same chat, generate 3 variations, export at highest quality",
+            "draft three options, pick one, targeted refinement pass, export at final resolution",
+            "generate from an uploaded reference photo, one refinement round max, export — no extra quality pass needed for social"
+          ]
+        },
+        {
+          "name": "YOUR RULE",
+          "what": "Your standing decision for when text gets generated by AI versus added manually in a design tool — this closes off the most common source of embarrassing spelling mistakes in shipped work.",
+          "examples": [
+            "any client-facing or paid asset gets text added manually in a design tool, no exceptions",
+            "internal drafts can use AI-generated text; anything published gets a manual proofread and, if it fails once, a manual redo",
+            "AI-generated text is fine for captions under 4 words; anything longer goes through a design tool"
+          ]
+        },
+        {
+          "name": "YOUR CHECKLIST ITEMS",
+          "what": "The specific gate every image passes through before publishing, pulled from the commercial-safety lesson, stated as a short checklist rather than a vague reminder to \"be careful.\"",
+          "examples": [
+            "check plan tier per tool for data-handling terms; no real people without consent; no named-artist style references; log tool and date",
+            "confirm marketplace background requirements are met; compare against the real product; no invented branding",
+            "flag any real logo, real person, or named-artist style before it goes to the client for approval"
+          ]
+        },
+        {
+          "name": "YOUR CONVENTION",
+          "what": "The actual file-naming and logging pattern you use, or want to start using, so any image can be traced back to its tool, prompt, and date later.",
+          "examples": [
+            "YYYYMMDD_tool_jobtype_v1.png, logged in a shared spreadsheet with prompt text and plan tier",
+            "clientname_assettype_date_version.png, stored in a dated folder per campaign",
+            "productSKU_angle_date.jpg, cross-referenced in the inventory sheet"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Solo freelancer, lightweight version",
+          "whenToUse": "Use this when you're a one-person operation and want a lighter document than a full team reference — fewer sections, faster to actually maintain.",
+          "prompt": "Help me draft a short, practical personal image-generation checklist for my [ROLE/BUSINESS] — just the essentials I'll actually reread before each job, not a formal team document. Use only these details, don't invent anything: default tools — [LIST YOUR JOB TYPES AND PREFERRED TOOLS]; my style block — [PASTE YOUR STYLE BLOCK(S) AND NOTE WHETHER IT'S A CHATGPT PROJECT OR A GEMINI GEM]; my one non-negotiable safety rule — [YOUR RULE]. Keep it under half a page."
+        },
+        {
+          "label": "Team onboarding version for a new hire",
+          "whenToUse": "Use this when a new designer or marketer is joining and needs the full pipeline explained, not just referenced, with reasoning included rather than just the rules.",
+          "prompt": "Help me draft an onboarding guide for a new team member joining my [ROLE/BUSINESS], teaching them our image-generation pipeline. Use this structure, filling in only what I give you and explaining briefly WHY each rule exists so it's not just a list to memorize: default tool per job type — [LIST YOUR JOB TYPES AND PREFERRED TOOLS]; brand style block(s) — [PASTE YOUR STYLE BLOCK(S) AND NOTE WHETHER IT'S A CHATGPT PROJECT OR A GEMINI GEM]; iteration workflow — [DESCRIBE YOUR STEPS]; text rule — [YOUR RULE]; safety checklist — [YOUR CHECKLIST ITEMS]; file convention — [YOUR CONVENTION]."
+        },
+        {
+          "label": "Audit version for an existing, undocumented process",
+          "whenToUse": "Use this when your team already has an informal process and you want the AI to help you spot gaps before formalizing it into a document.",
+          "prompt": "Here's how my [ROLE/BUSINESS] currently generates images, informally: [DESCRIBE YOUR CURRENT PROCESS LOOSELY, e.g., \"we mostly just open whichever chat app is already tabbed and wing it, no style guide, no safety check\"]. Compare this against a standard pipeline covering: brief template, ChatGPT-vs-Gemini tool selection, brand consistency, iteration workflow, text handling, and commercial-safety checks. Tell me which of these six areas we're missing entirely, based only on what I described."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Too generic — ground it in your real details",
+          "prompt": "This still reads a bit generic. Rewrite section [SECTION NUMBER] using only these exact details, nothing invented: [PASTE YOUR ACTUAL DETAILS FOR THAT SECTION]."
+        },
+        {
+          "label": "Missing your team's specific constraint",
+          "prompt": "Add one more rule to the [SECTION NAME] section: [YOUR ADDITIONAL RULE OR CONSTRAINT]. Keep everything else in the document exactly as it was."
+        },
+        {
+          "label": "Turn it into a shareable format",
+          "prompt": "Reformat this whole document as a simple table with columns for Step, Who's Responsible, and Tool/Reference — so it's easy to scan and share with the team."
+        },
+        {
+          "label": "Set a review reminder",
+          "prompt": "Add a final line to the document noting that this pipeline should be reviewed every [TIMEFRAME, e.g., \"quarter\"], since ChatGPT and Gemini both update their image features often — and remind me what specifically tends to go stale fastest based on what's in this document."
+        }
+      ],
+      "walkthrough": "Sofia runs freelance social media management for four small local businesses and has been generating images the same ad-hoc way for a year — reopening whatever tool she used last time and re-explaining her style from memory for each client.\n\nShe decides to finally document her process. In ChatGPT, she pastes the pipeline template and fills in: role/business — \"freelance social media manager for small local businesses\"; default tools — \"product photos: ChatGPT; infographics and diagrams: Gemini; headline-driven posters: ChatGPT\"; style block — her saved wording for one client's bakery brand, noted as a ChatGPT Project called \"Bakery Brand\"; iteration workflow — \"draft, refine in the same chat, generate 3 variations, export at highest quality\"; text rule — \"any client-facing graphic with text gets proofread character by character before sending, no exceptions\"; safety checklist — \"check plan tier per tool for data-handling terms, no real people without consent, no named-artist references\"; file convention — \"clientname_assettype_date_version.png, logged in a shared spreadsheet.\"\n\nThe AI returns a clean one-page document organized under all seven headings, using her exact wording rather than generic filler.\n\nReading it back, Sofia realizes the document doesn't say how often she should revisit it. She sends the follow-up asking for a review-reminder line, and the AI adds a note to review the tool-selection section quarterly, flagging that default tools are what go stale fastest as ChatGPT and Gemini ship new image features.\n\nShe saves the finished document in her shared client folder so she can hand a version to a subcontractor if she ever needs backup help.\n\nTotal time: about eighteen minutes to turn a year of scattered habits into one document she can actually reuse and share."
+    }
+  }
+}

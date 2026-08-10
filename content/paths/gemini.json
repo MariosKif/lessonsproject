@@ -1,0 +1,25 @@
+{
+  "paths": [
+    {
+      "slug": "gemini-academy",
+      "title": "Gemini Academy",
+      "tagline": "From your first great prompt to a full Google-ecosystem AI workflow.",
+      "description": "A ladder of 8 hands-on lessons covering everything a working professional needs from Gemini: writing prompts that work the first time, prompting fundamentals with multimodal inputs, drafting in Gmail and Docs, analyzing documents and images together, running Deep Research for grounded reports, building data workflows in Sheets, choosing between Gemini and NotebookLM, and chaining it all into one end-to-end workflow.",
+      "kind": "tool-course",
+      "level": "mixed",
+      "toolSlug": "gemini",
+      "professionSlug": null,
+      "sortOrder": 7,
+      "lessons": [
+        "gem-b1-first-professional-result",
+        "gem-b2-prompting-fundamentals-multimodal",
+        "gem-b3-gmail-docs-daily-communication",
+        "gem-i1-analyzing-documents-and-images",
+        "gem-i2-deep-research-grounded-reports",
+        "gem-i3-sheets-data-workflows",
+        "gem-a1-notebooklm-vs-gemini",
+        "gem-a2-google-ecosystem-workflow"
+      ]
+    }
+  ]
+}

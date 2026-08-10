@@ -1,0 +1,44 @@
+{
+  "paths": [
+    {
+      "slug": "ai-for-teachers",
+      "title": "AI for Teachers",
+      "tagline": "Plan lessons, differentiate materials, grade with real feedback, and teach students to use AI honestly — without losing your voice or your standards.",
+      "description": "A 7-lesson path for teachers covering the AI workflows that save the most real prep and grading time: building a full lesson plan from a curriculum objective, differentiating one text or worksheet into three ability tiers, generating quizzes with verified answer keys, writing specific and constructive feedback comments, drafting parent communication templates for recurring scenarios, building a NotebookLM knowledge base from your curriculum documents, and redesigning an assignment to be AI-resilient while teaching students AI literacy directly. Every lesson keeps the AI grounded in your own material and your own voice, rather than generating generic content you'd have to rewrite anyway.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "teacher",
+      "sortOrder": 8,
+      "lessons": [
+        "tch-b1-lesson-plan-from-objectives",
+        "tch-b2-differentiated-materials",
+        "tch-b3-quiz-assessment-generation",
+        "tch-i1-feedback-comments",
+        "tch-i2-parent-communication-templates",
+        "tch-i3-notebooklm-curriculum-knowledge-base",
+        "tch-a1-ai-resilient-assignments-literacy"
+      ]
+    },
+    {
+      "slug": "ai-for-students",
+      "title": "AI for Students",
+      "tagline": "Study smarter, prep for exams, and get sharper at writing and research — while keeping every academic-integrity line firmly on your side.",
+      "description": "A 7-lesson path for students covering the AI workflows that actually build understanding instead of borrowing it: using AI as a Socratic tutor instead of an answer key, summarizing and questioning readings in NotebookLM, building practice questions and a spaced-review plan for an exam, getting feedback on your own writing without letting AI ghostwrite it, finding and verifying sources for a research paper, running an AI practice loop to build a technical skill, and combining all of it into one weekly personal learning system. Every lesson is built around one core habit — use AI to check and challenge your own thinking, never to replace the work of learning — with explicit academic-integrity guardrails throughout.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "student",
+      "sortOrder": 21,
+      "lessons": [
+        "stu-b1-ai-tutor-without-cheating",
+        "stu-b2-summarize-question-readings",
+        "stu-b3-exam-prep-practice-spaced-review",
+        "stu-i1-writing-feedback-not-ghostwriting",
+        "stu-i2-research-papers-find-organize-synthesize",
+        "stu-i3-learn-technical-skill-practice-loop",
+        "stu-a1-personal-learning-system"
+      ]
+    }
+  ]
+}

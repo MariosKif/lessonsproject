@@ -1,0 +1,42 @@
+{
+  "paths": [
+    {
+      "slug": "ai-for-creators",
+      "title": "AI for Content Creators",
+      "tagline": "Never run out of ideas, write in your own voice, repurpose one piece into ten, and build a content system that actually holds up.",
+      "description": "A 6-lesson path for content creators covering the AI workflows that make consistent output possible: systematic ideation grounded in your niche and real audience questions, scripting and outlining in your own voice, repurposing one long-form piece into ten platform-native posts, designing thumbnails and visuals with AI image tools, storyboarding short-form video concepts with AI video tools, and building a personal content operating system for calendar, batching, and consistency. Every lesson is built around a core habit: keep the AI grounded in your real voice, real audience signals, and real facts, instead of letting it default to generic output.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "content-creator",
+      "sortOrder": 9,
+      "lessons": [
+        "cre-b1-idea-generation-system",
+        "cre-b2-scripts-outlines-own-voice",
+        "cre-i1-repurpose-one-piece-ten-posts",
+        "cre-i2-thumbnails-visuals-ai-image",
+        "cre-i3-short-form-video-concepts-ai-video",
+        "cre-a1-content-operating-system"
+      ]
+    },
+    {
+      "slug": "ai-for-social-media",
+      "title": "AI for Social Media Managers",
+      "tagline": "Turn a strategy document into a month of posts, write platform-native captions, reply in brand voice, and report what happened and why.",
+      "description": "A 6-lesson path for social media managers covering the AI workflows that save the most time on the job: turning a strategy document into a full month of pillar-tagged posts, writing platform-native captions and hooks, drafting engagement replies in brand voice with clear escalation rules, turning raw analytics into a narrative report that separates facts from hypotheses, generating consistent on-brand campaign visuals with AI image tools, and running multi-client workflows with separate voice profiles, templates, and approval flows. Every lesson is built around a core habit: keep the AI grounded in the strategy, voice, and data you actually supply, and have it flag gaps instead of guessing.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "social-media-manager",
+      "sortOrder": 28,
+      "lessons": [
+        "smm-b1-month-of-posts-from-strategy-doc",
+        "smm-b2-platform-native-captions-hooks",
+        "smm-i1-engagement-replies-brand-voice",
+        "smm-i2-analytics-narratives",
+        "smm-i3-campaign-visuals-ai-image",
+        "smm-a1-multi-client-workflows"
+      ]
+    }
+  ]
+}

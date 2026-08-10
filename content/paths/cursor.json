@@ -1,0 +1,25 @@
+{
+  "paths": [
+    {
+      "slug": "cursor-academy",
+      "title": "Cursor Academy",
+      "tagline": "Code faster and ship with confidence in the AI-first editor",
+      "description": "An eight-lesson path from installing Cursor and mastering Tab autocomplete to running a complete spec-to-merged-PR delivery workflow. Covers chatting with an unfamiliar codebase, precise inline edits versus coordinated multi-file changes, delegating whole tasks to Agent mode with review checkpoints, writing .cursor/rules/*.mdc files that keep the agent on your team's conventions, disciplined debugging, and running parallel background and cloud agents for bigger work.",
+      "kind": "tool-course",
+      "level": "mixed",
+      "toolSlug": "cursor",
+      "professionSlug": null,
+      "sortOrder": 8,
+      "lessons": [
+        "cur-b1-setup-tab-autocomplete",
+        "cur-b2-chat-with-codebase",
+        "cur-i1-inline-edit-multi-file",
+        "cur-i2-agent-mode-whole-tasks",
+        "cur-i3-rules-files-conventions",
+        "cur-i4-debugging-workflows",
+        "cur-a1-background-cloud-agents",
+        "cur-a2-feature-delivery-workflow"
+      ]
+    }
+  ]
+}

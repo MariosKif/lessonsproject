@@ -1,0 +1,812 @@
+{
+  "enrichment": {
+    "ops-b1-sops-from-tribal-knowledge": {
+      "placeholders": [
+        {
+          "name": "NAME, e.g. \"receiving and logging inbound inventory shipments\"",
+          "what": "The specific process you're documenting, named clearly enough that someone unfamiliar with it would know what it covers. Find this by asking \"what would I call this if I had to list it on a shift schedule?\" A good value is specific and scoped to one task, not a whole job role.",
+          "examples": [
+            "Receiving and logging inbound inventory shipments",
+            "Closing the kitchen line at night",
+            "Processing a customer refund request"
+          ]
+        },
+        {
+          "name": "ROLE",
+          "what": "The job title or role of the person who currently performs this task day to day — not the person's name, but their position. This tells the AI who the SOP's \"you\" is when it writes instructions, and helps it use language appropriate to that role's typical experience level.",
+          "examples": [
+            "Warehouse associate",
+            "Line cook",
+            "Front desk supervisor"
+          ]
+        },
+        {
+          "name": "PASTE ROUGH NOTES / VOICE-OF-EXPERIENCE DESCRIPTION",
+          "what": "Your own explanation of how the task really happens, in whatever order it comes to mind — typed notes, a bullet list, or a transcript of you talking through it out loud. Include the exceptions and workarounds you'd normally only mention in person, since those are exactly what a written SOP tends to leave out. A weak version only covers the happy path; a strong one includes what to do when something goes wrong.",
+          "examples": [
+            "Check packing slip against the PO number first. Count every box, don't just eyeball it. If a box looks damaged, photograph it before opening. Log quantities in the inventory sheet, not the old spreadsheet. If the count is off by more than 5%, call the warehouse lead immediately, don't just note it and move on.",
+            "Server closing side work: wipe and reset all tables, refill and wipe condiments, roll silverware, sweep under booths, wipe high chairs, take out trash from the server station. The closing manager (not the server) counts the register drawer.",
+            "When a customer requests a refund, first check if the order was delivered — if it's still in transit, offer to hold the refund until it's confirmed lost. If delivered and the item is damaged, ask for a photo before approving. Refunds over $100 need manager sign-off."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a short, simple task",
+          "whenToUse": "Use this when the task is only a handful of steps with no real exceptions — a light version that skips the full purpose/scope structure so you're not over-formatting something simple.",
+          "prompt": "Turn my rough explanation into a short, numbered SOP for a simple task — no need for a full purpose/scope section, just clear numbered steps and a one-line note on who owns it.\n\nProcess: [NAME]\nMy rough explanation: [PASTE ROUGH NOTES]\n\nGive me numbered steps only, each a single clear action, plus one line naming who owns this task. Do not add any step I didn't describe — list anything you think is missing separately under \"gaps to confirm.\""
+        },
+        {
+          "label": "When multiple people do the task differently",
+          "whenToUse": "Use this when two or more staff members currently do the same task in slightly different ways and you need to reconcile them into one standard before writing it up.",
+          "prompt": "I have two different explanations of how the same task is currently done by different people. Compare them, flag every place they genuinely conflict (not just wording differences), and do not silently pick one version to standardize on — list each conflict for me to decide.\n\nProcess: [NAME]\nExplanation from Person A: [PASTE]\nExplanation from Person B: [PASTE]\n\nAfter I tell you which version to use for each conflict, build the final SOP using the standard purpose/scope/steps/exceptions/owner structure, using only what was in one of the two explanations or what I confirm."
+        },
+        {
+          "label": "Turning an existing messy document into a clean SOP",
+          "whenToUse": "Use this when an old, disorganized SOP or training doc already exists and needs a rewrite rather than starting from a verbal explanation.",
+          "prompt": "Here is an existing SOP document that has become disorganized or outdated. Reorganize it into the clean structure below, but do not add, remove, or \"improve\" any actual instruction — only reorganize and clarify wording. Flag anything that looks outdated or contradictory as a separate note, don't resolve it yourself.\n\nProcess: [NAME]\nExisting document: [PASTE ROUGH NOTES]\n\nStructure: 1. Purpose, 2. Scope, 3. Numbered steps, 4. \"If something goes wrong,\" 5. Owner and review frequency, plus a separate \"flagged for review\" list of anything unclear or possibly outdated."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Too many invented steps? Strip it back",
+          "prompt": "Go through the SOP again and remove any step, tool, or detail that wasn't explicitly in my original explanation. Move anything you're unsure about into the \"gaps to confirm\" section instead of leaving it in the numbered steps."
+        },
+        {
+          "label": "Make the exceptions section more complete",
+          "prompt": "Looking only at the exceptions I actually described, expand the \"if something goes wrong\" section so each exception has its own clear line, rather than being bundled together. Don't add any new exception I didn't mention."
+        },
+        {
+          "label": "Simplify the language for a new hire",
+          "prompt": "Rewrite the numbered steps in simpler, shorter sentences a first-day new hire with no context could follow without asking a question. Keep every instruction exactly the same — only simplify the wording."
+        },
+        {
+          "label": "Add a completion check",
+          "prompt": "Add one line at the end of the steps describing exactly how someone would know the task was done correctly and completely, based only on what I already told you — if that wasn't part of my explanation, ask me for it instead of guessing."
+        }
+      ],
+      "walkthrough": "Denise runs the back office for a six-truck moving company and has never written a real SOP — new dispatchers just shadow her for a week. She opens Claude and pastes the prompt, filling in Process as \"dispatching a same-day job request,\" Who currently does this as \"dispatcher,\" and then talks through her rough notes: check the truck availability board first, confirm the crew size matches the job size listed by the customer, call the customer to confirm the pickup window, if no truck is free within two hours offer the next available slot instead of guessing, and always text the assigned crew the address and access notes (gate code, stairs, parking) before they leave.\n\nClaude returns a purpose statement (fast job dispatch without dropped details), a scope line for all dispatchers, five numbered steps matching her explanation with the availability board and crew size check first, an \"if something goes wrong\" section built around the two-hour rule, an owner field naming the dispatch lead, and a \"gaps to confirm\" note asking who dispatchers should call if a crew doesn't respond to the text within 15 minutes — something Denise had never actually written down as a rule.\n\nShe reads it against her own habits, confirms every step matches, and sends the follow-up asking Claude to simplify the wording for a first-day hire, since the draft used phrases like \"confirm crew-to-job-size parity\" that no new dispatcher would recognize. The simplified version reads like plain instructions. She saves it as a laminated reference sheet at the dispatch desk. The whole thing, from opening Claude to a document she trusts enough to hand to the next new hire, took about twenty minutes."
+    },
+    "ops-b2-process-mapping-describe-question-improve": {
+      "placeholders": [
+        {
+          "name": "NAME, e.g. \"new employee onboarding, first two weeks\"",
+          "what": "The name of the recurring process you want mapped, scoped tightly enough to be useful — \"onboarding\" alone is too broad, but \"new employee onboarding, first two weeks\" tells the AI exactly where the map starts and ends.",
+          "examples": [
+            "New employee onboarding, first two weeks",
+            "Order fulfillment, from order placed to shipped",
+            "Customer support ticket escalation to a manager"
+          ]
+        },
+        {
+          "name": "PASTE STEP-BY-STEP DESCRIPTION",
+          "what": "Your own description of the process in the order it actually happens, naming who or what performs each step and where it hands off from one person or system to another. A weak description skips the handoffs; a strong one names exactly who does what and what they pass along.",
+          "examples": [
+            "HR sends the offer letter. Once signed, the hiring manager submits an equipment request to IT. IT provisions accounts and ships the laptop, usually 3-5 days before start date. On day one, the manager runs orientation. The employee has 30 days to complete compliance training in the LMS.",
+            "Customer submits a ticket through the support portal. A support agent triages it within 4 hours. If it's a billing issue, it's routed to the billing team. If unresolved after 24 hours, the agent escalates to their team lead, who decides whether to loop in engineering.",
+            "Warehouse receives a purchase order from purchasing. Receiving checks the packing slip against the PO. Inventory is logged in the system. Any discrepancy over 5% is flagged to the warehouse lead, who contacts the vendor."
+          ]
+        },
+        {
+          "name": "PASTE YOUR ANSWERS",
+          "what": "Your written answers to the diagnostic questions the AI asked in Part B — the facts you actually know (delays, who really owns a step, what happens when someone's out) and an honest \"not sure, need to check\" for anything you don't. This is what grounds Part C's improvement suggestions in your real operation instead of generic advice.",
+          "examples": [
+            "1. IT provisioning can take up to 5 days if a laptop isn't in stock, and orientation happens without full system access if it's late. 2. No one currently tracks the 30-day compliance deadline except the employee's own reminder. 3. Not sure — need to check whether HR or the manager is supposed to confirm the offer letter was actually signed.",
+            "1. Billing escalations wait an average of 6 hours for the billing team to pick them up, since no one owns \"billing team availability.\" 2. The team lead is the single point of failure for engineering escalation — if they're out, tickets sit unescalated. 3. Not sure how many tickets get reopened after being marked resolved."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Faster version for a quick weekly check-in",
+          "whenToUse": "Use this when you just want a fast pulse check on a process you already know reasonably well, without the full three-part sequence.",
+          "prompt": "Here is a process I run, described step by step. In one pass, give me: a short numbered map with handoffs marked, and the single sharpest question about where this process is most likely to break right now. Keep it to one question, not a full list.\n\nProcess: [NAME]\nMy description: [PASTE STEP-BY-STEP DESCRIPTION]"
+        },
+        {
+          "label": "When you're mapping a process you don't personally run",
+          "whenToUse": "Use this when you're an operations manager mapping someone else's process based on what they told you, and need extra care about what you're inferring versus what they actually said.",
+          "prompt": "Here is a process as described to me by the person who runs it day to day — I did not perform this process myself, so treat gaps in the description as genuinely unknown rather than something to infer. Restate it as a numbered map with handoffs marked, and separately list anything in the description that seems ambiguous or incomplete so I can go back and ask a follow-up question before we move to diagnosis.\n\nProcess: [NAME]\nTheir description: [PASTE STEP-BY-STEP DESCRIPTION]"
+        },
+        {
+          "label": "Comparing the mapped process against how it's supposed to work",
+          "whenToUse": "Use this when you also have an official policy or documented version of the process and want to see where reality has drifted from it.",
+          "prompt": "Here is how this process actually happens (my real description) and separately, the official documented version. Map the actual process with handoffs marked, then list every specific place the real process differs from the documented one — don't judge which is better, just identify the differences.\n\nProcess: [NAME]\nActual description: [PASTE STEP-BY-STEP DESCRIPTION]\nDocumented/official version: [PASTE]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Map doesn't match reality? Correct it",
+          "prompt": "Here's what you got wrong in the map: [DESCRIBE THE CORRECTION]. Restate the full numbered map with this fixed before we move to the diagnostic questions."
+        },
+        {
+          "label": "Questions too generic? Push for sharper ones",
+          "prompt": "Some of those questions could apply to almost any process. Give me 5 new diagnostic questions that reference specific steps or handoffs from my actual map by name, not generic operational questions."
+        },
+        {
+          "label": "Improvements feel like \"just automate it\"",
+          "prompt": "A couple of those suggestions are generic automation advice. Redo the improvement list so each suggestion is tied to a specific weak point from my answers, and explain in one sentence exactly which weak point it fixes."
+        },
+        {
+          "label": "Pick the single best one to test first",
+          "prompt": "Of the improvements you suggested, which single one would you test first if you could only pick one, and why — based only on lowest risk and clearest connection to a real weak point we identified?"
+        }
+      ],
+      "walkthrough": "Marcus manages operations for a regional print shop and has been asked by the owner to figure out why rush orders keep slipping past their promised turnaround. He opens ChatGPT and works through Part A first, describing the rush-order process step by step: a customer submits a rush request through the website, the print queue software flags it, a shop floor lead manually reassigns it ahead of standard jobs, the lead notifies the press operator by walking over in person, and the order ships once quality-checked by whoever is free.\n\nChatGPT restates this as a five-step numbered map, marking the handoff from software flag to the floor lead's manual reassignment, and from the lead to the press operator, as the two points where work moves between a system and a person. Marcus confirms the map is accurate.\n\nHe then runs Part B, and gets sharp questions like \"what happens to a rush order if the floor lead is on the sales floor and doesn't see the flag for twenty minutes?\" and \"who is responsible for the quality check if 'whoever is free' means no one is specifically assigned?\" Marcus answers honestly: the floor lead has no backup, and quality checks do sometimes get skipped when the shop is busy.\n\nFor Part C, he pastes his answers and gets three concrete suggestions, including assigning a designated backup for rush-order reassignment and making quality check a mandatory queue status rather than an informal step. He picks the backup-assignment fix to test first, since it's low-effort and ties directly to the biggest gap. The whole exercise took under fifteen minutes and gave him something specific to bring to the owner instead of a vague \"we should tighten up rush orders.\""
+    },
+    "ops-i1-operational-reports-dashboards-narratives": {
+      "placeholders": [
+        {
+          "name": "PASTE: METRIC | THIS PERIOD | PRIOR PERIOD | TARGET | KNOWN REASON IF ANY",
+          "what": "Your actual metrics pulled directly from your dashboard or reporting system, laid out row by row with the current figure, the prior period's figure, the target, and any known reason for a change — written \"not yet identified\" if you genuinely don't know why something moved. Never let the AI estimate or guess a number; only paste figures your system already calculated.",
+          "examples": [
+            "On-time delivery | 91% | 94% | 95% | two-day carrier outage mid-month\nTicket backlog | 42 open | 48 open | 50 open | not yet identified\nCost per unit | $4.12 | $4.05 | $4.00 | new packaging supplier started this period",
+            "Headcount utilization | 87% | 91% | 90% | two open roles unfilled since last period\nAvg response time | 6.2 hrs | 5.8 hrs | 6.0 hrs | not yet identified\nOrder accuracy | 98.5% | 98.9% | 99% | not yet identified"
+          ]
+        },
+        {
+          "name": "AUDIENCE, e.g. \"the VP of Operations\"",
+          "what": "Who will actually read this report — their title or role determines how much operational detail versus high-level framing belongs in the narrative. A director wants different depth than a frontline team lead reading the same numbers.",
+          "examples": [
+            "The VP of Operations",
+            "The founder/CEO, who skims reports in under two minutes",
+            "The weekly ops team stand-up, all frontline leads"
+          ]
+        },
+        {
+          "name": "WORD COUNT, e.g. 300",
+          "what": "The maximum length you want the finished narrative to be, matched to how much time your actual audience will spend reading it — a director reading between meetings needs something shorter than a written deep-dive report.",
+          "examples": [
+            "300",
+            "150",
+            "500"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a weekly stand-up",
+          "whenToUse": "Use this for a short recurring internal update where you just need the headline status of each metric, not a full narrative with suggested actions.",
+          "prompt": "Below are this period's metrics, pre-calculated — do not recalculate or adjust any number. Give me one line per metric: the metric name, current figure, and a single word status (on track / watch / decision needed) based on distance from target. No paragraphs, no suggested actions, just a scannable list for a stand-up.\n\nMetrics: [PASTE: METRIC | THIS PERIOD | PRIOR PERIOD | TARGET | KNOWN REASON IF ANY]"
+        },
+        {
+          "label": "Deeper version with trend context",
+          "whenToUse": "Use this for a monthly or quarterly report where leadership wants to see the trend over several periods, not just the most recent comparison.",
+          "prompt": "Below are this metric's figures over the last several periods, pre-calculated — do not recalculate any number. Write a narrative for [AUDIENCE] that describes the trend direction (improving, flat, declining) for each metric across the periods given, not just the most recent change, using only the reasons I provide for any shift. Flag any metric that's been below target for more than one consecutive period as requiring a decision. Under [WORD COUNT] words.\n\nMetrics across periods: [PASTE: METRIC | PERIOD 1 | PERIOD 2 | PERIOD 3 | TARGET | KNOWN REASON IF ANY]"
+        },
+        {
+          "label": "Version that also drafts talking points for a live meeting",
+          "whenToUse": "Use this when you'll be presenting the numbers live and want a few rehearsed talking points in addition to the written narrative.",
+          "prompt": "Below are this period's metrics, pre-calculated — do not recalculate or adjust any number. Write the standard narrative grouped into on track / worth watching / needs a decision, using only the reasons I provide, under [WORD COUNT] words. Then add a separate section: 3 short talking points I could say out loud if asked \"what's the one thing I should know,\" each tied to a specific metric and reason I actually gave you.\n\nMetrics: [PASTE: METRIC | THIS PERIOD | PRIOR PERIOD | TARGET | KNOWN REASON IF ANY]\nAudience: [AUDIENCE]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check no numbers were altered",
+          "prompt": "List every number, percentage, and figure that appears in your narrative, next to the exact figure I originally gave you for it, so I can verify none were changed, rounded differently, or recalculated."
+        },
+        {
+          "label": "Too long for the audience? Cut it",
+          "prompt": "Cut this to under [WORD COUNT] words. Keep every \"needs a decision\" item and its suggested action — trim from the \"on track\" section first."
+        },
+        {
+          "label": "A reason sounds too confident — soften it",
+          "prompt": "Re-read the explanation for [METRIC NAME] — I'm not fully certain that's the real reason, only a guess. Rewrite that line to say the likely reason is unconfirmed rather than stating it as fact."
+        },
+        {
+          "label": "Add a suggested action I'm missing",
+          "prompt": "For [METRIC NAME] under \"needs a decision,\" the suggested action is too vague. Give me a more specific, concrete next step based only on the reason I provided — still clearly labeled as a suggestion, not a decision already made."
+        }
+      ],
+      "walkthrough": "Priya manages operations for a regional courier service and needs to send the VP of Operations a Monday-morning summary of last week's numbers before a leadership meeting. She pulls five metrics straight from the dashboard — on-time delivery, cost per route, driver utilization, customer complaints, and average delivery time — with each period's figure, the prior period, and target, exactly as the system calculated them.\n\nShe opens Claude, pastes the prompt with her metrics table, sets Audience to \"the VP of Operations,\" and Word Count to 250. She knows on-time delivery dropped from 96% to 89% because of a two-day snowstorm that closed two regional routes, so she adds that as the known reason; she leaves the reason blank for a smaller uptick in complaints since she genuinely doesn't know why yet.\n\nClaude returns a narrative putting on-time delivery under \"needs a decision,\" citing the snowstorm exactly as given and suggesting the team evaluate a backup routing plan for weather closures; complaints go under \"worth watching\" with \"reason not yet identified\" rather than a guess; the other three metrics land under \"on track.\"\n\nPriya checks every number against her dashboard, confirms nothing was recalculated, then sends the follow-up asking Claude to list every figure next to her original source as a final check. It matches. She trims one sentence to fit the VP's usual two-minute read and sends it. Building a report that used to take her forty-five minutes of writing took about twelve minutes end to end, and the VP now reads a consistent format every week instead of a different structure each time."
+    },
+    "ops-i2-vendor-internal-communications": {
+      "placeholders": [
+        {
+          "name": "MESSAGE TYPE: vendor escalation / vendor request / internal process update / cross-team announcement",
+          "what": "Which of the four message categories you're writing, since each needs a different structure and level of firmness. A vendor escalation holds someone to a commitment; a cross-team announcement informs without demanding action from any one person.",
+          "examples": [
+            "Vendor escalation",
+            "Internal process update",
+            "Cross-team announcement"
+          ]
+        },
+        {
+          "name": "TONE: neutral / firm / urgent",
+          "what": "How much pressure the message should convey, chosen based on how serious the situation actually is and how many times you've already raised it. Escalating tone too fast on a first-time issue can damage a relationship; staying too soft on a repeated problem gets it deprioritized.",
+          "examples": [
+            "Neutral — first time raising a minor issue",
+            "Firm — a second request after no response, or a real SLA miss",
+            "Urgent — an active issue actively affecting customers or operations right now"
+          ]
+        },
+        {
+          "name": "WHO, e.g. \"our fulfillment vendor's account manager\" or \"the customer support team\"",
+          "what": "The specific person or team receiving the message — a name or role, not just \"the vendor\" or \"the team,\" since that shapes how formal and how much context the message needs to include.",
+          "examples": [
+            "Our fulfillment vendor's account manager",
+            "The customer support team",
+            "The warehouse operations lead"
+          ]
+        },
+        {
+          "name": "WHAT HAPPENED, WITH DATES, e.g. \"3 shipments in the last 2 weeks arrived 2+ days late, contracted SLA is next-day delivery for standard orders\"",
+          "what": "The specific, factual, dated situation prompting this message — real dates and real numbers, not a vague impression. This is what makes the message credible instead of sounding like a general complaint.",
+          "examples": [
+            "3 shipments (order #4471, #4502, #4519) arrived 2+ days late between March 3-14, contracted SLA is next-day delivery for standard orders",
+            "The new expense-reporting process launched March 1 has a 40% error rate on submitted forms in its first two weeks, per finance's tracking",
+            "Two customer escalations this week (March 10, March 12) were routed to the wrong team due to a tag change in the ticketing system on March 8"
+          ]
+        },
+        {
+          "name": "SPECIFIC ASK, e.g. \"a root-cause explanation and a corrective action plan\"",
+          "what": "Exactly what you want the recipient to do — a document, an action, a meeting, a correction — stated concretely enough that they know what \"done\" looks like. A vague ask like \"please look into this\" produces a vague response.",
+          "examples": [
+            "A root-cause explanation and a corrective action plan",
+            "A revised training doc and one live walkthrough session with the team",
+            "Confirmation the routing rule has been fixed, plus a list of any tickets that need to be re-routed"
+          ]
+        },
+        {
+          "name": "DATE",
+          "what": "The real deadline by which you need the ask completed — a specific date, not \"soon\" or \"ASAP,\" so the recipient can commit to it and you have a clear point to follow up if it's missed.",
+          "examples": [
+            "March 21",
+            "End of day Friday, March 14",
+            "Before next Monday's leadership meeting"
+          ]
+        },
+        {
+          "name": "WORD COUNT, e.g. 150",
+          "what": "The maximum length for the message, chosen based on how busy the recipient is and how much detail the situation genuinely requires — most vendor and internal messages should be short enough to read in under a minute.",
+          "examples": [
+            "150",
+            "100",
+            "200"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a routine, low-stakes request",
+          "whenToUse": "Use this for a simple, first-time ask that doesn't need the full facts/ask/deadline structure — a quick, friendly nudge rather than a formal escalation.",
+          "prompt": "Write a short, friendly [MESSAGE TYPE] to [WHO] asking for [SPECIFIC ASK]. Keep it under 60 words, casual but clear, one call to action, no invented details beyond what I've given you."
+        },
+        {
+          "label": "Formal written escalation with a paper trail",
+          "whenToUse": "Use this when the issue is serious enough that you need a clearly documented, formal record — for example a repeated SLA miss that may lead to a contract conversation.",
+          "prompt": "Write a formal, documented [MESSAGE TYPE: vendor escalation] to [WHO], tone: firm. This needs to function as a clear record of the issue in case it's referenced later, so include a short numbered timeline of the specific dated incidents below, the exact ask, and the deadline. Do not state any contract term, SLA percentage, or penalty I have not explicitly provided.\n\nTimeline of incidents: [WHAT HAPPENED, WITH DATES]\nWhat I need: [SPECIFIC ASK]\nDeadline: [DATE]\nKeep it under [WORD COUNT] words, professional throughout, no hostility even though the tone is firm."
+        },
+        {
+          "label": "Internal announcement with an FAQ section",
+          "whenToUse": "Use this for a cross-team process change likely to raise the same two or three questions from multiple people, so you can get ahead of them in the original message.",
+          "prompt": "Write a [MESSAGE TYPE: cross-team announcement] with a [TONE: neutral] tone about the change below, then add a short FAQ section answering the 2-3 questions people are most likely to ask, based only on the facts I've given you — if you're not sure what people would ask, say so rather than inventing a question that doesn't fit.\n\nWhat's changing: [WHAT HAPPENED, WITH DATES]\nWhy: [SPECIFIC ASK — reframe as the reason for the change]\nEffective date: [DATE]\nKeep the whole thing under [WORD COUNT] words."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Too soft for a repeated issue? Firm it up",
+          "prompt": "This is the second time I'm raising this issue with no resolution. Rewrite with a firmer tone that makes clear this is a repeat request, while staying professional and not hostile."
+        },
+        {
+          "label": "Check for invented contract terms",
+          "prompt": "Go through this draft and flag anything that sounds like a specific contract term, SLA percentage, penalty, or policy — I want to confirm I actually stated each one before this goes out."
+        },
+        {
+          "label": "Ask sounds vague — sharpen it",
+          "prompt": "The call to action is still too vague. Rewrite the ask so it names exactly what deliverable or action I need, by when, with no room for the recipient to interpret it as optional."
+        },
+        {
+          "label": "Trim for a one-minute read",
+          "prompt": "Cut this down so it can be read in under a minute, keeping the facts, the ask, and the deadline intact — trim any softening language or extra context first."
+        }
+      ],
+      "walkthrough": "Tom is the operations manager at a mid-size e-commerce company and has now had three late shipments from their fulfillment vendor in two weeks, against a contracted next-day delivery SLA. He's already mentioned it casually to the account manager once with no real follow-through, so this time he wants something on the record.\n\nHe opens ChatGPT and fills in Message Type as \"vendor escalation,\" Tone as \"firm,\" Recipient as \"our fulfillment vendor's account manager, Rachel,\" Situation as the three specific late shipments with order numbers and dates pulled from his tracking system, What I Need as \"a root-cause explanation and a corrective action plan,\" and Deadline as \"end of day Friday.\" Word count: 150.\n\nThe draft opens by stating the pattern plainly — three shipments, specific dates, referencing the next-day SLA exactly as Tom described it — asks directly for the root-cause explanation and corrective action plan, states Friday's deadline, and closes with a single request to schedule a call or respond in writing. It reads firm without sounding hostile.\n\nTom rereads it and realizes it's actually too soft given this is his second time raising the issue, so he sends the follow-up asking for a firmer tone that notes this is a repeat request. The revised version opens by referencing the earlier informal conversation and states plainly that a written response is now needed by Friday. He sends it from his own email, attaching nothing invented — no penalty clause, no SLA percentage beyond what he'd actually stated. The whole exchange, including the revision, took about ten minutes, and Rachel replied with a corrective action plan the same afternoon."
+    },
+    "ops-i3-identify-automation-candidates": {
+      "placeholders": [
+        {
+          "name": "PASTE: TASK | FREQUENCY | TIME PER INSTANCE | RULE-BASED OR JUDGMENT-BASED | CURRENT TOOL/SYSTEM",
+          "what": "Your real list of recurring tasks, one per line, with an honest frequency, a realistic time estimate per instance, and your honest call on whether the steps are always the same (rule-based) or require judgment each time. Underestimating time or overestimating how rule-based a task is will skew the whole ranking, so be accurate rather than optimistic.",
+          "examples": [
+            "Vendor invoice matching | weekly | 2 hrs | rule-based | spreadsheet\nCustomer escalation triage | daily | 1 hr | judgment-based | ticketing system\nMonthly inventory reconciliation | monthly | 3 hrs | mostly rule-based, occasional judgment call | inventory software",
+            "New vendor onboarding paperwork | monthly, ~3x | 45 min each | rule-based | shared drive + email\nShift schedule conflict resolution | weekly | 1.5 hrs | judgment-based | scheduling app\nExpense report first-pass review | weekly | 1 hr | rule-based | expense software"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a single task you're already considering",
+          "whenToUse": "Use this when you already have one specific task in mind and just want a fast suitability check, not a ranked shortlist across many tasks.",
+          "prompt": "I'm considering automating one specific task. Score it on: (1) how rule-based the steps are, (2) whether the frequency makes automation worth the setup cost, (3) the cost of an error if it goes wrong, (4) whether it would still need a human-in-the-loop review step. Give me a clear suitability rating (high/medium/low) and your reasoning, plus the single biggest risk if I automated it.\n\nTask: [TASK NAME]\nFrequency: [FREQUENCY]\nTime per instance: [TIME PER INSTANCE]\nRule-based or judgment-based: [DESCRIBE]\nCurrent tool/system: [CURRENT TOOL]"
+        },
+        {
+          "label": "Version that accounts for error cost more heavily",
+          "whenToUse": "Use this for a task list where getting something wrong would be expensive or reputationally damaging (customer-facing, financial, compliance-related), and you want error cost weighted above time savings.",
+          "prompt": "Here is a list of recurring tasks, several of which are customer-facing, financial, or compliance-related. Score each for automation suitability using the same four criteria, but weight error cost most heavily — a task that's high-frequency and rule-based should still score lower than \"high\" if a mistake would be costly or hard to reverse. Flag any task where the error cost alone should rule out full automation regardless of the other criteria.\n\nTasks: [PASTE: TASK | FREQUENCY | TIME PER INSTANCE | RULE-BASED OR JUDGMENT-BASED | CURRENT TOOL/SYSTEM]"
+        },
+        {
+          "label": "Follow-up round after piloting the first pick",
+          "whenToUse": "Use this a few weeks after piloting your #1 candidate, to decide whether to expand it, adjust it, or move to the next item on the shortlist.",
+          "prompt": "I piloted the #1 automation candidate you previously identified. Here's what happened: [DESCRIBE PILOT RESULTS — errors caught, time actually saved, any near-misses]. Based on this real result, tell me whether to expand this automation further, adjust the human-review step, or pause it — and re-rank the remaining shortlist candidates in light of what this pilot taught us about our actual error rate and review capacity."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Ranking feels off — recheck the reasoning",
+          "prompt": "Walk me through why [TASK NAME] scored higher than [OTHER TASK NAME] specifically on the frequency and error-cost criteria — I want to sanity-check the ranking before I commit to piloting the top pick."
+        },
+        {
+          "label": "Judgment-based task marked automatable? Push back",
+          "prompt": "You marked [TASK NAME] as suitable for direct automation, but I think it actually requires judgment calls more often than the notes suggest. Re-score it assuming it needs a human-in-the-loop review step, and tell me how that changes its rank."
+        },
+        {
+          "label": "Add a rough time-to-set-up estimate",
+          "prompt": "For the top 3 shortlist items, add a rough estimate of how much setup effort each would realistically take (quick win vs. a real project), based only on the tool/system I listed for each — flag if you don't have enough information to estimate this."
+        },
+        {
+          "label": "Check it didn't invent available tools",
+          "prompt": "Confirm you didn't assume any tool, integration, or automation platform I didn't actually mention. List anything in your recommendations that depends on a tool I haven't confirmed we have."
+        }
+      ],
+      "walkthrough": "Angela runs operations for a regional home-services company and keeps getting told by leadership to \"automate more\" without a clear starting point. She lists ten recurring tasks her team does, being honest about frequency and how much judgment each requires: weekly technician scheduling (judgment-heavy, 3 hrs/week), monthly customer invoice generation (rule-based, 4 hrs/month), and daily new-lead intake and routing (mostly rule-based, 45 min/day, using their CRM), among others.\n\nShe pastes the list into Claude with the prompt, scoring each on how rule-based it is, frequency, error cost, and whether it needs human review. The output comes back as a table: invoice generation scores high suitability, recommended for direct automation; lead intake scores high too, but recommended with human review since a misrouted lead could mean a lost customer; scheduling scores low, flagged as too judgment-heavy for now. The ranked shortlist puts lead intake first, since it's daily, mostly rule-based, and the review step is fast to add; invoice generation second.\n\nAngela isn't fully convinced lead intake is as rule-based as scored, so she sends the follow-up pushing back and asking for a re-score assuming more judgment is involved. Claude adjusts lead intake down slightly but it still ranks near the top, with the human-review recommendation reinforced. She reads the flagged biggest risk — a lead getting silently misrouted and never followed up — and decides that's manageable with a weekly spot-check. She pilots lead-intake automation with review for three weeks before touching anything else. The whole exercise, from listing tasks to a decision she could defend to leadership, took about twenty-five minutes."
+    },
+    "ops-a1-rollout-ai-assisted-process-team": {
+      "placeholders": [
+        {
+          "name": "NAME + BRIEF DESCRIPTION, e.g. \"using an AI-drafted first pass for weekly vendor status reports, reviewed and finalized by the analyst before sending\"",
+          "what": "A short name plus one-sentence description of the specific AI-assisted process you're rolling out — specific enough that a team member reading only this line would understand what's changing about their actual work.",
+          "examples": [
+            "Using an AI-drafted first pass for weekly vendor status reports, reviewed and finalized by the analyst before sending",
+            "An automation agent flagging duplicate vendor invoices for manual review, replacing the fully manual spot-check",
+            "AI-assisted first-draft responses to routine customer support tickets, reviewed and sent by the support agent"
+          ]
+        },
+        {
+          "name": "DESCRIBE",
+          "what": "A plain breakdown of exactly which parts of the process the AI touches and which stay entirely in human hands — the single most important thing to get right in the whole rollout, since ambiguity here is where mistakes happen.",
+          "examples": [
+            "AI drafts the first-pass report from the metrics I feed it; the analyst checks every number against the dashboard, edits the narrative, and is the one who sends it — the AI never sends anything directly.",
+            "The automation agent flags a possible duplicate invoice and routes it to a review queue; a human always makes the final call on whether to reject or approve the payment."
+          ]
+        },
+        {
+          "name": "e.g. \"pilot with 2 of 6 analysts for 3 weeks, then full team\"",
+          "what": "How big your team is and how you plan to phase the rollout — starting small and expanding is what lets you catch a problem before it affects everyone, so state the pilot group size, duration, and the point at which it expands.",
+          "examples": [
+            "Pilot with 2 of 6 analysts for 3 weeks, then full team",
+            "Pilot with the whole 4-person support team for 2 weeks before deciding to keep it",
+            "Pilot with 1 of 3 warehouse leads for one full monthly cycle, then the other two"
+          ]
+        },
+        {
+          "name": "WHAT COULD GO WRONG, e.g. \"an unreviewed AI draft gets sent directly to a vendor\"",
+          "what": "Your honest assessment of the realistic failure modes for this specific process — not a generic \"AI could be wrong\" but the actual thing that would cause damage if it happened, like an unreviewed output going out or a team member skipping the review step under time pressure.",
+          "examples": [
+            "An unreviewed AI draft gets sent directly to a vendor with an incorrect number in it",
+            "A team member starts treating the AI's flagged \"possible duplicate\" as automatically correct and stops actually checking it",
+            "The AI-drafted customer response contains a policy statement that isn't actually accurate, and the agent doesn't catch it before sending"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Lightweight version for a very small team",
+          "whenToUse": "Use this for a team of 2-4 people where a formal multi-phase rollout would be overkill — a simpler version with one short pilot and a direct conversation instead of a training document.",
+          "prompt": "I'm introducing an AI-assisted process to a small team of [TEAM SIZE]. Give me a simple two-step plan: a short pilot period with one clear go/no-go check-in, and 3-4 bullet points I should personally say to the team covering what's changing, what still needs human review, and how to flag a problem. No formal training document needed — this is a direct conversation, not a company-wide announcement.\n\nProcess: [NAME + BRIEF DESCRIPTION]\nWhich steps are AI-assisted vs. fully human: [DESCRIBE]\nKnown risks: [WHAT COULD GO WRONG]"
+        },
+        {
+          "label": "Version for a process that touches customer-facing output",
+          "whenToUse": "Use this when the AI-assisted step produces something a customer or external party will actually see, where the review guardrail matters even more than for an internal-only process.",
+          "prompt": "I'm rolling out an AI-assisted process where the output is customer-facing or goes to an external party. Build the rollout plan and training with extra emphasis on the review guardrail: give me a specific, checkable rule for what \"reviewed\" means before anything is sent externally (not just \"someone looked at it\"), and a hard stop condition where the pilot is paused immediately if an unreviewed output reaches a customer or vendor even once.\n\nProcess: [NAME + BRIEF DESCRIPTION]\nWhich steps are AI-assisted vs. fully human: [DESCRIBE]\nTeam size and rollout scope: [SCOPE]\nKnown risks: [WHAT COULD GO WRONG]"
+        },
+        {
+          "label": "Version after the pilot, deciding whether to expand",
+          "whenToUse": "Use this once the pilot phase has actually run, to turn real pilot results into a go/no-go decision and, if going, the full-team rollout plan.",
+          "prompt": "My pilot for this AI-assisted process has finished. Here's what actually happened: [PILOT RESULTS — near-misses, time saved, team feedback, any errors caught]. Based only on this real outcome, tell me: should this move to full rollout, be adjusted first, or be paused? If moving forward, give me the full-team rollout plan and updated training outline reflecting anything the pilot taught us.\n\nProcess: [NAME + BRIEF DESCRIPTION]\nOriginal known risks: [WHAT COULD GO WRONG]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Go/no-go criteria too vague? Make them concrete",
+          "prompt": "The go/no-go criteria for the pilot phase are too vague. Rewrite them as specific, checkable conditions (e.g. an exact number of allowed near-misses, a specific feedback threshold) rather than general statements like \"if it's going well.\""
+        },
+        {
+          "label": "Training doesn't make the human-review step clear enough",
+          "prompt": "The training outline doesn't make it obvious enough which steps require human review. Rewrite that section so it's impossible to misread — spell out exactly what \"review\" means and what happens if it's skipped."
+        },
+        {
+          "label": "Announcement sounds too hype-y",
+          "prompt": "Tone this announcement down — it reads more exciting than the situation calls for. Rewrite it calm and matter-of-fact, without undermining the real need for careful review during the pilot."
+        },
+        {
+          "label": "Rollback plan missing a decision-maker",
+          "prompt": "The rollback plan doesn't clearly say who has the authority to trigger it. Add a specific named role responsible for that decision and the exact signal that would prompt them to use it."
+        }
+      ],
+      "walkthrough": "Devon manages operations for a mid-size logistics company and has been piloting an AI-drafted first pass for the team's weekly vendor status reports himself for a month, with good results. Now he wants to roll it out to his four-person analyst team, but the last time someone introduced a new tool with just a Slack message, half the team ignored it within two weeks.\n\nHe opens Claude and fills in the process as \"using an AI-drafted first pass for weekly vendor status reports, reviewed and finalized by the analyst before sending,\" describes that the AI only drafts the narrative from metrics the analyst feeds it while the analyst checks every number and is the one who actually sends it, sets the rollout scope as \"pilot with 2 of 4 analysts for 3 weeks, then full team,\" and names the known risk as an unreviewed draft going out with a wrong figure in it.\n\nClaude returns a three-phase plan — a 3-week pilot with two analysts, a checkpoint requiring zero unreviewed drafts sent and positive analyst feedback before expanding, then full rollout — a training outline stating plainly that the AI draft is never final and must be checked against the dashboard before sending, a rollback plan naming Devon as the person who decides to pause it, and a calm one-paragraph announcement.\n\nDevon reads the announcement and feels it oversells the tool a bit, so he sends the follow-up asking for a calmer, more matter-of-fact tone. The revised version reads plainly, still clear about the review requirement. He shares it with his two pilot analysts that afternoon. Building the whole plan took him about eighteen minutes, replacing what would have otherwise been an informal, easy-to-ignore heads-up."
+    },
+    "seo-b1-content-briefs-from-keyword-intent": {
+      "placeholders": [
+        {
+          "name": "KEYWORD",
+          "what": "The exact target keyword or search phrase you're building the content brief for, written exactly as a searcher would type it — this anchors everything else in the brief, so use the precise phrase from your keyword research tool, not a paraphrase.",
+          "examples": [
+            "best crm for small business",
+            "how to remove wine stains from carpet",
+            "project management software pricing comparison"
+          ]
+        },
+        {
+          "name": "LIST",
+          "what": "The secondary or related keywords this piece should also be able to rank for, usually pulled from the \"related searches\" section of a search results page or your keyword research tool. A good list is genuinely related to the same search intent, not just any keyword that shares a word.",
+          "examples": [
+            "crm for small business free, best crm under $50/month, easiest crm to learn",
+            "carpet stain removal, red wine stain baking soda, professional carpet cleaning cost"
+          ]
+        },
+        {
+          "name": "informational / commercial / transactional / navigational",
+          "what": "The type of intent behind the search — informational means the searcher wants to learn something, commercial means they're comparing options before buying, transactional means they're ready to buy or take action now, and navigational means they're trying to reach a specific known site or page. Getting this right determines the whole format of the brief.",
+          "examples": [
+            "Commercial — searcher is comparing options before choosing",
+            "Informational — searcher wants to understand a topic or solve a problem",
+            "Transactional — searcher is ready to sign up, download, or buy"
+          ]
+        },
+        {
+          "name": "PASTE YOUR OBSERVATIONS, e.g. \"1. listicle, 'best X for Y', 2. in-depth guide with comparison table, 3. tool/calculator page\"",
+          "what": "What you actually see when you search the target keyword yourself and look at the top 3-5 results — the format each uses (listicle, guide, tool, video) and the angle it takes. This must come from a real, current look at the search results page, not a guess about what's probably ranking.",
+          "examples": [
+            "1. Listicle \"10 Best CRMs for Small Business 2026\" with a comparison table near the top. 2. Vendor comparison page with a feature-by-feature grid. 3. In-depth guide covering how to choose plus a shorter list of picks.",
+            "1. Step-by-step how-to guide with numbered instructions and photos. 2. Short listicle of 5 home remedies. 3. Video-first result with a brief text summary below it."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a fast-turnaround blog post",
+          "whenToUse": "Use this when you need a lightweight brief fast — a smaller blog site publishing frequently, where a full structured brief would be more overhead than the piece needs.",
+          "prompt": "Give me a quick, lightweight content brief for this keyword — just the essentials, not the full structure. Target keyword: [KEYWORD]. Intent: [informational / commercial / transactional / navigational]. What's ranking: [PASTE YOUR OBSERVATIONS]. Give me: recommended word count, 3-5 required subtopics as a bullet list, and 3 questions the piece should answer. Nothing else."
+        },
+        {
+          "label": "For a competitive, high-value commercial keyword",
+          "whenToUse": "Use this for a keyword with real business value where you're going head-to-head with strong competitors and need a more thorough, differentiated brief before committing writer time.",
+          "prompt": "Build a thorough content brief for this competitive commercial keyword — assume I need a genuinely differentiated angle to have any chance of outranking established competitors, not just a checklist of subtopics they already cover.\n\nTarget keyword: [KEYWORD]\nSecondary/related keywords: [LIST]\nSearch intent: [informational / commercial / transactional / navigational]\nWhat's currently ranking, including any unique element each top result has (interactive tool, video, downloadable template): [PASTE YOUR OBSERVATIONS]\n\nGive me the standard 5-part brief, plus a dedicated section: \"what would make this piece genuinely hard to compete with\" — 2-3 concrete ideas (not vague ones like 'add more detail'), grounded only in gaps you can see in what's currently ranking."
+        },
+        {
+          "label": "For refreshing an existing underperforming page",
+          "whenToUse": "Use this when you already have a published page targeting this keyword that isn't ranking well, and need a brief for updating it rather than starting from scratch.",
+          "prompt": "I have an existing page targeting this keyword that isn't performing well. Build a brief for updating it, not writing from scratch — compare what my page currently covers against what's ranking and current search intent, and tell me specifically what to add, cut, or restructure.\n\nTarget keyword: [KEYWORD]\nSearch intent: [informational / commercial / transactional / navigational]\nWhat's currently ranking: [PASTE YOUR OBSERVATIONS]\nWhat my existing page currently covers: [PASTE A SUMMARY OF YOUR CURRENT PAGE]\n\nGive me: what to add, what to cut, what to restructure, and whether the current format (compare against what's ranking) is even the right one to keep."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Feels generic? Push for specificity",
+          "prompt": "This brief feels like it could apply to almost any keyword in this space. Make the required subtopics and questions more specific to what's actually ranking for this exact keyword, not generic best-practices for the topic area."
+        },
+        {
+          "label": "Add competitor differentiation",
+          "prompt": "Give me one more specific idea for how this piece could stand out from what's currently ranking — something concrete like a unique structural element or angle, not just \"be more thorough.\""
+        },
+        {
+          "label": "Word count feels off — check against the SERP",
+          "prompt": "Does the recommended word count actually match what's ranking, or is it a generic SEO guess? Re-check it specifically against the format and depth of the top-ranking pages I described."
+        },
+        {
+          "label": "Turn it into instructions for the writer",
+          "prompt": "Rewrite this brief as direct instructions addressed to the writer, in plain second person (\"you should...\"), so it reads like a assignment brief rather than an analysis document."
+        }
+      ],
+      "walkthrough": "Jae runs content for a small business software review site and needs a brief for the keyword \"best invoicing software for freelancers.\" Before opening any AI tool, Jae actually searches the term and looks at the top four results: two listicles comparing 8-10 tools each, one vendor comparison page with a pricing table, and one guide focused on choosing based on business size.\n\nJae opens ChatGPT, fills in Target keyword as the exact phrase, Secondary keywords as \"free invoicing software, invoicing app for freelancers, invoicing software pricing,\" Search intent as commercial, and pastes the real observations about the four ranking pages and their formats.\n\nThe brief comes back recommending a comparison-listicle format around 2,200 words, describing the audience as freelancers evaluating tools for the first time, required subtopics including a comparison table and a \"how to choose based on business size\" section drawn from the fourth ranking page's angle, five questions like \"is there a truly free option for freelancers\" and \"what's the difference between invoicing software and accounting software,\" and a differentiation angle suggesting a section specifically for freelancers who also need time tracking, since none of the four ranking pages addressed that combination.\n\nJae reads it against the actual search results page one more time, confirms the subtopics match reality, then sends the follow-up asking ChatGPT to rewrite the brief as direct instructions to the writer in second person. The final version reads like a clear assignment. Jae hands it to a freelance writer that afternoon. The whole process, including the manual SERP check, took about fifteen minutes."
+    },
+    "seo-b2-title-tags-meta-descriptions-at-scale": {
+      "placeholders": [
+        {
+          "name": "PASTE: PAGE URL/NAME | TARGET KEYWORD | PAGE TYPE | DISTINGUISHING DETAIL",
+          "what": "Your batch of pages, one per line, each with its target keyword, the type of page it is, and one genuinely distinguishing detail that makes this page different from the others in the batch. The distinguishing detail is the most important field — without it, every entry gets written from the keyword alone and the whole batch ends up sounding the same.",
+          "examples": [
+            "/blog/email-marketing-tips | email marketing tips | blog post | focuses specifically on small ecommerce brands\n/products/email-tool | email marketing software | product page | free tier available, no credit card required\n/compare/email-tools | best email marketing tools | comparison page | compares 8 tools with current pricing in a table",
+            "/guides/moving-checklist | moving checklist | guide | includes a printable PDF download\n/services/local-movers | local movers near me | service/landing page | serves a specific metro area with same-day quotes\n/blog/packing-tips | packing tips for moving | blog post | written for people moving with pets"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a small batch (under 5 pages)",
+          "whenToUse": "Use this for a handful of pages where the full table output and repeated-pattern warnings are more structure than needed — a faster, plainer version.",
+          "prompt": "Write title tags (under 60 characters) and meta descriptions (under 155 characters) for these few pages, each genuinely distinct based on its detail below, not a templated keyword swap. Just list them plainly, page by page — no table needed.\n\nPages: [PASTE: PAGE URL/NAME | TARGET KEYWORD | PAGE TYPE | DISTINGUISHING DETAIL]"
+        },
+        {
+          "label": "Version for an existing site needing a rewrite pass",
+          "whenToUse": "Use this when you're auditing and rewriting title tags/descriptions that already exist and underperform, rather than writing them for new pages.",
+          "prompt": "Here are existing title tags and meta descriptions that are underperforming (low click-through rate, or generic/templated). Rewrite each one to be more specific and compelling based on the distinguishing detail I've added, while keeping the target keyword. Flag which of the existing ones look templated so I understand the pattern to avoid repeating.\n\nPages with current copy: [PASTE: PAGE URL/NAME | TARGET KEYWORD | PAGE TYPE | DISTINGUISHING DETAIL | CURRENT TITLE | CURRENT META DESCRIPTION]\n\nSame requirements as before: under 60/155 characters, no repeated sentence structure across entries, output as a table."
+        },
+        {
+          "label": "Version targeting a specific competitive angle",
+          "whenToUse": "Use this when you want the titles to lean into a specific competitive differentiator (price, speed, a feature competitors lack) across the whole batch, not just general distinctiveness.",
+          "prompt": "Write title tags and meta descriptions for this batch, and where the distinguishing detail supports it, lean into [COMPETITIVE ANGLE, e.g. \"genuinely free tier\" or \"fastest setup time\"] as the hook — but only where the detail I gave you actually supports that angle, don't force it onto pages where it doesn't fit.\n\nPages: [PASTE: PAGE URL/NAME | TARGET KEYWORD | PAGE TYPE | DISTINGUISHING DETAIL]\n\nSame length limits and anti-templating rules as before, output as a table."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Scan for a hidden repeated pattern",
+          "prompt": "Look across the whole batch again and check for any repeated opening phrase, sentence structure, or filler pattern that isn't obvious at first glance. List every entry that shares a structure with another one, and rewrite just those."
+        },
+        {
+          "label": "A title got cut off — check character counts",
+          "prompt": "Re-check the character count for every title tag and meta description in the table against the actual text — flag and rewrite any that are over 60 or 155 characters respectively, since the count you gave doesn't match what I'm seeing."
+        },
+        {
+          "label": "Keyword feels forced in one entry",
+          "prompt": "The keyword in [PAGE NAME]'s title reads awkwardly, like it was forced in. Rewrite just that one entry so the keyword appears more naturally, even if it means placing it differently in the sentence."
+        },
+        {
+          "label": "Add a soft CTA where missing",
+          "prompt": "A few of the meta descriptions don't include any call to action. Add a short, natural CTA to any entry missing one, matched to that page's type (e.g. \"compare pricing\" for a comparison page, \"get started free\" for a product page)."
+        }
+      ],
+      "walkthrough": "Sofia handles SEO for a home services marketplace and needs title tags and meta descriptions for six new location landing pages the dev team just launched — one per city the company now serves. Writing six by hand felt fast, but she'd been burned before: the last batch she wrote quickly all started with \"Find the Best\" and Google flagged them as near-duplicates in Search Console.\n\nThis time she opens Claude with the prompt and lists all six pages with their target keyword (\"plumbers in [city],\" swapped per city) and, critically, one real distinguishing detail per page — one city page mentions same-day emergency service is available there, another notes the company has been operating in that market the longest, a third highlights a lower average response time based on real data.\n\nClaude returns a table of six titles and descriptions, each opening differently: one leads with \"Same-Day Plumbers,\" another with \"15 Years Serving [City],\" a third with \"Fastest Response Time.\" Character counts are shown next to each. Sofia scans for repeated openers and doesn't see one this time, but she still runs the follow-up asking Claude to double-check for any hidden repeated structure — it flags that two entries both end their meta description with nearly the same closing phrase, and rewrites just those two.\n\nShe pastes the final six pairs into her CMS and spot-checks two of them in an actual SERP preview tool to confirm nothing truncates. The whole batch, from listing the pages to publishing, took about eighteen minutes — versus the roughly forty-five minutes the templated approach took her last time, with a better result."
+    },
+    "seo-i1-competitor-content-gap-research": {
+      "placeholders": [
+        {
+          "name": "TOPIC/KEYWORD CLUSTER",
+          "what": "The topic area or group of related keywords you want researched, broad enough to cover a real content cluster but narrow enough that the research stays focused and useful, rather than a topic so wide it produces vague generalities.",
+          "examples": [
+            "Project management software for marketing agencies",
+            "Home carpet cleaning and stain removal",
+            "Small business payroll and tax filing"
+          ]
+        },
+        {
+          "name": "LIST URLS OR COMPANY NAMES",
+          "what": "The specific competitors or competing pages you want checked — real URLs if you have them, or company/site names if you don't have exact URLs handy. A good list is the sites you actually compete against in search results for this topic, not a generic list of \"big players\" in the industry.",
+          "examples": [
+            "capterra.com/project-management-software, softwareadvice.com, and the comparison page on asana.com/compare",
+            "Angi.com's carpet cleaning guide, a competitor named CleanFreak's blog, and the Bissell brand's stain-removal resource page"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a single competitor deep-dive",
+          "whenToUse": "Use this when you're focused on outmaneuvering one specific competitor's page rather than surveying a whole competitive set.",
+          "prompt": "Research this one competitor's page on [TOPIC/KEYWORD CLUSTER] in depth. Tell me every subtopic and angle it covers, with sources, and then identify the 3-5 things a searcher interested in this topic would likely still want to know that this specific page doesn't address. Cite a source for every claim; flag anything you can't verify.\n\nCompetitor page: [URL]"
+        },
+        {
+          "label": "Broader version across an entire content cluster",
+          "whenToUse": "Use this when planning a whole content cluster (a pillar page plus several supporting articles) and need gap research across many related keywords at once, not just one target term.",
+          "prompt": "Research what these competitors cover across this entire topic cluster, not just one keyword — I'm planning a pillar page and several supporting articles. Group your findings by subtopic within the cluster, and for each subtopic, tell me how well-covered it already is across the competitor set (well-covered / thin / missing entirely), with sources for every claim.\n\nTopic cluster: [TOPIC/KEYWORD CLUSTER]\nRelated keywords in this cluster: [LIST]\nCompetitors/pages to check: [LIST URLS OR COMPANY NAMES]\n\nEnd with a recommended content cluster structure — a pillar topic and 4-6 supporting article topics — based only on the gaps you found."
+        },
+        {
+          "label": "Version focused on outdated content specifically",
+          "whenToUse": "Use this when the opportunity isn't a missing subtopic but competitor content that's simply gone stale — outdated pricing, old screenshots, references to discontinued features.",
+          "prompt": "Research these competitors' content on [TOPIC/KEYWORD CLUSTER] specifically for signs it's outdated — mentions of pricing, versions, or features that may no longer be current, publish or last-updated dates if visible, and any claim that looks like it hasn't been refreshed recently. Cite a source for every claim, and flag clearly when you're inferring \"likely outdated\" versus when you have direct evidence (like a visible last-updated date).\n\nCompetitors/pages to check: [LIST URLS OR COMPANY NAMES]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify the top claim yourself",
+          "prompt": "For the #1 ranked gap you identified, give me the exact source URL and quote or describe specifically what you found there, so I can open it myself and confirm the gap is real before I act on it."
+        },
+        {
+          "label": "Gap feels too generic — narrow it",
+          "prompt": "The gap \"[GAP DESCRIPTION]\" is too broad to brief a writer on directly. Narrow it into a specific, targetable subtopic or angle a single piece of content could actually cover."
+        },
+        {
+          "label": "Check how many competitors really miss it",
+          "prompt": "Double-check: of the competitors I listed, exactly which ones are missing \"[GAP DESCRIPTION]\" and which ones do cover it, even partially? I want the precise breakdown, not just a general \"most competitors\" statement."
+        },
+        {
+          "label": "Ask for the strongest gap, not just the longest list",
+          "prompt": "Of everything you found, if you had to pick the single gap most worth targeting first — based on how many competitors miss it and how directly it connects to real searcher intent — which one, and why specifically?"
+        }
+      ],
+      "walkthrough": "Ben does SEO for a company selling project management software to marketing agencies and wants to find a real content gap before briefing next month's articles. He opens Gemini, starts a Deep Research session, and gives it the topic cluster \"project management software for marketing agencies\" along with three real competitors he actually loses rankings to: two SaaS review sites and one direct competitor's own comparison page.\n\nDeep Research shows him a short research plan, then returns a breakdown for each site: the review sites cover general feature comparisons and pricing tiers, with source links to the actual pages; the competitor's comparison page covers integrations and onboarding time. It then flags that none of the three sources address agency-specific client-billing or retainer-tracking workflows in any depth, citing the specific pages checked, and notes it could not fully verify one claim about a fourth page it found in passing, recommending Ben check that one manually.\n\nBen doesn't take this at face value. He sends the follow-up asking for the exact source and quote behind the retainer-tracking gap claim, gets a specific URL and a summary of what that page actually covers instead, and opens it himself. It checks out — the page mentions client billing only in passing, with no real depth. He also verifies the second-ranked gap the same way.\n\nWith two verified gaps in hand, Ben briefs a new pillar article specifically on managing agency retainers within project management software, an angle none of his three checked competitors cover well. The research and verification together took about twenty-five minutes, considerably faster than his usual method of manually reading through five or six competitor pages himself."
+    },
+    "seo-i2-outlines-drafts-satisfy-search-intent": {
+      "placeholders": [
+        {
+          "name": "KEYWORD",
+          "what": "The target keyword this piece is being written for, matching exactly what's in your content brief — this keeps the outline and draft anchored to the same search term the brief was built around.",
+          "examples": [
+            "best invoicing software for freelancers",
+            "how to choose a moving company",
+            "project management software pricing comparison"
+          ]
+        },
+        {
+          "name": "INTENT, e.g. \"someone deciding between three specific tool categories before buying\"",
+          "what": "A one-sentence, concrete restatement of what the searcher is actually trying to accomplish — not a category label like \"commercial intent\" but the real goal, specific enough to guide every structural decision in the outline.",
+          "examples": [
+            "Someone deciding between three specific tool categories before buying",
+            "A first-time mover trying to figure out what to ask a moving company before booking",
+            "Someone who already knows they need project management software and wants to compare real prices before choosing"
+          ]
+        },
+        {
+          "name": "PASTE BRIEF: SUBTOPICS, AUDIENCE, QUESTIONS TO ANSWER",
+          "what": "The full content brief you already built for this piece (or received from someone else) — the required subtopics, target audience description, and the questions the content needs to answer. This is what the outline gets built from, so it should be complete, not a partial summary.",
+          "examples": [
+            "Audience: freelancers evaluating invoicing tools for the first time. Subtopics: comparison table, pricing tiers, free vs paid features, how to choose based on business size. Questions: is there a truly free option, what's the difference between invoicing and accounting software, do these integrate with tax software."
+          ]
+        },
+        {
+          "name": "e.g. \"direct, practical, second person\"",
+          "what": "The voice the draft should be written in — how formal, how personal, what point of view. This should match your publication's usual style, not be decided fresh for every piece.",
+          "examples": [
+            "Direct, practical, second person",
+            "Conversational but authoritative, first-person plural (\"we\")",
+            "Formal and neutral, third person, suited to a B2B enterprise audience"
+          ]
+        },
+        {
+          "name": "e.g. \"accessible to a non-technical small business owner\"",
+          "what": "How technical or advanced the writing can assume the reader is — this determines whether jargon needs defining, how much background gets explained, and how long sentences can reasonably be.",
+          "examples": [
+            "Accessible to a non-technical small business owner",
+            "Written for an experienced marketing professional who knows the basic terminology",
+            "Simple enough for someone reading in their second language"
+          ]
+        },
+        {
+          "name": "PASTE APPROVED OUTLINE",
+          "what": "The outline from Step 1, after you've reviewed it and cut any subtopic that didn't serve the stated intent — this should be the final, approved structure, not the first draft of the outline, since the draft will follow it exactly.",
+          "examples": [
+            "1. Direct answer: the 3 factors that matter most for a 10-person agency (budget, must-have features, team size fit). 2. Comparison table of top options. 3. How to weigh the 3 factors for your specific team. 4. Common mistakes when choosing. 5. Final recommendation framework."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Skip straight to a full draft (no outline-approval pause)",
+          "whenToUse": "Use this for a lower-stakes piece, or when you already trust the brief enough that you don't need to review the outline as a separate step before drafting.",
+          "prompt": "I have a content brief for a piece targeting [KEYWORD], search intent: [INTENT]. Build the outline and then immediately write the full first draft in one pass, without waiting for my approval between steps — but still flag any brief subtopic that doesn't serve the stated intent as \"cut this\" at the top of your response, and still flag any statistic or fact you're not fully certain of.\n\nBrief: [PASTE BRIEF: SUBTOPICS, AUDIENCE, QUESTIONS TO ANSWER]\nVoice: [VOICE]\nReading level: [READING LEVEL]"
+        },
+        {
+          "label": "For a piece requiring stricter factual caution (YMYL topics)",
+          "whenToUse": "Use this for health, financial, legal, or safety-related content, where an unverified claim is a much bigger risk than in a general how-to piece.",
+          "prompt": "I have a content brief for a piece targeting [KEYWORD] in a sensitive/high-stakes topic area (health, financial, legal, or safety-related), search intent: [INTENT]. Build the outline first, flagging any subtopic that doesn't serve the intent. Then, once I approve, write the draft — but do not state ANY specific statistic, figure, regulation, or claim of fact anywhere in the draft. Instead, insert a clearly marked placeholder like [VERIFY: claim about X] everywhere a fact would normally go, so nothing unverified reaches a reader in this topic area.\n\nBrief: [PASTE BRIEF: SUBTOPICS, AUDIENCE, QUESTIONS TO ANSWER]\nVoice: [VOICE]\nReading level: [READING LEVEL]\nApproved outline: [PASTE APPROVED OUTLINE]"
+        },
+        {
+          "label": "Rewriting an existing draft to better match intent",
+          "whenToUse": "Use this when a draft already exists (written by you, a freelancer, or an earlier AI pass) but reads as generic or buries the answer, and needs restructuring around intent rather than a full rewrite from scratch.",
+          "prompt": "Here is an existing draft that I don't think actually satisfies the search intent well — it may bury the answer or drift into tangents. Search intent: [INTENT]. Restructure it (don't just polish the prose) so the core answer appears in the first 2-3 sentences and every section clearly serves the stated intent — flag any paragraph that doesn't and suggest cutting or moving it.\n\nExisting draft: [PASTE DRAFT]\nBrief for reference: [PASTE BRIEF: SUBTOPICS, AUDIENCE, QUESTIONS TO ANSWER]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Answer buried too deep — bring it forward",
+          "prompt": "The core answer to the search intent is still buried past the first couple of sentences. Rewrite the introduction so it states the direct answer within the first 2-3 sentences, cutting any generic scene-setting before it."
+        },
+        {
+          "label": "Check flagged facts before publishing",
+          "prompt": "List every statistic, specific claim, or fact you flagged as uncertain in this draft, in one place, so I can verify each one before this goes to an editor."
+        },
+        {
+          "label": "Reading level too advanced or too simple",
+          "prompt": "The reading level doesn't match what I asked for — it's [too technical / too simplistic]. Rewrite the draft at the level of [DESIRED READING LEVEL], keeping the structure and facts the same."
+        },
+        {
+          "label": "Trim a section that reads as a tangent",
+          "prompt": "The section on \"[SECTION NAME]\" doesn't seem to serve the stated search intent — it reads like a tangent. Either cut it or explain specifically how it serves the intent; if you can't, remove it and tighten the transition around it."
+        }
+      ],
+      "walkthrough": "Nadia writes SEO content for a B2B software review site and has a completed brief for \"how to choose project management software for a 10-person agency,\" with the search intent being a small agency owner trying to make a purchase decision quickly, not someone researching casually.\n\nShe opens Claude, pastes the brief with its subtopics, audience, and questions, states the intent as one sentence, and runs Step 1 only. The outline comes back leading with a short decision framework — budget, must-have features, team size fit — before any tool-by-tool detail, and flags a \"brief history of project management software\" subtopic from the original brief as \"consider cutting,\" since it doesn't serve someone trying to decide quickly.\n\nNadia agrees, removes that subtopic, and pastes the approved outline back in for Step 2, setting Voice to \"direct, practical, second person\" and Reading level to \"accessible to a non-technical small business owner.\" The draft opens with a direct two-sentence answer naming the three factors that matter most for a 10-person agency, before moving into the outlined sections. It flags one specific pricing figure as something Nadia should verify since pricing changes often.\n\nShe reads the introduction on its own, out of context, and confirms it actually answers what someone searching the keyword would want to know. She then checks the one flagged pricing figure against the vendor's current site and corrects it slightly. The whole process — brief to a draft she trusts enough to send to her editor — took about twenty-five minutes, notably faster than her old habit of drafting directly from the brief without the intermediate outline-approval step, which used to produce drafts that wandered off-topic more often."
+    },
+    "seo-i3-technical-seo-audit-notes-to-client-reports": {
+      "placeholders": [
+        {
+          "name": "PASTE: FINDING | AFFECTED URLS/COUNT | TOOL-ASSIGNED SEVERITY IF ANY",
+          "what": "Your raw findings exactly as your crawler or audit tool reported them, one per line, with how many URLs are affected and the tool's own severity rating if it assigned one. Paste these directly from the tool's export rather than summarizing from memory, so nothing gets lost or misremembered.",
+          "examples": [
+            "12 pages return 404 (broken internal links) | 12 URLs | high\nMissing canonical tags on paginated URLs | 40 URLs | medium\nLargest Contentful Paint 4.2s on mobile | site-wide | high",
+            "Duplicate title tags across product variant pages | 85 URLs | medium\nOrphaned pages with no internal links pointing to them | 6 URLs | low\nMissing alt text on images | 210 images | low"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for an internal team update, not a client",
+          "whenToUse": "Use this when the report is going to your own internal team or a technical stakeholder, not an external client, so you can keep more technical detail and skip the plain-language translation.",
+          "prompt": "Below are raw technical SEO audit findings. Turn this into an internal team update, not a client report — keep the technical terminology (no need to define jargon), and prioritize by severity and effort. Use only the findings I've listed, no invented traffic or ranking numbers.\n\nRaw findings: [PASTE: FINDING | AFFECTED URLS/COUNT | TOOL-ASSIGNED SEVERITY IF ANY]\n\nOutput as a prioritized table: finding | affected count | severity | recommended fix | effort | suggested owner (dev/content/SEO)."
+        },
+        {
+          "label": "Version with a one-paragraph executive summary",
+          "whenToUse": "Use this when the client audience includes a non-technical decision-maker who needs a short summary before the detailed findings, not just the finding-by-finding breakdown.",
+          "prompt": "Below are raw technical SEO audit findings. Use only what I've listed, no invented findings or specific traffic/ranking numbers. First write a 3-4 sentence executive summary in plain language covering the overall health of the site and the single most urgent issue, grounded only in the findings given. Then provide the full finding-by-finding report grouped into fix first / fix soon / monitor, same format as before.\n\nRaw findings: [PASTE: FINDING | AFFECTED URLS/COUNT | TOOL-ASSIGNED SEVERITY IF ANY]"
+        },
+        {
+          "label": "Version comparing this audit to the prior one",
+          "whenToUse": "Use this for a recurring client relationship where you want to show progress (or lack of it) by comparing this audit's findings against the last one.",
+          "prompt": "Below are this period's raw technical SEO findings and the prior audit's findings for comparison. Use only what I've listed for both — do not invent any finding or number. Produce a report that separates: issues resolved since the last audit, issues that persist, and new issues found this time, each translated to plain language with general impact and recommended fix, grouped by priority.\n\nThis period's findings: [PASTE: FINDING | AFFECTED URLS/COUNT | TOOL-ASSIGNED SEVERITY IF ANY]\nPrior audit's findings: [PASTE PRIOR FINDINGS]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Too much jargon for a non-technical client",
+          "prompt": "Go through this report again and rewrite any remaining technical term in plain language, or define it clearly the first time it's used — assume the client has never heard the term \"canonical tag\" or \"crawl budget\" before."
+        },
+        {
+          "label": "Check nothing was dropped from the raw list",
+          "prompt": "List every finding from my original raw list next to a checkmark showing where it appears in your report, so I can confirm nothing was dropped, merged incorrectly, or given a severity I didn't provide."
+        },
+        {
+          "label": "Impact language sounds too specific — soften it",
+          "prompt": "Re-read the impact statement for [FINDING NAME] — it sounds more specific than what I actually gave you. Rewrite it in general terms only (e.g. \"can affect indexing\"), removing anything that reads like a specific measured number."
+        },
+        {
+          "label": "Client needs the one most urgent thing highlighted",
+          "prompt": "If the client only reads one line of this whole report, which single finding should it be and why — write one short, plain-language sentence I can put at the very top as the headline takeaway."
+        }
+      ],
+      "walkthrough": "Carlos runs technical SEO audits for an agency serving small business clients and just finished crawling a client's site with his usual tool. The raw export has eighteen findings, ranging from broken links to slow load times, in a format the client would never make sense of on their own — rows of URLs, status codes, and tool jargon.\n\nHe copies the raw findings into a spreadsheet, keeping the tool's own severity ratings, and pastes them into ChatGPT with the prompt. Among the findings: 12 broken internal links (high severity), missing canonical tags on 40 paginated URLs (medium), and a 4.2-second mobile page load time (high).\n\nThe report comes back grouped into \"fix first,\" \"fix soon,\" and \"monitor.\" The broken links land in fix first, explained in plain language as links that send visitors and search engines to pages that no longer exist, wasting crawl budget and frustrating users — with crawl budget defined in one clause since it's not obvious. The page speed issue also lands in fix first, explained as slowing page load in a way that hurts both user experience and Google's Core Web Vitals scoring. No specific traffic numbers appear anywhere, since Carlos never provided any.\n\nHe checks his original eighteen findings against the report one by one and confirms all eighteen appear somewhere, none merged incorrectly. He then sends the follow-up asking for the single most urgent headline takeaway, and gets one clean sentence about the broken links being the fastest, highest-impact fix. He adds that sentence to the top of the report and sends it. Total time: about twenty minutes, versus the hour-plus he used to spend writing these by hand."
+    },
+    "seo-a1-seo-content-production-pipeline-quality-gates": {
+      "placeholders": [
+        {
+          "name": "DESCRIBE STAGES AS THEY ACTUALLY HAPPEN",
+          "what": "An honest description of your current content process, even if informal or inconsistent — \"someone has an idea, someone writes it, it goes live\" is a valid honest starting point. Describing an idealized process you don't actually follow will produce a pipeline that doesn't fit your real operation.",
+          "examples": [
+            "Someone on the team has an idea for a post, usually from a client request or a quick keyword check. A writer drafts it, often with AI assistance for a first pass. An editor skims it before it's scheduled to publish — there's no formal fact-check step, and SEO checks happen only if the writer remembers to do them.",
+            "Strategist picks keywords from a monthly list. A freelance writer is assigned and drafts independently with no brief beyond the keyword. Drafts come back and go straight to the CMS, reviewed only if something looks obviously wrong."
+          ]
+        },
+        {
+          "name": "ROLES + REALISTIC OUTPUT, e.g. \"1 strategist, 2 writers (partly AI-assisted), 1 editor, realistic capacity 6-8 pieces/week\"",
+          "what": "Your team's actual roles and how much content they can genuinely produce per week — an honest capacity number, not an aspirational one. This is what keeps the resulting pipeline something your real team can run rather than a diagram sized for a team you don't have.",
+          "examples": [
+            "1 strategist, 2 writers (partly AI-assisted), 1 editor, realistic capacity 6-8 pieces/week",
+            "1 person doing everything part-time, realistic capacity 2 pieces/week",
+            "2 in-house writers, 3 freelancers, 1 editor, 1 SEO specialist, realistic capacity 15 pieces/week"
+          ]
+        },
+        {
+          "name": "e.g. \"comparison pages and how-to guides\"",
+          "what": "The main type or types of content this pipeline needs to handle — different content types (comparison pages, how-to guides, news/trend pieces, product pages) sometimes need different quality gates, so naming the type keeps the pipeline relevant.",
+          "examples": [
+            "Comparison pages and how-to guides",
+            "Local service landing pages",
+            "Long-form buyer's guides and shorter blog posts"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Lightweight version for a one- or two-person team",
+          "whenToUse": "Use this for a very small team (a solo operator or a two-person team) where a multi-stage formal pipeline with named roles at each gate would be unrealistic overhead.",
+          "prompt": "Help me design a lightweight SEO content process with real quality checks for a very small team — do not assume separate people for each stage, since the same one or two people do everything.\n\nOur current process: [DESCRIBE STAGES AS THEY ACTUALLY HAPPEN]\nTeam and capacity: [ROLES + REALISTIC OUTPUT]\nTarget content types: [CONTENT TYPES]\n\nGive me 3-4 stages maximum, each with one simple, checkable pass/fail criterion the same person can self-apply before moving to the next stage (e.g. a personal checklist), and the single most likely place quality slips when one person is doing everything."
+        },
+        {
+          "label": "Version emphasizing AI-content risk specifically",
+          "whenToUse": "Use this when a large share of the draft is AI-generated and you're specifically worried about factual errors or generic content making it to publish, more than about workflow bottlenecks.",
+          "prompt": "Help me design an SEO content pipeline with quality gates specifically focused on catching problems unique to AI-assisted drafting — invented statistics, generic content that doesn't serve search intent, and factual errors — in addition to the standard editorial gates.\n\nOur current process: [DESCRIBE STAGES AS THEY ACTUALLY HAPPEN]\nTeam and capacity: [ROLES + REALISTIC OUTPUT]\nTarget content types: [CONTENT TYPES]\nShare of the draft that's AI-assisted: [e.g. \"first draft is 80% AI-generated, human edited\"]\n\nFor the fact-check and SEO/intent stages specifically, give me concrete pass/fail criteria aimed at AI-specific failure modes (e.g. \"every statistic has a live source checked within 30 days\" or \"the draft directly answers the target search intent within the first 3 sentences, confirmed by a human reader, not just present somewhere in the piece\")."
+        },
+        {
+          "label": "Version for scaling up an already-working pipeline",
+          "whenToUse": "Use this when you already have a working pipeline at a smaller volume and need to redesign it for higher output without losing the quality gates that are currently working.",
+          "prompt": "We already have a working content pipeline at a smaller volume and want to scale output without losing quality. Here's our current pipeline and what's actually working well about it — don't change what's working, focus on where it would break at higher volume.\n\nCurrent pipeline and what's working: [DESCRIBE STAGES AS THEY ACTUALLY HAPPEN, noting which gates are currently effective]\nCurrent capacity vs. target capacity: [e.g. \"currently 6 pieces/week, need to get to 15/week\"]\nTeam: [ROLES]\n\nTell me specifically which stage will become the bottleneck first as volume increases, whether that stage needs more AI assistance, a process change, or more headcount, and how to adjust the quality gate at that stage so it still catches real problems at the higher volume."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "A quality gate is too vague — make it checkable",
+          "prompt": "The quality gate for the \"[STAGE NAME]\" stage is still too vague to actually check against. Rewrite it as a specific, concrete criterion someone could verify yes/no, not a general statement about quality."
+        },
+        {
+          "label": "AI-vs-human split doesn't match our real risk tolerance",
+          "prompt": "I think [STAGE NAME] needs more human review than you assigned it, given how much it affects our clients directly. Revise the AI-vs-human split for that stage specifically and explain the tradeoff."
+        },
+        {
+          "label": "Push harder on the failure point",
+          "prompt": "Go deeper on the failure point you identified — walk me through exactly what it would look like in practice if this pipeline broke down there, and give me one leading indicator I could watch for that would tell me it's starting to happen before it causes a real problem."
+        },
+        {
+          "label": "Turn this into a one-page reference doc",
+          "prompt": "Condense this whole pipeline into a one-page reference document I could pin for the team — just the stage names, the pass/fail criterion for each, and who owns each stage. Cut all the explanatory reasoning."
+        }
+      ],
+      "walkthrough": "Priya leads content strategy at a small SEO agency and has watched their AI-assisted content output nearly triple in the last six months — but so has the number of pieces going out with a thin fact-check or an off-intent angle that a client later flagged. She wants a real pipeline instead of the current informal habit of \"writer drafts with AI help, editor skims before publishing.\"\n\nShe opens ChatGPT and describes her current process honestly, including that fact-checking mostly doesn't happen unless the editor happens to catch something. She lists her real team — one strategist, two writers who are partly AI-assisted, one editor working part-time — and states their realistic capacity as six pieces a week, not the eight they've been aspirationally aiming for. Target content types: comparison pages and how-to guides.\n\nThe response returns a six-stage pipeline from brief through editorial sign-off, sized to her actual team. Each stage has a concrete gate: the fact-check gate requires every statistic and named tool feature to have a live source checked within the last 30 days, with unchecked claims removed before moving forward; the SEO/intent gate requires the draft to answer the core search intent within the first three sentences, confirmed by a second reader, not merely present somewhere in the piece. AI assistance is marked for the outline and first-draft stages; humans are required for fact-checking and final sign-off. The flagged failure point: their part-time editor is the likely bottleneck at six pieces a week.\n\nPriya sends the follow-up asking ChatGPT to condense the whole thing into a one-page reference doc she can pin in their shared workspace. She pilots it on three real pieces before rolling it out fully. Building the pipeline took about twenty-five minutes; catching what would have been an unverified statistic on the very first piloted piece took about two."
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "paths": [
+    {
+      "slug": "notebooklm-academy",
+      "title": "Documents & Knowledge Academy",
+      "tagline": "Ground AI in your own documents with Claude Projects and Gemini — answers you can actually verify",
+      "description": "A ladder from creating your first Claude Project and loading it with real documents through asking grounded questions and verifying every quote yourself, synthesizing across multiple documents, building a Gemini-powered study system from your course materials, turning sources into work-ready briefings, maintaining a living client or project knowledge base, reconciling documents that disagree, and running advanced Workspace-grounded knowledge workflows for a whole team.",
+      "kind": "tool-course",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": null,
+      "sortOrder": 11,
+      "lessons": [
+        "nlm-b1-first-notebook-sources",
+        "nlm-b2-grounded-questions-citations",
+        "nlm-i1-synthesize-multiple-documents",
+        "nlm-i2-study-system-course-materials",
+        "nlm-i3-briefings-summaries-for-work",
+        "nlm-a1-client-project-knowledge-base",
+        "nlm-a2-compare-reconcile-conflicting-sources",
+        "nlm-a3-advanced-team-knowledge-workflows"
+      ]
+    }
+  ]
+}

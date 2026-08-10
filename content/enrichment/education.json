@@ -1,0 +1,892 @@
+{
+  "enrichment": {
+    "tch-b1-lesson-plan-from-objectives": {
+      "placeholders": [
+        {
+          "name": "GRADE",
+          "what": "The grade level and, if relevant, the course track of the class you're planning for. You'll find this on your class roster or master schedule. A good value is specific, like '7th grade' or '10th grade Algebra 1'; a bad value is vague like 'middle school.'",
+          "examples": [
+            "7th grade",
+            "10th grade (Algebra 1, general track)",
+            "3rd grade (self-contained classroom)"
+          ]
+        },
+        {
+          "name": "SUBJECT",
+          "what": "The subject area of the lesson, matching how you'd describe it on your schedule or gradebook. Be specific enough to signal the discipline's conventions, since a science lesson and a writing lesson need very different activity types.",
+          "examples": [
+            "U.S. History",
+            "Physical Science",
+            "English Language Arts - persuasive writing"
+          ]
+        },
+        {
+          "name": "MINUTES",
+          "what": "The number of minutes in this specific class period today, written as one plain number. Check your bell schedule, since block days or shortened schedules change this from a normal day. A bad value is a range like '45-50' — give one number so the AI can build a plan that actually adds up.",
+          "examples": [
+            "45",
+            "55",
+            "90 (block schedule)"
+          ]
+        },
+        {
+          "name": "PASTE STANDARD",
+          "what": "The exact wording of the standard or objective you're teaching to, copied from your state standards document, curriculum guide, or district pacing guide — not paraphrased from memory. Getting the exact wording matters because the AI builds every activity around what this specific sentence actually requires students to do.",
+          "examples": [
+            "CCSS.ELA-LITERACY.RI.7.8: Trace and evaluate the argument and specific claims in a text, assessing whether the reasoning is sound and the evidence is relevant and sufficient.",
+            "NGSS MS-PS1-4: Develop a model that predicts and describes changes in particle motion, temperature, and state of a pure substance when thermal energy is added or removed.",
+            "State standard 8.G.A.1: Verify experimentally the properties of rotations, reflections, and translations."
+          ]
+        },
+        {
+          "name": "PRIOR KNOWLEDGE",
+          "what": "A short, honest description of what students have already learned or practiced that's relevant to today's lesson, including any recent gaps. Think back over your last week or two of lessons, not the whole year. A bad value is 'they know the basics' — that tells the AI nothing about where to start the hook.",
+          "examples": [
+            "Students can identify claims and evidence in a text but haven't practiced evaluating whether the evidence is sufficient. We covered claim vs. counterclaim last week.",
+            "Students know the particle model of matter at a basic level (solid/liquid/gas) from 6th grade but have never connected it to energy transfer.",
+            "Students can plot points and reflect shapes over the x-axis; rotations are brand new content today."
+          ]
+        },
+        {
+          "name": "MATERIALS, e.g. \"whiteboard, Chromebooks, no printer access\"",
+          "what": "What's physically available in your classroom today, including anything that's normally available but isn't today, like a broken printer or a Chromebook cart being used by another class. This keeps every activity in the plan realistic instead of asking students to use a device or handout you don't actually have.",
+          "examples": [
+            "Whiteboard, projector, 1 Chromebook per student, no printer access today",
+            "Textbooks, poster paper, markers, no technology available",
+            "Interactive whiteboard, lab stations with basic equipment, printed handouts allowed"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Emergency Sub Plan",
+          "whenToUse": "Use this when you'll be absent and a substitute with no background in your content needs to run the entire class alone, so every step must be spelled out with no assumed classroom routines.",
+          "prompt": "You are helping me write a lesson plan detailed enough for a substitute teacher who does not know my students, my routines, or this subject to run alone.\n\nCONTEXT\nGrade level: [GRADE]\nSubject: [SUBJECT]\nClass length: [MINUTES] minutes\nStandard/objective (exact wording): [PASTE STANDARD]\nWhat students already know: [PRIOR KNOWLEDGE]\nMaterials available today: [MATERIALS, e.g. \"whiteboard, Chromebooks, no printer access\"]\nClassroom routines the sub should know: [ROUTINES, e.g. \"students get a warning then move seats if disruptive; bathroom pass is on the hook by the door\"]\n\nBuild a lesson plan with these sections, each with a time allotment that adds up to [MINUTES] minutes:\n1. Hook/warm-up — include the EXACT words the sub should say out loud to start it.\n2. Direct instruction — write it as a script the sub can read aloud, not just bullet points, since they don't know this content.\n3. Guided practice — a task the sub does WITH the class, with the exact instructions to give.\n4. Independent practice — a task students do alone or in pairs, with exact written instructions to put on the board.\n5. Formative check — a simple way for the sub to collect evidence of who understood it, that doesn't require subject expertise to evaluate.\n6. What to do if a section runs short or long — give the sub a one-line backup for each.\n\nRules: Do not invent facts about my school, students, or curriculum beyond what I gave you. Assume the sub has zero familiarity with this subject and cannot answer content questions, so the plan must be self-contained."
+        },
+        {
+          "label": "Multi-Day Lesson Arc",
+          "whenToUse": "Use this when one class period isn't enough to cover the standard properly and you need the objective spread across 2-3 connected class periods instead of forced into a single day.",
+          "prompt": "You are helping me plan a short unit arc that spreads one objective across multiple class periods.\n\nCONTEXT\nGrade level: [GRADE]\nSubject: [SUBJECT]\nNumber of days: [NUMBER OF DAYS, e.g. \"3\"]\nClass length per day: [MINUTES] minutes\nStandard/objective (exact wording): [PASTE STANDARD]\nWhat students already know: [PRIOR KNOWLEDGE]\nMaterials available: [MATERIALS, e.g. \"whiteboard, Chromebooks, no printer access\"]\n\nFor EACH day, build a lesson plan with these sections, each with a time allotment that adds up to [MINUTES] minutes:\n1. Hook/warm-up (connect to the previous day if it's not day 1)\n2. Direct instruction\n3. Guided practice\n4. Independent practice\n5. Formative check\n6. Homework/extension (optional, one line)\n\nAcross the days, make sure the cognitive demand builds — day 1 shouldn't just repeat day 2's content at a lower level — and tell me, in one line per day, what evidence would tell me a student is ready to move to the next day's content versus needs to stay on the current one.\n\nRules: Do not invent facts about my school, students, or curriculum beyond what I gave you. If the objective doesn't realistically fit in the number of days I gave you, tell me what to cut or which day to add, instead of quietly compressing it."
+        },
+        {
+          "label": "Co-Teach / Small Group Split Version",
+          "whenToUse": "Use this when you have a co-teacher, aide, or paraprofessional in the room and want the plan to specify who leads which part and how the class splits into groups.",
+          "prompt": "You are helping me plan a single class lesson that I will teach alongside a co-teacher/aide.\n\nCONTEXT\nGrade level: [GRADE]\nSubject: [SUBJECT]\nClass length: [MINUTES] minutes\nStandard/objective (exact wording): [PASTE STANDARD]\nWhat students already know: [PRIOR KNOWLEDGE]\nMaterials available today: [MATERIALS, e.g. \"whiteboard, Chromebooks, no printer access\"]\nSecond adult in the room and their role: [CO-TEACHER ROLE, e.g. \"special education co-teacher, can pull a small group of 5 students\"]\n\nBuild a lesson plan with these sections, each with a time allotment that adds up to [MINUTES] minutes, and for each section note which adult leads it and what the other adult is doing at the same time:\n1. Hook/warm-up\n2. Direct instruction\n3. Guided practice\n4. Independent practice, split into a whole-class group and a small pulled-out group\n5. Formative check — one version for the whole class, one adapted version for the small group\n6. Homework/extension (optional, one line)\n\nRules: Do not invent facts about my school, students, or curriculum beyond what I gave you. If the sections don't realistically fit in [MINUTES] minutes, tell me what to cut instead of quietly keeping everything."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Tighten unrealistic timing",
+          "prompt": "Be honest with me: which of these six sections is most likely to run long in a real classroom, and why? Rebuild the time breakdown assuming that section takes 3-5 minutes longer, and tell me exactly what to cut to still end on time."
+        },
+        {
+          "label": "Add differentiation for this lesson",
+          "prompt": "Add one sentence to the guided and independent practice sections describing a quick adjustment for students who are struggling and one for students who finish early, without changing the core objective or timing."
+        },
+        {
+          "label": "Make the formative check faster to grade",
+          "prompt": "The formative check you gave me takes too long to collect and grade before the bell. Give me a version that takes under 2 minutes to administer and under 5 minutes total to skim for who needs a follow-up."
+        },
+        {
+          "label": "Script the hook word-for-word",
+          "prompt": "Write out the exact words I should say to open the hook/warm-up, as if I'm reading a script, including the question I ask students and one example of a strong versus weak student response."
+        }
+      ],
+      "walkthrough": "Dana Ruiz teaches 7th grade U.S. History and has 45 minutes tomorrow to cover causes of the American Revolution before a unit test on Friday. She opens Claude and pastes the lesson-plan prompt, filling in GRADE as \"7th grade,\" SUBJECT as \"U.S. History,\" MINUTES as \"45,\" PASTE STANDARD as her state's standard about analyzing multiple causes of the Revolution, PRIOR KNOWLEDGE as \"students read a short article on the Stamp Act last week but haven't connected multiple causes together yet,\" and MATERIALS as \"whiteboard, projector, 1 Chromebook per student, no printer access today.\"\n\nClaude returns a six-part plan: a 5-minute hook where students rank three grievances by \"how angry would this make you,\" 12 minutes of direct instruction on four causes (taxation, representation, quartering, trade restrictions), a 10-minute guided practice sorting activity done as a class, a 12-minute independent practice where pairs pick one cause and write two sentences connecting it to an event, a 4-minute exit ticket asking students to name one cause and rate their confidence 1-3, and a one-line homework extension. The times add to exactly 45.\n\nDana notices the guided practice sounds vague about what actually goes on the board, so she sends the follow-up asking Claude to script the hook word-for-word and, since she wants the guided part clearer too, asks it to lay out the sorting activity as an exact board layout with two filled-in example rows. Claude responds with the opening question read aloud, plus a four-column table she can copy directly onto the whiteboard.\n\nTotal time: about 9 minutes, including typing in her details and one follow-up. She now has a full lesson plan, a script for the opening minute, and a ready-to-use board layout for tomorrow morning."
+    },
+    "tch-b2-differentiated-materials": {
+      "placeholders": [
+        {
+          "name": "OBJECTIVE",
+          "what": "The single learning objective that all three versions must still teach, written as a clear 'students will be able to...' statement — copy this from your lesson plan or standard. A good value is specific and measurable; a bad value is vague like 'understand photosynthesis.'",
+          "examples": [
+            "Students will explain how cells convert glucose and oxygen into usable energy (ATP) and identify the byproducts of that process.",
+            "Students will identify the author's main argument in a persuasive text and evaluate whether two pieces of evidence are relevant and sufficient.",
+            "Students will solve one-step linear equations involving addition and subtraction and check their solution by substitution."
+          ]
+        },
+        {
+          "name": "PASTE READING OR WORKSHEET",
+          "what": "The full original text of the reading or worksheet you want tiered, pasted in completely, including any existing questions. Don't summarize it — if you paste a thin summary instead of the real document, the AI will have to invent details to fill the gaps, which breaks the rule about not inventing content.",
+          "examples": [
+            "Cellular respiration is the process cells use to convert glucose and oxygen into usable energy called ATP. This process happens mainly in an organelle called the mitochondria. During cellular respiration, glucose reacts with oxygen, producing carbon dioxide, water, and ATP as byproducts. Plants and animals both perform cellular respiration, even though plants also perform photosynthesis. Without enough oxygen, cells can only produce a small amount of ATP through a less efficient backup process.\n\nQuestions:\n1. What two byproducts are produced during cellular respiration besides ATP?\n2. Where in the cell does most cellular respiration occur?\n3. Why can't cells produce as much ATP without oxygen?",
+            "Some people think school should start later for teenagers. Studies show teenagers naturally stay up later and need more sleep than adults think. When schools start too early, students are tired and don't learn as well. Later start times could mean better grades and safer driving for teens who drive themselves to school. Critics say a later start time would mess up after-school sports and parents' work schedules.\n\nQuestions:\n1. What is the author's main argument?\n2. What is one piece of evidence the author gives to support it?"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Two Tiers Only",
+          "whenToUse": "Use this when your class doesn't have students who need an extension challenge, or you only have time to prep two versions instead of three.",
+          "prompt": "You are helping me differentiate a classroom material into two versions that both teach the SAME objective at different levels of accessibility.\n\nOBJECTIVE (must stay identical across all versions): [OBJECTIVE]\nORIGINAL MATERIAL: [PASTE READING OR WORKSHEET]\n\nCreate two versions:\n1. SUPPORT: for students who need scaffolding — add vocabulary definitions and sentence starters, simplify sentence structure, but keep the core concept and required thinking intact. Do not remove the objective's cognitive demand, only the language barrier.\n2. ON-LEVEL: lightly cleaned-up version of the original, usable by the rest of the class.\n\nBoth versions must be answerable using the same answer key logic (equivalent questions, adjusted wording). List the answer key once and note where wording differs per tier. Do not invent content that isn't grounded in the original material or the stated objective."
+        },
+        {
+          "label": "Add an ELL Layer",
+          "whenToUse": "Use this when a meaningful number of your students are English language learners and need a fourth version with visual supports and cognates, not just simplified English.",
+          "prompt": "You are helping me differentiate a classroom material into four versions that all teach the SAME objective at different levels of accessibility, including one designed for English language learners.\n\nOBJECTIVE (must stay identical across all versions): [OBJECTIVE]\nORIGINAL MATERIAL: [PASTE READING OR WORKSHEET]\nHOME LANGUAGES IN MY CLASS: [HOME LANGUAGES, e.g. \"Spanish and Haitian Creole\"]\n\nCreate four versions:\n1. SUPPORT: for students who need scaffolding in English — add vocabulary definitions and sentence starters, simplify sentence structure, but keep the core concept and required thinking intact.\n2. ELL: same simplifications as SUPPORT, plus flag cognates with the home languages listed where they exist, suggest where a visual or diagram would replace a text-heavy sentence, and keep sentences under 12 words where possible.\n3. ON-LEVEL: lightly cleaned-up version of the original.\n4. EXTENSION: same objective, but add a layer of complexity, ambiguity, or an extra analytical step for students ready to go further.\n\nAll four versions must be answerable using the same answer key logic (equivalent questions, adjusted wording). List the answer key once and note where wording differs per tier. Do not invent content that isn't grounded in the original material or the stated objective, and do not guess at translations you aren't confident in — flag them for me to verify instead."
+        },
+        {
+          "label": "Differentiate a Test Instead of a Worksheet",
+          "whenToUse": "Use this for a formal graded assessment rather than a practice worksheet, where point values must stay exactly equivalent across tiers for grading fairness.",
+          "prompt": "You are helping me differentiate a graded test into three versions that all assess the SAME objective at different levels of accessibility, while keeping scoring fair and equivalent.\n\nOBJECTIVE (must stay identical across all versions): [OBJECTIVE]\nORIGINAL TEST: [PASTE READING OR WORKSHEET]\nTOTAL POINTS THE TEST MUST BE WORTH: [TOTAL POINTS, e.g. \"20\"]\n\nCreate three versions, each worth exactly [TOTAL POINTS] points distributed the same way across questions:\n1. SUPPORT: for students who need scaffolding — add vocabulary definitions and sentence starters, simplify sentence structure, but keep the required thinking and point value per question intact.\n2. ON-LEVEL: lightly cleaned-up version of the original.\n3. EXTENSION: same objective and point total, but add a layer of complexity or an extra analytical step for students ready to go further.\n\nAll three versions must be gradable with the same answer key logic (equivalent correct answers, adjusted wording) and the same point value per equivalent question, so a Support-tier student and an Extension-tier student who both fully demonstrate mastery earn the same total score. List the answer key once with points per question, and note where wording differs per tier. Do not invent content that isn't grounded in the original material or the stated objective."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check the reading level actually dropped",
+          "prompt": "Look at the SUPPORT version again and tell me its approximate reading grade level compared to the original. If it's not meaningfully simpler, revise it further — shorten sentences and add more vocabulary support — without cutting any of the required thinking."
+        },
+        {
+          "label": "Verify the answer key truly matches across tiers",
+          "prompt": "Go through each question in all three versions side by side and confirm the correct answer is genuinely equivalent, not just similarly worded. Flag any question where a wording change in Support or Extension could accidentally change what counts as correct."
+        },
+        {
+          "label": "Make the extension meaningfully harder",
+          "prompt": "The EXTENSION version feels too close to the on-level version. Add a genuine extra layer — an ambiguous case, a comparison to a related concept, or a 'justify your answer' component — so it's clearly a step up in cognitive demand, not just longer."
+        },
+        {
+          "label": "Add a student self-check",
+          "prompt": "Add one short self-check box at the end of each version — 2-3 questions students can use to judge whether they're ready to move up a tier next time, phrased in plain student-facing language."
+        }
+      ],
+      "walkthrough": "Marcus Webb teaches 9th grade Biology and has a one-page reading on cellular respiration that's too dense for about a third of his class, while another third finishes early every time. He opens Claude, fills OBJECTIVE with \"Students will explain how cells convert glucose and oxygen into usable energy (ATP) and identify the byproducts of that process,\" and pastes the full reading, six sentences plus three original questions, into PASTE READING OR WORKSHEET.\n\nClaude returns three labeled versions. The Support version breaks long sentences into two, defines \"mitochondria\" and \"ATP\" in a side box, and adds sentence starters like \"Cellular respiration happens in the ___ because ___.\" The On-Level version tightens the original wording without changing content. The Extension version keeps the same three questions but adds a fourth asking students to compare aerobic and anaerobic respiration and defend which is more efficient for a sprinting muscle cell. Claude also lists one shared answer key with a note: \"Extension Q4 has no single correct answer — grade on reasoning quality, not a fixed answer.\"\n\nMarcus reads the Support version and feels the sentences are still a bit long for his lowest readers, so he sends the follow-up asking Claude to check the reading level drop and simplify further while keeping every science term intact. Claude shortens several sentences and adds one more visual cue: \"Look for the word ENERGY — that's your clue.\"\n\nTotal time: about 8 minutes from pasting the reading to having three print-ready versions with a shared answer key, which Marcus copies into three separate Google Docs for the next day's class."
+    },
+    "tch-b3-quiz-assessment-generation": {
+      "placeholders": [
+        {
+          "name": "PASTE FULL SOURCE TEXT",
+          "what": "The complete text you actually taught from — a textbook excerpt, article, or your own notes — pasted in full. The AI is instructed to only use facts present here, so if you paste a thin summary instead of the real material, it won't have enough content to write a fair, well-grounded quiz.",
+          "examples": [
+            "The water cycle describes how water moves through Earth's systems in four main stages. Evaporation occurs when the sun heats water in oceans, lakes, and rivers, turning it into water vapor that rises into the atmosphere. Condensation happens when that water vapor cools and forms clouds. Precipitation occurs when water falls back to Earth as rain, snow, sleet, or hail. Collection happens when precipitation gathers in oceans, lakes, rivers, and underground reservoirs called aquifers, where the cycle begins again. Plants also release water vapor into the air through a process called transpiration, which contributes to the evaporation stage.",
+            "The Silk Road was a network of trade routes connecting China to the Mediterranean Sea, active from around 130 BCE to the 1450s CE. Merchants carried silk, spices, and precious metals westward, while gold, ivory, and glassware moved eastward. Beyond goods, the Silk Road spread ideas, religions such as Buddhism, and technologies including papermaking. Caravans relied on oasis cities like Samarkand and Kashgar for water and rest. The route declined after the rise of sea trade routes in the 15th century made ocean shipping faster and cheaper."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick 5-Question Exit Ticket",
+          "whenToUse": "Use this when you need a fast formative check at the end of class instead of a full graded quiz.",
+          "prompt": "You are creating a 5-question exit ticket based ONLY on the source material below. Do not add facts, dates, or details that are not present in this source.\n\nSOURCE MATERIAL: [PASTE FULL SOURCE TEXT]\n\nBuild 5 questions students can answer in under 5 minutes: 2 multiple choice (4 options each), 2 true/false where any false statement requires the student to also write the correction, and 1 short answer.\n\nFor every question, provide the correct answer and a one-line justification citing the specific sentence or fact in the source that supports it. If you are unsure whether a question is fully supported by the source, flag it instead of guessing."
+        },
+        {
+          "label": "Higher-Order Thinking Version",
+          "whenToUse": "Use this for advanced students or an honors section, when you want questions that go beyond recall into application and analysis.",
+          "prompt": "You are creating a quiz based ONLY on the source material below, but focused on application and analysis rather than recall. Do not add facts, dates, or details that are not present in this source, and do not ask students to use outside knowledge beyond what's here.\n\nSOURCE MATERIAL: [PASTE FULL SOURCE TEXT]\n\nBuild an 8-question quiz where every question requires students to apply, compare, or analyze the source rather than just recall a fact from it — for example, predicting what would happen if a described process were interrupted, or comparing two things mentioned in the source. Use a mix of short answer and extended response.\n\nFor every question, provide a model answer and a one-line justification citing the specific sentence or fact in the source it's grounded in. Assign a point value to each question. If you're unsure whether a question can be fully answered using only this source, flag it instead of guessing."
+        },
+        {
+          "label": "Multi-Source Synthesis Version",
+          "whenToUse": "Use this when the quiz should draw from two or more source texts you taught together and you want students to compare or connect them, not just recall each separately.",
+          "prompt": "You are creating a quiz based ONLY on the source materials below. Do not add facts, dates, or details that are not present in these sources.\n\nSOURCE MATERIAL 1: [PASTE FULL SOURCE TEXT]\nSOURCE MATERIAL 2: [PASTE SECOND SOURCE TEXT]\n\nBuild a 10-question quiz: 3 questions testing Source 1 only, 3 questions testing Source 2 only, and 4 questions requiring students to compare or connect information across both sources.\n\nFor every question, provide the correct answer and a one-line justification citing which source and specific sentence or fact supports it. Assign a point value to each question. If you are unsure whether a question is fully supported by the sources, flag it instead of guessing."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Resolve flagged questions",
+          "prompt": "For every question you flagged as unsure or not fully supported, either rewrite it so it's clearly grounded in the source I gave you, or tell me exactly what one sentence I'd need to add to my source material to make it fair to ask."
+        },
+        {
+          "label": "Format for import into Google Forms",
+          "prompt": "Reformat this quiz as a simple list I can paste into Google Forms — one line per question, options lettered A-D on separate lines for multiple choice, and the correct answer marked clearly at the end of each question instead of in a separate answer key."
+        },
+        {
+          "label": "Even out the difficulty",
+          "prompt": "Look at the 10 questions and tell me which ones are genuinely easy, medium, and hard. If most of them cluster at one difficulty level, rewrite 2-3 questions so the quiz has a better spread across easy, medium, and hard."
+        },
+        {
+          "label": "Add short-answer grading guidance",
+          "prompt": "For the 3 short-answer questions, write a brief rubric for each — what a full-credit answer must include, and what a partial-credit answer looks like — so I can grade them consistently and quickly."
+        }
+      ],
+      "walkthrough": "Priya Anand teaches 6th grade Science and just finished a two-day unit on the water cycle using a textbook section and her own slide notes. She wants a quiz for Friday but doesn't want to write ten questions from scratch. She opens Gemini, pastes her combined source material, the textbook section on evaporation, condensation, precipitation, and collection, plus her extra notes on groundwater, into PASTE FULL SOURCE TEXT, and sends the quiz-generation prompt as written.\n\nGemini returns 10 questions: four multiple choice, each with a wrong-answer explanation like \"Option B, sublimation, is plausible because it also involves a state change, but it's not covered as a step in this cycle,\" three short answer, and three true/false where two of the three false statements require a written correction. Each question lists a point value, and one short-answer question is flagged: \"Not confident this is fully supported — the source mentions runoff but doesn't explain how it differs from infiltration. Consider removing or adding a sentence to your source.\"\n\nPriya reads the flag, realizes she never actually explained infiltration in class, and sends the follow-up asking Gemini to resolve the flagged question by rewriting it so it's grounded in what she actually taught. Gemini replaces it with a question about condensation that cites the exact sentence in her notes.\n\nTotal time: about 9 minutes, including pasting her notes and one round of follow-up. She copies the finished quiz into Google Forms for Friday, confident every question traces back to something she actually taught."
+    },
+    "tch-i1-feedback-comments": {
+      "placeholders": [
+        {
+          "name": "ASSIGNMENT TYPE",
+          "what": "The kind of work you're giving feedback on, described in plain terms — e.g. 'argumentative essay,' 'lab report,' 'math problem set.' This shapes the tone and vocabulary of the comment, so be specific rather than just typing 'assignment.'",
+          "examples": [
+            "argumentative essay on social media regulation",
+            "chemistry lab report on reaction rates",
+            "unit 3 fractions problem set"
+          ]
+        },
+        {
+          "name": "PASTE",
+          "what": "This placeholder appears twice in the prompt: once after 'RUBRIC/CRITERIA,' where you paste your actual grading rubric or the criteria you scored against, and once after 'MY SHORTHAND NOTES AND SCORES,' where you paste your own quick grading notes and the score you gave. Fill each occurrence with the content that matches its label — don't reuse the same text for both.",
+          "examples": [
+            "Rubric (4 categories, 4 points each): 1) Claim clarity — specific, arguable thesis. 2) Evidence use — at least 2 credible sources, correctly cited. 3) Counterargument — addresses an opposing view. 4) Mechanics — grammar, spelling, sentence variety.",
+            "Shorthand notes: Score 13/16. Claim is clear but buried in paragraph 2, not the intro. Used the Pew Research stat well; second source was misquoted. No counterargument paragraph. A few comma splices in paragraphs 3-4.",
+            "Shorthand notes: Score 7/10. Strong opening thesis. Cited only 1 of the 2 required sources. Counterargument present but only one sentence, not developed. Clean mechanics, no errors found."
+          ]
+        },
+        {
+          "name": "PASTE 1-3 EXAMPLES",
+          "what": "One to three short direct quotes copied word-for-word from the student's actual paper, not your summary of what they wrote. These let the AI reference real language in the feedback instead of writing something generic. Pick quotes that clearly show the strength or the problem you noted.",
+          "examples": [
+            "\"Congress should regulate social media because it's obviously bad for kids and everyone knows it.\"",
+            "\"According to a 2023 Pew Research study, 46% of teens say they are online almost constantly, which shows how deeply integrated social media has become in daily life.\"",
+            "\"Some people might disagree, but I still think social media should be regulated.\" (only sentence addressing an opposing view)"
+          ]
+        },
+        {
+          "name": "GRADE",
+          "what": "The grade level of the student whose work you're giving feedback on. This shapes vocabulary and tone — feedback for a 4th grader reads differently than feedback for an AP senior. Use the actual grade you teach, not a general range.",
+          "examples": [
+            "10th grade",
+            "6th grade",
+            "AP-level 11th grade"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Batch Mode for a Whole Class Set",
+          "whenToUse": "Use this when you're grading 25+ papers in one sitting and want a faster, repeatable process instead of running the full prompt separately for each student.",
+          "prompt": "You are helping me write feedback comments for multiple students' [ASSIGNMENT TYPE] at once, using the same rubric.\n\nRUBRIC/CRITERIA: [PASTE]\nSTUDENT GRADE LEVEL: [GRADE]\n\nI will give you one student at a time in this format:\nStudent: [name or ID]\nNotes and score: [shorthand notes]\nQuote(s): [1-3 quotes]\n\nFor each student, write a feedback comment (120-180 words) with this structure: one specific strength referencing their actual quote, one specific area to improve referencing my notes and describing the pattern, and one concrete next step. Use only what I give you for that student — do not carry over details from a previous student or invent anything. Wait for me to paste each student before writing their comment. Match a warm but honest teacher tone appropriate for [GRADE]-level students."
+        },
+        {
+          "label": "ELL / Emerging Writer Version",
+          "whenToUse": "Use this for an English language learner or emerging writer where the feedback needs to acknowledge language-acquisition progress separately from content mastery, with gentler, more scaffolded next steps.",
+          "prompt": "You are helping me write a feedback comment for an English language learner's [ASSIGNMENT TYPE].\n\nRUBRIC/CRITERIA: [PASTE]\nMY SHORTHAND NOTES AND SCORES: [PASTE]\nSPECIFIC QUOTES OR EXAMPLES FROM THEIR WORK: [PASTE 1-3 EXAMPLES]\nSTUDENT GRADE LEVEL: [GRADE]\nENGLISH PROFICIENCY LEVEL: [PROFICIENCY LEVEL, e.g. \"WIDA Level 3, intermediate\"]\n\nWrite a feedback comment (120-180 words) with this structure:\n1. One specific content strength AND one specific language-growth strength, each referencing the actual quote or example I gave you.\n2. One specific area to improve, focused on the single highest-priority pattern rather than a long list of every error, described gently.\n3. One concrete, doable next step written in short, simple sentences.\n\nRules: Use only the strengths, weaknesses, and quotes I gave you. Do not invent examples from the student's work that I did not provide. Keep language simple enough for the student to read the comment themselves, and keep the tone encouraging — this student is still building English proficiency, not just content mastery."
+        },
+        {
+          "label": "Peer-Feedback Training Version",
+          "whenToUse": "Use this when you want a model comment to show students what strong peer feedback looks like, rather than a comment you'll give directly to one student.",
+          "prompt": "You are helping me create a MODEL feedback comment to teach my class what strong peer feedback looks like, based on one real (anonymized) student example.\n\nRUBRIC/CRITERIA: [PASTE]\nMY SHORTHAND NOTES AND SCORES: [PASTE]\nSPECIFIC QUOTES OR EXAMPLES FROM THE WORK: [PASTE 1-3 EXAMPLES]\nSTUDENT GRADE LEVEL: [GRADE]\n\nWrite a feedback comment (120-180 words) with this structure: one specific strength referencing the actual quote, one specific area to improve describing the pattern, and one concrete next step. Then add a short 'What makes this good feedback' breakdown (3 bullet points) I can show students, explaining why it references specific evidence instead of general praise, why it names a pattern instead of just a mistake, and why the next step is doable.\n\nRules: Use only what I gave you — do not invent examples from the student's work. Remove any identifying details so this is safe to share with the class as an anonymized model. Keep the tone appropriate for [GRADE]-level students."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Make it sound more like me",
+          "prompt": "This reads a little generic and AI-polished. Rewrite it in a more conversational, slightly informal teacher voice — the kind I'd actually say out loud to a student — while keeping the same structure and only the details I gave you."
+        },
+        {
+          "label": "Shorten it",
+          "prompt": "This is too long for a student or parent to actually read closely. Cut it down to 100-120 words while keeping the specific quote, the pattern, and the one next step intact."
+        },
+        {
+          "label": "Double-check no invented details",
+          "prompt": "Reread the comment and flag anything in it that isn't directly traceable to the rubric, notes, or quotes I gave you. I need to be sure nothing about this student's work was invented or assumed."
+        },
+        {
+          "label": "Adjust the tone for this specific student",
+          "prompt": "This student has been discouraged lately and needs a gentler opening. Keep the same strength, area to improve, and next step, but rewrite the opening sentence to feel more encouraging before it gets into feedback."
+        }
+      ],
+      "walkthrough": "Elena Cho teaches 10th grade English and just finished grading a stack of argumentative essays. She wants better comments than \"good job, work on transitions\" but doesn't have time to write each one from scratch. She opens Claude, sets ASSIGNMENT TYPE to \"argumentative essay on social media regulation,\" pastes her rubric criteria (four categories: claim clarity, evidence use, counterargument, mechanics) into the first PASTE, pastes her shorthand grading notes, \"claim clear but buried in paragraph 2; used one source well, second source misquoted; no counterargument; a few comma splices,\" into the second PASTE, and pastes two direct quotes from the essay into PASTE 1-3 EXAMPLES, including one where the student wrote \"Congress should regulate because it's obviously bad for kids.\"\n\nClaude writes a 150-word comment. It opens by praising the specific move of using a real source, naming the quote, names the pattern of asserting claims like \"obviously bad\" without evidence, and gives one concrete next step: \"before you submit, highlight every sentence with 'obviously' or 'clearly' and replace it with a specific fact or statistic.\"\n\nElena thinks the opening reads a little clinical for this particular student, who has been discouraged lately, so she sends the follow-up asking Claude to adjust the tone and warm up the opening line while keeping the rest the same. Claude revises the opening to acknowledge the student's improvement since the last essay.\n\nTotal time: about 6 minutes per student once she has her rubric and notes ready, versus the 12-15 minutes she used to spend writing comments from scratch."
+    },
+    "tch-i2-parent-communication-templates": {
+      "placeholders": [
+        {
+          "name": "GRADE",
+          "what": "The grade level of your classroom, which shapes the vocabulary and formality of the templates. A good value is specific, like '4th grade' or '9th grade Algebra 1'; a bad value is a broad range like 'elementary school.'",
+          "examples": [
+            "4th grade",
+            "9th grade Algebra 1",
+            "Kindergarten"
+          ]
+        },
+        {
+          "name": "LIST SCENARIOS, e.g. 1) missing homework pattern (repeat), 2) positive recognition, 3) grade concern check-in, 4) unexcused absence follow-up",
+          "what": "The specific list of situations you want a template for, numbered, covering the kinds of messages you find yourself typing over and over. Good values name distinct, recurring scenarios; a bad value is something vague like 'good and bad news.'",
+          "examples": [
+            "1) missing homework pattern (repeat), 2) positive recognition, 3) grade concern check-in, 4) unexcused absence follow-up",
+            "1) late arrival pattern, 2) improvement shoutout after a rough start, 3) upcoming project reminder, 4) request for a parent-teacher conference",
+            "1) disruptive behavior check-in, 2) missing permission slip reminder, 3) reading log not being signed, 4) end-of-quarter positive note home"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Add a Language-Access Layer",
+          "whenToUse": "Use this when a significant number of families speak a language other than English at home and you want templates written to translate cleanly rather than relying on idioms.",
+          "prompt": "You are helping me draft parent communication templates for a [GRADE] classroom, written so they translate cleanly for families who use a translation app.\n\nWrite templates for these scenarios: [LIST SCENARIOS, e.g. 1) missing homework pattern (repeat), 2) positive recognition, 3) grade concern check-in, 4) unexcused absence follow-up]\n\nFor each template:\n- Use short, simple sentences and avoid idioms, sarcasm, or culturally specific phrases that translation apps handle poorly.\n- Use a warm, professional, non-alarmist tone even for concerns.\n- Include clear placeholders in brackets for student name, specific behavior or grade, and date, so I can personalize quickly.\n- End every concern-type message with a collaborative next step (a call, a meeting, or a specific ask) — never just a complaint.\n- Keep each template under 100 words so it stays simple after translation.\n\nDo not include specific grades, names, or incidents — these are reusable templates, not messages about a real student yet."
+        },
+        {
+          "label": "Text Message Length",
+          "whenToUse": "Use this when you send most parent communication through a texting app like ClassDojo or Remind instead of email, and need templates short enough to fit a phone screen.",
+          "prompt": "You are helping me draft short text-message templates for a [GRADE] classroom, meant to be sent through an app like ClassDojo or Remind.\n\nWrite templates for these scenarios: [LIST SCENARIOS, e.g. 1) missing homework pattern (repeat), 2) positive recognition, 3) grade concern check-in, 4) unexcused absence follow-up]\n\nFor each template:\n- Keep it under 40 words total — this needs to read naturally as a text message, not a shortened email.\n- Use a warm, professional, non-alarmist tone even for concerns.\n- Include clear placeholders in brackets for student name, specific behavior or grade, and date, so I can personalize quickly.\n- End every concern-type message with a short, specific next step (a call, a meeting, or a specific ask).\n\nDo not include specific grades, names, or incidents — these are reusable templates, not messages about a real student yet."
+        },
+        {
+          "label": "Behavior-Specific Set",
+          "whenToUse": "Use this when the recurring situations you need templates for are behavior incidents rather than academic or attendance issues.",
+          "prompt": "You are helping me draft parent communication templates for a [GRADE] classroom, focused on behavior incidents rather than academics or attendance.\n\nWrite templates for these scenarios: [LIST BEHAVIOR SCENARIOS, e.g. 1) repeated classroom disruption, 2) disrespect toward a peer, 3) positive behavior shoutout, 4) request for a behavior-plan check-in meeting]\n\nFor each template:\n- Describe the behavior pattern factually and specifically, without labeling the child (e.g. 'called out during instruction several times this week,' not 'is disruptive').\n- Use a warm, professional, non-alarmist tone even for concerns.\n- Include clear placeholders in brackets for student name, specific behavior, and date, so I can personalize quickly.\n- End every concern-type message with a collaborative next step (a call, a meeting, or a specific ask) — never just a complaint.\n- Keep each template under 120 words.\n\nDo not include specific names or real incidents — these are reusable templates, not messages about a real student yet."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Shorten for text message",
+          "prompt": "Rewrite all of these templates to fit under 40 words each so they work as text messages sent through an app like ClassDojo or Remind, while keeping the placeholders and the collaborative next step in each concern-type message."
+        },
+        {
+          "label": "Warm up the recognition template",
+          "prompt": "The positive recognition template still sounds a little flat. Rewrite it so it feels genuinely warm and specific to a family reading it, while still keeping it under 120 words and free of any real student details."
+        },
+        {
+          "label": "Add a Spanish-language version",
+          "prompt": "Add a Spanish-language version of each template, keeping the same placeholders and tone. Flag if any phrase doesn't translate naturally so I can have a fluent Spanish speaker double-check it before I send anything to a family."
+        },
+        {
+          "label": "Double-check nothing specific leaked in",
+          "prompt": "Reread every template and confirm none of them accidentally include a specific name, grade, date, or incident detail — these need to stay fully generic placeholders until I fill them in myself."
+        }
+      ],
+      "walkthrough": "Tom Bradley teaches 4th grade and is tired of typing the same kinds of parent messages from scratch every week. He opens ChatGPT and fills GRADE with \"4th grade\" and lists his scenarios: \"1) missing homework pattern (repeat), 2) positive recognition, 3) grade concern check-in, 4) unexcused absence follow-up.\"\n\nChatGPT returns four templates, each under 120 words. The missing homework one reads: \"Hi [Parent Name], I wanted to reach out because [Student Name] hasn't turned in homework on [number] occasions this [week/month], most recently on [date]. I know things come up — could we do a quick call this week to figure out what's getting in the way?\" Each concern-type template ends with a specific next step instead of just a complaint, and the recognition one is upbeat without needing an ask, matching its different purpose.\n\nTom notices the templates are written at email length, but he actually sends most parent messages through the school's text app, so he sends the follow-up asking ChatGPT to shorten each one to under 40 words for text messaging while keeping the placeholders. ChatGPT trims them down, cutting the missing-homework one to: \"Hi [Parent Name] — [Student Name] has missed [number] homeworks this month, most recently [date]. Can we do a 10-minute call this week?\"\n\nTotal time: about 7 minutes to get both the email-length and text-length versions. Tom saves both sets in a notes app so he can copy one, fill in the brackets with a real name and date, and send a personalized message in under a minute the next time an issue comes up, never sending a template with the placeholder brackets still showing."
+    },
+    "tch-i3-notebooklm-curriculum-knowledge-base": {
+      "placeholders": [
+        {
+          "name": "STANDARDS DOCUMENT NAME",
+          "what": "The exact file name of your standards document as you uploaded it into the Claude Project's knowledge — check the project's files list to see the precise name Claude is using. Getting this exact match matters because Claude cites sources by name, and a close-but-wrong name can cause it to search the wrong document.",
+          "examples": [
+            "7th_Grade_ELA_CCSS_Standards.pdf",
+            "NGSS_MS_Standards_2024.pdf",
+            "Algebra1_State_Standards_Master_List.docx"
+          ]
+        },
+        {
+          "name": "X",
+          "what": "The current week number of your school year according to your own pacing guide, not the calendar week. Check the pacing guide document you uploaded to find which week you're on; a good value matches exactly what your pacing guide calls it, for example if your guide starts counting at week 1 in late August, use that same numbering.",
+          "examples": [
+            "14",
+            "22",
+            "6"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Mid-Unit Check",
+          "whenToUse": "Use this partway through a single unit rather than across the whole year, when you just want to confirm you've hit every standard tied to the unit you're currently teaching.",
+          "prompt": "Using only the uploaded documents, answer: within [UNIT NAME], which of its tied standards from [STANDARDS DOCUMENT NAME] have I not yet covered, based on the lessons I've taught so far this unit?\n\nFor each uncovered standard:\n- Cite the exact source document it comes from.\n- Suggest which remaining lesson in this unit it best fits, based only on what's in the unit plan I uploaded.\n\nIf you are not sure whether a standard has been covered based on these documents, say so rather than guessing."
+        },
+        {
+          "label": "Cross-Check Two Pacing Guides",
+          "whenToUse": "Use this when you co-teach or share a course with another teacher and want to confirm both sections are covering the same standards at the same pace.",
+          "prompt": "Using only the uploaded documents, compare [PACING GUIDE 1 NAME] and [PACING GUIDE 2 NAME] as of week [X]. Which standards from [STANDARDS DOCUMENT NAME] does one section's pacing guide show as covered that the other doesn't?\n\nFor each mismatch:\n- Cite the exact source document and week it appears in.\n- Note which section, based on the pacing guide file name, is ahead on that standard.\n\nIf you're not sure whether a standard has been covered in either pacing guide based on these documents, say so rather than guessing."
+        },
+        {
+          "label": "Generate a Catch-Up Plan",
+          "whenToUse": "Use this when you already know you're behind and want a concrete plan to fold missed standards into upcoming units, not just a list of gaps.",
+          "prompt": "Using only the uploaded documents, identify which standards in [STANDARDS DOCUMENT NAME] I have not yet covered, based on my pacing guide as of week [X]. Then, using only my remaining unit plans, propose a catch-up plan for the rest of the year.\n\nFor each uncovered standard:\n- Cite the exact source document it comes from.\n- Tell me whether it can be folded into an already-planned upcoming unit (and which one) or needs a new standalone lesson.\n\nOrganize the result as a week-by-week list for the remaining weeks in my pacing guide. If you are not sure whether a standard has been covered, or whether it realistically fits into an existing unit, say so rather than guessing."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Ask for exact page or section citations",
+          "prompt": "For each uncovered standard, give me the exact page number or section heading in the source document where I could double-check this myself, not just the file name."
+        },
+        {
+          "label": "Check for partially covered standards",
+          "prompt": "Beyond standards with zero coverage, are there any standards that were only touched briefly or partially, based on what's in these documents? List those separately and explain what's missing to call them fully covered."
+        },
+        {
+          "label": "Turn the gaps into a week-by-week catch-up plan",
+          "prompt": "Turn this list of uncovered standards into a week-by-week catch-up plan for the rest of my pacing guide, using only the upcoming units I've already uploaded. Tell me which standards fit into an existing unit and which need a new lesson."
+        },
+        {
+          "label": "Double-check its own uncertainty",
+          "prompt": "Go back through your answer and tell me which of these conclusions you're most and least confident about, based only on the uploaded documents, so I know which ones to verify manually before I trust this list."
+        }
+      ],
+      "walkthrough": "Grace Okafor teaches 8th grade ELA and wants to know, six weeks before the state test, which standards she still hasn't taught. She opens Claude, creates a new Project, and uploads three files to its knowledge: her official standards document, named \"8th_Grade_ELA_Standards.pdf,\" her pacing guide spreadsheet, and her unit plan documents for the semester so far. This upload step happens before any prompting — Claude needs the source files loaded into the project first so every answer it gives can be traced back to something she actually uploaded, not general knowledge about 8th grade standards.\n\nOnce the documents are in, she starts a new chat inside the project and pastes the prompt, filling STANDARDS DOCUMENT NAME with \"8th_Grade_ELA_Standards.pdf\" and X with \"14,\" since it's week 14 of her pacing guide.\n\nClaude lists five standards it can't find evidence of being covered, each naming its source, for example: \"Standard RL.8.6, from 8th_Grade_ELA_Standards.pdf — no matching entry found in Pacing_Guide.xlsx or Unit_3_Plan.docx.\" For each, it suggests which upcoming unit fits best, based only on the unit plans she uploaded, and flags one standard as uncertain: \"RI.8.7 may be partially covered in Unit 2 but the pacing guide doesn't specify which lesson — verify manually.\"\n\nGrace wants more than a list, so she sends a follow-up asking Claude to turn the gaps into a week-by-week catch-up plan for her remaining seven weeks. It proposes folding two of the standards into her already-planned Unit 4 and flags that the other three need a dedicated new lesson.\n\nTotal time: about 12 minutes, most of it spent uploading files the first time. Every gap it named, she could check herself against the source document sitting right there in the project's knowledge."
+    },
+    "tch-a1-ai-resilient-assignments-literacy": {
+      "placeholders": [
+        {
+          "name": "PASTE PROMPT",
+          "what": "The exact wording of your current assignment prompt or instructions, copied in full from your handout, LMS post, or slide, not a summary. The AI needs the real wording to spot exactly which parts are generic enough for an AI to fake without any of your class's specific context.",
+          "examples": [
+            "Write a five-paragraph essay explaining three causes of the Cold War. Use your textbook and class notes. Minimum 750 words, due Friday.",
+            "Write a persuasive essay arguing for or against social media regulation for minors. Include at least two supporting reasons. 3-4 paragraphs, due next Monday.",
+            "Explain the process of photosynthesis in your own words, including the role of sunlight, water, and carbon dioxide. One page, due next class."
+          ]
+        },
+        {
+          "name": "GRADE/SUBJECT",
+          "what": "The grade level and subject of the class this assignment is for, written together since both affect how AI-resistant an assignment needs to be. A good value is specific, like '11th grade, U.S. History'; a bad value is just 'high school.'",
+          "examples": [
+            "11th grade, U.S. History",
+            "9th grade Biology",
+            "7th grade English Language Arts"
+          ]
+        },
+        {
+          "name": "DESCRIBE, e.g. \"a generic five-paragraph essay with no reference to our specific class discussion or local case study\"",
+          "what": "Your honest prediction of what a fully AI-ghostwritten answer to this exact assignment would look like — be specific about what it would be missing, like a local example, a specific text you read, a class debate, or a dataset, so the AI can design around exactly that gap. A vague answer like 'it would be bad' isn't useful here.",
+          "examples": [
+            "a generic five-paragraph essay listing textbook causes with no reference to the primary source documents we analyzed in class or our Cold War simulation debate",
+            "a competent-sounding persuasive essay using generic talking points about screen time, with no mention of the survey data our class collected from the student body last week",
+            "a technically correct explanation of photosynthesis copied almost word-for-word from any biology textbook, with no reference to the plant-growth experiment we ran in class over the past two weeks"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Group Project Version",
+          "whenToUse": "Use this when the assignment is a group project rather than individual work, where you also need to make sure AI use doesn't let one student coast while others do the thinking.",
+          "prompt": "You are helping me redesign a group assignment to be resistant to AI ghostwriting while still allowing students to use AI as a legitimate research or thinking tool.\n\nORIGINAL ASSIGNMENT: [PASTE PROMPT]\nGRADE/SUBJECT: [GRADE/SUBJECT]\nGROUP SIZE: [GROUP SIZE, e.g. \"groups of 4\"]\nWHAT A FULLY AI-GHOSTWRITTEN SUBMISSION WOULD LOOK LIKE FOR THIS PROMPT: [DESCRIBE, e.g. \"a generic five-paragraph essay with no reference to our specific class discussion or local case study\"]\n\nGive me:\n1. A redesigned version of the assignment that requires evidence a generic AI response can't produce on its own, and that also makes each individual group member's contribution visible and separately assessable.\n2. 2-3 checkpoint deliverables spaced across the timeline, at least one of which is an individual (not group) checkpoint, so I can see each student's own thinking, not just the group's final product.\n3. A short, plain-language 'how you may use AI on this assignment' policy for students, with specific examples of allowed use and disallowed use, including how it applies differently to individual versus group portions.\n4. A 15-minute lesson plan teaching students the difference between using AI to think and using AI to skip thinking, with one in-class discussion question about group accountability specifically.\n\nBase this only on the assignment and context I gave you — don't invent facts about my school's policies."
+        },
+        {
+          "label": "STEM Lab / Problem Set Version",
+          "whenToUse": "Use this for a math or science assignment where the ghostwriting risk is showing work or using a specific dataset, not writing prose.",
+          "prompt": "You are helping me redesign a math or science assignment to be resistant to AI ghostwriting while still allowing students to use AI as a legitimate tool for checking work or getting unstuck.\n\nORIGINAL ASSIGNMENT: [PASTE PROMPT]\nGRADE/SUBJECT: [GRADE/SUBJECT]\nWHAT A FULLY AI-GENERATED SUBMISSION WOULD LOOK LIKE FOR THIS PROMPT: [DESCRIBE, e.g. \"correct final answers with generic textbook-style work shown, no connection to the specific data our class collected in the lab\"]\n\nGive me:\n1. A redesigned version of the assignment that requires students to use data, measurements, or numbers unique to our class (e.g. their own lab results, a dataset only our class has) so a generic AI answer can't match the specific numbers.\n2. 2-3 checkpoint deliverables spaced across the timeline (e.g. raw data recorded in class, a first attempt at the calculation, a final write-up with an explanation of one error they caught and fixed) that make the student's own process visible.\n3. A short, plain-language 'how you may use AI on this assignment' policy for students, with specific examples of allowed use (e.g. asking AI to explain a formula, checking a calculation) and disallowed use (e.g. having AI solve the problem from the data).\n4. A 15-minute lesson plan teaching students the difference between using AI to check their thinking and using AI to skip the thinking, with one in-class discussion question specific to math/science work.\n\nBase this only on the assignment and context I gave you — don't invent facts about my school's policies."
+        },
+        {
+          "label": "Whole-Department Policy Version",
+          "whenToUse": "Use this when you want to build a consistent AI-use policy and assignment-design checklist across an entire department or grade team, not just redesign one assignment.",
+          "prompt": "You are helping my department build a consistent approach to AI-resistant assignment design and a shared AI-use policy, starting from one example assignment.\n\nEXAMPLE ASSIGNMENT: [PASTE PROMPT]\nGRADE/SUBJECT: [GRADE/SUBJECT]\nWHAT A FULLY AI-GHOSTWRITTEN SUBMISSION WOULD LOOK LIKE FOR THIS PROMPT: [DESCRIBE, e.g. \"a generic five-paragraph essay with no reference to our specific class discussion or local case study\"]\nOTHER ASSIGNMENT TYPES OUR DEPARTMENT COMMONLY USES: [ASSIGNMENT TYPES, e.g. \"essays, lab reports, reading responses, presentations\"]\n\nGive me:\n1. A redesigned version of the example assignment that requires evidence a generic AI response can't produce on its own.\n2. A general checklist (5-7 items) any teacher in the department can use to check whether one of their own assignments is AI-ghostwriting-resistant, based on the pattern in the redesigned example.\n3. A short, plain-language 'how you may use AI on assignments' policy written generally enough to apply across the assignment types I listed, with specific examples of allowed and disallowed use for each type.\n4. A 15-minute lesson plan teaching students the difference between using AI to think and using AI to skip thinking, with one in-class discussion question, that any teacher in the department could run as-is.\n\nBase this only on the assignment and context I gave you — don't invent facts about my school's policies or assume department agreement that hasn't happened yet."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Make the AI-use policy more specific",
+          "prompt": "The AI-use policy still feels a little abstract. Rewrite the allowed and disallowed lists with 4-5 concrete examples each, specific to this assignment, like 'allowed: asking AI to explain what an annotated bibliography is' and 'disallowed: pasting the checkpoint prompt into AI and submitting its output.'"
+        },
+        {
+          "label": "Fit the checkpoints to a shorter timeline",
+          "prompt": "I only have two weeks for this assignment, not the full timeline you assumed. Compress the checkpoints to fit two weeks and tell me which one is safe to combine with another if I'm short on class time."
+        },
+        {
+          "label": "Write the discussion question script",
+          "prompt": "Write out the discussion question as an actual script I can read to the class, including one example of a strong student response and one example of a weak one, so I know what to listen for."
+        },
+        {
+          "label": "Check it isn't assuming resources I don't have",
+          "prompt": "Reread the redesigned assignment and checkpoints and flag anything that assumes access I don't actually have — like a specific dataset, guest interview, or technology — so I can confirm what's realistic before I hand this out."
+        }
+      ],
+      "walkthrough": "Jordan Kessler teaches 11th grade U.S. History and is worried his current essay prompt on the causes of the Cold War is too easy for AI to ghostwrite convincingly, since it's a generic \"explain three causes\" essay any AI could answer without knowing anything about his class. He opens Claude, pastes his original assignment into PASTE PROMPT, sets GRADE/SUBJECT to \"11th grade, U.S. History,\" and describes the ghostwriting risk in DESCRIBE: \"a generic five-paragraph essay listing textbook causes with no reference to the primary source documents we analyzed in class or our Cold War simulation debate.\"\n\nClaude returns a redesigned assignment requiring students to reference two specific primary sources distributed in class and cite a moment from the in-class debate simulation by name. It proposes three checkpoints: a one-paragraph topic proposal naming which primary source they'll center the essay on, an annotated outline due a week later, and a final draft submitted with visible revision history using Google Docs version history. It writes a plain-language AI policy allowing brainstorming and grammar checks but disallowing generating full paragraphs, with examples of each. It also includes a 15-minute lesson with a discussion question: \"If you asked an AI to write this essay right now, what would it get wrong about our class specifically?\"\n\nJordan worries the discussion question is a little abstract for his class, so he sends the follow-up asking Claude to write it out as an actual script with a strong and a weak example response. Claude rewrites it as a short script he can read aloud, with both examples included.\n\nTotal time: about 13 minutes. Jordan now has a redesigned assignment, a policy he can paste into his syllabus, and a discussion activity ready for Monday."
+    },
+    "stu-b1-ai-tutor-without-cheating": {
+      "placeholders": [
+        {
+          "name": "TOPIC",
+          "what": "The exact concept, theorem, process, or skill you're trying to learn — not the whole course, just one specific thing. You can find it on your syllabus, the assignment sheet, or the textbook's table of contents. A good value is narrow enough to actually check understanding of (e.g. 'oxidative phosphorylation'); a bad value is a whole course name like 'biology', which is too broad for the tutor to target questions.",
+          "examples": [
+            "the Krebs cycle and where each stage happens in the cell",
+            "linear regression, specifically what R-squared measures",
+            "Newton's second law and drawing free-body diagrams"
+          ]
+        },
+        {
+          "name": "CLASS/EXAM",
+          "what": "The course, level, or exam this topic is for — it tells the tutor how deep and technical to go. Pull this from your syllabus, course code, or the name printed on your study guide. A good value names the specific course and, if relevant, the exact test ('AP Chemistry, unit 4 test'); a bad value is vague, like 'school.'",
+          "examples": [
+            "AP Biology, unit 3 test next Thursday",
+            "Intro Macroeconomics (ECON 201), midterm 2",
+            "AP Physics 1, in-class quiz on Friday"
+          ]
+        },
+        {
+          "name": "YOUR ATTEMPT AT EXPLAINING IT",
+          "what": "Your own honest explanation of the topic right now, in plain language, written from memory before you check any notes or search anything. This is the raw material the tutor uses to find exactly what you're missing, so it needs to be genuinely yours — copying a definition from your textbook defeats the purpose. It's fine, even useful, if it's partly wrong or you trail off where you get unsure.",
+          "examples": [
+            "Cellular respiration is how cells make energy from food. Glucose gets broken down and it makes ATP. I think it happens in the mitochondria. There's a step called glycolysis that happens first, outside the mitochondria I think, and it splits glucose into two smaller molecules. After that I'm fuzzy on what happens — I know oxygen is involved somewhere and CO2 comes out at the end.",
+            "Supply and demand means that when a product gets more popular, the price goes up because more people want it. If a company makes too much of something nobody wants, they have to lower the price to sell it. I think equilibrium is when the price stops changing because supply and demand are equal, but I'm not sure how to find that point on a graph or what shifts the curves versus moves along them.",
+            "Newton's second law is F=ma, force equals mass times acceleration. So heavier things need more force to move the same amount. I know you use free-body diagrams to show all the forces on an object but I always mix up which forces to include, and I don't really get why acceleration is zero when things are moving at a constant speed."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick pre-class check-in",
+          "whenToUse": "Use this when you only have 5-10 minutes before class or a quiz and just need to know if you're missing something obvious, not a full deep-dive session.",
+          "prompt": "I'm about to walk into [CLASS/EXAM] and want a 5-minute Socratic check on [TOPIC] before I go in.\n\nRules: don't explain anything up front. Ask me one question to test whether I actually understand [TOPIC]. If I get it wrong, tell me why and ask one more question — max 2 rounds total, then give me a one-line verdict: 'ready' or 'review this specific part before class.'\n\nWhat I think I know:\n[YOUR ATTEMPT AT EXPLAINING IT]\n\nGo straight to your first question."
+        },
+        {
+          "label": "Peer-teaching mode",
+          "whenToUse": "Use this when you want deeper active recall by having Claude play a confused classmate you have to teach, which forces you to produce the explanation instead of just answering questions.",
+          "prompt": "I'm learning [TOPIC] for [CLASS/EXAM]. Instead of quizzing me directly, play the role of a classmate who is confused about [TOPIC] and needs me to teach it to them.\n\nRules:\n- Ask me genuinely confused-student questions, including ones that expose gaps in my explanation.\n- If my explanation to you is wrong or unclear, react the way a real confused student would (say you're more confused, or ask a follow-up that shows the gap) rather than telling me directly I'm wrong.\n- Don't break character to explain the concept yourself unless I explicitly ask you to step out of the role and just tell me.\n\nHere's how I'd start explaining it to you:\n[YOUR ATTEMPT AT EXPLAINING IT]\n\nRespond in character as the confused classmate."
+        },
+        {
+          "label": "Full pre-exam audit across multiple topics",
+          "whenToUse": "Use this a few days before an exam when you need the tutor to sweep across everything on the exam, not just one concept, and tell you which topics need this Socratic treatment most.",
+          "prompt": "I have an exam on [CLASS/EXAM] covering multiple topics. I want you to Socratically audit my understanding across all of them, not just one.\n\nTopics to cover: [TOPIC]\n\nRules: go topic by topic. For each one, ask me to explain it first before you say anything. Tell me what's right and wrong, ask one guiding question if something's off, then move to the next topic — don't give full explanations unless I ask. At the end, rank the topics from strongest to weakest based on how the audit went.\n\nStart with the first topic and ask me to explain it."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Ask for the smallest possible hint",
+          "prompt": "I'm stuck — give me the smallest hint you can, just enough to get me unstuck, not the answer or the reasoning."
+        },
+        {
+          "label": "Confirm real understanding, not just repeating you",
+          "prompt": "Now quiz me on this same topic a different way — change the example or angle — so I can prove I actually understand it and I'm not just repeating your explanation back."
+        },
+        {
+          "label": "Tutor gave away too much",
+          "prompt": "That was too much of the answer. Go back to asking me guiding questions instead of explaining — I want to work it out myself."
+        },
+        {
+          "label": "Connect to the bigger picture",
+          "prompt": "Now ask me a question that connects this topic to how it might show up in a harder or combined exam question, not just in isolation."
+        }
+      ],
+      "walkthrough": "Priya has an AP Biology unit test on cellular respiration in four days. She opens Claude, pastes the lesson's prompt, and fills in the brackets: TOPIC becomes 'cellular respiration, especially the electron transport chain,' CLASS/EXAM becomes 'AP Biology, unit 4 test Thursday,' and for YOUR ATTEMPT AT EXPLAINING IT she writes three sentences from memory, admitting she isn't sure why oxygen is needed at the end of the chain.\n\nClaude's first reply doesn't explain anything. It tells her she's right that glycolysis happens in the cytoplasm, but flags that she's mixed up where the electron transport chain occurs (she said mitochondrial matrix; it's actually the inner mitochondrial membrane), and asks: 'What do you think would happen to the electron transport chain if there were no oxygen available at all?'\n\nPriya guesses wrong — she says the cell would just slow down. Claude tells her that's not quite right and why, then asks a narrower question about where the electrons would back up. She's stuck, so she sends the first follow-up: 'I'm stuck — give me the smallest hint you can.' Claude gives one sentence about electron carriers filling up, not the full mechanism. That's enough — Priya works out that without oxygen to accept the final electrons, the whole chain backs up and stops.\n\nShe asks for the full explanation, then Claude asks her to explain it back in her own words, which she does, correctly this time. Before closing, she sends the peer-teaching-style follow-up asking Claude to quiz her from a different angle, to make sure she isn't just repeating the last answer back.\n\nThe whole session takes about 15 minutes. Priya ends it with a written explanation she generated herself, not one she copied — which is what she actually needs in order to remember it on Thursday."
+    },
+    "stu-b2-summarize-question-readings": {
+      "variations": [
+        {
+          "label": "Fast chapter recap",
+          "whenToUse": "Use when you just need a quick refresher on a short reading before class discussion and don't need full self-check questions.",
+          "prompt": "Using only the uploaded document, give me a fast recap: one paragraph (5-6 sentences) summarizing the whole reading, then a bullet list of the 5 most important terms with one-sentence definitions taken directly from the text. Skip the self-check questions this time — I just need the recap. Do not add anything that isn't in the document."
+        },
+        {
+          "label": "Seminar discussion prep",
+          "whenToUse": "Use before a class discussion or seminar where you need discussion questions and points to raise, not just quiz yourself.",
+          "prompt": "Using only the uploaded document, do the following:\n1. Summarize the reading section by section, 2-3 sentences per section, using the document's own headings.\n2. List the 3 most debatable or contestable claims the author makes, each with the sentence or passage it comes from.\n3. Write 4 discussion questions I could raise in seminar that engage with those debatable claims, not just factual recall.\n4. For everything above, stay traceable to the source document only — no outside context."
+        },
+        {
+          "label": "Multi-document synthesis",
+          "whenToUse": "Use when you've uploaded more than one reading (e.g. two articles assigned for the same week) and need to see where they agree, disagree, or build on each other, grounded in both texts.",
+          "prompt": "Using only the uploaded documents (both of them), do the following:\n1. Summarize each document separately, section by section, 2-3 sentences per section.\n2. Identify 3 points where the two documents agree, and 3 points where they disagree or emphasize different things, citing which document each point comes from.\n3. Write 4 self-check questions that require comparing both documents to answer, not just recalling one.\n4. Stay traceable to the two uploaded documents only — do not add outside context."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check for unsupported claims",
+          "prompt": "Go back through your summary and self-check questions and flag anything that isn't directly supported by the uploaded document — if you added outside knowledge anywhere, tell me exactly where."
+        },
+        {
+          "label": "Make quiz questions harder",
+          "prompt": "The 'explain why/how' questions were too easy. Rewrite them so they require connecting two different sections of the reading, not just restating one paragraph."
+        },
+        {
+          "label": "Clarify a confusing section",
+          "prompt": "Ask me which section of the reading I'm still confused about, then explain just that section in plainer language, using only the document, with a concrete example if there is one."
+        },
+        {
+          "label": "Convert to flashcards",
+          "prompt": "Turn the 5 key terms and their definitions into a flashcard format: term on one line, definition on the next, so I can copy them into a flashcard app."
+        }
+      ],
+      "walkthrough": "Marcus has a 22-page reading on the origins of the Cold War due for his history seminar tomorrow. He opens Claude, starts a new chat, and uploads the PDF his professor posted using the attachment button. Once it finishes processing, he pastes the lesson's prompt into the chat box exactly as written — no edits needed since there are no placeholders to fill in.\n\nClaude replies with a section-by-section summary using the reading's own subheadings ('Origins of Mutual Suspicion,' 'The Truman Doctrine,' 'Containment in Practice'), each two to three sentences. Below that: five key terms — containment, Truman Doctrine, Marshall Plan, iron curtain, and satellite state — each with a one-sentence definition quoted from the text. Then six self-check questions: three factual ('What year was the Truman Doctrine announced?') and three explain-why ('Why did containment require both military and economic tools, according to the reading?').\n\nMarcus notices one question mentions NATO, but NATO isn't actually named anywhere in his reading — it must have pulled that from general knowledge instead of the document. He sends the follow-up asking Claude to flag anything not directly supported by the source. It re-checks, admits that question wasn't grounded in the text, replaces it with one about the Marshall Plan instead, and quotes the exact sentence the replacement question comes from.\n\nMarcus quizzes himself using the six questions before closing his laptop, answering them on his own first rather than just reading the key — the point is checking his own understanding, not producing something to hand in. The whole thing takes about 12 minutes, and because he can check every claim against the actual PDF, he trusts the summary enough to actually study from it instead of re-reading all 22 pages the night before class."
+    },
+    "stu-b3-exam-prep-practice-spaced-review": {
+      "placeholders": [
+        {
+          "name": "SUBJECT/TOPIC LIST",
+          "what": "The subject and/or the specific topics your exam will cover, as broad or as itemized as you currently know it — check your course syllabus, the exam study guide your teacher handed out, or the unit titles in your textbook. A good value lists the actual topic names ('cell division, genetics, and evolution'); a bad value is just the class name with no topics ('biology').",
+          "examples": [
+            "Organic Chemistry: functional groups, reaction mechanisms, and stereochemistry",
+            "US History unit 5: the Progressive Era, WWI, and the 1920s",
+            "Statistics: hypothesis testing, confidence intervals, and p-values"
+          ]
+        },
+        {
+          "name": "DATE",
+          "what": "The actual calendar date of your exam, taken directly from your syllabus or your school's portal — this is what the schedule counts backward from, so it needs to be the real date, not an estimate. This bracket appears twice in the prompt; use the same date both times. A good value is a specific date; a bad value is vague, like 'next week.'",
+          "examples": [
+            "August 18, 2026",
+            "Friday, September 4",
+            "October 2, 2026"
+          ]
+        },
+        {
+          "name": "X",
+          "what": "The number of days you actually have left before the exam, counted from today on a real calendar. Count it yourself rather than guessing, since the whole schedule depends on this number being accurate. A good value is a specific whole number; a bad value is a rough guess like 'a couple weeks.'",
+          "examples": [
+            "9",
+            "5",
+            "17"
+          ]
+        },
+        {
+          "name": "Y",
+          "what": "How many minutes you can realistically study per day, based on your actual schedule (classes, work, sports) — not an ideal you won't hit most days. This bracket appears twice; use the same number both times so the schedule and the daily cap match. A bad value is an unrealistic number, like 240, that assumes a totally free schedule.",
+          "examples": [
+            "45",
+            "90",
+            "60"
+          ]
+        },
+        {
+          "name": "PASTE NOTES OR TOPIC LIST",
+          "what": "Your actual class notes, a topic outline, or a bullet list of everything you've covered so far for this exam — copy-pasted from your notebook, slides, or study guide. This is the only material the practice questions and schedule will be built from, so the more complete and specific it is, the better the output; a bad value is a single vague line like 'chapter 5' with no actual content.",
+          "examples": [
+            "- Functional groups: alcohols (-OH), carboxylic acids (-COOH), amines (-NH2), esters\n- SN1 vs SN2 reactions: SN1 is two steps, forms carbocation, works best with tertiary substrates; SN2 is one step, backside attack, works best with primary substrates\n- E1 vs E2 elimination and Zaitsev's rule for the major product\n- Stereochemistry: R/S configuration, assigning priority with CIP rules\n- Chair conformations of cyclohexane, axial vs equatorial substituents\n- Still confused on how to tell substitution from elimination based on the reagents given",
+            "- Progressive Era reforms: trust-busting, Pure Food and Drug Act, 19th Amendment\n- Causes of WWI: alliances, militarism, assassination of Franz Ferdinand\n- US entry into WWI: Zimmermann Telegram, unrestricted submarine warfare\n- Treaty of Versailles and why the US Senate rejected it\n- 1920s: Prohibition, the Scopes Trial, rise of consumer culture\n- Need to review: causes of the Great Migration, still fuzzy on the dates",
+            "- Null vs alternative hypothesis, how to write H0 and Ha\n- Type I vs Type II errors\n- p-value: what it actually means (probability of data this extreme if H0 is true)\n- Confidence intervals: how to interpret a 95% CI in words\n- z-test vs t-test: when to use each\n- Weak spot: calculating sample size needed for a given margin of error"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "1-2 day cram version",
+          "whenToUse": "Use when the exam is tomorrow or the day after and there's no time for spaced repetition — you need triage and one intensive pass, not a multi-day schedule.",
+          "prompt": "I have an exam on [SUBJECT/TOPIC LIST] on [DATE] and only [X] days left — this is a cram situation, not a spaced-review situation.\n\nMy notes/topics: [PASTE NOTES OR TOPIC LIST]\n\n1. Rank my topics from highest-yield (most likely to appear, or worth the most points) to lowest, based only on what's in my notes.\n2. Generate 12 practice questions weighted toward the highest-yield topics, with an answer key that includes a 1-sentence reason for each answer.\n3. Build an hour-by-hour schedule for the time remaining, capped at [Y] minutes per session, that front-loads the highest-yield topics and leaves the last block before the exam for my weakest topic only.\n\nDo not add topics that aren't in my notes — ask me instead of assuming."
+        },
+        {
+          "label": "Study group version",
+          "whenToUse": "Use when you're prepping with 2-3 classmates and want a shared plan that splits topics and a combined practice test you can quiz each other with.",
+          "prompt": "My study group (3-4 people) has an exam on [SUBJECT/TOPIC LIST] on [DATE]. We have [X] days left and can meet for [Y] minutes per session.\n\nCombined notes/topics from the group: [PASTE NOTES OR TOPIC LIST]\n\n1. Split the topics into roughly equal chunks, one per group member, so each person can become the 'expert' who explains their chunk to the others.\n2. Generate 15 practice questions covering all topics combined, with an answer key, that we can use to quiz each other.\n3. Build a day-by-day schedule for our group sessions using spaced repetition, noting which member should lead each session's review.\n\nDo not add topics that aren't in our combined notes — ask us instead of assuming."
+        },
+        {
+          "label": "Cumulative final exam version",
+          "whenToUse": "Use for a final exam covering an entire semester's worth of material across multiple units, where the schedule needs to weight review toward older topics you're most likely to have forgotten.",
+          "prompt": "I have a cumulative final exam on [SUBJECT/TOPIC LIST] on [DATE], covering the whole semester. I have [X] days left and can study [Y] minutes/day.\n\nMy notes/topics from the whole semester: [PASTE NOTES OR TOPIC LIST]\n\n1. Generate 20 practice questions weighted toward earlier-semester topics, since those are the ones I'm most likely to have forgotten, with an answer key.\n2. Build a day-by-day spaced review schedule that revisits early-semester topics more frequently than recent ones, capped at [Y] minutes per day.\n3. Flag which early-semester topics look thinnest in my notes, since those are the highest-risk gaps for a cumulative exam.\n\nDo not add topics that aren't in my notes — ask me instead of assuming."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Answer key too thin",
+          "prompt": "For each answer in the key, add a 1-2 sentence explanation of why it's correct, not just the answer itself, so I can check my reasoning, not only my final answer."
+        },
+        {
+          "label": "Schedule doesn't fit a specific day",
+          "prompt": "I actually have less time than planned on one of the days — rebuild the schedule assuming I only get 15 minutes that day and redistribute the rest across the remaining days without exceeding my daily limit."
+        },
+        {
+          "label": "More practice on weak topics",
+          "prompt": "Generate 8 more practice questions focused only on the topics you flagged as weakest, with the answer key, and make them harder than the first set."
+        },
+        {
+          "label": "Double-check nothing was invented",
+          "prompt": "Go back through the practice questions and schedule and confirm every topic came from my notes — if any question tests something not in what I gave you, tell me exactly which one and remove or replace it."
+        }
+      ],
+      "walkthrough": "Elena has an Organic Chemistry exam in 6 days and roughly 60 minutes a day to study around her part-time job. She opens ChatGPT and pastes the lesson prompt, filling in SUBJECT/TOPIC LIST as 'functional groups, SN1/SN2 reactions, and stereochemistry,' DATE as the actual exam date from her syllabus, X as '6,' Y as '60,' and for PASTE NOTES OR TOPIC LIST she copies six bullet points straight from her notebook, including one line admitting she's shaky on telling substitution from elimination reactions.\n\nChatGPT responds with 15 practice questions (mostly multiple choice, a few short answer) and an answer key underneath. Then it lays out a day-by-day schedule: Day 1 covers functional groups and SN1/SN2 basics fresh; Day 3 briefly revisits functional groups (spaced repetition) while introducing stereochemistry; Day 5 mixes all three topics together as a timed mini-quiz; Day 6 is a light final review, capped at 60 minutes every day. It flags substitution-versus-elimination as her weakest area based on her own note, and asks whether the exam also covers addition reactions, since her notes never mentioned them.\n\nElena confirms addition reactions aren't on this exam, so nothing changes. She sends the follow-up asking for explanations behind each answer key entry, since a few multiple-choice answers left her wondering why the other options were wrong. ChatGPT adds a short reasoning line under each one.\n\nSetting this up took about 10 minutes. Elena now has a printed schedule taped above her desk and a stack of practice questions she works through each day, catching herself forgetting the SN1/SN2 distinction on day 3 — exactly as the spaced schedule predicted she might."
+    },
+    "stu-i1-writing-feedback-not-ghostwriting": {
+      "placeholders": [
+        {
+          "name": "PASTE YOUR DRAFT",
+          "what": "The actual text of your own essay, paper, or assignment draft, copied in full or at least the section you want feedback on — pulled from your Google Doc, Word file, or wherever you're writing. It must be work you wrote yourself; pasting something you didn't write, or that another AI generated for you, defeats the entire point of this exercise and makes the feedback meaningless for your revision.",
+          "examples": [
+            "In The Great Gatsby, Fitzgerald shows that the American Dream is corrupted by wealth. Gatsby wants to be with Daisy but he can't because of money and social class. The green light represents his hope. Nick is the narrator and he judges everyone but also seems to admire Gatsby. I think this shows that money can't buy happiness and that the 1920s were a time of moral decay. The parties Gatsby throws are really extravagant and show how much money he has.",
+            "Social media has a negative effect on teenagers' mental health because it causes them to compare themselves to others. Studies show that teens who use social media a lot report feeling more anxious. Instagram especially shows filtered photos that aren't real. Also, teens spend less time with friends in person because they are on their phones instead. This is a problem because in-person connection is important for mental health, and I think schools should teach kids about this in health class."
+          ]
+        },
+        {
+          "name": "PASTE PROMPT OR GOAL",
+          "what": "The actual assignment instructions from your teacher or professor (copy them from the syllabus, the assignment sheet, or the LMS/Canvas page), or, if there's no formal prompt, a one-sentence statement of what the piece is supposed to accomplish. This tells the AI what to measure your draft against — without it, feedback defaults to generic writing advice instead of whether you actually met the assignment.",
+          "examples": [
+            "Write a 3-page literary analysis essay arguing a specific interpretation of a central theme in The Great Gatsby, using at least 3 textual quotations as evidence. Due Friday.",
+            "Argumentative essay, 1200 words: take a position on a current social issue and support it with at least two cited sources. Persuade a skeptical reader.",
+            "Personal narrative essay, 750 words, for the college common app — show growth or change through a specific experience, don't just tell the reader what you learned."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick sentence-level pass",
+          "whenToUse": "Use when your ideas and structure are already solid and you just want a fast check on clarity and awkward sentences before submitting, not a full argument review.",
+          "prompt": "You are giving me feedback on my own writing, not rewriting it. Do not rewrite or generate replacement sentences at any point, even as an example — describe problems and ask questions instead.\n\nMy draft: [PASTE YOUR DRAFT]\n\nJust focus on Clarity: point to specific sentences that are unclear, awkward, or overly complex (quote them exactly), explain what's unclear about them, and tell me what question a confused reader would ask at that point — but do not rewrite them for me. Limit it to the 5 sentences that would improve the piece the most if I fixed them."
+        },
+        {
+          "label": "Deep structural review for a long paper",
+          "whenToUse": "Use for a longer research paper or thesis draft where you need feedback organized by section (intro, each body section, conclusion) rather than as one pass over the whole thing.",
+          "prompt": "You are giving me feedback on my own writing, not rewriting it. Do not rewrite or generate replacement sentences or paragraphs at any point, even as an example — describe problems and ask questions instead.\n\nMy draft: [PASTE YOUR DRAFT]\nAssignment/goal: [PASTE PROMPT OR GOAL]\n\nGo section by section (introduction, each body section, conclusion). For each section, tell me: what its job is supposed to be in the overall argument, whether it actually does that job, and one specific question that would help me fix it if it doesn't. At the end, tell me if the sections are in the right order, and which one (if any) doesn't earn its place in the paper at all."
+        },
+        {
+          "label": "Rubric-matched feedback",
+          "whenToUse": "Use when your teacher gave you a grading rubric and you want feedback organized around the actual rubric categories, so you know roughly how you'd score before you turn it in.",
+          "prompt": "You are giving me feedback on my own writing, not rewriting it. Do not rewrite or generate replacement sentences or paragraphs at any point, even as an example — describe problems and ask questions instead.\n\nMy draft: [PASTE YOUR DRAFT]\nAssignment/goal: [PASTE PROMPT OR GOAL]\nGrading rubric (paste it exactly as given): [PASTE RUBRIC]\n\nGo category by category through the rubric. For each category, tell me honestly where my draft currently sits against it, point to the specific evidence in my draft that supports that assessment, and ask me a question that would help me close the gap — do not rewrite anything for me. End with the single rubric category most likely to cost me points if I don't fix it."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Confirm nothing was rewritten",
+          "prompt": "Double check your feedback above — did you rewrite or generate any replacement sentence anywhere, even as an example? If you did, point out exactly where so I can ignore it and fix it myself."
+        },
+        {
+          "label": "Want specific sentence references",
+          "prompt": "Some of that feedback was too general. Go back through and for every issue you raised, quote the exact sentence from my draft it applies to."
+        },
+        {
+          "label": "Check my revision",
+          "prompt": "I revised the draft based on your feedback. Tell me which of the issues you raised are actually fixed now and which aren't — don't rewrite anything, just assess. Here's my revision:\n\n(paste revised draft here)"
+        },
+        {
+          "label": "Prioritize what matters most",
+          "prompt": "If I only have 30 minutes to revise before this is due, which single issue from your feedback should I fix first, and why does it matter more than the others?"
+        }
+      ],
+      "walkthrough": "Jordan is a college freshman with a literary analysis essay on The Great Gatsby due Friday. He's written a full first draft in Google Docs. He opens Claude, pastes the lesson's prompt, and fills in PASTE YOUR DRAFT with his actual three paragraphs (including the slightly generic line 'I think this shows that money can't buy happiness'), and PASTE PROMPT OR GOAL with the assignment sheet text his professor posted on Canvas: argue a specific interpretation using at least three quotations.\n\nClaude's response is organized into the four categories from the prompt. Under Argument, it points out his thesis says wealth 'corrupts' the American Dream but his second paragraph mostly describes the parties without connecting them back to that claim, and asks: 'What specifically about the parties shows corruption, rather than just wealth?' Under Evidence, it notes he hasn't used a single direct quotation yet, which conflicts with the assignment's requirement of three. Under Clarity, it quotes his sentence about money and moral decay and explains that stacking two separate claims in one sentence makes it hard to tell which one he's actually arguing — but it does not rewrite the sentence for him. It ends by naming the two highest-impact fixes: add textual evidence, and narrow the thesis to one claim.\n\nJordan rewrites two sentences himself and adds a quotation about the green light. Unsure if he fixed the clarity issue, he sends the third follow-up, pasting his revision and asking Claude to assess it without rewriting anything. Claude confirms the thesis is now narrower but says the new quotation still needs one more sentence explaining how it supports his point.\n\nTotal time: about 20 minutes, and every sentence in the final essay is still Jordan's own writing."
+    },
+    "stu-i2-research-papers-find-organize-synthesize": {
+      "placeholders": [
+        {
+          "name": "RESEARCH QUESTION / WORKING THESIS",
+          "what": "The specific question your paper is trying to answer, or the tentative argument (working thesis) you're currently planning to make — not the general topic. Pull this from your assignment prompt or the working thesis you already drafted with your professor or TA. A good value is answerable or arguable and specific; a bad value is a broad topic with no question attached, like 'social media.'",
+          "examples": [
+            "Does heavy Instagram use in teenagers (ages 13-17) correlate with increased anxiety symptoms, and if so, why?",
+            "Working thesis: Remote work policies disproportionately benefit white-collar employees while widening inequality for hourly workers.",
+            "How did redlining in the 1930s-1950s shape present-day racial wealth gaps in US cities?"
+          ]
+        },
+        {
+          "name": "e.g. \"at least 3 peer-reviewed sources, published after 2015, APA citation style\"",
+          "what": "The specific requirements your assignment gives for sources and citations — number of sources, how recent they need to be, whether they must be peer-reviewed, and which citation style to use. Copy these directly from your assignment sheet or rubric; don't guess, because getting this wrong (using MLA when APA is required, for example) costs easy points.",
+          "examples": [
+            "at least 5 sources, minimum 3 peer-reviewed, published after 2018, MLA 9th edition citation style",
+            "4 sources total, at least 2 primary sources, no citation style specified but must include full bibliographic info",
+            "6-8 sources, all peer-reviewed journal articles, published within the last 10 years, APA 7th edition"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Open-access only version",
+          "whenToUse": "Use when your school library access is limited or you need sources you can actually read in full for free, not just abstracts behind a paywall.",
+          "prompt": "I'm researching: [RESEARCH QUESTION / WORKING THESIS]\nRequirements: [e.g. \"at least 3 peer-reviewed sources, published after 2015, APA citation style\"], and every source must be something I can actually read in full for free (open-access journals, university repositories, or publicly posted PDFs) — no paywalled-only sources.\n\n1. Suggest 6-8 candidate sources that meet both the requirements and the open-access condition, with publication, author, year, and a real link where possible. Tell me clearly if you're not fully certain a source exists, is open-access, or if any detail is correct — I will verify every source myself before using it.\n2. For each source, give a 1-sentence description of its likely angle based only on its title/abstract.\n\nI will confirm access and read the actual sources myself before citing anything."
+        },
+        {
+          "label": "Annotated bibliography format",
+          "whenToUse": "Use when your assignment specifically requires a formatted annotated bibliography (each source with a citation plus a paragraph of annotation) rather than a working source list.",
+          "prompt": "I'm researching: [RESEARCH QUESTION / WORKING THESIS]\nRequirements: [e.g. \"at least 3 peer-reviewed sources, published after 2015, APA citation style\"]\n\n1. Suggest 6-8 candidate sources with full citation details, flagging clearly anywhere you're not fully certain a source exists or a detail is correct.\n2. Format each as an annotated bibliography entry: full citation in the required style, followed by a short annotation (2-3 sentences) describing its likely argument/angle and how it might relate to my research question, based only on the title/abstract.\n\nI will read the actual sources myself and correct or remove any entry before using it in my paper."
+        },
+        {
+          "label": "Counter-argument sources",
+          "whenToUse": "Use once you already have supporting sources and need sources that challenge or complicate your thesis, so your paper can address counterarguments instead of ignoring them.",
+          "prompt": "I'm researching: [RESEARCH QUESTION / WORKING THESIS] and I already have supporting sources for my main argument.\nRequirements: [e.g. \"at least 3 peer-reviewed sources, published after 2015, APA citation style\"]\n\n1. Suggest 4-6 candidate sources that specifically challenge, complicate, or offer a different angle on my working thesis, not ones that just support it. Flag clearly if you're not fully certain a source exists or a detail is correct.\n2. For each one, give a 1-sentence description of the counterargument or complication it likely raises, based only on its title/abstract.\n\nI will read the actual sources myself and verify before citing anything."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify a source before using it",
+          "prompt": "For source #3 on your list, tell me again exactly how confident you are that it's real and that the details (author, year, journal) are accurate — I'm about to go look it up myself and want to know what to double check."
+        },
+        {
+          "label": "Only recent sources",
+          "prompt": "Drop any source you suggested that's older than 5 years and replace it with a more recent one on the same angle, following the same rule — flag it clearly if you're not fully certain it exists."
+        },
+        {
+          "label": "Format the verified ones",
+          "prompt": "I've now confirmed sources 1, 3, and 5 are real and I've read them. Format full citations for just those three in the citation style from my requirements, and don't touch the others."
+        },
+        {
+          "label": "Different angle needed",
+          "prompt": "I already have enough sources on that angle. Suggest 4 more candidate sources that instead look at a different mechanism or effect related to my research question, with the same certainty flags as before."
+        }
+      ],
+      "walkthrough": "Tasha is writing a psychology term paper and needs at least 3 peer-reviewed sources published after 2015, in APA style. She opens Gemini and pastes the lesson's prompt, filling RESEARCH QUESTION / WORKING THESIS with 'Does heavy Instagram use in teenagers correlate with increased anxiety symptoms, and if so, why?' and the requirements placeholder with 'at least 3 peer-reviewed sources, published after 2015, APA citation style.'\n\nGemini returns 7 candidate sources. For five of them it gives a full citation with what looks like a working link or DOI and states it's reasonably confident these are real. For two others, it explicitly flags: 'I'm not fully certain this exact article exists — the author and general topic are correct as far as I know, but please verify the title and journal before citing it.' For each source it adds one sentence on the likely angle, for example: 'This one likely argues social comparison, not screen time itself, is the real mechanism behind the anxiety link.'\n\nTasha opens her university library database and checks all 7. Two of the 'confident' ones check out immediately. One of the flagged ones turns out not to exist at all under that title — the journal is real but that specific article isn't. She sends the first follow-up on source #3, gets Gemini's honest reassessment, and decides to drop it rather than risk citing something fake.\n\nOnce she's confirmed 5 real sources by reading their actual abstracts, she sends the follow-up asking Gemini to format full APA citations for just those five. It does, and she pastes them straight into her working bibliography.\n\nThe whole process — searching, verifying, and organizing — takes about 25 minutes, versus the hour she usually spends blindly searching databases with no starting angle."
+    },
+    "stu-i3-learn-technical-skill-practice-loop": {
+      "placeholders": [
+        {
+          "name": "SPECIFIC NARROW SKILL",
+          "what": "The one specific skill you're drilling, narrow enough that a single practice problem can target it — not a whole subject. Think in terms of what you'd tell a tutor you need to practice, like a specific programming construct, math technique, or grammar rule. A good value is narrow ('nested for-loops in Python'); a bad value is broad ('programming').",
+          "examples": [
+            "nested for-loops in Python",
+            "SQL JOINs (INNER vs LEFT)",
+            "balancing chemical equations"
+          ]
+        },
+        {
+          "name": "YOUR LEVEL, e.g. \"can write a basic for-loop but struggle with nested loops\"",
+          "what": "An honest, specific description of what you can currently do and exactly where you get stuck, written from your own recent experience — not a guess at what level you 'should' be. This calibrates the difficulty of the very first practice problem, so vague answers like 'beginner' produce a badly-calibrated problem. A good value names both what works and exactly where it breaks.",
+          "examples": [
+            "can write a basic for-loop that prints numbers 1-10, but when I try to nest one loop inside another for a multiplication table, I lose track of which variable belongs to which loop",
+            "comfortable with INNER JOIN but I don't understand when a LEFT JOIN gives different results or why NULLs show up",
+            "can balance equations with simple molecules like H2O but get stuck when there are polyatomic ions like sulfate on both sides"
+          ]
+        },
+        {
+          "name": "PASTE YOUR ATTEMPT WHEN READY — leave blank for now and just send the first problem",
+          "what": "Once you receive the practice problem, this is where you paste your actual attempt at solving it — your code, your worked-out math, or your written answer, exactly as you produced it, not cleaned up. Leave this blank on your very first message so the AI sends you a problem first; only fill it in on your next message after you've genuinely tried.",
+          "examples": [
+            "def print_table(n):\n    for i in range(1, 11):\n        for j in range(1, 11):\n            print(i * j)\n    # I think this should print a multiplication table but it's not formatted right and I'm not sure it's even using n",
+            "SELECT customers.name, orders.total FROM customers LEFT JOIN orders ON customers.id = orders.customer_id WHERE orders.total > 100; -- I expected this to include customers with no orders too but they're missing from the results",
+            "Na2SO4 + BaCl2 -> BaSO4 + NaCl -- I know I need to balance the Na and Cl but I'm not sure if I balance the sulfate as one unit or break it into S and O separately"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Interview-style timed practice",
+          "whenToUse": "Use when you're prepping for a coding interview or timed exam and want problems delivered under time pressure with a harder ramp-up, closer to real test conditions.",
+          "prompt": "I'm practicing [SPECIFIC NARROW SKILL] for a technical interview, currently at [YOUR LEVEL, e.g. \"can write a basic for-loop but struggle with nested loops\"].\n\nGive me ONE problem at interview difficulty for this skill, and tell me a realistic time limit for it before you give it to me. Do not give me the solution yet.\n\nAfter I submit my attempt within the time limit:\n- Tell me specifically what's correct and what's wrong, referencing my actual attempt.\n- Comment on whether I'd have passed a real interview on this answer, and why.\n- Only show a full corrected solution if I get it wrong twice or explicitly ask.\n- If I pass, give me the next problem, one step harder, with a new time limit.\n\nMy attempt: [PASTE YOUR ATTEMPT WHEN READY — leave blank for now and just send the first problem]"
+        },
+        {
+          "label": "Non-coding technical skill (e.g. spreadsheet formulas)",
+          "whenToUse": "Use this same loop for a non-programming technical skill, like Excel formulas or statistical calculations, where the 'attempt' is a formula or worked calculation instead of code.",
+          "prompt": "I'm practicing [SPECIFIC NARROW SKILL], currently at [YOUR LEVEL, e.g. \"can write a basic for-loop but struggle with nested loops\"].\n\nGive me ONE practice problem (a realistic scenario with actual data or numbers) at a level that's slightly challenging but achievable right now. Do not give me the solution yet.\n\nAfter I submit my attempt:\n- Tell me specifically what's correct and what's wrong, referencing my actual formula/calculation, not a generic explanation.\n- Do not just give me the corrected version — explain the concept I'm missing and let me try again first.\n- Only show a full corrected solution if I get it wrong twice, or if I explicitly ask for it.\n- If I get it right, give me the next problem, one step harder.\n\nMy attempt: [PASTE YOUR ATTEMPT WHEN READY — leave blank for now and just send the first problem]"
+        },
+        {
+          "label": "Randomized-difficulty exam simulation",
+          "whenToUse": "Use in the final days before an exam when you want problems that jump around in difficulty unpredictably, like a real test, instead of strictly increasing one step at a time.",
+          "prompt": "I'm practicing [SPECIFIC NARROW SKILL] for an upcoming exam, currently at [YOUR LEVEL, e.g. \"can write a basic for-loop but struggle with nested loops\"].\n\nGive me ONE practice problem, but instead of strictly increasing difficulty each time, vary the difficulty unpredictably like a real exam would (sometimes easier, sometimes harder, sometimes a variant I haven't seen). Do not give me the solution yet.\n\nAfter I submit my attempt:\n- Tell me specifically what's correct and what's wrong, referencing my actual attempt.\n- Do not just give me the corrected version — explain the concept I'm missing and let me try again first.\n- Only show a full corrected solution if I get it wrong twice, or if I explicitly ask for it.\n- Track and tell me, every 3 problems, which specific sub-skills I keep getting wrong.\n\nMy attempt: [PASTE YOUR ATTEMPT WHEN READY — leave blank for now and just send the first problem]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Explanation still doesn't click",
+          "prompt": "That explanation didn't click for me. Explain the concept again a completely different way — use an analogy or a real-world comparison instead."
+        },
+        {
+          "label": "Just show me the solution",
+          "prompt": "I want to see the full corrected solution now, with an explanation of every step, even though I haven't gotten it wrong twice."
+        },
+        {
+          "label": "Recalibrate difficulty",
+          "prompt": "This problem was too easy / too hard for where I actually am (pick one and tell me which). Give me one that's better matched to my level before moving on."
+        },
+        {
+          "label": "Show me my pattern of mistakes",
+          "prompt": "Looking back at everything I've attempted in this session, what's the one underlying misunderstanding that keeps showing up across my mistakes?"
+        }
+      ],
+      "walkthrough": "Diego is in his first programming course and keeps getting stuck on nested loops. He opens Claude and pastes the lesson's prompt, filling SPECIFIC NARROW SKILL with 'nested for-loops in Python,' the level placeholder with 'can write a basic for-loop that prints 1-10, but I lose track of the variables when I nest one loop inside another,' and leaves the attempt placeholder blank so Claude sends a first problem.\n\nClaude gives him one problem: write a function that prints a small multiplication table (rows 1-5, columns 1-5) using nested loops. Diego writes his attempt in his own editor, gets the print statement wrong so it prints one long row instead of a grid, and pastes his actual code back in.\n\nClaude doesn't just fix it. It tells him exactly what's right (the outer loop correctly runs 5 times) and exactly what's wrong (he's not putting a newline after the inner loop finishes, so everything prints on one line), then asks: 'What needs to happen right after the inner loop finishes each time, before the outer loop moves to the next row?' Diego guesses print() with nothing inside it, and Claude confirms that's exactly right, then gives him a slightly harder problem: a triangle pattern of asterisks.\n\nHe gets that one wrong too, and on his second attempt he's still off by one row. He sends the follow-up asking for the full solution with an explanation, since he's now gotten it wrong twice, which the lesson's own rule allows. Claude walks through why the range needs to start at 1, not 0, for the pattern to look right.\n\nDiego works through four problems in this loop over about 25 minutes, with the last one taking him only one attempt — a visible sign he closed the gap he started with."
+    },
+    "stu-a1-personal-learning-system": {
+      "placeholders": [
+        {
+          "name": "LIST",
+          "what": "This bracket appears twice in the prompt: first for your actual list of courses or topics you're currently studying, and second — a few lines down — for your real weekly hours available and roughly when. Fill in each occurrence with the matching information from the label just before it; pull your course list from your class schedule and your available hours from your actual calendar or work/activity schedule, not an idealized version.",
+          "examples": [
+            "Organic Chemistry, Statistics 200, US History survey, Spanish 3",
+            "Mon/Wed 7-9pm, Tue/Thu 6-7:30pm, Saturday 10am-1pm — about 10.5 hours total",
+            "Calculus II, Intro Psychology, a part-time internship I'm also trying to learn from"
+          ]
+        },
+        {
+          "name": "e.g. \"NotebookLM notebook for Biology, a spaced-review list for Statistics exam in 3 weeks\"",
+          "what": "A short list of study resources or systems you've already set up for any of your courses, so the plan builds on what exists instead of duplicating it. This can be a NotebookLM notebook, flashcard deck, existing schedule, or practice question set from an earlier lesson. If you genuinely have nothing set up yet, say so directly rather than leaving it blank.",
+          "examples": [
+            "A NotebookLM notebook with all my Biology lecture PDFs uploaded, and a spaced-review schedule for my Statistics exam in 3 weeks from an earlier ChatGPT session",
+            "Nothing set up yet for any course — starting from scratch",
+            "A Claude practice-loop thread for SQL that I use a few times a week, and a Google Doc with rough notes for my History research paper"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Very limited hours version",
+          "whenToUse": "Use when you have fewer than 5-6 hours a week total (e.g. balancing a job or heavy commitments) and need the plan to ruthlessly prioritize rather than try to cover everything evenly.",
+          "prompt": "Help me design a weekly personal learning system with very limited time.\n\nMy courses/topics: [LIST]\nHours available per week and roughly when: [LIST]\nWhat I already have: [e.g. \"NotebookLM notebook for Biology, a spaced-review list for Statistics exam in 3 weeks\"]\n\nSince my hours are tight, don't try to give every course equal time. Build me a one-page weekly plan that:\n- Ranks my courses/topics by urgency (nearest deadline, weakest area, or highest weight toward my grade) and allocates more time to the top 1-2.\n- Explicitly tells me which courses are getting minimal or no dedicated time this week, and what the risk of that is.\n- Includes one weekly checkpoint question to catch if I'm falling too far behind on a deprioritized course.\n\nKeep total weekly hours within what I gave you, and be honest if my course load doesn't realistically fit — don't pretend it does."
+        },
+        {
+          "label": "Exam-crunch month version",
+          "whenToUse": "Use during a stretch with multiple exams close together, when you temporarily need to deprioritize new material in favor of review across all courses at once.",
+          "prompt": "Help me redesign my weekly personal learning system for an exam-crunch stretch — I have multiple exams close together and need to temporarily prioritize review over new material.\n\nMy courses/topics and their exam dates: [LIST]\nHours available per week and roughly when: [LIST]\nWhat I already have: [e.g. \"NotebookLM notebook for Biology, a spaced-review list for Statistics exam in 3 weeks\"]\n\nBuild me a one-page weekly plan for this crunch period that:\n- Weights time toward spaced review and practice loops for material already covered, over grounded reading of new material, unless a course has genuinely new content that must be learned before its exam.\n- Sequences courses by exam date, nearest first, without leaving any course at zero for the whole week.\n- Includes one weekly checkpoint question focused on exam-readiness, not general learning.\n\nKeep total weekly hours within what I gave you, and flag if the exam schedule doesn't realistically fit my available hours."
+        },
+        {
+          "label": "Self-directed learner version (no formal courses)",
+          "whenToUse": "Use if you're not enrolled in classes but are teaching yourself skills or subjects independently, so the plan is built around personal goals and self-set milestones instead of a syllabus.",
+          "prompt": "Help me design a weekly personal learning system for self-directed learning — I'm not enrolled in formal courses, I'm teaching myself.\n\nSkills/topics I'm learning and my personal goal for each: [LIST]\nHours available per week and roughly when: [LIST]\nWhat I already have: [e.g. \"NotebookLM notebook for Biology, a spaced-review list for Statistics exam in 3 weeks\"]\n\nBuild me a one-page weekly plan that assigns specific study techniques to specific time blocks:\n- Which sessions are for grounded reading/summarizing vs. active practice loops vs. spaced review, given there's no syllabus or exam forcing a deadline.\n- A rotation so every skill gets both new-material time and review time each week, not just whichever one I'm most excited about.\n- One weekly checkpoint question to assess real progress toward my own stated goal, since there's no grade to measure it for me.\n\nKeep total weekly hours within what I gave you, and flag if my goals don't realistically fit my available hours."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Plan doesn't actually fit my hours",
+          "prompt": "Add up the hours in the plan you gave me against what I actually have available — if it doesn't fit, tell me clearly what to cut rather than quietly compressing everything."
+        },
+        {
+          "label": "Make it calendar-ready",
+          "prompt": "Reformat this as exact time blocks with start and end times for each day, in a format I can copy straight into my calendar app."
+        },
+        {
+          "label": "One course got shortchanged",
+          "prompt": "One of my courses barely got any time in this plan even though it has real material to cover. Rebalance the week so it gets at least one dedicated block, and tell me what you moved to make room."
+        },
+        {
+          "label": "Sharper checkpoint question",
+          "prompt": "That weekly checkpoint question was too generic. Give me one that's specifically tied to the weakest topics you identified for me, so I'm checking the right thing each week."
+        }
+      ],
+      "walkthrough": "Sam is juggling four courses this semester and keeps feeling behind despite studying most nights. She opens Gemini and pastes the lesson's prompt. For the first LIST she writes her four courses: Organic Chemistry, Statistics 200, US History survey, and Spanish 3. For the second LIST, a few lines down, she writes her actual available hours: Monday/Wednesday 7-9pm, Tuesday/Thursday 6-7:30pm, and Saturday 10am-1pm, about 10.5 hours total. For the 'what I already have' line she mentions the NotebookLM notebook she built for Biology in an earlier session and the spaced-review list she has for her Statistics exam, which is three weeks away.\n\nGemini returns a one-page weekly grid. Monday's block is grounded reading in NotebookLM for a new History chapter; Wednesday is a Spanish practice loop; Tuesday and Thursday alternate between Statistics spaced review and Chemistry problem sets; Saturday's three hours split between catching up on whichever course fell behind and a checkpoint review. It flags that Spanish, which needs frequent short contact to stick, is only getting one weekly slot, and asks whether Sam wants to trade one History slot for a short daily Spanish review instead. It ends with one checkpoint question: 'What's one thing I thought I understood last week that I couldn't actually explain today?'\n\nSam realizes Statistics barely appears except on Tuesdays, so she sends the follow-up about the shortchanged course. Gemini rebalances by trimming 15 minutes off the Saturday catch-up block and adding it to Thursday's Statistics slot, explaining the trade-off it made.\n\nSetting this up took about 18 minutes. Sam pins the grid above her desk and now has a plan that actually accounts for the exam three weeks out, not just this week's homework."
+    }
+  }
+}

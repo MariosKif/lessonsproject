@@ -1,0 +1,27 @@
+{
+  "paths": [
+    {
+      "slug": "ai-for-developers",
+      "title": "AI for Software Developers",
+      "tagline": "Choose, combine, and safely direct AI coding agents across your whole workflow",
+      "description": "A ten-lesson, cross-tool path for professional developers who work with more than one AI coding agent. Covers choosing the right tool for a task among Claude Code, Codex, Cursor, and GitHub Copilot; understanding an unfamiliar repository; writing specs agents implement correctly; implementing features, debugging, and refactoring with review checkpoints; generating tests that actually catch bugs; reviewing pull requests with AI assistance; planning a migration before touching code; and setting up repository guardrails (CLAUDE.md, AGENTS.md, .cursor/rules, permissions) for safe team-wide agent workflows.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "software-developer",
+      "sortOrder": 4,
+      "lessons": [
+        "dev-b1-choose-the-right-tool",
+        "dev-b2-understand-a-repo",
+        "dev-b3-write-specs-for-agents",
+        "dev-i1-implement-from-spec",
+        "dev-i2-debug-failing-test",
+        "dev-i3-refactor-safely",
+        "dev-i4-generate-tests-that-catch-bugs",
+        "dev-i5-review-a-pull-request",
+        "dev-a1-plan-a-migration",
+        "dev-a2-repo-guardrails"
+      ]
+    }
+  ]
+}

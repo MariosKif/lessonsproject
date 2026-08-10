@@ -1,0 +1,421 @@
+{
+  "enrichment": {
+    "nlm-b1-first-notebook-sources": {
+      "variations": [
+        {
+          "label": "Quick single-file check",
+          "whenToUse": "Use this when you're just testing a Claude Project with one document and want a fast quality check instead of a full multi-file inventory.",
+          "prompt": "Based only on the one file currently in this project's knowledge, tell me:\n1. What this document actually covers, in 3-4 sentences.\n2. Whether it looks fully readable (real extractable text) or whether large sections seem to be missing or garbled, which can happen with scanned PDFs.\n3. Three specific questions this single file could actually answer.\nDo not use outside knowledge, and say plainly if the file seems incomplete."
+        },
+        {
+          "label": "Bigger initial batch (6-10 files)",
+          "whenToUse": "Use this when you're setting up a Project for a whole project or research effort and loaded many files at once, not just three.",
+          "prompt": "Based only on the files currently in this project's knowledge, give me:\n1. A one-paragraph overview of what this set covers as a whole.\n2. A short summary of what each individual file contributes, grouped into 2-4 natural categories (for example by document type or subtopic).\n3. Any files that seem largely redundant with another file in the set.\n4. Obvious gaps this set of files doesn't cover.\nDo not use outside knowledge. Flag any file that seems to have failed to upload or contains very little usable text."
+        },
+        {
+          "label": "When your files are exports of Google Docs or Slides",
+          "whenToUse": "Use this when your Project is built from files exported out of Google Docs or Slides rather than native PDFs, since formatting can shift or drop during export.",
+          "prompt": "Based only on the files currently in this project's knowledge, give me:\n1. A one-paragraph overview of what these documents cover as a set.\n2. A one-line summary of what each file specifically contributes.\n3. A note on any file where the text looks like it lost formatting, tables, or speaker notes during export — anything that suggests the original content didn't come through cleanly.\n4. Any obvious gaps in coverage.\nDo not use outside knowledge, and flag any file that seems to have uploaded with very little usable text."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "One file barely has any content — check what happened",
+          "prompt": "Look specifically at [FILE NAME]. How much usable text did you actually extract from it, and does it look like a normal document or like a scanned image with little to no selectable text? Be honest if you can't tell."
+        },
+        {
+          "label": "Get help renaming a badly titled file",
+          "prompt": "Suggest a clear, specific title for the file currently named [CURRENT FILENAME], based on what it actually contains, so I can rename it and tell it apart from the others later."
+        },
+        {
+          "label": "Narrow the gap list to what actually matters",
+          "prompt": "Of the gaps you just listed, which 1-2 are the most important for me to fill before I start asking real questions in this Project? Ignore minor or nice-to-have gaps."
+        },
+        {
+          "label": "Sanity-check the overview against what you expected",
+          "prompt": "I expected this file set to cover [WHAT YOU EXPECTED, e.g. both onboarding and benefits topics]. Does the overview you gave me actually reflect that, or does something seem to be missing or off?"
+        }
+      ],
+      "walkthrough": "Renata is a freelance grant writer helping a small animal shelter apply for a state funding grant. She has never used Claude Projects before and has about fifteen minutes before a call with the shelter's director.\n\nShe signs into claude.ai on her Pro plan, clicks 'Projects,' then 'Create project,' and names it 'Riverside Shelter FY26 Grant' so it's obvious later what this Project is for. She clicks 'Add content' and uploads the shelter's strategic plan as a PDF, then adds a Word document containing answers from last year's grant application, then pastes in a block of text copied from the shelter's public annual report page. She writes a short custom instruction: 'Answer only from the files in this project unless I say otherwise.'\n\nShe opens a new chat and pastes the inventory-check prompt from the lesson. The response describes the set as covering the shelter's mission, past grant responses, and public reporting, but flags one issue: the pasted annual-report text looks thin and choppy, likely because she copied it straight from a page that loads content dynamically rather than as plain text. It also notes a gap — none of the three files mention specific intake or adoption numbers for the current year, which the grant application will need.\n\nRenata downloads the annual report as a PDF directly from the shelter's site instead of pasting text from the page, re-uploads it as a file, and reruns the same prompt. This time all three files show up cleanly in the overview with no extraction warnings. The whole process, from opening the browser to a clean, verified Project, takes her about twelve minutes — well within her window before the call."
+    },
+    "nlm-b2-grounded-questions-citations": {
+      "placeholders": [
+        {
+          "name": "YOUR QUESTION",
+          "what": "The specific question you want answered using only what's in this Project's files. It should be concrete and answerable from real documents you uploaded — not a broad request like 'tell me everything,' which produces a vague answer with no real quotes to check.",
+          "examples": [
+            "What is our refund policy for orders placed more than 30 days ago?",
+            "According to the customer interview transcripts, what were the three most common complaints about pricing?",
+            "What deadline does the Statement of Work give for the first project deliverable?"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Question that connects two files",
+          "whenToUse": "Use this when you specifically want to test whether Claude can synthesize an answer that draws from more than one document, not just one.",
+          "prompt": "Answer the following question by connecting information across at least two different files in this project's knowledge: [YOUR QUESTION]\n\nExplicitly name which file each part of the answer came from, with a quote on every claim. If the files only partially answer the question, say what's missing instead of filling the gap with outside knowledge."
+        },
+        {
+          "label": "Fast one-line fact check",
+          "whenToUse": "Use this when you just need one specific number or fact quickly, for example right before a call, and don't need a full explanation.",
+          "prompt": "In one sentence, using only the files in this project's knowledge, answer: [YOUR QUESTION]\n\nInclude the exact quote and file name it's based on. If the files don't clearly answer this, say so instead of guessing."
+        },
+        {
+          "label": "Deliberately testing what your files don't cover",
+          "whenToUse": "Use this to stress-test a Project before relying on it for real work, by asking something you already suspect isn't covered.",
+          "prompt": "Using only the files in this project's knowledge, answer: [YOUR QUESTION]\n\nIf the files don't address this at all, say so plainly and don't attempt to answer from general knowledge, even a partial or likely-sounding answer."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Get the exact wording instead of a paraphrase",
+          "prompt": "For your last claim, quote the exact sentence from the file word for word, instead of paraphrasing it, and name the file it's from."
+        },
+        {
+          "label": "Two quotes seem to disagree — ask why",
+          "prompt": "The quotes you gave for [CLAIM] seem to point to two files that say slightly different things. Quote both exactly and tell me if this is a real conflict or if I'm misreading it."
+        },
+        {
+          "label": "Compress the answer",
+          "prompt": "Give me the same answer in one sentence, keeping the quote and file name, with no extra explanation."
+        },
+        {
+          "label": "See what wasn't used",
+          "prompt": "Which files in this project's knowledge were NOT used in your last answer, and is that because they're irrelevant to this question or because you didn't check them?"
+        }
+      ],
+      "walkthrough": "Marcus coordinates HR for a 40-person company and just built a Claude Project containing the employee handbook (Word), an onboarding doc, and a benefits summary PDF, with custom instructions restricting Claude to project knowledge. His manager asks him, over Slack, what the parental leave policy is for part-time employees, and he wants a fast, accurate, verifiable answer rather than digging through three files himself.\n\nHe opens the Project's chat and pastes the grounded-question prompt, replacing [YOUR QUESTION] with: 'What is our parental leave policy for part-time employees?' Claude answers that part-time employees receive parental leave prorated by their average weekly hours over the prior twelve months, quoting the exact sentence and naming the benefits PDF as the source.\n\nMarcus opens the benefits PDF himself and searches for the quoted sentence — it matches word for word. He then sends a follow-up: 'The quotes for this claim seem to point to two files — quote both exactly and tell me if this is a real conflict or if I'm misreading it,' since the handbook also touched on leave policy. Claude quotes both passages side by side and confirms they're consistent, just phrased differently, with the handbook cross-referencing the benefits PDF.\n\nAs a final check, Marcus asks a question he's fairly sure isn't covered: whether the policy differs for employees in a state outside company headquarters. Claude replies plainly that none of the three files address state-specific variation, rather than guessing.\n\nMarcus copies the verified answer, with its quote and source file, into his Slack reply. The whole exchange, including opening the source PDF and one clarifying follow-up, takes him about six minutes."
+    },
+    "nlm-i1-synthesize-multiple-documents": {
+      "placeholders": [
+        {
+          "name": "TOPIC, e.g. pricing, timeline, and scope",
+          "what": "The specific attribute or attributes you want compared across your files — not 'everything,' but the dimensions that actually matter for your decision. Naming concrete attributes gives Claude something structured to compare instead of producing a loose general summary.",
+          "examples": [
+            "pricing, implementation timeline, and included support hours",
+            "case outcome, damages awarded, and the judge's stated reasoning",
+            "candidate's stated salary expectations, years of relevant experience, and earliest start date"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Two-file comparison",
+          "whenToUse": "Use this simpler version when you're only comparing two documents head-to-head, not four or more.",
+          "prompt": "Compare these two files in this project's knowledge on [TOPIC]. Structure your answer as:\n1. What both files agree on, with a quote from each.\n2. Where they disagree — quote each file's specific claim or figure, with its file name. Do not average or pick a winner.\n3. Anything unique to only one of the two.\nKeep each file's contribution clearly attributed throughout."
+        },
+        {
+          "label": "Weighted recommendation version",
+          "whenToUse": "Use this once you've already seen the raw agreement/disagreement breakdown and now want a recommendation based on criteria you specify, not Claude's own judgment.",
+          "prompt": "Using the files in this project's knowledge, compare them on [TOPIC]. Then, weighing [YOUR PRIORITY 1] most heavily, followed by [YOUR PRIORITY 2], rank the files from best to worst fit and explain the ranking with a quote for every factual claim used in your reasoning. Do not introduce criteria I haven't named."
+        },
+        {
+          "label": "Numeric comparison as a table",
+          "whenToUse": "Use this when the comparison is mostly numbers, like pricing or timelines, and you want a clean table you can screenshot or paste into a doc immediately.",
+          "prompt": "Compare the files in this project's knowledge on [TOPIC]. Present the numeric comparisons as a markdown table with one row per file and one column per metric, with the source file noted for each cell. Below the table, separately list any points of agreement, disagreement, or uniqueness that aren't purely numeric."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Double-check a number that looks off",
+          "prompt": "The figure you gave for [FILE NAME] on [METRIC] looks unusual — open that file's contents again and confirm the exact number and wording, quoting it directly."
+        },
+        {
+          "label": "Turn it into a pasteable table",
+          "prompt": "Reformat that same comparison as a markdown table I can paste directly into a document, with one row per file and one column per point of comparison."
+        },
+        {
+          "label": "Explain why files might differ",
+          "prompt": "For the points where files disagree, suggest possible reasons for the difference — different dates, different methodology, different scope — based only on what's stated in the files, not speculation beyond them."
+        },
+        {
+          "label": "Surface the single biggest risk",
+          "prompt": "Based on everything you just compared, what is the single biggest risk revealed by the disagreements between these files, and which file's quote supports that risk?"
+        }
+      ],
+      "walkthrough": "Dana manages operations at a 25-person marketing agency and is choosing a new CRM. She's collected PDF proposals from three vendors and uploaded all three to one Claude Project, plus a spreadsheet export of the internal requirements list pasted in as text, with custom instructions restricting answers to project knowledge.\n\nShe opens the chat and pastes the synthesis prompt, filling in [TOPIC] with 'pricing, implementation timeline, and included support hours.' Claude returns a structured answer: all three vendors agree on a roughly six-week implementation window, quoted from each proposal. On pricing, the vendors diverge sharply — Vendor A quotes $800/month, Vendor B quotes $1,450/month, and Vendor C quotes $600/month with a $2,000 one-time setup fee — each figure quoted and named rather than averaged. Uniquely, Vendor C offers a dedicated onboarding specialist for the first 90 days, something the other two don't mention at all.\n\nDana notices Vendor B's monthly price seems high compared to the sales call she remembers, so she sends the follow-up asking Claude to reopen Vendor B's proposal and quote the exact figure. It confirms $1,450/month is accurate, taken directly from page 3 of Vendor B's PDF, and that the sales call must have referenced a different tier.\n\nShe then asks for the whole comparison reformatted as a table, which she pastes directly into an email to her CFO, along with one line: 'Vendor C's dedicated onboarding specialist is a real differentiator none of the others offer, per their proposal.' Building the Project, running the comparison, and verifying the one questionable figure takes Dana about eighteen minutes total — far faster than the two hours she budgeted for reading all three proposals herself."
+    },
+    "nlm-i2-study-system-course-materials": {
+      "placeholders": [
+        {
+          "name": "PASTE THE QUESTION AND YOUR WRONG ANSWER",
+          "what": "The exact practice question Gemini gave you, plus the answer you actually gave that got marked wrong. Paste it word for word rather than summarizing from memory, since Gemini needs the precise wording to diagnose exactly where your understanding went off.",
+          "examples": [
+            "Q: Which organelle is primarily responsible for photosynthesis in plant cells? My answer: mitochondria (marked wrong)",
+            "Q: Per the reading, what is the statute of limitations for breach of a written contract in this jurisdiction? My answer: 4 years (marked wrong)",
+            "Flashcard: Define opportunity cost. My answer: 'the cost of buying something' (marked incomplete)"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Whole-topic re-teach",
+          "whenToUse": "Use this when several related practice questions went wrong, not just one, and you suspect a whole concept is shaky rather than one fact.",
+          "prompt": "I got several related questions wrong, all around this topic: [NAME THE TOPIC, e.g. cellular respiration vs. photosynthesis]. Here are the specific ones: [PASTE 2-3 QUESTIONS AND YOUR WRONG ANSWERS]\n\nUsing only the course materials I uploaded, explain the underlying concept I'm clearly missing, in plain language with a pointer to where it's covered, then give me three new practice questions on it that are different from the ones I got wrong."
+        },
+        {
+          "label": "Exam-week rapid triage",
+          "whenToUse": "Use this close to an exam when you have a pile of wrong answers to work through quickly and want them sorted by importance, not explained one at a time.",
+          "prompt": "Here are several practice questions I got wrong recently: [PASTE MULTIPLE QUESTIONS AND WRONG ANSWERS]\n\nUsing only the course materials I uploaded, group them by underlying concept, tell me which concept is most likely to reappear on an exam based on how much the materials emphasize it, and give me a one-paragraph explanation for just that top-priority concept first."
+        },
+        {
+          "label": "Connect the missed concept to the bigger picture",
+          "whenToUse": "Use this after generating the concept outline, to see how the concept you got wrong relates to others you already understand, which helps it stick.",
+          "prompt": "I got this wrong: [PASTE THE QUESTION AND YOUR WRONG ANSWER]\n\nUsing only the course materials I uploaded, explain the correct answer with a pointer to where it's covered, then explain how this concept connects to [A RELATED CONCEPT FROM YOUR OUTLINE] so I understand where it fits in the bigger picture, not just in isolation."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Ask for a memory trick",
+          "prompt": "Give me a short mnemonic or memory trick, based on the correct explanation you just gave, to help me remember this specific distinction."
+        },
+        {
+          "label": "Get more practice on just this",
+          "prompt": "Give me three more practice questions that test only this exact concept, each phrased differently from the others and from the original question."
+        },
+        {
+          "label": "Ask for a simpler explanation",
+          "prompt": "Explain that same answer again, but as if you were teaching someone with zero background in this subject — avoid jargon or define it immediately if you have to use it."
+        },
+        {
+          "label": "Find where the slides covered it",
+          "prompt": "Point specifically to where in the lecture slides, not just the reading, this concept was mentioned or shown."
+        }
+      ],
+      "walkthrough": "Priya is a first-year nursing student studying for a unit exam on cell biology. She started one Gemini conversation for just this unit, uploaded two chapter PDFs and a slide deck her professor posted, and asked Gemini to generate a study guide, flashcard-style Q&A pairs, and a short concept outline earlier in the week.\n\nRunning through the practice questions the night before her exam, she misses one: 'Which organelle is primarily responsible for photosynthesis in plant cells?' She answered mitochondria, and it was marked wrong. Instead of just rereading the flashcard on organelles, she pastes the remediation prompt into the same conversation, filling in the placeholder with the exact question and her wrong answer.\n\nGemini responds that the correct answer is the chloroplast, not the mitochondria, explains that mitochondria handle cellular respiration (energy release) while chloroplasts handle photosynthesis (energy capture from light), and points to chapter 4, page 12 of the uploaded reading for the distinction. It also gives her a new question: 'If a plant cell's chloroplasts were damaged, which specific process would be directly impaired first?' — a question she can't answer just by memorizing the original flashcard's wording.\n\nShe answers correctly this time, then sends a quick follow-up asking for a memory trick. Gemini suggests associating 'chloro' with 'chlorophyll,' the green pigment involved in photosynthesis, to separate it from mitochondria.\n\nThe whole exchange — pasting the wrong answer, reading the explanation, and answering the new question — takes Priya about four minutes, and she moves on to her next missed question with a clearer, source-checked understanding instead of a guess she might repeat on the actual exam."
+    },
+    "nlm-i3-briefings-summaries-for-work": {
+      "placeholders": [
+        {
+          "name": "AUDIENCE, e.g. our leadership team",
+          "what": "Who will actually read this briefing and what they already know coming in. Naming a real, specific group — not just 'people' — changes how much background Claude includes and what it assumes you can skip.",
+          "examples": [
+            "our leadership team, who haven't seen any of the underlying documents",
+            "the client's procurement committee, who mainly care about cost and timeline, not technical detail",
+            "my direct manager, who just needs a clear go or no-go recommendation"
+          ]
+        },
+        {
+          "name": "TOPIC OR DECISION",
+          "what": "The specific decision, update, or question this briefing exists to support. Vague topics like 'the project' produce a vague briefing; naming the actual decision at stake keeps the output focused on what the reader needs to act on.",
+          "examples": [
+            "whether to approve the Q3 marketing budget increase",
+            "the vendor selection decision for our new payroll system",
+            "the proposed timeline for relocating the downtown office"
+          ]
+        },
+        {
+          "name": "LENGTH",
+          "what": "A concrete length cap, stated in a way that's easy to check against, so the output doesn't sprawl into a full re-summary of every file.",
+          "examples": [
+            "one page",
+            "150 words",
+            "a 2-minute read"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Live talking-points version",
+          "whenToUse": "Use this when you're presenting the update out loud in a meeting rather than sending a written document.",
+          "prompt": "Based only on the files in this project's knowledge, give me 5-6 short talking points for presenting [TOPIC OR DECISION] out loud to [AUDIENCE]. Each point should be one sentence I could say naturally, with the supporting quote and file name noted separately below it so I can reference it if asked. End with the one question I should be ready to be asked."
+        },
+        {
+          "label": "Executive one-liner",
+          "whenToUse": "Use this when the reader genuinely only has time for the headline and the number, not the full context.",
+          "prompt": "Based only on the files in this project's knowledge, give me the single most important sentence [AUDIENCE] needs to know about [TOPIC OR DECISION], including the key number if there is one, plus its quote and file name. No preamble, no extra context."
+        },
+        {
+          "label": "Briefing with multiple stakeholder sections",
+          "whenToUse": "Use this when different parts of the same audience need different information, for example finance versus operations.",
+          "prompt": "Write a briefing about [TOPIC OR DECISION], based only on the files in this project's knowledge, with a separate short section for each of these stakeholder groups: [LIST 2-3 GROUPS, e.g. Finance, Operations, Legal]. Each section should cover only what that group specifically needs to know or decide, with quotes and file names. Keep the whole document under [LENGTH]. Do not add outside context or unsupported recommendations."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Cut it in half",
+          "prompt": "Cut this briefing to half its current length without dropping the recommendation, the key facts, or their quotes."
+        },
+        {
+          "label": "Add a risks section",
+          "prompt": "Add a short 'what could go wrong' section based only on risks mentioned in the files, each with a quote. If the files don't mention any specific risks, say so instead of inventing plausible ones."
+        },
+        {
+          "label": "Re-verify every number",
+          "prompt": "Go back through every number in this briefing one more time and confirm each one against its source file, quoting the exact text. Flag anything that doesn't match exactly."
+        },
+        {
+          "label": "Write the email subject line",
+          "prompt": "Write one clear, specific email subject line for sending this briefing, based on the actual decision it's about."
+        }
+      ],
+      "walkthrough": "Tom is a project manager at a mid-sized logistics company leading a system migration. He has three meeting transcripts and a vendor readiness report uploaded to a Claude Project, with custom instructions restricting Claude to project knowledge, and leadership wants a briefing before Thursday's budget approval meeting.\n\nHe asks Claude for a first-draft briefing, skims it, and notices it reads like a general recap rather than something built for a decision. He pastes the copyable prompt, filling in [AUDIENCE] with 'our leadership team, who haven't seen any of the underlying documents,' [TOPIC OR DECISION] with 'whether to approve the budget for the Q3 system migration,' and [LENGTH] with 'one page.'\n\nClaude returns a briefing with a three-sentence situation summary, four quoted facts covering cost ($180,000, quoted from the vendor report), timeline (14 weeks, quoted from a transcript), a flagged risk about data migration downtime, and vendor readiness — each with the source file named. It states plainly: 'decision requested: approve budget by Friday.' It closes with one open question the files don't resolve — whether the vendor's support plan covers weekend incidents.\n\nTom reads it and thinks it's slightly long for a one-pager once formatted, so he sends the follow-up asking to cut it in half without losing the recommendation or quotes. The revised version tightens the situation summary to two sentences and trims the risk section to one line, keeping every quote intact.\n\nHe asks Claude to render the final version as an Artifact, exports it, adds the subject line Claude suggested when he asked for one, and sends it to leadership two days ahead of the meeting. Building the Project, generating the first draft, and refining it into a final one-pager takes him about twenty minutes, versus the ninety he'd normally spend writing this from scratch."
+    },
+    "nlm-a1-client-project-knowledge-base": {
+      "placeholders": [
+        {
+          "name": "CLIENT OR PROJECT NAME",
+          "what": "The exact name you use consistently to identify this specific engagement, matching what you'd call it in your own notes or invoices. Using the real name, not a placeholder, keeps every prep output correctly scoped to one client.",
+          "examples": [
+            "Meridian Bank Website Redesign",
+            "Chen Family Trust Estate Planning",
+            "Northgate Logistics Q3 Audit"
+          ]
+        },
+        {
+          "name": "UPCOMING MEETING OR CALL",
+          "what": "The specific meeting you're preparing for, named clearly enough that the prep focuses on what that meeting actually needs, rather than a generic status check.",
+          "examples": [
+            "Thursday's status call with the client's marketing director",
+            "the kickoff call for phase 2 of the engagement",
+            "next week's quarterly business review"
+          ]
+        },
+        {
+          "name": "SPECIFIC DOCUMENT, e.g. the SOW",
+          "what": "The one document whose version history you most need tracked, so Claude checks specifically for what changed in that document rather than scanning everything loosely.",
+          "examples": [
+            "the Statement of Work",
+            "the engagement letter",
+            "the master project timeline document"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Weekly internal recap, not meeting-specific",
+          "whenToUse": "Use this for your own standing weekly check-in on the account, when there's no specific external meeting driving it.",
+          "prompt": "This is a client knowledge base for [CLIENT OR PROJECT NAME]. Using only the files currently in this project's knowledge, give me a weekly internal recap:\n1. What moved forward this week, with quotes.\n2. What's stalled or overdue, with quotes.\n3. Anything that changed since the last version of [SPECIFIC DOCUMENT, e.g. the SOW].\nFlag anything that looks contradicted by a more recent file rather than picking one version silently."
+        },
+        {
+          "label": "Account handoff to a colleague",
+          "whenToUse": "Use this when another team member is taking over the account and needs to get up to speed from the Project alone, without a long verbal handoff.",
+          "prompt": "This is a client knowledge base for [CLIENT OR PROJECT NAME]. A colleague is taking over this account. Using only the files currently in this project's knowledge, prepare a handoff brief covering:\n1. The engagement's current status and scope, with quotes.\n2. Every open commitment we've made to the client that hasn't been delivered yet.\n3. Any known points of client sensitivity or friction mentioned in call transcripts or notes.\n4. What changed most recently in [SPECIFIC DOCUMENT, e.g. the SOW].\nFlag anything contradicted by a more recent file instead of silently picking one version."
+        },
+        {
+          "label": "Post-meeting update, not prep",
+          "whenToUse": "Use this right after a real meeting to turn your notes into an update for the knowledge base, instead of using the Project to prepare beforehand.",
+          "prompt": "I just had [MEETING NAME] with the client for [CLIENT OR PROJECT NAME]. Here are my raw notes: [PASTE YOUR NOTES]\n\nBased on these notes plus what's already in this project's knowledge, tell me what specifically changed or is new compared to the existing files, and what I should add or update in the Project to keep it current."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Just the last two weeks",
+          "prompt": "Narrow that down to only what changed or is new in the last two weeks, dropping anything that was already true before that."
+        },
+        {
+          "label": "Draft the recap email",
+          "prompt": "Based on this prep, draft a short recap email I could send the client after the meeting, using only facts you just quoted, in a professional but warm tone."
+        },
+        {
+          "label": "Check for scope creep",
+          "prompt": "Compare what we've actually been doing, based on the meeting transcripts, against the original scope in [SPECIFIC DOCUMENT, e.g. the SOW]. Flag anything that looks like it's drifted outside the original scope, with quotes for both sides."
+        },
+        {
+          "label": "Verify the flagged contradiction",
+          "prompt": "You flagged a contradiction between two versions of [SPECIFIC DOCUMENT]. Quote both versions' exact wording side by side so I can confirm this myself before I raise it with the client."
+        }
+      ],
+      "walkthrough": "Alicia is an independent consultant running a redesign engagement for a client she calls 'Meridian Bank Website Redesign' in all her own notes. She built a Claude Project for this client months ago and has kept adding files as the engagement progressed: two versions of the Statement of Work, four call transcripts, and a status file she updates by hand after each meeting, with custom instructions telling Claude to treat the status file as the current source of truth.\n\nBefore Thursday's status call with the client's marketing director, Alicia opens the Project and pastes the meeting-prep prompt, filling in [CLIENT OR PROJECT NAME] with 'Meridian Bank Website Redesign,' [UPCOMING MEETING OR CALL] with 'Thursday's status call with the client's marketing director,' and [SPECIFIC DOCUMENT] with 'the Statement of Work.'\n\nClaude returns four open items with quotes, including a note that the homepage wireframes are two days behind schedule. Under changes, it flags something important: SOW v2 pushed the final delivery date back two weeks, but the most recent call transcript from last week still has Alicia's team referencing the original date — a direct contradiction between what's contractually current and what her team believes is current.\n\nAlicia isn't fully sure the flag is right, so she sends the follow-up asking Claude to quote both the SOW v2 date and the transcript's reference side by side. The quotes confirm it's a real discrepancy, not a misread. She flags it internally before the call so her team stops working against the wrong deadline.\n\nShe runs the call fully prepared, citing the correct current date without having reread either document herself. The whole prep, including verifying the contradiction, takes about ten minutes — a task that used to mean rereading four documents the night before every client call."
+    },
+    "nlm-a2-compare-reconcile-conflicting-sources": {
+      "placeholders": [
+        {
+          "name": "TOPIC OR SECTION",
+          "what": "The exact clause, figure, or subject area where you know or suspect your files disagree. Naming it specifically focuses the search; leaving it broad produces a scattershot list that mixes real contradictions with irrelevant differences.",
+          "examples": [
+            "the liability cap and the termination notice period",
+            "the projected Q4 revenue figures",
+            "the witness accounts of what time the incident occurred"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Single clause deep-dive",
+          "whenToUse": "Use this when you already know exactly which contract clause or section is in dispute and need a focused, line-by-line comparison of just that section.",
+          "prompt": "Compare only the [SPECIFIC CLAUSE NAME] section across these files. Do not resolve or average any disagreement. Quote each file's exact wording for this clause, with its file name, and state plainly whether the difference is a real contradiction or just different phrasing of the same terms. Do not tell me which one is correct."
+        },
+        {
+          "label": "Broad first-pass scan",
+          "whenToUse": "Use this when you don't yet know where the conflicts are and need Claude to surface candidates before you narrow in on any one topic.",
+          "prompt": "Scan all the files in this project's knowledge and identify every topic or section where they appear to disagree with each other, even loosely. For each one, name the general topic, quote a representative conflicting phrase from at least two files with file names, and rate how significant the disagreement looks on a scale of minor wording difference to major factual contradiction. Do not resolve any of them."
+        },
+        {
+          "label": "Three or more files (forecasts or reports)",
+          "whenToUse": "Use this when comparing more than two files, such as three analyst forecasts, where disagreements might not be simple two-way splits.",
+          "prompt": "These files may disagree with each other on [TOPIC OR SECTION]. Do not resolve or average any disagreement. For every point of disagreement:\n1. Quote each file's exact claim or figure, clearly labeled by file name.\n2. Note which files agree with each other, if any, forming a cluster, versus which stand alone.\n3. State whether this is a factual contradiction, a numeric discrepancy, or a difference in interpretation or scope.\nDo not tell me which is correct — list conflicts ranked by how consequential they look."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Rank by financial or legal exposure",
+          "prompt": "Re-rank these conflicts specifically by which one creates the most financial or legal exposure if we get it wrong, not just by how large the discrepancy looks on paper. Explain your reasoning for the top one."
+        },
+        {
+          "label": "Get exact page or section numbers",
+          "prompt": "For each conflict you listed, give me the exact page or section number in each file, not just the file name, so I can pull them up quickly."
+        },
+        {
+          "label": "Push back on a flagged 'conflict'",
+          "prompt": "Look again at the conflict you flagged between [FILE A] and [FILE B] on [POINT]. This might just be a difference in scope, not a real contradiction — re-evaluate it and tell me if both files could be correct but talking about different things."
+        },
+        {
+          "label": "Draft a note explaining it to a manager",
+          "prompt": "Write a short, plain-language paragraph explaining this specific conflict to my manager, who hasn't read either file, including both figures and their quotes, without recommending which one to trust."
+        }
+      ],
+      "walkthrough": "Diego reviews vendor contracts for a construction consultancy and has two competing drafts for a subcontractor agreement uploaded to one Claude Project: an older draft from the subcontractor's lawyer and a revised version his own team marked up.\n\nHe starts with a broad question just to see what Claude notices unprompted, and the answer reads smoothly without flagging any real disagreement — a sign it's blending the two drafts rather than distinguishing them. He then pastes the reconciliation prompt, filling in [TOPIC OR SECTION] with 'the liability cap and the termination notice period.'\n\nThis time the response is different: it quotes draft A's liability cap as capped at $50,000, citing section 8.2, and draft B's cap at $250,000, citing section 8.2 of the revised version — a direct numeric contradiction. It also finds draft A requires 30 days' termination notice versus draft B's 60 days, categorized as a numeric discrepancy rather than an interpretation difference, and ranks the liability cap conflict as more consequential given the dollar gap.\n\nDiego isn't ready to trust the liability figures without checking, so he opens both files himself and confirms Claude read both clauses correctly. He then sends the follow-up asking it to re-rank by legal exposure specifically, which confirms the liability cap outranks the notice period difference for risk.\n\nHe drafts a short internal note to his managing partner summarizing both figures with quotes, without recommending which one to accept — that decision belongs to the partner, not the AI. The full review, including verifying both quotes personally, takes Diego about twenty-five minutes, compared to the hour he'd normally spend redlining two full drafts side by side."
+    },
+    "nlm-a3-advanced-team-knowledge-workflows": {
+      "placeholders": [
+        {
+          "name": "TOPIC, e.g. new-hire onboarding",
+          "what": "The specific knowledge domain this shared team workflow exists to cover. A narrow, well-defined topic keeps the Gem — and the FAQ it generates — genuinely useful, instead of becoming a dumping ground for anything vaguely related to the team.",
+          "examples": [
+            "new-hire onboarding",
+            "weekly product-team meeting notes",
+            "customer support macros and troubleshooting steps"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Training-retention quiz instead of FAQ",
+          "whenToUse": "Use this when the goal is compliance or certification tracking, so the team needs to demonstrate they've actually absorbed the material, not just have it available to reference.",
+          "prompt": "We're building a shared [TOPIC] knowledge workflow for training purposes. Using Deep Research with our Workspace sources enabled, generate a 10-question quiz covering the concepts a team member absolutely must know. For each question, include the correct answer with the source document named, kept in a separate answer key section. Flag any important compliance-related point our current sources don't clearly cover, as a gap for us to fill."
+        },
+        {
+          "label": "Leadership readout instead of FAQ",
+          "whenToUse": "Use this when the audience is leadership needing a concise readout rather than team members looking things up themselves.",
+          "prompt": "We're building a shared [TOPIC] knowledge workflow. Using Deep Research with our Workspace sources enabled, prepare a short leadership readout: the current state in 3-4 bullet points, the single biggest open risk or gap, and one recommended next step, each with the source document named. Keep it under half a page. Do not add recommendations that aren't grounded in these sources."
+        },
+        {
+          "label": "Meeting-notes recap corpus",
+          "whenToUse": "Use this when the shared workflow is a running archive of recurring meeting notes rather than a stable reference document like a handbook.",
+          "prompt": "We're building a shared [TOPIC] knowledge workflow from our recurring meeting notes in Drive and Gmail. Using Deep Research with our Workspace sources enabled, generate a weekly recap: decisions made, action items assigned with owners if named, and any topic that's come up in three or more meetings without being resolved. Name the source document for every decision and action item."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Find the weakest FAQ answers",
+          "prompt": "Of the 10 FAQ answers you just gave, which ones are you least confident about because the source material was thin or ambiguous? Be specific about which ones and why."
+        },
+        {
+          "label": "Format for Slack",
+          "prompt": "Reformat this FAQ for posting directly in a Slack channel, using short paragraphs and bold question headers instead of a numbered document format."
+        },
+        {
+          "label": "Check for contradicting sources",
+          "prompt": "Do any of the sources you used contradict each other on the same question? If so, name which documents and quote the conflicting parts, without deciding which is correct."
+        },
+        {
+          "label": "Draft the rollout announcement",
+          "prompt": "Draft a short message I can post to the team introducing this Gem and its FAQ, explaining what it's for and how to use it, in a friendly, low-hype tone."
+        }
+      ],
+      "walkthrough": "Sofia is the operations lead at a 12-person startup and keeps getting the same onboarding questions from new hires over Slack. She decides to pilot a shared Gemini workflow instead of answering everything individually every time someone joins.\n\nShe picks one real problem to solve — onboarding — rather than trying to cover the whole company at once, and creates a Gem named 'New Hire Onboarding,' which she owns and is responsible for keeping current, pointed at a Drive folder containing the employee handbook, a benefits PDF, and a short doc describing team norms and communication tools.\n\nShe pastes the standing FAQ prompt into a Deep Research request with Workspace sources enabled, filling in [TOPIC] with 'new-hire onboarding.' Gemini returns ten questions a new hire would realistically ask — 'How much PTO do I get in year one?' sourced to the benefits PDF, 'What tools do I need access to on day one?' sourced to the team-norms doc — each answered in 2-3 sentences. At the end, it flags a real gap: none of the sources specify who approves expense reports over $500.\n\nSofia sends a follow-up asking which of the ten answers she should trust least, and Gemini flags the PTO accrual answer as based on a slightly ambiguous sentence in the handbook, prompting her to double-check it manually before publishing.\n\nShe reformats the FAQ for Slack with the follow-up prompt, fixes the ambiguous PTO wording herself, and shares the Gem with her co-founder for feedback, who confirms it would have answered three questions he personally fielded last month. Building the Gem, generating the FAQ, and getting real feedback takes Sofia about forty minutes spread across one afternoon — a one-time cost against what had been a recurring weekly interruption."
+    }
+  }
+}

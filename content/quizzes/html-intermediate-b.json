@@ -1,0 +1,354 @@
+{
+  "quizzes": {
+    "html-i11-select-textarea": [
+      {
+        "q": "Your backend receives department=Billing question instead of the short code billing. What is wrong with the markup?",
+        "options": [
+          "The select element is missing its name attribute",
+          "The chosen option has no value attribute, so the browser submitted its visible text",
+          "The option is missing the selected attribute",
+          "The optgroup label overrode the option's value"
+        ],
+        "answer": 1,
+        "why": "Without a value attribute, an option falls back to submitting its display text. A value=\"billing\" keeps the submitted token stable regardless of wording changes."
+      },
+      {
+        "q": "You want a comment box that starts pre-filled with 'Type here...'. Which markup is correct?",
+        "options": [
+          "<textarea name=\"c\" value=\"Type here...\"></textarea>",
+          "<textarea name=\"c\" placeholder=\"Type here...\" value=\"Type here...\">",
+          "<textarea name=\"c\">Type here...</textarea>",
+          "<textarea name=\"c\" default=\"Type here...\"></textarea>"
+        ],
+        "answer": 2,
+        "why": "A textarea has no value attribute — its default text is its content, written between the opening and closing tags."
+      },
+      {
+        "q": "A 'Show preview' helper button inside your form keeps submitting the form when clicked. Why?",
+        "options": [
+          "Buttons inside forms always submit no matter what",
+          "The button is missing a name attribute",
+          "It was written as <button> with no type, which defaults to submit inside a form",
+          "It should have been an optgroup"
+        ],
+        "answer": 2,
+        "why": "Inside a form, a button without an explicit type behaves as type=\"submit\". Helper buttons need type=\"button\"."
+      }
+    ],
+    "html-i12-input-attributes": [
+      {
+        "q": "An order form shows the order number in a field the user must not edit, but the server still needs to receive it. Which attribute do you use?",
+        "options": [
+          "disabled — it greys the field out",
+          "readonly — uneditable but still submitted",
+          "hidden — invisible and submitted",
+          "maxlength=\"0\" — nothing more can be typed"
+        ],
+        "answer": 1,
+        "why": "readonly blocks editing while keeping the field in the submission; disabled would exclude it from the submitted data entirely."
+      },
+      {
+        "q": "Users can still type 50 characters into a username field you wrote as <input size=\"12\">. What happened?",
+        "options": [
+          "The browser ignored the attribute because it needs units",
+          "size only sets the visible width — maxlength is what caps input length",
+          "size must be combined with pattern to work",
+          "The field also needed spellcheck=\"false\""
+        ],
+        "answer": 1,
+        "why": "size is purely visual sizing; only maxlength actually prevents typing past the limit."
+      },
+      {
+        "q": "A verification-code field should raise a digits-only keypad on phones but must keep codes with leading zeros like 042518. What is the best markup?",
+        "options": [
+          "<input type=\"number\" name=\"otp\">",
+          "<input type=\"text\" name=\"otp\" inputmode=\"numeric\" autocomplete=\"one-time-code\">",
+          "<input type=\"tel\" name=\"otp\" autocomplete=\"off\" spellcheck=\"true\">",
+          "<input type=\"range\" name=\"otp\" min=\"0\" max=\"999999\">"
+        ],
+        "answer": 1,
+        "why": "type=\"text\" preserves leading zeros, inputmode=\"numeric\" requests the digit keypad, and autocomplete=\"one-time-code\" lets mobile browsers suggest the incoming SMS code."
+      }
+    ],
+    "html-i13-validation": [
+      {
+        "q": "Users see only 'Please match the requested format' on your invite-code field and give up. What is the standard fix?",
+        "options": [
+          "Replace pattern with minlength",
+          "Add a title attribute describing the expected format — it appears in the error bubble",
+          "Wrap the pattern in slashes so the browser can read it",
+          "Add novalidate to the form"
+        ],
+        "answer": 1,
+        "why": "The title attribute's text is appended to the browser's pattern error, turning a dead end into an instruction."
+      },
+      {
+        "q": "Your editors need to save half-finished articles, but the Publish flow must keep validating. Where does the attribute go?",
+        "options": [
+          "novalidate on the form element",
+          "formnovalidate on the Save draft submit button",
+          "required=\"false\" on the title input",
+          "disabled on the Publish button until the form is valid"
+        ],
+        "answer": 1,
+        "why": "formnovalidate skips validation only for submissions triggered by that specific button; novalidate on the form would also disable checks for Publish."
+      },
+      {
+        "q": "A colleague argues that with required, pattern and min/max in place, the server no longer needs validation. What is the correct response?",
+        "options": [
+          "Correct — the browser guarantees the constraints before sending",
+          "Correct, as long as the form also uses method=\"post\"",
+          "Wrong — client checks are trivially bypassed with DevTools or curl, so the server must re-validate everything",
+          "Wrong — but only pattern needs re-checking server-side"
+        ],
+        "answer": 2,
+        "why": "Client-side validation runs in software the sender controls and can be stripped or bypassed entirely; it is a UX layer, never a security boundary."
+      }
+    ],
+    "html-i14-datalist-output-meter": [
+      {
+        "q": "A city field should suggest common destinations but still accept any city a user types. Which element fits?",
+        "options": [
+          "A select with all known cities",
+          "A datalist linked to the input via its list attribute",
+          "A select with multiple enabled",
+          "An output listing suggestions"
+        ],
+        "answer": 1,
+        "why": "A datalist offers suggestions without restricting input — unlike select, users can type values that are not listed."
+      },
+      {
+        "q": "You need to show that a file upload is 45% complete. Which markup is semantically correct?",
+        "options": [
+          "<meter value=\"45\" max=\"100\"></meter>",
+          "<progress value=\"45\" max=\"100\"></progress>",
+          "<progress value=\"45\"></progress>",
+          "<output value=\"45\"></output>"
+        ],
+        "answer": 1,
+        "why": "Task completion is what progress means; and max=\"100\" is needed because without it the scale runs 0 to 1 and 45 would render as full. Meter is for measurements, not tasks."
+      },
+      {
+        "q": "A disk-usage gauge should turn red as the disk fills. Which attribute set tells the browser that low values are the good zone?",
+        "options": [
+          "value, min and max only",
+          "low, high and optimum, with optimum set near min",
+          "step set to a small number",
+          "kind=\"warning\" on the meter"
+        ],
+        "answer": 1,
+        "why": "low and high divide the meter's range into zones, and a low optimum declares emptiness desirable — so the browser recolours the bar as the value climbs into the bad zone."
+      }
+    ],
+    "html-i15-video": [
+      {
+        "q": "You list a WebM and an MP4 source, but the browser ignores both and plays the file named in the video tag's src attribute. Why?",
+        "options": [
+          "The sources were missing type attributes",
+          "When the video element has an src attribute, all source children are ignored",
+          "WebM must always be listed last",
+          "source elements need closing tags to register"
+        ],
+        "answer": 1,
+        "why": "src on the video element and nested source children are mutually exclusive mechanisms — the attribute wins and the alternatives are never considered."
+      },
+      {
+        "q": "Your muted hero video refuses to autoplay on phones. The markup is <video autoplay loop src=\"bg.mp4\">. What is missing?",
+        "options": [
+          "The controls attribute",
+          "The muted attribute — browsers block audible autoplay",
+          "preload=\"auto\"",
+          "A poster image"
+        ],
+        "answer": 1,
+        "why": "Autoplay policies require the muted attribute in the markup; without it most browsers simply never start playback, regardless of the file's actual audio."
+      },
+      {
+        "q": "What does the type attribute on a source element actually buy you?",
+        "options": [
+          "It forces the browser to transcode into that format",
+          "The browser can reject unsupported formats instantly without downloading any of the file",
+          "It is required or the video will not play",
+          "It enables the poster frame"
+        ],
+        "answer": 1,
+        "why": "With a declared MIME type the browser decides support from the markup alone; without it, it must fetch part of each candidate file to sniff the format."
+      }
+    ],
+    "html-i16-audio-track": [
+      {
+        "q": "Your MP3 source is written as <source src=\"ep.mp3\" type=\"audio/mp3\"> and some browsers skip it. What is the correct type?",
+        "options": [
+          "audio/mpeg — the registered MIME type for MP3",
+          "audio/mp3gain",
+          "music/mp3",
+          "application/mp3"
+        ],
+        "answer": 0,
+        "why": "MP3's registered MIME type is audio/mpeg; audio/mp3 is a common guess that browsers are not obliged to accept."
+      },
+      {
+        "q": "A viewer who is deaf needs the dialogue plus cues like [door slams]. Which track kind serves them?",
+        "options": [
+          "subtitles — translated dialogue",
+          "captions — speech plus meaningful non-speech sounds",
+          "descriptions — narration of visuals",
+          "metadata — cues for scripts"
+        ],
+        "answer": 1,
+        "why": "Captions target people who cannot hear the audio, so they include non-speech information; subtitles assume the viewer hears sound but needs the language."
+      },
+      {
+        "q": "A track element points at a correct .vtt file but no captions ever appear. The file starts directly with the first cue timing. What is wrong?",
+        "options": [
+          "Cue timings must use commas, not periods",
+          "The file is missing the mandatory WEBVTT header line, so the whole track fails to parse",
+          "The track needs a type=\"text/vtt\" attribute",
+          "Captions only work on video, never with valid markup"
+        ],
+        "answer": 1,
+        "why": "A WebVTT file must begin with the literal line WEBVTT; without it, browsers silently discard the entire track."
+      }
+    ],
+    "html-i17-iframes-embeds": [
+      {
+        "q": "An accessibility audit flags every iframe on your site. The frames have src, width and height. What is most likely missing?",
+        "options": [
+          "The sandbox attribute",
+          "The title attribute — without it screen readers announce only 'frame'",
+          "loading=\"lazy\"",
+          "The name attribute"
+        ],
+        "answer": 1,
+        "why": "Screen-reader users need the title's description to know what a frame contains; an untitled frame is announced with no context at all."
+      },
+      {
+        "q": "You embed an untrusted third-party widget that only needs to run its own JavaScript to draw a chart. What is the right sandbox?",
+        "options": [
+          "No sandbox — the iframe is isolated anyway",
+          "sandbox=\"allow-scripts\" — grant only what it needs",
+          "sandbox=\"allow-scripts allow-top-navigation allow-popups\"",
+          "sandbox=\"\" with allowfullscreen"
+        ],
+        "answer": 1,
+        "why": "Sandbox works by granting the minimum tokens the embed needs; allow-scripts alone lets it draw while denying popups, form submission and navigation of your tab."
+      },
+      {
+        "q": "You iframe a bank's login page for convenience and it renders blank. What is the most likely explanation?",
+        "options": [
+          "Login pages need allow=\"camera\" to render",
+          "The bank's server sends X-Frame-Options or CSP frame-ancestors headers that forbid framing, to prevent clickjacking",
+          "iframes cannot load HTTPS content",
+          "The iframe is missing a name attribute"
+        ],
+        "answer": 1,
+        "why": "Sites protect sensitive pages with framing headers so hostile pages cannot overlay and hijack clicks on them — the blank frame is the defence working."
+      }
+    ],
+    "html-i18-computercode": [
+      {
+        "q": "Documentation must show the literal markup <p>Hello</p> to readers, but it keeps vanishing from the rendered page. What fixes it?",
+        "options": [
+          "Wrap it in samp instead of code",
+          "Write the angle brackets as &lt; and &gt; so they display instead of parsing",
+          "Add spellcheck=\"false\" to the pre element",
+          "Use two pre elements nested"
+        ],
+        "answer": 1,
+        "why": "Raw < and > are parsed as real tags; the &lt; and &gt; entities render the symbols as visible text."
+      },
+      {
+        "q": "A terminal transcript mixes commands the reader types and responses the machine prints. Which pairing is semantically correct?",
+        "options": [
+          "code for both, styled differently",
+          "kbd for the typed commands, samp for the printed output",
+          "samp for the typed commands, kbd for the printed output",
+          "var for commands, code for output"
+        ],
+        "answer": 1,
+        "why": "kbd marks human-to-machine input and samp marks machine-to-human output — the direction of flow decides the element."
+      },
+      {
+        "q": "In the usage line ssh user@host, readers must replace user and host with their own values. How do you mark those two words?",
+        "options": [
+          "<b>user</b> — bold shows importance",
+          "<var>user</var> — var marks placeholders the reader substitutes",
+          "<samp>user</samp> — it is sample text",
+          "<kbd>user</kbd> — the user types it"
+        ],
+        "answer": 1,
+        "why": "var is the element for variables and placeholders; it tells readers exactly which parts of an example are theirs to replace."
+      }
+    ],
+    "html-i19-responsive-basics": [
+      {
+        "q": "Your carefully written min-width media queries never trigger on phones — the site renders as a tiny desktop miniature. What is missing?",
+        "options": [
+          "A max-width query for phones",
+          "The viewport meta tag with width=device-width — without it the browser simulates a ~980px canvas",
+          "px units instead of rem in the queries",
+          "loading=\"lazy\" on the images"
+        ],
+        "answer": 1,
+        "why": "Without the viewport tag, mobile browsers report a fake desktop width, so narrow-screen media queries never match and the page is scaled down instead."
+      },
+      {
+        "q": "After adding width: 100% to all images, small icons render blurry and huge. What should the rule have been?",
+        "options": [
+          "height: 100% as well",
+          "max-width: 100% with height: auto — shrink to fit but never enlarge",
+          "min-width: 100%",
+          "width: auto with no height"
+        ],
+        "answer": 1,
+        "why": "max-width only constrains images that exceed their container; width: 100% force-stretches every image, inflating small ones past their natural size."
+      },
+      {
+        "q": "A user increases their browser's default font size but your site's text does not budge. Which sizing choice caused this?",
+        "options": [
+          "Text sized in rem units",
+          "Text sized in fixed px values, which ignore the user's preference",
+          "Text sized in percentages",
+          "The missing lang attribute"
+        ],
+        "answer": 1,
+        "why": "rem scales from the root font size, which follows the user's browser setting; fixed px sizes override that preference entirely."
+      }
+    ],
+    "html-i20-project-registration": [
+      {
+        "q": "A registration form was shipped with method=\"get\" and users' emails are appearing in server access logs. Why does switching to post fix this?",
+        "options": [
+          "POST encrypts the data automatically",
+          "GET appends form data to the URL, which gets logged, cached and shared; POST carries it in the request body",
+          "GET limits forms to five fields",
+          "POST validates fields before sending"
+        ],
+        "answer": 1,
+        "why": "GET serialises submissions into the query string, exposing personal data everywhere URLs travel; POST moves the data into the request body (though HTTPS is still what encrypts it)."
+      },
+      {
+        "q": "Testers report they can select Standard, Student and Speaker tickets simultaneously. The radios are named ticket1, ticket2, ticket3. What went wrong?",
+        "options": [
+          "Radios need the multiple attribute removed",
+          "Mutual exclusivity comes from a shared name — all three must be name=\"ticket\"",
+          "Each radio needs required",
+          "The radios must share one id"
+        ],
+        "answer": 1,
+        "why": "The browser groups radios by their name attribute; distinct names create three independent one-button groups that can all be on at once."
+      },
+      {
+        "q": "Attendees may sign up for any number of optional workshops. Which control is the right choice?",
+        "options": [
+          "Radio buttons sharing one name",
+          "A group of checkboxes sharing a name, one per workshop",
+          "A select with multiple, relying on Ctrl-click",
+          "A required select with one workshop per option"
+        ],
+        "answer": 1,
+        "why": "Checkboxes natively express zero-to-many choices with obvious interaction; multiple selects depend on a Ctrl-click convention many users do not know, and radios force exactly one."
+      }
+    ]
+  }
+}

@@ -1,0 +1,354 @@
+{
+  "quizzes": {
+    "gpt-b1-first-professional-result": [
+      {
+        "q": "You ask ChatGPT to \"write me a product description\" and get a generic, forgettable paragraph you can't use. Per the lesson's prompt formula, what's the single biggest fix?",
+        "options": [
+          "Ask ChatGPT to write it twice and pick the better one",
+          "Switch to a longer, more expensive model",
+          "Add role, audience, context, explicit requirements, and format to the prompt",
+          "Tell ChatGPT to 'try harder' and be more creative"
+        ],
+        "answer": 2,
+        "why": "Each part of the prompt (role, context, requirements, format) removes a guess ChatGPT would otherwise make, which is why a vague one-liner produces generic output."
+      },
+      {
+        "q": "Why does adding a line like 'Do not use the words stunning or must-see' improve a ChatGPT draft?",
+        "options": [
+          "It closes off the laziest, most generic wrong answers before they happen",
+          "It shortens the response automatically",
+          "It's a required OpenAI content-policy field",
+          "It guarantees factual accuracy in the draft"
+        ],
+        "answer": 0,
+        "why": "The 'do not' line rules out the cliché, low-effort phrasing ChatGPT tends to default to, forcing a more specific result."
+      },
+      {
+        "q": "A freelancer writes a detailed, well-structured prompt, gets a draft back, and sends it straight to the client without comparing it to their original requirements. What mistake does this match from the lesson?",
+        "options": [
+          "Forgetting to state the audience",
+          "Not specifying format or length",
+          "Typing a vague one-line request",
+          "Accepting the first draft without checking it actually hit the specific requirements listed"
+        ],
+        "answer": 3,
+        "why": "Even a well-structured prompt can produce a draft that misses a requirement; the lesson stresses checking the result against your original need before using it."
+      }
+    ],
+    "gpt-b2-prompt-structure-fundamentals": [
+      {
+        "q": "A ChatGPT response comes back rambling, three times longer than needed, with no clear structure. Which part of the 4-part formula was most likely missing or vague?",
+        "options": [
+          "Role",
+          "Format",
+          "Context",
+          "Constraints"
+        ],
+        "answer": 1,
+        "why": "The lesson states a rambling, wrong-length answer usually traces back to a missing or vague Format instruction."
+      },
+      {
+        "q": "ChatGPT gives a confident, well-written answer — to a problem you didn't actually ask about. What's the most likely cause?",
+        "options": [
+          "The Format line was too short",
+          "Custom Instructions weren't set",
+          "The Task line crammed two unrelated tasks into one sentence",
+          "The model needs a system prompt"
+        ],
+        "answer": 2,
+        "why": "An answer that solves the wrong problem usually means the Task line tried to do two things at once instead of stating one specific action."
+      },
+      {
+        "q": "A prompt's result falls short. What does the lesson recommend as the most efficient next step?",
+        "options": [
+          "Rewrite the whole prompt from scratch every time",
+          "Switch tools immediately",
+          "Add more adjectives describing the desired tone",
+          "Diagnose which single part (role, context, task, or format) was missing or vague, and fix only that"
+        ],
+        "answer": 3,
+        "why": "Learning to diagnose which of the four parts is missing is more useful than any single prompt template, and it avoids unnecessary full rewrites."
+      }
+    ],
+    "gpt-b3-improving-drafts-and-tone": [
+      {
+        "q": "You want a ChatGPT draft to sound like you, not like a generic AI. What's the most reliable technique from the lesson?",
+        "options": [
+          "Paste 2-3 sentences of your own writing as a voice anchor for it to match",
+          "Repeat 'make it more professional' until it sounds right",
+          "Regenerate the response from scratch several times",
+          "Ask it to shorten the draft by half"
+        ],
+        "answer": 0,
+        "why": "A real voice sample gives ChatGPT a concrete target to match, which works far better than describing style in adjectives."
+      },
+      {
+        "q": "Why does 'more direct, less corporate' work better as a revision request than 'make it better'?",
+        "options": [
+          "It uses simpler vocabulary the model parses faster",
+          "It gives ChatGPT a concrete, comparative target instead of an abstract adjective to guess at",
+          "It automatically shortens the response",
+          "It's the only phrasing ChatGPT recognizes as a tone request"
+        ],
+        "answer": 1,
+        "why": "Generic tone requests give no fixed target and get guessed at generically; direct comparative language converges in fewer rounds."
+      },
+      {
+        "q": "While revising a draft, you ask ChatGPT to fix the tone, cut the length, and restructure it all in the same follow-up. What problem does the lesson warn this causes?",
+        "options": [
+          "ChatGPT will refuse the request",
+          "It uses more of your monthly quota",
+          "It becomes hard to tell which change actually fixed (or broke) the draft",
+          "It forces a full account upgrade"
+        ],
+        "answer": 2,
+        "why": "Asking for tone, length, and structure to all change at once is a listed common mistake because it obscures what worked."
+      }
+    ],
+    "gpt-i1-analyzing-files-and-documents": [
+      {
+        "q": "You upload a 22-page contract and ask 'what's the termination clause?' without telling ChatGPT to answer only from the file. What's the risk?",
+        "options": [
+          "ChatGPT will refuse to read the PDF",
+          "The file will be permanently stored without consent",
+          "ChatGPT will always cite the wrong page number",
+          "ChatGPT may blend general knowledge about contracts with the actual document, and you won't be able to tell which is which"
+        ],
+        "answer": 3,
+        "why": "Without the 'only from the attached file' guardrail, ChatGPT tends to blend outside knowledge with document content indistinguishably."
+      },
+      {
+        "q": "Why does the lesson insist on requiring a page or section citation for every claim ChatGPT pulls from a document?",
+        "options": [
+          "It turns each answer into something you can verify in seconds instead of trusting blindly",
+          "It's a formatting requirement of the PDF standard",
+          "It prevents the file from exceeding size limits",
+          "It automatically fixes OCR errors in scanned documents"
+        ],
+        "answer": 0,
+        "why": "Citations let you flip to the source and confirm a claim in seconds rather than accepting it on faith."
+      },
+      {
+        "q": "You upload a scanned image-only PDF with no extractable text and ask for exact figures. What should you expect?",
+        "options": [
+          "Perfect detail recall, since ChatGPT reads all PDFs identically",
+          "Reduced accuracy — a scanned image with no extractable text won't give reliable detail recall",
+          "An automatic upgrade to OCR mode",
+          "A rejection of the file with no analysis attempted"
+        ],
+        "answer": 1,
+        "why": "The lesson lists uploading a scanned image with no extractable text and expecting perfect recall as a common mistake."
+      }
+    ],
+    "gpt-i2-projects-for-organized-work": [
+      {
+        "q": "A consultant juggles five active clients in ChatGPT. Per the lesson, what's the best way to organize this in Projects?",
+        "options": [
+          "One giant Project called 'All Clients' holding every file and chat",
+          "One Project per active client, each with its own instructions and files",
+          "No Projects — just rely on memory to keep clients straight",
+          "A new Project for every single chat message"
+        ],
+        "answer": 1,
+        "why": "A Project is meant to be one workspace per active engagement, not one giant catch-all archive."
+      },
+      {
+        "q": "Why do Project instructions save time compared to a normal chat?",
+        "options": [
+          "They unlock a cheaper pricing tier",
+          "They replace the need to write any prompt at all",
+          "They apply automatically to every chat inside that Project, instead of being restated each time",
+          "They sync identically across every other Project you own"
+        ],
+        "answer": 2,
+        "why": "Project instructions are written once and apply to every chat inside that Project, so a new chat already starts grounded."
+      },
+      {
+        "q": "A Project starts giving answers based on an old version of a client's brief. What's the likely mistake?",
+        "options": [
+          "The Project was named after a specific client instead of a category",
+          "Project instructions were written at all",
+          "Too many files were uploaded",
+          "The source documents were updated, but the files in the Project were never re-uploaded"
+        ],
+        "answer": 3,
+        "why": "Forgetting to re-upload files when underlying documents change means the Project answers from a stale version."
+      }
+    ],
+    "gpt-i3-custom-gpts-for-repeatable-tasks": [
+      {
+        "q": "A custom GPT gives inconsistent, drifting answers depending on how a teammate phrases their request. What's the most likely design flaw?",
+        "options": [
+          "Too few knowledge files were uploaded",
+          "The GPT's purpose is too broad or multi-task, so its behavior drifts",
+          "Web search wasn't enabled",
+          "It was tested with an edge case before launch"
+        ],
+        "answer": 1,
+        "why": "Custom GPTs fail most often from trying to do too much; naming one job is what keeps behavior consistent."
+      },
+      {
+        "q": "Why does the lesson recommend testing a custom GPT with a deliberately weird or off-topic input before sharing it with a team?",
+        "options": [
+          "It's required to publish a GPT",
+          "It increases the GPT's visibility in Explore GPTs",
+          "That's exactly where vague instructions break down, and it's cheap to catch early",
+          "It unlocks the code interpreter tool automatically"
+        ],
+        "answer": 2,
+        "why": "Off-topic or edge-case inputs are where a poorly scoped GPT's instructions break down, and catching that before a teammate does is cheap."
+      },
+      {
+        "q": "What should a custom GPT's system instructions define for requests outside its one job?",
+        "options": [
+          "A specific boundary response so it declines instead of improvising",
+          "Nothing — it should always attempt to help regardless of scope",
+          "A redirect to Deep Research",
+          "An automatic tone shift to match the off-topic request"
+        ],
+        "answer": 0,
+        "why": "Not setting a boundary response for out-of-scope requests leaves the GPT improvising instead of declining, which the lesson flags as a common mistake."
+      }
+    ],
+    "gpt-i4-deep-research-reports": [
+      {
+        "q": "You get roughly 10 Deep Research runs a month on Plus. What should you do before spending one on a real question?",
+        "options": [
+          "Submit the first version of the question that comes to mind",
+          "Run the same question twice to compare results",
+          "Draft and refine the research brief in a normal chat first, then paste the tightened version into Deep Research",
+          "Skip scoping — Deep Research automatically narrows vague questions"
+        ],
+        "answer": 2,
+        "why": "Iterating on the brief in a free regular chat first avoids burning a limited monthly run on a question that still needed shaping."
+      },
+      {
+        "q": "Why does the lesson stress naming which source types to include or exclude in a Deep Research brief?",
+        "options": [
+          "It's a mandatory field in the composer",
+          "It limits the report to under 500 words",
+          "It disables citation requirements",
+          "Without it, the report can end up unfocused, mixing outdated or low-credibility sources with current, reliable ones"
+        ],
+        "answer": 3,
+        "why": "Not scoping source types is a listed common mistake that produces an unfocused report mixing outdated and current information."
+      },
+      {
+        "q": "A Deep Research report just finished. What should you do before treating any specific claim in it as fact?",
+        "options": [
+          "Immediately forward it to your team as final",
+          "Read the source list and check a sample of citations against the underlying sources",
+          "Re-run the exact same query to confirm it",
+          "Delete the original brief so it doesn't bias future runs"
+        ],
+        "answer": 1,
+        "why": "Treating the report as final truth without checking citations is a named common mistake; spot-checking sources first is the guardrail."
+      }
+    ],
+    "gpt-a1-data-analysis-with-code-interpreter": [
+      {
+        "q": "ChatGPT returns a confident month-over-month growth analysis on a CSV, but it turns out 3 duplicate rows inflated the numbers. What step in the lesson's workflow was skipped?",
+        "options": [
+          "Requesting a labeled chart",
+          "The data-quality check step (columns, row count, missing values, duplicates) before running the analysis",
+          "Uploading the file as XLSX instead of CSV",
+          "Verifying at least one number by hand"
+        ],
+        "answer": 1,
+        "why": "Skipping the data-quality check is the most common failure mode, producing confidently wrong analysis on dirty data."
+      },
+      {
+        "q": "Why does the lesson insist on asking ChatGPT to 'show the calculation logic, not just the result'?",
+        "options": [
+          "It turns the analysis into something you can audit in seconds instead of a black box you either trust blindly or don't use",
+          "It's required for chart generation to work",
+          "It automatically catches every hallucination",
+          "It makes the Python code run faster"
+        ],
+        "answer": 0,
+        "why": "Visible calculation logic is what lets you audit the analysis quickly instead of trusting it blindly."
+      },
+      {
+        "q": "A computed number in a spreadsheet analysis looks off. What's the fastest way to find the bug, per the lesson?",
+        "options": [
+          "Re-upload the file and start over from scratch",
+          "Switch to a different ChatGPT plan",
+          "Ignore it — code interpreter results are always accurate",
+          "Ask 'show me the code you ran' and read it to spot the wrong column, filter, or date range"
+        ],
+        "answer": 3,
+        "why": "The proTip explicitly recommends reading the underlying code to spot the bug faster than re-explaining the task."
+      }
+    ],
+    "gpt-a2-memory-and-personalization": [
+      {
+        "q": "You need to discuss a confidential client detail you don't want ChatGPT to remember or keep in your history. What should you do?",
+        "options": [
+          "Add it as an explicit memory, then delete it right after",
+          "Ask ChatGPT to promise not to remember it",
+          "Start a Temporary Chat, which never touches memory or history",
+          "Use a Project instead of a regular chat"
+        ],
+        "answer": 2,
+        "why": "Temporary Chat is the lesson's safe default for confidential or one-off content because it never touches memory or history."
+      },
+      {
+        "q": "What's the actual difference between Custom Instructions and memory, per the lesson?",
+        "options": [
+          "They are two names for the exact same feature",
+          "Custom Instructions are standing rules you set explicitly; memory accumulates from conversation unless you actively curate it",
+          "Memory only works inside Projects",
+          "Custom Instructions require an Enterprise plan"
+        ],
+        "answer": 1,
+        "why": "The lesson explicitly distinguishes explicit standing rules (Custom Instructions) from passively accumulating, curatable memory."
+      },
+      {
+        "q": "Several months into using ChatGPT, responses start referencing an old job you no longer have. What mistake led to this?",
+        "options": [
+          "Never reviewing and cleaning up memory, letting outdated facts quietly skew responses",
+          "Doing a quarterly memory review",
+          "Using Temporary Chat for sensitive topics",
+          "Adding a deliberate memory about a standing preference"
+        ],
+        "answer": 0,
+        "why": "Never reviewing memory is a listed common mistake that lets outdated facts silently skew future responses."
+      }
+    ],
+    "gpt-a3-agent-mode-and-your-workflow": [
+      {
+        "q": "You give Agent mode the instruction 'help me plan an event' with no finish condition or output format. What typically happens?",
+        "options": [
+          "It completes the task in one step automatically",
+          "It asks you a single clarifying question and stops",
+          "It keeps browsing and acting without ever producing a usable, finished result",
+          "It defaults to writing a Deep Research report instead"
+        ],
+        "answer": 2,
+        "why": "A vague goal with no finish condition is a named common mistake that leaves Agent mode wandering without a usable result."
+      },
+      {
+        "q": "The lesson has you explicitly tell Agent mode to 'stop and ask before submitting any form, logging in, or making a payment,' even though Agent mode already pauses for these by default. Why state it anyway?",
+        "options": [
+          "It's a legal requirement for using Agent mode",
+          "It speeds up how fast the agent completes tasks",
+          "It disables the terminal access entirely",
+          "It makes an already-default safety boundary explicit and unambiguous in your specific task"
+        ],
+        "answer": 3,
+        "why": "Stating the pause instruction directly makes an already-default guardrail unambiguous for this specific task."
+      },
+      {
+        "q": "Agent mode successfully completes a multi-step venue-booking task you know you'll need to repeat monthly. What's the recommended next move?",
+        "options": [
+          "Convert the reusable subtask into a custom GPT or Project instruction so it's not re-described from scratch every time",
+          "Delete the chat so it doesn't clutter your history",
+          "Re-run the exact same Agent mode task every month from a blank chat",
+          "Switch future runs to Deep Research instead"
+        ],
+        "answer": 0,
+        "why": "The lesson explicitly warns against running a good task once and never converting it into a repeatable custom GPT or Project setup."
+      }
+    ]
+  }
+}

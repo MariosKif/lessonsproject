@@ -1,0 +1,29 @@
+{
+  "paths": [
+    {
+      "slug": "claude-beginner",
+      "title": "Claude Beginner",
+      "tagline": "From first login to a personal AI workflow — master the Claude skills professionals use every day.",
+      "description": "Learn Claude by doing real work with it from lesson one. This 12-lesson course takes you from creating your account to running a deliberate personal workflow: writing prompts that get professional-quality results, rewriting and drafting with guardrails that protect your facts, summarizing long documents you can actually trust, extracting clean data from messy text, analyzing spreadsheets in plain language, and researching with web search plus the verification habits that keep you safe. Along the way you'll set up Claude Projects for standing context, build a reusable prompt template library, and finish by choosing the right plan and wiring Claude into your actual week. Every lesson includes a copy-paste prompt, a realistic worked example, and an exercise you complete in your own Claude account.",
+      "kind": "tool-course",
+      "level": "beginner",
+      "toolSlug": "claude",
+      "professionSlug": null,
+      "sortOrder": 1,
+      "lessons": [
+        "claude-b1-first-conversation",
+        "claude-b2-professional-prompts",
+        "claude-b3-rewrite-and-tone",
+        "claude-b4-summarize-long-document",
+        "claude-b5-extract-structured-data",
+        "claude-b6-emails-from-bullets",
+        "claude-b7-iterate-with-followups",
+        "claude-b8-projects-standing-context",
+        "claude-b9-analyze-spreadsheet",
+        "claude-b10-research-with-web-search",
+        "claude-b11-reusable-prompt-templates",
+        "claude-b12-personal-workflow"
+      ]
+    }
+  ]
+}

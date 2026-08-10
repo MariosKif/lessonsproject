@@ -1,0 +1,284 @@
+{
+  "quizzes": {
+    "mkt-b1-campaign-brief-from-product": [
+      {
+        "q": "A marketer pastes a raw, messy product description and gets a brief where the audience section says '[ASSUMPTION] Likely mid-to-high income professionals aged 30-45.' What should the marketer do?",
+        "options": ["Confirm or correct it using real knowledge before treating it as the campaign foundation", "Delete the assumption since it wasn't explicitly requested", "Ignore it and move straight to ad angles", "Ask the AI to remove all assumptions from future briefs"],
+        "answer": 0,
+        "why": "Flagged assumptions are the prompt's safeguard against incorrect guesses quietly becoming the base of the whole campaign — they must be checked, not ignored or blindly kept."
+      },
+      {
+        "q": "Why does this lesson's prompt instruct the model to state the campaign goal (e.g., awareness vs. sales) explicitly?",
+        "options": ["It's required for the AI to run at all", "An awareness brief and a sales brief should read differently, and omitting the goal causes a generic default", "It determines which AI model to use", "It only affects the word count"],
+        "answer": 1,
+        "why": "Naming the goal up front changes what a good brief looks like; skipping it causes the model to default to a generic brand-awareness brief that may not match what's actually needed."
+      },
+      {
+        "q": "A marketer treats the first generated brief as the final version and sends it straight to the design team. What common mistake is this?",
+        "options": ["Correcting flagged assumptions too aggressively", "Skipping the campaign goal field", "Treating a first draft as final instead of correcting and filling it in", "Pasting a polished description instead of raw notes"],
+        "answer": 2,
+        "why": "The lesson stresses that the output is a first draft to correct and fill in, not a finished document — sending it unreviewed skips the human verification step that makes it trustworthy."
+      }
+    ],
+    "mkt-b2-product-brief-to-20-ad-angles": [
+      {
+        "q": "Why does the prompt require 20 ad angles to be grouped into 5 named categories (pain-led, outcome-led, etc.) instead of just asking for '20 ad angles'?",
+        "options": ["Categories make the output easier to format into a spreadsheet", "It's required to test on Meta and Google simultaneously", "It reduces the word count of each angle", "An unstructured request reliably produces near-duplicate angles reworded differently, not real variety"],
+        "answer": 3,
+        "why": "An open-ended '20 angles' request tends to return the same idea reworded twenty times; forcing five distinct psychological categories is what produces genuine strategic variety."
+      },
+      {
+        "q": "A marketer shortlists their top 6 angles, but all 6 come from the 'outcome/aspiration-led' category because those felt strongest. What's the problem?",
+        "options": ["It defeats the purpose of testing different psychological approaches to buying", "The angles need a stronger hook length", "Outcome-led angles are legally required in ad testing", "Nothing — strongest angles should always be prioritized regardless of category"],
+        "answer": 0,
+        "why": "The lesson explicitly warns against shortlisting all favorites from one category, since that defeats testing genuinely different reasons to buy."
+      },
+      {
+        "q": "Why does the prompt ask for a one-sentence 'why this works' explanation per angle?",
+        "options": ["It's needed for SEO purposes", "It makes weak or generic angles easy to spot, since a vague explanation could apply to any product", "It replaces the need for a campaign brief", "It's only needed for LinkedIn ads"],
+        "answer": 1,
+        "why": "If the psychological explanation behind an angle could apply to any product, the angle itself isn't specific enough to be worth testing."
+      }
+    ],
+    "mkt-b3-generate-improve-ad-variants": [
+      {
+        "q": "In the hook-variant testing prompt, why must the body copy and CTA stay identical across all 6 variants?",
+        "options": ["To save time writing", "Because Meta doesn't allow varying body copy", "So the test result can be attributed to the hook alone rather than multiple changed elements", "It's a platform character limit issue"],
+        "answer": 2,
+        "why": "Isolating one variable at a time is what makes a test result meaningful — if several elements change at once, a win or loss can't be attributed to anything specific."
+      },
+      {
+        "q": "The model scores each hook 1-5 and gives one-sentence reasoning. A marketer skims only the numeric scores and ignores the reasoning. What's the risk?",
+        "options": ["The scores will be wrong", "The AI will lower future scores", "Nothing — the numeric score is sufficient on its own", "They miss the actually useful feedback, which lives in the reasoning, not the number"],
+        "answer": 3,
+        "why": "The one-sentence reasoning behind each score is where the genuinely useful critique lives; the number alone doesn't explain what to fix."
+      },
+      {
+        "q": "Why does the workflow ask for a second critique-and-revise pass on the same weak variant rather than always generating a fresh batch?",
+        "options": ["A second targeted pass on a named weakness often improves more than starting over blind", "Fresh batches are against platform policy", "It's required to avoid AI hallucination", "It reduces API costs only"],
+        "answer": 0,
+        "why": "Fixing the specifically named problem in a weak variant tends to produce a bigger improvement than generating an entirely new batch and hoping one is better."
+      }
+    ],
+    "mkt-b4-landing-page-copy-that-converts": [
+      {
+        "q": "A landing page headline reads 'Welcome to ProjectFlow' after a visitor clicked an ad promising 'Stop losing billable hours to status update emails.' What guardrail did this violate?",
+        "options": ["The CTA must be a button, not a link", "The headline must directly continue the ad's specific promise, not restate the brand generically", "Headlines must always be under 10 words", "Landing pages must include a testimonial"],
+        "answer": 1,
+        "why": "A generic brand-first headline breaks message match with the ad's specific promise, which reads as a bait-and-switch to the visitor and tanks conversion."
+      },
+      {
+        "q": "Why does the prompt require '[PLACEHOLDER]' instead of letting the model write a testimonial or stat for the proof section?",
+        "options": ["Placeholders load faster on the page", "Inventing a stat or testimonial would be a false, publishable claim", "It's a formatting requirement for Codex", "Testimonials are not allowed in landing page copy"],
+        "answer": 1,
+        "why": "Letting the model invent a testimonial or statistic risks publishing a false claim; a placeholder protects against that until real proof exists."
+      },
+      {
+        "q": "Why does the workflow hand the finished copy to Codex to build an actual page instead of stopping at the copy document?",
+        "options": ["Codex writes better prose than Claude or ChatGPT", "It's required for SEO indexing", "It automatically fixes weak headlines", "Seeing real layout catches structural problems like a CTA buried below the fold that copy alone can't reveal"],
+        "answer": 3,
+        "why": "Reviewing copy in isolation misses layout problems; seeing it assembled into an actual page reveals issues like a strong headline undercut by a buried CTA."
+      }
+    ],
+    "mkt-i1-email-sequence-from-core-offer": [
+      {
+        "q": "Why does the prompt assign each of the 5 emails one explicit job instead of letting the model decide?",
+        "options": ["Without explicit jobs, the model defaults to restating the full offer in every email, the most common sequence failure", "It's required by email service providers", "It guarantees higher open rates", "It shortens each email automatically"],
+        "answer": 0,
+        "why": "Without an assigned job per email, the model's safest default is to restate the offer each time, which is exactly the failure mode this structure prevents."
+      },
+      {
+        "q": "Email 4 is supposed to create urgency, but the offer has no real deadline or limited spots. What should happen?",
+        "options": ["Invent a countdown timer to make the email persuasive", "Skip inventing urgency and stick to what's real, since false scarcity damages trust and can create legal exposure", "Delete email 4 entirely from every sequence", "Ask the model to imply urgency without stating it"],
+        "answer": 1,
+        "why": "The prompt explicitly bans inventing fake scarcity because false urgency claims damage trust and, in some jurisdictions, create legal exposure."
+      },
+      {
+        "q": "A marketer notices Email 3 (Objection) gets fewer opens and considers cutting it from future sequences because it 'feels negative.' What does the lesson say?",
+        "options": ["Objection emails should always be cut if opens are mixed", "Objection emails should only be sent to repeat customers", "The objection email is usually the one that converts the most hesitant readers, so skipping it is a common mistake", "Negative-feeling emails should be replaced with urgency emails"],
+        "answer": 2,
+        "why": "The lesson lists skipping the objection email as a common mistake, since it typically converts the most hesitant readers even if it feels like the harder email to send."
+      }
+    ],
+    "mkt-i2-monthly-social-content-calendar": [
+      {
+        "q": "Why does the prompt require the content-mix ratio (e.g., 40% value, 20% promotion) to be fixed before generating any posts?",
+        "options": ["It's required by every social platform's terms of service", "Without a fixed ratio up front, the calendar drifts toward mostly promotional content under time pressure", "It reduces the total number of posts needed", "It guarantees viral reach"],
+        "answer": 1,
+        "why": "Fixing the mix before generating content prevents the calendar from defaulting to mostly promotional posts, which is the easiest content to write under deadline pressure."
+      },
+      {
+        "q": "The generated calendar ends with a summary table counting posts per content type. Why does this matter?",
+        "options": ["It self-checks the calendar against the stated ratio so a skewed mix is caught immediately, not after a month of underperformance", "It's just a nice-to-have visual", "It's required for scheduling software imports", "It replaces the need for theme rotation"],
+        "answer": 0,
+        "why": "The closing summary table forces a check against the intended ratio, catching a skewed calendar immediately rather than discovering it after a month of weak engagement."
+      },
+      {
+        "q": "Why does the prompt instruct that no two promotional posts should sit within 3 days of each other?",
+        "options": ["Platforms penalize frequent promotional posts algorithmically", "Clustering promotional posts undermines the value-first feel that keeps an audience from muting the account", "It's a legal advertising requirement", "It ensures equal posting across all platforms"],
+        "answer": 1,
+        "why": "Spacing out promotional posts protects the value-first feel of the calendar, which is what keeps an audience engaged instead of tuning out."
+      }
+    ],
+    "mkt-i3-analyze-competitor-messaging": [
+      {
+        "q": "Why is Deep Research (Gemini or ChatGPT) specifically well suited to this competitor research task, compared to a normal chat reply?",
+        "options": ["It's faster at generating creative copy", "It has a larger context window", "It browses many sources over several minutes and cites them, turning claims about competitors into something checkable rather than guesses", "It can browse competitor social media directly"],
+        "answer": 2,
+        "why": "Deep Research's ability to browse many sources and cite them in the final report is what turns a claim about a competitor from a guess into something the marketer can actually verify."
+      },
+      {
+        "q": "A marketer wants to use a claim from the research ('Competitor X focuses on enterprise clients') directly in a campaign brief. What should they do first?",
+        "options": ["Use it immediately since the report already cited it", "Ask a different AI tool to double-check it", "Rephrase it so it sounds less specific", "Open the cited source themselves to confirm it's accurate and current before using it"],
+        "answer": 3,
+        "why": "An unsourced claim used as-is is a guess dressed as fact; opening the cited source personally is what makes it trustworthy enough to build positioning on."
+      },
+      {
+        "q": "Why does the prompt explicitly ask what competitors are NOT saying, not just what they claim?",
+        "options": ["It reframes research from 'copy what works' to 'find the open space,' which is more useful for real differentiation", "It's a required field for Deep Research queries", "It reduces the number of sources needed", "Competitors' silence is always illegal to reference otherwise"],
+        "answer": 0,
+        "why": "Asking what's missing from competitors' messaging surfaces genuine gaps to differentiate on, rather than just copying claims that are already saturated."
+      }
+    ],
+    "mkt-a1-repurpose-asset-into-ten-formats": [
+      {
+        "q": "Why does the prompt require each of the 10 repurposed pieces to be labeled with the specific source idea it's built around?",
+        "options": ["It's needed for copyright tracking", "It prevents the classic failure of ten reformatted copies of the same paragraph by forcing variety at the idea level", "It's required for scheduling tools", "It shortens each piece automatically"],
+        "answer": 1,
+        "why": "Labeling each piece with its anchor idea forces genuine variety at the idea level, not just the format level, avoiding the lazy repurposing trap of one idea stretched ten ways."
+      },
+      {
+        "q": "A team publishes all 10 repurposed pieces on the same day to 'get it all out at once.' What's the risk noted in the lesson?",
+        "options": ["Nothing — simultaneous publishing maximizes reach", "Platforms will flag duplicate content instantly", "The pieces visibly compete for the same audience's attention instead of extending reach over time", "It voids the original asset's copyright"],
+        "answer": 2,
+        "why": "Posting all ten pieces at once cannibalizes reach across the same audience; scheduling them over 1-2 weeks extends the value of the source asset instead."
+      },
+      {
+        "q": "Why does the lesson recommend reading the source asset yourself first, rather than letting the model find standout ideas unsupervised?",
+        "options": ["The model can't read long transcripts", "It's faster to read manually than to prompt", "It avoids copyright issues", "Relying on the model unsupervised tends to surface generic points rather than the most distinctive ones"],
+        "answer": 3,
+        "why": "A human pass over the source material tends to surface the genuinely distinctive ideas, while an unsupervised model pass tends to pick the safest, most generic points."
+      }
+    ],
+    "copy-b1-three-draft-directions": [
+      {
+        "q": "Why does the prompt require three genuinely different structural approaches (story-led, claim-led, question-led) rather than just asking for '3 versions'?",
+        "options": ["An unstructured request reliably produces three drafts with the same bones and different adjectives", "It's a client billing requirement", "It guarantees a higher word count", "Only three structures exist in copywriting"],
+        "answer": 0,
+        "why": "Naming distinct structural approaches is what forces real divergence; an unstructured request for 'three versions' tends to produce three drafts that are structurally the same."
+      },
+      {
+        "q": "Why does the prompt ask for three complete drafts instead of three outlines?",
+        "options": ["Outlines take longer to write", "Tone and rhythm problems, where most real copy decisions happen, only show up in actual prose", "Clients never read outlines", "Complete drafts are required for SEO"],
+        "answer": 1,
+        "why": "Outlines hide tone and rhythm problems that only surface in actual prose, which is where most real copy decisions get made."
+      },
+      {
+        "q": "A copywriter edits and polishes the first direction before reading all three. What's the issue?",
+        "options": ["It saves time overall", "It's required to check grammar early", "It anchors judgment on whichever direction was seen first, undermining the point of generating real options", "Editing early always improves final quality"],
+        "answer": 2,
+        "why": "Editing the first direction before comparing all three anchors judgment on whatever was seen first, which defeats the purpose of generating genuinely distinct options."
+      }
+    ],
+    "copy-b2-edit-tighten-preserve-voice": [
+      {
+        "q": "Why does the editing prompt require pasting 2-3 real voice samples before asking for any cut?",
+        "options": ["It's needed to check for plagiarism", "It shortens the editing time by half", "Voice samples are required for copyright registration", "It turns 'keep the voice' into a concrete pattern the model can match, instead of a vague instruction that leads to flattening"],
+        "answer": 3,
+        "why": "Real voice samples give the model a concrete target to pattern-match, which is the difference between an edit that sounds like the original writer and one that sounds like a competent stranger."
+      },
+      {
+        "q": "A client's distinctive, slightly irreverent blog intro is cut for length, and the edited version reads as generic corporate copy. What likely went wrong?",
+        "options": ["The edit tightened by flattening personality along with the fat, likely because no voice samples anchored the model", "The target word count was set too low", "The client's original voice was never good to begin with", "The model refused to follow instructions"],
+        "answer": 0,
+        "why": "Without real voice samples anchoring the edit, the default AI tightening pass flattens personality along with the actual fat, producing generic-sounding prose."
+      },
+      {
+        "q": "Why does the prompt ask the editor to name the specific problem ('too long,' 'weak opening') instead of just saying 'make it better'?",
+        "options": ["Vague instructions are against platform policy", "Naming the actual problem focuses the cut on what's genuinely wrong instead of random trimming", "It's required to generate a word count estimate", "It prevents the model from changing the CTA"],
+        "answer": 1,
+        "why": "Naming the specific problem focuses the edit on what's actually broken, rather than producing a generic tightening pass that cuts randomly."
+      }
+    ],
+    "copy-b3-headline-systems": [
+      {
+        "q": "Why does the headline prompt require 4 headlines from each of 5 named formulas rather than one open list of 20?",
+        "options": ["It matches a legal requirement for A/B testing", "It reduces total generation time", "Naming formulas up front produces structurally different headlines instead of the same idea reworded", "Each formula corresponds to a different platform"],
+        "answer": 2,
+        "why": "Named formulas force structural variety; an open-ended '20 headlines' request most commonly produces minor rewordings of one or two ideas."
+      },
+      {
+        "q": "A copywriter shortlists all 3 finalists from the single highest-scoring formula category. What's wrong with this approach?",
+        "options": ["Nothing, highest score should always win", "It violates the prompt's word limit", "Scores can't be compared across formulas", "It loses the point of testing genuinely different psychological approaches"],
+        "answer": 3,
+        "why": "The lesson recommends shortlisting from at least two different formulas, since picking all finalists from one category defeats testing different psychological approaches."
+      },
+      {
+        "q": "The prompt explicitly says not to invent a bigger stat than what's actually available. Why does this matter here?",
+        "options": ["Bigger stats always perform worse in tests", "An invented, unsupported number in a headline is a claim the copywriter can't defend if challenged", "It's a platform character-limit issue", "It only applies to email subject lines"],
+        "answer": 1,
+        "why": "A headline built on an invented, more impressive number is a specific claim that can't be defended if a client or reader challenges it."
+      }
+    ],
+    "copy-i1-research-backed-copy": [
+      {
+        "q": "Why does this lesson separate research (ChatGPT Deep Research) from the drafting step instead of researching and writing in one pass?",
+        "options": ["It's faster overall", "A drafting-only prompt under deadline pressure often invents a plausible-sounding but unsupported number because that completes the sentence best", "ChatGPT cannot generate copy at all", "Separating steps is required for SEO"],
+        "answer": 1,
+        "why": "Under deadline pressure, a combined research-and-draft pass tends to produce a confident but unsupported number because that's what best completes the sentence, not because it's verified true."
+      },
+      {
+        "q": "The research turns up a statistic from a source dated 3 years ago. What should happen next per the lesson?",
+        "options": ["Use it as-is since it's already sourced and cited", "Flag it as potentially outdated since an accurate but old figure can still mislead readers about the current market", "Double the number to account for growth", "Remove all dates before using it in copy"],
+        "answer": 1,
+        "why": "A genuinely accurate but multi-year-old statistic can still mislead a reader into thinking it reflects the current market, so source age should be flagged."
+      },
+      {
+        "q": "No reliable source can be found for a claim the copywriter wanted to make. What's the recommended action?",
+        "options": ["Keep the specific number anyway since it sounds credible", "Ask a different AI model until one confirms the number", "Publish it with a disclaimer footnote", "Cut the claim or replace it with softer, honest phrasing rather than keeping an unsupported number"],
+        "answer": 3,
+        "why": "When no solid source exists for a specific claim, the lesson recommends cutting it or softening the phrasing honestly rather than keeping an unverifiable number."
+      }
+    ],
+    "copy-i2-client-revision-rounds": [
+      {
+        "q": "A client's feedback includes 'make it more premium' and, later in the same email, 'keep it casual, our audience is relaxed.' What should the revision prompt do?",
+        "options": ["Flag the contradiction explicitly rather than silently resolving it", "Silently pick 'casual' since it was mentioned last", "Apply both changes by alternating paragraphs", "Ignore both notes since they conflict"],
+        "answer": 0,
+        "why": "The prompt requires listing contradictions explicitly instead of silently choosing one, which prevents the revision from resolving a note in a way the client didn't actually intend."
+      },
+      {
+        "q": "Why does the prompt apply specific asks before vague directional notes?",
+        "options": ["Specific asks are always more important to the client", "Vague notes translated first risk overriding a precise instruction buried in the same feedback", "It's alphabetical order", "Vague notes take longer to process"],
+        "answer": 1,
+        "why": "Applying vague direction first risks overcorrecting in a way that buries or overrides a precise, unambiguous ask hidden in the same feedback."
+      },
+      {
+        "q": "Why does the prompt require a change log mapping each feedback note to the specific change made?",
+        "options": ["It's required for invoicing clients by the hour", "It automatically fixes contradictory notes", "It makes the revision defensible — a client can see exactly which note produced which change", "It replaces the need for a final human read-through"],
+        "answer": 2,
+        "why": "The change log turns a vague disagreement ('this doesn't feel like what I asked for') into something specific and resolvable by showing exactly which note produced which change."
+      }
+    ],
+    "copy-a1-personal-style-guide-asset": [
+      {
+        "q": "Why does the prompt insist that every named trait ('conversational,' 'punchy') be backed by a specific, quotable mechanism?",
+        "options": ["It's required for trademark purposes", "It shortens the style guide", "Quoted examples are needed for legal citation", "A vague adjective gives the model nothing concrete to pattern-match against, while a specific mechanism it can reliably apply"],
+        "answer": 3,
+        "why": "'Write conversationally' means almost nothing to a model, but a named, quoted mechanism like short declarative sentences is something it can reliably pattern-match against."
+      },
+      {
+        "q": "Why does the lesson recommend building the style guide from a writer's 5-10 best, most distinctive samples rather than average or rushed ones?",
+        "options": ["Building from average writing captures less-distinctive patterns and produces a weaker, less useful guide", "Best samples are always the longest", "It's the only way to get the model to respond", "Distinctive samples are required for copyright"],
+        "answer": 0,
+        "why": "Rushed or average writing samples don't capture what's genuinely distinctive about a writer's voice, producing a weaker guide than one built from their best work."
+      },
+      {
+        "q": "After building the guide, why does the lesson recommend immediately testing it on a new, unrelated piece of writing?",
+        "options": ["Testing is required before saving any prompt", "An inaccurate or incomplete pattern in the guide goes uncaught if never tested against a real new draft", "New pieces always score higher", "It verifies the model isn't hallucinating facts"],
+        "answer": 1,
+        "why": "Without testing the guide on a fresh draft, an inaccurate or incomplete pattern in the guide would go unnoticed and keep steering future drafts toward the wrong voice."
+      }
+    ]
+  }
+}

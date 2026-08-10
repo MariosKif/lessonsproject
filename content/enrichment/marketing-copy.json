@@ -1,0 +1,951 @@
+{
+  "enrichment": {
+    "mkt-b1-campaign-brief-from-product": {
+      "placeholders": [
+        {
+          "name": "PASTE YOUR RAW PRODUCT DESCRIPTION",
+          "what": "This is your own rough notes about the product or service the campaign is for — what it does, who currently buys it, what it costs, and anything you know about competitors. It does not need to be polished; a few messy sentences you'd type into a Slack message to a coworker work better than a marketing-department paragraph, because the AI needs your actual raw knowledge, not language it can copy without understanding the product. A weak value is a single generic sentence like \"a great app for productivity\" with no specifics; a strong one names the actual feature, price, and current customer.",
+          "examples": [
+            "A subscription box for home baristas — monthly shipment of freshly roasted specialty coffee beans from a different small farm each month, plus a tasting card. $28/month, cancel anytime. Mostly bought by people who already own an espresso machine or pour-over setup.",
+            "A browser extension that blocks distracting websites during work hours and shows a weekly focus report. Free basic version, $6/month for teams with shared blocklists. Competitors are mostly single-user apps; ours is the only one built for small teams.",
+            "An online course teaching freelance graphic designers how to price and pitch retainer contracts instead of one-off projects. $197, one-time payment, includes templates and a private community. Built by a designer with 8 years of freelance experience."
+          ]
+        },
+        {
+          "name": "e.g. drive trial sign-ups / launch awareness / holiday sales",
+          "what": "This is the single most important input in the whole prompt — it tells the AI what success looks like for this campaign, and every section of the brief changes depending on the answer. Pick the one goal that's actually true right now, not the goal you'd like to eventually have; a brief written for \"awareness\" looks completely different from one written for \"drive trial sign-ups,\" even for the exact same product.",
+          "examples": [
+            "Drive trial sign-ups — the product has a free trial and the goal is simply getting people to start it",
+            "Launch awareness — this is a brand-new product with zero existing audience, so the goal is just getting seen and remembered",
+            "Holiday sales — a seasonal push tied to a specific date, where the goal is direct purchases before a deadline"
+          ]
+        },
+        {
+          "name": "e.g. small paid social test / full multi-channel launch",
+          "what": "This tells the AI how big a campaign to plan for, which changes the channel recommendations and tone of the brief — a $500 test needs a very different plan than a six-figure launch. If you genuinely don't know yet, it's fine to write \"not yet decided\" rather than guessing, since the AI will just skip detailed scale-specific advice instead of inventing a budget.",
+          "examples": [
+            "Small paid social test — under $1,000, just testing whether the message resonates before committing more",
+            "Full multi-channel launch — paid social, email, and a landing page all going live the same week",
+            "Not yet decided — budget approval is pending, so keep channel recommendations general"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Faster version for an internal-only brief",
+          "whenToUse": "Use this when you just need a quick working brief for your own team, not something polished enough to hand to a client — it skips proof points and tone guidance and gets straight to audience and message.",
+          "prompt": "You are a marketing strategist writing a fast internal working brief. Use only the information below; flag any assumption with [ASSUMPTION].\n\nProduct description: [PASTE YOUR RAW PRODUCT DESCRIPTION]\nCampaign goal: [e.g. drive trial sign-ups / launch awareness / holiday sales]\n\nGive me just three things, as bullet points, under 150 words total:\n1. Target audience (1-2 segments)\n2. Positioning statement (one sentence)\n3. Key message (the one thing every asset should say)\n\nNo proof points, no channel recommendations, no tone guidance — just the core of the brief so I can start writing today."
+        },
+        {
+          "label": "Client-facing version with justification",
+          "whenToUse": "Use this when the brief will be presented to a client or external stakeholder who wasn't in the room for the product discussion and needs to understand why each recommendation was made, not just what it is.",
+          "prompt": "You are a senior marketing strategist preparing a campaign brief to present to a client. Use only the information in the product description below; where you need to make an assumption, state it clearly as an assumption and flag it with [ASSUMPTION].\n\nProduct description: [PASTE YOUR RAW PRODUCT DESCRIPTION]\nCampaign goal: [e.g. drive trial sign-ups / launch awareness / holiday sales]\nBudget or scale (if known): [e.g. small paid social test / full multi-channel launch]\n\nProduce the same 9-section brief (Product Summary, Target Audience, Core Problem, Positioning Statement, Key Message, Proof Points, Recommended Channels, Tone and Voice, Success Metric), but after each of the Target Audience, Positioning Statement, and Recommended Channels sections, add one sentence explaining why that recommendation follows from the product description — written for a client seeing this reasoning for the first time. Keep it under 550 words total."
+        },
+        {
+          "label": "When you only have a product URL or landing page, not notes",
+          "whenToUse": "Use this when you don't have written notes yet and are starting from an existing website or landing page instead — paste the page's visible text rather than trying to summarize it yourself first.",
+          "prompt": "You are a senior marketing strategist writing a campaign brief for an internal team. Below is the raw text copied from the product's website or landing page — treat this as your only source of truth, and where you need to make an assumption beyond what's stated, flag it clearly with [ASSUMPTION].\n\nWebsite/landing page text: [PASTE THE FULL VISIBLE TEXT FROM THE PRODUCT PAGE]\nCampaign goal: [e.g. drive trial sign-ups / launch awareness / holiday sales]\n\nProduce the same 9-section campaign brief as before. If the page text is marketing-polished rather than factual (e.g. vague claims with no specifics), note that in an [ASSUMPTION] flag rather than treating the marketing language as a confirmed fact."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Too many assumptions flagged? Narrow it down",
+          "prompt": "You flagged a lot of [ASSUMPTION] items. Here's what I actually know that should replace some of them: [PASTE THE REAL FACTS YOU HAVE]. Update the brief with these corrections, and keep only the assumptions I haven't addressed."
+        },
+        {
+          "label": "Audience feels too broad? Sharpen it",
+          "prompt": "The target audience section is too broad to be useful for writing actual ads. Narrow it to the single most valuable segment based on the product description, and describe that one segment specifically enough that I could picture one real person in it — their role or life situation, and the one thing they're frustrated about right now."
+        },
+        {
+          "label": "Check nothing was invented",
+          "prompt": "Go back through every section of the brief and check: is there any specific fact, number, or claim that isn't either directly from my product description or clearly flagged as [ASSUMPTION]? List anything you find so I can fix it."
+        },
+        {
+          "label": "Turn it into a one-page client summary",
+          "prompt": "Condense this brief into a one-page summary I could paste into a client email: a 2-sentence overview of the strategy, the audience in one sentence, the key message in one sentence, and the recommended first channel. No headers, just plain paragraphs."
+        }
+      ],
+      "walkthrough": "Maria runs marketing for a three-person team at a small logistics software company. Her manager asks for a campaign brief for a new feature — automated delivery-window notifications — by end of day, and Maria has 20 minutes before her next meeting.\n\nShe opens Claude and pastes in the lesson's prompt. For the product description, she writes out what she actually knows: \"A feature inside our existing delivery software that automatically texts customers a 2-hour delivery window and lets them reschedule. Currently in beta with 12 customers, full launch planned for next month. We don't have pricing set yet — it may be a paid add-on.\" For campaign goal, she writes \"launch awareness — this is brand new and most of our existing customers don't know it exists yet.\" She leaves budget blank since it hasn't been decided.\n\nClaude returns a nine-section brief. The target audience section names two segments — logistics managers at mid-size delivery companies, and their customer-support teams who currently field \"where's my order\" calls — and flags \"[ASSUMPTION] pricing not yet confirmed, brief assumes this may be positioned as free during beta.\" The positioning statement and key message both center on reducing support tickets, a benefit Maria's notes actually supported.\n\nMaria reads it once through, then sends the \"sharpen the audience\" follow-up, since the two segments felt too broad to write a headline against. Claude narrows it to logistics managers specifically, describing one as someone who fields angry calls every afternoon during peak delivery hours.\n\nMaria pastes the finished brief into her team's shared doc. Total time: 14 minutes, including her own read-through — well under her deadline."
+    },
+    "mkt-b2-product-brief-to-20-ad-angles": {
+      "placeholders": [
+        {
+          "name": "PRODUCT NAME",
+          "what": "The actual name of the product or service you're advertising — just the name itself, not a description. This gets used throughout the ad angles so the copy reads naturally instead of saying \"the product\" repeatedly; if you're testing an unnamed or internal-codename product, use whatever name you'd actually put in an ad.",
+          "examples": [
+            "FocusBox (coffee subscription)",
+            "TeamShield (browser extension)",
+            "RetainerPitch (online course)"
+          ]
+        },
+        {
+          "name": "PASTE BRIEF OR PRODUCT DESCRIPTION + AUDIENCE",
+          "what": "This is the campaign brief from the previous lesson (or, if you haven't run that lesson, a short product description plus who you're selling to). The angles the AI generates are only as good as this input — a brief that already names the audience's pain points and the product's real benefits gives the AI real material to build 20 different angles from, instead of guessing at generic ones.",
+          "examples": [
+            "Product: FocusBox, a $28/month coffee subscription shipping beans from a different small farm each month. Audience: home coffee enthusiasts who've upgraded past supermarket beans but don't have time to research and order from individual roasters themselves. Key pain: decision fatigue picking a new roaster every month; key benefit: someone else does the curation for them.",
+            "Product: TeamShield, a website-blocking browser extension with shared team blocklists, $6/user/month. Audience: engineering managers at 10-30 person startups whose teams complain about Slack and social media eating into deep-work time. Key pain: individual willpower-based blockers don't work when the whole team needs to buy in together.",
+            "Product: RetainerPitch, a $197 course teaching freelance designers to sell retainer contracts instead of one-off projects. Audience: freelance graphic designers making $40-70k/year who are tired of constantly hunting for the next one-off gig. Key pain: income unpredictability; key benefit: recurring monthly revenue from the same 3-5 clients."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Fewer, higher-effort angles for a small test budget",
+          "whenToUse": "Use this when you can only realistically test 6-8 ad variants (small budget, limited ad spend), so you'd rather get fewer angles done well than 20 you'll never use.",
+          "prompt": "You are a direct-response advertising strategist. Based on the campaign brief below, generate 8 distinct ad angles for [PRODUCT NAME], covering at minimum these 4 categories (2 angles each): pain/problem-led, outcome/aspiration-led, objection-handling, and curiosity/contrarian. For each angle, give a one-line ad hook (under 12 words) and a one-sentence explanation of the psychology behind it. Do not repeat the same core idea across angles.\n\nCampaign brief: [PASTE BRIEF OR PRODUCT DESCRIPTION + AUDIENCE]"
+        },
+        {
+          "label": "Angles for a specific platform's format",
+          "whenToUse": "Use this once you've picked a primary channel and need angles already shaped for that platform's conventions, instead of generic angles you'll have to reformat later.",
+          "prompt": "You are a direct-response advertising strategist writing specifically for [NAME THE PLATFORM, e.g. Google Search ads / TikTok organic-style video ads / LinkedIn sponsored posts]. Based on the campaign brief below, generate 20 distinct ad angles for [PRODUCT NAME], grouped into these 5 categories (4 angles each): pain/problem-led, outcome/aspiration-led, social proof/authority-led, objection-handling, curiosity/contrarian. Write each angle's hook in the format and length that actually works on this specific platform, not a generic ad line, and note briefly why that format fits the platform.\n\nCampaign brief: [PASTE BRIEF OR PRODUCT DESCRIPTION + AUDIENCE]"
+        },
+        {
+          "label": "Advanced: angles targeted at a second, different audience segment",
+          "whenToUse": "Use this when you're expanding beyond your first audience segment and want angles built specifically for a second, distinct type of buyer rather than reusing the same 20 angles for everyone.",
+          "prompt": "You are a direct-response advertising strategist. Based on the campaign brief below, generate 20 distinct ad angles for [PRODUCT NAME] written specifically for this second audience segment: [DESCRIBE THE SECOND AUDIENCE SEGMENT AND HOW THEY DIFFER FROM THE FIRST]. Group into the same 5 categories (pain-led, outcome-led, social proof-led, objection-handling, curiosity-led), 4 angles each. Each angle must reflect this segment's specific situation, not be a generic angle that could apply to any buyer. For each angle, give a one-line hook and a one-sentence psychology explanation.\n\nCampaign brief: [PASTE BRIEF OR PRODUCT DESCRIPTION + AUDIENCE]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "A category feels like a duplicate? Replace it",
+          "prompt": "The pain-led angles feel too similar to the objection-handling angles — they're making basically the same argument. Regenerate the 4 pain-led angles so they're built on a genuinely different psychological hook, not just reworded."
+        },
+        {
+          "label": "Hooks feel vague? Make them specific",
+          "prompt": "Several of these hooks are vague enough to apply to almost any product in this category. Rewrite the ones that don't name a specific detail, number, or outcome from the brief, and make each one concrete enough that it couldn't be reused for a competitor."
+        },
+        {
+          "label": "Turn the shortlist into full one-line ad copy",
+          "prompt": "Here are the angles I'm shortlisting: [PASTE YOUR 6-8 SHORTLISTED HOOKS]. For each one, write a complete one-line ad (hook plus a follow-up sentence and a call to action) ready to test, not just the hook alone."
+        },
+        {
+          "label": "Check nothing crosses into an unsupported claim",
+          "prompt": "Review all 20 angles and flag any hook that implies a specific stat, guarantee, or comparison to a competitor that isn't actually supported by the brief I gave you."
+        }
+      ],
+      "walkthrough": "Devon is a freelance media buyer running Meta ads for a client who sells TeamShield, the team-focused website blocker from the earlier lesson. The client has approved a small test budget and Devon needs a real spread of angles to test, not one idea repeated.\n\nDevon opens ChatGPT and pastes in the ad-angles prompt, filling in \"TeamShield\" as the product name and pasting a short brief: the audience is engineering managers at 10-30 person startups, the pain is individual blockers failing because the whole team needs to buy in, and the benefit is shared team blocklists that work company-wide.\n\nThe AI returns 20 angles across five labeled categories. Under pain-led: \"Your team's willpower isn't the problem. Your tools are.\" Under objection-handling: \"No, your team won't hate you for this — here's why.\" Under curiosity-led: \"The one Slack setting most engineering teams get wrong.\" Devon scans the category headers first, as the lesson suggests, and notices the social-proof category leans heavily on a specific stat the brief never mentioned.\n\nDevon sends the follow-up asking the AI to check for unsupported claims. It flags two hooks that implied a specific percentage improvement with no source, and Devon has them rewritten to reference the pain point generally instead of a fabricated number.\n\nDevon shortlists 7 angles spanning four categories, then sends the follow-up turning the shortlist into full one-line ads with hooks, follow-up sentences, and calls to action. The whole process — from opening the prompt to a client-ready ad set — takes about 12 minutes, well within the lesson's estimate."
+    },
+    "mkt-b3-generate-improve-ad-variants": {
+      "placeholders": [
+        {
+          "name": "X",
+          "what": "This is the maximum character count each hook is allowed to be, matching whatever platform you named — for example Google search headlines cap at 30 characters, while a Meta feed ad hook has more room before it gets cut off. Check the actual limit for your specific ad placement before filling this in, since a hook that's too long will get truncated or rejected by the ad platform.",
+          "examples": [
+            "30 (Google Search headline limit)",
+            "40 (Meta feed ad hook, comfortable read-length before truncation)",
+            "70 (LinkedIn sponsored post first-line limit before \"see more\")"
+          ]
+        },
+        {
+          "name": "platform",
+          "what": "This should exactly match whatever you type into the \"Platform:\" field just below it in the same prompt — it's not a separate decision, just a repeated reference so the character-limit instruction and the platform field agree with each other. Keep the wording identical in both places so the AI doesn't have to guess which platform you mean.",
+          "examples": [
+            "Meta feed ad",
+            "Google search headline",
+            "LinkedIn sponsored post"
+          ]
+        },
+        {
+          "name": "PASTE ANGLE FROM PREVIOUS LESSON",
+          "what": "This is the one ad angle you've already picked as a winner — a single hook and its underlying idea, not the full 20-angle list. Pull it directly from the ad-angles lesson output; a good value names the specific psychological angle (e.g. \"pain-led: individual willpower doesn't work for team habits\"), not just a vague theme like \"productivity.\"",
+          "examples": [
+            "Pain-led: \"Your team's willpower isn't the problem. Your tools are.\" — the angle is that individual blockers fail because habit change needs to be a team-wide default, not a personal choice.",
+            "Outcome-led: \"Get 2 hours back every week.\" — the angle is a concrete time-savings outcome from automating manual scheduling.",
+            "Objection-handling: \"No setup team required — live in one afternoon.\" — the angle directly answers the fear that adopting new software means a painful IT rollout."
+          ]
+        },
+        {
+          "name": "e.g. Meta feed ad, Google search headline",
+          "what": "Name the exact platform and ad format you're writing for, since hook length, tone, and what counts as a \"pattern interrupt\" differ a lot between a search headline someone is actively looking for and a feed ad interrupting someone's scroll. Being specific here (not just \"social media\") is what lets the AI write hooks that actually fit the format's real constraints.",
+          "examples": [
+            "Meta feed ad",
+            "Google search headline",
+            "LinkedIn sponsored content"
+          ]
+        },
+        {
+          "name": "PASTE BODY COPY",
+          "what": "The body text of the ad that stays identical across all 6 hook variants — this is what makes the test valid, since only the hook is allowed to change. Use the actual body copy you plan to run, not a placeholder, since the hooks need to lead naturally into this specific body.",
+          "examples": [
+            "Most \"focus\" apps rely on you remembering to turn them on. TeamShield turns on automatically for your whole team during work hours, with one shared blocklist everyone follows — no individual willpower required.",
+            "FocusBox ships freshly roasted beans from a different small farm every month, with a tasting card explaining what makes each one different. No more standing in the coffee aisle guessing.",
+            "RetainerPitch teaches you the exact scripts and pricing structure freelance designers use to turn one-off clients into $2-4k/month retainers — without sounding pushy or overpriced."
+          ]
+        },
+        {
+          "name": "e.g. \"Start your free trial\"",
+          "what": "The exact call-to-action text that also stays identical across all 6 variants, matching whatever CTA button or link text you'll actually use on the ad or landing page. Keep it short and action-based; a mismatch between this and your real CTA button means the test doesn't reflect what will actually run.",
+          "examples": [
+            "\"Start your free trial\"",
+            "\"Get this month's box\"",
+            "\"See the pricing scripts\""
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Test the body copy instead of the hook",
+          "whenToUse": "Use this once you've already found a winning hook and want to isolate a different variable — testing which body copy converts best while keeping the hook and CTA fixed.",
+          "prompt": "You are an ad copywriter. Below is a winning ad hook and platform. Generate 5 variants that test only the BODY COPY (2-3 sentences) while keeping the hook and CTA identical.\n\nWinning hook: [PASTE HOOK]\nPlatform: [e.g. Meta feed ad, Google search headline]\nCTA (keep identical): [e.g. \"Start your free trial\"]\n\nEach body variant should try a different persuasion approach: one leads with a specific mechanism/how-it-works, one leads with a concrete outcome, one leads with removing a specific objection, one leads with a short relatable scenario, one leads with a comparison to the old/painful way of doing things. Score each 1-5 on clarity and specificity, with one sentence of reasoning, then rewrite the two lowest scorers."
+        },
+        {
+          "label": "Quick version: 3 variants, no scoring, for a fast test",
+          "whenToUse": "Use this when you need something live today and don't have time for the full critique-and-revise loop — good for a scrappy first test rather than a polished one.",
+          "prompt": "You are an ad copywriter. Below is one ad angle and platform. Generate 3 hook variants only, keeping body and CTA identical. Each hook under [X] characters for [platform]. No scoring needed — just make sure the 3 hooks are genuinely different approaches (not 3 rewordings), and briefly note in one line what's different about each.\n\nAngle: [PASTE ANGLE FROM PREVIOUS LESSON]\nPlatform: [e.g. Meta feed ad, Google search headline]\nBody copy (keep identical): [PASTE BODY COPY]\nCTA (keep identical): [e.g. \"Start your free trial\"]"
+        },
+        {
+          "label": "Advanced: test across two platforms at once",
+          "whenToUse": "Use this when you're running the same angle on two different platforms and want the character limits and format conventions respected for each, rather than writing one set and reformatting by hand.",
+          "prompt": "You are an ad copywriter. Below is one ad angle. Generate 6 hook variants for EACH of two platforms (12 total), testing only the hook, with body and CTA identical within each platform. Respect each platform's real character limits and tone conventions — do not just copy the same 6 hooks to both.\n\nAngle: [PASTE ANGLE FROM PREVIOUS LESSON]\nPlatform 1: [e.g. Meta feed ad] — character limit: [X]\nPlatform 2: [e.g. Google search headline] — character limit: [X]\nBody copy (keep identical per platform): [PASTE BODY COPY]\nCTA (keep identical): [e.g. \"Start your free trial\"]\n\nScore each hook 1-5 on specificity, clarity, and pattern interrupt, with one sentence of reasoning."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Scores feel too generous? Push back",
+          "prompt": "Be harsher in your scoring. Re-score all 6 variants, and for anything scoring 4 or above, tell me specifically what would need to be true for it to be a 5 — don't give high scores just because a hook is competently written."
+        },
+        {
+          "label": "Rewrite didn't fix the real problem? Say so explicitly",
+          "prompt": "Look at the two rewritten hooks again. For each one, confirm in one sentence whether it actually fixes the specific weakness you originally named, or if it just changed the wording without addressing that weakness."
+        },
+        {
+          "label": "Too similar to each other? Force more distance",
+          "prompt": "Some of these variants read too similarly to each other. Rewrite them so each uses a distinctly different opening technique (a question, a number/stat, a direct command, a scenario, a contrarian statement) rather than variations on the same sentence structure."
+        },
+        {
+          "label": "Sounds like generic ad copy? Make it sound human",
+          "prompt": "A few of these hooks sound like generic ad-copy filler rather than something a real person would say. Rewrite the ones that feel that way so they sound like a specific, slightly opinionated person talking, not a marketing template."
+        }
+      ],
+      "walkthrough": "Priya freelances as a copywriter and just picked her strongest angle from the previous lesson for a client selling FocusBox, the coffee subscription. Her next job is turning that one angle into testable hook variants for a Meta feed ad campaign.\n\nShe opens Claude and pastes the ad-variants prompt. For the angle, she writes: \"Outcome-led: someone else curates a new small-farm roaster every month so you stop standing in the coffee aisle guessing.\" Platform: Meta feed ad. Character limit: 40. Body copy: the same three sentences the client already approved about monthly curation and the tasting card. CTA: \"Get this month's box.\"\n\nClaude returns 6 hooks — a question hook (\"Tired of guessing at the coffee aisle?\"), a direct-statement hook (\"We pick your next favorite roaster for you\"), a specificity hook naming the tasting card, and others — each scored on specificity, clarity, and pattern interrupt, with one sentence of reasoning per score. Two hooks score low: one is vague (\"Great coffee, delivered\"), and one is wordy enough it might get cut off.\n\nPriya reads the reasoning behind each score, not just the numbers, since that's where the useful feedback lives. She sends the follow-up asking Claude to be harsher on anything scoring 4 or above, since she suspects the scoring is a little generous. That pass tightens two more hooks.\n\nPriya then asks for the rewrite of the two original lowest scorers, addressing the named weaknesses directly. She reads all 6 final hooks aloud, as the lesson suggests, and cuts one that still sounds like filler even after scoring well. The whole pass takes about 11 minutes, and she hands the client a set of 5 genuinely distinct hooks ready to test."
+    },
+    "mkt-b4-landing-page-copy-that-converts": {
+      "placeholders": [
+        {
+          "name": "PRODUCT/OFFER",
+          "what": "The specific product or offer this landing page is selling — name it plainly, the way you would in a one-line pitch, not a full description (the campaign brief below carries the detail). This keeps the AI anchored on what's actually being sold when it writes every section.",
+          "examples": [
+            "FocusBox monthly coffee subscription, $28/month",
+            "TeamShield team plan, $6/user/month, free 14-day trial",
+            "RetainerPitch course, $197 one-time"
+          ]
+        },
+        {
+          "name": "PASTE AD HOOK",
+          "what": "The exact hook from the specific ad that's driving traffic to this page — copy it word for word, not a paraphrase, since the whole point of this lesson is making the page headline continue that exact promise. If you're testing multiple ad hooks, run this prompt once per hook rather than trying to cover all of them on one page.",
+          "examples": [
+            "Tired of guessing at the coffee aisle?",
+            "Your team's willpower isn't the problem. Your tools are.",
+            "Stop pricing every project from scratch."
+          ]
+        },
+        {
+          "name": "PASTE BRIEF",
+          "what": "Your campaign brief from the earlier lesson (or a short product description plus audience if you haven't run that lesson) — this gives the AI the audience, pain points, and tone it needs to write the problem, solution, and objection sections accurately, rather than guessing generically.",
+          "examples": [
+            "Audience: home coffee enthusiasts who've outgrown supermarket beans but don't have time to research individual roasters. Pain: decision fatigue and inconsistent quality when ordering blind. Tone: warm, a little playful, coffee-nerd-friendly but not snobby.",
+            "Audience: engineering managers at 10-30 person startups. Pain: individual website blockers fail because habit change needs the whole team on board, not just one person's willpower. Tone: direct, no corporate jargon, speaks like one engineer to another.",
+            "Audience: freelance graphic designers earning $40-70k/year, tired of unpredictable one-off project income. Pain: constantly re-pitching from zero for every new client. Tone: confident and practical, not hype-y."
+          ]
+        },
+        {
+          "name": "PASTE FINAL COPY",
+          "what": "The complete, reviewed landing-page copy from the first half of this prompt — all six sections, after you've checked it for message match against the ad hook. This is what gets handed to Codex to actually build into a page, so make sure it's the version you've already approved, not a rough first draft.",
+          "examples": [
+            "Full six-section copy: Hero headline \"Stop guessing at the coffee aisle\" + subheadline + CTA button \"Get this month's box\"; Problem section on decision fatigue; Solution section on monthly curation; Proof section with two [PLACEHOLDER] proof points; Objection section addressing \"what if I don't like a roast\"; Final CTA section with a one-line urgency note.",
+            "Full six-section copy for TeamShield: Hero headline \"Your team's willpower isn't the problem\" + subheadline + CTA \"Start free trial\"; Problem section on individual blockers failing team-wide; Solution section on shared blocklists; Proof section with a beta-customer quote; Objection section on setup effort; Final CTA section.",
+            "Full six-section copy for RetainerPitch: Hero headline \"Stop pricing every project from scratch\" + subheadline + CTA \"See the pricing scripts\"; Problem section on unpredictable income; Solution section on the retainer pitch framework; Proof section with a student outcome [PLACEHOLDER]; Objection section on \"will clients actually say yes to a retainer\"; Final CTA section."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Copy only, no page build",
+          "whenToUse": "Use this when you just need the landing-page copy itself — for review, translation, or handing to a designer who'll build the page manually — without generating an HTML page.",
+          "prompt": "You are a conversion copywriter. Write landing-page copy for [PRODUCT/OFFER] that a visitor will land on immediately after clicking an ad with this exact hook: [PASTE AD HOOK]. The headline must directly continue that promise — do not write a generic brand headline.\n\nCampaign brief: [PASTE BRIEF]\n\nWrite these sections: 1. Hero (headline under 10 words + subheadline + CTA button text) 2. Problem (2-3 sentences) 3. Solution (3-4 sentences, no jargon) 4. Proof (structure for 2-3 proof points, use [PLACEHOLDER] for anything you don't have yet) 5. Objection-handling (2-3 real hesitations) 6. Final CTA section.\n\nKeep sentences short, one adjective max in a row. Do not build a page — copy only."
+        },
+        {
+          "label": "Rebuild an underperforming page's copy without touching the layout",
+          "whenToUse": "Use this when a page is already live and getting traffic but converting poorly, and you want to rewrite the copy against its actual known drop-off point rather than starting from a blank brief.",
+          "prompt": "You are a conversion copywriter fixing an underperforming landing page. Below is the ad hook driving traffic, the current copy, and what we know about where visitors drop off.\n\nAd hook driving traffic: [PASTE AD HOOK]\nCurrent page copy: [PASTE CURRENT COPY]\nWhat we know about the drop-off: [e.g. \"most visitors leave within 5 seconds and never scroll,\" \"analytics show high scroll-through but low CTA clicks\"]\n\nRewrite the copy to fix the specific drop-off point named above. If visitors leave immediately, focus on message match between the hook and the hero headline. If they scroll but don't click, focus on the objection-handling and final CTA sections. Keep every other section's core claims the same unless they're part of the problem. Explain in one sentence per changed section what you changed and why."
+        },
+        {
+          "label": "Build a second page variant for an A/B test",
+          "whenToUse": "Use this when you already have one working landing page and want a genuinely different second version to test against it, not a copy with minor wording changes.",
+          "prompt": "You already wrote landing-page copy for [PRODUCT/OFFER] based on this ad hook: [PASTE AD HOOK]. Here is that first version: [PASTE FINAL COPY].\n\nWrite a second, structurally different version for an A/B test — same hook and same core offer, but change the structural approach (e.g. if version 1 opened with the problem, open version 2 with a bold outcome claim instead; if version 1 used short punchy sections, try a slightly longer, more narrative-driven flow). The two versions should feel like genuinely different tests of what convinces this audience, not the same copy reworded.\n\nThen hand both to Codex with: Build two single-page HTML landing pages, one for each version above, each with the hero visible without scrolling."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Headline doesn't match the ad? Fix it",
+          "prompt": "The hero headline doesn't feel like a direct continuation of this exact ad hook: [PASTE AD HOOK]. Rewrite just the headline and subheadline so a visitor clicking that specific ad would feel like they landed exactly where they expected, not on a generic page."
+        },
+        {
+          "label": "Objection section feels generic? Get specific",
+          "prompt": "The objection-handling section reads like generic reassurance. Rewrite it to address the 2-3 specific, real reasons someone matching this audience would hesitate: [DESCRIBE THE AUDIENCE AGAIN IF NEEDED]. Name the actual hesitation in the copy, don't just reassure vaguely."
+        },
+        {
+          "label": "CTA buried below the fold? Fix the build",
+          "prompt": "In the page you built, the CTA button isn't visible without scrolling on a standard screen. Rebuild the HTML so the headline, subheadline, and CTA button all fit within the first screen (roughly 700px of height) before any scrolling."
+        },
+        {
+          "label": "Check for invented proof points",
+          "prompt": "Check the Proof section for anything that reads like a real stat, number, or testimonial rather than a [PLACEHOLDER]. List anything you find so I can confirm it's real or replace it with a placeholder before this goes live."
+        }
+      ],
+      "walkthrough": "Sam handles marketing for RetainerPitch, the freelance-pricing course from earlier lessons. The winning ad hook from testing was \"Stop pricing every project from scratch,\" and Sam needs a landing page that continues that exact promise instead of a generic course-sales page.\n\nSam opens ChatGPT and pastes the lesson's combined copy-and-build prompt. Product/offer: \"RetainerPitch course, $197 one-time.\" Ad hook: \"Stop pricing every project from scratch.\" Brief: freelance designers earning $40-70k/year, tired of unpredictable one-off income, tone confident and practical.\n\nThe AI writes six sections. The hero headline reads \"Stop pricing every project from scratch — sell retainers instead,\" directly extending the ad hook rather than opening with the brand name. The proof section correctly uses two [PLACEHOLDER] tags for a student outcome and a testimonial Sam hasn't collected yet, instead of inventing one. The objection section names a real hesitation — \"will clients actually agree to a retainer\" — rather than generic reassurance.\n\nSam reviews the copy against the ad hook, confirms message match, then pastes the finished copy into the Codex build instruction included in the same prompt. Codex returns a single HTML file. Opening it, Sam notices the CTA button sits just below the visible screen on a laptop-sized window.\n\nSam sends the \"CTA buried below the fold\" follow-up. Codex rebuilds the layout, tightening the hero section so the headline, subheadline, and button all fit above the first scroll. Sam reads the page top to bottom as a first-time visitor would, confirms the promise from the ad is delivered immediately, and saves the file. Total time from prompt to working page: about 16 minutes."
+    },
+    "mkt-i1-email-sequence-from-core-offer": {
+      "placeholders": [
+        {
+          "name": "PASTE OFFER DETAILS: WHAT, PRICE/TERMS, DEADLINE IF ANY",
+          "what": "The actual offer this sequence is built around — what's being offered, the real price or terms, and any real deadline. A good value is specific and true (a real discount, a real cutoff date); a bad value is a vague description like \"a great deal\" or a deadline you made up to sound urgent, which the prompt explicitly warns against inventing.",
+          "examples": [
+            "Early-bird pricing on our project management course: $200 off the $799 list price, ends in 7 days, includes lifetime access to updates.",
+            "Free 30-day trial of our scheduling tool, no credit card required, converts to $49/month after the trial unless cancelled.",
+            "Annual plan discount: pay yearly and get 2 months free compared to monthly billing, available year-round, no deadline."
+          ]
+        },
+        {
+          "name": "PASTE AUDIENCE FROM BRIEF",
+          "what": "Who this sequence is being sent to — pull this from your campaign brief if you have one, or describe them in a sentence or two if not. Include what they already know or don't know about you, since that changes how much explaining Email 1 needs to do.",
+          "examples": [
+            "Small agency owners (2-15 employees) who signed up for a free project-tracking template but haven't purchased anything yet; they know our brand name but haven't seen the paid product.",
+            "Existing free-trial users of our scheduling tool, 12 days into a 30-day trial, who have logged in at least twice but haven't invited teammates yet.",
+            "Newsletter subscribers who've been on the list for 3+ months, opened at least 2 of the last 5 emails, but have never clicked through to the pricing page."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "3-email shorter version for a lower-commitment offer",
+          "whenToUse": "Use this for a smaller offer (a free tool, a low-priced product, a webinar signup) where a full 5-email sequence would be overkill relative to the size of the ask.",
+          "prompt": "You are an email marketer writing a 3-email sequence for one offer. Each email has ONE job:\nEmail 1 (Value): teach something genuinely useful related to the problem this offer solves. Mention the offer in one sentence at the end only.\nEmail 2 (Objection): directly name and answer the single biggest reason this audience hesitates.\nEmail 3 (Close): a short, direct final ask with a clear CTA and a one-line recap of the offer.\n\nOffer: [PASTE OFFER DETAILS: WHAT, PRICE/TERMS, DEADLINE IF ANY]\nAudience: [PASTE AUDIENCE FROM BRIEF]\n\nFor each email, write: subject line, preview text, and body (100-150 words). Keep voice consistent across all three. Flag with [NEEDS REAL DATA] anywhere you'd want a real stat or deadline I haven't given you. Do not invent fake urgency."
+        },
+        {
+          "label": "7-email extended launch sequence",
+          "whenToUse": "Use this for a bigger launch (a course, a major product release) where a longer runway of trust-building content justifies more than 5 touches before the close.",
+          "prompt": "You are an email marketer writing a 7-email launch sequence for one offer. Do not repeat the full pitch in every email — each has ONE job:\nEmail 1 (Value): teach something useful, mention the offer briefly at the end.\nEmail 2 (Story/Proof): a case study or scenario showing the problem being solved.\nEmail 3 (Value #2): a second, different useful tip or insight — no offer mention.\nEmail 4 (Objection #1): name and answer the biggest hesitation.\nEmail 5 (Objection #2 or FAQ): answer the second most common question or concern.\nEmail 6 (Urgency): a real reason to act now — do not invent fake scarcity.\nEmail 7 (Close): short, direct final ask with a one-line recap.\n\nOffer: [PASTE OFFER DETAILS: WHAT, PRICE/TERMS, DEADLINE IF ANY]\nAudience: [PASTE AUDIENCE FROM BRIEF]\n\nFor each email: subject line, preview text, body (120-200 words). Flag [NEEDS REAL DATA] anywhere a real stat or deadline is missing."
+        },
+        {
+          "label": "Re-engagement version for a cold list",
+          "whenToUse": "Use this for subscribers who haven't opened emails in a while — the sequence needs to re-earn attention before pitching anything, not jump straight into the offer.",
+          "prompt": "You are an email marketer writing a 4-email re-engagement sequence for subscribers who haven't opened an email from us in [NUMBER] months. Each email has ONE job:\nEmail 1 (Re-engage): acknowledge the gap honestly and lead with one genuinely useful piece of value, no offer mention.\nEmail 2 (Value): a second useful insight related to the problem this offer solves, offer mentioned in one sentence only.\nEmail 3 (Objection): name and answer the biggest reason this audience hesitates.\nEmail 4 (Close or opt-down): a direct ask with the offer, or an easy option to stay subscribed at lower frequency instead of the full offer.\n\nOffer: [PASTE OFFER DETAILS: WHAT, PRICE/TERMS, DEADLINE IF ANY]\nAudience: [PASTE AUDIENCE FROM BRIEF]\n\nSubject line, preview text, and 100-150 word body for each. Do not invent urgency to compensate for the cold list."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check no email repeats the full pitch",
+          "prompt": "Read back through emails 2 through 5 and tell me if any of them restate the full offer pitch at length instead of just a brief mention. Rewrite any that do, trimming the offer mention back to one sentence."
+        },
+        {
+          "label": "Subject lines don't feel like one sequence",
+          "prompt": "These subject lines feel like they could be from five different senders. Rewrite them so they clearly read as a connected sequence — consistent tone and a subtle thread between them — without becoming repetitive."
+        },
+        {
+          "label": "Objection email feels too soft — sharpen it",
+          "prompt": "The objection email dances around the concern instead of naming it directly. Rewrite it to state the objection plainly in the first two sentences, the way the prospect would actually think it, before answering it."
+        },
+        {
+          "label": "Verify no invented urgency or data",
+          "prompt": "Check every email for any deadline, statistic, or scarcity claim and tell me exactly which ones came from what I gave you versus anything you added. Flag anything not traceable to my input with [NEEDS REAL DATA]."
+        }
+      ],
+      "walkthrough": "Owen runs email for a project management tool and wants a sequence to promote a $200-off early-bird price on their course, ending in 7 days. He has a campaign brief from an earlier lesson describing the audience: small agency owners who downloaded a free template but haven't bought anything.\n\nHe opens Claude and pastes the sequence prompt, filling in the offer details (price, discount, real 7-day deadline) and the audience description from his brief.\n\nClaude returns five emails: Email 1 teaches a real tip about running smoother client handoffs, mentioning the course in one line at the end; Email 2 tells a short case-study-style scenario about an agency reducing missed deadlines; Email 3 names the actual objection (\"I don't have time for a course right now\") and answers it directly; Email 4 uses the real 7-day deadline rather than inventing a countdown; Email 5 is short and direct, recapping the price and deadline in one line. Subject lines and preview text are included for each.\n\nReading through, Owen notices Email 3's objection section feels a little soft — it hints at the concern rather than stating it plainly. He sends the follow-up: \"The objection email dances around the concern instead of naming it directly — rewrite it to state the objection plainly in the first two sentences.\" Claude rewrites the opening to say outright, \"You're busy. A course is probably the last thing on your list right now,\" before answering it.\n\nOwen checks that no email past #2 repeats the full pitch, confirms the deadline matches his real one, and schedules the five sends across the week. Total time: about 18 minutes."
+    },
+    "mkt-i2-monthly-social-content-calendar": {
+      "placeholders": [
+        {
+          "name": "PLATFORM(S)",
+          "what": "Which social platform or platforms this calendar covers. List all of them if you're posting the same month across multiple, since format constraints differ by platform and the prompt needs to know which ones to account for.",
+          "examples": [
+            "Instagram and LinkedIn",
+            "TikTok only",
+            "Facebook, Instagram, and X/Twitter"
+          ]
+        },
+        {
+          "name": "e.g. 40% value/education, 20% engagement, 20% proof, 20% promotion",
+          "what": "The ratio of content types you want across the month, decided before generating anything. A good mix keeps promotional posts a minority; a bad one (skipping this entirely) tends to default toward mostly-promotional content, which is exactly the failure this lesson prevents.",
+          "examples": [
+            "40% value/education, 20% engagement, 20% proof/social proof, 20% promotion",
+            "50% value/education, 25% behind-the-scenes/culture, 15% proof, 10% promotion",
+            "30% value, 30% engagement/community, 20% proof, 20% promotion"
+          ]
+        },
+        {
+          "name": "LIST 4-6 THEMES",
+          "what": "The core topics or subject areas this month's content will rotate through, so posts don't repeat the same idea. Good themes are specific enough to generate distinct posts from (\"customer wins,\" \"product tips\") rather than one broad theme like \"our business,\" which produces repetitive content.",
+          "examples": [
+            "Product tips for saving time on invoicing, customer success stories, industry trends in small-business accounting, behind-the-scenes of our team, common bookkeeping mistakes",
+            "New menu items, sourcing/ingredient stories, customer photos and reviews, seasonal specials, staff spotlights",
+            "Beginner coding tips, student project showcases, industry career advice, common learner mistakes, upcoming course launches"
+          ]
+        },
+        {
+          "name": "PASTE FROM BRIEF",
+          "what": "Your brand voice description, pulled directly from your campaign brief if you have one, or written fresh in a sentence or two — specific enough that the calendar's captions sound consistent, not generic.",
+          "examples": [
+            "Friendly and a little irreverent, short sentences, occasional emoji, avoids corporate jargon",
+            "Warm, expert, reassuring — speaks to a stressed small-business owner like a knowledgeable friend, not a formal advisor",
+            "Energetic and direct, speaks to ambitious beginners, avoids being condescending about what they don't know yet"
+          ]
+        },
+        {
+          "name": "e.g. 5 posts/week",
+          "what": "How many posts per week you actually plan to publish on this platform. Be realistic about what you can sustain — a calendar planned for 7 posts/week that you actually post 3 times a week just creates a backlog of unused drafts.",
+          "examples": [
+            "5 posts/week",
+            "3 posts/week",
+            "1 post/day (7 posts/week)"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Single-platform, single-week version for a faster start",
+          "whenToUse": "Use this when planning a full 30-day calendar feels like too much upfront commitment — plan one platform, one week, and expand once it's working.",
+          "prompt": "You are a social media strategist. Build a 7-day content calendar for [PLATFORM] following this content mix: [e.g. 40% value/education, 20% engagement, 20% proof, 20% promotion].\n\nThemes to rotate across (don't repeat the same idea twice): [LIST 3-4 THEMES]\nBrand voice: [PASTE FROM BRIEF]\nPosting frequency: [e.g. 5 posts/week]\n\nFor each post: date, content type, theme, caption, and a one-line visual/format note. Do not place two promotional posts on consecutive days. End with a count of posts per content type."
+        },
+        {
+          "label": "Campaign-tied version around a launch date",
+          "whenToUse": "Use this when the month's calendar needs to build toward a specific launch or event, not just rotate general themes evenly.",
+          "prompt": "You are a social media strategist. Build a 30-day content calendar for [PLATFORM(S)] that builds toward a launch on [LAUNCH DATE], following this content mix: [e.g. 30% value, 30% engagement, 20% proof, 20% promotion].\n\nThemes to rotate: [LIST 4-6 THEMES]\nWhat's launching: [DESCRIBE THE LAUNCH]\nBrand voice: [PASTE FROM BRIEF]\nPosting frequency: [e.g. 5 posts/week]\n\nStructure the month in three phases: weeks 1-2 general value/engagement content with no launch mention, week 3 building anticipation (teasers, behind-the-scenes of the launch) without revealing full details, week 4 the launch itself and immediate follow-up. Label which phase each post belongs to. End with a content-type count to confirm the mix ratio."
+        },
+        {
+          "label": "Repurposed-from-existing-content version",
+          "whenToUse": "Use this when you already have blog posts, videos, or other content this month and want the calendar built around repurposing it rather than from scratch.",
+          "prompt": "You are a social media strategist. Build a 30-day content calendar for [PLATFORM(S)] built primarily around repurposing existing content, following this content mix: [e.g. 40% value, 20% engagement, 20% proof, 20% promotion].\n\nExisting content to draw from this month: [LIST YOUR SOURCE PIECES, e.g. 3 blog posts, 1 webinar, 2 customer case studies]\nBrand voice: [PASTE FROM BRIEF]\nPosting frequency: [e.g. 5 posts/week]\n\nFor each post, note which source piece (if any) it's built from, and don't build more than 3 posts total from any single source piece to avoid visible repetition. Give date, content type, theme, caption, and format note for each. End with a content-type count table."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Mix looks skewed — check and fix it",
+          "prompt": "Recount the actual content types in the calendar against the ratio I specified and tell me exactly where it's off. Adjust the posts needed to bring the real count back in line with the stated mix."
+        },
+        {
+          "label": "Two posts feel repetitive — replace one",
+          "prompt": "Post on [DATE] and post on [DATE] make essentially the same point. Replace the weaker of the two with a genuinely different angle from one of the stated themes."
+        },
+        {
+          "label": "Captions sound too similar across the month",
+          "prompt": "Several captions open with a similar sentence structure or start with a question every time. Rewrite for more variety in how captions open across the month, while keeping the same content types and themes."
+        },
+        {
+          "label": "Check promotional posts aren't clustered",
+          "prompt": "List every promotional post by date and confirm none are within 3 days of another. Move or replace any that are too close together."
+        }
+      ],
+      "walkthrough": "Renata handles social for a small accounting software company and needs a calendar for Instagram and LinkedIn covering the month ahead. Before opening any AI tool, she decides on her mix: 40% value/education, 20% engagement, 20% proof, 20% promotion, and writes down five themes — product tips, customer wins, industry trends, behind-the-scenes, and common bookkeeping mistakes.\n\nShe opens Claude and pastes the calendar prompt with her platforms, mix ratio, five themes, brand voice pulled from her campaign brief, and a posting frequency of 5 posts/week.\n\nClaude returns a day-by-day table: Monday is a value post on a product tip, Wednesday is an engagement post asking the audience a question about their invoicing habits, Friday is a proof post featuring a customer result, with promotional posts spread roughly a week apart rather than clustered. A closing table counts roughly 12 value, 6 engagement, 6 proof, and 6 promotion posts across the 30 days — matching her intended ratio.\n\nScanning the list, Renata notices two posts in week 2 both make the same point about saving time on manual entry. She sends the follow-up: \"These two posts make essentially the same point — replace the weaker one with a genuinely different angle from one of the stated themes.\" Claude swaps the weaker post for one about a common bookkeeping mistake instead.\n\nShe pulls out the promotional posts into a separate list, confirms none sit within 3 days of each other, and exports the calendar into her scheduling tool. Total time: about 20 minutes, most of it the initial review."
+    },
+    "mkt-i3-analyze-competitor-messaging": {
+      "placeholders": [
+        {
+          "name": "LIST 3-5 COMPETITOR NAMES OR URLS",
+          "what": "Actual named competitors — company names or website URLs — not a vague category description. Naming real companies is what lets Deep Research browse and cite current, specific sources; a vague request like \"competitors in project management\" produces generalized, unsourced results.",
+          "examples": [
+            "Asana, Monday.com, ClickUp",
+            "trainual.com, whale.io, scribehow.com",
+            "Toggl Track, Harvest, Clockify"
+          ]
+        },
+        {
+          "name": "MY PRODUCT/CATEGORY",
+          "what": "What you sell and the category it competes in, in a short phrase — this gives context for identifying a genuine gap relevant to your specific product, not a generic industry observation.",
+          "examples": [
+            "a project management tool built specifically for small creative agencies",
+            "a training documentation tool for hourly/frontline teams",
+            "a time-tracking tool built for freelancers who bill multiple clients"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Pricing-focused deep dive",
+          "whenToUse": "Use this when you specifically need current, sourced pricing details for a proposal or positioning decision, rather than a broad messaging overview.",
+          "prompt": "Research the current, publicly listed pricing and plan structure of these competitors: [LIST 3-5 COMPETITOR NAMES OR URLS]. For each, find and cite: (1) all publicly listed pricing tiers and what's included in each, (2) any free tier or trial terms, (3) the source and date the pricing was published or last confirmed. Flag clearly if a competitor doesn't publish pricing publicly rather than guessing at a figure. Then answer directly: which of these competitors is priced highest and lowest for a comparable tier, and where might [MY PRODUCT/CATEGORY] be positioned competitively on price."
+        },
+        {
+          "label": "Customer complaint / weakness research",
+          "whenToUse": "Use this as a follow-up research pass specifically looking for competitor weaknesses from real customer feedback, which is often more useful for differentiation than their own marketing claims.",
+          "prompt": "Research public customer feedback and complaints about these competitors: [LIST 3-5 COMPETITOR NAMES OR URLS]. Look specifically at review sites (G2, Capterra, Trustpilot, or similar), Reddit, or other public forums. For each competitor, cite 1-2 specific, recurring complaints with sources and dates — not a single one-off negative review. Then answer: which recurring complaints, if any, point to a specific gap that [MY PRODUCT/CATEGORY] could credibly claim to solve better? Do not state anything as a common complaint without at least one cited source."
+        },
+        {
+          "label": "Single deep competitor profile",
+          "whenToUse": "Use this when you're going up against one specific competitor in an active deal or campaign and need a thorough, single-company profile rather than a broad multi-competitor scan.",
+          "prompt": "Research the current public positioning of [ONE COMPETITOR NAME OR URL] in depth. Find and cite sources for: (1) their current homepage headline/tagline and how long it appears to have been in use if determinable, (2) their primary claimed differentiator, (3) full visible pricing/plan structure, (4) their top 2-3 proof points or claims (awards, customer counts, guarantees), (5) any recent news or product changes in the last 6 months.\n\nThen answer directly: what does this competitor clearly NOT claim or address that could be a real gap for [MY PRODUCT/CATEGORY]? Cite a source for every factual claim."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify the most important claim yourself",
+          "prompt": "Give me the direct link for the source behind the most important claim in this summary, so I can open and confirm it myself before I use it in a brief."
+        },
+        {
+          "label": "Push for what they're NOT saying",
+          "prompt": "Go deeper on part (b) — what none of these competitors clearly claim or address. Give me 2-3 more specific possible gaps, not just one, each tied to a reason you didn't find any competitor addressing it."
+        },
+        {
+          "label": "Too generic — ask for something more specific",
+          "prompt": "This reads like general category information I could find anywhere. Push for something more specific and recent about each competitor — an exact quote, a specific number, or a named initiative — rather than a broad summary."
+        },
+        {
+          "label": "Turn this into a positioning statement input",
+          "prompt": "Based on the saturated claims and the gap you identified, draft one possible positioning statement for [MY PRODUCT/CATEGORY] that avoids the saturated claim and leans into the gap. Flag it as a draft to test, not a final statement."
+        }
+      ],
+      "walkthrough": "Kwame is about to write a positioning brief for a project management tool aimed at small creative agencies, and doesn't want to guess at what competitors are currently saying. He opens Gemini and starts a Deep Research session instead of a normal chat.\n\nHe pastes the research prompt naming three real competitors — Asana, Monday.com, and ClickUp — plus his own category, a project management tool built specifically for small creative agencies. Gemini shows a short research plan before running; he skims it, sees it covers taglines, differentiators, and pricing, and lets it proceed.\n\nAbout twelve minutes later, the report comes back: a per-competitor summary with sources — each one's current homepage tagline (cited and dated), their primary claimed differentiator, visible pricing tiers, and one proof point each leads with. The synthesis notes that all three competitors currently lead with some version of \"ease of use\" or \"flexibility,\" a saturated claim, and that none of them explicitly addresses agency-specific billing or client-approval workflows — a possible gap.\n\nKwame clicks through the citation for Monday.com's tagline himself to confirm it's current, since that's the claim he's most likely to reference directly. It checks out, dated within the last month.\n\nHe sends a follow-up in the same session: \"Go deeper on what none of these competitors clearly address — give me 2-3 more specific possible gaps, not just one.\" Gemini adds two more: none of the three surface time-to-approval metrics for client work, and none specifically market to agencies under 15 people.\n\nWith three sourced, verified gaps in hand, Kwame feeds the synthesis directly into his campaign brief's positioning statement, noting the source and date next to each claim so a colleague could check it later. Total time: about 20 minutes, most of it waiting on the report — next time, since he's often at his laptop with ChatGPT open too, he might just as easily run the same brief through ChatGPT Deep Research instead."
+    },
+    "mkt-a1-repurpose-asset-into-ten-formats": {
+      "placeholders": [
+        {
+          "name": "LIST YOUR 10 FORMATS, e.g. LinkedIn post, X/Twitter thread (5-7 tweets), Instagram carousel outline (6-8 slides with slide-by-slide text), email newsletter blurb (80 words), YouTube Short script (150 words, hook in first line), quote graphic caption, FAQ snippet, blog pull-quote, one-pager bullet, internal team summary",
+          "what": "The specific list of 10 output formats you actually need, each with enough detail (length, structure) that the model can follow real platform conventions instead of guessing. A good list names concrete formats with rough length or structure notes; a bad one is a vague list like \"social posts x10\" that gives no format-specific guidance.",
+          "examples": [
+            "LinkedIn post, X/Twitter thread (6 tweets), Instagram carousel outline (7 slides), email newsletter blurb (100 words), YouTube Short script (150 words), quote graphic caption, FAQ snippet, blog pull-quote, sales one-pager bullet, internal Slack summary",
+            "LinkedIn post, Instagram caption (short-form), Instagram Reel script (30 seconds), Pinterest pin description, email subject + preview text, blog intro paragraph, podcast show-notes summary, Twitter/X single post, customer FAQ answer, internal newsletter blurb",
+            "Webinar recap blog intro, LinkedIn carousel outline (8 slides), 3-tweet thread, email nurture blurb, YouTube Short script (hook + 3 points), sales deck bullet summary, quote card caption, FAQ entry, Slack team recap, newsletter subject line options"
+          ]
+        },
+        {
+          "name": "PASTE FULL TEXT OR TRANSCRIPT",
+          "what": "The complete source asset — a webinar transcript, full blog post, case study, or report — pasted in full, not summarized. A summary strips out the specific quotes and details that make repurposed content feel original rather than generic; the model needs the raw material to pull real anchors from.",
+          "examples": [
+            "[Full 40-minute webinar transcript on remote team management, including a stat on meeting overload mentioned around minute 12, a client quote about async work around minute 25, and a 3-step framework outlined around minute 30]",
+            "[Full 1,800-word blog post on small-business cash flow mistakes, including three specific mistakes with brief real-client examples for each]",
+            "[Full customer case study PDF text: a mid-size retailer's onboarding process before and after implementation, including specific before/after numbers and one direct customer quote]"
+          ]
+        },
+        {
+          "name": "LIST 3-5 IDEAS/QUOTES/STATS YOU IDENTIFIED",
+          "what": "The 3-5 most distinctive, specific ideas, quotes, or data points you personally noticed in the source material — picked by you, not left for the model to find unsupervised. Good picks are specific and quotable; a bad pick is a vague theme like \"the general topic of productivity,\" which won't anchor a distinct piece.",
+          "examples": [
+            "1) The stat that teams lose an average of 6 hours/week to redundant status meetings, mentioned at minute 12. 2) The client quote: \"Once we went async, our decisions actually got faster, not slower.\" 3) The 3-step framework for async decision-making outlined at minute 30. 4) The offhand comment about how most teams only realize meeting overload once they measure it.",
+            "1) The specific mistake of confusing profit with cash flow, with the real client example of a business that was profitable on paper but nearly ran out of cash. 2) The stat that 60% of small business failures cite cash flow as a factor. 3) The tip about a 13-week rolling cash flow forecast.",
+            "1) The before/after stat: onboarding time dropped from 3 weeks to 4 days. 2) The customer quote: \"We stopped losing new hires in their first month.\" 3) The specific detail about which two systems were integrated to make it work."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "5-format quick version for a smaller asset",
+          "whenToUse": "Use this for a shorter source asset (a single blog post rather than a full webinar) where 10 formats would stretch the material too thin.",
+          "prompt": "You are a content repurposing specialist. Below is a source asset and standout ideas from it. Produce 5 distinct pieces of content, one per format listed, following platform conventions:\n\nFormats needed: [LIST YOUR 5 FORMATS]\nSource asset: [PASTE FULL TEXT]\nStandout ideas to build from (use a different one as the anchor for each piece): [LIST 3 IDEAS/QUOTES/STATS]\n\nFor each piece, label which standout idea it's built around, then write the content following that platform's actual format conventions. If two pieces would end up nearly identical, choose a different angle from the source instead."
+        },
+        {
+          "label": "Single-platform deep repurposing (one format, many pieces)",
+          "whenToUse": "Use this when you only post actively on one platform and want several distinct pieces for it, rather than spreading thin across ten different platforms.",
+          "prompt": "You are a content repurposing specialist. Below is a source asset and standout ideas from it. Produce 6 distinct [PLATFORM, e.g. LinkedIn posts / Instagram carousels / YouTube Short scripts] from this single source, each built around a different standout idea, following that platform's real format conventions.\n\nSource asset: [PASTE FULL TEXT OR TRANSCRIPT]\nStandout ideas to build from (a different one anchors each piece): [LIST 4-6 IDEAS/QUOTES/STATS]\n\nLabel which idea each piece is built around. If any two pieces would read nearly identically, choose a different angle instead. Suggest a realistic posting gap between them so they don't cannibalize each other."
+        },
+        {
+          "label": "Recurring-asset version (repurposing something you've already repurposed before)",
+          "whenToUse": "Use this for a popular, evergreen source asset you've already pulled content from once, so the new batch draws from different angles instead of repeating past output.",
+          "prompt": "You are a content repurposing specialist. I've repurposed this source asset before. Produce 10 NEW distinct pieces of content that do not reuse any of the angles listed below as already used.\n\nFormats needed: [LIST YOUR 10 FORMATS]\nSource asset: [PASTE FULL TEXT OR TRANSCRIPT]\nStandout ideas already used in past repurposing (do not reuse these as the anchor): [LIST PAST ANGLES]\nNew standout ideas to build from instead: [LIST 3-5 NEW IDEAS/QUOTES/STATS]\n\nLabel which new idea each piece is built around, following real platform conventions for each format."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Too many pieces reuse the same idea — force more variety",
+          "prompt": "Several of these pieces are anchored on the same one or two ideas. Tell me which standout idea each of the 10 pieces currently uses, then rewrite whichever ones are duplicating an idea already used elsewhere, drawing from a different one of the standout ideas I gave you."
+        },
+        {
+          "label": "This doesn't follow real platform conventions",
+          "prompt": "The [FORMAT NAME] piece reads like a generic shortened paragraph, not something built for that platform's real structure. Rewrite it following that format's actual convention (e.g. a proper thread with one idea per tweet, or a carousel with distinct slide-by-slide text)."
+        },
+        {
+          "label": "Check nothing was invented from the source",
+          "prompt": "Go through each of the 10 pieces and confirm every specific quote, number, or claim traces back to the source text I pasted, not something added or paraphrased into a stronger-sounding claim than what was actually said."
+        },
+        {
+          "label": "Suggest a posting schedule",
+          "prompt": "Suggest a realistic 2-week posting schedule for these 10 pieces across their platforms, spacing them so similar formats or ideas aren't posted too close together and so this doesn't all go out in a single day."
+        }
+      ],
+      "walkthrough": "Deshawn recorded a 40-minute webinar on remote team management last month and wants to get more mileage out of it instead of letting it sit as one YouTube upload. He watches back through his notes first and picks out four standout moments: a stat about teams losing 6 hours a week to redundant meetings, a client quote about async decisions getting faster, a 3-step framework mentioned partway through, and an offhand comment about most teams not realizing their meeting overload until they measure it.\n\nHe opens Claude, pastes the full transcript, lists his four standout ideas, and specifies 10 formats: a LinkedIn post, a 6-tweet thread, a 7-slide Instagram carousel outline, an 80-word email blurb, a YouTube Short script, a quote graphic caption, an FAQ snippet, a blog pull-quote, a one-pager bullet, and an internal Slack summary.\n\nClaude generates all 10, each labeled with which standout idea anchors it — the LinkedIn post built around the meeting-overload stat, the Twitter thread built around the 3-step framework broken into one tweet per step, the Instagram carousel built around the client quote as a mini customer story.\n\nScanning them side by side, Deshawn notices the FAQ snippet and the blog pull-quote both circle back to the same stat as the LinkedIn post. He sends the follow-up: \"Tell me which idea each piece uses, then rewrite whichever ones duplicate an idea already used elsewhere.\" Claude flags the overlap and rewrites the FAQ snippet around the async-decisions quote instead.\n\nHe checks the Twitter thread actually reads like a real thread, not a paragraph with line breaks, confirms it does, and schedules the 10 pieces across the next two weeks rather than posting them all at once. Total time: about 25 minutes."
+    },
+    "copy-b1-three-draft-directions": {
+      "placeholders": [
+        {
+          "name": "DELIVERABLE, e.g. a product email, a homepage hero, a 60-second video script",
+          "what": "What you're actually writing — the specific format and use case, not a vague category like \"some copy.\" Be as concrete as you can about where this piece will actually appear, since that shapes what a \"direction\" even means for it.",
+          "examples": [
+            "a product launch email announcing a new feature",
+            "a homepage hero section for a SaaS landing page",
+            "a 60-second video script for a paid social ad"
+          ]
+        },
+        {
+          "name": "X",
+          "what": "This exact bracket \"[X]\" is reused five times in the prompt as a shorthand for five different brief fields, in this order: format, audience, key message, must-include facts, and length. Replace each occurrence with the real value for that field — don't paste the same thing into all five slots.",
+          "examples": [
+            "format: a product launch email; audience: existing customers on the free plan; key message: the new feature cuts setup time in half; must-include facts: launches March 1, available to all paid plans; length: under 150 words",
+            "format: a homepage hero section; audience: small business owners evaluating accounting software for the first time; key message: get bookkeeping-accurate numbers without hiring a bookkeeper; must-include facts: starts at $19/month, free 14-day trial; length: headline plus one subheadline",
+            "format: a 60-second video script; audience: college students who procrastinate on job applications; key message: build a tailored resume in minutes, not hours; must-include facts: free to start, no credit card required; length: 60 seconds, roughly 150 spoken words"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Two directions instead of three, for a tight deadline",
+          "whenToUse": "Use this when there's genuinely no time to generate and compare three full drafts — two still gives you a real choice, which one draft alone doesn't.",
+          "prompt": "You are a copywriter working from the brief below. Write two genuinely distinct first-draft directions for [DELIVERABLE]. The two directions must differ in structural approach, not just wording — for example: Direction 1 leads with a story/scenario, Direction 2 leads with a direct claim/promise.\n\nBrief: format [X], audience [X], key message [X], must-include facts [X], length [X].\n\nWrite each as a complete draft, not an outline. Label each with its structural approach in one line before the copy. Do not let both directions converge on the same opening line."
+        },
+        {
+          "label": "Client-facing version with rationale for each direction",
+          "whenToUse": "Use this when you need to present the three directions to a client or stakeholder and want a short strategic rationale attached to each, not just the copy itself.",
+          "prompt": "You are a copywriter working from the brief below, preparing three directions to present to a client. Write three genuinely distinct first-draft directions for [DELIVERABLE], differing in structural approach (e.g. story-led, claim-led, question-led).\n\nBrief: format [X], audience [X], key message [X], must-include facts [X], length [X].\n\nFor each direction: 1) a complete draft (not an outline), 2) a 1-2 sentence rationale explaining why this direction could work for this audience, written the way you'd explain it out loud to a client, 3) one likely client concern about this direction and a one-line response to it. Do not let any two directions converge on the same opening line."
+        },
+        {
+          "label": "Five-direction version for a high-stakes piece",
+          "whenToUse": "Use this for something important enough to warrant more genuine options than usual — a major campaign centerpiece rather than routine copy.",
+          "prompt": "You are a copywriter working from the brief below. Write five genuinely distinct first-draft directions for [DELIVERABLE], each using a clearly different structural approach — name the five approaches yourself based on what fits this deliverable (for example: story-led, claim-led, question-led, contrarian/against-the-grain, and testimonial-led).\n\nBrief: format [X], audience [X], key message [X], must-include facts [X], length [X].\n\nWrite each as a complete draft, not an outline, labeled with its structural approach in one line before the copy. No two directions should share an opening line or core sentence reworded."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Two directions feel too similar — force real divergence",
+          "prompt": "Direction [NUMBER] and Direction [NUMBER] read too similarly in structure or opening. Rewrite one of them using a genuinely different structural approach than what's currently used across all three."
+        },
+        {
+          "label": "Combine the best parts into one draft",
+          "prompt": "I'm leaning toward Direction [NUMBER] as my base. Rewrite it incorporating [DESCRIBE THE SPECIFIC LINE OR ELEMENT] from Direction [NUMBER], adjusting the surrounding copy so it flows naturally."
+        },
+        {
+          "label": "Too long — tighten the winning direction",
+          "prompt": "Take Direction [NUMBER] and tighten it to [TARGET LENGTH], cutting redundant phrasing and weak qualifiers without losing the structural approach or the must-include facts."
+        },
+        {
+          "label": "Explain why each direction might or might not work",
+          "prompt": "For each of the three directions, give me a one-sentence honest assessment of the biggest risk with using it for this audience — not just what's good about it, but where it could fail."
+        }
+      ],
+      "walkthrough": "Sofia is a freelance copywriter with a new brief: a product launch email for a productivity app's new scheduling feature, going out to existing free-plan users.\n\nBefore opening any AI tool, she fills in her brief essentials: format is a launch email, audience is existing customers currently on the free plan, key message is that the new feature saves users 2 hours a week on manual scheduling, must-include facts are the March 1 launch date and that it's available on all paid plans, and length is under 150 words.\n\nShe opens Claude and pastes the three-directions prompt with those five brief fields filled in. Claude returns three complete drafts: Direction 1 opens with a relatable Monday-morning scheduling scenario before naming the feature; Direction 2 opens with a direct claim — \"Get 2 hours back every week\" — followed by proof; Direction 3 opens with a provocative question, \"What would you do with 2 extra hours a week?\" Each is labeled with its structural approach.\n\nReading all three once through without editing, Sofia finds Direction 2's claim-led opening strongest, but Direction 3's closing line is punchier than Direction 2's. She sends the follow-up: \"I'm leaning toward Direction 2 as my base — rewrite it incorporating the closing line from Direction 3, adjusting the surrounding copy so it flows naturally.\" Claude produces a revised version that keeps the direct claim opening but ends with the sharper question-based close.\n\nShe reads it once more against the brief, confirms the March 1 date and plan availability are both present, and sends it to her client with the two rejected directions filed away for a future project. Total time: about 15 minutes."
+    },
+    "copy-b2-edit-tighten-preserve-voice": {
+      "placeholders": [
+        {
+          "name": "TARGET WORD COUNT / % SHORTER",
+          "what": "How much shorter the edit needs to be — either a specific word count or a percentage cut. A specific number gives the model a clear target; a vague \"make it tighter\" produces an inconsistent amount of cutting.",
+          "examples": [
+            "140 words (down from 220)",
+            "cut by about 30%",
+            "under 100 words total"
+          ]
+        },
+        {
+          "name": "PASTE 2-3 SHORT SAMPLES OF THE REAL VOICE",
+          "what": "Actual past writing from the same writer or brand — real sentences, not a description of the voice. This is the single most important input in this prompt: without real samples, the model has nothing concrete to match, and the edit will default to generic, competent-sounding prose.",
+          "examples": [
+            "\"We built this because our own team was sick of spreadsheets that fought back. No offense to spreadsheets. They tried.\" / \"Look, onboarding software is boring to write about. So we're not going to pretend otherwise. Here's what it actually does.\"",
+            "\"You didn't start your business to become a part-time bookkeeper. We think that's a fair trade you shouldn't have to make.\" / \"Numbers should tell you something useful, not just sit there looking official.\"",
+            "\"Most job hunts fail before the interview — at the resume. We fix that part first.\" / \"No fluff, no 10-page templates you'll never finish. Fifteen minutes, done.\""
+          ]
+        },
+        {
+          "name": "PASTE DRAFT",
+          "what": "The actual draft you want edited, pasted in full. Paste the whole thing, even the parts you're not sure about — the model needs the full context to know what's redundant versus what's carrying real information.",
+          "examples": [
+            "[Paste a 200-word product blog intro that currently repeats its main point in both the first and third paragraphs]",
+            "[Paste a 180-word email draft with a weak, throat-clearing opening sentence before it gets to the point]",
+            "[Paste a 300-word landing page section with several long qualifier-heavy sentences]"
+          ]
+        },
+        {
+          "name": "e.g. \"too long,\" \"repeats the same point in paragraphs 2 and 4,\" \"opening is weak\"",
+          "what": "The specific, named problem with the current draft — not a vague \"make it better.\" Naming the exact issue (repetition, a weak opener, over-length) tells the model what to actually fix rather than cutting randomly.",
+          "examples": [
+            "too long, and repeats the core benefit in both paragraph 1 and paragraph 3",
+            "opening sentence is a throat-clearing warm-up instead of getting to the point",
+            "too many hedging qualifiers (\"kind of,\" \"we think,\" \"maybe\") that weaken otherwise strong claims"
+          ]
+        },
+        {
+          "name": "e.g. \"the core facts,\" \"the closing line,\" \"the product name usage\"",
+          "what": "What must survive the edit exactly as-is — specific facts, a closing line you already love, required legal or brand phrasing. Naming this protects against the edit accidentally cutting something important while trimming length.",
+          "examples": [
+            "the pricing figure and the free-trial length must stay exactly as stated",
+            "the closing line — keep it word for word, it's already approved by legal",
+            "every mention of the product name must use the full name, not a shortened version"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Tone shift instead of length cut",
+          "whenToUse": "Use this when the draft is the right length already but needs to shift from one tone to another (e.g. too formal for the actual brand) while still preserving what's distinctive about the voice.",
+          "prompt": "You are editing the draft below to shift its tone to [TARGET TONE, e.g. \"warmer and more conversational,\" \"more direct and less hedged\"] while keeping it in the exact voice shown in these writing samples from the same writer/brand:\n\nVoice samples: [PASTE 2-3 SHORT SAMPLES OF THE REAL VOICE]\nDraft to edit: [PASTE DRAFT]\nWhat's currently off about the tone: [DESCRIBE, e.g. \"reads too corporate and hedged for how we actually talk to customers\"]\nDo not change: [e.g. \"the core facts,\" \"the length\"]\n\nAdjust word choice and sentence structure to hit the target tone without changing the overall length by more than 10%. Keep sentence rhythm and any distinctive phrasing patterns visible in the voice samples."
+        },
+        {
+          "label": "Multi-piece consistency pass",
+          "whenToUse": "Use this when you have several pieces (e.g. a set of email variants or landing page sections) that need to sound like the same writer and you're checking them as a batch rather than editing one at a time.",
+          "prompt": "You are reviewing the pieces below for voice consistency against these real writing samples:\n\nVoice samples: [PASTE 2-3 SHORT SAMPLES OF THE REAL VOICE]\nPieces to review: [PASTE 2-4 PIECES, LABELED 1-4]\n\nFor each piece, note whether it matches the voice samples or has drifted toward generic phrasing, and quote the specific line where it drifted if so. Then rewrite only the lines that drifted, keeping everything else in each piece unchanged."
+        },
+        {
+          "label": "Aggressive cut for a hard length constraint",
+          "whenToUse": "Use this when the target length is a hard platform constraint (an ad character limit, a fixed word count for print) rather than a soft \"tighter is better\" goal.",
+          "prompt": "You are editing the draft below to fit a hard limit of [EXACT CHARACTER OR WORD COUNT] — this is a strict constraint, not a suggestion. Keep it in the exact voice shown in these writing samples:\n\nVoice samples: [PASTE 2-3 SHORT SAMPLES OF THE REAL VOICE]\nDraft to edit: [PASTE DRAFT]\nDo not change: [e.g. \"the core claim,\" \"the CTA wording\"]\n\nCut aggressively if needed to hit the exact limit, prioritizing keeping the single strongest sentence or phrase from the draft intact over preserving everything partially. Confirm the final character/word count at the end."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Still sounds generic — compare against the samples again",
+          "prompt": "Compare this edited version line by line against the voice samples I gave you and flag anywhere it now sounds like a competent stranger instead of the same writer. Revise just those lines."
+        },
+        {
+          "label": "Cut too much of the personality along with the length",
+          "prompt": "This cut too much of what made the original distinctive. Restore [SPECIFIC PHRASE OR LINE] and find the length savings somewhere else instead — a redundant sentence or a weak qualifier, not a signature phrase."
+        },
+        {
+          "label": "One more targeted pass, not a full rewrite",
+          "prompt": "This is close, but [SPECIFIC SENTENCE] still reads a little flat. Do one more targeted pass on just that sentence to bring it in line with the voice samples — don't touch anything else in the draft."
+        },
+        {
+          "label": "Confirm nothing important got cut",
+          "prompt": "List everything you removed in this edit, one line each, so I can confirm none of the cuts accidentally removed a fact, claim, or line I needed to keep."
+        }
+      ],
+      "walkthrough": "Priya edits copy for a brand with a distinctive, slightly irreverent voice, and her client just sent over a 220-word blog intro that needs to come down to about 140 words before publishing.\n\nBefore touching the draft, she pulls two short samples of the brand's actual past writing from an old blog post — sentences with short, punchy openers and a near-total avoidance of exclamation points.\n\nIn ChatGPT, she pastes the editing prompt: target word count 140, the two real voice samples, the full 220-word draft, the specific problem (\"too long, and repeats the core benefit in both paragraph 1 and paragraph 3\"), and what must stay unchanged (\"the closing line, word for word — it's already approved\").\n\nChatGPT returns a 145-word edit that removes the redundant second explanation of the same benefit and trims a throat-clearing opening sentence, while keeping the brand's characteristic short declarative sentences and one signature aside intact, and leaving the closing line untouched.\n\nPriya compares it line by line against her two voice samples and notices one paragraph now reads a touch more neutral than the rest. She sends the follow-up: \"Compare this against the voice samples and flag anywhere it now sounds like a competent stranger instead of the same writer.\" ChatGPT flags that exact paragraph and revises it to restore a bit of the brand's characteristic dry humor.\n\nShe reads the final version once more against the original samples, confirms the closing line is untouched and the word count is 142, and sends it back to the client. Total time: about 10 minutes."
+    },
+    "copy-b3-headline-systems": {
+      "placeholders": [
+        {
+          "name": "ONE PLAIN SENTENCE — THE ACTUAL BENEFIT OR CLAIM",
+          "what": "The real, specific benefit or claim your headlines need to communicate, stated plainly — not a vague theme. A good value is concrete enough to build a headline from directly (\"saves 6 hours a week\"); a bad one is an abstract idea like \"we help businesses grow\" that could describe almost anything.",
+          "examples": [
+            "This budgeting app finds an average of $200/month in unused subscriptions.",
+            "Our onboarding checklist tool cuts new-hire ramp time from 3 weeks to 5 days.",
+            "This course gets beginners writing working code in their first session, not week three."
+          ]
+        },
+        {
+          "name": "X",
+          "what": "This is the Audience field — who these headlines need to speak to. Be specific about who's reading, since a headline that lands for a beginner reads flat to an expert, and vice versa.",
+          "examples": [
+            "freelancers who track expenses across multiple clients",
+            "HR managers at companies with 50-200 employees",
+            "complete beginners who've never written a line of code"
+          ]
+        },
+        {
+          "name": "e.g. blog title, email subject line, ad headline — specify length limit if relevant",
+          "what": "What format the headline is for, plus any length constraint that format enforces (an email subject line has a much tighter effective limit than a blog title). This changes what a \"good\" headline even looks like.",
+          "examples": [
+            "email subject line, under 50 characters so it doesn't truncate on mobile",
+            "blog post title, no strict limit but should stay skimmable, under 12 words",
+            "Google search ad headline, hard limit of 30 characters"
+          ]
+        },
+        {
+          "name": "PASTE ANY REAL FACTS/NUMBERS AVAILABLE",
+          "what": "Any real, specific numbers or facts you actually have and can back up — used to keep the number-led headline formula honest instead of letting the model invent a bigger, more impressive-sounding stat.",
+          "examples": [
+            "Average savings found per user: $200/month, based on our own product data from the last 6 months.",
+            "4-day average onboarding time across our current customer base of 40 companies.",
+            "No hard numbers available yet — first cohort just finished, informal feedback only."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Single-format focused version (just email subject lines)",
+          "whenToUse": "Use this when you only need one specific format, not a mixed 5-formula sweep — useful for a quick A/B test setup on a single email send.",
+          "prompt": "You are a headline specialist. The core message is: [ONE PLAIN SENTENCE — THE ACTUAL BENEFIT OR CLAIM]. Audience: [X].\n\nGenerate 8 email subject line options, 2 each from these 4 formulas: (1) benefit-led, (2) curiosity-led (no clickbait), (3) number/specificity-led (use only real numbers: [PASTE ANY REAL FACTS/NUMBERS AVAILABLE]), (4) direct-address. Each under 50 characters. Score each 1-5 on clarity, specificity, and scroll-stop, and shortlist the top 3 from at least 2 different formulas."
+        },
+        {
+          "label": "Headline + full first-line pairing",
+          "whenToUse": "Use this when the headline needs to work together with the very next line (a subheadline, a first sentence), since a headline that's strong alone can fall flat if the next line doesn't follow through on it.",
+          "prompt": "You are a headline specialist. The core message is: [ONE PLAIN SENTENCE — THE ACTUAL BENEFIT OR CLAIM]. Audience: [X]. Format: [e.g. blog title, email subject line, ad headline — specify length limit if relevant].\n\nGenerate 4 headline + first-line pairs, one for each of these formulas: benefit-led, curiosity-led, number-led (real numbers only: [PASTE ANY REAL FACTS/NUMBERS AVAILABLE]), problem-led. Each pair should show how the first line delivers on the headline's promise rather than restating it. Score each pair 1-5 on clarity, specificity, and whether the first line follows through."
+        },
+        {
+          "label": "Competitor-aware headline set",
+          "whenToUse": "Use this when you already know what competitors' headlines tend to sound like and want yours to stand out from that pattern specifically, not just be generically different.",
+          "prompt": "You are a headline specialist. The core message is: [ONE PLAIN SENTENCE — THE ACTUAL BENEFIT OR CLAIM]. Audience: [X]. Format: [e.g. blog title, email subject line, ad headline].\n\nWhat competitor headlines in this space commonly sound like: [DESCRIBE OR PASTE 2-3 EXAMPLES]\n\nGenerate 12 headlines (3 each across benefit-led, curiosity-led, number-led using only real numbers: [PASTE ANY REAL FACTS/NUMBERS AVAILABLE], and direct-address) that deliberately avoid sounding like the competitor pattern described above. Score each 1-5 on clarity, specificity, scroll-stop, and how distinct it is from the competitor pattern."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Scores look inflated — sanity-check the top ones",
+          "prompt": "Look again at the 3 highest-scoring headlines and tell me honestly if any of them are actually vague or generic despite the high score. Re-score them more critically if so."
+        },
+        {
+          "label": "One formula is weak — regenerate just that category",
+          "prompt": "The [FORMULA NAME] headlines are the weakest of the five categories. Regenerate just those 4, pushing for something more specific and less generic than what's there now."
+        },
+        {
+          "label": "Check no stat was inflated or invented",
+          "prompt": "Go through every number-led headline and confirm each figure matches exactly what I gave you in the real facts, with no rounding up or added claims."
+        },
+        {
+          "label": "Shortlist from different formulas than my instinct",
+          "prompt": "Ignore my likely favorites for a second — based purely on the scores, give me the 3 headlines that scored highest across at least 3 different formulas, not just my top-scoring category."
+        }
+      ],
+      "walkthrough": "Grace is writing headline options for a budgeting app that, per the company's own product data, finds users an average of $200 a month in unused subscriptions.\n\nShe opens Claude and pastes the headline-systems prompt: core message is the $200/month stat, audience is people who suspect they're overpaying for subscriptions but haven't checked, format is a blog title with no strict length limit, and the real facts available are just the $200/month figure from the last 6 months of product data.\n\nClaude returns 20 headlines across five formulas, each scored: benefit-led (\"Find the $200 a month you didn't know you were losing\"), curiosity-led (\"The subscription costing you $200 a month, hiding in plain sight\"), number-led using the real $200 figure rather than inventing a bigger one, direct-address (\"You're probably paying for something you forgot about\"), and problem-led (\"Stop paying for subscriptions you don't use\"). Each headline has clarity, specificity, and scroll-stop scores with a one-line reason.\n\nGrace notices the curiosity-led category scored consistently lower than the others and reads a little vague. She sends the follow-up: \"The curiosity-led headlines are the weakest category — regenerate just those 4, pushing for something more specific.\" Claude returns four sharper options, each now naming the specific subscription-tracking mechanic rather than staying abstract.\n\nShe does her own sanity check on the top 5 scored headlines, confirms the $200 figure appears correctly everywhere it's used, and shortlists three finalists spanning the benefit-led, number-led, and revised curiosity-led categories. Total time: about 12 minutes."
+    },
+    "copy-i1-research-backed-copy": {
+      "placeholders": [
+        {
+          "name": "LIST 2-4 SPECIFIC CLAIMS, e.g. \"average time small businesses spend on invoicing per month,\" \"industry adoption rate of X in 2025-2026,\" \"typical cost difference between X and Y\"",
+          "what": "The exact specific claims you want to make in your copy, named precisely — not a broad topic to research generally. A good claim is specific enough to actually be answered with one figure or fact; a bad one is a broad request like \"tell me about this industry,\" which returns unfocused general information instead of a checkable claim.",
+          "examples": [
+            "average time small businesses spend on manual invoicing per month; typical error rate in manually reconciled books",
+            "percentage of remote teams reporting meeting fatigue in 2025-2026; average number of status meetings per week for a mid-size team",
+            "average cost difference between hiring a part-time bookkeeper versus using bookkeeping software; typical time small business owners spend on bookkeeping weekly"
+          ]
+        },
+        {
+          "name": "WHAT THE COPY IS FOR AND WHO IT'S FOR",
+          "what": "The context this research will feed into — what piece of copy you're writing and who it's for. This helps the model judge which facts are actually relevant and how to phrase the suggested copy line at the end.",
+          "examples": [
+            "A landing page hero section for a small-business invoicing tool, aimed at solo freelancers and very small agencies.",
+            "A LinkedIn ad for a remote-work productivity tool, targeting mid-size company operations managers.",
+            "An email nurture sequence for bookkeeping software, aimed at small business owners currently doing their own books."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Single high-stakes claim, deep verification",
+          "whenToUse": "Use this when you have one specific, important claim you plan to use prominently (a hero headline, a press release) and need thorough verification rather than a quick multi-claim sweep.",
+          "prompt": "Research this single claim in depth and find the most current, authoritative source available. Do not state anything as fact without a source; say explicitly if you cannot find a reliable one.\n\nClaim to research: [ONE SPECIFIC CLAIM]\nContext: [WHAT THE COPY IS FOR AND WHO IT'S FOR]\n\nFind: the specific fact/figure, the most authoritative source you can find (prioritize original research or primary sources over secondary articles citing them), publication date, and note if multiple sources disagree on the figure. Flag if the source is more than 2 years old. Then suggest 2 different ways to phrase this claim as a direct, specific copy line, each embedding the figure naturally."
+        },
+        {
+          "label": "Competitor-comparison claims",
+          "whenToUse": "Use this when the claims you want to make are explicitly comparative (cheaper than, faster than, more X than) rather than standalone industry facts, which need extra care to avoid overstating.",
+          "prompt": "Research the following comparative claims and find current, citable sources for each. Do not state a comparison as fact without a source for both sides of it; if you can't verify both sides, say so rather than guessing.\n\nComparative claims to research: [LIST 2-3 COMPARISONS, e.g. \"our category's typical cost vs. hiring in-house,\" \"time saved vs. manual process\"]\nContext: [WHAT THE COPY IS FOR AND WHO IT'S FOR]\n\nFor each, give: both figures being compared, sources and dates for each, and a note on whether the comparison is apples-to-apples or has caveats worth knowing before using it in copy. Then suggest one honest, specific copy line for each comparison."
+        },
+        {
+          "label": "Ongoing fact-sheet builder for a recurring topic",
+          "whenToUse": "Use this to build (or refresh) a running reference document for a topic you write about often, rather than researching from scratch for a single piece.",
+          "prompt": "I'm building a running fact sheet on [TOPIC] that I'll reuse across multiple pieces of copy over the next few months. Research current, citable facts on: [LIST 4-6 SUBTOPICS OR CLAIM AREAS]\n\nFor each: the specific fact/figure, source and URL, publication date, and a one-line note on how confident/authoritative the source is. Flag anything older than 2 years. Format this as a clean reference table I can save and re-check before reusing any fact in future copy, since some of these may go stale before I use them again."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify the source actually says this",
+          "prompt": "For the claim about [SPECIFIC CLAIM], give me the direct source link so I can open it and confirm it actually supports the figure you gave me, worded the way you summarized it."
+        },
+        {
+          "label": "This stat is too old — find something more current",
+          "prompt": "The source for [SPECIFIC CLAIM] is more than 2 years old. Search again specifically for something more recent, and if nothing more current exists, tell me clearly instead of reusing the old figure."
+        },
+        {
+          "label": "No good source — help me phrase it honestly",
+          "prompt": "You couldn't find a solid source for [SPECIFIC CLAIM]. Suggest an honest, softer version of this claim that doesn't require a specific unverifiable number, while still being useful in the copy."
+        },
+        {
+          "label": "Turn the verified facts into copy",
+          "prompt": "Using only the facts you found sources for, write [NUMBER] versions of a single sentence for [WHERE IT WILL APPEAR, e.g. \"the hero subheadline\"] that embeds the real figure directly and specifically, without vague phrasing like \"studies show.\""
+        }
+      ],
+      "walkthrough": "Marcus writes copy for a bookkeeping software company and wants to open a new landing page with a specific, credible claim about how much time small businesses spend on manual bookkeeping — not a vague \"studies show\" line.\n\nHe opens ChatGPT, checks that Deep Research is available on his Plus plan, and selects it in the composer instead of a normal chat. He pastes the research prompt: claims to research are \"average time small business owners spend on their own bookkeeping weekly\" and \"average cost of hiring a part-time bookkeeper,\" with context that this is for a landing page hero aimed at small business owners currently doing their own books. ChatGPT asks one quick clarifying question about which region to focus on; he answers \"United States.\"\n\nAbout ten minutes later, the report comes back: a figure for the weekly bookkeeping time with a named source and a 2025 date, flagged as current, and a cost figure for part-time bookkeepers with a separate source. It also suggests a copy line embedding the real hours figure directly.\n\nMarcus opens the source for the time-spent figure himself to confirm the summary matches what the article actually says — it does, and the number is even more specific than he expected.\n\nHe wants to double-check the bookkeeper cost figure feels right for his specific market, so he sends the follow-up: \"The source for the bookkeeper-cost claim — give me the direct link so I can confirm it supports the figure as summarized.\" ChatGPT provides the link, and Marcus finds it's from a regional survey that may run a bit high for his audience, so he decides to leave that specific number out and use the time-spent stat instead, which he trusts more.\n\nHe writes the verified time figure directly into his hero subheadline, noting the source and date in his working doc in case a client asks. Total time: about 20 minutes, including the wait for the report — he made sure to start it early rather than five minutes before he needed the copy."
+    },
+    "copy-i2-client-revision-rounds": {
+      "placeholders": [
+        {
+          "name": "PASTE DRAFT",
+          "what": "The original draft that the client feedback applies to, pasted in full. Include everything, not just the sections you think got feedback — the model needs the whole piece to apply changes accurately and produce a usable change log.",
+          "examples": [
+            "[Paste the full 250-word product email draft the client is reviewing]",
+            "[Paste the complete landing page hero and problem section, about 180 words]",
+            "[Paste the full 3-paragraph blog intro under review]"
+          ]
+        },
+        {
+          "name": "PASTE ALL FEEDBACK",
+          "what": "All the client's feedback exactly as they gave it, even if it's messy, came from multiple emails, or is written casually — don't clean it up or summarize it before pasting. The model needs the raw, sometimes-contradictory feedback to correctly separate specific asks from vague direction and catch real contradictions.",
+          "examples": [
+            "\"Love the opening. Can we cut this down by half? Also make the CTA stronger. And can it feel a bit more premium — actually maybe keep it casual, our audience is pretty relaxed.\"",
+            "From Slack: \"this is good but too long\" — from email reply: \"also can we lead with the discount instead of the feature? and drop the second paragraph entirely, feels redundant\"",
+            "\"Overall solid. A few things: 1) the second sentence is a bit awkward, 2) we should mention the free trial somewhere, 3) can it sound less like a template and more like us? not sure how to describe that exactly\""
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Multiple stakeholders with conflicting feedback",
+          "whenToUse": "Use this when feedback came from more than one person on the client side and you need the contradictions clearly attributed to who said what, not just flagged generically.",
+          "prompt": "You are revising the draft below based on feedback from multiple stakeholders. Separate the feedback into (a) specific asks and (b) vague/directional notes, and note which stakeholder gave which note. If any two stakeholders' notes contradict each other, list the contradiction explicitly with both names, rather than silently choosing one.\n\nOriginal draft: [PASTE DRAFT]\nFeedback from [STAKEHOLDER 1 NAME]: [PASTE]\nFeedback from [STAKEHOLDER 2 NAME]: [PASTE]\n\nApply the specific asks first, exactly as stated, noting whose ask each was. Then address vague notes with concrete changes. End with a change log mapping each note (with stakeholder name) to the specific change made, and a clearly flagged list of any stakeholder contradictions that need a decision before this can be finalized."
+        },
+        {
+          "label": "Second-round revision after partial feedback on round one",
+          "whenToUse": "Use this for a second (or later) round of revisions, where you need the new feedback applied on top of the already-revised draft, not the original.",
+          "prompt": "You are applying a second round of client feedback to a draft that's already been revised once. Separate the feedback into (a) specific asks and (b) vague/directional notes before applying anything, and flag any contradiction with the round-one changes explicitly.\n\nCurrent draft (after round 1): [PASTE CURRENT DRAFT]\nRound 1 change log (for context, so you don't undo it accidentally): [PASTE ROUND 1 CHANGE LOG]\nNew client feedback (round 2): [PASTE ALL FEEDBACK]\n\nApply specific asks first, then vague notes with concrete named changes. End with a round-2 change log, and flag anywhere the new feedback seems to reverse a round-1 decision, rather than silently overwriting it."
+        },
+        {
+          "label": "Feedback that includes a reference example",
+          "whenToUse": "Use this when the client's feedback includes a reference piece of writing (\"more like this\") rather than only verbal description, which is often a stronger signal than adjectives alone.",
+          "prompt": "You are revising the draft below based on client feedback that includes a reference example of the tone/style they want. Separate the feedback into (a) specific asks and (b) vague/directional notes before applying anything.\n\nOriginal draft: [PASTE DRAFT]\nClient feedback: [PASTE ALL FEEDBACK]\nReference example the client pointed to as the tone/style they want: [PASTE REFERENCE EXAMPLE]\n\nApply the specific asks first, exactly as stated. Then use the reference example as a concrete pattern-match for any vague direction (like \"more premium\" or \"punchier\"), naming in the change log exactly what pattern from the reference you applied and where."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Double-check the change log against the original feedback",
+          "prompt": "Go through the original feedback line by line and confirm each note is reflected somewhere in the change log. Flag anything from the feedback that doesn't appear to have been addressed."
+        },
+        {
+          "label": "This resolved a contradiction without asking — flag it properly",
+          "prompt": "Looking at the notes about [DESCRIBE THE CONFLICTING FEEDBACK], you seem to have picked one interpretation without flagging it as a contradiction. Undo that choice and list it explicitly as a contradiction I need to resolve instead."
+        },
+        {
+          "label": "An unrequested change slipped in — revert it",
+          "prompt": "The change to [SPECIFIC LINE OR SECTION] doesn't map to anything in the feedback I gave you. Revert that specific change back to the original draft's wording and leave everything else as is."
+        },
+        {
+          "label": "Translate a vague note more concretely",
+          "prompt": "The change you made for the vague note \"[VAGUE NOTE, e.g. more premium feel]\" feels too subtle to actually register as a change. Make it more clearly, concretely different, and update the change log line to describe exactly what changed."
+        }
+      ],
+      "walkthrough": "Elena is revising a product email for a client and receives feedback that's a little scattered: \"Love the opening. Can we cut this down by half? Also make the CTA stronger. And can it feel a bit more premium — actually maybe keep it casual, our audience is pretty relaxed.\"\n\nRather than guessing at what the client really wants, she opens Claude and pastes the revision prompt with the full original draft and the feedback exactly as the client wrote it, unedited.\n\nClaude separates the feedback: specific asks are \"cut by half\" and \"stronger CTA\"; it flags the contradiction between \"more premium\" and \"keep it casual\" explicitly rather than silently picking one. It applies the two specific asks first — shortening the draft and rewriting the CTA to be more direct — then notes that the tone request needs clarification before it can be applied. A change log lists each addressed item.\n\nElena reads the flagged contradiction and realizes the client probably meant something like \"more polished, not more casual\" rather than truly opposite requests, so she checks with the client directly and gets confirmation: they want it more polished but not stiff. She sends the follow-up: \"Apply the tone request as 'more polished but not stiff' — the client confirmed that's what they meant, not literally casual and literally premium at the same time.\" Claude revises the copy accordingly and updates the change log entry.\n\nShe checks the final change log against the original feedback, confirms every note is addressed, and sends the revision back with the change log attached so the client can see exactly what moved. Total time: about 12 minutes, plus the quick clarifying question."
+    },
+    "copy-a1-personal-style-guide-asset": {
+      "placeholders": [
+        {
+          "name": "PASTE 5-10 SAMPLES OF YOUR OWN BEST WRITING",
+          "what": "Real writing you've actually produced that you consider genuinely representative of your best, most distinctive work — not your average rushed output, and not writing you're unsure about. Pull from a few different formats (emails, headlines, longer pieces) if possible, since patterns that only show up in one format aren't fully your style, they're that format's convention.",
+          "examples": [
+            "[Paste 3 of your best email openers, 2 headlines you're proud of, and one full short piece — like a blog intro or landing page section — you consider genuinely representative of how you write at your best]",
+            "[Paste 5 LinkedIn posts you wrote that got strong engagement and that you'd still stand behind today, plus 2 email subject lines you think are distinctly \"you\"]",
+            "[Paste your 4 favorite pieces of client work from the last year across different formats — an email, an ad headline set, a landing page paragraph, a social caption]"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Building a client or brand voice guide instead of your own",
+          "whenToUse": "Use this to build a reusable voice guide for a regular client or brand you write for, rather than your own personal voice — same mechanism, different subject.",
+          "prompt": "Analyze the writing samples below and build a voice guide for [CLIENT/BRAND NAME]. Do not use vague adjectives alone (e.g. 'conversational,' 'punchy') — for every trait you name, identify the specific mechanism that creates it, with a quoted example from the samples.\n\nWriting samples (their own past copy, not mine): [PASTE 5-10 SAMPLES OF THE CLIENT'S/BRAND'S BEST WRITING]\n\nProduce a guide with: 1) sentence patterns (with quoted examples), 2) vocabulary habits — words favored and avoided, with examples, 3) structural habits, 4) 3-5 signature moves with quoted examples, 5) a paste-ready instruction block under 100 words for writing in this voice, built only from the patterns above."
+        },
+        {
+          "label": "Quick version from fewer samples",
+          "whenToUse": "Use this when you don't have 5-10 strong samples handy and want a lighter first pass you can refine later as you gather more writing.",
+          "prompt": "Analyze the writing samples below and build a short, first-pass style guide — treat this as a draft I'll refine once I have more samples. Do not use vague adjectives alone; for every trait you name, identify the specific mechanism with a quoted example.\n\nWriting samples (fewer than ideal, working with what I have): [PASTE 2-4 SAMPLES]\n\nProduce: 1) 2-3 sentence patterns you can identify even from this small sample, 2) any vocabulary habits you notice, 3) a short paste-ready instruction block (under 80 words), clearly flagged as a first draft to refine, noting which sections feel under-supported by too few examples."
+        },
+        {
+          "label": "Compare your voice against a target voice you're trying to shift toward",
+          "whenToUse": "Use this when you're deliberately trying to evolve your voice (e.g. sound less formal) rather than just capture what it already is — it produces a gap analysis instead of a pure description.",
+          "prompt": "Analyze both sets of writing samples below. First, build a short style guide of my current voice from set A. Then compare it against set B (a voice I'm trying to move toward) and identify the 3-5 most specific, actionable differences — not vague ('be more casual') but mechanical ('set B uses contractions in nearly every sentence; set A rarely does').\n\nMy current writing (set A): [PASTE 4-5 SAMPLES]\nTarget voice I want to move toward (set B): [PASTE 4-5 SAMPLES]\n\nEnd with a paste-ready instruction block (under 100 words) describing how to write like set B while still sounding like a more casual evolution of set A, not a completely different person."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Too vague — push for the actual mechanism",
+          "prompt": "The trait \"[VAGUE TRAIT, e.g. conversational]\" still isn't concrete enough. Tell me exactly what mechanism creates that impression — sentence length, punctuation, word choice, structure — with a quoted example from my samples."
+        },
+        {
+          "label": "Test the instruction block on a new piece",
+          "prompt": "Using only the paste-ready instruction block from the guide above, write [NEW PIECE, e.g. a LinkedIn post about X]. Don't reference the original samples directly — just the instruction block, the way I'd actually use it in a future prompt."
+        },
+        {
+          "label": "Instruction block is too long — tighten it",
+          "prompt": "The paste-ready instruction block is longer than I want to paste into every prompt. Cut it to under 60 words while keeping the 2-3 most distinctive, load-bearing patterns."
+        },
+        {
+          "label": "This missed a pattern I know is really me",
+          "prompt": "I think there's a pattern in my writing you missed: [DESCRIBE IT, e.g. \"I almost always end paragraphs with a short one-line sentence\"]. Check the samples for this pattern, and if it's really there, add it to the guide with a quoted example."
+        }
+      ],
+      "walkthrough": "Theo has been freelance copywriting for two years and notices AI drafts never quite sound like him — they're competent but generic. He decides to build a real style guide instead of continuing to describe his voice from memory each time.\n\nHe gathers eight samples of writing he's genuinely proud of: three email openers, two headlines, and three short passages from past landing pages and blog intros — deliberately picking his best work, not average output.\n\nIn Claude, he pastes the style-guide prompt with all eight samples. Claude returns a structured guide: sentence patterns (a habit of opening with a 4-8 word declarative sentence followed by one longer explanatory sentence, with two quoted examples), vocabulary habits (a near-total avoidance of the word \"leverage\" and a preference for concrete verbs over adjectives), structural habits, and 3-5 signature moves each with a quoted example — plus a paste-ready 85-word instruction block summarizing it all.\n\nTo test it, Theo sends the follow-up: \"Using only the instruction block, write a LinkedIn post about time management for freelancers — don't reference the original samples directly.\" The resulting post opens with a short declarative sentence and avoids the vocabulary the guide flagged, and it genuinely reads like something he'd write.\n\nHe shows the test post to a colleague without telling her it was AI-assisted, and she doesn't flag anything as off. Satisfied, he saves the instruction block in a notes app for quick pasting into future prompts. Total time: about 20 minutes."
+    }
+  }
+}

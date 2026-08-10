@@ -1,0 +1,520 @@
+{
+  "enrichment": {
+    "pplx-b1-cited-research-questions": {
+      "placeholders": [
+        {
+          "name": "YOUR SPECIFIC QUESTION",
+          "what": "This is the exact, narrow question you need answered — not a topic. Swap in a real question from your work, phrased specifically enough that it has a checkable answer (a fact, a number, a named policy) rather than an open-ended 'tell me about' request.",
+          "examples": [
+            "What is the current maximum daily transaction limit for consumer accounts under the EU's PSD2 regulation?",
+            "How many US states currently require pay-transparency disclosures in job postings, and which states added the requirement in the last year?",
+            "What was Shopify's most recently reported quarterly revenue, and how does it compare to the prior quarter?"
+          ]
+        },
+        {
+          "name": "timeframe, e.g. the last 12 months",
+          "what": "This tells ChatGPT how recent the sources need to be. Pick a window that actually matches how fast the topic changes — fast-moving topics like regulation or funding need a tight window (weeks to months), stable topics can use a year or more.",
+          "examples": [
+            "the last 12 months",
+            "the last 90 days",
+            "since January 2025"
+          ]
+        },
+        {
+          "name": "source type, e.g. primary sources, regulatory filings, industry reports",
+          "what": "This tells ChatGPT which kind of source to prioritize over another — for example a government filing over a blog's summary of that filing. Naming the type explicitly is what keeps a low-quality aggregator from ranking equally with a primary source.",
+          "examples": [
+            "primary sources and regulator filings over law-firm blog summaries",
+            "peer-reviewed studies and government statistics over news commentary",
+            "company press releases and SEC filings over analyst speculation"
+          ]
+        },
+        {
+          "name": "geography/market",
+          "what": "This narrows the answer to the region or market that actually matters for your decision, since many facts like regulations, pricing, and market size vary by country or region and a global average can be misleading.",
+          "examples": [
+            "the United States and Canada",
+            "the European Union",
+            "the UK small-business market"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick fact-check, not a full research question",
+          "whenToUse": "Use this when you just need to confirm a single specific number or fact fast, without the full disagreement-checking structure.",
+          "prompt": "Search the web and quick fact check this with a citation: [SPECIFIC FACT OR NUMBER]. Give me the current, correct value with one reliable, dated source — no narrative, just the fact and the citation."
+        },
+        {
+          "label": "Comparing two named options directly",
+          "whenToUse": "Use this when your question is really a comparison between two specific things, not a single lookup.",
+          "prompt": "Search the web for this. Compare [OPTION A] and [OPTION B] specifically on [THE DIMENSION THAT MATTERS, e.g. total cost of ownership over 3 years]. Cite a source for every figure on both sides, note the publication date of each, and tell me explicitly if the comparison isn't apples-to-apples for any reason."
+        },
+        {
+          "label": "Same question run in Claude as an independent second read",
+          "whenToUse": "Use this when a claim is important enough to want confirmation from a completely different retrieval pipeline, not just a second ChatGPT chat.",
+          "prompt": "Search the web for this — do not answer from what you already know. Question: [YOUR SPECIFIC QUESTION]. Scope: prioritize sources from [timeframe] and favor [source type] for [geography/market]. If sources disagree, show both positions with citations."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Too vague — force it to be specific",
+          "prompt": "That's still fairly general. Narrow it to the single most specific, checkable version of this question you can answer, and redo it with citations."
+        },
+        {
+          "label": "Check if sources actually agree",
+          "prompt": "Did any of your sources disagree with each other on this? If so, show me both positions side by side with their separate citations instead of blending them into one answer."
+        },
+        {
+          "label": "Push past the paywall summary",
+          "prompt": "One of your citations looks like it might be summarizing a paywalled or primary source secondhand. Search again for the original primary source directly if one exists, and cite that instead."
+        },
+        {
+          "label": "Get the freshest possible version",
+          "prompt": "Has anything changed on this since the most recent source you cited? Search specifically for anything published in the last 30 days that might update this answer."
+        }
+      ],
+      "walkthrough": "Nadia is an independent compliance consultant, and a client just asked her whether their data storage setup is still compliant with EU data residency rules — a question she needs to answer accurately, not from memory, since regulations shift and being wrong could cost the client a fine.\n\nShe opens a new chat in ChatGPT and clicks the search icon in the composer to force a web search rather than let the model answer from what it already knows. Instead of typing a vague question about EU data residency rules, she uses the scoped template: her specific question is what the current data residency requirements are for storing EU customer data, and whether there have been any regulatory changes in the last 12 months. She sets the scope to prioritize official EU and national regulator sources over law-firm blog summaries, and asks ChatGPT to show both sides explicitly if sources disagree.\n\nThe answer comes back with four inline citations: a summary of the current requirement, a note that a relevant amendment took effect eight months ago, and a flag that one national regulator's guidance is stricter than the EU baseline. She clicks through three of the four citations and confirms each one actually says what the answer claims — the amendment citation, in particular, links straight to the regulator's own publication.\n\nShe sends one tight follow-up in the same chat asking whether the stricter national guidance applies specifically to the client's country. The answer narrows to a clear yes, with the reasoning attached.\n\nFifteen minutes total, and she can forward the answer to her client with every claim traceable to a dated, official source — not a paraphrase she'd have to double-check herself."
+    },
+    "pplx-b2-evaluate-and-verify-sources": {
+      "variations": [
+        {
+          "label": "Verifying just one specific claim, not the whole answer",
+          "whenToUse": "Use this when only one number or claim in a longer answer actually matters for your decision, rather than auditing everything.",
+          "prompt": "Focus only on this one claim from your last answer: [PASTE THE SPECIFIC CLAIM]. Quote the exact sentence from its cited source that supports it, and tell me plainly if the source only implies it rather than stating it directly."
+        },
+        {
+          "label": "Verifying before forwarding to a client or boss",
+          "whenToUse": "Use this as a final check specifically before you send research externally, framed around what a skeptical reader would challenge.",
+          "prompt": "If I forwarded your last answer to a skeptical client who fact-checked every claim, which one or two claims would they be most likely to find weakly supported? Identify those specifically and quote what the source actually says versus what the answer claims."
+        },
+        {
+          "label": "Cross-checking with Gemini Deep Research as an independent second source",
+          "whenToUse": "Use this for a high-stakes number where one source, even a good one, isn't enough — you want genuine independent confirmation from a separately retrieved source set.",
+          "prompt": "Run this same question through Gemini Deep Research and tell me whether it lands on the same figure or a different one: [THE KEY FIGURE AND ITS CONTEXT]. I want to know if its independently retrieved sources confirm this number."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "It found a weak claim — go deeper",
+          "prompt": "You flagged that claim as weakly supported. Search the web again specifically for a better, more direct source for that exact number before I decide whether to use it."
+        },
+        {
+          "label": "Check the source's own credibility",
+          "prompt": "For the source behind this claim, tell me what kind of publication it is — a regulator, an academic journal, a company blog, a news aggregator — and whether it has any obvious bias or commercial interest in this specific topic."
+        },
+        {
+          "label": "One claim checked out, apply the same check elsewhere",
+          "prompt": "Now run the same verification — quote the supporting sentence for each claim — on the research thread from earlier in this conversation, not this one."
+        },
+        {
+          "label": "Confirm the date is actually current",
+          "prompt": "For every claim you just verified, tell me explicitly whether anything more recent than its cited source exists that might have changed the answer."
+        }
+      ],
+      "walkthrough": "Julian is a marketing consultant putting together a pricing recommendation for a client's new SaaS product, and ChatGPT gave him a headline figure: the average B2B SaaS churn rate is 5% monthly. It's a good, specific-sounding number, and it would look clean in his pitch deck — which is exactly why he's suspicious of it.\n\nHe pastes the copyable verification prompt into the same chat: show the source for every factual claim in the last answer, and quote the exact sentence from the source that supports each one, flagging anything that isn't directly supported by a quotable sentence.\n\nChatGPT responds honestly. For the 5% churn figure, it quotes the source sentence, and the quote reveals something the original answer didn't make clear: the 5% figure is specific to enterprise SaaS companies serving customers with 500 or more employees. Julian's client sells to small agencies with under 20 employees — a completely different segment, where churn tends to run much higher.\n\nIf Julian had put that 5% figure straight into the client pitch, he'd have set an unrealistic retention target based on a number that was never actually about his client's market segment. Instead, he asks a follow-up: search again for the same churn statistic specifically for SaaS companies selling to small businesses under 50 employees. The corrected answer comes back closer to 12%, with a source specific to that segment.\n\nHe checks the new source's publication date too — under a year old — before using it. The whole verification took about six minutes, and it changed a number that would otherwise have gone straight into a client-facing deck. Julian now runs this verification prompt as a standing habit on any number he plans to repeat to a client, treating a citation as a starting point to check, not a stamp of truth."
+    },
+    "pplx-i1-focused-market-research": {
+      "placeholders": [
+        {
+          "name": "DECISION, e.g. \"whether to launch a $49/month starter tier for our project management SaaS targeting small agencies\"",
+          "what": "This is the actual decision you or your team is about to make — not the general topic around it. Write it as a real choice with two sides (do this or don't, or choose A vs B), since a genuine decision keeps every sub-question anchored to something actionable.",
+          "examples": [
+            "whether to open a second physical location in Austin within the next 12 months",
+            "whether to switch our email marketing platform from Mailchimp to Klaviyo",
+            "whether to raise our standard consulting day rate from $1,200 to $1,500"
+          ]
+        },
+        {
+          "name": "SPECIFIC SUB-QUESTION, e.g. \"What do the 5 leading project management SaaS tools charge for their entry-level paid tier, and what features are included at that price?\"",
+          "what": "This is one narrow, answerable piece of the larger decision — a decision usually breaks into 3-4 of these. Each sub-question should be specific enough that Gemini Deep Research can return concrete data points rather than a general narrative.",
+          "examples": [
+            "What is the average commercial rent per square foot for retail space in downtown Austin as of this year?",
+            "What do Klaviyo and Mailchimp each charge for a list size of 25,000 subscribers, and what automation features are included at that tier?",
+            "What day rates do independent consultants with 10+ years of experience in mid-market operations charge in major US metro areas?"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Fast version for a lower-stakes decision",
+          "whenToUse": "Use this when the decision matters but isn't high-stakes enough to justify 3-4 separate Deep Research runs — one broader brief covering the main sub-points at once.",
+          "prompt": "I'm making this business decision: [DECISION]. Give me the 3-4 most important data points to inform it, each with a source and publication date, covering [LIST 2-3 KEY AREAS, e.g. cost, competitor approach, and demand signal]. Flag anything you're not confident about instead of guessing."
+        },
+        {
+          "label": "When you need customer demand signal, not just competitor data",
+          "whenToUse": "Use this when the missing piece of the decision is whether there's actual demand, not just what competitors are doing.",
+          "prompt": "I'm making this business decision: [DECISION]. Research question: what public evidence exists of customer demand or dissatisfaction relevant to this decision — reviews, forum discussions, survey data, or analyst commentary? Give me specific quotes or data points with sources and dates, not a general sentiment summary."
+        },
+        {
+          "label": "Higher-stakes version requiring second-source confirmation",
+          "whenToUse": "Use this for a decision with real financial consequences, where every key figure needs independent confirmation before it goes in front of decision-makers.",
+          "prompt": "I'm making this business decision: [DECISION]. Research question: [SPECIFIC SUB-QUESTION]. For every number you give me, find a second, independent source that confirms or contradicts it, and tell me explicitly if you could only find one source for something important."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Numbers from different years got mixed together",
+          "prompt": "Go back through every figure you gave me and confirm the exact publication year for each one individually — I want to check none of these are older than 18 months without me knowing."
+        },
+        {
+          "label": "Need it compiled into a brief",
+          "prompt": "Compile everything from these Deep Research reports into a one-page decision brief with a short recommendation at the top, each supporting data point below it with its source, and a final section listing anything you couldn't answer confidently."
+        },
+        {
+          "label": "One figure needs a second source",
+          "prompt": "The figure you gave me for [SPECIFIC FIGURE] is the one number this decision really hinges on. Find a second, independent source for it before I put it in the brief."
+        },
+        {
+          "label": "Check what's missing before presenting",
+          "prompt": "Before I take this to a decision meeting, tell me plainly: what's the weakest or least-supported part of this research, and what would you need to research further to be more confident?"
+        }
+      ],
+      "walkthrough": "Ravi owns a 12-person digital agency, and he's trying to decide whether to launch a $49-a-month self-serve starter tier for the project-management tool his team built internally and now wants to sell externally. He's tempted to just search around for an hour, but he knows that produces scattered browser tabs, not something he can act on.\n\nInstead, he opens the Gemini app and writes down the actual decision, not the topic: whether to launch a $49/month starter tier for their project management SaaS targeting small agencies. He breaks it into four sub-questions: what the five leading competitors charge for their entry-level tier and what's included, what demand signals exist for a cheaper tier in this market, what a $49 price point would need to include to be competitive, and any constraint on his own product that would make that price hard to support.\n\nHe selects Deep Research and runs each sub-question as its own brief using the copyable template, naming the decision each time so the research stays anchored to it. For the pricing question, he reviews the research plan Gemini proposes before approving it, adding a note to also check annual-billing discounts. The finished report returns a clean list: five competitor names, prices, billing periods, and included features, each with a source and publication date. He notices one figure looks outdated, an 18-month-old blog post, and flags it as needing a second check rather than trusting it as-is.\n\nAfter all four reports, he asks Gemini to compile everything into a short brief and exports it to Google Docs. He cross-checks the one pricing figure that mattered most against a second, more recent source before including it.\n\nThe whole process takes about forty minutes across four focused Deep Research runs — slower than one lazy prompt, but he walks into his Friday leadership meeting with a one-page brief, three sourced data points, and a clear recommendation, instead of a vague sense of what competitors seem to charge."
+    },
+    "pplx-i2-competitive-analysis-workflow": {
+      "placeholders": [
+        {
+          "name": "COMPETITOR NAME",
+          "what": "The exact name of the one competitor this specific Deep Research report covers — run this same template once per competitor, changing only this and the next placeholder, so the outputs stay directly comparable.",
+          "examples": [
+            "Asana",
+            "Monday.com",
+            "ClickUp"
+          ]
+        },
+        {
+          "name": "YOUR COMPANY/PRODUCT",
+          "what": "Your own company or product name and a one-line description of what it does, so ChatGPT frames the competitor's positioning and pricing relative to something specific instead of generically.",
+          "examples": [
+            "our product, TaskFlow — a project management tool for small creative agencies",
+            "our company, Riverbank Consulting — a boutique financial advisory for mid-market manufacturers",
+            "our app, Fetchly — an on-demand pet care booking platform"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Faster version for a quick pricing-only check",
+          "whenToUse": "Use this when you only need to refresh competitor pricing, not the full positioning and recent-moves picture — a much shorter, faster run that doesn't need Deep Research.",
+          "prompt": "Search the web for [COMPETITOR NAME]'s current pricing tiers and exactly what's included at each, with a source and date. Flag if any tier changed in the last 3 months."
+        },
+        {
+          "label": "Deeper version including customer sentiment",
+          "whenToUse": "Use this when positioning and pricing alone aren't enough and you also need a read on how the competitor's actual customers feel, drawn from reviews.",
+          "prompt": "Research [COMPETITOR NAME] as a competitor to [YOUR COMPANY/PRODUCT]. In addition to positioning, pricing, and recent moves, summarize the most common complaints and praise from public reviews (G2, Capterra, Reddit) in the last 6 months, with direct quotes and sources. Mark this section clearly as customer sentiment, not verified fact."
+        },
+        {
+          "label": "Batch version for a full competitor set at once",
+          "whenToUse": "Use this once you already have 2-3 individual competitor Deep Research reports in the same Project, to generate the combined comparison table in one step.",
+          "prompt": "Using the Deep Research reports already in this Project, combine them into one comparison table with columns for positioning, pricing, target customer, and moves in the last 6 months. Flag any competitor where the data feels thinner or less current than the others."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Table has gaps for one competitor",
+          "prompt": "The row for [COMPETITOR NAME] in the comparison table is missing pricing detail the others have. Go back to their individual report and fill that gap specifically, keeping the same source-and-date format."
+        },
+        {
+          "label": "Double-check a claim that would change strategy",
+          "prompt": "The claim that [COMPETITOR NAME] made about [SPECIFIC CLAIM] would actually change our positioning if true. Click through and confirm that exact claim against the primary source, not a secondhand summary."
+        },
+        {
+          "label": "Separate fact from inference more strictly",
+          "prompt": "Go through the comparison table again and mark every cell that's inference or analyst opinion rather than a directly sourced fact — I want to see the two clearly separated before I present this."
+        },
+        {
+          "label": "Refresh just the recent-moves column",
+          "prompt": "Re-run just the 'recent moves' question for all competitors in this table, since the last full run was over a quarter ago — I only need what's changed since then, not the whole table again."
+        }
+      ],
+      "walkthrough": "Elena is the marketing lead at a small project-management SaaS company, and her CMO wants an updated competitor comparison ahead of a positioning refresh — the last one anyone did was a static slide from over a year ago, built from memory and old sales notes.\n\nShe decides to build something she can actually rerun later. She creates a ChatGPT Project named for this competitor set, then writes one Deep Research template prompt and runs it three times inside the Project, once per named competitor, changing only the competitor name and keeping everything else identical: current positioning and target customer, pricing tiers and what's included, any product launches or funding news in the last six months, and publicly stated strengths and weaknesses from reviews, explicitly separated from ChatGPT's own opinion.\n\nEach report comes back with a source and date attached to every claim. For the recent-moves section, she notices one competitor recently raised a funding round — a fact that hadn't reached her team yet through any other channel.\n\nOnce all three reports are done, she asks ChatGPT to combine them into a single comparison table. The result lands as a clean grid: three rows, four columns, sources and dates preserved in each cell. Before sending it to her CMO, she clicks through the citation for the one claim that would actually shift their positioning, a competitor's claimed integration with a major platform, and confirms it's real, not a stale rumor.\n\nShe keeps everything inside the same Project, with custom instructions set to always require a source and date, so refreshing it next quarter means rerunning the same three prompts rather than starting from nothing.\n\nBuilding the table this way takes about thirty-five minutes the first time. Refreshing it next quarter, she expects, will take about ten."
+    },
+    "pplx-i3-deep-research-long-form-reports": {
+      "placeholders": [
+        {
+          "name": "TOPIC",
+          "what": "The subject of the report, stated as specifically as you can — a named market, technology, or question, not a broad field. The more specific the topic, the less padding Deep Research needs to fill its structure.",
+          "examples": [
+            "the market for residential solar panel installation for small businesses in Germany",
+            "regulatory requirements for AI-driven credit scoring in the United States",
+            "the competitive landscape for direct-to-consumer meal kit delivery in the UK"
+          ]
+        },
+        {
+          "name": "who will read it and why, e.g. \"our leadership team deciding whether to enter the X market\"",
+          "what": "Name the actual person or group who will read this report and the decision it's meant to inform. This shapes which sections get depth and which get cut — a report for an investor pitch looks different from one for an internal engineering team.",
+          "examples": [
+            "our leadership team deciding whether to enter the German solar market",
+            "a compliance officer assessing legal exposure before launching a new product",
+            "a board of directors evaluating a potential acquisition target"
+          ]
+        },
+        {
+          "name": "specific sub-topics, e.g. market size and growth, key players, regulatory landscape, entry barriers",
+          "what": "List the exact sections you need the report to cover. Without this, Deep Research picks its own structure, which may miss the one section your decision actually depends on.",
+          "examples": [
+            "market size and growth rate, the top 5 competitors and their market share, regulatory barriers to entry, and typical customer acquisition cost",
+            "current adoption rate, main technology providers, cost trends over the last 3 years, and any pending legislation",
+            "target customer segments, pricing benchmarks, distribution channels, and recent M&A activity"
+          ]
+        },
+        {
+          "name": "things out of scope, e.g. the consumer segment, regions outside the EU",
+          "what": "State explicitly what the report should NOT cover, so Deep Research doesn't pad the report with tangential content just because sources exist on it. This keeps a long report focused on what you'll actually use.",
+          "examples": [
+            "the consumer/residential segment — this report is B2B only",
+            "any region outside North America",
+            "historical data older than 5 years"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Shorter primer instead of a full landscape report",
+          "whenToUse": "Use this when you need a fast, digestible overview for a meeting tomorrow rather than an exhaustive report — Deep Research can also produce a shorter, tighter output if you ask for one.",
+          "prompt": "Write a short research primer (roughly 2 pages, not a full report) on: [TOPIC]. Audience: [who will read it and why]. Cover only the 3 most decision-relevant points: [LIST 3 POINTS]. Cite every data point and skip anything not directly relevant to those 3 points."
+        },
+        {
+          "label": "Due-diligence style report on a specific company",
+          "whenToUse": "Use this when the subject is a single company you're evaluating — for acquisition, partnership, or investment — rather than a broader market.",
+          "prompt": "Write a due-diligence research report on: [COMPANY NAME]. Audience: [who will read it and why, e.g. \"our investment committee evaluating a Series B investment\"]. Scope: cover company history and leadership, financial signals available publicly, competitive position, and any public controversies or litigation. Exclude: detailed product-feature comparison — that's covered separately. Structure the report with headed sections and end with a short \"key risks and open questions\" section. Cite every data point."
+        },
+        {
+          "label": "Comparative report across multiple options",
+          "whenToUse": "Use this when the decision is a choice between several named alternatives rather than a single-topic overview.",
+          "prompt": "Write a comparative research report evaluating: [OPTION A], [OPTION B], and [OPTION C] as [THE DECISION, e.g. \"potential vendors for our new CRM\"]. Audience: [who will read it and why]. Scope: cover cost, feature fit for our stated requirements, implementation timeline, and vendor stability. Structure the report with one section per option plus a final comparison table and a recommendation. Cite every data point and flag any section where evidence is thin."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "One section came back too thin",
+          "prompt": "The section on [SECTION NAME] is much thinner than the others and doesn't have enough sourced detail to be useful. Expand that section specifically with more sources, without touching the rest of the report."
+        },
+        {
+          "label": "Missing a section you actually needed",
+          "prompt": "Add a new section on [TOPIC] that wasn't in my original brief — I realize this report needs it to be actionable. Keep the rest of the report as-is."
+        },
+        {
+          "label": "Check the source list for quality",
+          "prompt": "List every source used in this report by domain, sorted by how many times each was cited. Flag any source that looks like a low-quality aggregator rather than a primary or reputable outlet."
+        },
+        {
+          "label": "Push on the disagreement it flagged",
+          "prompt": "You noted that sources disagree on one specific point in this report. Go deeper on that specific disagreement — what's the range across sources, and which source seems most authoritative and why?"
+        }
+      ],
+      "walkthrough": "Felix runs a solar panel installation company in the Netherlands, and his leadership team is debating whether to expand into Germany next year — a decision big enough that a vague online search wouldn't cut it, but hiring a market research firm would take weeks he doesn't have.\n\nHe opens the Gemini app and selects Deep Research from the tools menu. Instead of typing a one-line question, he writes a full brief: the topic is the market for residential and small-business solar panel installation in Germany, the audience is his leadership team deciding on a go or no-go for entry next year, the scope covers market size and growth, the top competitors, regulatory barriers, and a realistic three-year growth range, and he explicitly excludes the large-scale commercial solar segment, which isn't part of this decision. He asks for headed sections and a closing 'key risks and open questions' section.\n\nGemini shows him a research plan before it starts browsing. He notices it's missing a step on state-level permitting rules, so he adds it before clicking Start research, then waits about six minutes while it browses and synthesizes sources — long enough that he makes coffee rather than watching a spinner.\n\nThe report comes back with five sections. The regulatory section, thanks to his edit, flags that permitting rules vary meaningfully by German state. The closing risks section notes plainly that installer-count figures disagree across two of its sources by a wide margin.\n\nRather than treating the number as settled, he sends a follow-up asking Gemini to dig specifically into that disagreement — it turns out one source counts only certified installers and the other includes unregistered contractors, which explains most of the gap.\n\nHe exports the full report to Google Docs, including its source list and the caveat about the disagreement, for his leadership meeting. Total time: under twenty minutes of his own attention for a report that would have taken him a full day to assemble manually, with the uncertainty flagged honestly instead of hidden."
+    },
+    "pplx-i4-spaces-for-ongoing-research": {
+      "placeholders": [
+        {
+          "name": "PROJECT/CLIENT NAME",
+          "what": "The real name of the project, client, or deal this ChatGPT Project is dedicated to. Using a specific name instead of a generic label like \"Research\" or \"Misc\" is what keeps the Project usefully separate from your other work.",
+          "examples": [
+            "Meridian Capital — Series B Diligence",
+            "123 Oak St — Buyer Due Diligence",
+            "Q3 Competitor Watch — Checkout Vertical"
+          ]
+        },
+        {
+          "name": "industry/role, e.g. \"boutique M&A advisory evaluating a mid-market acquisition target\"",
+          "what": "A short description of your role and industry context for this project, so every answer in the Project is framed correctly — the same question gets a different useful answer depending on whether you're a buyer, a seller, or an advisor.",
+          "examples": [
+            "a boutique M&A advisory evaluating a mid-market manufacturing acquisition target",
+            "a residential real estate agent representing a buyer during due diligence",
+            "an independent consultant assessing a client's supply-chain risk before a contract renewal"
+          ]
+        },
+        {
+          "name": "always-check angle, e.g. \"regulatory or compliance risk\"",
+          "what": "A category of risk or concern that matters to this project every time, even when a specific question doesn't mention it directly. Naming it once in the Project's custom instructions means it gets checked automatically instead of depending on you remembering to ask.",
+          "examples": [
+            "regulatory or compliance risk",
+            "any pending litigation or liens",
+            "customer concentration risk (reliance on a small number of large customers)"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Lighter-weight Project for a shorter project",
+          "whenToUse": "Use this for a project that will only run a few weeks, where a shorter instructions block is enough and you don't expect to upload many files.",
+          "prompt": "This Project is for research supporting [PROJECT/CLIENT NAME]. For every question: always note the publication date of sources, and prioritize sources from the last 6 months unless historical context is specifically requested."
+        },
+        {
+          "label": "Project shared with a client, not just internal team",
+          "whenToUse": "Use this when the Project itself, not just individual answers, will be shared with a client or external partner on a Team/Enterprise workspace — the instructions need to account for that audience.",
+          "prompt": "This Project is for research supporting [PROJECT/CLIENT NAME], and will be shared directly with the client. For every question: use plain, non-technical language, always cite sources, and avoid any internal commentary or speculation that wouldn't be appropriate for the client to read directly. Flag internally-only notes clearly if any are needed."
+        },
+        {
+          "label": "Project combining internal documents with web research",
+          "whenToUse": "Use this when the project has a mix of your own internal materials and the need for fresh external research, and you want every answer to draw on both clearly labeled.",
+          "prompt": "This Project is for research supporting [PROJECT/CLIENT NAME]. We are a [industry/role]. Uploaded documents include our internal notes, contracts, and prior correspondence — treat these as authoritative for anything they cover, and use web research only to fill gaps or verify external facts. Always label each part of your answer as \"from uploaded documents\" or \"from web research.\""
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check it's actually using the uploaded files",
+          "prompt": "For your last answer, tell me explicitly which parts came from our uploaded documents versus web research, and quote the specific document and section you pulled from."
+        },
+        {
+          "label": "Files went stale, refresh check",
+          "prompt": "We uploaded the inspection report three weeks ago — has anything changed since then that we should re-check, and are all our uploaded documents still the most current versions?"
+        },
+        {
+          "label": "New teammate needs a fast orientation",
+          "prompt": "A colleague is joining this project with no prior context. Summarize the 3-4 most important things they need to know from this Project's history before their first client call."
+        },
+        {
+          "label": "Confirm the always-check angle actually triggered",
+          "prompt": "In your last few answers in this Project, did you actually check for our always-check risk angle each time, even when I didn't ask directly? Show me where you did, and flag any answer where you didn't."
+        }
+      ],
+      "walkthrough": "Carmen is a real estate agent helping a buyer close on a house at 123 Oak St, and the due diligence period involves a stream of small questions over several weeks — inspection findings, HOA rules, permit history — that would normally live scattered across email threads and her own notes.\n\nShe creates a new ChatGPT Project and names it '123 Oak St — Buyer Due Diligence' instead of something generic. In the custom instructions, she states her role, a real estate agent representing a buyer during due diligence, and sets a standing rule: always flag anything relevant to permits or liens, even if a specific question doesn't mention them directly, since that's the risk category that actually matters most for this deal.\n\nShe uploads the inspection report and the HOA's governing documents, both PDFs she already had from the seller's disclosures. From that point on, every chat she starts inside the Project, like what a particular inspection note about the roof means in plain terms, or whether there are unusual restrictions in the HOA bylaws, draws on both the uploaded documents and fresh web research where needed, clearly separated.\n\nTwo weeks in, Carmen goes on vacation for four days, and a colleague on her team's Business workspace covers her clients. Instead of a lengthy handoff call, she points him to the shared Project. He opens it, reads the chat history, and asks a new question about a permit issue that came up. The Project answers correctly, citing both the uploaded inspection report and a city permit record it found online, with zero re-briefing needed.\n\nSetting up the Project took about fifteen minutes. Over the following month, it replaced what would have been a dozen separate email threads and at least two handoff calls, and every answer stayed traceable to either a document or a dated source."
+    },
+    "pplx-a1-research-to-deliverable": {
+      "placeholders": [
+        {
+          "name": "10-slide PowerPoint deck / spreadsheet with X tabs",
+          "what": "State the exact deliverable format and size you need — a deck with a specific slide count, or a spreadsheet with a specific number of tabs. Being precise here stops ChatGPT from picking an arbitrary length that doesn't fit your actual presentation slot or use case.",
+          "examples": [
+            "a 6-slide PowerPoint deck",
+            "a spreadsheet with 3 tabs: summary, detailed data, and sources",
+            "a 10-slide PowerPoint deck"
+          ]
+        },
+        {
+          "name": "audience, e.g. \"our leadership team, non-technical\"",
+          "what": "Describe who will actually view this deliverable and their level of familiarity with the topic. This determines how much jargon, background explanation, and detail belongs in the final file versus what can be assumed as known.",
+          "examples": [
+            "our leadership team, non-technical",
+            "a prospective client evaluating our proposal, first time seeing this data",
+            "our board of directors, familiar with the industry but not this specific research"
+          ]
+        },
+        {
+          "name": "outline exactly what each slide/section/tab should cover, e.g. \"slide 1 title, slide 2 market size, slide 3 competitor comparison table, slides 4-5 opportunities, slide 6 risks, slide 7 recommendation\"",
+          "what": "A slide-by-slide or tab-by-tab outline of exactly what belongs where. Without this, ChatGPT's data analysis tool picks its own generic structure, which often doesn't match how you actually need to present the material to this specific audience.",
+          "examples": [
+            "slide 1 title, slide 2 executive summary, slide 3 market overview, slide 4 competitor table, slide 5 recommendation, slide 6 sources",
+            "tab 1 summary table, tab 2 raw pricing data by competitor, tab 3 sources and dates",
+            "slide 1 title, slides 2-3 findings by region, slide 4 risks, slide 5 next steps"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Written one-pager instead of a deck or spreadsheet",
+          "whenToUse": "Use this when the deliverable needs to be a shareable document rather than a slide file or spreadsheet — for example a quick reference memo for a team.",
+          "prompt": "Turn this research into a written one-pager with [NUMBER] sections for [audience]. Structure: [outline exactly what each section should cover]. Keep every claim traceable — include a sources section at the end. Do not add any claim that wasn't in the original research."
+        },
+        {
+          "label": "Tracking spreadsheet for ongoing monitoring, not a one-time deck",
+          "whenToUse": "Use this when the research is a recurring or trackable metric rather than a one-time snapshot, and you want a spreadsheet you'll keep updating instead of static slides.",
+          "prompt": "Turn this research into a spreadsheet tracking [METRICS, e.g. competitor pricing over time] for [audience]. Structure: [outline what each tab should show]. Include the source and date for every data point, and make clear which figures are current versus which are historical."
+        },
+        {
+          "label": "Client-facing version with internal notes stripped out",
+          "whenToUse": "Use this when the underlying research thread includes internal commentary or caveats that shouldn't go to an external client, and you need a cleaned-up version.",
+          "prompt": "Turn this research into a [FORMAT] for [external client, non-technical]. Structure: [outline]. Strip out any internal-only commentary, speculation, or caveats meant for our team — keep only claims and language appropriate for the client to read directly. Include a sources slide/tab. Do not add any claim that wasn't in the original research."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check no new claims snuck in",
+          "prompt": "Go through every slide/tab in this deliverable and confirm each claim traces back to something actually in the original research thread. Flag anything that looks like it was added or embellished during generation."
+        },
+        {
+          "label": "One section needs a fix, not a full regenerate",
+          "prompt": "On slide/tab [NUMBER] only, fix this specific issue: [SPECIFIC FIX, e.g. \"the competitor pricing table is missing the billing period column\"]. Leave every other slide/tab exactly as it is."
+        },
+        {
+          "label": "Sources missing from the final file",
+          "prompt": "The sources slide/tab is missing citations for one of the claims. Add the full citation list back in, matching the original research thread exactly."
+        },
+        {
+          "label": "Simplify for a less technical audience",
+          "prompt": "This still reads too technical for the intended audience. Rewrite the language on each slide/tab to be understandable to someone with no background in this topic, without cutting any of the actual data."
+        }
+      ],
+      "walkthrough": "Priyanka is an independent consultant who just finished a Deep Research run comparing outsourcing options for customer support across three regions — Philippines, Eastern Europe, and Latin America — for a client deciding where to build a new support team. Before turning it into anything client-facing, she runs the verification habit from earlier in her research process, checking the key cost and quality figures against their cited sources.\n\nOnce she's confident the research holds up, she asks ChatGPT to turn it into a deliverable, but she doesn't leave the format open. She specifies a 6-slide PowerPoint deck for her client's leadership team, who are non-technical, tells it to use the data analysis tool to generate the actual file, and outlines exactly what belongs on each slide: title, cost comparison across the three regions, quality and language considerations, staffing timeline, a recommendation, and a sources slide. She explicitly tells it not to add any claim that wasn't in the original research thread.\n\nThe deck comes back structured exactly as outlined. She reviews it section by section against the original research thread rather than skimming for typos alone — on slide 3, she notices a claim about average agent tenure that sounds slightly more specific than what the research actually supported, so she sends a targeted follow-up asking ChatGPT to check that one claim traces back to the source, rather than regenerating the whole deck. It turns out the figure was accurate but the wording had tightened the claim slightly; she gets it corrected in under a minute.\n\nShe downloads the PPTX file and does a five-minute polish pass in PowerPoint itself, adjusting a font size, aligning one chart. The client receives a clean, sourced deck the same afternoon the research finished, instead of the half-day Priyanka used to spend manually rebuilding bullet points into slides."
+    },
+    "pplx-a2-recurring-research-routine": {
+      "placeholders": [
+        {
+          "name": "DATE RANGE, e.g. \"the last 7 days\"",
+          "what": "The time window this specific run should cover — the one part of the template you edit every time you run it. Match it to your actual cadence so you're not re-reading the same news twice or missing a gap between runs.",
+          "examples": [
+            "the last 7 days",
+            "the last 30 days",
+            "since our last run on August 3"
+          ]
+        },
+        {
+          "name": "e.g. \"any pricing or product changes from our top 3 competitors\"",
+          "what": "One of your 3-5 standing research questions — the fixed set you decide once and reuse every run. Pick things that genuinely recur and matter to your role, not everything you could theoretically research.",
+          "examples": [
+            "any pricing or product changes from our top 3 competitors",
+            "any client industry news relevant to our current engagements",
+            "notable executive hires or departures at companies in our target market"
+          ]
+        },
+        {
+          "name": "e.g. \"any new regulation affecting our industry in the EU\"",
+          "what": "A second standing question in your recurring set, typically covering a different category of change than the first (for example regulatory instead of competitive) so the routine covers more than one angle each run.",
+          "examples": [
+            "any new regulation affecting our industry in the EU",
+            "any significant supply-chain disruption affecting our sector",
+            "any change in interest rates or monetary policy relevant to our clients"
+          ]
+        },
+        {
+          "name": "e.g. \"notable funding or M&A news in our sector\"",
+          "what": "A third standing question rounding out the set — often the one covering deal activity, market structure change, or a category specific to your own role that the first two questions don't cover.",
+          "examples": [
+            "notable funding or M&A news in our sector",
+            "any new entrant or major product launch in our market",
+            "significant analyst rating changes for companies we track"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Daily version for a fast-moving market",
+          "whenToUse": "Use this for a market that moves too fast for a weekly Scheduled Action to keep up — daily crypto, breaking-news-heavy sectors — with a tighter date range and a shorter question set.",
+          "prompt": "Run my daily research check for the last 24 hours. Questions: 1) [FAST-MOVING QUESTION 1], 2) [FAST-MOVING QUESTION 2]. Compare to yesterday's run and flag only what's genuinely new — skip anything unchanged. Give me 3-5 bullet points maximum, with a citation per item."
+        },
+        {
+          "label": "Monthly deep version for a slower-moving industry",
+          "whenToUse": "Use this for a slower-moving industry where a weekly Scheduled Action would mostly return nothing new, and a monthly, slightly deeper pass makes more sense.",
+          "prompt": "Run my monthly research check for the last 30 days. Questions: 1) [QUESTION 1], 2) [QUESTION 2], 3) [QUESTION 3], 4) [QUESTION 4]. Compare to last month's run and flag what's changed. This time, for anything flagged as significant, add one extra paragraph of context beyond the usual short bullet."
+        },
+        {
+          "label": "Client-specific version instead of industry-wide",
+          "whenToUse": "Use this when the recurring check is about a specific client or account rather than your broader industry — for example an account manager tracking one key client's public activity.",
+          "prompt": "Run my recurring check on [CLIENT/ACCOUNT NAME] for [DATE RANGE]. Questions: 1) any public news, leadership changes, or announcements from them, 2) any signal of budget or strategy shifts relevant to our engagement, 3) any competitor of theirs making a notable move. Compare to our last run and flag what's new. Short bulleted update with a citation per item."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Nothing new came back — sanity check",
+          "prompt": "You found no changes this run. Confirm you actually compared against the prior run rather than just returning a generic 'no updates' — show me what you checked."
+        },
+        {
+          "label": "One flagged item needs digging into",
+          "prompt": "One of the items you flagged is the one that actually matters this week. Go deeper on just that one — full context, sources, and what it might mean for us."
+        },
+        {
+          "label": "Routine feels stale, review the question list",
+          "prompt": "Looking back at the last 6 runs of this routine, which of my standing questions has consistently returned nothing useful? Suggest whether to retire it and what might replace it."
+        },
+        {
+          "label": "Turn this run into a shareable note",
+          "prompt": "Turn this run's bullet points into a short update I can paste directly into a team Slack channel or a Gmail draft — same content, just formatted for a quick read with the citations as links."
+        }
+      ],
+      "walkthrough": "Devon is a financial analyst covering the mid-cap software sector, and he used to spend the first hour of every Monday manually checking five different news sites and a couple of analyst newsletters before he felt caught up enough to talk to clients. It was slow, and he sometimes missed things that came out over the weekend.\n\nHe opens the Gemini app and defines three standing questions he wants answered every week: any earnings surprises among the peer companies he tracks, any regulatory announcements relevant to the sector, and any notable analyst rating changes. He writes these into a reusable Deep Research brief with a date-range placeholder as the only thing he'd otherwise edit each run, then sets up a Scheduled Action so it runs automatically every Monday at 7am instead of depending on him remembering to trigger it.\n\nThe first Monday, the scheduled run delivers a short bulleted update: one earnings surprise, no regulatory news, and two rating changes, each with a citation. He verifies the item that actually matters, the earnings surprise, by clicking through to the source, then moves on with his day in about eight minutes total.\n\nSix weeks in, the routine has real momentum. Each run compares itself against the prior week and explicitly flags only what's changed, which means most weeks he's reading five bullet points instead of a full market overview. One Monday, when nothing in the news category comes back, he asks a quick follow-up to confirm it actually checked against last week's results rather than just returning a generic 'no updates' — it had, and genuinely nothing new had happened.\n\nWhat used to be an hour of scattered reading is now a fifteen-minute habit that starts itself, most of it verification rather than searching, and Devon walks into client calls each week already caught up."
+    }
+  }
+}

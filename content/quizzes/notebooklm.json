@@ -1,0 +1,284 @@
+{
+  "quizzes": {
+    "nlm-b1-first-notebook-sources": [
+      {
+        "q": "You upload a scanned PDF policy manual to a new Claude Project, and it shows as uploaded with no visible error. What's the real risk here?",
+        "options": [
+          "The Project will automatically reject the file after 24 hours",
+          "A scanned, image-only PDF with no selectable text layer may yield little or no usable content, without any obvious error",
+          "Claude will convert it to audio automatically",
+          "The file will count double against the per-chat file limit"
+        ],
+        "answer": 1,
+        "why": "Uploading scanned or image-only PDFs and assuming Claude extracted the full text is a listed common mistake — Claude can extract little or nothing from them while the upload still appears to have succeeded."
+      },
+      {
+        "q": "After adding three files to a new Claude Project, what should you do before asking your first real question?",
+        "options": [
+          "Immediately ask a broad open-ended question to test the Project",
+          "Run an inventory-style prompt asking Claude to summarize what each file contributes and flag any gaps or failed uploads",
+          "Delete two of the three files to simplify the Project",
+          "Wait 24 hours for background indexing before doing anything"
+        ],
+        "answer": 1,
+        "why": "The inventory-check prompt forces Claude to account for every file individually, surfacing a failed-to-parse or redundant file in minute two instead of an hour later."
+      },
+      {
+        "q": "You set up a Claude Project but skip writing custom instructions. What's the practical consequence?",
+        "options": [
+          "Claude will refuse to answer any questions until instructions are added",
+          "Claude may quietly blend general knowledge in with the uploaded files instead of sticking to them",
+          "The Project automatically deletes itself after a week",
+          "File uploads are disabled without custom instructions"
+        ],
+        "answer": 1,
+        "why": "Skipping custom instructions is a listed common mistake — unlike a source-locked tool, Claude doesn't default to answering only from uploaded files; it will blend in general knowledge unless explicitly restricted."
+      }
+    ],
+    "nlm-b2-grounded-questions-citations": [
+      {
+        "q": "You ask Claude a question inside your Project and get a fluent, confident-sounding answer. What's the core habit this lesson wants you to build?",
+        "options": [
+          "Trust the answer since Claude only uses your uploaded files by default",
+          "Require Claude to quote its exact source sentence and file name, then open that file yourself to verify it",
+          "Ask the same question in a new Project to cross-check",
+          "Only trust answers that don't include any quotes"
+        ],
+        "answer": 1,
+        "why": "Claude has no automatic citation-chip panel like a dedicated grounded tool — the trust mechanism has to be requiring verbatim quotes with a named source, then personally verifying them against the original file."
+      },
+      {
+        "q": "You ask Claude to quote its source and it gives you wording that looks slightly off from what you remember the document saying. What should you do?",
+        "options": [
+          "Trust it, since Claude wouldn't invent a quote",
+          "Open the original file and search for the exact quoted text to confirm it's accurate and not a paraphrase presented as a quote",
+          "Assume the source file itself was edited",
+          "Ask a different question instead"
+        ],
+        "answer": 1,
+        "why": "Treating a paraphrase as an exact quote is a listed common mistake — since Claude has no automatic passage-highlighting, opening the file and searching for the quoted text yourself is the only reliable check."
+      },
+      {
+        "q": "You deliberately ask your Project a question about a topic none of your files cover. What's the correct behavior to look for?",
+        "options": [
+          "Claude should answer confidently using general knowledge to fill the gap",
+          "Claude should say the files don't address this rather than quietly answering from outside knowledge",
+          "Claude should refuse to answer any further questions in that Project",
+          "Claude should delete the unanswerable question from the chat history"
+        ],
+        "answer": 1,
+        "why": "This is a deliberate test of whether custom instructions are actually holding — Claude should plainly state the gap rather than quietly blending in general knowledge."
+      }
+    ],
+    "nlm-i1-synthesize-multiple-documents": [
+      {
+        "q": "You have four vendor proposal files in a Project with different pricing figures and ask Claude to \"summarize all of this.\" What's the likely problem with this prompt?",
+        "options": [
+          "It will refuse since four files exceed some limit",
+          "It tends to blend files into one voice, losing track of which file said what and potentially averaging conflicting numbers",
+          "It only works if all four documents are the same file type",
+          "It will only summarize the first file uploaded"
+        ],
+        "answer": 1,
+        "why": "A lazy 'summarize all of this' prompt tends to blend files into mush, and this is exactly the failure mode where numeric disagreement gets silently averaged or resolved rather than surfaced."
+      },
+      {
+        "q": "Why does the structured synthesis prompt explicitly forbid Claude from averaging or picking one number when files disagree on pricing?",
+        "options": [
+          "Averaging is computationally expensive for the model",
+          "Silently resolving a real disagreement into one plausible number is the exact danger the prompt is designed to prevent",
+          "Claude cannot perform arithmetic on numbers from different files",
+          "Averages are only allowed on certain Claude plans"
+        ],
+        "answer": 1,
+        "why": "Explicitly forbidding averaging or picking a winner stops Claude from doing the one thing that makes multi-document synthesis dangerous: quietly resolving a disagreement into a single blended figure."
+      },
+      {
+        "q": "After getting a structured agreement/disagreement/unique-points synthesis, what should you specifically do with the disagreement section before using it?",
+        "options": [
+          "Accept it as-is since it already separates agreement from disagreement",
+          "Open the named files yourself to confirm Claude quoted the conflicting figures accurately",
+          "Delete the disagreement section since it adds complexity",
+          "Ask Claude to pick which file is correct for you"
+        ],
+        "answer": 1,
+        "why": "Accepting flagged disagreements without opening the named files to confirm Claude read them correctly is a listed common mistake — verification is required before you rely on the attribution."
+      }
+    ],
+    "nlm-i2-study-system-course-materials": [
+      {
+        "q": "A student uploads an entire semester's worth of materials into one Gemini conversation, then asks for a practice quiz. What goes wrong?",
+        "options": [
+          "Gemini won't accept that many files in one conversation",
+          "The generated quiz and study guide end up mixing content from unrelated units instead of staying scoped to what's being tested next",
+          "Gemini automatically archives older units",
+          "Flashcard-style questions can no longer be generated"
+        ],
+        "answer": 1,
+        "why": "Uploading an entire semester's materials into one conversation is a listed common mistake; starting one conversation per course unit keeps generated study material scoped to what's actually being tested next."
+      },
+      {
+        "q": "You miss a practice question on mitochondria vs. chloroplast function. What's the most effective next step according to the lesson?",
+        "options": [
+          "Re-read the same flashcard-style card that already covers this topic",
+          "Use the targeted follow-up prompt to get an explanation grounded in the uploaded material and a genuinely new question testing real understanding",
+          "Regenerate the entire study guide from scratch",
+          "Skip the topic since it's a minor detail"
+        ],
+        "answer": 1,
+        "why": "Asking Gemini to point to exactly where the material covers it forces you back to the real reading rather than trusting a possibly-imprecise flashcard, and asking for a genuinely new follow-up question checks understanding instead of pattern-matched recall."
+      },
+      {
+        "q": "After generating flashcard-style Q&A pairs from your uploaded course materials, why does the lesson recommend spot-checking a handful against the actual reading?",
+        "options": [
+          "Flashcards expire after 24 hours if unverified",
+          "There's no built-in review step in Gemini, so an occasional flattened nuance can slip through unnoticed",
+          "Spot-checking is required to unlock the practice quiz",
+          "It reduces the number of files counted in the conversation"
+        ],
+        "answer": 1,
+        "why": "The lesson warns that with no built-in review step, generated flashcards can occasionally flatten an important nuance, so spot-checking a sample against the real reading is part of the workflow."
+      }
+    ],
+    "nlm-i3-briefings-summaries-for-work": [
+      {
+        "q": "A generated briefing ends up re-summarizing every file in full instead of focusing on what leadership needs to decide. What went wrong?",
+        "options": [
+          "The Project's file panel malfunctioned",
+          "The briefing was allowed to balloon into a full re-summary instead of being scoped to what the specific audience needs to act on",
+          "Too few files were uploaded to the Project",
+          "Claude doesn't support audience-specific prompts"
+        ],
+        "answer": 1,
+        "why": "Letting the briefing balloon into a full re-summary of every file instead of only what the audience needs to act on is a listed common mistake — a briefing is not a re-summary of the whole Project."
+      },
+      {
+        "q": "Why does the briefing prompt explicitly instruct Claude not to add outside context or unsupported recommendations?",
+        "options": [
+          "It speeds up generation time",
+          "It guards against Claude padding gaps with plausible-sounding but unsourced claims, which matters most when readers act without checking the files themselves",
+          "It's a formatting requirement with no substantive effect",
+          "It's required to enable the Artifact feature"
+        ],
+        "answer": 1,
+        "why": "Requiring a quote on every fact and forbidding outside context guards against Claude filling gaps with unsupported claims — critical because the audience will act on the briefing without checking the source files themselves."
+      },
+      {
+        "q": "The generated briefing includes a section titled \"open questions the files don't resolve.\" Why does the lesson say to keep this section rather than trim it out?",
+        "options": [
+          "It's required by Claude's Artifact format and can't be removed",
+          "It's often more useful to a stakeholder than the summary itself, since it tells them exactly what still needs to be found out",
+          "It reduces the number of quotes needed",
+          "It's only relevant for legal audiences"
+        ],
+        "answer": 1,
+        "why": "The lesson's proTip explicitly notes that the open-questions section is often more useful to a stakeholder than the summary, because it tells them precisely what still needs to be found out."
+      }
+    ],
+    "nlm-a1-client-project-knowledge-base": [
+      {
+        "q": "A consultant juggling three clients considers using one shared Claude Project for all of them to save setup time. What's the actual risk?",
+        "options": [
+          "Claude will merge the clients' billing automatically",
+          "Mixing multiple clients' documents risks Claude blending context between engagements in an answer, a confidentiality risk",
+          "Shared Projects have a lower file limit than single-client ones",
+          "Nothing — Claude automatically isolates each client's files"
+        ],
+        "answer": 1,
+        "why": "Mixing multiple clients' documents into one Project is a listed common mistake — it risks Claude blending context between engagements, which matters especially for confidentiality-sensitive work."
+      },
+      {
+        "q": "A client engagement Project now has SOW v1 and v2, with old call transcripts still referencing terms from v1. What convention prevents confusion here?",
+        "options": [
+          "Deleting all transcripts once a new SOW version is uploaded",
+          "A clear naming/versioning convention (v1, v2, final, date-stamped) so it's obvious which document is currently authoritative",
+          "Merging all versions into a single combined file before uploading",
+          "Creating a brand new Project for every SOW revision"
+        ],
+        "answer": 1,
+        "why": "Establishing a naming convention for files — date-stamping notes and labeling draft versions clearly — makes it obvious which document is currently authoritative, avoiding the risk of quoting a stale draft."
+      },
+      {
+        "q": "Before a client meeting, the meeting-prep prompt is run against the Project and returns a contradiction between a recent transcript and the current SOW version. Why does the prompt ask Claude to flag this rather than silently pick one?",
+        "options": [
+          "Because Claude can't process more than one file version at a time",
+          "Because without being told to prefer recency and flag conflicts, Claude may silently answer from whichever version it reads first",
+          "Because flagging conflicts is required to stay under a plan's file limit",
+          "Because contradictions always indicate a corrupted file"
+        ],
+        "answer": 1,
+        "why": "Without explicit instruction to prefer recency and flag contradictions, Claude may silently answer from whichever version it happens to read first — exactly the failure mode a living knowledge base needs to avoid."
+      }
+    ],
+    "nlm-a2-compare-reconcile-conflicting-sources": [
+      {
+        "q": "Two contract draft files in a Project have different liability caps ($50,000 vs $250,000). You ask Claude to \"compare these.\" What's the risk with that generic phrasing?",
+        "options": [
+          "Claude will refuse to compare legal documents",
+          "It tends to quietly synthesize one blended answer, hiding exactly the disagreement you need to see",
+          "It will only compare the two files' formatting, not content",
+          "It requires a higher-tier plan to compare more than one file"
+        ],
+        "answer": 1,
+        "why": "A generic 'compare these' question tends to quietly blend conflicting files into one plausible-sounding but wrong composite, hiding the real disagreement."
+      },
+      {
+        "q": "The reconciliation prompt asks Claude to categorize each disagreement as factual, numeric, interpretive, or scope/emphasis. Why does this categorization matter?",
+        "options": [
+          "It's purely cosmetic formatting for the output",
+          "It distinguishes real contradictions from differences where both files are correct but simply talking about different things",
+          "It determines which file gets deleted from the Project",
+          "It's required before Claude will quote a source"
+        ],
+        "answer": 1,
+        "why": "Confusing a scope or emphasis difference — where both files are correct but discussing different things — with a genuine contradiction is a listed common mistake; explicit categorization prevents that confusion."
+      },
+      {
+        "q": "Claude surfaces a disagreement between two forecasts but doesn't say which one is correct, even though asked to rank by importance. Is this expected behavior?",
+        "options": [
+          "No, it's a malfunction — it should always pick the more likely correct file",
+          "Yes, the prompt deliberately withholds a verdict since resolving which file is right is the user's professional judgment call",
+          "No, ranking by importance requires it to also declare a winner",
+          "Yes, but only because both files are equally low quality"
+        ],
+        "answer": 1,
+        "why": "The prompt explicitly instructs Claude not to declare which claim is correct — that judgment call belongs to the human, and Claude's job is only to surface, quote, and categorize the disagreement."
+      }
+    ],
+    "nlm-a3-advanced-team-knowledge-workflows": [
+      {
+        "q": "Several teammates each build their own separate Gem covering the same onboarding topic. What's the problem with this pattern?",
+        "options": [
+          "Gemini will merge them automatically after a week",
+          "It's a listed common mistake — without one canonical, owned Gem, the knowledge workflow fragments and goes stale since no one owns the source folder",
+          "Personal Gems can't use Deep Research",
+          "It exceeds the per-user Gem count limit"
+        ],
+        "answer": 1,
+        "why": "Letting every team member build their own version of the same Gem or document instead of maintaining one canonical, owned version is a listed common mistake — it lacks the single owner responsible for keeping the source folder current."
+      },
+      {
+        "q": "A team lead turns on Deep Research's Workspace sources without checking what it can actually access. What does the lesson warn about this?",
+        "options": [
+          "It's always safe since Workspace sources never surface unexpected content",
+          "Turning it on without checking what it can access risks being surprised by what it surfaces",
+          "Workspace sources require a paid plan and shouldn't be used casually",
+          "Deep Research ignores Workspace sources by default and this setting does nothing"
+        ],
+        "answer": 1,
+        "why": "Turning on Deep Research's Workspace sources without checking what it can actually access, and being surprised by what it surfaces, is a listed common mistake."
+      },
+      {
+        "q": "A team's shared Gem and Drive folder haven't been reviewed in months. What should happen per the lesson?",
+        "options": [
+          "Nothing — Gems never go stale once created",
+          "Set a review cadence for the Gem and its source folder, the same way you'd review a live automation, so stale files get pruned",
+          "Delete the Gem and have everyone go back to individual uploads",
+          "Ignore staleness since Deep Research always pulls the latest web content anyway"
+        ],
+        "answer": 1,
+        "why": "The lesson calls for setting a review cadence for the shared Gem and its source folder, the same way you'd review a live automation, so the team keeps trusting it rather than letting it go stale."
+      }
+    ]
+  }
+}

@@ -1,0 +1,869 @@
+{
+  "enrichment": {
+    "sales-b1-cold-outreach-from-prospect-research": {
+      "placeholders": [
+        {
+          "name": "NAME, TITLE, COMPANY",
+          "what": "The prospect's full name, exact job title, and company name, all on one line. Pull this straight from their LinkedIn profile or the company's team page — get the title exact, since calling a VP a \"Manager\" signals immediately that you didn't actually look them up. A bad value here is a vague stand-in like \"a manager at a logistics company.\"",
+          "examples": [
+            "Dana Reyes, VP of Operations, Fenwick Logistics",
+            "Marcus Cole, Head of Customer Success, Bramble Analytics",
+            "Priya Nandan, Founder & CEO, Loop Homecare"
+          ]
+        },
+        {
+          "name": "PASTE 3-5 REAL FACTS, e.g. a recent funding round, a role change, a post they wrote, a product they launched, a stated company priority",
+          "what": "Specific, current, checkable facts about the prospect or their company that you actually found while researching — never general impressions. A good fact is true of this specific prospect right now (a post they wrote last week, a launch, a funding round, a new title). A bad fact is generic enough to apply to any company in the industry, like \"they seem to be growing fast.\"",
+          "examples": [
+            "Dana Reyes posted on LinkedIn 8 days ago about the challenge of onboarding 40 new warehouse hires before peak season. Fenwick Logistics closed a $12M Series A in June 2026. Their careers page currently lists 6 open ops roles.",
+            "Marcus Cole moved from Senior CSM to Head of Customer Success about 3 months ago. Bramble Analytics launched a self-serve onboarding flow last month, announced on their company blog. Marcus commented on an industry post saying churn is harder to diagnose than to fix.",
+            "Loop Homecare just expanded into two new states per a press release from last week. Priya Nandan wrote a LinkedIn post about the difficulty of scheduling caregivers across time zones. The company shows 25 employees on LinkedIn."
+          ]
+        },
+        {
+          "name": "PRODUCT/SERVICE IN ONE SENTENCE",
+          "what": "What you sell, in one plain sentence, written the way you'd actually say it out loud to a stranger — not a tagline full of jargon. If you can't describe it in one clear sentence yourself, the model can't either, and the resulting email will come out vague.",
+          "examples": [
+            "A software tool that automates new-hire training checklists so warehouse and retail teams ramp up in days instead of weeks.",
+            "A customer success platform that automatically flags accounts at risk of churning based on real usage patterns.",
+            "A scheduling app built specifically for coordinating in-home caregiver visits across multiple time zones."
+          ]
+        },
+        {
+          "name": "ONE SENTENCE",
+          "what": "One sentence naming the specific problem your product solves that's most likely to matter to this exact prospect, based on the facts you just gave — not a generic list of benefits pulled from your website. Tie it directly to something in their real situation, like the onboarding struggle they posted about.",
+          "examples": [
+            "Cuts new-hire ramp time from three weeks down to about five days by turning scattered training steps into one guided checklist.",
+            "Surfaces which accounts are quietly disengaging weeks before it would show up in a renewal conversation.",
+            "Removes the manual back-and-forth of coordinating caregiver schedules across three time zones."
+          ]
+        },
+        {
+          "name": "e.g., a 15-minute call, a reply with interest, a resource to send",
+          "what": "The single, specific thing you want the prospect to do next. Pick exactly one — asking for a call and a reply and a resource in the same message makes it harder for a busy person to respond to any of them. Match the ask to how warm the prospect is: a cold prospect gets a lower-friction ask than someone who already showed interest.",
+          "examples": [
+            "A 15-minute call next week to see if this is worth exploring further",
+            "A quick reply letting me know if this is relevant to what they're dealing with right now",
+            "Permission to send over a 2-minute case study from a similar company"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "LinkedIn connection request (no email yet)",
+          "whenToUse": "Use this when you've researched a prospect but only have their LinkedIn profile, not a verified email — a connection-request note has a much tighter character limit than email and a different tone (less formal, more like a real message from a person).",
+          "prompt": "I'm writing a LinkedIn connection request note to a prospect. Use only the facts I give you — do not invent details about their company, role, or achievements.\n\nProspect: [NAME, TITLE, COMPANY]\nResearched facts (use for personalization): [PASTE 2-3 REAL FACTS]\nWhat I sell: [PRODUCT/SERVICE IN ONE SENTENCE]\nWhy I'm reaching out: [ONE SENTENCE]\n\nRules:\n- Under 280 characters total (LinkedIn's connection note limit).\n- Reference one specific real fact, not a generic compliment.\n- No pitch in the note itself — the goal is just to get connected. Save the actual ask for a follow-up message after they accept.\n- No hype words, no fake urgency.\n\nWrite the connection note, then a short first message to send once they accept (under 50 words), which can include one clear, low-friction ask."
+        },
+        {
+          "label": "Warm intro / referral-based outreach",
+          "whenToUse": "Use this when someone referred you to the prospect or you have a mutual connection — the opener should center the connection itself rather than researched facts about the company.",
+          "prompt": "I'm writing outreach to a prospect I have a warm connection to (a referral or mutual contact), not a fully cold prospect.\n\nProspect: [NAME, TITLE, COMPANY]\nWho referred me / the mutual connection: [NAME AND CONTEXT, e.g. \"Jordan Lee, who works with them on their ops team, suggested I reach out\"]\nResearched facts (secondary personalization, use only what's real): [PASTE 2-3 REAL FACTS]\nWhat I sell: [PRODUCT/SERVICE IN ONE SENTENCE]\nProblem it solves that's likely relevant to them: [ONE SENTENCE]\nMy ask: [e.g., a 15-minute call, a reply with interest]\n\nRules:\n- Open by naming the referral or mutual connection specifically, not a vague \"we're connected.\"\n- Do not invent what the referrer said unless I've told you their actual words.\n- Keep it under 100 words.\n- One clear ask, no fake urgency, no hype words.\n\nWrite the email and a shorter LinkedIn message version."
+        },
+        {
+          "label": "Batch version for a short list of similar prospects",
+          "whenToUse": "Use this once you've researched 4-6 prospects in the same role at similar companies and want consistent quality across all of them without the opener structure becoming visibly repetitive.",
+          "prompt": "I'm writing cold outreach to several similar prospects. Use only the facts I give for each — do not invent anything.\n\nWhat I sell: [PRODUCT/SERVICE IN ONE SENTENCE]\nProblem it solves that's likely relevant to this type of prospect: [ONE SENTENCE]\nMy ask: [e.g., a 15-minute call]\n\nProspects (name, title, company, and 2-3 real facts for each):\n1. [NAME, TITLE, COMPANY — FACTS]\n2. [NAME, TITLE, COMPANY — FACTS]\n3. [NAME, TITLE, COMPANY — FACTS]\n\nRules:\n- Write one email per prospect, each opening with a fact specific to that person — do not reuse the same opening sentence structure for all of them.\n- Under 100 words each, one ask, no hype words, no fake urgency.\n- After all the emails, list which opener each one used, so I can confirm none of them read as a template with names swapped in."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Opener still sounds generic — make it more specific",
+          "prompt": "The opening line still feels like it could apply to any prospect in this industry, not specifically to this person. Rewrite the opener so it could only make sense if sent to this exact prospect, using only the facts I gave you — don't add anything new."
+        },
+        {
+          "label": "Too long or too formal — cut it down",
+          "prompt": "This reads too long and too formal for a cold email. Cut the email to under 75 words and the LinkedIn message to under 40. Keep the specific fact reference and the single ask — cut everything else."
+        },
+        {
+          "label": "Check nothing was invented",
+          "prompt": "Go back through this message line by line and tell me exactly which facts about the prospect or their company came from what I gave you, versus anything you may have added or inferred. Flag anything not directly traceable to my input."
+        },
+        {
+          "label": "Give me 3 different subject line options",
+          "prompt": "Give me 3 different subject line options for this email, each under 6 words, using a different approach: one curiosity-led, one direct/specific, one referencing the researched fact directly. No clickbait or vague hype."
+        }
+      ],
+      "walkthrough": "Jordan sells onboarding software to logistics and warehouse companies and has a list of 30 prospects to reach out to this week, most of them cold.\n\nJordan picks one name — Dana Reyes, VP of Operations at Fenwick Logistics — and spends about 8 minutes on LinkedIn and the company site before opening Claude. The notes: Dana posted last week about struggling to onboard 40 warehouse hires before peak season; the company closed a $12M Series A in June; there are 6 open ops roles listed.\n\nJordan opens a new Claude chat and pastes the cold-outreach prompt, filling in: Prospect — \"Dana Reyes, VP of Operations, Fenwick Logistics\"; the three researched facts; what Jordan sells in one sentence; the relevant problem (cuts new-hire ramp time); and the ask — a 15-minute call.\n\nClaude returns a subject line (\"Onboarding 40 hires by peak?\"), an 85-word email opening with \"Saw your post last week about getting 40 new warehouse hires ramped up before peak season\" rather than a generic greeting, and a 45-word LinkedIn version.\n\nReading it back against the notes, the email's second line feels slightly generic — something like \"we help teams like yours move faster.\" Jordan sends the follow-up: \"The opening line still feels like it could apply to any prospect in this industry — rewrite the opener so it could only make sense sent to this exact prospect.\" Claude replaces the line with a direct reference to the 40-hire onboarding push and the peak-season deadline.\n\nJordan reads both versions once more, confirms every detail traces back to the actual research, and sends the email from his own account. Total time: about 15 minutes, most of it spent on research rather than writing."
+    },
+    "sales-b2-followup-sequence-that-doesnt-feel-robotic": {
+      "placeholders": [
+        {
+          "name": "PASTE ORIGINAL MESSAGE",
+          "what": "The exact text of the outreach message you originally sent (or a close paraphrase if you don't have it verbatim). The model needs this so the follow-ups don't repeat the same opening line or restate the identical pitch — a vague summary like \"I pitched them our product\" won't be specific enough to build distinct follow-ups from.",
+          "examples": [
+            "\"Saw your post last week about getting 40 new warehouse hires ramped up before peak season. We built a tool that turns scattered onboarding steps into one guided checklist — cuts ramp time to about 5 days. Worth a 15-minute call to see if it's relevant?\"",
+            "\"Congrats on the self-serve onboarding launch. Curious how you're tracking which new accounts are quietly disengaging before renewal conversations come up — we built a tool that flags that automatically. Open to a quick call?\"",
+            "\"Saw Loop Homecare just expanded into two new states — coordinating caregiver schedules across time zones must be getting harder. We built a scheduling tool made specifically for that. Worth 15 minutes to see if it'd help?\""
+          ]
+        },
+        {
+          "name": "NUMBER",
+          "what": "How many days have passed since you sent the original message. This changes how the follow-up should read — a follow-up sent after 3 days should feel lighter and more patient than one sent after 3 weeks, where a graceful exit message becomes more appropriate.",
+          "examples": [
+            "4",
+            "9",
+            "18"
+          ]
+        },
+        {
+          "name": "e.g., busy quarter, no signal either way, said \"maybe later\"",
+          "what": "What you actually know or suspect about why they haven't replied — not a guess dressed up as fact. If you truly don't know anything, say so; the model can still write a reasonable sequence, it just won't pretend to know their situation.",
+          "examples": [
+            "No signal either way — they haven't opened or replied to anything yet, as far as I can tell",
+            "Replied briefly once saying \"maybe later this quarter, we're mid-migration on something else right now\"",
+            "It's their company's fiscal year-end this month, likely heads-down on budget approvals"
+          ]
+        },
+        {
+          "name": "email / LinkedIn",
+          "what": "Which channel you're following up on. Pick the one you originally sent the outreach through — email and LinkedIn have different word-count and tone norms, so the sequence should be built for one channel, not blended.",
+          "examples": [
+            "email",
+            "LinkedIn"
+          ]
+        },
+        {
+          "name": "3 or 4",
+          "what": "How many follow-up touches you want in the sequence. Three is enough for most cold outreach; four adds room for a dedicated social-proof touch if you have a strong, real example to include.",
+          "examples": [
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Shorter 2-touch version for a lower-priority list",
+          "whenToUse": "Use this for a longer prospect list where a full 4-touch sequence isn't worth the time per prospect — two touches (one value-add, one break-up) is enough to not leave money on the table without over-investing.",
+          "prompt": "Write a short 2-message follow-up sequence for a prospect who hasn't replied to my outreach.\n\nOriginal message I sent: [PASTE ORIGINAL MESSAGE]\nDays since I sent it: [NUMBER]\nChannel: [email / LinkedIn]\n\nRules:\n- Message 1: add one new piece of value or a specific, low-effort question — do not repeat the original ask word-for-word.\n- Message 2: a short, no-pressure break-up message.\n- Do not use \"just checking in,\" \"following up,\" or \"circling back.\"\n- Keep each under 50 words.\n- Suggest a sending gap in days between the two."
+        },
+        {
+          "label": "Sequence after a soft positive signal (they opened but didn't reply)",
+          "whenToUse": "Use this when you have evidence of engagement — an email open, a LinkedIn profile view, a click — rather than pure silence; the tone can be slightly more direct since there's a signal of interest to build on.",
+          "prompt": "Write a follow-up sequence for a prospect who has shown a soft signal of interest but hasn't replied.\n\nOriginal message I sent: [PASTE ORIGINAL MESSAGE]\nDays since I sent it: [NUMBER]\nSignal I've seen: [e.g., opened the email twice, viewed my LinkedIn profile after I messaged, clicked a link I included]\nChannel: [email / LinkedIn]\nNumber of follow-ups: [3 or 4]\n\nRules:\n- Reference the signal naturally in the first follow-up only (e.g., \"figured I'd follow up since this seemed relevant\") without sounding like you're tracking them creepily — never say \"I saw you opened this.\"\n- Do not repeat \"just checking in,\" \"following up,\" or restate the original ask word-for-word.\n- Each message needs a distinct angle: new value, a specific question, social proof (only if I supply a real example), and a break-up message.\n- Keep each under 60 words and suggest a sending cadence."
+        },
+        {
+          "label": "Sequence for a prospect who explicitly said \"not right now\"",
+          "whenToUse": "Use this when the prospect gave an explicit soft no with a timeframe, rather than pure silence — the sequence should be a single scheduled nudge near that timeframe, not a repeated push.",
+          "prompt": "Write a re-engagement message (not a full sequence) for a prospect who explicitly said not now, to send around the time they suggested.\n\nOriginal message and their reply: [PASTE ORIGINAL MESSAGE AND THEIR REPLY]\nWhen they suggested revisiting: [e.g., \"after Q3 budget planning,\" \"in the new year\"]\nWhat's changed since, if anything: [e.g., a new feature shipped, nothing has changed]\n\nRules:\n- Reference their own stated timing directly (\"you mentioned revisiting this after Q3 planning\") rather than pretending this is a fresh cold outreach.\n- If nothing has changed, do not invent a reason it's urgent now — a simple, low-pressure check-in is fine.\n- Under 60 words, one clear ask, no fake urgency."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Still sounds like a template — vary the openers more",
+          "prompt": "Two of these follow-up messages open in a similar way. Rewrite so each of the 3-4 messages has a genuinely distinct opening structure, not just different wording of the same setup."
+        },
+        {
+          "label": "Social proof feels invented — replace it",
+          "prompt": "The social-proof message uses an example that isn't something I actually provided. Replace it with the [YOUR EXAMPLE] placeholder text instead, or ask me for a real example before writing that message."
+        },
+        {
+          "label": "Make the break-up message warmer",
+          "prompt": "The final break-up message reads a little cold. Rewrite it to sound more genuinely low-pressure and warm, while keeping it under 60 words and still making it easy for them to say not now."
+        },
+        {
+          "label": "Adjust cadence for a slower-moving buyer",
+          "prompt": "This prospect is in a slower-moving industry with longer decision cycles. Suggest a longer cadence between messages (spread the sequence over 3-4 weeks instead of the original suggestion) and note where I should adjust."
+        }
+      ],
+      "walkthrough": "Priya sent a cold email to an operations manager pitching her scheduling tool six days ago and hasn't heard back. Rather than firing off a quick \"just following up!\" note, she opens ChatGPT to build a real sequence.\n\nShe pastes her original message, notes it's been 6 days, writes that she has no signal either way (no reply, no visible engagement), picks email as the channel, and asks for 4 follow-ups.\n\nChatGPT returns four messages with distinct jobs: touch one adds a specific insight about a common scheduling pain point not mentioned in the first email; touch two asks one direct question — \"Is scheduling handled centrally or per-team at your company?\"; touch three is meant to include social proof but, since Priya didn't supply a real example, it uses the [YOUR EXAMPLE] placeholder rather than inventing a client name; touch four is a short break-up message. A suggested cadence of roughly 4 days between touches is included.\n\nPriya doesn't have a real client example ready yet, so she sends a follow-up: \"Replace the social-proof message's placeholder — I don't have a real example right now, so turn that one into a second specific question instead.\" ChatGPT swaps it for a question about how the prospect currently tracks scheduling conflicts.\n\nShe reads all four messages once more, confirms none repeat \"just checking in\" or restate her original pitch word-for-word, and schedules them at the suggested 4-day cadence in her email tool, with a note to stop immediately if she gets any reply. The whole process, from opening ChatGPT to having four messages scheduled, took about 12 minutes."
+    },
+    "sales-b3-objection-handling-from-real-objections": {
+      "placeholders": [
+        {
+          "name": "PASTE EXACT OBJECTION",
+          "what": "The objection written in the prospect's own words, as close to verbatim as you can remember or wrote down right after the call — not your interpretation of what they meant. The exact phrasing matters because it often reveals the real concern underneath (price vs. trust vs. timing), which a paraphrase can flatten out.",
+          "examples": [
+            "\"Your pricing is almost double what [competitor] charges.\"",
+            "\"We already tried something like this two years ago and it didn't really stick — half the team stopped using it within a month.\"",
+            "\"I don't think now is the right time — we're mid-way through a re-org and I don't want to add another new tool.\""
+          ]
+        },
+        {
+          "name": "PRODUCT/SERVICE",
+          "what": "What you're selling, described plainly — this is context for the model so its response approaches make sense for what you actually sell, not a generic product.",
+          "examples": [
+            "A scheduling automation tool for logistics teams",
+            "A customer success platform that flags at-risk accounts",
+            "An onboarding checklist tool for warehouse and retail hiring"
+          ]
+        },
+        {
+          "name": "LIST — only things that are actually true",
+          "what": "Your product's real strengths that are actually relevant to this specific objection — not a general list of everything it does. If the objection is about price, list what justifies the price; if it's about a past failed tool, list what's different this time. Never list a feature you're not sure is currently true.",
+          "examples": [
+            "Dedicated onboarding support included in every plan; a shift-conflict detection feature the main competitor doesn't have; average customer sees ROI within 6 weeks per our own usage data",
+            "Adoption tracking dashboard built specifically because past tools failed from low adoption; a required 2-week rollout plan with a dedicated success manager; month-to-month contract so there's no long lock-in risk",
+            "Setup takes under a day with no IT involvement needed; can run alongside their current re-org without needing a dedicated project owner; free 30-day pause option if priorities shift"
+          ]
+        },
+        {
+          "name": "LIST, if any — e.g., \"we don't integrate with X yet,\" \"we're pricier than the low-end competitor\"",
+          "what": "Any real limitation relevant to this objection that you shouldn't dodge if asked directly. It's fine to leave this blank if there genuinely isn't one relevant here, but don't skip it just because it's uncomfortable — an honest limitation named upfront is usually what makes the response credible.",
+          "examples": [
+            "Yes — our list price genuinely is higher than the low-end competitor they mentioned",
+            "We don't yet have a native integration with their specific ERP system, though we support CSV import/export",
+            "None specific to this objection"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Written response for email instead of a live call",
+          "whenToUse": "Use this when the objection came in over email or a chat message rather than live on a call, so you need a polished written reply instead of spoken talking points.",
+          "prompt": "Help me write an email response to a real sales objection.\n\nObjection, in the prospect's own words: [PASTE EXACT OBJECTION]\nWhat I'm selling: [PRODUCT/SERVICE]\nReal strengths relevant to this objection: [LIST — only things that are actually true]\nReal limitations I shouldn't dodge: [LIST, if any]\n\nRules:\n- Do not invent features, integrations, pricing, or claims I haven't told you are true.\n- Write a complete, ready-to-send email response (not talking points) under 150 words.\n- If a limitation exists, acknowledge it honestly in one sentence rather than avoiding it.\n- End with one clear next step, not multiple options.\n- No hype language or fake urgency."
+        },
+        {
+          "label": "Group prep for a team's most common objections",
+          "whenToUse": "Use this to prepare a whole team ahead of a busy sales period, when you already know the 3-4 objections that come up most often rather than working through them one at a time.",
+          "prompt": "Help me prepare team-wide responses to our most common real objections.\n\nWhat we're selling: [PRODUCT/SERVICE]\nObjections we hear most often, in prospects' own words: [PASTE 3-4 REAL OBJECTIONS]\nReal strengths relevant to each: [LIST, mapped to each objection]\nReal limitations we shouldn't dodge: [LIST, if any, mapped to each objection]\n\nRules:\n- For each objection, give 2 response approaches (not scripts) with a one-line note on when each fits.\n- At least one approach per objection should acknowledge any real limitation honestly.\n- Do not invent features, pricing, or claims not stated as true.\n- Format as a simple reference sheet the whole team could use, one objection per section."
+        },
+        {
+          "label": "Deeper roleplay practice session",
+          "whenToUse": "Use this after you already have response approaches and want an extended practice session rather than a single round of pushback — useful before a high-stakes call with a known tough negotiator.",
+          "prompt": "I want to practice handling this objection out loud through an extended roleplay.\n\nObjection: [PASTE EXACT OBJECTION]\nWhat I'm selling: [PRODUCT/SERVICE]\nMy chosen response approach: [PASTE THE APPROACH YOU PLAN TO USE]\nReal limitations that exist: [LIST, if any]\n\nPlay the role of a skeptical prospect. Push back on my response at least 3 times with increasingly specific follow-up objections a real prospect might raise, based on the approach I gave you. After each of my responses, briefly note (out of character) whether my answer stayed honest and specific or drifted into vague reassurance."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Feels too scripted — loosen the wording",
+          "prompt": "These talking points read too much like a script I'd recite word-for-word. Rewrite them as looser, more natural bullet points I could internalize and say in my own words, not sentences to memorize."
+        },
+        {
+          "label": "Push the honest-limitation approach harder",
+          "prompt": "Give me one more response approach that leads even more directly with the honest limitation before pivoting — I want to test whether being more upfront about it actually builds more trust with this kind of prospect."
+        },
+        {
+          "label": "Continue the roleplay with a harder pushback",
+          "prompt": "Keep playing the skeptical prospect. Push back one more time, harder than before, specifically questioning whether the strength I mentioned is really as different from competitors as I'm claiming."
+        },
+        {
+          "label": "Double-check nothing was invented",
+          "prompt": "List every specific claim about my product in these responses — every feature, number, or capability mentioned — so I can confirm each one is something I actually told you is true."
+        }
+      ],
+      "walkthrough": "Tomas sells a customer success platform and just got off a call where the prospect said, almost word for word, \"your pricing is almost double what CompetitorX charges.\" He wrote the exact line down right after hanging up so he wouldn't lose the phrasing.\n\nHe opens Claude and pastes the objection prompt, filling in the objection verbatim, what he sells, his real relevant strengths (a churn-flagging feature the competitor doesn't have, and data showing customers hit ROI within 6 weeks), and the honest limitation — yes, the list price really is higher.\n\nClaude returns three approaches: a reframe-the-cost approach connecting the price gap to the churn-flagging feature and the 6-week ROI data; an acknowledge-and-pivot approach that admits the price difference plainly before shifting to total cost of ownership; and a note on which approach fits a price-sensitive buyer versus a value-focused one. It then roleplays the prospect pushing back: \"but that's still real money — why should I pay more for something I'm not sure I need?\"\n\nTomas reads the talking points and finds the first approach sounds a little too much like a script. He sends the follow-up: \"These read too much like a script I'd recite word-for-word — rewrite as looser bullet points I could say in my own words.\" Claude rewrites them as shorter fragments and phrases rather than full sentences.\n\nHe practices the acknowledge-and-pivot approach out loud twice, adjusting the wording to sound like himself, then saves both approaches into a running doc of objections that worked. Total time: about 10 minutes, plus two minutes of speaking practice before his next call."
+    },
+    "sales-i1-proposal-quote-from-discovery-notes": {
+      "placeholders": [
+        {
+          "name": "NAME",
+          "what": "The prospect's name and their company name. This is used to personalize the proposal document itself, so get the spelling and company name exactly right — a misspelled name on a proposal is a small but real credibility hit.",
+          "examples": [
+            "Dana Reyes, Fenwick Logistics",
+            "Marcus Cole, Bramble Analytics",
+            "Priya Nandan, Loop Homecare"
+          ]
+        },
+        {
+          "name": "PASTE RAW NOTES",
+          "what": "Your actual discovery call notes, messy and unedited — the stated problem, goals, timeline, any budget signal, and what was discussed as in-scope. This is the single most important input: thin or vague notes produce a thin, generic proposal no matter how good the prompt is.",
+          "examples": [
+            "Ops team spends ~6 hrs/week manually reconciling shipment data across two systems. Want it under 1 hr/week. Timeline: before end of quarter. No price discussed. In scope per call: automated reconciliation for the two systems mentioned (WMS + carrier portal). NOT discussed: reporting dashboard, though Dana asked in passing if 'something like that' exists.",
+            "Marcus wants earlier visibility into at-risk accounts — currently finds out about churn risk during the renewal call itself, too late to act. Team of 6 CSMs managing ~40 accounts each. Wants integration with their existing CRM (Salesforce). Timeline: wants to pilot with 2 CSMs first, decide on full rollout after 60 days. Budget signal: mentioned they have room in Q3 budget for 'a few thousand a month.'",
+            "Priya needs to coordinate caregiver schedules across 3 states now, was fine with 1. Current process is a shared spreadsheet plus phone calls. Wants caregivers to get automatic schedule change alerts. Timeline: 'sooner is better, this is causing real problems now.' Team is small (25 people total), no dedicated IT."
+          ]
+        },
+        {
+          "name": "SHORT DESCRIPTION",
+          "what": "A short, plain description of your product or service — one or two sentences, written for someone reading the proposal who may not be deeply technical. This gets used across the whole proposal, so keep it accurate rather than aspirational.",
+          "examples": [
+            "A reconciliation automation tool that syncs shipment data between a WMS and carrier portals automatically, flagging mismatches for human review instead of requiring manual cross-checking.",
+            "A customer success platform that surfaces early churn-risk signals from product usage data, weeks before a renewal conversation would typically catch them.",
+            "A scheduling tool built for coordinating in-home caregiver visits across time zones, with automatic alerts when a schedule changes."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Short executive-summary-only version",
+          "whenToUse": "Use this when you need something to send within an hour of the call, before a full proposal is ready — a one-page summary to keep momentum while the full document gets built.",
+          "prompt": "Write a short executive-summary email from my discovery call notes, to send today while the full proposal is being finalized. Use only what's in the notes — do not invent scope, timelines, or pricing.\n\nProspect / company: [NAME]\nDiscovery notes: [PASTE RAW NOTES]\nWhat we sell / our solution: [SHORT DESCRIPTION]\n\nWrite a 4-6 sentence email: restate their problem in their own terms, name the proposed solution direction in one sentence, confirm the timeline they mentioned, and say a full proposal is coming by [DATE]. No pricing in this email. Tone: confident, no filler adjectives."
+        },
+        {
+          "label": "Multi-tier pricing structure version",
+          "whenToUse": "Use this when you're presenting more than one package option (e.g., a pilot vs. full rollout) rather than a single scope and price.",
+          "prompt": "Draft a sales proposal from my discovery call notes with two options presented side by side. Use only what's in the notes — do not invent scope or pricing.\n\nProspect / company: [NAME]\nDiscovery notes: [PASTE RAW NOTES]\nWhat we sell / our solution: [SHORT DESCRIPTION]\nOption A (smaller/pilot scope discussed): [DESCRIBE]\nOption B (fuller scope discussed): [DESCRIBE]\n\nStructure: 1) Executive summary, 2) Problem statement, 3) Two options presented as a simple comparison table (scope, timeline, and [PRICE PLACEHOLDER] for each — never estimate a number), 4) Scope items to confirm for each option, 5) Recommendation of which option best fits their stated goals and why, 6) Next steps. Tone: consultative, no filler adjectives."
+        },
+        {
+          "label": "Internal version for manager sign-off before sending",
+          "whenToUse": "Use this when your process requires internal review before a proposal goes to the prospect — it produces the same content plus an internal-only risk/assumptions note for your manager.",
+          "prompt": "Draft a sales proposal from my discovery call notes, plus an internal review note for my manager. Use only what's in the notes — do not invent scope, timelines, or pricing.\n\nProspect / company: [NAME]\nDiscovery notes: [PASTE RAW NOTES]\nWhat we sell / our solution: [SHORT DESCRIPTION]\n\nFirst, the client-facing proposal (executive summary, problem statement, proposed solution, scope of work with a separate \"scope items to confirm\" section, [PRICE PLACEHOLDER] unless I gave you a number, timeline and next steps).\n\nThen, a separate internal-only section titled \"For manager review\": list anything in the proposal that's inferred rather than directly quoted from the notes, any assumption that needs a gut-check before sending, and any part of the scope that seems larger than what was likely discussed on a single discovery call."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check scope didn't creep beyond what was discussed",
+          "prompt": "Go through the \"Scope of work\" section line by line and tell me, for each item, whether it was explicitly stated in my notes or whether you inferred it. Move anything inferred into \"Scope items to confirm\" if it isn't already there."
+        },
+        {
+          "label": "Make the executive summary sound less templated",
+          "prompt": "The executive summary sounds like it could open any proposal. Rewrite it to open with a specific detail from the discovery notes — a number, a quote, or a specific situation they described — so it clearly reads as written from this exact call."
+        },
+        {
+          "label": "Shorten for a time-pressed exec",
+          "prompt": "This prospect's stakeholder is a busy executive who'll skim, not read closely. Cut the whole proposal by about 40%, keeping the executive summary, scope, and pricing sections but trimming everything else to bullet points."
+        },
+        {
+          "label": "Tighten the tone — cut any leftover filler",
+          "prompt": "Read through for any leftover generic phrases like \"cutting-edge,\" \"best-in-class,\" or \"seamless\" that might have slipped in, and replace them with specific, concrete language grounded in the actual notes."
+        }
+      ],
+      "walkthrough": "Amara just finished a discovery call with Dana Reyes at Fenwick Logistics and wants the proposal in Dana's inbox within 24 hours, while the conversation is still fresh. She opens her notes app and copies her raw call notes as they are — messy, in fragments, not yet organized.\n\nIn ChatGPT, she pastes the proposal prompt: prospect name and company, the raw discovery notes (the 6-hours-a-week reconciliation problem, the under-1-hour goal, the end-of-quarter timeline, and the note that a reporting dashboard came up only in passing, not as a confirmed scope item), and a short description of her product.\n\nChatGPT returns a structured draft: an executive summary restating the 6-hour reconciliation burden in Dana's own terms; a problem statement grounded only in what was said; a scope section listing just the reconciliation automation for the two systems mentioned; a separate \"Scope items to confirm\" section correctly holding the reporting dashboard, since it was only mentioned in passing; a pricing section showing [PRICE PLACEHOLDER]; and a timeline reflecting the end-of-quarter target.\n\nAmara reads it and notices the executive summary opens with a generic line about \"streamlining operations.\" She sends the follow-up: \"Rewrite the executive summary to open with a specific detail from the notes, not a generic line.\" The AI revises it to open with the actual 6-hours-a-week figure.\n\nShe fills in the real price herself — something the model was never allowed to guess — does one final read against her original notes, and sends it from her company's proposal tool that afternoon. Total time: about 20 minutes, most of it the final human review."
+    },
+    "sales-i2-prospect-research-before-a-call-perplexity": {
+      "placeholders": [
+        {
+          "name": "COMPANY NAME",
+          "what": "The exact legal or commonly-used name of the prospect's company — use the name they'd recognize themselves, not an abbreviation you're guessing at. Getting this exact matters because a slightly wrong or outdated company name can pull up results for the wrong entity entirely.",
+          "examples": [
+            "Fenwick Logistics",
+            "Bramble Analytics",
+            "Loop Homecare"
+          ]
+        },
+        {
+          "name": "PROSPECT NAME, TITLE",
+          "what": "The specific person's full name and current title, if you know who you're meeting with. Skip this and research company-wide only if you don't yet know who's on the call — the prompt handles that gracefully by flagging what it couldn't find.",
+          "examples": [
+            "Dana Reyes, VP of Operations",
+            "Marcus Cole, Head of Customer Success",
+            "not yet known — researching the company broadly ahead of the call"
+          ]
+        },
+        {
+          "name": "discovery / demo / renewal",
+          "what": "What kind of call this is. This changes what's actually useful to know — a discovery call benefits most from understanding priorities and pain points, while a renewal call benefits more from anything that's changed since the relationship started (leadership changes, expansion, contraction).",
+          "examples": [
+            "discovery",
+            "demo",
+            "renewal"
+          ]
+        },
+        {
+          "name": "WHAT I SELL, ONE SENTENCE",
+          "what": "What you sell, in one plain sentence — this tells the research what kind of \"relevant priority\" to look for. Without it, the research comes back generic instead of connected to what you'd actually be pitching.",
+          "examples": [
+            "A tool that automates warehouse and retail new-hire training checklists.",
+            "A customer success platform that flags at-risk accounts before renewal.",
+            "A scheduling tool for coordinating in-home caregiver visits."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Single-question fallback when there's no time to wait for Deep Research",
+          "whenToUse": "Use this when a call got scheduled with little notice and there isn't enough lead time for a full Deep Research report to finish — ask in a normal ChatGPT chat instead, which can still search the web for a quick fact, just without the same multi-source cited report.",
+          "prompt": "Quick pre-call check on [COMPANY NAME] and, if publicly findable, [PROSPECT NAME, TITLE] — this call starts soon and I don't have time for a full research report.\n\nGive me just: (1) one recent news item (last 3 months) with a source if you can find one, (2) one thing that might currently matter to them relevant to [WHAT I SELL, ONE SENTENCE], and (3) a flag if you can't find anything recent or specific — don't pad with generic company background."
+        },
+        {
+          "label": "Team account research before a multi-stakeholder call",
+          "whenToUse": "Use this ahead of a call with several people from the same company (not just one prospect), so you walk in knowing each attendee's likely angle.",
+          "prompt": "Research [COMPANY NAME] ahead of a call with multiple attendees from their side.\n\nAttendees I know about: [LIST NAMES AND TITLES, OR \"not yet known\"]\nCall type: [discovery / demo / renewal]\nWhat I sell: [WHAT I SELL, ONE SENTENCE]\n\nFor the company: recent news (last 3-6 months), size, industry, and any stated priority relevant to what I sell — each with a source and date. For each named attendee: their role and how long they've been in it, if public. Flag clearly which attendees you found nothing public on, rather than guessing. End with a one-line note on which attendee's priorities seem most directly relevant to what I sell, based only on what you found."
+        },
+        {
+          "label": "Post-call research refresh before a follow-up call weeks later",
+          "whenToUse": "Use this when a deal has stalled or the next call is happening weeks after the last one, so you re-check whether anything material has changed since your last research pass.",
+          "prompt": "I researched [COMPANY NAME] before, but it's been a while and I have another call coming up. Re-check specifically for anything that's changed in the last [NUMBER] weeks: new leadership, funding, layoffs, product changes, or any public statement relevant to [WHAT I SELL, ONE SENTENCE]. Cite a source and date for anything new. If nothing material has changed, say so directly rather than repeating older context as if it were new."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify the most important claim",
+          "prompt": "Give me the direct source link for the single most important or surprising item in this summary, so I can open and confirm it myself before the call."
+        },
+        {
+          "label": "Narrow to the prospect's specific team, not the whole company",
+          "prompt": "This came back mostly company-wide. Narrow the research specifically to [PROSPECT NAME]'s team or department — anything public about their team's priorities, recent changes, or challenges specifically, not general company news."
+        },
+        {
+          "label": "Too generic — push for something more specific",
+          "prompt": "This still reads like general company background I could get from any search. Push harder for something specific and recent — a direct quote, a specific number, or a named initiative — rather than a broad summary."
+        },
+        {
+          "label": "Turn this into 2 talking points for the call",
+          "prompt": "Based on this research, give me 2 natural talking points I could bring up early in the call to show I've done my homework, without sounding like I'm reciting a research report."
+        }
+      ],
+      "walkthrough": "Elena has a discovery call with Fenwick Logistics at 2pm, and at 1:30 she sits down to prep instead of walking in with only a guess based on the industry. She opens ChatGPT and selects Deep Research in the composer rather than a normal chat, since she knows it takes several minutes to run.\n\nShe pastes the pre-call research prompt: company name Fenwick Logistics, prospect Dana Reyes (VP of Operations), call type discovery, and what she sells in one sentence (onboarding automation software). ChatGPT asks a quick clarifying question about whether to focus on the operations side or the whole company; she answers \"operations.\"\n\nWhile it runs, Elena reviews her call notes for the previous prospect. About fifteen minutes later, the report comes back: a note about Fenwick's $12M Series A closed in June 2026 (sourced to a funding database, dated), a mention that Dana has been in her VP role for about 18 months (sourced to her LinkedIn), a company blog post about scaling warehouse operations before peak season, and basic facts — roughly 40 employees, logistics industry, commonly compared to two named competitors.\n\nElena clicks through the funding-round citation and the blog post citation herself to confirm both are current and accurate — the funding article checks out, dated three weeks ago.\n\nShe sends one follow-up in the same session: \"Narrow the research specifically to Dana's team's priorities, not general company news.\" ChatGPT returns a more targeted note: Dana's team appears to be actively hiring for operations roles, based on the company's careers page, suggesting an active scaling push relevant to onboarding.\n\nWith ten minutes left before the call, Elena jots down two natural references she can bring up early — the peak-season scaling push and the active ops hiring — without sounding like she's reading from a report. Total time: about 20 minutes, most of it the report running in the background while she did other prep."
+    },
+    "sales-a1-reusable-sales-messaging-library": {
+      "placeholders": [
+        {
+          "name": "DESCRIBE YOUR TEAM'S TONE, e.g., \"direct, consultative, no hype adjectives like 'revolutionary' or 'game-changing'\"",
+          "what": "A short, concrete description of how your team actually communicates — not an aspirational brand adjective. A good value names specific things to do and avoid (direct, no hype words, short sentences); a bad value is a single vague word like \"professional\" that gives the model nothing to actually follow.",
+          "examples": [
+            "Direct and consultative — short sentences, no hype adjectives like 'revolutionary' or 'game-changing,' comfortable naming a real limitation instead of dodging it",
+            "Warm but efficient — friendly opener allowed, but gets to the point within two sentences, avoids corporate phrases like 'reach out' or 'circle back'",
+            "Confident and data-forward — leads with a specific number or outcome whenever one is available, avoids adjectives entirely in favor of concrete claims"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Solo rep version (no shared team project)",
+          "whenToUse": "Use this if you're an individual rep without a team-wide Claude plan, so you can still get most of the consistency benefit using a single pinned chat instead of a formal Project.",
+          "prompt": "I want you to remember these standing rules for every sales message I ask you to write in this conversation going forward:\n\n1. Only use claims, proof points, and pricing I state directly in this chat — never invent a statistic, client name, or feature.\n2. If a request needs a fact I haven't given you, ask for it or use a placeholder — don't fill the gap yourself.\n3. My tone: [DESCRIBE YOUR TONE, e.g., \"direct, consultative, no hype words\"].\n4. Cold outreach under 100 words, follow-ups under 60 words, unless I say otherwise.\n5. Objection responses should always include one option that honestly acknowledges a real limitation, not only a flattering framing.\n\nConfirm you've got these, then I'll just give you the prospect and situation details for each request from here on."
+        },
+        {
+          "label": "Manager version: build once, roll out to a whole team",
+          "whenToUse": "Use this as a sales manager setting up the project on behalf of the team, with an explicit rollout and QA step before every rep starts relying on it.",
+          "prompt": "I'm setting up a shared Claude Project for my whole sales team's messaging. Help me build the custom instructions and a QA checklist before I roll it out.\n\nStanding rules to include: [PASTE THE 5 RULES FROM THE MAIN PROMPT, ADJUSTED FOR YOUR TEAM]\nOur approved value props: [LIST]\nOur real proof points/case studies: [LIST]\nOur standard objection responses: [LIST]\nCompliance-sensitive language to avoid: [LIST, if any, e.g. regulated-industry claims]\n\nWrite: 1) the final custom instructions text, 2) a 5-item QA checklist for me to personally test before rolling this out to the team (e.g. \"run one cold outreach test and confirm it pulls the uploaded proof point, not a generic one\"), 3) a short rollout message I can send to the team explaining how to use it."
+        },
+        {
+          "label": "Refresh pass for an existing project that's gone stale",
+          "whenToUse": "Use this quarterly, or whenever pricing or proof points change, to update an existing project's knowledge without rebuilding it from scratch.",
+          "prompt": "I have an existing sales messaging project with these standing instructions: [PASTE CURRENT INSTRUCTIONS]. Some of the uploaded proof points and pricing are now outdated.\n\nWhat's changed: [LIST WHAT'S NEW OR NO LONGER TRUE, e.g. \"old case study no longer representative, new pricing tier added, old objection about missing integration is now outdated since we shipped it\"]\n\nRewrite the custom instructions and tell me exactly which uploaded documents I need to remove or replace, so the project reflects current reality instead of quietly citing outdated claims."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Test whether it's actually pulling from the uploaded knowledge",
+          "prompt": "For this next test request, tell me explicitly which uploaded proof point or value prop you used, and quote the exact line from the uploaded material — I want to confirm you're pulling from what I uploaded, not generating something generic that happens to sound similar."
+        },
+        {
+          "label": "Tone came out too stiff — recalibrate",
+          "prompt": "This came out more corporate and stiff than our actual tone. Here's a real example of how we normally write: [PASTE A REAL MESSAGE]. Rewrite using that as the tone reference, and suggest an update to the standing tone instruction so future drafts default closer to this."
+        },
+        {
+          "label": "A claim needs a caveat added to the standing rules",
+          "prompt": "The claim about [SPECIFIC CLAIM] needs a caveat every time it's used — [EXPLAIN THE CAVEAT, e.g. \"only true for customers on the annual plan\"]. Update the standing instructions so this caveat gets added automatically anytime that claim comes up, not just this one time."
+        },
+        {
+          "label": "Audit for anything that slipped past the guardrails",
+          "prompt": "Review the last few messages you've drafted in this project and flag anything that might not be fully traceable to the uploaded knowledge or what I've told you directly — I want to catch any drift before it becomes a habit."
+        }
+      ],
+      "walkthrough": "Nadia manages a 6-person sales team and notices every rep writes outreach slightly differently — some overpromise on a feature that's actually still in beta, others forget the honest-limitation approach entirely when handling pricing objections.\n\nShe creates a new Claude Project called \"Sales Messaging — Fenwick Onboarding.\" In the custom instructions field, she pastes the standing rules from the lesson prompt, filling in the team's tone as \"direct and consultative — short sentences, no hype adjectives, comfortable naming a real limitation instead of dodging it.\"\n\nShe uploads four documents as project knowledge: the team's three approved value props, two real case studies she's cleared for external use, a document of standard objection responses, and a short list of claims that need a caveat (like a stat that only applies to annual-plan customers).\n\nTo test it, she types just one line into the project: \"Cold outreach to a VP of Ops at a 200-person logistics company, they just posted about missing a peak-season deadline.\" The output references the actual case study she uploaded, not a generic one, and stays under 100 words without her re-explaining any guardrails.\n\nShe checks the tone against a real message a top rep sent last month and finds the AI's version slightly stiffer. She sends the follow-up asking it to match the real example more closely and to update the tone instruction. The next test comes out noticeably closer to how the team actually writes.\n\nShe rolls it out to the team with a short usage note and puts a recurring quarterly reminder on her calendar to refresh the uploaded proof points. Total setup time: about 25 minutes."
+    },
+    "hr-b1-job-description-that-attracts-right-candidates": {
+      "placeholders": [
+        {
+          "name": "TITLE",
+          "what": "The exact job title for this role, as it will appear on the posting. Use the real title your company has settled on, not a placeholder like \"the role\" — the title itself shapes who searches and finds the posting.",
+          "examples": [
+            "Senior Data Analyst",
+            "Customer Support Team Lead",
+            "Warehouse Operations Coordinator"
+          ]
+        },
+        {
+          "name": "WHO THEY REPORT TO",
+          "what": "The title of the person or role this position reports to. This gives candidates a sense of where the role sits in the org, and it's a fact you should already know before drafting — never a guess.",
+          "examples": [
+            "reports to the Director of Analytics",
+            "reports to the Customer Support Manager",
+            "reports to the Warehouse Operations Manager"
+          ]
+        },
+        {
+          "name": "PASTE ROUGH NOTES",
+          "what": "Your actual, unedited notes on what this role does day to day — bullet points, a messy list, whatever you already have. Real notes produce a role-specific JD; a thin or generic note (\"does analytics stuff\") produces a generic posting no matter how good the prompt is.",
+          "examples": [
+            "Builds and maintains recurring weekly/monthly reports for the ops team, does ad hoc analysis when leadership asks a specific question, presents findings in a monthly review meeting, occasionally helps clean/audit data quality issues in the CRM.",
+            "First point of contact for escalated customer tickets, coaches 3 junior support reps on tone and resolution speed, tracks team CSAT and flags issues to the support manager, occasionally jumps in on live chat during peak hours.",
+            "Manages inbound/outbound shipment scheduling for one warehouse, coordinates with 2 shift leads on staffing needs, runs daily stand-up with the floor team, flags recurring bottlenecks to the ops manager."
+          ]
+        },
+        {
+          "name": "LIST",
+          "what": "This bracket appears twice in the prompt — once for must-have qualifications, once for nice-to-have qualifications. For the must-have list, include only what's genuinely necessary to do the job on day one; for nice-to-have, include things that would help but aren't a dealbreaker. Padding the must-have list with wishful extras is the single biggest reason strong candidates self-select out of applying.",
+          "examples": [
+            "Must-have: 3+ years in a data analysis role, proficiency in SQL, experience presenting findings to non-technical stakeholders. Nice-to-have: experience with a specific BI tool like Looker or Tableau, familiarity with the logistics or supply chain industry.",
+            "Must-have: 2+ years in a customer support role, experience de-escalating frustrated customers, comfort giving direct feedback to peers. Nice-to-have: prior experience coaching or mentoring, familiarity with our specific support software.",
+            "Must-have: 1+ years in a warehouse or logistics operations role, comfort managing a small team's daily schedule. Nice-to-have: forklift certification, experience with a specific WMS platform."
+          ]
+        },
+        {
+          "name": "LIST, or \"not publishing\"",
+          "what": "The compensation and benefits information you're actually approved to publish right now — a real salary range or benefits list, or explicitly \"not publishing\" if the company isn't ready to share that yet. Never invent a number here just to fill the field.",
+          "examples": [
+            "$78,000-$95,000 base, plus standard health/dental/vision and a 401k match; not yet approved to publish bonus structure",
+            "not publishing — compensation will be discussed directly with candidates who advance to a first interview",
+            "$22-$26/hour, full benefits after 90 days, paid time off starting at 2 weeks/year"
+          ]
+        },
+        {
+          "name": "1-2 SENTENCES",
+          "what": "A short, real description of the company or team this role sits on — not marketing copy pulled from a website. Keep it factual and specific enough that a candidate understands the actual environment they'd be joining.",
+          "examples": [
+            "We're a 40-person logistics analytics company serving mid-size shipping companies. The analytics team is 5 people, reporting into the VP of Product.",
+            "A 60-person SaaS company in customer support software. The support team is growing from 8 to 12 people this year to keep pace with new customer volume.",
+            "A regional logistics company operating 3 warehouses. This role is based at our newest facility, opened 8 months ago."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Internal-transfer / promotion posting",
+          "whenToUse": "Use this when the role is being posted internally for current employees rather than external candidates — the tone and what needs explaining is different.",
+          "prompt": "Write an internal job posting using only the details I provide below. Do not invent responsibilities, qualifications, or details I haven't stated.\n\nRole title: [TITLE]\nReporting line: [WHO THEY REPORT TO]\nReal responsibilities: [PASTE ROUGH NOTES]\nMust-have qualifications (keep genuinely necessary, not aspirational): [LIST]\nNice-to-have qualifications: [LIST]\nWho's eligible to apply: [e.g. current full-time employees with 6+ months tenure]\nHow this differs from the current version of the role, if it's a promotion/expansion: [1-2 SENTENCES]\n\nRules:\n- Clearly separate Required from Preferred qualifications.\n- Flag any exclusionary language in a separate \"Language flagged for review\" section rather than silently rewriting it.\n- Note clearly how an interested internal employee should express interest and to whom."
+        },
+        {
+          "label": "Fast, short-form version for a job board with tight character limits",
+          "whenToUse": "Use this when posting to a platform with a strict length limit (some job boards, or a social post about an opening) rather than a full-length JD.",
+          "prompt": "Write a short-form job posting (under 150 words) using only the details I provide. Do not invent responsibilities, qualifications, or benefits.\n\nRole title: [TITLE]\nReporting line: [WHO THEY REPORT TO]\nReal responsibilities (top 3 only): [PASTE ROUGH NOTES]\nMust-have qualifications (top 3 only): [LIST]\nCompensation/benefits I can publish: [LIST, or \"not publishing\"]\n\nRules:\n- Keep it to the 3 most important responsibilities and 3 most important requirements — this is a summary, not the full JD.\n- Avoid gendered, age-coded, or unnecessarily exclusionary language; flag anything in my notes that reads this way in a separate section.\n- Include a clear line on how to apply."
+        },
+        {
+          "label": "Rewrite an existing JD to check for exclusionary language",
+          "whenToUse": "Use this on a job description you've already written (not building from scratch) specifically to audit it for exclusionary or bloated requirements before reposting it.",
+          "prompt": "Review the existing job description below for exclusionary language and requirement bloat. Do not rewrite the whole document yet — first just flag issues.\n\nExisting JD: [PASTE FULL EXISTING JD TEXT]\n\nFlag, in a separate section: (1) any gendered, age-coded, or unnecessarily exclusionary language, (2) any requirement that reads like a wish list rather than a genuine day-one necessity, (3) any generic filler phrase (\"fast-paced environment,\" \"wear many hats\") that doesn't describe anything specific to this actual role. For each flagged item, suggest a specific fix, but wait for my go-ahead before producing a full rewritten version."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Make a decision on every flagged item, don't skip the review",
+          "prompt": "Go back through the \"Language flagged for review\" section item by item and, for each one, either confirm you're keeping the current wording with a reason why it's actually fine, or give me the specific replacement wording — I want an explicit decision recorded for every flagged item, not a silent pass."
+        },
+        {
+          "label": "A requirement is really just a preference — move it",
+          "prompt": "Looking at the Required list again, [SPECIFIC REQUIREMENT] is really something that would help but isn't genuinely necessary to do this job on day one. Move it to Preferred and tell me if anything else in Required looks like it might be the same kind of aspirational add rather than a true must-have."
+        },
+        {
+          "label": "Check for indirect exclusionary language, not just obvious cases",
+          "prompt": "Look again specifically for subtler exclusionary language that might not have been flagged the first time — things like unnecessary degree requirements for a role that doesn't need one, physical-ability phrasing that isn't actually essential to the job, or culture-fit language vague enough to screen out people who don't match an unstated 'type.'"
+        },
+        {
+          "label": "Too much generic filler slipped in — cut it",
+          "prompt": "This still has some generic phrasing that could describe any company's posting (like references to a 'fast-paced environment' or 'wearing many hats'). Cut anything that doesn't come directly from the specific details I gave you about this role."
+        }
+      ],
+      "walkthrough": "Renee is hiring a mid-level data analyst and has a rough set of notes: the role builds recurring reports, does ad hoc analysis, and occasionally audits CRM data quality. Her draft notes for requirements originally read \"bachelor's degree required, 3+ years experience, young and energetic team player.\"\n\nShe opens Claude and pastes the job description prompt: title, reporting line (Director of Analytics), her rough responsibility notes, must-have qualifications drawn straight from her original notes, a nice-to-have list, and \"not publishing\" for compensation since it isn't approved yet.\n\nClaude returns a job description with a clearly separated Required list (3+ years relevant analysis experience, SQL proficiency, comfort presenting to non-technical stakeholders) and Preferred list, plus a separate \"Language flagged for review\" section noting that \"young and energetic\" reads as age-coded language, and that the bachelor's degree requirement may be worth reconsidering since nothing in the actual responsibilities clearly requires one.\n\nRenee reads the flagged section but doesn't want to just silently accept or reject the suggestions — she wants an explicit record of her decision on each one for her own hiring notes. She sends the follow-up: \"Go back through the flagged section item by item and either confirm keeping the wording with a reason, or give me specific replacement wording — I want an explicit decision recorded for each.\" Claude walks through both items: it recommends dropping \"young and energetic\" entirely in favor of naming the actual trait meant (\"collaborative, comfortable asking questions\"), and recommends downgrading the degree requirement to preferred rather than required, since the actual responsibilities don't depend on it.\n\nRenee accepts both changes, does one final read to confirm nothing invented crept in, and posts the reviewed version rather than the raw first draft. Total time: about 15 minutes."
+    },
+    "hr-b2-interview-questions-per-role-and-competency": {
+      "placeholders": [
+        {
+          "name": "TITLE",
+          "what": "The exact role you're interviewing for. This anchors the whole question set — questions about \"debugging under time pressure\" mean something different for a junior engineer than a senior one, and the title helps calibrate difficulty.",
+          "examples": [
+            "Senior Backend Engineer",
+            "Customer Support Lead",
+            "Regional Sales Manager"
+          ]
+        },
+        {
+          "name": "LIST 3-5, e.g., \"cross-functional stakeholder communication,\" \"debugging under time pressure,\" \"prioritizing conflicting deadlines\"",
+          "what": "The real, specific competencies this interview needs to evaluate — named concretely, not as a vague trait like \"good communicator.\" A specific competency (\"de-escalating an angry customer\") produces a real, gradeable question; a vague one produces a generic, hard-to-score question.",
+          "examples": [
+            "de-escalating frustrated customers, coaching junior team members, prioritizing a full support queue under pressure",
+            "cross-functional stakeholder communication, debugging under time pressure, making tradeoffs with incomplete information",
+            "building trust with a skeptical prospect, handling a stalled deal, forecasting accurately under uncertainty"
+          ]
+        },
+        {
+          "name": "e.g., 45-minute behavioral interview / technical screen",
+          "what": "The format and length of this specific interview, since that determines how many questions are realistic to ask and how much depth each one can go into.",
+          "examples": [
+            "45-minute behavioral interview",
+            "30-minute technical phone screen",
+            "60-minute onsite panel round"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Panel round with multiple interviewers covering different competencies",
+          "whenToUse": "Use this when several interviewers are splitting competencies across one panel round, so each interviewer needs their own focused subset rather than the full list.",
+          "prompt": "Build a structured interview question set for a panel round, split across [NUMBER] interviewers.\n\nRole: [TITLE]\nAll competencies being evaluated across the whole panel: [LIST 4-6]\nInterview format: [e.g. 45-minute panel, 3 interviewers, 15 minutes each]\n\nRules:\n- Assign competencies to interviewers so there's no overlap — each interviewer owns 1-2 competencies, not the full list.\n- Use behavioral or situational questions tied to real job scenarios.\n- One follow-up probe per main question.\n- Do not include any question touching age, family/marital status, pregnancy, disability, religion, national origin, or similar protected characteristics, even indirectly.\n- Flag any named competency too vague to write a good question for.\n\nOutput as one labeled section per interviewer, with 2-3 questions each."
+        },
+        {
+          "label": "Technical/skills assessment questions instead of behavioral",
+          "whenToUse": "Use this for a technical screen where you need skills-based or scenario-based technical questions rather than behavioral \"tell me about a time\" questions.",
+          "prompt": "Build a structured technical interview question set for this role.\n\nRole: [TITLE]\nTechnical competencies to evaluate: [LIST 3-5, e.g. \"debugging a production incident under time pressure,\" \"database schema design tradeoffs\"]\nInterview format: [e.g. 30-minute technical phone screen]\n\nRules:\n- Group questions by named competency.\n- Use realistic scenario-based prompts (\"here's a situation, walk me through your approach\") rather than trivia-style questions with a single correct answer.\n- One follow-up probe per question to use if the initial answer is shallow.\n- Do not include any question touching protected characteristics, even indirectly.\n- Flag any competency too vague to write a good question for.\n\nGive 2-3 questions per competency."
+        },
+        {
+          "label": "Reference-check question set (post-interview, not live interview)",
+          "whenToUse": "Use this to build a structured reference-check question set for a finalist candidate, using the same competency-based approach so references are evaluated consistently too.",
+          "prompt": "Build a structured reference-check question set for a finalist candidate.\n\nRole: [TITLE]\nCompetencies to probe with references: [LIST 3-5]\nWhat this candidate said about themselves in interviews, relevant to these competencies (for the reference to confirm or add color to, not to lead the reference toward a specific answer): [BRIEF NOTES]\n\nRules:\n- Group questions by competency.\n- Ask open-ended questions that let the reference speak freely, not leading or yes/no questions.\n- Do not include any question touching protected characteristics, even indirectly.\n- Include one general open question at the end: \"is there anything else relevant to how they'd perform in this specific role that I haven't asked about?\"\n\nGive 1-2 questions per competency, plus the closing open question."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Re-check for indirect protected-characteristic risk",
+          "prompt": "Go through every question again specifically looking for indirect versions of protected-characteristic questions — things like asking about long commutes (which can indirectly probe family/location situations), gaps in a timeline, or availability that might indirectly ask about caregiving responsibilities. Flag anything borderline, even if it wasn't an obvious violation."
+        },
+        {
+          "label": "A competency is too vague — sharpen it first",
+          "prompt": "You flagged [COMPETENCY NAME] as too vague to write a good question for. Help me sharpen it into something specific enough to interview against — ask me clarifying questions if needed, then regenerate that section once it's sharper."
+        },
+        {
+          "label": "Follow-up probes are too easy — make them harder",
+          "prompt": "The follow-up probes are too easy to answer vaguely. Rewrite them to be more specific and harder to deflect — the kind of follow-up that would catch a candidate who gave a rehearsed but shallow initial answer."
+        },
+        {
+          "label": "Make questions comparable in difficulty across competencies",
+          "prompt": "Compare the difficulty level of the questions across the different competencies — are any of them noticeably easier or harder than the others? Rebalance so no single competency is easier to score well on just because its questions are softer."
+        }
+      ],
+      "walkthrough": "Kayla is hiring a Senior Customer Support Lead and wants a structured question set instead of the improvised questions different interviewers on her team have used in the past.\n\nShe names three real competencies: de-escalating frustrated customers, coaching junior reps, and prioritizing under a full support queue. In ChatGPT, she pastes the question-set prompt with the role title, her three competencies, and the format — a 45-minute behavioral interview.\n\nChatGPT returns questions grouped under each competency: under de-escalation, a question like \"Tell me about a time you handled an angry customer who wanted a refund outside policy,\" with a follow-up probe (\"What did you say first, and why?\"); similar grouped sets for coaching and prioritization. No question touches family status, age, or anything similar.\n\nBefore sharing it with her interview panel, Kayla wants to be extra careful, since one of her past interviewers once asked a candidate about their commute length, not realizing it can indirectly probe someone's living or family situation. She sends the follow-up: \"Go through every question again specifically looking for indirect versions of protected-characteristic questions — things like commute length, timeline gaps, or availability that might indirectly ask about caregiving.\" ChatGPT reviews the set again and confirms nothing indirect is present, and adds a note that if Kayla plans to ask any availability-related question separately (like willingness to work weekends), she should phrase it around the specific business need, not personal circumstances.\n\nKayla shares the finalized set with her whole panel so every candidate for the role gets the same structured interview. Total time: about 15 minutes."
+    },
+    "hr-b3-candidate-outreach-messages": {
+      "placeholders": [
+        {
+          "name": "PASTE 2-3 REAL DETAILS",
+          "what": "Specific, real facts from the candidate's public profile — a project they led, a role change, a skill they've highlighted. Good details are specific to this person; a bad detail is a generic compliment about their \"impressive background\" that could apply to almost anyone.",
+          "examples": [
+            "Led a data migration project mentioned on their LinkedIn, recently moved from an individual contributor role into a team-lead position about 4 months ago, lists Python and dbt as top skills.",
+            "Their profile headline mentions specializing in B2B onboarding flows; they posted 3 weeks ago about a redesign project that cut signup drop-off; 6 years at their current company.",
+            "Recently completed a certification in supply chain analytics per their profile; previously worked at two logistics companies; posted about a warehouse automation project they contributed to."
+          ]
+        },
+        {
+          "name": "TITLE, brief description",
+          "what": "The role you're sourcing for, named clearly with a short description of what it involves — enough context that the message can explain why this specific candidate's background is relevant.",
+          "examples": [
+            "Senior Backend Engineer — owns core API architecture for a fast-growing logistics platform",
+            "Customer Onboarding Lead — builds and improves the first-30-days experience for new B2B customers",
+            "Supply Chain Analyst — works on forecasting and warehouse efficiency across multiple regional sites"
+          ]
+        },
+        {
+          "name": "ONE SENTENCE",
+          "what": "One sentence connecting the candidate's real background to why they'd be relevant for this specific role — not a generic \"you seem like a great fit.\" This should feel like a genuine, specific reason, not flattery.",
+          "examples": [
+            "Their recent migration project and move into a lead role line up directly with the technical depth and people-leadership this role needs.",
+            "Their focus on reducing onboarding drop-off is close to the exact problem this role is being created to own.",
+            "Their warehouse automation project background is directly relevant to the forecasting and efficiency work this role covers."
+          ]
+        },
+        {
+          "name": "1-2 SENTENCES",
+          "what": "What genuinely makes this specific role worth a passive candidate's time — real, specific reasons, not generic phrases like \"exciting opportunity at a growing company.\" Think about what would actually make someone who isn't looking pause and consider it.",
+          "examples": [
+            "This is a newly created role reporting directly to the VP of Engineering, with real ownership over a system that's currently a bottleneck for the whole platform.",
+            "The team is rebuilding onboarding from scratch this year with real budget behind it — not a maintenance role, a genuine build.",
+            "This role would mean leading forecasting for a company about to open two new regional warehouses, with a lot of room to shape the process from the ground up."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "InMail-length version for LinkedIn Recruiter",
+          "whenToUse": "Use this when sourcing through LinkedIn Recruiter InMail specifically, which has its own conventions and a slightly different tone expectation than a personal LinkedIn message.",
+          "prompt": "Write a LinkedIn Recruiter InMail message to a passive candidate. Use only the real details I give you — do not invent anything about their background.\n\nCandidate's real, relevant details: [PASTE 2-3 REAL DETAILS]\nRole I'm sourcing for: [TITLE, brief description]\nWhy their background is relevant: [ONE SENTENCE]\nWhat makes this role worth their time: [1-2 SENTENCES]\n\nRules:\n- Open with a specific, genuine reference to one real detail — not a generic compliment.\n- Be transparent this is recruiting outreach.\n- Include a subject line under 8 words.\n- Keep the body under 120 words (InMail allows a bit more room than a standard connection note).\n- One clear, low-friction next step."
+        },
+        {
+          "label": "Outreach for an internal mobility / referral candidate",
+          "whenToUse": "Use this when reaching out to someone referred by a current employee, rather than a fully cold sourced candidate — the opener should center the referral, not just profile research.",
+          "prompt": "Write an outreach message to a candidate who was referred by a current employee. Use only real details — do not invent anything about their background.\n\nWho referred them and the context: [NAME AND CONTEXT, e.g. \"referred by Jamie Osei, who worked with them at their previous company\"]\nCandidate's real, relevant details (secondary, use only what's real): [PASTE 2-3 REAL DETAILS, OR \"not researched yet\"]\nRole I'm sourcing for: [TITLE, brief description]\nWhat makes this role worth their time: [1-2 SENTENCES]\n\nRules:\n- Open by naming the referral specifically.\n- Be transparent this is recruiting outreach.\n- Under 100 words, one clear next step, no generic \"exciting opportunity\" phrasing without a specific detail attached."
+        },
+        {
+          "label": "Re-engagement message for a candidate from a past search",
+          "whenToUse": "Use this for a candidate who was in your pipeline for a different role previously (didn't move forward or the role closed) and you want to re-engage them for a new opening.",
+          "prompt": "Write a re-engagement outreach message to a candidate who was previously in our pipeline for a different role.\n\nWhat happened last time: [e.g. \"made it to final round for a similar role 6 months ago, role was put on hold\" / \"applied but the role was filled internally\"]\nCandidate's real, relevant details for this new role: [PASTE 2-3 REAL DETAILS]\nNew role I'm sourcing for: [TITLE, brief description]\nWhy this role fits better or what's different: [1-2 SENTENCES]\n\nRules:\n- Acknowledge the past interaction honestly and briefly, don't pretend this is the first contact.\n- Open with genuine specifics, not a generic compliment.\n- Under 100 words, one clear ask."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Opener still reads generic — sharpen it",
+          "prompt": "The opener still reads like it could apply to a lot of candidates in this field, not specifically this person. Rewrite it so it could only make sense sent to this exact candidate, using only the real details I gave you."
+        },
+        {
+          "label": "Make sure it doesn't overpromise on the role",
+          "prompt": "Check this message for anything that overstates the role, the company, or the opportunity beyond what I actually described — I don't want to oversell something I'd have to walk back in the interview."
+        },
+        {
+          "label": "Too vague about it being recruiting outreach",
+          "prompt": "This reads a little evasive about being recruiting outreach — make it clearer and more upfront in the first two sentences that this is about a specific job opportunity, without losing the personalized opener."
+        },
+        {
+          "label": "Draft a distinct third touch in case there's still no reply",
+          "prompt": "If there's still no reply after the follow-up message, draft one more brief, low-pressure final touch — under 40 words — that gives them an easy, no-pressure way to say not interested, and makes clear this is the last outreach on this specific role."
+        }
+      ],
+      "walkthrough": "Ben is sourcing for a newly created Senior Backend Engineer role and finds a candidate whose LinkedIn shows they led a data migration project and recently moved from an individual contributor role into team lead. He notes those two details plus that they list Python and dbt as top skills.\n\nHe opens Claude and pastes the candidate outreach prompt: the real details he noted, the role title and description, why their background is relevant (the migration project and recent move into a lead role match the technical-depth-plus-people-leadership this role needs), and what makes the role worth their time (it's a newly created role reporting directly to the VP of Engineering with real ownership over a known bottleneck system).\n\nClaude returns a first-touch message opening with \"Saw you led the migration project and recently moved into a team-lead role\" rather than a generic greeting, states plainly that this is recruiting outreach for a specific opening, and closes with a single low-effort ask — a reply if they're open to a short call. It also produces a shorter follow-up version under 50 words for use if there's no reply after about a week.\n\nBen rereads it and worries the description of the role sounds slightly more finished than it actually is — the team hasn't fully scoped ownership yet. He sends the follow-up: \"Check this message for anything that overstates the role beyond what I actually described — I don't want to oversell something I'd have to walk back in the interview.\" Claude flags one phrase implying the scope was fully defined and suggests softening it to \"still being shaped, with real input from whoever joins.\"\n\nBen checks both versions against the candidate's actual profile, confirms every detail is traceable, and sends the first-touch message from his recruiting platform. Total time: about 10 minutes."
+    },
+    "hr-i1-screen-cvs-against-criteria-fairly": {
+      "placeholders": [
+        {
+          "name": "TITLE",
+          "what": "The exact role this CV is being screened against. Keep it consistent across every CV you screen for the same opening so comparisons stay apples-to-apples.",
+          "examples": [
+            "Mid-level Project Manager",
+            "Senior Backend Engineer",
+            "Customer Support Specialist"
+          ]
+        },
+        {
+          "name": "LIST",
+          "what": "This bracket appears twice — once for must-have criteria, once for nice-to-have criteria. Write these before looking at any actual CVs, using only what's genuinely necessary versus helpful, so the criteria aren't unconsciously shaped by candidates you've already seen.",
+          "examples": [
+            "Must-have: 3+ years leading cross-functional projects, experience with a named PM methodology (Agile or Scrum). Nice-to-have: PMP certification, experience in a client-services environment.",
+            "Must-have: 4+ years backend development, production experience with a language in our stack (Python, Go, or Java), experience owning a system end-to-end. Nice-to-have: experience with our specific cloud provider, prior startup experience.",
+            "Must-have: 2+ years in a direct customer support role, experience with a ticketing system, comfort handling escalations. Nice-to-have: experience in our specific industry, bilingual."
+          ]
+        },
+        {
+          "name": "PASTE CV TEXT — role-relevant content only",
+          "what": "The relevant content of the candidate's CV — work history, skills, relevant experience. You can leave out or redact anything not job-relevant (like a photo, age, or personal details) before pasting, which is good practice and reduces the chance of those factors ever influencing the summary.",
+          "examples": [
+            "[Paste the candidate's work history and skills sections, redacting name/photo/age if your process calls for blind screening]",
+            "[Paste the relevant project descriptions and technical skills list from the CV]",
+            "[Paste the candidate's role history and any listed certifications relevant to the role]"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Batch screening for a stack of CVs against the same role",
+          "whenToUse": "Use this when you have a batch of CVs for the same opening and want a consistent side-by-side comparison rather than running each one separately and losing track of the comparison.",
+          "prompt": "You are helping me screen multiple CVs against the same role criteria, as a triage aid only — you are not making hiring decisions, and I will not treat this as automatic accept/reject for any candidate.\n\nRole: [TITLE]\nMust-have criteria: [LIST]\nNice-to-have criteria: [LIST]\n\nCV 1: [PASTE CV TEXT — role-relevant content only]\nCV 2: [PASTE CV TEXT — role-relevant content only]\nCV 3: [PASTE CV TEXT — role-relevant content only]\n\nRules:\n- Evaluate each CV independently against only the listed criteria — do not compare CVs to each other or rank them.\n- Do not factor in name, presumed gender, age, nationality, employment gaps (unless directly relevant to a stated criterion), or school prestige beyond confirming a required degree.\n- For each CV, rate every criterion as \"Matches,\" \"Partial match,\" \"Does not match,\" or \"Insufficient information,\" quoting the CV as evidence.\n- End each CV's summary with: \"This is a structured comparison to support human review, not a hiring recommendation. A human should make the final screening decision.\""
+        },
+        {
+          "label": "Screening with a required certification or hard credential",
+          "whenToUse": "Use this when the role has one non-negotiable, verifiable credential (a license, a certification, a legal work-authorization requirement) that should be checked distinctly from softer experience criteria.",
+          "prompt": "You are helping me screen a CV against role criteria. This is a triage aid only — not a hiring decision.\n\nRole: [TITLE]\nRequired credential (hard gate — must be explicitly present): [CREDENTIAL, e.g. \"active RN license,\" \"CPA certification\"]\nOther must-have criteria: [LIST]\nNice-to-have criteria: [LIST]\nCV content: [PASTE CV TEXT — role-relevant content only]\n\nRules:\n- Check the required credential first and separately, stating clearly whether it's explicitly present, explicitly absent, or not mentioned (which should be treated as \"insufficient information,\" not \"does not match,\" since it may simply not have been listed).\n- Evaluate all other criteria as \"Matches / Partial match / Does not match / Insufficient information,\" with no factoring in of name, age, gender, nationality, or unrelated gaps.\n- End with the required human-review disclaimer, verbatim: \"This is a structured comparison to support human review, not a hiring recommendation. A human should make the final screening decision, especially for any 'insufficient information' or 'partial match' result.\""
+        },
+        {
+          "label": "Re-screen after updating criteria mid-search",
+          "whenToUse": "Use this when you've refined your criteria partway through a search (a common and reasonable thing to do) and need to re-screen CVs you already looked at under the old criteria, to keep the process fair across all candidates.",
+          "prompt": "I'm re-screening a CV I looked at earlier because our role criteria have been updated since then. Treat this as a fresh evaluation, not influenced by any prior read.\n\nRole: [TITLE]\nUpdated must-have criteria: [LIST]\nUpdated nice-to-have criteria: [LIST]\nCV content: [PASTE CV TEXT — role-relevant content only]\n\nRules: same as the standard screening prompt — per-criterion ratings only, no factoring in of name/age/gender/nationality/unrelated gaps/school prestige, evidence quoted from the CV, and the standard human-review disclaimer at the end. Note explicitly that this is a re-screen under updated criteria, in case the earlier read needs to be revisited too for fairness."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Push back on a rating that seems to have drifted",
+          "prompt": "Re-check the rating for [CRITERION NAME] — it's marked as [CURRENT RATING], but I want you to justify that strictly against the exact wording of the CV and the criterion, quoting the specific text. If the quoted evidence doesn't clearly support that rating, change it and explain why."
+        },
+        {
+          "label": "Confirm no excluded factors leaked in",
+          "prompt": "Go back through your evaluation and confirm explicitly that none of the ratings were influenced by the candidate's name, presumed gender, age, nationality, employment gaps unrelated to a stated criterion, or school prestige beyond the required degree. If any rating might have been affected by one of these, re-evaluate it using only the stated criteria."
+        },
+        {
+          "label": "Turn an 'insufficient information' flag into a clarifying question",
+          "prompt": "For every criterion marked 'insufficient information,' draft one short, specific, job-relevant question I could send the candidate to clarify it directly, rather than assuming the worst."
+        },
+        {
+          "label": "Spot-check against your own independent read",
+          "prompt": "Before I look at this myself, tell me which rating in this summary you're least confident about and why — I want to focus my own independent read on exactly that part of the CV."
+        }
+      ],
+      "walkthrough": "Fatima is hiring a mid-level Project Manager and, before looking at a single CV, writes down her real criteria: must-have is 3+ years leading cross-functional projects and experience with a named PM methodology; nice-to-have is a PMP certification and client-services background.\n\nShe opens Claude and pastes the CV-screening prompt for the first candidate, with the role, her criteria, and the CV's relevant content (redacting the candidate's photo and graduation year before pasting, since her team's process calls for that).\n\nClaude returns a per-criterion comparison: \"Cross-functional project experience: Matches — CV states '4 years coordinating cross-functional launches across engineering and marketing.'\" and \"PM methodology: Insufficient information — CV does not mention a specific methodology; worth asking directly rather than assuming absence.\" No mention of the candidate's name, age, or any employment gap appears anywhere in the output, and the required disclaimer is present at the end, stating a human must make the final call.\n\nFatima wants to be sure the \"insufficient information\" flag on methodology wasn't secretly influenced by something else in the CV, so she sends the follow-up: \"Confirm none of these ratings were influenced by name, age, gender, nationality, unrelated gaps, or school prestige — if any might have been, re-evaluate using only the stated criteria.\" Claude confirms the methodology rating was based purely on the absence of that specific term in the CV text, not on anything else.\n\nRather than treating the missing methodology info as a soft rejection, Fatima drafts a short clarifying question to send the candidate directly, using Claude's suggested wording, and makes her actual advance decision herself once she has the answer. Total time: about 10 minutes per CV, including the clarifying question."
+    },
+    "hr-i2-hr-policy-and-process-documentation": {
+      "placeholders": [
+        {
+          "name": "e.g., remote work, PTO, expense reimbursement",
+          "what": "The specific policy topic this document covers — one topic at a time, not a bundle of several policies in one document, which gets confusing for employees to reference.",
+          "examples": [
+            "remote work policy",
+            "paid time off (PTO) policy",
+            "expense reimbursement policy"
+          ]
+        },
+        {
+          "name": "PASTE DECISIONS, e.g., \"employees may work remote up to 3 days/week, manager approval required, must be reachable during core hours 10am-3pm local time\"",
+          "what": "The actual policy decisions that have already been made by HR leadership, legal, or founders — real, confirmed rules, not your own guess at what the policy should be. This document turns decisions into documentation; it doesn't make the decisions.",
+          "examples": [
+            "employees may work remote up to 3 days per week, manager approval required in advance, must be reachable during core hours 10am-3pm in their local time zone, exceptions require director-level sign-off",
+            "full-time employees accrue 15 PTO days per year starting day one, prorated for partial first year, unused days roll over up to 5 days into the next year, requests need 2 weeks notice except for emergencies",
+            "expenses under $50 can be self-approved and submitted via the expense app within 30 days, expenses over $50 require manager pre-approval, reimbursement is processed within 10 business days of submission"
+          ]
+        },
+        {
+          "name": "PASTE, e.g., how to request, who approves, what system to use",
+          "what": "The real, current process steps — which system employees use, who approves what, and any timing requirements. If the process doesn't actually work this way in practice, the document will create confusion the moment someone follows it exactly as written and it doesn't match reality.",
+          "examples": [
+            "Request via the HR portal at least 1 week in advance for planned remote days; manager approves or denies within 2 business days; recurring arrangements get reviewed quarterly.",
+            "Submit PTO requests through the HR system; direct manager approves within 3 business days; HR is cc'd automatically and updates the shared team calendar.",
+            "Submit receipts through the expense app within 30 days of purchase; manager approval required for anything over $50; finance processes approved reimbursements on the next bi-weekly pay cycle."
+          ]
+        },
+        {
+          "name": "e.g., all employees / a specific team",
+          "what": "Who this policy applies to — everyone at the company, or a specific team, level, or employment type (full-time only, a specific office location). Scope matters because a policy written for \"all employees\" that actually only applies to one team will confuse people it doesn't apply to.",
+          "examples": [
+            "all full-time employees",
+            "all employees except those in roles requiring on-site presence (listed separately)",
+            "employees at the headquarters office only; other locations follow local policy"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "FAQ-format version for a policy with common questions",
+          "whenToUse": "Use this for a policy that tends to generate a lot of similar employee questions, so the documentation format itself answers likely questions upfront.",
+          "prompt": "Draft an FAQ-format HR policy document from the decisions below. Use only what I state — do not invent legal requirements or jurisdiction-specific rules.\n\nPolicy topic: [e.g., remote work, PTO, expense reimbursement]\nOur actual policy decisions: [PASTE DECISIONS]\nProcess steps involved: [PASTE PROCESS STEPS]\nCommon questions employees are likely to ask: [LIST 3-5, e.g. \"what happens if I need more remote days for a specific reason,\" \"does unused time roll over\"]\nAudience: [e.g., all employees]\n\nRules: same as the standard policy prompt — plain language, no invented legal claims, jurisdiction-specific gaps listed under \"Needs legal/compliance review\" rather than filled with generic language, clear process section, effective-date placeholder at the end. Format as question-and-answer pairs covering the listed questions plus the core policy."
+        },
+        {
+          "label": "Policy update / redline version",
+          "whenToUse": "Use this when revising an existing policy rather than writing one from scratch, so the changes are clearly visible against the prior version.",
+          "prompt": "I'm updating an existing HR policy. Draft the revised employee-facing documentation and clearly show what changed from the previous version. Use only what I state — do not invent legal requirements.\n\nPolicy topic: [e.g., remote work]\nPrevious policy decisions: [PASTE OLD DECISIONS]\nNew/updated policy decisions: [PASTE NEW DECISIONS]\nReason for the change, if useful to share with employees: [1 SENTENCE, OR \"not sharing a reason\"]\nProcess steps involved (updated): [PASTE]\nAudience: [e.g., all employees]\n\nWrite: 1) the full revised policy in plain language, 2) a short \"What's changing\" summary highlighting just the differences from the old policy, 3) the standard \"Needs legal/compliance review\" section for anything jurisdiction-specific, 4) an effective-date placeholder: [EFFECTIVE DATE]."
+        },
+        {
+          "label": "Manager-facing companion guide (separate from the employee policy)",
+          "whenToUse": "Use this to create a second, manager-only document explaining how to apply and enforce a policy consistently, alongside the employee-facing version.",
+          "prompt": "Draft a manager-facing companion guide for applying the HR policy below consistently. Use only what I state — do not invent legal requirements or guidance beyond what's given.\n\nPolicy topic: [e.g., remote work]\nThe employee-facing policy (for reference): [PASTE THE EMPLOYEE-FACING POLICY TEXT]\nCommon edge cases managers are likely to face: [LIST, e.g. \"an employee asks for a 4th remote day for a one-time reason,\" \"a request comes in with less than the required notice\"]\n\nWrite guidance for each edge case grounded only in the stated policy — where the policy doesn't clearly cover a case, say so explicitly and note it should go to HR rather than a manager's own judgment. Flag anywhere managers might be tempted to apply the policy inconsistently, and give a one-line rule to prevent that."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Escalate a jurisdiction-specific claim to real legal review",
+          "prompt": "Look again at everything under 'Needs legal/compliance review' and, for each item, tell me specifically what question I need to ask our legal or compliance contact — phrase each as a direct question I can send them, not just a vague flag."
+        },
+        {
+          "label": "Check no legal-sounding language snuck into the policy body",
+          "prompt": "Re-read the policy body itself (not the flagged section) and check for any sentence that sounds like it's stating a legal entitlement or requirement, even if it wasn't explicitly flagged. Move anything you find into the 'Needs legal/compliance review' section instead."
+        },
+        {
+          "label": "Process doesn't match reality — fix it",
+          "prompt": "The process section says [DESCRIBE WHAT'S WRONG, e.g. 'approval happens within 2 business days'], but that's not actually how it works today — it's closer to [ACTUAL PROCESS]. Update the process section to match what actually happens, not the aspirational version."
+        },
+        {
+          "label": "Simplify for employees who'll skim, not read closely",
+          "prompt": "Most employees will skim this, not read closely. Add a 3-bullet 'the short version' summary at the very top, above the full policy, covering just the most important practical points."
+        }
+      ],
+      "walkthrough": "Tobias is documenting his company's remote work policy after leadership finalized the actual decisions: up to 3 remote days per week, manager approval required in advance, and reachability required during core hours 10am-3pm local time. No jurisdiction-specific detail was discussed.\n\nHe opens ChatGPT and pastes the policy documentation prompt: topic (remote work), the real decisions exactly as leadership stated them, the process (request via the HR system, manager approves within 2 business days), and audience (all full-time employees).\n\nChatGPT returns a plain-language policy stating the 3-day limit, the approval requirement, and the core-hours rule; a process section describing the HR-system request and 2-day approval window; and a \"Needs legal/compliance review\" section flagging that jurisdiction-specific remote-work tax or labor requirements weren't addressed and should be checked before publishing, rather than inventing generic compliance language to fill that gap.\n\nTobias doesn't know exactly what to ask legal, so he sends the follow-up: \"Look again at everything under 'Needs legal/compliance review' and phrase each as a direct question I can send our legal contact.\" ChatGPT turns the flag into a specific question: \"Are there any state-specific requirements around remote work arrangements for employees working from a different state than our registered office?\"\n\nTobias sends that exact question to the company's legal counsel before publishing anything. Once legal confirms there's nothing additional needed for their current employee locations, he fills in the real effective date, does a final read-through, and publishes the reviewed version — not the raw first draft. Total time: about 15 minutes, plus the time waiting on legal's answer before publishing."
+    },
+    "hr-a1-structured-hiring-workflow-ai-safe-steps": {
+      "placeholders": [
+        {
+          "name": "LIST YOUR REAL STAGES, e.g., requisition approval, job description drafting, sourcing/outreach, CV screening, phone screen, panel interview, hiring decision, offer, onboarding kickoff",
+          "what": "Your company's actual hiring stages, in the real order they happen — not a generic template. Some companies skip a requisition-approval step, or have two interview rounds instead of one; the map is only useful if it reflects how hiring genuinely works at your company.",
+          "examples": [
+            "requisition approval, JD drafting, sourcing outreach, CV screening, recruiter phone screen, hiring manager interview, panel interview, reference checks, hiring decision, offer, background check, onboarding kickoff",
+            "role approval, JD drafting, internal referral window (first 2 weeks), external sourcing, resume screening, phone screen, take-home assessment, final panel, hiring decision, offer negotiation, onboarding",
+            "headcount approval, JD drafting, sourcing/outreach, CV screening, phone screen, skills assessment, panel interview, hiring decision, offer, onboarding kickoff"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Single-stage deep dive instead of the whole workflow",
+          "whenToUse": "Use this when you don't need the full end-to-end map yet and just want to carefully classify and build a template for one specific, higher-risk stage first, like CV screening.",
+          "prompt": "Help me deeply classify and build a safe AI-assisted approach for just one stage of our hiring process, before I map the whole workflow.\n\nStage: [e.g. CV screening, interview question prep, offer letter drafting]\nWhat currently happens at this stage, in detail: [DESCRIBE]\n\nClassify it as \"AI-assisted drafting,\" \"AI-assisted summary/triage,\" or \"human-only,\" with a clear reason. If this stage involves advancing or rejecting a candidate in any way, it must be classified as \"AI-assisted summary/triage\" at most — never AI-decided. Flag if this stage needs legal/compliance sign-off before using AI at all. Then draft a standing prompt template for this specific stage, including the guardrail that a human makes the final call, and a short QA checklist for testing it before relying on it for a real candidate."
+        },
+        {
+          "label": "Compliance-focused audit of an existing (already in-use) AI workflow",
+          "whenToUse": "Use this when your team is already using AI somewhere in hiring without a formal map, and you need to audit current practice rather than design from a blank slate — useful before a compliance review.",
+          "prompt": "I want to audit how our team is currently using AI in hiring, not design a new process from scratch.\n\nOur real hiring stages, in order: [LIST YOUR REAL STAGES]\nHow AI is actually being used at each stage today, as far as I know: [DESCRIBE CURRENT PRACTICE PER STAGE, INCLUDING ANY YOU'RE UNSURE ABOUT]\n\nFor each stage, tell me: (1) whether current practice matches a safe classification (AI-assisted drafting / AI-assisted summary-triage / human-only) or has drifted into something riskier, (2) specifically what's risky about any stage that has drifted, particularly anything close to AI making an actual advance/reject/hire decision, (3) a concrete fix for any stage that needs one. Flag anything requiring immediate legal/compliance attention separately from lower-urgency items."
+        },
+        {
+          "label": "Small-team / solo-recruiter simplified version",
+          "whenToUse": "Use this for a small company or a solo recruiter/HR person who doesn't need a formal multi-stakeholder rollout process, just a personal reference to hold themselves to consistent guardrails.",
+          "prompt": "I'm a solo recruiter/HR person at a small company. Help me build a simple personal reference for where I safely use AI in hiring, not a formal team rollout.\n\nOur real hiring stages, in order: [LIST YOUR REAL STAGES]\n\nFor each stage, classify as \"AI-assisted drafting,\" \"AI-assisted summary/triage,\" or \"human-only,\" with a one-sentence reason, following the rule that any stage involving candidate advancement or rejection is never AI-decided. Keep this simple and short enough that I'll actually refer back to it — a one-page reference, not a formal policy document. For each AI-assisted stage, give me one short standing prompt template I can reuse, each explicitly stating that I make the final call."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Double-check nothing crosses into AI making the actual decision",
+          "prompt": "Go through every stage classified as 'AI-assisted summary/triage' again and confirm, for each one, that the language in both the classification and the standing prompt template makes it unambiguous that a human makes the actual advance/reject decision — not just that AI 'helps.' Tighten the wording anywhere it's ambiguous."
+        },
+        {
+          "label": "A stage got classified as more automated than it should be",
+          "prompt": "I think [STAGE NAME] is classified as more AI-friendly than it should be given [REASON, e.g. \"it directly determines who moves to the next round\"]. Reclassify it more conservatively and explain what changes in the standing prompt template as a result."
+        },
+        {
+          "label": "Flag anything needing legal/compliance sign-off more specifically",
+          "prompt": "For every stage flagged as needing legal/compliance sign-off, turn that into a specific question I could send to our legal or compliance contact, rather than a general flag — I want something concrete I can actually act on."
+        },
+        {
+          "label": "Build the rollout communication for the team",
+          "prompt": "Now that the map and templates are finalized, draft a short message I can send to every interviewer and hiring manager (not just the recruiting team) explaining the workflow map in plain terms, emphasizing clearly that no AI tool is ever making an actual hiring decision."
+        }
+      ],
+      "walkthrough": "Naomi manages recruiting operations at a 150-person company and realizes different hiring managers are using AI inconsistently — one uses it to help screen CVs and sometimes rejects candidates based purely on its summary, while another avoids AI entirely, including for low-risk tasks like drafting outreach messages.\n\nShe lists her company's real hiring stages in order: requisition approval, JD drafting, sourcing outreach, CV screening, recruiter phone screen, panel interview, hiring decision, offer, and onboarding kickoff.\n\nIn Claude, she pastes the workflow-classification prompt with her real stages. Claude classifies JD drafting and sourcing outreach as \"AI-assisted drafting\" since a human reviews and sends the output; CV screening as \"AI-assisted summary/triage,\" with an explicit note that a human must make every advance/reject call; phone screen and panel interview as \"human-only\" for the live conversation itself; hiring decision and offer approval as \"human-only\"; and offer letter drafting as \"AI-assisted drafting.\" Each comes with a one-sentence reason and a reusable prompt template.\n\nNaomi is specifically worried about the CV-screening stage, since that's where the risky practice has been happening. She sends the follow-up: \"Go through every 'AI-assisted summary/triage' stage again and confirm the language makes it unambiguous a human makes the actual decision — tighten anywhere it's ambiguous.\" Claude revises the CV-screening template to explicitly state, in bold, that the AI output is never a pass/fail verdict and must never be the sole basis for rejecting a candidate.\n\nShe reviews the finalized map with her legal contact, sets up a Claude Project containing it, and sends a short rollout message to every hiring manager and interviewer — not just recruiting — making the human-decision rule explicit. Total time: about 30 minutes across the mapping and legal review."
+    }
+  }
+}

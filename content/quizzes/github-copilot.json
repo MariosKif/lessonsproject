@@ -1,0 +1,284 @@
+{
+  "quizzes": {
+    "cop-b1-setup-and-quality-completions": [
+      {
+        "q": "A developer accepts Cursor Tab's first suggestion on reflex without reading it, and a bug in an unhandled edge case (like a zero interest rate) surfaces in code review instead. What does the lesson say this mistake costs?",
+        "options": [
+          "Nothing — Tab suggestions are pre-verified",
+          "It only matters on the Hobby plan",
+          "The bug is caught late, in review, instead of at write time when it was cheap to catch",
+          "It voids your Cursor subscription"
+        ],
+        "answer": 2,
+        "why": "Accepting suggestions on reflex without reading them means bugs surface in review instead of at write time, per the lesson's common mistakes."
+      },
+      {
+        "q": "Why does the lesson recommend writing a short comment stating inputs, outputs, and edge cases before letting Tab generate a function body?",
+        "options": [
+          "Comments are required by Cursor's terms of service",
+          "The quality of what you type first sets the ceiling for what Tab can suggest, and naming edge cases up front prevents plausible-looking but wrong completions",
+          "It disables ghost-text so you can type manually",
+          "It automatically writes unit tests"
+        ],
+        "answer": 1,
+        "why": "Tab predicts from surrounding context, so a comment stating the contract (including edge cases) raises the ceiling of what it can correctly suggest."
+      },
+      {
+        "q": "A developer on the Hobby tier assumes their Tab completions are lower quality than a paid plan's. What does the lesson say about this?",
+        "options": [
+          "The underlying models are the same on Hobby and paid tiers — only how much usage you get before hitting a cap differs",
+          "Hobby tier suggestions intentionally omit edge-case handling",
+          "Hobby tier only works with JavaScript",
+          "Paid plans use a fundamentally different completion model"
+        ],
+        "answer": 0,
+        "why": "The lesson explicitly corrects this assumption: only usage limits differ between Hobby and paid tiers, not suggestion quality."
+      }
+    ],
+    "cop-b2-steer-completions-with-comments-and-context": [
+      {
+        "q": "A developer keeps unrelated files from a different feature open while working on a new one, and Tab's suggestions keep drifting toward that other feature's patterns. What's the fix per the lesson?",
+        "options": [
+          "Turn off Tab and write the code manually",
+          "Add more comments to override the pattern",
+          "Restart the editor",
+          "Close the irrelevant tabs — open and recently edited files are weighted more heavily than the rest of the index"
+        ],
+        "answer": 3,
+        "why": "Tab weighs open and recently edited files more heavily, so closing unrelated tabs stops it from pulling suggestions toward the wrong pattern."
+      },
+      {
+        "q": "Why does the lesson say a JSDoc block with concrete @example input/output pairs works better than a paragraph of prose description?",
+        "options": [
+          "Worked examples pin down the exact input/output shape, leaving no room to guess wrong on formatting, while prose still leaves decisions ambiguous",
+          "JSDoc is the only format Tab can parse",
+          "Prose comments are ignored by Tab entirely",
+          "Examples reduce the number of tokens used"
+        ],
+        "answer": 0,
+        "why": "Concrete worked examples remove formatting ambiguity (like currency conversion and symbol placement) that a prose description would still leave open."
+      },
+      {
+        "q": "A developer keeps retyping the same 'always use our ApiResult wrapper' reminder in comment after comment across many files. What does the lesson recommend instead?",
+        "options": [
+          "Keep retyping it — comments are the only way to steer Tab",
+          "Write it once as a `.cursor/rules/*.mdc` file so it applies automatically without retyping it every time",
+          "Rename every function to include 'ApiResult' in the name",
+          "Disable Tab for that project"
+        ],
+        "answer": 1,
+        "why": "The lesson explicitly recommends moving a repeated reminder into a standing Rule file instead of retyping it in every comment."
+      }
+    ],
+    "cop-i1-copilot-chat-explanation-and-exploration": [
+      {
+        "q": "A developer asks 'what does this code do?' with nothing selected or referenced. What's the likely result, per the lesson?",
+        "options": [
+          "A precise, verifiable answer about the exact function of concern",
+          "An error, since a selection is required",
+          "A vague answer instead of an explanation of the specific part they actually care about",
+          "An automatic fix applied to the code"
+        ],
+        "answer": 2,
+        "why": "Asking a generic question with nothing selected or referenced is a named common mistake that produces a vague answer instead of a targeted one."
+      },
+      {
+        "q": "Why does the lesson say to treat an AI explanation of code as a hypothesis rather than a verified fact?",
+        "options": [
+          "Explanations are randomly generated",
+          "Neither tool can read selected code accurately",
+          "This only applies to the free tier",
+          "Either tool can misread control flow just like a human skimming quickly, so it needs verifying against the actual code"
+        ],
+        "answer": 3,
+        "why": "The lesson explicitly warns that either tool can misread control flow, so explanations should be verified rather than trusted outright."
+      },
+      {
+        "q": "A developer needs to trace a bug across several files before a big refactor. What does the lesson recommend over a quick question in Cursor Chat?",
+        "options": [
+          "Opening a dedicated Claude Code session, since a genuine standalone investigation is better suited to it than a quick in-editor chat",
+          "Skipping investigation and guessing at the fix",
+          "Asking the same one-line question repeatedly until it's right",
+          "Switching to a different programming language"
+        ],
+        "answer": 0,
+        "why": "The lesson distinguishes a quick in-editor question from a genuine standalone investigation, recommending a dedicated Claude Code session for the latter."
+      }
+    ],
+    "cop-i2-edit-across-files-with-copilot": [
+      {
+        "q": "A developer approves an entire multi-file agent diff at once without reading each file individually. What risk does the lesson highlight?",
+        "options": [
+          "The change will fail to compile",
+          "This is exactly how scope creep and unrelated changes slip into a commit unnoticed",
+          "Agent mode requires per-file approval anyway, so nothing changes",
+          "It only affects test files"
+        ],
+        "answer": 1,
+        "why": "Approving a whole multi-file diff at once without reading each file is the lesson's top-listed way scope creep slips in unnoticed."
+      },
+      {
+        "q": "Why does the lesson recommend naming the exact files that are in bounds when giving any of the three agents a task?",
+        "options": [
+          "It's required syntax for agent mode to run at all",
+          "It speeds up the agent's response time",
+          "Without it, the agent may 'helpfully' touch a shared utility, config file, or the database schema you didn't want changed",
+          "It reduces the number of test cases generated"
+        ],
+        "answer": 2,
+        "why": "Not naming files or directories that are off-limits is a named common mistake that lets the agent reach into unintended files."
+      },
+      {
+        "q": "A task is delegated to an unattended Codex cloud task, but it turns out to be genuinely ambiguous partway through. What does the lesson warn?",
+        "options": [
+          "The wrong turn is only discovered once the task has already finished, since you can't redirect it mid-course",
+          "Codex automatically pauses and asks for clarification",
+          "This is fine as long as CI passes",
+          "Unattended tasks always fail safely on ambiguity"
+        ],
+        "answer": 0,
+        "why": "The lesson explains that unattended surfaces can't be redirected mid-course, so an ambiguous task's wrong turn surfaces only once it's finished."
+      }
+    ],
+    "cop-a1-coding-agent-issue-to-pull-request": [
+      {
+        "q": "A team lead writes a GitHub issue that just says 'add rate limiting' and delegates it to a Codex cloud task. What does the lesson predict?",
+        "options": [
+          "The task will ask clarifying questions before starting",
+          "The task will refuse the issue as underspecified",
+          "The PR will exactly match what was needed",
+          "The PR will likely solve a different, more generic version of the problem than the one actually intended"
+        ],
+        "answer": 3,
+        "why": "Writing the issue as a one-line request is a named common mistake that produces a PR solving a more generic version of the problem."
+      },
+      {
+        "q": "Why does the sample issue template include an explicit 'Out of scope' line?",
+        "options": [
+          "It stops the agent from 'helpfully' expanding the task into something bigger and harder to review",
+          "It's required metadata for GitHub Issues",
+          "It tells the agent which repository to use",
+          "It disables CI checks on the resulting PR"
+        ],
+        "answer": 0,
+        "why": "The 'out of scope' line matters as much as the scope line — it prevents the agent from expanding the task into something harder to review."
+      },
+      {
+        "q": "A reviewer approves an agent-authored PR faster than usual, reasoning that 'the AI already checked it.' What does the lesson say about this?",
+        "options": [
+          "This is the correct approach since agent PRs are pre-verified",
+          "The agent did not check business context only a human reviewer has, so the same review rigor as a human contributor's PR still applies",
+          "Agent PRs should get less scrutiny only on small repos",
+          "This is fine as long as CI passes"
+        ],
+        "answer": 1,
+        "why": "The lesson explicitly warns against reviewing agent-authored PRs less critically — the agent did not check business context only the reviewer has."
+      }
+    ],
+    "cop-a2-ai-code-review-on-github": [
+      {
+        "q": "A developer requests review on a large, high-risk PR with no specific focus. What does the lesson say to expect?",
+        "options": [
+          "A deep, exhaustive security audit automatically",
+          "An instant review, since agentic review is always fast",
+          "A pass that reads more like a generic style check than a deep analysis of the risks that actually matter",
+          "A refusal, since focus areas are mandatory"
+        ],
+        "answer": 2,
+        "why": "Requesting review with no specific focus on a large PR is a named common mistake, producing a pass that reads more like a style check."
+      },
+      {
+        "q": "A team merges a PR touching authentication logic based solely on an approving AI review, with no human reviewer. What mistake does this match?",
+        "options": [
+          "Verifying a flagged issue by checking the code path",
+          "Dismissing a false positive with a reasoning comment",
+          "Tracking how much a deeper review pass costs",
+          "Treating an approving AI review as equivalent to human sign-off on a change touching security or business logic"
+        ],
+        "answer": 3,
+        "why": "The lesson explicitly requires pairing AI review with a human reviewer for anything touching business logic, security, or public APIs."
+      },
+      {
+        "q": "A repo runs Codex review on every PR, and separately someone runs Claude Code review at a high effort level. What does the lesson say to watch?",
+        "options": [
+          "Nothing — both are always free",
+          "Usage, since a deeper agentic review pass costs more than a quick scan and can add up on an active repo",
+          "Only the number of comments left, not any cost",
+          "The color scheme of the review comments"
+        ],
+        "answer": 1,
+        "why": "The lesson notes that a deeper agentic review pass costs more than a quick one, so usage is worth watching on an active team repository."
+      }
+    ],
+    "cop-a3-custom-instructions-for-your-repository": [
+      {
+        "q": "A team writes an AGENTS.md that just says 'write clean code' and 'use meaningful names.' Why does the lesson say this fails to change behavior?",
+        "options": [
+          "Generic instructions files are ignored by all three tools entirely",
+          "Generic advice doesn't disambiguate anything — it doesn't state repo-specific facts that override default guesses",
+          "The file needs to be renamed to CONTRIBUTING.md",
+          "Instructions files only work with chat, not completions"
+        ],
+        "answer": 1,
+        "why": "Generic best-practice advice doesn't change behavior because it doesn't disambiguate anything, unlike specific, repo-true statements."
+      },
+      {
+        "q": "The example AGENTS.md names concrete files like ApiResult<T> and AppError instead of describing conventions abstractly. Why does this matter?",
+        "options": [
+          "File paths are required syntax for the file to parse",
+          "It reduces the file's total length",
+          "Pointing at concrete files is what lets a model actually apply the convention rather than approximate it",
+          "It's only relevant to Codex, not Claude Code or Cursor"
+        ],
+        "answer": 2,
+        "why": "Pointing at real files instead of describing conventions abstractly is what lets a model apply the rule concretely instead of approximating it."
+      },
+      {
+        "q": "A team maintains three separate hand-written instructions files — one per tool — and they've drifted out of sync. What does the lesson say the fix is?",
+        "options": [
+          "Delete all three and rely on default suggestions",
+          "Write one canonical AGENTS.md, since Codex and Cursor read it natively, and import it into CLAUDE.md with `@AGENTS.md` instead of maintaining three separate files",
+          "Pick whichever file is newest and delete the other two without comparing them",
+          "Ask each tool vendor to standardize on a single format first"
+        ],
+        "answer": 1,
+        "why": "The lesson's core recommendation is one canonical AGENTS.md, read natively by Codex and Cursor and imported into CLAUDE.md, instead of three drifting files."
+      }
+    ],
+    "cop-a4-integrating-copilot-into-a-team-workflow": [
+      {
+        "q": "Developers on a team each default to whichever AI coding tool they personally prefer, with no stated policy. What does the lesson say results from this?",
+        "options": [
+          "Nothing — individual preference is always fine for a team",
+          "The team ends up with three inconsistent sets of conventions since nobody agreed on which tool is the default for which kind of work",
+          "Usage costs automatically balance across the three tools",
+          "This is required by each tool's terms of service"
+        ],
+        "answer": 1,
+        "why": "The lesson's first common mistake is never writing the default-tool policy down, leading to three inconsistent sets of conventions."
+      },
+      {
+        "q": "Why does the sample team policy restrict which repos a Codex cloud task or Claude Code background session can touch?",
+        "options": [
+          "It's a legal requirement for Team/Business plans",
+          "Without an access policy, an unattended agent has the same reach into a sensitive repo as into a low-risk one",
+          "It reduces the number of PRs opened",
+          "It disables human review entirely"
+        ],
+        "answer": 1,
+        "why": "The lesson explicitly warns that skipping the access-policy line gives an unattended session the same reach into sensitive repos as low-risk ones."
+      },
+      {
+        "q": "Three separate subscriptions — Claude, ChatGPT/Codex, and Cursor — each meter usage differently. What does the lesson say to do about this?",
+        "options": [
+          "Ignore it, since a spike in one always shows up in the others",
+          "Cancel two of the three subscriptions to simplify billing",
+          "Review usage across all three monthly, since a spike in one doesn't show up in the others",
+          "Only the org administrator needs to know usage numbers"
+        ],
+        "answer": 2,
+        "why": "The lesson recommends a monthly review across all three separate billing surfaces, since each meters differently and a spike in one won't appear in the others."
+      }
+    ]
+  }
+}

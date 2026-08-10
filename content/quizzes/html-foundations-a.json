@@ -1,0 +1,424 @@
+{
+  "quizzes": {
+    "html-b01-what-is-html": [
+      {
+        "q": "A colleague claims a web page needs no programming at all to exist. For a page of pure text content, are they right?",
+        "options": [
+          "No — every page needs at least some JavaScript to render",
+          "Yes — HTML alone describes the content, and the browser renders it without any programming",
+          "No — HTML must be compiled into a program before browsers can open it",
+          "Only if the server converts the HTML into images first"
+        ],
+        "answer": 1,
+        "why": "HTML is a markup language: it labels content, and the browser parses and renders it directly. No code execution, compiling or scripting is required for a content page."
+      },
+      {
+        "q": "You type a site's address and press Enter. What is the first thing your browser receives back for the page?",
+        "options": [
+          "A rendered screenshot of the page",
+          "The page's CSS styling rules",
+          "The HTML document as plain text",
+          "A compiled binary of the page"
+        ],
+        "answer": 2,
+        "why": "The server's response to the initial request is the HTML text itself; the browser then parses it and may issue further requests for images, styles and scripts."
+      },
+      {
+        "q": "You write <heding>Welcome</heding> by mistake. What will the browser do?",
+        "options": [
+          "Show an error message explaining the typo",
+          "Refuse to render the rest of the page",
+          "Automatically correct it to <h1>",
+          "Render the text without any heading meaning or styling, reporting nothing"
+        ],
+        "answer": 3,
+        "why": "Browsers ignore unknown tags silently — the text still appears, but no heading semantics or default styling apply, and no error is ever shown."
+      }
+    ],
+    "html-b02-editors-setup": [
+      {
+        "q": "You edited index.html in VS Code, switched to the browser, refreshed — and the change is not there. What is the most likely cause?",
+        "options": [
+          "The file was never saved after editing",
+          "HTML files need to be recompiled after each change",
+          "The browser cache must be deleted every time",
+          "VS Code cannot edit files that a browser has open"
+        ],
+        "answer": 0,
+        "why": "The browser reads the file from disk, and unsaved changes exist only in the editor's memory. Save first, then refresh — it is the most common beginner stumble."
+      },
+      {
+        "q": "You want to see the exact HTML text a live website's server sent, unmodified. Which tool shows that?",
+        "options": [
+          "The DevTools Elements panel",
+          "View page source",
+          "The browser's reading mode",
+          "The downloads list"
+        ],
+        "answer": 1,
+        "why": "View-source shows the raw document as sent. The DevTools Elements panel shows the live DOM after parsing, repairs and script changes — related, but not the same text."
+      },
+      {
+        "q": "A friend wrote their first page in Microsoft Word and saved it as page.html from Word's save dialog. The browser shows garbled clutter. Why?",
+        "options": [
+          "Word documents are too large for browsers to open",
+          "The page is missing a doctype declaration",
+          "Word saves formatting data around the text, so the file is not the plain-text HTML the browser expects",
+          "Browsers block files created by word processors for security"
+        ],
+        "answer": 2,
+        "why": "HTML must be plain text. Word processors embed their own formatting markup, so the saved file contains far more than the typed tags — use a code editor or plain-text editor instead."
+      }
+    ],
+    "html-b03-document-anatomy": [
+      {
+        "q": "A layout renders with strangely computed widths, and you notice the file's first line is a comment, with <!DOCTYPE html> on line two. What is going on?",
+        "options": [
+          "Comments are invalid in HTML files",
+          "The doctype only works when written in lowercase",
+          "Content before the doctype can push browsers into quirks mode, changing how CSS behaves",
+          "The html element is missing a lang attribute"
+        ],
+        "answer": 2,
+        "why": "The doctype must be the very first thing in the file; anything before it risks quirks mode, where box sizing and other CSS behaviours imitate legacy browsers."
+      },
+      {
+        "q": "You are building a page whose content is written in Greek. Which markup declares that correctly?",
+        "options": [
+          "<html lang=\"el\">",
+          "<html language=\"greek\">",
+          "<body lang=\"gr\">",
+          "<meta charset=\"el\">"
+        ],
+        "answer": 0,
+        "why": "The lang attribute belongs on the html root element and takes a standard language code — el for Greek. charset declares text encoding, not language."
+      },
+      {
+        "q": "Where must the <title> element live, and what happens if you leave it out?",
+        "options": [
+          "In the body; without it the h1 disappears",
+          "In the head; without it the tab shows the file name or URL and search results suffer",
+          "Anywhere; browsers relocate it automatically with no downside",
+          "Before the doctype, or browsers use quirks mode"
+        ],
+        "answer": 1,
+        "why": "title is head-only metadata naming the document for tabs, bookmarks and search results. Omitting it leaves the browser falling back to the file name or URL."
+      }
+    ],
+    "html-b04-elements-nesting": [
+      {
+        "q": "Which of these lines is correctly nested?",
+        "options": [
+          "<strong><em>launch day</strong></em>",
+          "<em><strong>launch day</em></strong>",
+          "<strong><em>launch day</em></strong>",
+          "<strong><em>launch day</strong></em></em>"
+        ],
+        "answer": 2,
+        "why": "The most recently opened element must close first — em opened last, so it closes before strong. Crossed tags force the browser to guess a repair."
+      },
+      {
+        "q": "A teammate writes <img src=\"cat.jpg\" alt=\"Cat\"></img> and asks if the closing tag is required. What do you tell them?",
+        "options": [
+          "Yes — every element needs a closing tag",
+          "img is a void element: it has no closing tag at all, so </img> should be removed",
+          "Only needed when the image has an alt attribute",
+          "It is required in HTML5 but optional in older HTML"
+        ],
+        "answer": 1,
+        "why": "img is one of the void elements (br, hr, img, input, meta, link...). They consist of a single tag; closing tags for them are invalid and discarded by the parser."
+      },
+      {
+        "q": "In a plain HTML file you write <div/> expecting a self-closed empty div. What does the parser actually do?",
+        "options": [
+          "Creates an empty, properly closed div",
+          "Ignores the slash and treats it as an ordinary opening <div> that still needs closing",
+          "Reports a syntax error in the console",
+          "Converts the div into a void element"
+        ],
+        "answer": 1,
+        "why": "In HTML5 the trailing slash is meaningless. On void elements it is harmlessly ignored; on normal elements like div it still leaves the element open — a classic source of broken layouts."
+      }
+    ],
+    "html-b05-attributes": [
+      {
+        "q": "An image file is named team photo.jpg. Which markup loads it reliably?",
+        "options": [
+          "<img src=team photo.jpg alt=\"Our team\">",
+          "<img src=\"team photo.jpg\" alt=\"Our team\">",
+          "<img src=team%20photo.jpg alt=Our team>",
+          "<img \"src=team photo.jpg\" alt=\"Our team\">"
+        ],
+        "answer": 1,
+        "why": "Quotes keep the space inside the value. Unquoted, the parser cuts the value at the space and mangles the rest — which is why professionals quote every attribute value."
+      },
+      {
+        "q": "You render <input type=\"checkbox\" checked=\"false\"> and the box appears ticked. Why?",
+        "options": [
+          "The value false is misspelled — it needs to be False",
+          "checked is a boolean attribute: its presence means on, and the value is ignored entirely",
+          "Checkboxes are always ticked by default in every browser",
+          "The type attribute overrides the checked attribute"
+        ],
+        "answer": 1,
+        "why": "For boolean attributes like checked, disabled and required, existence is the whole signal — even checked=\"false\" means checked. The only off switch is removing the attribute."
+      },
+      {
+        "q": "You need to style a specific paragraph uniquely and also mark it as one of many 'note' paragraphs. Which combination is right?",
+        "options": [
+          "<p id=\"note\" id=\"summary\"> — two ids cover both needs",
+          "<p class=\"summary-note\"> — classes replace ids entirely",
+          "<p id=\"summary\" class=\"note\"> — a unique id plus a shared class",
+          "<p name=\"summary note\"> — the name attribute handles both"
+        ],
+        "answer": 2,
+        "why": "id values are unique per page (one element, one id), while classes are reusable labels many elements can share — and one element can carry both attributes at once."
+      }
+    ],
+    "html-b06-headings": [
+      {
+        "q": "A blog post page has the post title, three section titles, and one sub-point under the second section. Which outline is correct?",
+        "options": [
+          "h1 for the title, h2 for each section, h3 for the sub-point",
+          "h1 for everything, sized differently with CSS",
+          "h1 for the title, h3 for sections because they look better, h4 for the sub-point",
+          "h2 for the title and h1 for sections to emphasise content"
+        ],
+        "answer": 0,
+        "why": "One h1 describes the page, major sections take h2, and subsections nest one level deeper — never skipping levels downwards."
+      },
+      {
+        "q": "A designer wants a small-looking heading and suggests using h5 for a major section since it renders smaller. What is the right response?",
+        "options": [
+          "Agree — heading tags exist to control text size",
+          "Use h2 for the structure and change its size with CSS — levels encode outline, not appearance",
+          "Use a bold paragraph instead of any heading",
+          "Use h5 but add extra bold styling to compensate"
+        ],
+        "answer": 1,
+        "why": "Heading levels are structural. Screen readers and search engines read the level, not the font size — appearance is CSS's job."
+      },
+      {
+        "q": "Why do screen-reader users particularly benefit from a correct heading structure?",
+        "options": [
+          "Headings are read in a louder voice",
+          "They can jump directly between headings to navigate, hearing each level announced",
+          "Screen readers skip all non-heading text automatically",
+          "Headings load faster than paragraphs"
+        ],
+        "answer": 1,
+        "why": "Heading navigation is a core screen-reader feature: users skim a page by jumping heading to heading, so skipped levels and fake bold-text headings genuinely break navigation."
+      }
+    ],
+    "html-b07-paragraphs": [
+      {
+        "q": "In your source file you separate two paragraphs of text with three blank lines but no tags. How does the browser render them?",
+        "options": [
+          "As two paragraphs with a large gap",
+          "As one continuous block — the blank lines collapse to a single space",
+          "As two paragraphs with a small gap",
+          "It depends on the browser's default font"
+        ],
+        "answer": 1,
+        "why": "All runs of whitespace, including line breaks, collapse to one space in normal HTML text. Only p elements create paragraph blocks."
+      },
+      {
+        "q": "You need vertical space between a heading and the text below it, and a teammate suggests <br><br>. What is the professional approach?",
+        "options": [
+          "Use <br><br> — that is what br is for",
+          "Use empty <p></p> elements instead",
+          "Use CSS margin for spacing; br is only for breaks that are part of the text's meaning, like poem lines",
+          "Use an hr styled to be invisible"
+        ],
+        "answer": 2,
+        "why": "br belongs to content whose line breaks carry meaning (poems, addresses). Visual spacing between blocks is presentation, which CSS margin handles responsively."
+      },
+      {
+        "q": "You want to display a small text-based table where columns align using spaces. Which element preserves your spacing exactly?",
+        "options": [
+          "<p> with extra spaces typed in",
+          "<blockquote>",
+          "<pre>",
+          "<mark>"
+        ],
+        "answer": 2,
+        "why": "pre switches off whitespace collapsing and renders in a monospaced font, so typed spaces and line breaks reach the screen exactly as written."
+      }
+    ],
+    "html-b08-text-formatting": [
+      {
+        "q": "A safety notice must convey 'do not skip this' to every reader, including screen-reader users. Which element carries that meaning?",
+        "options": [
+          "<b>, because bold draws the eye",
+          "<strong>, which marks serious importance rather than just bold styling",
+          "<mark>, because highlighting is stronger than bold",
+          "<u>, because underlines signal importance"
+        ],
+        "answer": 1,
+        "why": "strong states importance semantically — assistive technology can convey it, and machines reading the page treat the content as genuinely important. b is visual offset only."
+      },
+      {
+        "q": "You are marking up 'She boarded the Aurora' where Aurora is a ship's name conventionally set in italics, with no extra stress. Which element fits?",
+        "options": [
+          "<em>, because it renders italic",
+          "<i>, which marks conventional italics without claiming emphasis",
+          "<cite>, because ships are creative works",
+          "<q>, because names are quotations"
+        ],
+        "answer": 1,
+        "why": "i is for typographic-convention italics: ship names, foreign phrases, technical terms. em would falsely add spoken stress, and cite is for titles of works."
+      },
+      {
+        "q": "A product listing must show the price changed from $50 to $40, keeping the old price visible. Which markup records the change semantically?",
+        "options": [
+          "$50 → <b>$40</b>",
+          "<s>$50</s> <u>$40</u>",
+          "<del>$50</del> <ins>$40</ins>",
+          "<small>$50</small> <mark>$40</mark>"
+        ],
+        "answer": 2,
+        "why": "del marks removed content and ins marks its replacement — an explicit edit record that assistive technology can announce, unlike purely visual strikethrough."
+      }
+    ],
+    "html-b09-quotations": [
+      {
+        "q": "You quote a full paragraph from a public speech and want to record the transcript's URL machine-readably. Which markup is correct?",
+        "options": [
+          "<blockquote cite=\"https://example.com/transcript\"><p>...</p></blockquote>",
+          "<q href=\"https://example.com/transcript\">...</q>",
+          "<cite src=\"https://example.com/transcript\">...</cite>",
+          "<p quote=\"https://example.com/transcript\">...</p>"
+        ],
+        "answer": 0,
+        "why": "Block-level quotations take blockquote, whose optional cite attribute holds the source URL as invisible metadata. q is for inline quotes and cite (the element) marks visible work titles."
+      },
+      {
+        "q": "Marking up an inline quote with <q>, a colleague also types quotation marks around the words. What happens?",
+        "options": [
+          "Nothing — the browser removes the duplicates",
+          "The marks display doubled, because the browser generates q's quotation marks automatically",
+          "The page fails validation and will not render",
+          "The typed marks override the automatic ones"
+        ],
+        "answer": 1,
+        "why": "q supplies language-appropriate quotation marks itself — hand-typed ones stack on top of them. Write the quoted words bare inside q."
+      },
+      {
+        "q": "An article says 'Published on 5 March 2026' and you want search engines to parse the date reliably. What do you add?",
+        "options": [
+          "<date value=\"05-03-2026\"> around the text",
+          "<time datetime=\"2026-03-05\"> around the human-readable date",
+          "<meta date=\"March 5\"> in the paragraph",
+          "Nothing — search engines always parse written dates correctly"
+        ],
+        "answer": 1,
+        "why": "The time element pairs human text with an unambiguous ISO value (year-month-day) in its datetime attribute — the standard way to make dates machine-readable."
+      }
+    ],
+    "html-b10-comments": [
+      {
+        "q": "You need to hide an unfinished section before a demo but restore it next week. What is the standard approach?",
+        "options": [
+          "Delete the markup and retype it later",
+          "Wrap the section in <!-- and --> so it stays in the file but never renders",
+          "Set every element's font size to zero",
+          "Move the markup into the head element"
+        ],
+        "answer": 1,
+        "why": "Commenting-out disables markup without losing it — the parser skips comment contents entirely, and restoring the section means deleting two markers."
+      },
+      {
+        "q": "A developer leaves <!-- staging server: admin.internal.example.com, password Winter26 --> in a page. What is the risk?",
+        "options": [
+          "None — comments never leave the developer's machine",
+          "The comment slows down page rendering",
+          "Every visitor can read it via view-source; comments ship publicly with the page",
+          "Browsers may execute the comment as code"
+        ],
+        "answer": 2,
+        "why": "Comments are invisible in the rendered page but fully present in the delivered HTML. Credentials and internal details in comments are a real, commonly exploited leak."
+      },
+      {
+        "q": "You wrap an already-commented block inside another comment and suddenly raw markup appears on the page. Why?",
+        "options": [
+          "Comments cannot contain the letter sequence 'TODO'",
+          "Comments do not nest: the outer comment ends at the first -->, exposing everything after it",
+          "The browser ran out of comment memory",
+          "Two comments on one page is the maximum"
+        ],
+        "answer": 1,
+        "why": "The parser closes a comment at the first --> it encounters, so the inner comment's closing marker terminates the outer one and the remainder renders as content."
+      }
+    ],
+    "html-b11-links": [
+      {
+        "q": "From your site's resources page you link to another organisation's documentation site. Which href form is required?",
+        "options": [
+          "docs.html — relative paths reach any site",
+          "../external/docs — climbing out of your site's folder",
+          "https://docs.example.org/guide — an absolute URL with scheme and domain",
+          "#docs.example.org — a fragment reference"
+        ],
+        "answer": 2,
+        "why": "Leaving your own site requires the complete address: scheme plus domain. Relative paths only resolve within the current site's structure."
+      },
+      {
+        "q": "A screen-reader user pulls up the list of links on your page and hears 'click here' five times. What was the authoring mistake?",
+        "options": [
+          "Too many links on one page",
+          "Link text that only works in surrounding context — links should name their destination",
+          "Missing target attributes on the links",
+          "The links were not underlined"
+        ],
+        "answer": 1,
+        "why": "Links are often read out of context — in link lists and by scanning — so each link's own text must identify where it leads. 'Click here' identifies nothing."
+      },
+      {
+        "q": "You wrap your site logo in a link to the home page. What should the img's alt text say?",
+        "options": [
+          "A visual description of the artwork, like 'blue hexagon'",
+          "Nothing — linked images should have empty alt text",
+          "The link's destination, like 'ExampleCo home', since the alt becomes the link's accessible name",
+          "The word 'image' so users know it is a picture"
+        ],
+        "answer": 2,
+        "why": "For a linked image the alt text names the link, not the picture. Empty alt would leave the link with no announced name at all — a common accessibility failure."
+      }
+    ],
+    "html-b12-file-paths": [
+      {
+        "q": "The page articles/first-post.html must show images/logo.png, where images/ sits at the project root. Which src is correct?",
+        "options": [
+          "images/logo.png",
+          "../images/logo.png",
+          "/articles/images/logo.png",
+          "..images/logo.png"
+        ],
+        "answer": 1,
+        "why": "Relative paths start from the containing file: from inside articles/, one ../ climbs to the root, then images/logo.png descends to the file."
+      },
+      {
+        "q": "Your navigation uses href=\"/contact.html\" and works perfectly on the deployed site, but every nav link 404s when you open the files from disk. Why?",
+        "options": [
+          "Root-relative paths resolve against a web server's site root, which does not exist when browsing via file://",
+          "Browsers block navigation between local files",
+          "The leading slash is a typo that servers silently fix",
+          "contact.html must be renamed index.html first"
+        ],
+        "answer": 0,
+        "why": "A leading / anchors the path to the site root that a server defines. Opened from disk, it points at the drive's root instead — so use relative paths while testing local files."
+      },
+      {
+        "q": "Visitors should reach your site's front page at https://example.com/ with no filename in the URL. What makes that work?",
+        "options": [
+          "Registering the domain with a homepage certificate",
+          "Naming the front page index.html — the default file servers serve for a folder request",
+          "Adding a homepage attribute to the html element",
+          "Creating a file literally named example.com"
+        ],
+        "answer": 1,
+        "why": "When a URL requests a folder, the server looks for the conventional default file, index.html, and serves it — the convention behind every clean homepage URL."
+      }
+    ]
+  }
+}

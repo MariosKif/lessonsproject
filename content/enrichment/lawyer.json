@@ -1,0 +1,538 @@
+{
+  "enrichment": {
+    "law-b1-summarize-legal-documents-with-grounding": {
+      "placeholders": [
+        {
+          "name": "PASTE DOCUMENT TEXT - REDACT CLIENT-IDENTIFYING DETAILS IF THIS TOOL ISN'T APPROVED FOR CONFIDENTIAL DATA",
+          "what": "This is where you paste the full text of the legal document you want summarized (or the specific section, if the whole thing is very long). Copy the text directly from the PDF or Word file - select all, copy, paste - rather than retyping it. If your firm hasn't cleared this AI tool for confidential client data, replace names, addresses, account numbers, and case numbers with placeholders like [CLIENT] or [ACCOUNT #] before pasting.",
+          "examples": [
+            "COMMERCIAL LEASE AGREEMENT\\nThis Lease is entered into as of January 15, 2026, between Harborview Properties LLC (\"Landlord\") and Meridian Retail Co. (\"Tenant\")...\\n[full text continues for remaining pages]",
+            "SETTLEMENT AGREEMENT AND RELEASE\\nThis Agreement is made between [PLAINTIFF] and [DEFENDANT] as of the date of last signature below...\\n[remaining clauses pasted in full]",
+            "MASTER SERVICES AGREEMENT\\nSection 1. Definitions. \"Services\" means the consulting work described in Exhibit A...\\n[paste remaining sections you need summarized]"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a short document",
+          "whenToUse": "Use this when the document is only 1-3 pages (like a simple notice, short amendment, or single-clause excerpt) and you want a faster, less formal read without the full 5-part structure.",
+          "prompt": "You are assisting with a fast first-pass read of a short legal document for internal attorney review. This is NOT legal advice and NOT a final work product - I will verify every line against the original.\n\nRules:\n- Use ONLY information contained in the document text below. Do not add outside knowledge or assumptions.\n- Do not characterize enforceability, validity, or favorability.\n- If something is unclear or not addressed, write 'Not stated' rather than guessing.\n\nIn 5-8 plain-language bullet points, tell me what this document says, who it involves, and any dates or deadlines mentioned.\n\nDocument text:\n[PASTE DOCUMENT TEXT - REDACT CLIENT-IDENTIFYING DETAILS IF THIS TOOL ISN'T APPROVED FOR CONFIDENTIAL DATA]"
+        },
+        {
+          "label": "When you only have a scanned image or photo of the document",
+          "whenToUse": "Use this when you can't easily copy-paste text - for example a scanned exhibit, a fax, or a photo of a signed page - and need the AI to work from an image instead.",
+          "prompt": "You are assisting with a first-pass summary of a legal document image for internal attorney review. This is NOT legal advice and NOT a final work product - I will verify every line against the original.\n\nFirst, transcribe the visible text from the image below as accurately as possible, and explicitly note any word, number, or clause that is illegible, cut off, or ambiguous in the scan - do not guess at illegible text.\n\nThen, using ONLY the transcribed text, summarize using this structure:\n1. Document type and parties\n2. Stated purpose / subject matter\n3. Key terms (5-8 bullet points)\n4. Dates and deadlines mentioned\n5. Anything unclear, missing, or flagged 'Not stated' - including anything illegible in the scan\n\n[ATTACH OR PASTE THE DOCUMENT IMAGE]"
+        },
+        {
+          "label": "Multi-document set (exhibits or amendments together)",
+          "whenToUse": "Use this when you have a base agreement plus one or more amendments or exhibits and need a summary that keeps track of which document each fact came from.",
+          "prompt": "You are assisting with a first-pass summary of a set of related legal documents for internal attorney review. This is NOT legal advice and NOT a final work product - I will verify every line against the originals.\n\nRules:\n- Use ONLY information contained in the documents below. Do not add outside knowledge or assumptions.\n- For every fact, note which labeled document it came from.\n- Do not characterize enforceability, validity, or favorability.\n- If something is unclear or not addressed, write 'Not stated' rather than guessing.\n\nSummarize using this structure: 1. Document type and parties (per document); 2. Stated purpose; 3. Key terms (noting which document each comes from, and flagging if a later document changes an earlier one); 4. Dates and deadlines; 5. Anything unclear, missing, or 'Not stated'.\n\nDocuments:\nBase Agreement:\n[PASTE BASE AGREEMENT TEXT]\n\nAmendment 1:\n[PASTE AMENDMENT TEXT]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify every claim traces to the source",
+          "prompt": "List every factual claim in your summary above and identify which specific sentence or clause of the original document it comes from. If any claim can't be traced to a specific part of the text, flag it instead of leaving it in."
+        },
+        {
+          "label": "Too long? Tighten it to the essentials",
+          "prompt": "Cut this summary down to the 5 most important points a busy attorney needs to know in the next 60 seconds. Keep the 'Not stated' flags - do not drop them to save space."
+        },
+        {
+          "label": "Reminder: this still needs your own read of the source",
+          "prompt": "Before I rely on this, I'm going to read the original document myself line by line. For now, list any section of the source document you were given that you did NOT reference anywhere in your summary, so I know what to check most closely."
+        },
+        {
+          "label": "Check for anything that sounds like an opinion",
+          "prompt": "Re-read your summary above and flag any sentence that could be read as characterizing the document (e.g. calling a clause standard, favorable, or enforceable) rather than purely describing what it says. Rewrite any such sentence to be purely descriptive."
+        }
+      ],
+      "walkthrough": "Dana is a second-year associate who just got handed a 22-page commercial lease and needs a first-pass summary before a 3pm call with a partner. She has never used Claude for document work before.\n\nShe checks with the firm's IT policy page first and confirms their Claude account is approved for client documents, so no redaction is needed today. She opens a new Claude chat, copies the lesson's prompt, and pastes it into the message box. Then she scrolls to the bottom of the pasted prompt, finds the bracketed placeholder text, deletes it, and pastes the full lease text she copied from the PDF in its place. She sends the message.\n\nClaude responds with the five-part structure: it names Harborview Properties LLC as landlord and Meridian Retail Co. as tenant, states the purpose as a five-year retail lease, lists eight key terms including a 3% annual rent escalation and a co-tenancy clause, notes the commencement and expiration dates, and flags under 'Not stated' that the document does not define what counts as an 'anchor tenant' for the co-tenancy clause - a gap Dana would have had to hunt for manually.\n\nDana sends the first follow-up from this lesson: asking Claude to list every factual claim and trace it to a specific clause. This takes about 20 seconds and returns a clause-by-clause map. She opens the actual PDF side by side and spot-checks five of the traced claims - all five match. She does not fully re-read all 22 pages, but she now knows exactly which two sections (rent escalation and co-tenancy) deserve her closest attention before the call, since those are the ones with real deal terms at stake.\n\nShe labels her notes 'DRAFT - pending attorney review' as instructed, and brings both the summary and her own verification notes to the partner call. Total time from opening the chat to walking into the meeting: about 12 minutes, versus the 45 minutes a full solo read would normally take - and she still read the two most important sections herself before trusting anything in the summary."
+    },
+    "law-b2-extract-parties-dates-and-obligations": {
+      "placeholders": [
+        {
+          "name": "PASTE DOCUMENT TEXT - REDACT CLIENT-IDENTIFYING DETAILS IF NEEDED",
+          "what": "Paste the full text of the contract or agreement you need parties, dates, and obligations extracted from. Copy directly from the source file rather than retyping so nothing gets altered. If the tool isn't cleared for confidential data, swap real names and account numbers for placeholders like [PARTY A] first.",
+          "examples": [
+            "MUTUAL NON-DISCLOSURE AGREEMENT\\nThis Agreement is entered into between Northwind Innovations, Inc. and Priya Raman...\\n[full text continues]",
+            "EMPLOYMENT AGREEMENT\\nThis Employment Agreement is made between [COMPANY] and [EMPLOYEE NAME] effective March 1, 2026...\\n[full text continues]",
+            "SUPPLY AGREEMENT\\nThis Agreement is between Cascade Manufacturing Corp. (\"Supplier\") and Redline Auto Parts LLC (\"Buyer\")...\\n[full text continues]"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Fast version for a deadline-only pull",
+          "whenToUse": "Use this when you urgently need just the dates and deadlines out of a document - for example before a docketing deadline - and don't need the full obligations table right now.",
+          "prompt": "You are extracting deadline information from a legal document for internal review. This is NOT legal advice and NOT a final work product - I will verify every date against the original text before it goes on any calendar or docket.\n\nRules:\n- Use ONLY the document text below. Do not infer or estimate a date that isn't explicitly stated.\n- For every date, quote the exact sentence it comes from and note the section.\n- If a deadline depends on a triggering event (e.g. '30 days after notice') rather than a fixed date, say so explicitly and describe the trigger.\n\nList every date, deadline, and time period mentioned in the document, in chronological order where possible, with the source clause for each.\n\nDocument text:\n[PASTE DOCUMENT TEXT]"
+        },
+        {
+          "label": "Multi-party agreement with more than two sides",
+          "whenToUse": "Use this for agreements involving three or more parties (e.g. a joint venture, a syndicated loan, or a multi-vendor contract) where the standard two-column table isn't enough.",
+          "prompt": "You are extracting structured facts from a multi-party legal document for internal review. This is NOT legal advice and NOT a final work product - I will verify every entry against the original text.\n\nRules:\n- Use ONLY the document text below. Do not infer roles or obligations not explicitly stated.\n- For every entry, note which clause or section it comes from.\n- If a fact isn't stated, write 'Not stated' - never assume a typical value.\n- Do not offer opinions on whether obligations are reasonable or standard.\n\nFirst list every party and their defined role. Then extract into a table:\n| Party | Owes Obligation To | Obligation | Deadline/Date | Source Clause |\n\nThen list separately any joint or several obligations that apply to multiple parties together.\n\nDocument text:\n[PASTE DOCUMENT TEXT]"
+        },
+        {
+          "label": "When you already have a firm intake form to fill",
+          "whenToUse": "Use this when your firm has a standard matter-intake or docketing form with specific fields, and you want the extraction mapped directly onto those fields instead of a generic table.",
+          "prompt": "You are extracting structured facts from a legal document to populate our firm's intake form. This is NOT legal advice and NOT a final work product - I will verify every field against the original text.\n\nRules:\n- Use ONLY the document text below. Do not infer values.\n- If a field isn't addressed in the document, write 'Not stated'.\n- Note the source clause for every field you fill in.\n\nOur intake form fields are: [LIST YOUR FIRM'S FIELDS, e.g. Client Name, Opposing Party, Matter Type, Effective Date, Termination Date, Governing Law, Key Deadlines, Renewal Terms].\n\nFill in each field using only the document below, noting the source clause, and marking anything not addressed as 'Not stated'.\n\nDocument text:\n[PASTE DOCUMENT TEXT]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Double-check dates before they go on a calendar",
+          "prompt": "Before I put any of these into our docketing system, re-list only the dates and deadlines from your table above, each with the exact quoted sentence from the document it came from, so I can verify each one against the original before it's calendared."
+        },
+        {
+          "label": "Sounds like it guessed a governing law or notice period? Check it",
+          "prompt": "For the governing law and any notice-period entries in your table, confirm each one is explicitly stated in the document text I gave you and quote the exact language. If either was not explicitly stated and you inferred a typical value, correct it to 'Not stated'."
+        },
+        {
+          "label": "Too much detail? Give me the one-line version per party",
+          "prompt": "Condense the table into one sentence per party summarizing their main obligation and the nearest deadline, keeping the source clause references."
+        },
+        {
+          "label": "Reminder: verify against the source before relying on this",
+          "prompt": "This table is a first-pass aid, not a verified record. List which rows you're least confident about - anything based on ambiguous or dense wording in the original - so I know where to focus my own read of the document first."
+        }
+      ],
+      "walkthrough": "Marcus is a paralegal at a small firm who just received a signed mutual NDA between a client and an independent contractor, and needs to log the key obligations and renewal deadline into the matter file before end of day.\n\nHe opens Claude, pastes in the lesson's extraction prompt, and replaces the bracketed placeholder at the bottom with the full NDA text he copied from the signed PDF. He sends it.\n\nClaude returns a table: Northwind Innovations, Inc. and Priya Raman are both listed with a mutual confidentiality obligation lasting three years from disclosure (Section 3), a termination date two years from the effective date unless renewed (Section 7), and governing law listed as Delaware (Section 9). Under 'Not stated,' it flags that the document does not specify a required notice period for renewal - something Marcus would have needed to hunt for manually and easily could have missed.\n\nBefore calendaring anything, Marcus sends the first follow-up: asking Claude to re-list only the dates with the exact quoted sentence each came from. He gets back two lines, each with a direct quote from Section 7. He opens the actual PDF, finds Section 7, and confirms the quote matches word for word.\n\nHe also runs the second follow-up on the governing-law entry, since he vaguely remembers NDAs sometimes default to a party's home state and wants to be sure Claude didn't assume that. Claude confirms Delaware is explicitly named in Section 9 and quotes the sentence.\n\nSatisfied both dates and the governing law are genuinely stated in the document rather than inferred, Marcus enters the termination date into the firm's calendaring system, notes the missing renewal-notice-period gap in the matter file for the supervising attorney to flag with the client if it matters, and saves the verified table. The whole process, including his manual spot-checks, takes about 15 minutes - well under half the time a fully manual read-and-log would have taken."
+    },
+    "law-b3-internal-matter-summaries": {
+      "placeholders": [
+        {
+          "name": "PASTE YOUR VERIFIED NOTES - USE MATTER NUMBER OR CODE NAME IF THIS TOOL ISN'T APPROVED FOR CONFIDENTIAL DATA",
+          "what": "This is where you paste your own already-checked notes about the matter - not raw documents. Think bullet points on parties, status, key dates, and open issues that you personally know are accurate. If your tool isn't cleared for confidential client data, use a matter number or code name instead of the client's real name.",
+          "examples": [
+            "Matter: Doe v. Speedy Logistics Inc. (Matter #2026-0417). Personal injury, rear-end collision, 3/14/2026. Plaintiff represented by our firm. Defendant insurer: Continental Mutual. Demand letter sent 5/2/2026, no response yet. Medical records received from two providers, third outstanding. Statute of limitations: 2 years from incident date.",
+            "Matter #2026-0512. Trademark opposition, our client is the applicant. Opposer filed notice 4/1/2026. Discovery period opens 6/1/2026. We've identified three prior-use witnesses to interview. No settlement discussions yet.",
+            "Matter: Estate of [CODE NAME - Estate 0392]. Probate filing submitted 2/10/2026. One contested claim from a creditor for $42,000, disputed by executor. Hearing on the claim set for 9/15/2026. Two of three beneficiaries have signed waivers."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Very short status-only version",
+          "whenToUse": "Use this when you just need a two-sentence status line for a weekly team status meeting, not a full memo.",
+          "prompt": "You are drafting a one-paragraph internal status line from notes I provide. This is an internal working document only, NOT legal advice, and NOT final until I review it.\n\nRules:\n- Use ONLY the facts in the notes below. Do not add outside facts or draw legal conclusions.\n- Keep it factual and neutral, 2-3 sentences maximum.\n- If next steps aren't in the notes, don't invent any - just describe current status.\n\nNotes:\n[PASTE YOUR VERIFIED NOTES]"
+        },
+        {
+          "label": "Handoff version for a colleague taking over the matter",
+          "whenToUse": "Use this when a colleague is picking up the matter cold (e.g. you're going on leave or reassigning it) and needs more procedural detail than a routine status memo, including where files and open tasks live.",
+          "prompt": "You are drafting an internal matter handoff memo from notes I provide, for a colleague who will take over this matter and has no prior context. This is an internal working document only, NOT legal advice, and NOT final until I review it.\n\nRules:\n- Use ONLY the facts in the notes below. Do not add outside facts, infer motivations, or draw legal conclusions.\n- If the notes leave a section thin or unclear, say so explicitly.\n- Keep tone factual and neutral.\n\nOrganize into this structure:\n1. Matter overview (1-2 sentences)\n2. Parties involved\n3. Procedural posture / current status\n4. Key facts (bulleted)\n5. Where to find key documents (only if stated in notes)\n6. Open issues / questions\n7. Immediate next steps and any upcoming deadlines (only if stated in notes - otherwise 'Not specified in notes')\n8. Who to contact with questions (only if stated in notes)\n\nNotes:\n[PASTE YOUR VERIFIED NOTES - USE MATTER NUMBER OR CODE NAME IF THIS TOOL ISN'T APPROVED FOR CONFIDENTIAL DATA]"
+        },
+        {
+          "label": "Litigation-specific version with procedural posture emphasis",
+          "whenToUse": "Use this for active litigation matters where the procedural stage (motions pending, discovery deadlines, upcoming hearings) is the most important thing a colleague needs to know at a glance.",
+          "prompt": "You are drafting an internal litigation status memo from notes I provide. This is an internal working document only, NOT legal advice, and NOT final until I review it.\n\nRules:\n- Use ONLY the facts in the notes below. Do not speculate about case strategy, likelihood of success, or opposing counsel's intent.\n- If the notes leave a section thin, say so explicitly.\n- Keep tone factual and neutral.\n\nOrganize into: 1. Case caption and court; 2. Procedural posture (what's pending, what's been filed/decided); 3. Key upcoming deadlines (only if stated); 4. Key facts; 5. Open issues; 6. Next steps (only if stated in notes - otherwise 'Not specified in notes').\n\nNotes:\n[PASTE YOUR VERIFIED NOTES]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check nothing drifted from your original notes",
+          "prompt": "Compare the memo above against my original notes sentence by sentence and flag anything that was rephrased in a way that could change its meaning, or any detail that appears in the memo but wasn't in my notes."
+        },
+        {
+          "label": "It padded a thin section - strip that out",
+          "prompt": "Re-read the memo above. Any section that sounds generic or padded rather than based on a specific fact from my notes, replace with 'Not specified in notes' instead."
+        },
+        {
+          "label": "Verification reminder before circulating",
+          "prompt": "Before I send this to a colleague, list every fact in the memo above and confirm each one traces directly to something I wrote in my notes - flag anything you cannot trace back so I can double-check it against my source materials first."
+        },
+        {
+          "label": "Make it shorter for a status meeting",
+          "prompt": "Condense this to 5 bullet points suitable for a 2-minute verbal status update, keeping the procedural posture and any stated next steps, and dropping background detail."
+        }
+      ],
+      "walkthrough": "Elena, a mid-level associate, is heading into a Friday status meeting and needs to hand off a clean summary of the Doe v. Speedy Logistics matter to a colleague covering for her while she's out next week.\n\nShe pulls up her running notes file for the matter, which she's been updating as she works: the incident date, that a demand letter went out on May 2nd with no response yet, that two of three providers' medical records are in, and the two-year statute of limitations. She opens Claude, pastes the lesson's prompt, and swaps in her notes where the placeholder was, replacing the client's real name with the matter number since her firm hasn't approved this particular tool tier for client names.\n\nClaude returns a one-page memo: a matter overview line describing it as a personal injury claim from a rear-end collision, a parties section naming the plaintiff, defendant, and insurer, a procedural posture noting the demand letter is pending response, key facts bulleting the incident date and records status, an open issues line flagging the one outstanding provider, and - because Elena's notes didn't mention next steps - the next-steps section reads 'Not specified in notes' rather than inventing something.\n\nElena runs the first follow-up, asking Claude to compare the memo against her original notes sentence by sentence. It comes back clean - nothing rephrased in a misleading way, no extra details added. She reads it once more herself against her notes file just to be sure, since this is going to a colleague who won't have her context to catch an error.\n\nShe adds her own line about next steps (following up with the outstanding provider and preparing a follow-up letter if no response by the following Friday), labels the memo 'Internal use - AI-assisted draft, attorney reviewed,' and sends it to her colleague along with a two-minute verbal handoff. From opening her notes file to sending the memo: about 10 minutes, and her colleague can pick up the file without a single question the following Monday."
+    },
+    "law-b4-draft-client-communications": {
+      "placeholders": [
+        {
+          "name": "type of communication, e.g. status update email",
+          "what": "State what kind of message this is - a status update, a document request, a scheduling note, an invoice cover note, etc. This tells the AI what tone and structure to use and prevents it from guessing whether the message should read as routine or urgent.",
+          "examples": [
+            "Status update email",
+            "Request for documents needed to proceed",
+            "Scheduling note to confirm a deposition date"
+          ]
+        },
+        {
+          "name": "audience, e.g. the client",
+          "what": "Say exactly who is receiving this message - the client directly, a client's in-house counsel, a co-counsel firm, or a specific named contact. This affects formality and how much background to include, since a client's general counsel needs less hand-holding than an individual client unfamiliar with legal process.",
+          "examples": [
+            "The client directly (individual, non-lawyer)",
+            "Client's in-house counsel (sophisticated legal audience)",
+            "A specific contact person at the client company, e.g. their CFO"
+          ]
+        },
+        {
+          "name": "LIST FACTS",
+          "what": "Bullet the specific, concrete facts you want included - dates, actions taken, what's pending. Do not include anything you want the AI to guess or infer; if it's not in this list, it should not appear in the draft. This is the single most important input in the whole prompt.",
+          "examples": [
+            "Sent counterproposal on rent escalation cap 6/10/2026. Landlord's counsel requested two more weeks to respond. No other updates.",
+            "Filed the motion to dismiss on 7/15/2026. Court has not yet set a hearing date. Opposing counsel has not yet responded.",
+            "Received signed settlement agreement from opposing party 8/1/2026. Awaiting client's countersignature before we can submit to the court for dismissal."
+          ]
+        },
+        {
+          "name": "STATE PURPOSE",
+          "what": "One sentence on why you're sending this message right now - to keep the client informed, to request something from them, to confirm a date. This keeps the draft focused instead of trying to cover everything at once.",
+          "examples": [
+            "Routine biweekly status update, no action needed from client",
+            "Requesting the client sign and return the enclosed document within 5 business days",
+            "Confirming the client is available for a deposition on the proposed date"
+          ]
+        },
+        {
+          "name": "e.g. warm but professional",
+          "what": "Describe the tone you want. Pick based on the relationship and the news being delivered - a long-time client getting routine good news can be warmer than a first communication about a delay or a difficult development.",
+          "examples": [
+            "Warm but professional - long-standing client, routine update",
+            "Direct and brief - busy executive client who prefers short emails",
+            "Formal and measured - sensitive update where precision matters more than warmth"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Document request instead of a status update",
+          "whenToUse": "Use this when you need the client to send you something specific (records, signatures, information) rather than just receiving an update.",
+          "prompt": "You are drafting a NON-FINAL first draft of a client communication requesting documents or information. This is not legal advice, and this draft must not be sent as-is - I will review, edit, and add my own professional judgment before sending it myself.\n\nRules:\n- Use ONLY the facts listed below. Do not invent reasons for the request beyond what I've stated.\n- Do not offer legal advice or characterize the matter's strength.\n- Where a sentence would require my judgment, insert [ATTORNEY TO ADD] rather than writing something plausible-sounding.\n- Keep tone professional and clear about exactly what's needed and by when.\n\nDraft a request to [AUDIENCE] asking for: [LIST WHAT YOU NEED, e.g. 'signed W-9, last three pay stubs, copy of the lease'].\nDeadline for response: [DATE OR TIMEFRAME]\nReason for the request (if you want it included): [STATE REASON OR 'do not include a reason']\nTone: [e.g. friendly but clear about the deadline]\n\nLabel the output 'DRAFT - NOT FOR SENDING' at the top."
+        },
+        {
+          "label": "Difficult news or delay - extra caution version",
+          "whenToUse": "Use this when the update involves bad news, a delay, or an unfavorable development, where tone and precision matter even more than usual and overpromising is a real risk.",
+          "prompt": "You are drafting a NON-FINAL first draft of a client communication delivering a difficult update (a delay, unfavorable development, or setback). This is not legal advice, and this draft must not be sent as-is - I will review, edit, and add my own professional judgment before sending it myself.\n\nRules:\n- Use ONLY the facts listed below. Do not invent reasons for the delay or setback that I haven't stated.\n- Do not offer legal advice, predict outcomes, or minimize/characterize the significance of the news - state it plainly and factually.\n- Do not add reassurance not grounded in a fact I gave you (e.g. do not write 'this is not a major concern' unless I told you that).\n- Where a sentence would require my legal judgment or advice, insert [ATTORNEY TO ADD ADVICE HERE].\n- Keep tone calm, direct, and respectful of the client's likely concern.\n\nDraft a [type of communication] to [audience] covering:\nFacts to include: [LIST FACTS]\nPurpose: [STATE PURPOSE]\n\nLabel the output 'DRAFT - NOT FOR SENDING' at the top."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check nothing overstates certainty or gives advice",
+          "prompt": "Re-read the draft above and flag any sentence that implies advice, predicts an outcome, or states something with more certainty than the facts I gave you support. List each one so I can review it before sending."
+        },
+        {
+          "label": "Verification reminder - do not send unedited",
+          "prompt": "Remind me: before this goes anywhere, I need to personally fill in every bracketed placeholder with my own judgment, confirm every fact matches my file, and remove the DRAFT label myself once it's ready. Do not attempt to fill in the placeholders yourself even if I ask you to draft a follow-up."
+        },
+        {
+          "label": "Too formal or too cold? Adjust the tone",
+          "prompt": "Rewrite this draft with a [warmer / more formal / more concise] tone without changing any of the underlying facts or adding anything I didn't state."
+        },
+        {
+          "label": "Shorten it for a client who reads on their phone",
+          "prompt": "Condense this to under 120 words while keeping every fact and the bracketed placeholder intact - this client reads email on their phone and skims long messages."
+        }
+      ],
+      "walkthrough": "Tom is an associate handling a commercial lease renewal for Meridian Retail Co., and the client hasn't heard from him in two weeks. He wants to send a quick, accurate status update before end of day but doesn't want to write it from scratch.\n\nHe opens Claude and pastes the lesson's prompt. He fills in the placeholders: type of communication as 'status update email,' audience as 'the client directly,' the facts as 'sent counterproposal on rent escalation cap 6/10/2026, landlord's counsel requested two more weeks to respond, no other updates,' the purpose as 'routine update, no action needed from client,' and tone as 'warm but professional.'\n\nClaude returns a draft labeled 'DRAFT - NOT FOR SENDING' at the top. It opens with a friendly line, states the counterproposal was sent June 10th and the landlord's counsel asked for two more weeks, notes that's a normal part of this stage of negotiation, and then leaves a bracketed placeholder: '[ATTORNEY TO ADD: any guidance on what this timeline means for the client's planning].' It closes by saying they'll follow up once they hear back.\n\nBefore doing anything else, Tom sends the first follow-up, asking Claude to flag anything that overstates certainty or implies advice. Claude flags one sentence describing the two-week extension as 'a normal part of this stage' and notes that's arguably a mild characterization Tom should confirm he's comfortable with. Tom decides it's fine - it's accurate and not really advice - but appreciates the flag.\n\nHe then personally writes the bracketed section himself: a sentence letting the client know this timeline doesn't affect their planned relocation date, based on his own read of the negotiation. He deletes the DRAFT label, reads the whole email once more against his case notes to confirm the dates are right, and sends it from his own email account under his own name. Total time: about 6 minutes, versus 15-20 minutes writing it from a blank page - and the only sentence carrying real judgment is the one he wrote himself."
+    },
+    "law-i1-document-review-checklists": {
+      "placeholders": [
+        {
+          "name": "e.g. commercial lease",
+          "what": "The specific type of document the checklist is for. Be as specific as possible - 'commercial lease' produces a more useful checklist than 'contract,' because the recurring issues differ by document type.",
+          "examples": [
+            "Commercial lease",
+            "Software licensing agreement (SaaS)",
+            "Employment agreement with non-compete provisions"
+          ]
+        },
+        {
+          "name": "e.g. tenant",
+          "what": "Whose side you're reviewing on behalf of. The issues that matter shift depending on which party you represent - a tenant-side reviewer cares about different risks than a landlord-side one.",
+          "examples": [
+            "Tenant",
+            "Buyer (in an asset purchase)",
+            "Licensor (in a software licensing deal)"
+          ]
+        },
+        {
+          "name": "STATE/COUNTRY",
+          "what": "The jurisdiction whose law governs the document or where the reviewing attorney practices. This determines which items get flagged for jurisdiction-specific verification rather than treated as universal.",
+          "examples": [
+            "California, USA",
+            "Ontario, Canada",
+            "England and Wales"
+          ]
+        },
+        {
+          "name": "PASTE OR WRITE 'NONE'",
+          "what": "If your firm already has a playbook or checklist for this document type, paste it here so the AI builds on it instead of generating something generic. If you don't have one yet, just type 'NONE' and the AI will generate a fresh starting checklist.",
+          "examples": [
+            "NONE",
+            "Existing playbook excerpt: 'Always check assignment clause requires written landlord consent; always check CAM cap language; flag any co-tenancy clause for partner review.'",
+            "Firm precedent checklist from 2024 SaaS deal review (pasted in full)"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Fast version for a one-off document type you rarely see",
+          "whenToUse": "Use this for a document type you review only occasionally and don't need a reusable, categorized checklist for - just want a quick sanity-check list before diving in.",
+          "prompt": "You are helping draft a quick first-pass review checklist for a document type I don't often review. This is a starting aid, NOT legal advice, and NOT a substitute for jurisdiction-specific research.\n\nRules:\n- Phrase items as questions to check, not conclusions.\n- Tag anything requiring current-law verification with [VERIFY CURRENT LAW].\n\nGive me 8-10 quick checklist questions for a first-pass review of: [DOCUMENT TYPE], on behalf of: [YOUR ROLE], jurisdiction: [STATE/COUNTRY]. No need for categories - just a flat, prioritized list, most important first."
+        },
+        {
+          "label": "Deal-specific checklist tied to known deal terms",
+          "whenToUse": "Use this when you already know some specifics about the deal (e.g. deal size, industry, known negotiation points) and want the checklist tailored to those specifics rather than generic to the document type.",
+          "prompt": "You are helping draft a first-pass document review checklist tailored to a specific deal. This is a starting aid for an experienced reviewer, NOT legal advice.\n\nRules:\n- Organize by category.\n- Tag jurisdiction-sensitive items with [VERIFY CURRENT LAW].\n- Phrase items as questions, not conclusions.\n- Build on the existing playbook below if provided.\n\nBuild a checklist for:\nDocument type: [e.g. commercial lease]\nReviewing on behalf of: [e.g. tenant]\nJurisdiction: [STATE/COUNTRY]\nDeal-specific context: [e.g. 'this is a $2M annual SaaS contract with a Fortune 500 buyer, known negotiation points are data ownership and liability cap']\nExisting playbook (if any): [PASTE OR WRITE 'NONE']\n\nFormat: category headers, each with 3-6 checklist questions, with the deal-specific context reflected in at least one category."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify jurisdiction-flagged items are actually the risky ones",
+          "prompt": "Explain why you tagged each [VERIFY CURRENT LAW] item specifically - what about it depends on current or local law rather than being a universal contract question? If any tag looks unnecessary, say so."
+        },
+        {
+          "label": "Reminder: this is a memory aid, not authority",
+          "prompt": "Restate clearly, in one sentence per category, what this checklist can and cannot tell me - specifically, confirm it cannot confirm current law, firm playbook alignment, or this specific document's actual answers, only prompt me to check them."
+        },
+        {
+          "label": "Too generic - make it reflect our firm's actual practice",
+          "prompt": "Here is a note on how our firm actually handles this document type: [DESCRIBE YOUR FIRM'S APPROACH]. Revise the checklist to reflect this instead of generic industry practice."
+        },
+        {
+          "label": "Add what a real review just caught that isn't here yet",
+          "prompt": "I just reviewed a real document with this checklist and found this issue that wasn't on the list: [DESCRIBE ISSUE]. Add a new checklist item for it in the right category, and tell me if it suggests a category is missing entirely."
+        }
+      ],
+      "walkthrough": "Priya is a mid-level associate at a boutique real estate firm who reviews commercial leases for tenants regularly but has never had a formal written checklist - she's relied on memory and whatever she learned from senior partners.\n\nShe opens Claude and pastes the lesson's prompt, filling in 'commercial lease' as the document type, 'tenant' as who she's reviewing for, 'California' as the jurisdiction, and 'NONE' for the existing playbook since her firm doesn't have one written down.\n\nClaude returns a categorized checklist: under Commercial Terms, questions about whether base rent and escalation are clearly stated and whether operating expense pass-throughs are capped; under Risk Allocation, whether indemnification runs one-way or mutually and whether insurance requirements match; under Compliance, a question tagged [VERIFY CURRENT LAW] about ADA/accessibility obligations and which party bears remediation cost; under Termination, what triggers default and what cure period applies.\n\nPriya runs the first follow-up, asking why the ADA item got the verify-current-law tag. Claude explains that accessibility requirements and cost allocation vary by state and change through regulation, so it can't confirm the current standard - exactly the flag she wants, since she wouldn't have thought to double check that herself.\n\nShe tests the checklist on a real lease she's reviewing. Going question by question, she finds one issue the checklist prompted her to check that she likely would have skimmed past: whether the co-tenancy clause defines 'anchor tenant,' which turns out to be undefined here - a real gap worth raising with the client.\n\nShe tells Claude about this finding, and it adds a new checklist item asking whether all defined terms referenced in remedy clauses are actually defined elsewhere in the lease. Priya saves the refined checklist as a firm resource, dated and labeled as a starting aid. Total time to build and test it against a real document: about 25 minutes, and she now has something her whole team can reuse."
+    },
+    "law-i2-compare-two-document-versions": {
+      "placeholders": [
+        {
+          "name": "PASTE VERSION 1",
+          "what": "The baseline version of the document - typically the one you sent, or the earlier draft. Paste the full text so the comparison has complete context, not just the sections you think changed.",
+          "examples": [
+            "SECTION 8. INDEMNIFICATION. Each party shall indemnify the other for direct damages arising from a breach of this Agreement, up to a cap of $500,000. [rest of document text]",
+            "[Full baseline NDA text as sent to counterparty on 5/1/2026]",
+            "[Full first-draft services agreement, version dated 6/15/2026]"
+          ]
+        },
+        {
+          "name": "PASTE VERSION 2",
+          "what": "The revised version - typically what the counterparty sent back with their changes, or your own later draft. Paste the full text of this version too, so the comparison isn't working from a fragment.",
+          "examples": [
+            "SECTION 8. INDEMNIFICATION. Each party shall indemnify the other for direct and consequential damages arising from a breach of this Agreement, up to a cap of $750,000. [rest of document text]",
+            "[Full revised NDA text returned by counterparty's counsel on 5/10/2026]",
+            "[Full second-draft services agreement, version dated 6/22/2026]"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Fast version for a single clause you're worried about",
+          "whenToUse": "Use this when you already suspect one specific clause changed and want a quick, targeted check rather than a full clause-by-clause comparison of the whole document.",
+          "prompt": "You are comparing one specific clause across two document versions. This is NOT a substitute for a formal redline review, and NOT legal advice.\n\nRules:\n- Compare only the text provided. Do not speculate about intent.\n- Quote both versions' language for the clause side by side.\n- Say clearly whether the meaning changed, and how, or whether it's purely a wording/formatting change.\n\nClause: [NAME THE CLAUSE, e.g. 'indemnification clause']\n\nVersion 1 language:\n[PASTE VERSION 1 CLAUSE TEXT]\n\nVersion 2 language:\n[PASTE VERSION 2 CLAUSE TEXT]"
+        },
+        {
+          "label": "Three or more versions to track over a long negotiation",
+          "whenToUse": "Use this when a document has gone through multiple rounds and you need to see how a specific term evolved across all of them, not just the two most recent versions.",
+          "prompt": "You are comparing multiple versions of a legal document across a negotiation to produce a screening summary of how it evolved. This is NOT a substitute for a formal redline review, and NOT legal advice.\n\nRules:\n- Compare only the text provided. Do not speculate about intent behind any change.\n- For each substantive difference across versions, show the language from each version side by side in the order provided.\n- Distinguish substantive from stylistic changes.\n- Flag anything uncertain as 'Uncertain - verify manually'.\n\nTrack changes to [CLAUSE OR SECTION NAME] across these versions, in chronological order:\n\nVersion 1 ([DATE/LABEL]):\n[PASTE TEXT]\n\nVersion 2 ([DATE/LABEL]):\n[PASTE TEXT]\n\nVersion 3 ([DATE/LABEL]):\n[PASTE TEXT]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify against actual track-changes before relying on this",
+          "prompt": "List every change you flagged as 'substantive' above in a simple checklist format so I can open our word processor's actual track-changes or redline view and confirm each one matches what you found."
+        },
+        {
+          "label": "Double-check nothing was missed due to formatting",
+          "prompt": "Re-examine the two versions specifically for any section where paragraph numbering, headers, or formatting differs between the two pasted texts, since that can cause a change to be missed or misaligned. Flag any section where you're not fully confident the comparison is complete."
+        },
+        {
+          "label": "Prioritize which changes to review first",
+          "prompt": "Rank the substantive changes you found by likely negotiation significance (financial terms and liability first, procedural/administrative last), so I know which to scrutinize before the rest."
+        },
+        {
+          "label": "Run it the other direction to cross-check",
+          "prompt": "Now redo the comparison with Version 2 as the baseline and Version 1 as the revision. Tell me if anything in this second pass differs from your first comparison - any discrepancy is a signal I need to check that section manually."
+        }
+      ],
+      "walkthrough": "Raj is a corporate associate negotiating a services agreement, and the counterparty's counsel just sent back a revised draft. He needs to know quickly what actually changed before his 4pm call, without re-reading all 18 pages line by line from memory of the original.\n\nHe opens Claude, pastes the lesson's comparison prompt, and pastes the full baseline version he sent under 'Version 1' and the counterparty's returned draft under 'Version 2.'\n\nClaude returns a clause-by-clause table. Most rows say 'stylistic' - punctuation and section renumbering. But Section 8, indemnification, shows a real change: Version 1 capped indemnification at $500,000 for direct damages only; Version 2 raises the cap to $750,000 and adds consequential damages. The table marks this 'substantive.' One row, related to a notice-address clause, is flagged 'Uncertain - verify manually' because the paragraph numbering shifted around it.\n\nRaj runs the first follow-up, asking Claude to list the substantive changes in checklist form. He opens his word processor's actual compare-documents feature and checks the indemnification clause against it - confirmed, matches exactly. He also checks the flagged 'uncertain' notice-address section manually and finds it's actually unchanged; the numbering shift was just a formatting artifact from a converted PDF, exactly the kind of thing the AI was right to flag rather than assert confidently either way.\n\nHe runs the third follow-up to rank the changes, confirming indemnification is the only one worth spending real negotiation time on. Going into the 4pm call, Raj tells the partner exactly what changed and why it matters - a higher cap and added consequential damages - without having spent 30+ minutes doing a manual line-by-line comparison himself. Total time: about 8 minutes, with the flagged uncertain item manually confirmed before he trusted the rest of the summary."
+    },
+    "law-i3-meeting-prep-questions-from-case-material": {
+      "placeholders": [
+        {
+          "name": "PASTE CASE MATERIAL - CONFIRM THIS TOOL IS APPROVED FOR PRIVILEGED/WORK-PRODUCT MATERIAL BEFORE PASTING",
+          "what": "Paste the case material you want to generate prep questions from - a timeline, your own notes, or a transcript excerpt. This is often privileged or attorney work product, so before pasting anything, confirm the specific AI tool and account tier you're using is approved by your firm for that sensitivity level.",
+          "examples": [
+            "Workplace dispute timeline: Employee complaint filed 3/1/2026. Manager meeting occurred 3/10/2026, no notes on outcome exist. Formal warning issued 4/2/2026, no stated reason referencing the complaint. Employee still employed as of today.",
+            "Witness interview notes: Witness states she saw the vehicle run the red light but was 'not totally sure' about the color of the light. States she was on her phone at the time. No mention of exact distance from the intersection.",
+            "Deposition prep notes: Client states the contract was signed 'sometime in early spring 2025' but the copy we have is dated April 30, 2025. Client also mentions a phone call with the other party that isn't referenced anywhere in the documents we have."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a short pre-call check-in",
+          "whenToUse": "Use this for a routine, low-stakes client check-in call where you just want 3-5 quick questions rather than a full grouped list.",
+          "prompt": "You are helping prepare a short list of open, fact-finding questions for a quick client check-in call, based on case material I provide. This is NOT legal advice and NOT a final agenda.\n\nRules:\n- Base every question strictly on gaps in the material below. Do not introduce assumptions.\n- Write neutral, open-ended questions only.\n- Do not suggest strategy or conclusions.\n\nGive me the 3-5 most important open questions from this material, each noting what prompted it.\n\nCase material:\n[PASTE CASE MATERIAL - CONFIRM THIS TOOL IS APPROVED FOR PRIVILEGED/WORK-PRODUCT MATERIAL BEFORE PASTING]"
+        },
+        {
+          "label": "Witness interview version with credibility-neutral framing",
+          "whenToUse": "Use this specifically before a witness interview (as opposed to a client meeting), where question neutrality and avoiding leading phrasing matters even more.",
+          "prompt": "You are helping prepare open, non-leading questions for an upcoming witness interview, based on case material I provide. This is NOT legal advice and NOT a final interview script - I will select and reorder the questions myself.\n\nRules:\n- Base every question strictly on gaps, ambiguities, or inconsistencies in the material below.\n- Write only neutral, open-ended questions (who/what/when/where/how). Do not write anything that assumes an answer or suggests what the witness should have seen/heard/done.\n- Do not comment on the witness's credibility or suggest what their answer 'probably' is.\n- Do not suggest legal theories or conclusions about liability.\n\nGroup questions by purpose: (a) filling a factual gap, (b) resolving an inconsistency, (c) confirming a detail already mentioned but not fully detailed. For each, note what in the material prompted it.\n\nCase material:\n[PASTE CASE MATERIAL - CONFIRM THIS TOOL IS APPROVED FOR PRIVILEGED/WORK-PRODUCT MATERIAL BEFORE PASTING]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check for any leading or assumption-laden question",
+          "prompt": "Re-read every question above and flag any that assumes a fact not stated in the material, or that could be read as leading rather than open-ended. Rewrite each flagged one to be strictly neutral."
+        },
+        {
+          "label": "Remove anything that strays into strategy or credibility",
+          "prompt": "Check the list above for any question or note that suggests legal strategy, a theory of the case, or a judgment about credibility or liability. Remove or rewrite anything that oversteps into that territory - this list should be fact-finding only."
+        },
+        {
+          "label": "Confidentiality reminder before this leaves the file",
+          "prompt": "Before I use this list in a meeting, confirm for me in one sentence: is any of the material I pasted the kind of thing that would typically be privileged or attorney work product, and did I confirm this tool is approved for that before I pasted it? If I haven't confirmed that, flag it now."
+        },
+        {
+          "label": "Too many questions - help me prioritize",
+          "prompt": "Rank these questions by how much they'd change my understanding of the case if answered, most important first, so I can select the top 5 for a time-limited meeting."
+        }
+      ],
+      "walkthrough": "Fatima is preparing for a client meeting about a workplace-dispute matter and wants to walk in with sharp questions rather than winging it from memory of the file.\n\nBefore pasting anything, she checks that her firm's Claude account is approved for attorney work product at the sensitivity level of her notes - it is, since it's the firm's enterprise-tier account. She opens Claude, pastes the lesson's prompt, and pastes in her timeline: the employee's complaint filed March 1st, a manager meeting on March 10th with no notes on what was discussed, and a formal warning issued April 2nd with no stated connection to the complaint.\n\nClaude returns three grouped questions. Under timeline gaps: what was discussed at the March 10th meeting, since no notes exist. Under inconsistency: whether the April 2nd warning relates to the March 1st complaint or a separate, unstated issue, noting the timing but not asserting a conclusion. Under clarification: who else was present at the March 10th meeting, since the notes only name the manager and employee.\n\nFatima runs the first follow-up, checking for leading language. Claude flags that its own inconsistency question, as phrased, could be read as implying retaliation, and rewrites it more neutrally: 'What was the stated reason for the April 2nd warning, and how does that relate, if at all, to the March 1st complaint?'\n\nShe also runs the confidentiality-reminder follow-up as a final gut-check, confirming this material is privileged and that she confirmed tool approval beforehand.\n\nGoing into the meeting, Fatima has five sharp, neutral questions instead of a vague sense that 'something about the timing seems off.' She asks about the March 10th meeting first, and the client's answer reveals a detail not in the original notes: the manager had verbally warned the employee before the complaint was filed. That answer reshapes how Fatima reads the case. Total prep time: 10 minutes, versus a much less focused re-read of the raw timeline."
+    },
+    "law-i4-organize-research-notes-with-notebooklm": {
+      "variations": [
+        {
+          "label": "Fast version for a single quick lookup",
+          "whenToUse": "Use this when you just need one quick answer from your uploaded sources rather than a full organized issue outline - for example, confirming what one case held on a narrow point.",
+          "prompt": "Using only the uploaded sources, answer the following and cite which specific source (by name) supports your answer: [YOUR RESEARCH QUESTION].\n\nIf the uploaded sources don't address this, say so explicitly rather than filling the gap with general knowledge. Remind me this answer is a research organization aid only - I need to verify the citation against the original case reporter or statute text before relying on it."
+        },
+        {
+          "label": "Building a full issue outline for a brief or memo",
+          "whenToUse": "Use this once you've uploaded a substantial set of sources for a matter and are ready to organize them into a structured outline to start drafting a memo or brief from.",
+          "prompt": "Using only the uploaded sources in this project's knowledge, generate a full organized issue outline for this matter. Structure it by legal issue, and under each issue, list the relevant sources (by name) and a one-line note on what each source says about that issue. Explicitly note any issue where the uploaded sources are thin or silent, rather than filling the gap with general legal knowledge.\n\nRemind me at the end: every citation in this outline is a starting point, not a verified authority - each one needs to be checked against the actual case reporter or official statute text before appearing in any filing, memo, or advice to a client."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify a citation before trusting it",
+          "prompt": "For the case or statute you just cited, tell me exactly what in the uploaded source supports the proposition you attributed to it, quoting the relevant language from the source. I'm going to pull the actual reporter or official text next to confirm it matches."
+        },
+        {
+          "label": "Check for anything answered from outside the uploaded sources",
+          "prompt": "Review your answer above and flag anything that might have come from general legal knowledge rather than strictly from the sources I uploaded to this notebook. I only want source-grounded content."
+        },
+        {
+          "label": "Reminder before this goes in a filing",
+          "prompt": "Before any part of this outline goes into a memo or filing, list every case name and statute section you cited so I can check off each one as independently verified against the primary source."
+        },
+        {
+          "label": "Find the gaps, not just the answers",
+          "prompt": "What part of my research question, if any, is NOT addressed by the currently uploaded sources? I want to know what additional research or sources I still need to find."
+        }
+      ],
+      "walkthrough": "Carlos is handling a wrongful-termination matter and has three case excerpts, one statute section, and his own issue notes he wants organized before he starts drafting a memo on the retaliation standard.\n\nHe confirms with his firm's tech policy that Claude Projects are approved for this level of research material (no privileged client-identifying details, just case law and his own analytical notes), then creates a new Project for the matter. He uploads each source separately to the project's knowledge - the three case excerpts labeled by case name, the statute section labeled by its citation, and his notes labeled with today's date - so each is traceable individually.\n\nHe starts a chat in the project and pastes the lesson's prompt with his research question: what standard applies to a retaliation claim under this statute, and what does each case say about it. Claude answers by citing the statute section for the legal standard itself, then walks through each of the three cases by name, explaining how each applied that standard - and flags that one sub-question, whether a specific affirmative defense applies, isn't addressed anywhere in the uploaded sources.\n\nCarlos runs the first follow-up on the case he's least familiar with, asking Claude to quote the exact language supporting what it attributed to that case. He then opens the actual case reporter through his firm's legal research subscription, finds the passage, and confirms it matches - the holding is accurately represented.\n\nHe also runs the gap-finding follow-up, which confirms the affirmative-defense question isn't covered by what he's uploaded, so he knows to research that separately rather than assuming the project already covers it.\n\nWith one citation independently verified and the gap clearly identified, Carlos starts drafting his memo using the project's outline as a starting structure, but plans to verify each remaining citation the same way before the memo goes to the supervising partner. Setting up the project and doing this first verification pass took about 20 minutes - well spent, since it caught exactly which claim needed a second, independent check before anyone relied on it.",
+      "placeholders": [
+        {
+          "name": "YOUR RESEARCH QUESTION",
+          "what": "The actual legal question you want answered strictly from the uploaded sources in this matter's Claude Project - be as specific as the question you'd ask a colleague, not a broad topic. A vague question produces a vague, harder-to-verify answer.",
+          "examples": [
+            "What standard applies to a retaliation claim under this statute, and what does each uploaded case say about it?",
+            "Does any uploaded case address whether the affirmative defense in Section 4 applies to a terminated-for-cause claim?",
+            "Summarize what my own notes say about the client's timeline of events, and flag anything the case excerpts contradict."
+          ]
+        }
+      ]
+    },
+    "law-a1-reusable-prompt-frameworks-for-document-analysis": {
+      "placeholders": [
+        {
+          "name": "e.g. first-pass commercial contract review",
+          "what": "Name the specific, recurring task this framework template is being built for. Pick something narrow and well-defined - a framework trying to cover every possible document task ends up too generic to enforce its guardrails consistently.",
+          "examples": [
+            "First-pass commercial contract review",
+            "Discovery document triage and privilege screening",
+            "New-matter intake summary from client-provided documents"
+          ]
+        },
+        {
+          "name": "e.g. junior associates, paralegals",
+          "what": "Who on the team will actually use this template day to day. This affects how much explanation the usage note needs - a template for paralegals may need more explicit guardrail language than one for senior associates who already understand the risks.",
+          "examples": [
+            "Junior associates (1st-2nd year)",
+            "Paralegals doing first-pass document intake",
+            "The whole litigation team, mixed experience levels"
+          ]
+        },
+        {
+          "name": "e.g. structured issue list, risk flags, summary",
+          "what": "What kind of output this template should always produce. Being specific here (a table vs. a memo vs. a checklist) keeps every use of the template consistent enough to compare outputs across different documents and different people using it.",
+          "examples": [
+            "Structured issue list with source-clause citations",
+            "Risk-flag table categorized by severity",
+            "One-page summary memo in fixed section order"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Framework for a client-facing output instead of internal review",
+          "whenToUse": "Use this when the recurring task produces something that eventually reaches a client, not just internal review - so the guardrails need to include client-communication safeguards, not just grounding rules.",
+          "prompt": "You are helping me design a reusable prompt framework/template for a recurring, client-facing legal document task, for use across my team. This is a meta-task: design the template itself, not a one-off analysis.\n\nContext:\nTask type: [e.g. drafting a client-facing summary of a document we're returning to them]\nWho will use it: [WHO]\nOutput needed each time: [OUTPUT TYPE]\nFixed guardrails that must appear in every use (do not weaken or remove these):\n1. Use only the supplied document text; no outside knowledge or inference.\n2. Mark unclear or missing information explicitly rather than guessing.\n3. Never state legal conclusions, enforceability opinions, predictions, or advice.\n4. Insert a bracketed placeholder for anywhere attorney judgment or advice is needed, rather than generating plausible-sounding advice.\n5. Label all output 'DRAFT - NOT FOR SENDING - attorney review required' and state it is not legal advice.\n6. Remind the user to confirm confidentiality/tool approval before pasting any client material.\n\nDesign a template with a reusable guardrails block, clear bracketed placeholders for the variable parts, and a one-line usage note for teammates on when this template applies and when it doesn't."
+        },
+        {
+          "label": "Lightweight version for a small team without a formal rollout process",
+          "whenToUse": "Use this for a small firm or small team that just wants a solid, guardrail-safe template without the full versioning/documentation apparatus of the main prompt.",
+          "prompt": "Help me build a simple, reusable prompt template for a recurring document task my small team does often: [TASK TYPE]. Keep it short - one guardrails paragraph covering: use only supplied text, flag gaps instead of guessing, never state legal conclusions, label output as a non-final draft. Then give me 3-4 bracketed placeholders for what changes each time. Keep the whole thing under 200 words so it's easy for anyone on the team to actually use."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Stress-test the guardrails on messier input",
+          "prompt": "Now apply this template to a deliberately messy or ambiguous example document I'll describe: [DESCRIBE A MESSY EXAMPLE]. Show me the output and confirm whether all five fixed guardrails still held, or if any weakened under ambiguous input."
+        },
+        {
+          "label": "Check the guardrail language wasn't diluted",
+          "prompt": "Compare the guardrails block in this template word for word against the 5 fixed items I specified. Confirm none were softened, reworded to be optional, or dropped, and flag any wording that could be read as weaker than the original requirement."
+        },
+        {
+          "label": "Make the usage note clearer for teammates",
+          "prompt": "Rewrite the usage note so a teammate who has never seen this template before understands, in one read, exactly when to use it and when NOT to use it - name at least one specific situation it's not designed for."
+        },
+        {
+          "label": "Add a version number and changelog stub",
+          "prompt": "Add a version header (start at v1.0) and a changelog section with one entry noting this is the initial version, dated today. Format it so future updates can add a new dated entry explaining what changed and why."
+        }
+      ],
+      "walkthrough": "Naomi is a senior associate who's noticed that different associates on her team paste wildly different prompts into Claude for first-pass contract reviews - some remember to add grounding rules, some don't, and the quality is inconsistent. She decides to build a shared template for the whole team.\n\nShe opens Claude and pastes the lesson's meta-prompt, filling in 'first-pass commercial contract review' as the task type, 'junior associates and paralegals' as who'll use it, and 'categorized issue list with source-clause citations' as the output. She includes the five fixed guardrails from the lesson prompt: grounding-only, flag unclear items, no legal conclusions, DRAFT labeling, and a confidentiality reminder.\n\nClaude returns a template: a natural-language guardrails paragraph weaving in all five fixed requirements, followed by clearly bracketed placeholders for [DOCUMENT TYPE], [JURISDICTION], [DESIRED OUTPUT STRUCTURE], and [DOCUMENT TEXT], plus a one-line usage note: 'For single contracts under 30 pages. Not designed for multi-document deal sets.'\n\nNaomi runs the second follow-up, comparing the guardrails block word for word against her original five items, and confirms nothing was softened - the no-legal-conclusions rule in particular is phrased just as firmly as she specified.\n\nShe then tests the template on three real past contracts her team has already reviewed manually, checking whether the guardrails hold up on messier, real-world input. On the second contract, an oddly formatted amendment clause, the output briefly drifts into calling a clause 'fairly standard' - a guardrail violation. She flags this to Claude directly and asks for the wording to be strengthened; the revised guardrails paragraph adds an explicit instruction never to use words like 'standard,' 'typical,' or 'reasonable' when describing a clause.\n\nSatisfied it holds up under a real stress test, Naomi adds a version header (v1.0) and a one-line changelog entry noting today's date and that this is the initial version. She stores it in the firm's shared prompt library with a review date set for six months out. Building, testing, and refining the whole framework took about 40 minutes - a one-time cost that now saves every associate on the team from re-deriving these guardrails from scratch."
+    },
+    "law-a2-verification-protocols-for-high-stakes-work": {
+      "variations": [
+        {
+          "label": "Lightweight version for a solo practitioner",
+          "whenToUse": "Use this when you're a solo practitioner or small-team lawyer without a formal review workflow, and need a simpler self-check protocol rather than a multi-person sign-off process.",
+          "prompt": "You are helping me design a simple self-verification checklist for my own AI-assisted legal work product before I rely on it, file it, or send it. This is a process document, not legal advice.\n\nCover these risk categories with one concrete self-check each: fabricated or misstated citations, unsupported factual claims, misstatement of a document's actual terms, and confidentiality exposure.\n\nFor each, give me a specific question I ask myself and a specific action I take (e.g. 'pull the actual case reporter and confirm the quote matches word for word') before I consider the item verified. Keep the whole checklist to one page I can keep open while I work."
+        },
+        {
+          "label": "Team protocol focused specifically on filings",
+          "whenToUse": "Use this when you want a protocol specifically scoped to anything going into a court filing, where the consequences of an error are most severe, rather than all AI-assisted work generally.",
+          "prompt": "You are helping me design a verification protocol specifically for AI-assisted content going into any court filing (motion, brief, or pleading) before it is filed. This protocol is a process document, not legal advice.\n\nBuild a checklist covering: (1) every case and statute citation independently confirmed against the primary source, with the specific propositions they're cited for checked against the actual holding; (2) every factual assertion traced to admissible evidence or the record, not just to an AI summary; (3) confirmation the filing does not rely on any AI-generated language the attorney has not personally reviewed word by word; (4) a named attorney who takes final sign-off responsibility before filing.\n\nFor each item specify the check, who performs it, and when. Provide a sign-off log template with columns: item checked, checked by, date, result, corrections made. Make clear that any unresolved item blocks filing - no exceptions."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Test it on a real citation right now",
+          "prompt": "Let's apply item 1 of this protocol right now to a real citation. I'll paste a citation from AI-assisted work product below - tell me exactly what I need to look up and confirm to independently verify it, step by step: [PASTE A CITATION]"
+        },
+        {
+          "label": "Make the sign-off log easier to actually use",
+          "prompt": "Turn the sign-off log template into a format I can literally copy into a shared spreadsheet or document right now, with example placeholder rows filled in so my team can see exactly what a completed entry should look like."
+        },
+        {
+          "label": "Check for any gap the protocol doesn't cover",
+          "prompt": "Review the protocol above and tell me honestly: is there any realistic AI-assisted work-product failure mode in legal practice that isn't covered by these 5 risk categories? If so, add a category for it."
+        },
+        {
+          "label": "Verification reminder for anything that fails a check",
+          "prompt": "Restate clearly: what exactly should happen the moment an item fails verification under this protocol - confirm it must be corrected or removed before anything moves forward, never just flagged and left in, and tell me how that gets recorded in the sign-off log."
+        }
+      ],
+      "walkthrough": "James is a senior associate whose firm has been using AI tools for months without any formal check on the output before it reaches a client or a filing - just an informal 'someone should probably check this' culture. After hearing about sanctions cases involving fabricated citations, he decides to build an actual protocol.\n\nHe opens Claude and pastes the lesson's prompt, listing the five risk categories: fabricated citations, unsupported factual claims, misstatement of document terms, confidentiality exposure, and non-final labeling.\n\nClaude returns a checklist with a concrete check for each: citations independently confirmed against the primary source before internal circulation and again before external use; factual claims traced back to the source or verified notes; document-term misstatements cross-checked against the original text; confidentiality confirmed against firm tool policy; and non-final labeling confirmed present before anything leaves the building. It also provides a sign-off log template with columns for item, checked by, date, result, and corrections.\n\nJames tests it immediately using the first follow-up, pasting in a citation from an AI-drafted memo in his queue - three cases and a statute supporting a motion he's about to file. Claude walks him through how to verify each: pull the official reporter citation, confirm the case name and year match, and read the actual holding to check it supports the specific proposition claimed.\n\nJames does this manually for all three cases. Two check out cleanly. The third is correctly formatted and the case is real, but the AI's description of the holding doesn't quite match the actual opinion - it overstated how directly the case supported his point. He corrects the memo before it goes near the motion, and logs the finding: 'Item: 3 case citations. Checked by: J. Alvarez. Result: 2 of 3 confirmed accurate; 1 holding description corrected.'\n\nHe rolls the protocol out to his team that week, with the sign-off log kept in a shared spreadsheet. Building and running the first real test took about 35 minutes - and it caught a real error before it reached a filing, which is exactly the point."
+    }
+  }
+}

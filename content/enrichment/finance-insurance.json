@@ -1,0 +1,745 @@
+{
+  "enrichment": {
+    "fin-b1-explain-variance-narrative": {
+      "placeholders": [
+        {
+          "name": "MATERIALITY THRESHOLD, e.g. $5,000 or 3%",
+          "what": "This sets the cutoff below which a variance won't be written about, so the narrative doesn't waste a reader's time on trivial differences. Use whatever threshold your team already applies for management reporting, expressed as a dollar amount, a percentage, or both. If you don't have a standing rule, pick a number that would make a controller sit up if it were missed.",
+          "examples": [
+            "$5,000 or 3%, whichever is lower",
+            "$10,000 absolute variance only",
+            "5% of budgeted line-item value, ignoring anything under $2,000"
+          ]
+        },
+        {
+          "name": "OWNER",
+          "what": "This is the person the reader should go ask when a variance has no explanation yet, usually the budget owner, department head, or the person who'd know the real cause. Naming a specific person, not just a title, makes the placeholder text useful as an actual action item rather than a vague note.",
+          "examples": [
+            "Sarah Chen, Marketing Director",
+            "the FP&A business partner for Operations",
+            "David Osei, Controller"
+          ]
+        },
+        {
+          "name": "PASTE TABLE: LINE ITEM | BUDGET | ACTUAL | VARIANCE $ | VARIANCE %",
+          "what": "This is your actual variance data, pulled straight from your reporting system or spreadsheet, one row per line item with the four columns listed. Keep it as plain text or a simple table; you don't need special formatting. Double-check the variance $ and % columns are calculated correctly before pasting, since the AI is told to treat these as ground truth, not to recompute them.",
+          "examples": [
+            "Marketing spend | $120,000 | $148,500 | $28,500 | 23.8% unfavorable\nTravel & entertainment | $35,000 | $31,200 | -$3,800 | -10.9% favorable\nSoftware licenses | $60,000 | $61,100 | $1,100 | 1.8% unfavorable",
+            "Salaries & wages | $410,000 | $398,750 | -$11,250 | -2.7% favorable\nProfessional fees | $22,000 | $39,400 | $17,400 | 79.1% unfavorable",
+            "Cost of goods sold | $780,000 | $825,300 | $45,300 | 5.8% unfavorable\nFreight & shipping | $54,000 | $47,900 | -$6,100 | -11.3% favorable\nUtilities | $18,000 | $18,650 | $650 | 3.6% unfavorable"
+          ]
+        },
+        {
+          "name": "PASTE ANY NOTES, OR WRITE \"none provided\"",
+          "what": "This is where you add whatever you already know about why a specific line item moved, such as a one-time cost or a timing shift. Only include a note for line items you can actually explain; for everything else, leave it out or write \"none provided\" so the AI doesn't guess a cause for you.",
+          "examples": [
+            "Marketing spend: accelerated a campaign originally planned for next quarter into this one.\nProfessional fees: one-time legal cost for a contract renegotiation, not expected to recur.",
+            "none provided",
+            "Cost of goods sold: raw material price increase from our main supplier effective this quarter, affects all product lines."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick internal Slack update instead of a formal report",
+          "whenToUse": "Use this when you just need a two- or three-line heads-up for a manager or team channel, not a polished management-report paragraph.",
+          "prompt": "You are helping a financial analyst write a short internal Slack/Teams message summarizing budget variances. Use ONLY the numbers and context I provide below — do not recalculate, round, or invent a cause.\n\nOnly mention variances at or above [MATERIALITY THRESHOLD]. Write no more than 4 sentences total, casual internal tone, plain numbers (no jargon). If a driver wasn't given, say \"cause TBD\" instead of guessing.\n\nVariance table:\n[PASTE TABLE: LINE ITEM | BUDGET | ACTUAL | VARIANCE $ | VARIANCE %]\n\nKnown context:\n[PASTE ANY NOTES, OR WRITE \"none provided\"]"
+        },
+        {
+          "label": "Board-level summary with less detail, more framing",
+          "whenToUse": "Use this when the audience is executives or board members who want the big picture in a few sentences, not a line-by-line breakdown.",
+          "prompt": "You are helping a financial analyst write a board-level variance summary. Use ONLY the numbers and context below — no recalculating, no invented drivers.\n\nWrite a maximum of 5 sentences: 1) overall picture (favorable/unfavorable net), 2) the single largest variance and its driver if known, 3) any variance without a known driver, flagged as needing follow-up with [OWNER], 4) one forward-looking sentence only if I've given you guidance context, otherwise omit it.\n\nOnly include line items at or above [MATERIALITY THRESHOLD].\n\nVariance table:\n[PASTE TABLE: LINE ITEM | BUDGET | ACTUAL | VARIANCE $ | VARIANCE %]\n\nKnown context:\n[PASTE ANY NOTES, OR WRITE \"none provided\"]"
+        },
+        {
+          "label": "Multiple periods side by side (trend narrative)",
+          "whenToUse": "Use this when you want to describe how a variance is trending across two or three periods, not just the current month, to show whether it's getting better or worse.",
+          "prompt": "You are helping a financial analyst describe a budget variance trend across multiple periods. Use ONLY the numbers I provide — do not recalculate or estimate any missing period.\n\nFor each line item at or above [MATERIALITY THRESHOLD] in the most recent period, describe the trend across the periods given (improving, worsening, or stable) using the exact figures for each period. If a period's data wasn't provided, say so rather than interpolating.\n\nVariance table by period:\n[PASTE TABLE WITH ONE ROW PER LINE ITEM PER PERIOD: PERIOD | LINE ITEM | BUDGET | ACTUAL | VARIANCE $ | VARIANCE %]\n\nKnown context:\n[PASTE ANY NOTES, OR WRITE \"none provided\"]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Double-check it didn't invent a driver",
+          "prompt": "Go back through the narrative and list every driver or cause you stated. For each one, confirm whether I actually gave you that explanation in my notes, or whether you inferred it. If you inferred any of them, rewrite that sentence to say the driver was not provided instead."
+        },
+        {
+          "label": "Re-verify the numbers against my table",
+          "prompt": "List every number you used in the narrative next to the exact number from my source table, line by line, so I can check them side by side. Do not change any figures yet — just show me the comparison."
+        },
+        {
+          "label": "Too long — tighten it",
+          "prompt": "Cut this to half the length. Keep every number and every stated driver exactly as they are — only trim sentence structure and remove redundant phrasing, not content."
+        },
+        {
+          "label": "Strip anything that could identify a client or deal",
+          "prompt": "Reread the narrative and flag any wording that could identify a specific client, account, deal, or person, even indirectly. Replace it with a generic internal budget category label instead."
+        }
+      ],
+      "walkthrough": "Maria is a financial analyst at a mid-size manufacturing company, and it's the third day of the monthly close. She has a spreadsheet with twelve budget-vs-actual line items and needs a narrative paragraph for the management pack by end of day.\n\nShe opens Claude and pastes the lesson's prompt. Before running it, she fills in the materiality threshold as \"$5,000 or 3%.\" She copies her variance table directly from Excel, line item, budget, actual, variance $, variance %, and pastes it as plain text under \"Variance table.\" For known context, she adds one line: \"Marketing spend: accelerated a campaign originally planned for next quarter.\" Everything else she leaves as \"none provided.\"\n\nClaude returns a narrative covering three material variances: marketing spend ($28,500 over budget, tied to the campaign timing), professional fees ($17,400 over, marked \"driver not provided — confirm with Sarah Chen\"), and cost of goods sold ($45,300 over, also flagged as needing confirmation), followed by a two-sentence summary noting the overall picture was mixed, driven by one known timing shift and two unexplained overages.\n\nMaria sends the follow-up asking it to list every number next to her source table. It matches. She independently recalculates the marketing variance percentage by hand and confirms 23.8% is correct. She sends the second follow-up to check for invented drivers, and nothing comes back flagged. The whole task, including her own verification, took about twelve minutes, versus the twenty-five minutes she used to spend writing this by hand every month."
+    },
+    "fin-b2-summarize-filings-for-briefing": {
+      "placeholders": [
+        {
+          "name": "PASTE FILING OR REPORT TEXT — PUBLIC SOURCE ONLY",
+          "what": "This is the actual excerpt from a public filing, earnings release, or broker note you're summarizing. Paste the relevant section(s) like MD&A, financial highlights, or guidance, not the entire document if it's long. Only use text from sources you're allowed to paste into a general AI tool; public SEC filings and press releases are typically fine, but paid vendor research or non-public data usually isn't.",
+          "examples": [
+            "Q3 2025 revenue was $482 million, up 6% year over year, driven primarily by higher unit volumes in the core segment. Gross margin was 41.2%, down from 42.8% in the prior-year quarter, reflecting higher input costs. Management raised full-year revenue guidance to a range of $1.95 billion to $2.0 billion, from a prior range of $1.9 billion to $1.95 billion.",
+            "Net cash provided by operating activities was $214 million for the nine months ended September 30, 2025, compared to $189 million in the prior-year period. The Company repurchased 2.1 million shares for $87 million during the quarter under its existing share repurchase authorization.",
+            "Total revenue for the quarter was $1.12 billion, a decrease of 3% compared to the same period last year, primarily due to softer demand in the industrial segment, partially offset by growth in the consumer segment. The Company recorded a one-time restructuring charge of $22 million related to the closure of two manufacturing facilities."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Comparing two quarters or two companies side by side",
+          "whenToUse": "Use this when the briefing needs to show change over time or a peer comparison, not just a single filing's numbers.",
+          "prompt": "Summarize and compare the following two filing excerpts for a pre-meeting briefing. This is internal use by a financial analyst, so precision matters more than length.\n\nRules:\n- Quote every number exactly as written in each source — no rounding, recalculating, or converting units.\n- For each number, note the source (A or B) and section it came from.\n- Build a short comparison covering revenue, margin, and any guidance, showing both figures side by side.\n- Do not state a cause or comparison unless it's explicitly written in the text; label any inference clearly.\n\nExcerpt A ([LABEL, e.g. \"Q3 2025\" or \"Company X\"]):\n[PASTE TEXT]\n\nExcerpt B ([LABEL, e.g. \"Q2 2025\" or \"Company Y\"]):\n[PASTE TEXT]"
+        },
+        {
+          "label": "Ultra-short version for a hallway briefing",
+          "whenToUse": "Use this when you have thirty seconds before walking into a meeting and need only the two or three numbers that matter, not the full five-section structure.",
+          "prompt": "Give me the 3 most important numbers from this filing excerpt for a briefing happening in 5 minutes, quoted exactly as written with their section noted. One sentence per number, no analysis, no inference. If guidance was raised, lowered, or maintained, state that in a fourth line.\n\nDocument excerpt:\n[PASTE FILING OR REPORT TEXT — PUBLIC SOURCE ONLY]"
+        },
+        {
+          "label": "Summarizing an earnings call transcript instead of a filing",
+          "whenToUse": "Use this when your source is a call transcript with Q&A, where you also need to separate prepared remarks from analyst questions.",
+          "prompt": "Summarize the following earnings call transcript excerpt for a pre-meeting briefing. This is internal use by a financial analyst, so precision matters more than length.\n\nRules:\n- Quote every number exactly as spoken/written — no rounding or recalculating.\n- Separate prepared management remarks from analyst Q&A responses.\n- Note the speaker's name and role for any notable quote.\n- Flag any answer that was evasive or didn't directly address the analyst's question.\n- Do not infer a cause or trend unless explicitly stated; label inferences clearly.\n\nTranscript excerpt:\n[PASTE TRANSCRIPT TEXT — PUBLIC SOURCE ONLY]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify every quoted number against the source",
+          "prompt": "List every number you cited in the summary, next to the exact sentence from my excerpt it came from, so I can check them one by one before I use this."
+        },
+        {
+          "label": "Check for unlabeled inference",
+          "prompt": "Reread your summary and identify anything that isn't a direct quote or paraphrase of something explicitly stated in my excerpt. Relabel anything you inferred as \"inference, not stated directly,\" or remove it if it isn't clearly supported."
+        },
+        {
+          "label": "Too much detail — cut to headline numbers only",
+          "prompt": "Cut this down to just the headline numbers section and the guidance section. Drop everything else. Keep the exact figures and section labels as they are."
+        },
+        {
+          "label": "Make sure nothing from a non-public source slipped in",
+          "prompt": "Confirm you only used information from the excerpt I pasted, and didn't add any outside knowledge about this company, its history, or its industry that I didn't give you directly."
+        }
+      ],
+      "walkthrough": "David covers industrial companies as a junior equity research analyst. His team has a 9am briefing before a company's earnings call, and he only got the press release twenty minutes ago.\n\nHe opens ChatGPT and copies the MD&A and financial highlights section from the public earnings release, about 400 words, leaving out the boilerplate legal language at the end. He pastes it under \"Document excerpt\" in the lesson's prompt and runs it.\n\nThe AI returns five sections: headline numbers (\"$482 million, up 6% YoY — Q3 highlights\"), change versus prior period, management's stated explanation (\"higher unit volumes in the core segment\" quoted directly), guidance (\"raised to $1.95-$2.0 billion\" quoted exactly), and open questions, noting the release doesn't explain what's driving the raised guidance itself.\n\nDavid sends the first follow-up, asking it to list every cited number next to the sentence it came from. He checks all five against the actual press release on his second monitor, and they match. He also runs the second follow-up to check for unlabeled inference, and the AI flags one sentence it had written slightly too confidently (\"suggesting continued demand strength\") and relabels it as an inference rather than a stated fact, which David then cuts entirely since it wasn't useful.\n\nHe pastes the final five-section summary into his notes app and reads it once more before the briefing. Total time from opening the release to walking into the meeting: about eight minutes, compared to the twenty-plus minutes it used to take him to read and condense the release manually under time pressure."
+    },
+    "fin-i1-analysis-framework-checklist": {
+      "placeholders": [
+        {
+          "name": "TYPE OF ANALYSIS, e.g. \"evaluating a mid-cap public company for a buy/hold/sell recommendation\"",
+          "what": "This describes, in general terms, the category of analysis you do repeatedly, not a specific company or deal. Think about what you'd write in an internal job description for this kind of work: what type of subject, and what kind of decision or output it leads to.",
+          "examples": [
+            "evaluating a mid-cap public company for a buy/hold/sell recommendation",
+            "reviewing a monthly departmental budget variance pack before it goes to the CFO",
+            "assessing a private company's financials for a potential loan covenant review"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Building a checklist for a due-diligence style review",
+          "whenToUse": "Use this when the recurring work is a structured due-diligence exercise (M&A, credit, vendor) rather than a recommendation memo.",
+          "prompt": "Help me build a reusable due-diligence checklist for [TYPE OF DILIGENCE, e.g. \"evaluating a target company's financials before an acquisition\"]. This is a generic template — do not reference any specific company, deal, or real figures.\n\nStructure it as:\n1. Categories to cover (e.g., quality of earnings, working capital trends, contingent liabilities, management assessment)\n2. Under each category, 3-5 specific questions a diligence reviewer should answer\n3. For each question, note whether it needs verified external/third-party data or can be reasoned from figures provided by the target\n4. A short section of red flags that should pause or escalate the diligence process\n\nKeep it general and reusable — do not fabricate example numbers."
+        },
+        {
+          "label": "Turning the checklist into a scoring rubric",
+          "whenToUse": "Use this after you already have a checklist and want to convert it into something that produces a consistent score or rating, not just a list of questions.",
+          "prompt": "Here is my existing analysis checklist:\n\n[PASTE YOUR CHECKLIST]\n\nConvert this into a simple scoring rubric I can apply consistently. For each category, define what a strong, neutral, and weak answer looks like, and suggest a simple point scale. Do not add new categories or fabricate example scores — only structure what I've given you into a scoring format."
+        },
+        {
+          "label": "Short version for a quick gut-check, not a full analysis",
+          "whenToUse": "Use this when you need a fast 5-minute sanity check before deciding whether something is worth a full analysis, not the complete framework.",
+          "prompt": "Give me a 5-question quick gut-check checklist for [TYPE OF ANALYSIS] — the minimum set of questions that would tell me whether this is worth a full analysis or not. Generic and reusable, no real company data, no fabricated numbers."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check nothing generic slipped past your firm's standards",
+          "prompt": "Go through this checklist item by item and flag anything that sounds like boilerplate industry advice rather than something a rigorous analyst would actually verify. I'll decide which of those to keep or cut."
+        },
+        {
+          "label": "Make sure no real data leaked in",
+          "prompt": "Confirm this checklist doesn't reference any specific company, ticker, deal, or real figure — it should be fully generic and reusable. Point out anything that isn't."
+        },
+        {
+          "label": "Convert to a fill-in template",
+          "prompt": "Turn this checklist into a fill-in-the-blank template with a labeled blank line under each question, so I can bring real (de-identified) figures to it each time without rebuilding the structure."
+        },
+        {
+          "label": "Trim it down to what you'll actually use",
+          "prompt": "This is too long to realistically use every time. Cut it to the 12-15 items that matter most, and move the rest to an optional \"deeper dive\" section at the end."
+        }
+      ],
+      "walkthrough": "Priya is a senior financial analyst who evaluates mid-cap companies for buy/hold/sell recommendations, usually two or three per month. She's noticed her analyses vary in depth depending on how rushed she is, and she wants a standard checklist to work from.\n\nShe opens Claude and fills in the placeholder with \"evaluating a mid-cap public company for a buy/hold/sell recommendation,\" then runs the prompt. Claude returns six categories: revenue quality, margin trends, balance sheet strength, capital allocation, competitive position, and key risks, each with four or five specific questions. Under revenue quality, one question reads: \"Is revenue growth driven by volume, price, or one-time items?\" marked as needing verified filings data. The checklist ends with a red-flags section listing things like a restated prior-period filing or an auditor going-concern note.\n\nPriya reads through it against her firm's actual methodology and notices two categories are missing anything about related-party transactions, which her compliance team specifically requires her to check. She sends the follow-up asking Claude to confirm nothing generic slipped past her firm's standards, then manually adds a related-party transactions category herself, since that's firm-specific and not something to hand to the AI.\n\nShe runs the \"convert to fill-in template\" follow-up next, turning the finished checklist into a document with blank lines under each question. She saves it as a Claude Project so she can bring de-identified figures to it for her next analysis without rebuilding the prompt.\n\nThe whole process took about eighteen minutes, and she now has a checklist she plans to refine every quarter instead of working from memory."
+    },
+    "fin-i2-sector-research-cited-sources": {
+      "placeholders": [
+        {
+          "name": "SECTOR OR SUB-SECTOR",
+          "what": "Name the specific sector or, better, sub-sector you're researching. The more precise this is, the more targeted and checkable Gemini Deep Research's sources will be. A narrow sub-sector beats a broad industry label every time.",
+          "examples": [
+            "analog semiconductors",
+            "regional grocery retail",
+            "commercial property & casualty insurance underwriting"
+          ]
+        },
+        {
+          "name": "REGION/MARKET",
+          "what": "This scopes the geography so the research doesn't blend data from markets with very different dynamics. Be as specific as your question requires, a country, a region, or \"global\" if that's genuinely what you need.",
+          "examples": [
+            "North America",
+            "European Union",
+            "United States, with a note on any material China exposure"
+          ]
+        },
+        {
+          "name": "e.g. the last 12 months",
+          "what": "This tells Gemini Deep Research how recent the sources should be, which matters a lot in fast-moving sectors where a two-year-old source can be actively misleading. Pick a window that matches how quickly your sector actually changes.",
+          "examples": [
+            "the last 12 months",
+            "the last 2 quarters",
+            "since the start of this fiscal year"
+          ]
+        },
+        {
+          "name": "YOUR SPECIFIC QUESTION, e.g. \"What are the main drivers of margin compression in this sector, and has anything material changed in the last two quarters?\"",
+          "what": "This is the actual, specific question you need answered, not a general topic. A vague question like \"tell me about this industry\" produces a generic overview; a specific, analytical question produces sourced, checkable claims you can actually use.",
+          "examples": [
+            "What are the main drivers of margin compression in this sector, and has anything material changed in the last two quarters?",
+            "Which regulatory changes proposed or enacted in the last year are expected to materially affect underwriting costs in this sector?",
+            "How has customer concentration risk in this sub-sector changed since the largest recent industry consolidation?"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick fact-check of a single claim",
+          "whenToUse": "Use this when you already have a specific claim (from a client, a colleague, or another report) and just need to verify whether it's true and sourced, not conduct broader research.",
+          "prompt": "I need to fact-check a specific claim with checkable citations, not general knowledge.\n\nClaim to verify: [PASTE THE EXACT CLAIM]\nSector/topic: [SECTOR OR SUB-SECTOR]\nTimeframe: [e.g. the last 12 months]\n\nRules:\n- Tell me whether this claim is supported, contradicted, or unclear based on available sources.\n- Prioritize regulatory filings, primary company disclosures, and industry-association data.\n- Cite the specific source and its publish date for whatever you find.\n- If sources disagree, show both positions with citations rather than picking one."
+        },
+        {
+          "label": "Building a running competitive landscape brief",
+          "whenToUse": "Use this when you're tracking several companies within a sector over time and want a structured, comparable output rather than a single research question.",
+          "prompt": "I need a competitive landscape brief with checkable citations, not general knowledge.\n\nSector/sub-sector: [SECTOR OR SUB-SECTOR]\nCompanies to cover: [LIST 3-5 COMPANY NAMES]\nGeography: [REGION/MARKET]\nTimeframe: prioritize sources from [e.g. the last 2 quarters]\n\nFor each company, give me: recent notable developments, any disclosed strategic shifts, and how their positioning compares to peers, each point cited to a specific, dated source. Prioritize regulatory filings and primary disclosures over aggregator content. If sources disagree on a company's position, show both."
+        },
+        {
+          "label": "Deep-dive follow-up in an existing session",
+          "whenToUse": "Use this after your first research question, in the same Gemini Deep Research session, to go one level deeper on something the first answer surfaced without restarting the research.",
+          "prompt": "Follow-up on the previous answer: go deeper on [THE SPECIFIC POINT FROM THE PRIOR ANSWER YOU WANT MORE ON]. Keep the same sourcing rules — regulatory filings and primary disclosures prioritized, disagreements shown explicitly, publish dates noted, and nothing stated without a specific citation."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Open and confirm every citation before using it",
+          "prompt": "List every citation you used, with its link, next to the exact claim it supports. I'm going to open each one myself to confirm it actually says what you claimed — flag any citation you're less confident actually supports its claim."
+        },
+        {
+          "label": "Separate synthesized answer from actual sources",
+          "prompt": "For each claim in your answer, tell me explicitly: is this a direct statement from one of your cited sources, or is it your own synthesis across multiple sources? I want to know which claims I can quote directly versus which are your interpretation."
+        },
+        {
+          "label": "Check for stale or mismatched dates",
+          "prompt": "Go through your answer again and flag any source that's older than my stated timeframe or where you're not certain of the publish date. I don't want to accidentally blend outdated data with current data."
+        },
+        {
+          "label": "Push past a generic answer",
+          "prompt": "This still reads more like a general overview than sourced research. Narrow it down: give me only claims you can attribute to a specific named source with a date, and drop anything you can't."
+        }
+      ],
+      "walkthrough": "Tom covers the semiconductor sector as part of a broader tech coverage list, and his director asked for a short note on margin trends before next week's sector review. He has a Google AI Pro subscription through work, which gives him full Gemini Deep Research access.\n\nHe opens Gemini, starts a Deep Research session, and fills in the lesson's prompt: sector \"analog semiconductors,\" geography \"North America,\" timeframe \"the last 2 quarters,\" and his specific question, \"What are the main drivers of margin compression in this sector, and has anything material changed in the last two quarters?\" He adds the source-prioritization and disagreement rules from the prompt, reviews the short research plan Gemini proposes, and lets it run.\n\nAbout fifteen minutes later, the report comes back: a short answer citing two company disclosures and one industry-association report, noting that input cost pressure and softer end-demand are cited by most sources as the main drivers, but flagging that one analyst source attributes more of the compression to pricing competition than the others do, shown as an explicit disagreement rather than blended into one answer.\n\nTom sends the first follow-up in the same session, asking Gemini to list every citation next to its claim. He opens all three links in new tabs. Two check out exactly as described; the third, an aggregator summary of an earnings call, turns out to paraphrase loosely rather than quote directly, so he decides not to use that specific figure and instead traces it back to the original transcript himself.\n\nHe compiles the two verified claims and their source links into his note. Including the wait for the report and the citation-checking, the whole task took about thirty minutes, well under the hour it used to take him to manually search and cross-reference sources for a similar note."
+    },
+    "fin-i3-investment-memo-drafting": {
+      "placeholders": [
+        {
+          "name": "LIST YOUR FIRM'S STANDARD SECTIONS, e.g. Thesis, Business Overview, Financial Summary, Valuation, Key Risks, Catalysts",
+          "what": "This lists the section headers your firm's investment memos are actually structured around, so the draft comes out in your house format instead of a generic one. Check a recent approved memo from your team if you're not sure of the exact list.",
+          "examples": [
+            "Thesis, Business Overview, Financial Summary, Valuation, Key Risks, Catalysts",
+            "Executive Summary, Investment Thesis, Company Overview, Financial Analysis, Risks & Mitigants, Recommendation",
+            "Summary, Market Opportunity, Financial Highlights, Competitive Position, Risks, Exit Considerations"
+          ]
+        },
+        {
+          "name": "PASTE YOUR OWN NOTES — THESIS, NUMBERS YOU'VE ALREADY CHECKED, SOURCES",
+          "what": "This is your own already-verified analysis: figures you've personally checked against source documents, your thesis in your own words, and where each number came from. This should never be raw, unredacted deal data; it's your cleared, summarized working notes, ready to be turned into memo prose.",
+          "examples": [
+            "Thesis: undervalued relative to peers given margin expansion trajectory. Q3 revenue $210M, gross margin 42% (verified against 10-Q filed Nov 2025). Management guided FY revenue to $850-870M (verified against Q3 earnings call transcript). No verified data yet on competitor market share — need to source before finalizing.",
+            "Thesis: refinancing risk overstated by market given strong free cash flow coverage. FCF of $34M against $28M in annual debt service (verified against latest 10-Q cash flow statement). Next major maturity is 2027, not 2026 as some coverage suggests (verified against debt schedule in filing footnotes).",
+            "Thesis: turnaround underway but not yet priced in. Same-store sales grew 3.2% last quarter, first positive quarter in seven (verified against press release). New CEO started 6 months ago with a cost-reduction mandate; no verified figures yet on realized savings."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Drafting just the Key Risks section on its own",
+          "whenToUse": "Use this when the rest of the memo is already written or reviewed and you specifically want a rigorous, standalone risks section, not a full draft.",
+          "prompt": "Help me draft only the Key Risks section of an investment memo, from my own verified notes below. Do not add, estimate, or infer any risk or figure that isn't in my notes — if you'd normally expect a risk category I haven't covered, ask me about it rather than filling it in yourself.\n\nMy verified notes and known risks:\n[PASTE YOUR OWN NOTES ON RISKS AND CAVEATS]\n\nAlso include a subsection titled \"What would change my mind\" that argues against the thesis using only the risks I've noted — do not soften them, and do not add hedging language that isn't mine."
+        },
+        {
+          "label": "Converting a memo draft into a one-page investment committee summary",
+          "whenToUse": "Use this after the full memo draft exists and you need a condensed one-page version for a committee that won't read the whole document.",
+          "prompt": "Condense the following investment memo draft into a one-page summary for an investment committee. Use ONLY what's in the draft below — do not add, estimate, or infer anything not already stated.\n\nKeep: the core thesis in 2-3 sentences, the 3 most material figures exactly as stated, the top 2 risks, and the recommendation. If the draft has any [VERIFY] placeholders remaining, keep them visible in the summary rather than removing them.\n\nFull memo draft:\n[PASTE YOUR FULL MEMO DRAFT]"
+        },
+        {
+          "label": "Starting from a completely blank thesis, not existing notes",
+          "whenToUse": "Use this early in your process, before you have full notes, just to structure your thinking into the categories you'll need to go verify, not to generate a draft yet.",
+          "prompt": "I'm starting an investment analysis and don't have verified figures yet. Based on my rough thesis below, give me a list of the specific figures and facts I'll need to verify before I can draft a real memo, organized by memo section. Do not estimate or suggest any numbers yourself; just tell me what I need to go find and verify.\n\nMemo sections: [LIST YOUR FIRM'S STANDARD SECTIONS]\nRough thesis: [YOUR INITIAL, UNVERIFIED THESIS IN A FEW SENTENCES]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Resolve every [VERIFY] placeholder",
+          "prompt": "List every [VERIFY] placeholder you inserted, in order, with the exact sentence it appears in. I'll go confirm each one and paste back the real figure or tell you to remove the claim."
+        },
+        {
+          "label": "Check every number against my notes exactly",
+          "prompt": "Go through the draft and list every number you used, next to the exact figure from my notes it should match. Flag any that don't match exactly, including rounding differences."
+        },
+        {
+          "label": "Make sure the risks section isn't pulling punches",
+          "prompt": "Reread the Key Risks and \"what would change my mind\" section. Tell me if any risk sounds softened, hedged, or minimized compared to how I described it in my notes, and rewrite it to match my actual language."
+        },
+        {
+          "label": "Confirm no unverified deal data got used",
+          "prompt": "Confirm every figure and fact in this draft came only from the notes I pasted, and that you didn't add outside knowledge about this company, its peers, or the industry that I didn't provide."
+        }
+      ],
+      "walkthrough": "Elena is a research analyst building the case for a new position in a mid-cap industrials company. She's already spent two days verifying figures against the company's 10-Q and the latest earnings call transcript, and now needs to turn her notes into a memo draft before her Friday investment committee meeting.\n\nShe opens Claude and fills in her firm's standard sections, Thesis, Business Overview, Financial Summary, Valuation, Key Risks, Catalysts, and pastes her own verified notes: revenue and margin figures with the specific filing she checked them against, management's guidance range, and a note that she has no verified data yet on the company's competitive market share.\n\nClaude drafts each section using her exact figures, and where the Business Overview would normally include a market-share statistic, it inserts \"[VERIFY: competitor market share data]\" instead of guessing. The Key Risks section, built from her own caveats, includes a subsection called \"Key risks and what would change my mind,\" arguing that if the guided revenue range isn't hit next quarter, the margin-expansion thesis weakens significantly.\n\nElena runs the first follow-up, asking Claude to list every [VERIFY] placeholder. There are two: the market-share figure, and a reference to a competitor's pricing strategy she hadn't actually confirmed. She spends twenty minutes finding a verified market-share figure from a public industry report, updates the draft herself, and removes the unverified competitor claim entirely rather than guessing at it.\n\nShe runs the number-matching follow-up next and confirms every figure ties to her notes exactly. The full draft, including her verification work, took about fifty minutes, compared to the two-plus hours she used to spend writing memo prose from scratch each time."
+    },
+    "fin-a1-monthly-reporting-workflow": {
+      "placeholders": [
+        {
+          "name": "LIST YOUR CURRENT STEPS, however informal",
+          "what": "This is your actual current monthly reporting process, written exactly as it happens today, messy parts included, like a manual reconciliation nobody wrote down or a step you always forget until someone chases you. Don't clean it up first; the AI's job is to organize it, and it can't do that with an idealized version that doesn't match reality.",
+          "examples": [
+            "1. Pull GL export from the accounting system on the 2nd business day. 2. Build variance table in Excel comparing budget to actual by department. 3. Email department heads for explanations on anything over $10k. 4. Write narrative summary once explanations come back (sometimes waiting days). 5. Send to controller for review. 6. Format into the board deck template. 7. Controller does final sign-off. 8. Distribute to leadership team.",
+            "1. Finance ops pulls raw transaction data into a shared spreadsheet. 2. I reconcile it against the prior month's closing balances, usually finding at least one discrepancy I have to chase down. 3. I build the variance report by hand in Excel. 4. I write a one-page summary for the CFO. 5. CFO reviews and usually sends back edits. 6. I revise and send final version to the exec team, no formal sign-off step currently.",
+            "1. Download the trial balance. 2. Manually tie it to last month's closing figures in a separate tracking sheet. 3. Draft variance commentary in Word based on what I remember from department conversations that month. 4. Circulate draft to three department heads for comments, informally, over email or Slack. 5. Incorporate their edits. 6. Send final PDF to the CEO with no additional review step."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Focused only on the sign-off and distribution stage",
+          "whenToUse": "Use this when the drafting steps are already solid but the review, sign-off, and distribution part of your process is the messy, undocumented piece.",
+          "prompt": "Help me document just the review, sign-off, and distribution stage of my monthly reporting process, not the earlier drafting steps. Here's how it currently happens:\n\n[LIST YOUR CURRENT SIGN-OFF AND DISTRIBUTION STEPS, however informal]\n\nPlease: 1) organize into a clean numbered sequence with a clear owner for each step, 2) note exactly what gets checked at each review point and by whom, 3) flag any step where sign-off currently happens informally (verbal, Slack message) that should have a documented checkpoint instead, 4) write this as a short section I can append to the rest of my SOP."
+        },
+        {
+          "label": "Building the SOP for a new team member, not yourself",
+          "whenToUse": "Use this when the goal is specifically onboarding documentation for someone who has never done monthly reporting at your company before, not a reference for yourself.",
+          "prompt": "Help me turn my monthly reporting process into onboarding documentation for a new analyst who has never done this before at our company. Here's the process as it happens today:\n\n[LIST YOUR CURRENT STEPS, however informal]\n\nPlease: 1) reorganize into a numbered workflow with a clear input and output for each step, written assuming zero prior context about our systems or terminology, 2) define any internal acronym or system name the first time it's used, 3) mark which steps are safe to AI-assist versus must stay manual, with a one-sentence reason for each, 4) include a short 'who to ask if you're stuck' note per step. Do not remove any manual verification step I've listed."
+        },
+        {
+          "label": "Auditing an existing SOP against what actually happened last cycle",
+          "whenToUse": "Use this after you've already run the workflow once, to compare what the SOP says against what actually happened, so you can revise it based on reality.",
+          "prompt": "Here is my current SOP for monthly reporting:\n\n[PASTE YOUR EXISTING SOP]\n\nAnd here is what actually happened during last month's reporting cycle, including anywhere it deviated from the SOP or took longer than expected:\n\n[DESCRIBE WHAT ACTUALLY HAPPENED, INCLUDING DEVIATIONS OR DELAYS]\n\nCompare the two and tell me: which steps in the SOP didn't match reality, which verification checkpoints got skipped or rushed, and what you'd revise. Do not remove any manual verification step, only flag mismatches and suggest revisions."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Double-check nothing manual got reclassified as AI-safe",
+          "prompt": "Go through the workflow again and confirm every step involving source-system data extraction, figure verification, or final sign-off is still marked as manual. Flag anything that got reclassified as AI-assisted that shouldn't have been."
+        },
+        {
+          "label": "Make the checkpoints more specific",
+          "prompt": "For each verification checkpoint, tell me exactly what gets checked, against what source, and by whom — right now some of these are too vague to actually follow under deadline pressure. Rewrite each one to be a specific, checkable action."
+        },
+        {
+          "label": "Shorten the SOP to one page",
+          "prompt": "This is longer than one page. Condense it while keeping every step, owner, and verification checkpoint — cut only redundant explanation, not substance."
+        },
+        {
+          "label": "Confirm the confidentiality guidance is concrete enough",
+          "prompt": "Reread the SOP's guidance on where confidential data must never be pasted into a general AI tool. Make it more specific to my actual systems and data types, not a generic warning — name the specific data categories (client names, account numbers, unreleased figures) that must stay out."
+        }
+      ],
+      "walkthrough": "Raj is a financial analyst who has been doing monthly reporting the same informal way for two years, mostly from memory, with a few sticky notes. His manager asked him to document the process before he goes on leave next quarter, since right now only Raj knows how it actually works end to end.\n\nHe opens ChatGPT and writes out his real process, unpolished, exactly as it happens: pulling the GL export, building the variance table, emailing department heads for explanations (which sometimes takes days to come back), writing the narrative, sending to the controller, formatting into the board deck, controller sign-off, then distribution. He pastes this as the placeholder text and runs the lesson's prompt.\n\nThe AI returns a cleaned, numbered eight-step workflow. It marks GL data extraction and controller sign-off as manual, and marks the variance narrative drafting and board-deck formatting as AI-assist steps, each with a verification checkpoint: recalculate every material variance before the narrative moves forward, and re-check all figures against the signed-off table before formatting. It drafts a one-page SOP with named checkpoints and a note about never pasting client-identifying data into a general AI tool.\n\nRaj sends the follow-up asking it to make the checkpoints more specific, since the first draft just said 'verify figures' without saying against what. The revised version names the trial balance as the specific source to check against.\n\nHe runs the actual workflow against this SOP during the next close, timing each step, and finds the department-head email step takes longer than expected. He updates the SOP accordingly. Total time to build and test it: about ninety minutes across the cycle, for documentation that used to exist only in his head."
+    },
+    "ins-b1-explain-policy-plain-language": {
+      "placeholders": [
+        {
+          "name": "PASTE POLICY SECTION — SPECIMEN/DE-IDENTIFIED",
+          "what": "This is the actual policy wording you need explained: coverage, exclusions, limits, or conditions. Use specimen or generic product wording for practice, or de-identified real policy language with all client name, policy number, and address details removed. Never paste a real client's full policy with identifying details attached.",
+          "examples": [
+            "SECTION II - EXCLUSIONS: This policy does not cover loss caused by water damage that occurs gradually over a period of time, including but not limited to seepage, leakage, or continuous or repeated seepage of water. This policy does cover sudden and accidental discharge of water from a plumbing system.",
+            "COVERAGE C - PERSONAL PROPERTY: We cover personal property owned or used by an insured while it is anywhere in the world, up to the limit shown on the declarations page, subject to special limits for certain categories including jewelry ($1,500), firearms ($2,500), and business property ($2,500).",
+            "CONDITIONS: The insured must notify the Company of any loss within 60 days of discovery. Failure to provide timely notice may result in denial of the claim unless the insured can demonstrate the delay was reasonable and did not prejudice the Company's ability to investigate."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Explaining just one confusing clause, not the whole section",
+          "whenToUse": "Use this when a client is stuck on one specific sentence or term, not the full policy section, for example, they keep asking what \"actual cash value\" actually means for their situation.",
+          "prompt": "Explain this single policy clause in plain, everyday English for a client with no insurance background. Use ONLY what is written below — do not add or infer anything not explicitly stated.\n\nBe specific about: what it means in practice, any condition that must be met, and whether the wording is ambiguous. If the term is a defined term used elsewhere in policies generally (like \"actual cash value\"), explain it based only on how it's defined or used in this excerpt, not general industry knowledge, and say so if it isn't defined here at all.\n\nClause:\n[PASTE THE SPECIFIC CLAUSE — SPECIMEN/DE-IDENTIFIED]"
+        },
+        {
+          "label": "Preparing a written FAQ instead of talking points",
+          "whenToUse": "Use this when you want a short client-facing FAQ document to send after a call, not just talking points for the conversation itself.",
+          "prompt": "Turn the following policy language into a short client-facing FAQ, written in plain English for someone with no insurance background. Use ONLY what is written in the text — do not add, generalize, or infer anything not explicitly stated.\n\nFormat as 4-6 question-and-answer pairs covering what's covered, what's excluded, and any conditions. Keep exclusions and limits just as prominent as coverage, do not soften or bury them. Flag any ambiguous wording explicitly rather than resolving it. Add a closing line noting that the actual policy document governs and this FAQ is a plain-language summary only.\n\nPolicy language:\n[PASTE POLICY SECTION — SPECIMEN/DE-IDENTIFIED]"
+        },
+        {
+          "label": "Comparing plain-language explanation to what you'd say out loud",
+          "whenToUse": "Use this to stress-test your own verbal explanation habits — you give the AI your usual spoken explanation and ask it to check it against the actual policy text for accuracy.",
+          "prompt": "Here is the actual policy language, and below it, roughly how I usually explain it to clients out loud. Check whether my verbal explanation is accurate to the text, and flag anything I say that oversimplifies, omits an exclusion, or overstates coverage.\n\nPolicy language:\n[PASTE POLICY SECTION — SPECIMEN/DE-IDENTIFIED]\n\nHow I usually explain it out loud:\n[PASTE YOUR TYPICAL VERBAL EXPLANATION]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check exclusions weren't softened",
+          "prompt": "Reread your explanation and compare the exclusions section against the source wording word for word. Tell me if anything was softened, simplified in a way that changes the meaning, or made to sound less significant than the actual policy language."
+        },
+        {
+          "label": "Flag anything still ambiguous",
+          "prompt": "Go back through the source wording one more time and tell me if there's any term or condition that could reasonably be read more than one way, even if you didn't flag it the first time. I'd rather over-flag than under-flag ambiguity."
+        },
+        {
+          "label": "Make it sound less like a document, more like a conversation",
+          "prompt": "Rewrite this so it sounds like something I'd actually say out loud to a client sitting across from me, not something read from a page. Keep every fact, exclusion, and flagged ambiguity exactly the same — only change how it sounds."
+        },
+        {
+          "label": "Confirm no client-identifying details are present",
+          "prompt": "Check this explanation and the policy text I gave you for any name, policy number, address, or other identifying detail, and tell me if anything needs to be removed before I use this."
+        }
+      ],
+      "walkthrough": "Carla is an insurance agent preparing for a call with a new homeowner client who has questions about water damage coverage, a common source of confusion and complaints in her experience. She wants to explain the actual policy language clearly instead of relying on her memory of how it usually works.\n\nShe opens the specimen homeowners policy wording her agency uses for training, since this particular client's real policy isn't needed for practice. She copies Section II, the exclusions clause distinguishing sudden water damage from gradual leaks, and pastes it into Claude using the lesson's prompt.\n\nClaude returns a plain-language explanation: a burst pipe or similar sudden event is covered, but damage from a slow, ongoing leak is not. It flags that the phrase \"sudden and accidental\" isn't further defined in this excerpt and could be read narrowly (a single instant) or more broadly (a short period), and lists two likely client questions, including how the insurer would determine whether damage was sudden or gradual.\n\nCarla runs the follow-up asking whether any exclusion got softened, comparing the explanation against the source line by line. Nothing comes back flagged, which she confirms herself by rereading both side by side. She then runs the \"sound like a conversation\" follow-up so the explanation reads naturally rather than like a rewritten legal clause.\n\nShe uses this as her talking points for the actual call the next day, but doesn't send the AI's text to the client directly, she references the real policy document when the client asks to see it in writing. The whole preparation took about ten minutes, and she saved this specific explanation to reuse for other clients with the same policy form."
+    },
+    "ins-b2-client-followups-renewal-reminders": {
+      "placeholders": [
+        {
+          "name": "MESSAGE TYPE: renewal reminder / missing-document follow-up / post-quote check-in / lapse warning",
+          "what": "This tells the AI which of the four common message types you're drafting, since each has a different tone and urgency. Pick the one that matches your actual situation, a lapse warning needs more urgency than a routine post-quote check-in.",
+          "examples": [
+            "renewal reminder",
+            "missing-document follow-up",
+            "lapse warning"
+          ]
+        },
+        {
+          "name": "POLICY TYPE",
+          "what": "The specific type of policy this message is about, in plain terms a client would recognize, not an internal product code. This helps the message sound specific rather than generic.",
+          "examples": [
+            "homeowners insurance policy",
+            "auto insurance policy",
+            "small business liability policy"
+          ]
+        },
+        {
+          "name": "DATE",
+          "what": "The exact renewal date, deadline, or expiration date from the client's actual record, this must come from your system of record, never estimated or assumed. Use the format you'd actually write it in a message (month, day, year).",
+          "examples": [
+            "September 15, 2026",
+            "October 1, 2026",
+            "November 30, 2026"
+          ]
+        },
+        {
+          "name": "CHANGES OR \"none\"",
+          "what": "Anything that's different about the client's coverage compared to their last term, a new endorsement, a changed limit, an added driver. If nothing has changed, write \"none\" so the AI doesn't invent a change that isn't real.",
+          "examples": [
+            "added a home-based business endorsement at the client's request last spring",
+            "none",
+            "vehicle on the policy was updated from a 2019 sedan to a 2024 SUV"
+          ]
+        },
+        {
+          "name": "AMOUNT OR \"unchanged\"",
+          "what": "The exact premium change, if any, in dollars, never approximated. If the premium is staying the same, write \"unchanged\" rather than letting the AI guess or round a figure.",
+          "examples": [
+            "increased by $84 annually",
+            "unchanged",
+            "decreased by $22 due to a new safe-driver discount"
+          ]
+        },
+        {
+          "name": "ACTION",
+          "what": "The single specific thing you need the client to actually do next, sign a document, confirm information, make a payment, call you back. Keep it to one concrete action, since the prompt is designed to produce a message with only one call-to-action.",
+          "examples": [
+            "confirm their current mailing address is still accurate",
+            "upload their updated vehicle registration to the client portal",
+            "call the office to discuss the premium change before the renewal date"
+          ]
+        },
+        {
+          "name": "CLIENT NAME",
+          "what": "This is a placeholder token, not something you fill in yourself. Leave it as [CLIENT NAME] in the prompt so the AI generates a template with the client's name left blank for you to personalize before sending, rather than you having to paste an actual client name into the AI tool.",
+          "examples": [
+            "[CLIENT NAME] left as-is, filled in manually after the draft is generated",
+            "[CLIENT NAME] replaced with the client's first name only when personalizing the final message before sending",
+            "[CLIENT NAME] kept as a placeholder if the template will be reused across multiple clients via a mail-merge or CRM field"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Short SMS/text version instead of email",
+          "whenToUse": "Use this when your agency communicates by text message for time-sensitive reminders, where you need something under 300 characters instead of a full email.",
+          "prompt": "Draft a text message (SMS), under 300 characters, for a [MESSAGE TYPE] to a client. Use ONLY the facts below — do not invent or approximate any date, amount, or detail.\n\nFacts:\n- Policy type: [POLICY TYPE]\n- Renewal/deadline date: [DATE]\n- Premium change, if any: [AMOUNT OR \"unchanged\"]\n- The one action needed: [ACTION]\n\nOne clear call-to-action, no more. Friendly but brief tone appropriate for a text message. Use [CLIENT NAME] as a placeholder, do not use a real name."
+        },
+        {
+          "label": "Sequence of 3 reminders building urgency toward a lapse",
+          "whenToUse": "Use this when a client hasn't responded and you need an escalating sequence, first a routine reminder, then a follow-up, then a more urgent lapse warning, instead of a single message.",
+          "prompt": "Draft a 3-message sequence for a client approaching a coverage lapse, to be sent roughly a week apart. Use ONLY the facts below — do not invent or approximate any date or amount.\n\nFacts:\n- Policy type: [POLICY TYPE]\n- Lapse date: [DATE]\n- Premium, if relevant: [AMOUNT OR \"unchanged\"]\n- Action needed: [ACTION]\n\nMessage 1: friendly, routine reminder, low urgency. Message 2: slightly more direct, restating the deadline and consequence of missing it. Message 3: clear, respectful urgency, this is the final reminder before lapse. Each message should have exactly one call-to-action. Use [CLIENT NAME] as a placeholder."
+        },
+        {
+          "label": "Group/batch reminder for multiple clients with the same renewal date",
+          "whenToUse": "Use this when you have a list of clients all renewing around the same date and want one adaptable template rather than fully custom messages for each.",
+          "prompt": "Draft one reusable [MESSAGE TYPE] template I can adapt for multiple clients who share the same renewal window. Use ONLY the shared facts below, leave client-specific details as clearly marked placeholders.\n\nShared facts:\n- Policy type: [POLICY TYPE]\n- Renewal window: [DATE RANGE]\n- Standard action needed: [ACTION]\n\nUse [CLIENT NAME], [SPECIFIC RENEWAL DATE], and [PREMIUM CHANGE IF ANY] as placeholders I'll fill in per client from my system of record. One call-to-action only."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Double-check no date or amount was invented",
+          "prompt": "List every date and dollar figure that appears in both drafts. Confirm each one matches exactly what I gave you in my facts — flag anything you may have filled in, rounded, or approximated on your own."
+        },
+        {
+          "label": "Too many asks — cut to one call-to-action",
+          "prompt": "Reread both drafts and confirm each one has exactly one call-to-action. If either has more than one thing asking the client to do, cut it down to the single most important action."
+        },
+        {
+          "label": "Make the detailed version actually feel different from the brief one",
+          "prompt": "The two versions feel too similar. Make the detailed version genuinely explain why the action matters to the client, in 2-3 additional sentences, while keeping the brief version as short as it is."
+        },
+        {
+          "label": "Check tone isn't too pushy for a lapse warning",
+          "prompt": "Reread the lapse warning version specifically. Make sure the urgency feels respectful and clear, not alarming or pressuring, a client reading this should feel informed, not scared into acting."
+        }
+      ],
+      "walkthrough": "Mike is an insurance agent with about 200 active clients on his book. Every week he sends a batch of renewal reminders and follow-ups, and he's been writing each one from scratch, which eats up an hour or more.\n\nThis week he has a client whose auto policy renews in 30 days with no premium change. He opens ChatGPT, fills in the lesson's prompt: message type \"renewal reminder,\" policy type \"auto insurance policy,\" date \"September 9, 2026,\" changes \"none,\" premium \"unchanged,\" and action \"confirm their current mailing address is still accurate.\" He leaves [CLIENT NAME] as a placeholder rather than typing the client's actual name into the prompt.\n\nChatGPT returns two versions. The friendly-brief one reads: \"Your auto policy renews in 30 days with no change to your premium, could you confirm your mailing address is still current?\" The detailed version adds two sentences explaining that an accurate address matters for the renewal documents and any required notices, ending with the same single request.\n\nMike runs the follow-up checking that no date or amount was invented, comparing the draft against his CRM record, everything matches. He picks the brief version for this client, since they're a low-maintenance relationship, replaces [CLIENT NAME] with the client's actual first name, and sends it from his email.\n\nFor this one message, the process took about three minutes, most of it spent double-checking the date against his system of record. He saved both versions as a reusable renewal-reminder template, so future renewal messages become filling in five facts rather than writing from a blank page."
+    },
+    "ins-i1-compare-two-policy-documents": {
+      "placeholders": [
+        {
+          "name": "e.g. Current Policy",
+          "what": "This is the label you'll use to identify the first document throughout the comparison table, so the output clearly says which column refers to which document. Pick something short and unambiguous.",
+          "examples": [
+            "Current Policy",
+            "Existing Coverage (2025 Term)",
+            "Carrier A Quote"
+          ]
+        },
+        {
+          "name": "e.g. Renewal Offer / Competing Quote",
+          "what": "This is the label for the second document, distinguishing it clearly from the first, for example, the renewal offer being compared against the current policy, or a competing carrier's quote.",
+          "examples": [
+            "Renewal Offer",
+            "Competing Quote — Carrier B",
+            "New Policy Draft (2026 Term)"
+          ]
+        },
+        {
+          "name": "PASTE TEXT",
+          "what": "This is where you paste the actual policy wording for each document, used twice in the prompt, once under Document A and once under Document B. Remove client-identifying details first, but keep the substantive coverage, exclusion, limit, and endorsement language intact so the comparison is accurate.",
+          "examples": [
+            "COVERAGE A - DWELLING: Limit $450,000. Extended Replacement Cost Endorsement: dwelling coverage extended up to 125% of the stated limit in the event of a covered loss. EXCLUSIONS: flood, earth movement, gradual water damage.",
+            "COVERAGE A - DWELLING: Limit $450,000, no extended replacement cost endorsement included. EXCLUSIONS: flood, earth movement, gradual water damage, and mold remediation beyond $5,000.",
+            "LIABILITY COVERAGE: $1,000,000 per occurrence / $2,000,000 aggregate. Deductible: $1,000. Umbrella policy available as separate endorsement, not included in base premium."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Comparing more than two documents at once",
+          "whenToUse": "Use this when a client is weighing three or more competing quotes, not just two, and you need a single comparison table instead of running the two-document version multiple times.",
+          "prompt": "Compare the following policy documents clause by clause. Use ONLY what is explicitly written in each — do not assume equivalent coverage just because clauses sound similar, and do not fill in a gap with an assumption.\n\nBuild a comparison table with these columns: Coverage/Section | [LABEL A] | [LABEL B] | [LABEL C] | Notable Differences.\n\nRules:\n- Cover coverage types, limits, deductibles, exclusions, conditions, and endorsements.\n- Flag explicitly anything present in one document but missing from the others.\n- Where wording differs enough that you can't confidently compare, write \"cannot confirm from wording — needs manual review.\"\n- End with a ranked list of the differences most likely to matter to a client's actual protection.\n\nDocument A ([LABEL A]):\n[PASTE TEXT]\n\nDocument B ([LABEL B]):\n[PASTE TEXT]\n\nDocument C ([LABEL C]):\n[PASTE TEXT]"
+        },
+        {
+          "label": "Focused comparison on one coverage area only",
+          "whenToUse": "Use this when a client only cares about a specific type of coverage (like water damage or liability limits) rather than a full clause-by-clause review of the entire policy.",
+          "prompt": "Compare only the [SPECIFIC COVERAGE AREA, e.g. \"water damage and mold\"] provisions of these two policy documents. Use ONLY what is explicitly written — do not assume equivalence and do not fill gaps with assumptions.\n\nBuild a short comparison covering: what's covered, limits, exclusions, and conditions specific to this coverage area in each document. Flag anything present in one but missing from the other. If wording is too different to confidently compare, say so rather than guessing.\n\nDocument A (label: [e.g. Current Policy]):\n[PASTE RELEVANT SECTION TEXT]\n\nDocument B (label: [e.g. Renewal Offer]):\n[PASTE RELEVANT SECTION TEXT]"
+        },
+        {
+          "label": "Summarizing the comparison for a client who won't read a table",
+          "whenToUse": "Use this after you already have a verified comparison table and need a short narrative version for a client who wants the highlights explained conversationally, not a table.",
+          "prompt": "Here is a verified comparison table between two policy documents:\n\n[PASTE YOUR VERIFIED COMPARISON TABLE]\n\nTurn this into a short, plain-language narrative summary I could say out loud to a client, covering only the differences most likely to matter to their actual protection. Do not add any difference that isn't in the table. Keep exclusions and coverage reductions just as prominent as improvements — do not bury a coverage loss under good news."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Manually re-verify every flagged difference",
+          "prompt": "List every row you marked as a Difference, in order, quoting the exact source wording from Document A and Document B that led you to flag it. I'm going to check each one against the original documents myself."
+        },
+        {
+          "label": "Check for false equivalence",
+          "prompt": "Go through the rows where you marked the coverage as the same in both documents. For each one, quote the exact wording from both documents side by side so I can confirm they're actually equivalent, not just similar-sounding."
+        },
+        {
+          "label": "Double check the bidirectional gap check",
+          "prompt": "Confirm you checked for gaps in both directions — things in Document A missing from Document B, and things in Document B missing from Document A. List any additional ones you find on a second pass."
+        },
+        {
+          "label": "Strip any remaining client-identifying detail",
+          "prompt": "Check the comparison table and both source excerpts for any client name, policy number, address, or other identifying detail, and tell me if anything needs to be removed before this becomes a client-facing summary."
+        }
+      ],
+      "walkthrough": "Sandra is an insurance agent whose client is renewing a homeowners policy, but the renewal offer looks slightly different from the current policy and the client wants to know exactly what changed before agreeing to it.\n\nShe removes the client's name, policy number, and address from both documents, keeping the coverage sections intact, and pastes them into Claude using the lesson's prompt, labeling Document A as \"Current Policy\" and Document B as \"Renewal Offer.\"\n\nClaude returns a comparison table. Most rows show identical coverage, but one row stands out: \"Extended Replacement Cost\" shows \"Document A: included, 125% of dwelling limit\" against \"Document B: not present,\" flagged as a Difference. The closing summary lists this as the change most likely to matter to the client's actual protection, since it means the renewal offer would cap payout at the stated dwelling limit instead of 125% of it in a total-loss scenario.\n\nSandra runs the first follow-up, asking Claude to quote the exact source wording behind every flagged difference. She opens both original documents and confirms the extended replacement cost endorsement really is present in the current policy and genuinely absent from the renewal offer, not just worded differently. She also runs the false-equivalence follow-up on the rows marked as identical, and one row turns out to use slightly different deductible language that doesn't actually change the deductible amount, so she leaves it as-is.\n\nShe turns the verified table into client-facing talking points, keeping the raw AI comparison as her internal draft. When she calls the client, she can point to the dropped endorsement specifically and recommend they ask the carrier to reinstate it before renewing. The whole process, including her manual verification, took about twenty-five minutes."
+    },
+    "ins-i2-claims-communication": {
+      "placeholders": [
+        {
+          "name": "e.g. \"claim approved, partial payment issued\" / \"claim delayed pending additional documents\" / \"claim partially denied\"",
+          "what": "This describes the actual status of the claim in a few words, chosen from your real situation, not a guess or a hopeful framing. The wording you pick here sets the tone for the whole message, so make sure it matches what's actually been confirmed on your end.",
+          "examples": [
+            "claim approved, partial payment issued",
+            "claim delayed pending additional documents",
+            "claim partially denied"
+          ]
+        },
+        {
+          "name": "STATUS, AMOUNT IF APPLICABLE, TIMELINE, REQUIRED NEXT STEPS",
+          "what": "This is the actual confirmed claim information from your claims system: the real status, any dollar amount already approved or issued, the expected timeline, and exactly what the client needs to do next. Every one of these must be confirmed on your end before you write it here; this is not a place to estimate or guess.",
+          "examples": [
+            "Status: water damage claim, gradual-leak portion denied under policy exclusion, burst-pipe portion approved. Amount: $3,200 approved for burst-pipe repair. Timeline: payment issued within 5 business days of contractor invoice receipt. Next step: client must submit itemized contractor invoice within 30 days.",
+            "Status: auto claim under review, awaiting police report. Amount: not yet determined. Timeline: police report typically takes 10-14 business days from the request date; we requested it 3 business days ago. Next step: no action needed from client at this time; we'll update once the report arrives.",
+            "Status: claim approved in full. Amount: $8,450 for storm damage repairs. Timeline: payment will be issued within 7 business days. Next step: client should confirm their direct deposit information on file is current."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Voicemail script instead of written message",
+          "whenToUse": "Use this when you need to call the client and want a spoken script to work from, not a written email or letter, since the phrasing and pacing for speaking aloud is different.",
+          "prompt": "Draft a voicemail script for a claims update call to a client. Use ONLY the facts I give you below — do not add, soften, or embellish any figure, date, or status detail.\n\nSituation: [STATUS DESCRIPTION]\nConfirmed facts: [STATUS, AMOUNT IF APPLICABLE, TIMELINE, REQUIRED NEXT STEPS]\n\nWrite this as something natural to say out loud, under 45 seconds when spoken, ending with a clear callback number and one specific next step. Empathetic but not scripted-sounding. If this involves a denial or partial denial, keep it strictly factual, no language that could read as admitting fault or promising more coverage than confirmed."
+        },
+        {
+          "label": "Internal note to file before the client communication goes out",
+          "whenToUse": "Use this to draft the internal claims-file documentation of what was communicated, for your own records or compliance requirements, separate from the client-facing message itself.",
+          "prompt": "Draft an internal claims-file note documenting a client communication. Use ONLY the facts below — this is an internal record, so keep it factual and precise, not softened for tone.\n\nSituation: [STATUS DESCRIPTION]\nConfirmed facts: [STATUS, AMOUNT IF APPLICABLE, TIMELINE, REQUIRED NEXT STEPS]\nDate/method of client contact: [DATE AND METHOD, e.g. \"phone call, Aug 10\"]\n\nStructure: (1) summary of claim status communicated, (2) exact facts conveyed to client, (3) client's stated response or questions, if any, (4) any follow-up action required and by when."
+        },
+        {
+          "label": "Multi-language version for a client who prefers another language",
+          "whenToUse": "Use this when the client's preferred communication language isn't English, and you need the same accuracy and tone guardrails applied in translation, not just a literal translation of an English draft.",
+          "prompt": "Draft a claims communication message to a client, in [LANGUAGE]. Use ONLY the facts I give you below — do not add, soften, or embellish any figure, date, or status detail, and do not imply any coverage decision I haven't confirmed.\n\nSituation: [STATUS DESCRIPTION]\nConfirmed facts: [STATUS, AMOUNT IF APPLICABLE, TIMELINE, REQUIRED NEXT STEPS]\nTone needed: empathetic, clear, non-defensive, acknowledge the client's situation before stating facts.\n\nAfter the [LANGUAGE] version, also give me an English back-translation so I can confirm the meaning and tone came through as intended before I send it."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify every fact against my claims system one more time",
+          "prompt": "List every status detail, dollar amount, date, and next step mentioned in this draft, in order. I'm going to check each one against my claims system before sending, flag anything you're not 100% certain came directly from what I gave you."
+        },
+        {
+          "label": "Check the denial language carefully",
+          "prompt": "Reread this draft specifically for any phrase that could be interpreted as admitting fault, apologizing for the coverage decision itself, or promising coverage beyond what I confirmed. List each one and suggest a strictly factual alternative."
+        },
+        {
+          "label": "Make the acknowledgment sound genuine, not generic",
+          "prompt": "The opening acknowledgment sounds generic. Rewrite it to sound specific to this actual situation, using only the facts I gave you, not a template phrase that could apply to any claim."
+        },
+        {
+          "label": "Read-aloud check for tone",
+          "prompt": "Read this back to me as if you were saying it out loud to someone who just experienced this loss. Does anything sound cold, rushed, or overly formal? Suggest a warmer phrasing for those spots only, without changing any fact."
+        }
+      ],
+      "walkthrough": "James handles claims communication for an independent agency, and he has a client whose water damage claim came back partially denied, the gradual-leak portion is excluded, but the burst-pipe portion was approved for $3,200. This is exactly the kind of message that's easy to get wrong: too cold and the client feels dismissed, too apologetic and it sounds like an admission the denial was arbitrary.\n\nHe confirms the facts with the claims adjuster first: $3,200 approved for the burst-pipe repair, the gradual-leak portion denied under the policy's exclusion, and the client needs to submit a contractor invoice within 30 days. Only once these are confirmed does he open Claude.\n\nHe fills in the lesson's prompt: situation \"claim partially denied,\" the confirmed facts exactly as given by the adjuster, and the standard tone instructions from the prompt. Claude drafts a message that opens by acknowledging how disruptive water damage is to deal with, states plainly that $3,200 has been approved for the burst-pipe repair while the gradual-leak portion falls under a policy exclusion, gives the 30-day invoice deadline, and closes with a direct offer to answer questions.\n\nJames runs the follow-up asking Claude to check the denial language specifically. It flags one phrase, \"we understand this isn't the outcome you hoped for,\" as borderline, since it could read as an implicit apology for the decision itself rather than a neutral acknowledgment, and suggests replacing it with language that acknowledges the situation without characterizing the decision.\n\nHe accepts the revision, reads the final version aloud to check the tone, and verifies the $3,200 figure and the 30-day deadline against the claims system one more time before sending. Total time: about twelve minutes."
+    },
+    "ins-i3-objection-handling-needs-analysis": {
+      "placeholders": [
+        {
+          "name": "OBJECTION, e.g. \"client says they found cheaper coverage elsewhere\" OR NEEDS-ANALYSIS CONTEXT, e.g. \"first-time homeowner, wants to understand what coverage they actually need\"",
+          "what": "This describes the specific situation you're preparing for, either a real objection a client has raised or is likely to raise, or the client context for a needs-analysis conversation. Be specific about the actual situation rather than a generic category, since a vague input produces generic, unusable talking points.",
+          "examples": [
+            "client says they found cheaper coverage elsewhere",
+            "first-time homeowner, wants to understand what coverage they actually need",
+            "long-time client questioning why their renewal premium increased this year"
+          ]
+        },
+        {
+          "name": "PRODUCT FACTS, COVERAGE DETAILS, ANY CONSTRAINTS ON WHAT I CAN SAY",
+          "what": "This is the real, specific information you can actually reference: the product's genuine features, coverage details, or limitations, plus anything you're not allowed to say due to regulatory or compliance constraints. Grounding the response in real facts is what separates a useful talking point from a generic sales script.",
+          "examples": [
+            "Our policy includes guaranteed replacement cost coverage and a lower deductible on water damage than the competitor quote the client mentioned. I cannot guarantee a specific claims outcome or promise the competitor's price will be matched.",
+            "This client's home was built in 1998, no major claims history, standard construction. I can discuss general coverage categories (dwelling, liability, personal property, loss of use) but cannot quote exact premium figures until underwriting reviews the application.",
+            "Renewal premium increased due to a rate filing change approved by the state regulator affecting all policyholders in this region, not specific to this client's claims history. I can explain the general reason but cannot disclose other clients' rates or internal pricing formulas."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Preparing for a group presentation, not a one-on-one conversation",
+          "whenToUse": "Use this when you're presenting to multiple prospects or clients at once, like a small business seminar, and need talking points that work for a general audience rather than one specific person's situation.",
+          "prompt": "Help me prepare talking points for a group presentation to prospective clients.\n\nAudience: [DESCRIBE THE AUDIENCE, e.g. \"small business owners considering commercial liability coverage\"]\nCommon objections or questions this audience typically raises: [LIST 2-3 COMMON OBJECTIONS OR QUESTIONS]\nRelevant real facts I can reference: [PRODUCT FACTS, COVERAGE DETAILS, ANY CONSTRAINTS ON WHAT I CAN SAY]\n\nGive me honest, non-pressuring response angles for each common objection, suitable for a room of people rather than one individual. Do not suggest overstating coverage, guaranteeing outcomes, or using urgency tactics. Flag anything that could be read as overpromising."
+        },
+        {
+          "label": "Role-play practice script with likely pushback",
+          "whenToUse": "Use this when you want to rehearse a full back-and-forth exchange, not just the opening response, so you're prepared for the client pushing back on your first answer.",
+          "prompt": "Help me prepare for a client conversation by building a short role-play script.\n\nSituation: [OBJECTION OR NEEDS-ANALYSIS CONTEXT]\nRelevant real facts I can reference: [PRODUCT FACTS, COVERAGE DETAILS, ANY CONSTRAINTS ON WHAT I CAN SAY]\n\nWrite this as a back-and-forth: my honest, non-pressuring response, a realistic pushback the client might give in return, and my follow-up response to that pushback. Keep everything grounded in the facts I gave you, do not invent product features or overstate coverage. Flag anything that could be read as overpromising."
+        },
+        {
+          "label": "Debrief after the conversation to refine for next time",
+          "whenToUse": "Use this after an actual client conversation has already happened, to capture what worked and refine your prepared responses for the next similar situation.",
+          "prompt": "I just had this client conversation and want to refine my prepared responses for next time.\n\nOriginal situation: [OBJECTION OR NEEDS-ANALYSIS CONTEXT]\nWhat I actually said: [SUMMARIZE YOUR ACTUAL RESPONSE]\nHow the client reacted: [DESCRIBE THE CLIENT'S REACTION]\n\nBased on this, suggest a refined version of my response angle for next time this type of situation comes up. Keep it grounded in real product facts, honest, and non-pressuring, do not invent details I haven't confirmed."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Double-check nothing overstates coverage",
+          "prompt": "Reread every response angle or question you gave me and flag anything that could be read as overstating what the policy covers, guaranteeing a specific outcome, or using pressure or urgency language. Rewrite anything flagged to be strictly accurate to the facts I gave you."
+        },
+        {
+          "label": "Make the needs-analysis questions genuinely open-ended",
+          "prompt": "Look at the needs-analysis questions again. Flag any that are actually leading toward a specific product or answer rather than genuinely open-ended, and rewrite those to be neutral and exploratory instead."
+        },
+        {
+          "label": "Check it stayed within my stated constraints",
+          "prompt": "Confirm every response angle respects the constraints I gave you on what I can and can't say. Point out anything that might cross a line I mentioned, even if it wasn't an obvious overstatement."
+        },
+        {
+          "label": "Give me a version in my own natural voice",
+          "prompt": "Rewrite these response angles in a more conversational, less scripted tone, closer to how I'd actually talk to someone, not like a sales training manual. Keep the facts and the non-pressuring approach exactly the same."
+        }
+      ],
+      "walkthrough": "Nina is an insurance agent who has a call scheduled with a client who emailed saying they found a cheaper homeowners quote from another company and are thinking about switching. She doesn't want to come across as defensive or pushy, but she also has real reasons to think her policy is the better fit.\n\nShe opens Claude and fills in the lesson's prompt: situation \"client says they found cheaper coverage elsewhere,\" and the real facts she can reference: her policy includes guaranteed replacement cost coverage and a lower deductible on water damage than what she knows about the competitor's typical offering, and she can't guarantee she can match the competitor's exact price.\n\nClaude returns three response angles. One focuses on what guaranteed replacement cost actually means in a real total-loss claim scenario. Another asks the client directly what matters most to them if they ever had to file a claim, rather than leading with price. Each angle comes with a natural follow-up question, and none of them suggest price-matching or urgency.\n\nNina runs the follow-up checking for overstated coverage, and Claude confirms nothing in the responses claims a specific dollar outcome or guarantees a claim will be paid a certain way, it flags one sentence as slightly close to the line (\"you'll be covered no matter what\") and rewrites it to \"this coverage is designed to handle major repair costs even if rebuilding costs rise.\"\n\nShe practices the revised angles out loud twice before the call, adjusting the wording to sound like her own voice rather than reading it verbatim. During the actual call, she uses the claim-scenario angle, and the client agrees to stay for another term pending a coverage review. Preparation took about fifteen minutes."
+    },
+    "ins-a1-client-communication-template-library": {
+      "placeholders": [
+        {
+          "name": "PASTE YOUR EXISTING TEMPLATES/DRAFTS, OR DESCRIBE THE SITUATIONS: policy explanation, renewal reminder, follow-up, policy comparison, claims update, objection response, needs-analysis questions",
+          "what": "This is where you either paste the actual drafts you've already built (from earlier lessons or your own past messages) or, if you don't have drafts yet for a situation, just describe it in a sentence so the AI knows to draft one from scratch. Include as many of your real, already-used templates as you can, the more real content you give it, the less the AI has to invent.",
+          "examples": [
+            "Policy explanation: [paste your homeowners exclusions explanation draft]. Renewal reminder: [paste your friendly-brief renewal template]. Claims update: don't have one yet, please draft using the claims-communication guardrails, empathetic acknowledgment first, facts stated exactly, no overpromising language.",
+            "I don't have written templates yet, just describe the situations I need: policy explanation for auto and homeowners clients, renewal reminders (routine and lapse-warning versions), post-quote check-ins, and objection responses for the 'found it cheaper elsewhere' objection.",
+            "Follow-up: [paste your missing-document follow-up draft]. Policy comparison: [paste your current-vs-renewal comparison table format]. Objection response: [paste your price-objection talking points from last month]. Needs-analysis questions: don't have a set yet, please draft open-ended questions for first-time homeowners."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Building the library from scratch with no existing drafts",
+          "whenToUse": "Use this when you're starting the library for the first time and don't have any existing drafts to organize yet, you're generating the full set fresh, not just organizing what you already have.",
+          "prompt": "Help me build a personal library of client-communication templates from scratch, I don't have existing drafts yet. Here are the situations I need to cover: [LIST YOUR SITUATIONS, e.g. policy explanation, renewal reminder, follow-up, policy comparison, claims update, objection response, needs-analysis questions]\n\nFor each one, draft a template using these guardrails: use only facts supplied via placeholders, never invent dates or figures, keep exclusions as prominent as coverage, no pressure or urgency tactics, empathetic acknowledgment before facts for anything claims-related. Include: 1) a short name and one-line description of when to use it, 2) the template with clearly marked placeholders, 3) a verification checkpoint before sending, 4) tone notes.\n\nThen give me a short index of all templates by name and one-line description."
+        },
+        {
+          "label": "Auditing and pruning an existing library that's gotten stale",
+          "whenToUse": "Use this periodically, for example quarterly, once you already have a library, to review which templates are still accurate and which need retiring or updating due to product, carrier, or regulation changes.",
+          "prompt": "Here is my current template library:\n\n[PASTE YOUR CURRENT LIBRARY]\n\nHelp me audit it. For each template, tell me: 1) whether the verification checkpoint is still specific and useful or has gotten vague, 2) whether anything in the tone notes or structure seems outdated, 3) flag any template that seems unused or redundant with another one for me to consider retiring. Do not rewrite the content itself yet, just flag what needs review, and I'll decide what to update."
+        },
+        {
+          "label": "Building a smaller, role-specific subset for a new hire",
+          "whenToUse": "Use this when you're training a new agent and want to hand them a starter subset of the library, the highest-priority templates only, rather than the full set at once.",
+          "prompt": "From my full template library below, help me build a smaller starter set of just the 4-5 highest-priority templates a brand new agent should learn first.\n\nFull library:\n[PASTE YOUR CURRENT LIBRARY]\n\nFor each of the 4-5 you select, keep the template, placeholders, verification checkpoint, and tone notes exactly as they are, do not rewrite the content, just select and organize the subset with a short note on why each one is a priority for someone new."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Make sure it didn't invent template types you don't need",
+          "prompt": "List every template type in the output. Confirm each one matches a situation I actually described or provided a draft for, flag any you added that I didn't ask for, so I can decide whether to keep or remove them."
+        },
+        {
+          "label": "Check every verification checkpoint is specific, not generic",
+          "prompt": "Go through each template's verification checkpoint and tell me if any of them are too vague to actually follow under time pressure, like just saying 'check for accuracy.' Rewrite the vague ones to name the specific thing to check and against what source."
+        },
+        {
+          "label": "Confirm the guardrails carried over from the original drafts",
+          "prompt": "For each template that came from a draft I pasted, confirm the core guardrail from that situation is still present, for example, exclusions given equal weight to coverage in the policy explanation template, or no pressure language in the objection response template. Flag any that got softened or dropped in the reorganization."
+        },
+        {
+          "label": "Shorten the index so it's actually scannable",
+          "prompt": "The index is too long to scan quickly under time pressure. Cut each entry's description down to under 10 words, grouped by category (renewals, claims, objections, etc.) so I can find the right one in a few seconds."
+        }
+      ],
+      "walkthrough": "Oscar is an insurance agent who has been through this entire lesson path over the past few weeks and now has several one-off drafts scattered across old emails and a notes app: a homeowners policy explanation, a renewal reminder template, and a claims-delay message he wrote during a busy week. He wants them organized somewhere he'll actually use them.\n\nHe opens Claude and pastes his three existing drafts under the lesson's placeholder, along with a note that he doesn't yet have anything for objection responses or needs-analysis questions and would like those drafted using the same guardrails.\n\nClaude returns five organized entries. The homeowners policy explanation becomes \"Homeowners Coverage Explainer\" with placeholders like [POLICY SECTION], a verification checkpoint reading \"re-check exclusion wording against current specimen policy before each use,\" and a tone note to keep exclusions as prominent as coverage. The two new ones, objection response and needs-analysis questions, get drafted fresh, following the non-pressuring, open-ended-questions guardrails from earlier lessons. A short index lists all five by name and one-line description.\n\nOscar runs the follow-up asking whether any verification checkpoint is too vague. Two of them just say \"check for accuracy,\" so he asks Claude to make them specific, one becomes \"confirm renewal date and premium against system of record,\" the other \"confirm claim figures against claims system before sending.\"\n\nHe saves the finished library, with its index, as a Claude Project so he can bring new client-specific facts to any template without rebuilding the prompt each time. He sets a recurring quarterly reminder to review it. Building the initial library took about thirty-five minutes, replacing what used to be several disconnected documents he half-remembered where to find."
+    }
+  }
+}

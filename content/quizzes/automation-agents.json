@@ -1,0 +1,354 @@
+{
+  "quizzes": {
+    "auto-b1-what-agents-automations-are": [
+      {
+        "q": "A task involves copying new form responses into a spreadsheet with no judgment calls involved. What kind of solution does this call for?",
+        "options": [
+          "A full autonomous AI agent with tool access",
+          "A classic trigger-action automation, since it's pure mechanical data transfer with no AI judgment step",
+          "An AI-in-the-loop workflow with a summarization step",
+          "A custom-built application from scratch"
+        ],
+        "answer": 1,
+        "why": "Mechanical-only tasks — moving data with no judgment involved — usually need a classic automation, not an agent; jumping straight to an AI agent for pure data transfer just adds cost and failure points."
+      },
+      {
+        "q": "You're picking your first automation project from five candidate tasks. Which combination of traits should you prioritize?",
+        "options": [
+          "The most annoying task on the list, regardless of frequency or risk",
+          "The task that touches customer-facing communication, since automating that shows the most value",
+          "A task with high frequency, real time cost, and low risk if it makes an occasional mistake",
+          "The most technically ambitious task to prove the automation platform's capability"
+        ],
+        "answer": 2,
+        "why": "The scoring framework ranks candidates on frequency, time cost, and risk tolerance — a good first project is low-risk and high-frequency to build confidence, not the most ambitious or most annoying task."
+      },
+      {
+        "q": "One of your five candidate tasks is \"processing refund requests over $500.\" Why might this be a poor choice for your very first automation?",
+        "options": [
+          "It doesn't repeat often enough to be worth automating",
+          "It touches money and customer-facing outcomes, which is risky before you've built confidence with something lower-stakes",
+          "Refund processing can't be automated with any AI tool",
+          "It requires an MCP connector that doesn't exist yet"
+        ],
+        "answer": 1,
+        "why": "Picking a task that touches money, legal commitments, or customer-facing communication as the very first automation, before building confidence with something lower-stakes, is a listed common mistake."
+      }
+    ],
+    "auto-b2-map-a-process-to-automate": [
+      {
+        "q": "You describe your process to an AI as \"customer emails come in, we respond.\" What's wrong with feeding this into the process-mapping prompt?",
+        "options": [
+          "It's fine — the AI will infer all the missing systems and steps automatically",
+          "It's too vague; without naming actual systems and step order, the resulting map will be equally vague and unusable",
+          "It should be described in a spreadsheet instead of a prompt",
+          "The AI will reject the prompt outright for being too short"
+        ],
+        "answer": 1,
+        "why": "Describing the process too vaguely instead of naming the actual systems and order of steps is a listed common mistake — vague input produces a vague, unusable map."
+      },
+      {
+        "q": "While mapping an overdue-invoice process, you're tempted to skip documenting rare edge cases like partial payments because \"they're rare.\" What does the lesson say about this?",
+        "options": [
+          "Skipping rare edge cases is fine since automations only need to handle the common path",
+          "Rare cases are exactly what breaks unattended automations in production, so they should be documented, not skipped",
+          "Edge cases should only be documented after the automation has already failed once",
+          "Edge cases are only relevant for AI-in-the-loop automations, not classic ones"
+        ],
+        "answer": 1,
+        "why": "Skipping edge cases because 'they're rare' is a listed common mistake — rare cases are precisely what breaks unattended automations once they're live."
+      },
+      {
+        "q": "Why does the process-mapping prompt explicitly instruct the AI to use only the information given and not invent tools or steps?",
+        "options": [
+          "To keep the prompt shorter",
+          "To stop the AI from hallucinating parts of the process it wasn't told about, keeping the map accurate to your real workflow",
+          "Because inventing steps would violate the automation platform's terms of service",
+          "Because AI models can't name specific software tools"
+        ],
+        "answer": 1,
+        "why": "The anti-hallucination instruction stops the AI from inventing tools, systems, or steps you didn't mention, which is essential since the map needs to reflect your actual process, not a plausible-sounding guess."
+      }
+    ],
+    "auto-b3-mcp-explained": [
+      {
+        "q": "You connect Claude to your company's Notion via MCP and later want to use the same server in ChatGPT. What does the lesson say about this?",
+        "options": [
+          "You'd need to build a completely separate integration for ChatGPT",
+          "Because MCP is a shared standard, the same server works unmodified across MCP-compatible tools like Claude, ChatGPT, or others",
+          "MCP servers are proprietary to whichever AI vendor built them",
+          "You'd need to re-authenticate but the server itself needs no changes... this option is intentionally close to correct but wrong on requiring re-integration"
+        ],
+        "answer": 1,
+        "why": "MCP is an open, shared standard — connecting one server to Claude means the same server works, unmodified, in ChatGPT or another MCP-compatible tool, without learning a new integration per product."
+      },
+      {
+        "q": "After connecting an MCP server, a colleague assumes the AI now has full access to everything in that account. Why is this assumption wrong?",
+        "options": [
+          "MCP servers only ever expose read-only resources, never actions",
+          "A server only exposes the specific tools and resources it was built to expose, further limited by whatever OAuth scopes were granted",
+          "Full account access is only granted on paid AI plans",
+          "MCP connections expire after a single session, limiting exposure automatically"
+        ],
+        "answer": 1,
+        "why": "Assuming 'connected' means full account access is a listed common mistake — a server exposes only its specific built tools and resources, scoped further by the permissions granted during OAuth login."
+      },
+      {
+        "q": "You're deciding whether to trust a local MCP server the same way you'd trust a remote hosted one. What's the correct distinction?",
+        "options": [
+          "They carry identical risk since both use the same protocol",
+          "A local server runs with your own machine's permissions, while a remote server runs on someone else's infrastructure under granted access — different risk profiles",
+          "Local servers are always safer because they require no OAuth",
+          "Remote servers are always safer because they're maintained by vendors"
+        ],
+        "answer": 1,
+        "why": "Treating local and remote servers as the same risk profile is a listed common mistake — a local server runs under your machine's own permissions, while a remote one runs on someone else's infrastructure under granted access."
+      }
+    ],
+    "auto-i1-connect-first-mcp-connector": [
+      {
+        "q": "You're connecting your first MCP connector and the settings offer both a read-only option and full read/write access, pre-selected as read/write. What should you do?",
+        "options": [
+          "Leave the pre-selected read/write option since it's the default",
+          "Choose the narrower read-only scope for your first connection",
+          "Cancel the connection entirely rather than deal with scopes",
+          "Grant read/write but immediately revoke it after one test"
+        ],
+        "answer": 1,
+        "why": "Granting full read/write access by default because it's pre-selected, instead of checking for a narrower scope, is a listed common mistake — start with the narrowest scope offered."
+      },
+      {
+        "q": "Right after connecting a new MCP connector, you're tempted to immediately try a complex multi-step task. Why does the lesson advise a simple read-only test first?",
+        "options": [
+          "Complex tasks are technically impossible until a read-only test has run once",
+          "If something goes wrong on a complex task first, you can't isolate whether the connector, the AI, or your instructions caused the failure",
+          "Read-only tests are required by the MCP protocol before any write action",
+          "It reduces the API cost of the first several tests"
+        ],
+        "answer": 1,
+        "why": "Skipping verification and immediately trying a complex multi-step task is a listed common mistake — if something goes wrong, you can't tell whether the connector, the AI, or your instructions caused it."
+      },
+      {
+        "q": "The read-only test prompt explicitly says \"do not create, edit, or delete anything.\" Why include this constraint in a verification test?",
+        "options": [
+          "It's required boilerplate with no functional effect",
+          "It isolates the test to confirm the connection works correctly without risking any unintended action while trust is still being built",
+          "It prevents the AI from reading any data at all",
+          "It's only needed for connectors that lack a read-only scope option"
+        ],
+        "answer": 1,
+        "why": "Explicitly forbidding write actions during the verification step matters most while you're still building trust in a brand-new connection and want to confirm behavior safely before granting more."
+      }
+    ],
+    "auto-i2-zapier-ai-automation": [
+      {
+        "q": "You write a ChatGPT Task's instructions around one hypothetical example instead of the real, messy input it will actually see each run. What happens?",
+        "options": [
+          "ChatGPT automatically generalizes the instructions to handle any real input correctly",
+          "The first live run can behave differently than the test, since the task was never exercised against real data",
+          "The Task runs fine but only during manual Run Now tests",
+          "ChatGPT rejects the Task and refuses to schedule it"
+        ],
+        "answer": 1,
+        "why": "Writing the task's instructions around a single hypothetical example instead of the real input it will actually see each run is a listed common mistake — the first live run can behave differently than the test."
+      },
+      {
+        "q": "Your ChatGPT Task classifies leads and you need to scan the result in seconds every morning. Why does the instruction ask for a specific table format with fixed columns instead of open-ended prose?",
+        "options": [
+          "Because ChatGPT Tasks technically cannot output prose",
+          "Because a specific, constrained format lets you act on the result reliably instead of parsing free-form text every run",
+          "Because it reduces the task's token cost to zero",
+          "Because ChatGPT Tasks cannot display tables in task history"
+        ],
+        "answer": 1,
+        "why": "Leaving the output format open-ended when you need a specific shape to act on makes the recurring output inconsistent from run to run — a constrained format prevents that."
+      },
+      {
+        "q": "You write a new ChatGPT Task, save it, and let the schedule fire for the first time without ever running it manually. What did the lesson recommend doing differently?",
+        "options": [
+          "Nothing — the schedule firing once is sufficient before trusting it",
+          "Running it with Run Now against real data first, including checking how it handles the 'nothing new' case, before trusting the schedule",
+          "Waiting exactly 24 hours after creating it before letting the schedule fire",
+          "Skipping testing entirely since ChatGPT validates Tasks automatically"
+        ],
+        "answer": 1,
+        "why": "Turning on the schedule without running it manually against real data first, and without checking the 'nothing new' case, is a listed common mistake — Run Now testing surfaces problems before the first unattended run does."
+      }
+    ],
+    "auto-i3-n8n-make-workflow-ai-step": [
+      {
+        "q": "Your support-triage script needs to route messages to different log files based on an AI classification. Why should the headless `claude -p` call return valid JSON rather than a free-text sentence?",
+        "options": [
+          "JSON is required by `claude -p` regardless of downstream needs",
+          "Structured JSON output is directly parseable by your script's branching logic without scraping free text",
+          "JSON outputs run faster than plain text outputs",
+          "Free-text outputs are not supported by Claude Code's headless mode"
+        ],
+        "answer": 1,
+        "why": "Forcing structured JSON output makes the result directly parseable by your script's branching logic, without scraping a free-text sentence — critical when the next step branches on the value."
+      },
+      {
+        "q": "You test your branching script only with typical, everyday support messages and skip testing the rare \"complete outage\" case that should trigger urgent escalation. What's the risk?",
+        "options": [
+          "No risk — common-path testing is sufficient for any script",
+          "The rare branch remains unverified until it happens for real, exactly the scenario most testing misses",
+          "The script will refuse to run without testing every possible branch",
+          "Claude Code automatically generates edge-case tests for you"
+        ],
+        "answer": 1,
+        "why": "Not testing the edge case that should hit the rare branch is a listed common mistake — most testing only exercises the common path, leaving the risky branch unverified until it happens live."
+      },
+      {
+        "q": "Instead of parsing the AI step's JSON output and branching in code, you try to handle all decision-making inside one giant prompt passed to `claude -p`. What's the downside?",
+        "options": [
+          "It makes the script cheaper to run",
+          "It makes the script harder to debug when only one branch misbehaves, since logic isn't separated into distinct, inspectable steps",
+          "Headless Claude Code calls cannot be used without a branching step",
+          "It automatically disables error handling in the rest of the script"
+        ],
+        "answer": 1,
+        "why": "Skipping the branch-in-code step and doing all decision-making inside one giant AI prompt is a listed common mistake — it makes the script harder to debug when only one branch misbehaves."
+      }
+    ],
+    "auto-a1-design-safe-agent-instructions": [
+      {
+        "q": "An agent's instructions say \"respond to customer emails professionally\" with access to a send-email tool. What's the main safety gap here?",
+        "options": [
+          "The instructions are too long and need to be shortened",
+          "The send action isn't explicitly constrained by a rule, so the agent could send external emails with no human check",
+          "The instructions don't mention which email provider to use",
+          "Professional tone can't be defined precisely enough for an AI to follow"
+        ],
+        "answer": 1,
+        "why": "Granting an agent a powerful action like send without a hard rule constraining it, assuming good judgment will suffice, is a listed common mistake — good judgment is not a substitute for an explicit boundary."
+      },
+      {
+        "q": "You write instructions covering the normal case but say nothing about what the agent should do when required information is missing or contradictory. What's the risk?",
+        "options": [
+          "The agent will simply refuse to run at all",
+          "Agents default to improvising exactly where instructions don't specify, since writing only for the happy path leaves uncertainty undefined",
+          "Missing-information cases are automatically routed to a human by default in every platform",
+          "The instructions will fail validation before deployment"
+        ],
+        "answer": 1,
+        "why": "Writing instructions around the happy path only, with no rule for missing data or contradictions, is a listed common mistake — agents default to improvising exactly where you didn't specify."
+      },
+      {
+        "q": "After drafting agent instructions, you consider them finished. Why does the lesson insist on a red-team pass before deployment?",
+        "options": [
+          "Red-teaming is only needed for agents with no tool access",
+          "Gaps in instructions are rarely visible to the person who wrote them, so a skeptical review surfaces unintended actions the author missed",
+          "It's a compliance requirement, not a practical safety step",
+          "It replaces the need for a human approval checkpoint"
+        ],
+        "answer": 1,
+        "why": "Treating instructions as done after the first draft instead of red-teaming them is a listed common mistake — the gaps are rarely visible to the person who wrote the instructions in the first place."
+      }
+    ],
+    "auto-a2-human-in-the-loop-error-handling": [
+      {
+        "q": "You add a Slack approval checkpoint before your automation sends refunds, but nobody is assigned to monitor that Slack channel. What's the practical result?",
+        "options": [
+          "The automation will auto-approve after a timeout, so nothing changes",
+          "It becomes a silent backlog instead of an actual safety net",
+          "The Task or script automatically escalates unmonitored approvals to email",
+          "The checkpoint disables itself after 24 hours of inactivity"
+        ],
+        "answer": 1,
+        "why": "Building an approval checkpoint but never assigning or monitoring who responds to it is a listed common mistake — an approval checkpoint nobody monitors is worse than no checkpoint, since it becomes a silent backlog."
+      },
+      {
+        "q": "Your automation has an error path configured for malformed AI output, but you've only ever tested the happy path. What should you do before trusting it?",
+        "options": [
+          "Nothing further, since the error path exists in the configuration",
+          "Deliberately break a step with bad credentials or malformed input to confirm the alert or approval path actually fires",
+          "Wait for a real production failure to validate it naturally",
+          "Remove the error path since untested paths add risk"
+        ],
+        "answer": 1,
+        "why": "Only testing the happy path, so an error path exists on paper but has never actually fired, is a listed common mistake — deliberately breaking a step confirms the alert or approval path works as designed."
+      },
+      {
+        "q": "A dependency your automation calls goes down, and your retry policy has no cap on retries. What's the likely consequence?",
+        "options": [
+          "The automation will pause itself automatically until the dependency recovers",
+          "It can spam alerts or downstream systems, such as sending the same email multiple times, while the dependency is down",
+          "Nothing — uncapped retries are the safest default",
+          "The platform will automatically apply a cap regardless of configuration"
+        ],
+        "answer": 1,
+        "why": "Retrying failed steps indefinitely without a cap is a listed common mistake — it can spam alerts or downstream systems, like sending the same email multiple times, when a dependency is down."
+      }
+    ],
+    "auto-a3-cross-tool-pipeline": [
+      {
+        "q": "Your research-draft-publish pipeline's drafting stage has solid anti-hallucination instructions. Is it safe to wire the pipeline straight to auto-publish without a human review step?",
+        "options": [
+          "Yes, strong anti-hallucination instructions are a sufficient safeguard on their own",
+          "No — those instructions reduce but don't eliminate errors, so a human review step before publishing is still required",
+          "Yes, as long as the research stage uses a research-capable AI like Gemini Deep Research",
+          "No, but only because publishing pipelines legally require human sign-off"
+        ],
+        "answer": 1,
+        "why": "Skipping the human review stage and wiring the pipeline straight to publish, assuming anti-hallucination instructions alone are sufficient, is a listed common mistake — they reduce but don't eliminate errors."
+      },
+      {
+        "q": "The drafting-stage prompt omits the instruction to use only the supplied research findings. What's the likely failure mode?",
+        "options": [
+          "The draft will simply be shorter than requested",
+          "The draft can blend real research with invented-sounding filler that's hard to tell apart on a quick read",
+          "The pipeline will fail to run entirely",
+          "The publish step will automatically reject the draft"
+        ],
+        "answer": 1,
+        "why": "Letting the drafting stage's prompt omit the 'use only supplied research' constraint is a listed common mistake — it lets the draft blend real research with invented-sounding filler that's hard to catch on a quick read."
+      },
+      {
+        "q": "You trust a polished-looking draft without checking the research stage's raw output first. Why is this risky?",
+        "options": [
+          "Polished drafts are always accurate regardless of source quality",
+          "If the research stage returned thin or off-topic findings, the draft will look polished but be built on weak material",
+          "The draft stage always flags weak research automatically in bold text",
+          "It's not risky as long as a human eventually reviews the final draft"
+        ],
+        "answer": 1,
+        "why": "Not inspecting the research stage's raw output before trusting the draft is a listed common mistake — thin or off-topic findings can still produce a draft that looks polished but rests on weak material."
+      }
+    ],
+    "auto-a4-evaluate-maintain-automations": [
+      {
+        "q": "An automation has been running without any errors for months, so the team assumes it's working correctly. What's the flaw in this assumption?",
+        "options": [
+          "Automations without errors are always working correctly by definition",
+          "An automation can run without erroring while quietly producing wrong output that never trips an error path",
+          "Zero errors means the automation platform is being underused",
+          "It should have been retired regardless of error rate after six months"
+        ],
+        "answer": 1,
+        "why": "Treating 'it's still running' as equivalent to 'it's still working correctly' is a listed common mistake — an AI step can produce technically valid but subtly wrong output, like a bad classification, without ever tripping an error path."
+      },
+      {
+        "q": "A run log shows 140 runs with 6 errors all containing the message \"invalid_grant.\" What does this pattern most likely indicate, and what should you check first?",
+        "options": [
+          "A rate limit issue — check the API provider's usage dashboard",
+          "An expired or revoked OAuth token on a connected account — check connector status in the platform's settings",
+          "A data format change — check the trigger app's field mappings",
+          "AI output drift — check the model version being used"
+        ],
+        "answer": 1,
+        "why": "The repeated 'invalid_grant' error message strongly suggests an expired or revoked OAuth token on a connected account, and the diagnostic prompt is designed to point you to checking connector status first rather than guessing."
+      },
+      {
+        "q": "No single person is assigned to review any of the team's automations, though several people know they exist. What's the practical consequence?",
+        "options": [
+          "The automations will automatically flag themselves for review when needed",
+          "An automation everyone assumes someone else is watching is an automation nobody is actually watching",
+          "This has no consequence as long as error rates stay at zero",
+          "Automation platforms require an assigned owner before they can run at all"
+        ],
+        "answer": 1,
+        "why": "Letting automations accumulate with no single owner responsible for reviewing each one is a listed common mistake — an automation everyone assumes someone else is watching is an automation nobody is watching."
+      }
+    ]
+  }
+}

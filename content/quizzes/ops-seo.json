@@ -1,0 +1,424 @@
+{
+  "quizzes": {
+    "ops-b1-sops-from-tribal-knowledge": [
+      {
+        "q": "The AI-generated SOP adds a step about escalating damaged goods within 24 hours that the warehouse lead never actually mentioned. What should happen with this addition?",
+        "options": [
+          "It should appear under a separate 'gaps to confirm' section, not be silently included in the main numbered procedure - the prompt bans adding undescribed steps into the SOP itself",
+          "Keep it in the main steps since it sounds like good practice",
+          "Delete the entire SOP and start over from scratch",
+          "Assume the AI has accurate industry knowledge of the correct procedure"
+        ],
+        "answer": 0,
+        "why": "The prompt routes anything the AI thinks is missing into a separate 'gaps to confirm' list rather than silently adding an invented step into the official procedure."
+      },
+      {
+        "q": "Why does the lesson recommend having someone who has never done the task test-read the finished SOP before publishing?",
+        "options": [
+          "It's required for legal compliance purposes",
+          "Any place they get stuck reveals a gap the original expert didn't notice because the step is second nature to them",
+          "New employees generally write better documentation",
+          "It reduces overall training costs"
+        ],
+        "answer": 1,
+        "why": "Someone unfamiliar with the task will get stuck exactly where an expert's second-nature knowledge left a gap in the written procedure - that's the whole point of the pro tip."
+      },
+      {
+        "q": "A manager publishes a new SOP but doesn't name an owner or set a review date. What risk does the lesson flag?",
+        "options": [
+          "None - SOPs don't actually need owners",
+          "An SOP with no named owner and no review date is the first kind of documentation that goes stale, so these fields matter operationally",
+          "Owners are only needed for safety-critical SOPs",
+          "Review dates are purely optional metadata"
+        ],
+        "answer": 1,
+        "why": "The lesson explicitly calls out that leaving out an owner and review date is a common mistake, since it's how an SOP quietly goes stale within a year."
+      }
+    ],
+    "ops-b2-process-mapping-describe-question-improve": [
+      {
+        "q": "After Part B's diagnostic questions come back, a manager jumps straight to asking for improvements without answering the questions himself first. What's lost?",
+        "options": [
+          "Nothing - the AI can proceed just as well regardless",
+          "The improvement suggestions should be grounded in the manager's actual answers to the diagnostic questions - skipping this means suggestions won't be tied to real, confirmed weak points",
+          "Part B's questions are purely rhetorical and don't need answers",
+          "This actually speeds up the process with no real downside"
+        ],
+        "answer": 1,
+        "why": "Part C is explicitly designed to build improvements only from the manager's answers to the diagnostic questions - skipping that step disconnects the suggestions from real confirmed weak points."
+      },
+      {
+        "q": "Why does the prompt split the work into three parts - describe, question, improve - instead of asking for improvements right away?",
+        "options": [
+          "It's a technical limitation of the AI tool",
+          "It mirrors how good process improvement actually works, stopping the AI from jumping to solutions before real weak points are understood, and forces the manager to surface facts they hadn't written down",
+          "Splitting into parts is a requirement of the platform",
+          "It shortens the total length of the output"
+        ],
+        "answer": 1,
+        "why": "Describing first, then questioning, then improving is what stops premature solutioning and forces the manager to surface facts they know but haven't yet written down."
+      },
+      {
+        "q": "Part C's suggested improvements come back recommending 'just automate everything.' What does this indicate?",
+        "options": [
+          "A correctly working prompt output",
+          "A failure to follow instructions - the prompt explicitly bans a generic 'automate everything' fix and requires each suggestion grounded in a specific identified weak point",
+          "Automation is always the correct fix for any process",
+          "The manager should adopt this suggestion immediately without question"
+        ],
+        "answer": 1,
+        "why": "The prompt explicitly instructs against a generic 'automate everything' fix, requiring every suggestion to be grounded in a specific weak point identified in Part B."
+      }
+    ],
+    "ops-i1-operational-reports-dashboards-narratives": [
+      {
+        "q": "The AI report narrative explains a metric drop with a plausible-sounding cause the manager never actually confirmed or provided. What's the issue?",
+        "options": [
+          "It's fine, since the explanation sounds reasonable",
+          "The prompt requires 'reason not yet identified' instead of a guessed explanation - a plausible but false story is a real risk in a leadership report",
+          "Leadership prefers confident explanations regardless of accuracy",
+          "This is an acceptable use of the AI's general business knowledge"
+        ],
+        "answer": 1,
+        "why": "The prompt forces 'reason not yet identified' instead of a guessed explanation, since a plausible-sounding but false story is one of the biggest risks in leadership reporting."
+      },
+      {
+        "q": "Why does the prompt insist that dashboard figures be used 'exactly as given,' with no recalculation?",
+        "options": [
+          "AI models are generally bad at math",
+          "It removes the single biggest risk in AI-written operational reporting: the model quietly recalculating a percentage or averaging numbers incorrectly",
+          "Recalculation simply takes too much processing time",
+          "Dashboards already round every number before export"
+        ],
+        "answer": 1,
+        "why": "Requiring pre-calculated figures to be used exactly as given removes the single biggest risk in this workflow: a model silently miscalculating a percentage or trend."
+      },
+      {
+        "q": "A report groups a metric that's significantly below target and still worsening into 'worth watching' instead of 'needs a decision.' What does the lesson imply about this?",
+        "options": [
+          "The two categories are essentially interchangeable",
+          "Distinguishing 'needs a decision' from routine 'worth watching' matters, because urgent items get buried if the grouping isn't done correctly",
+          "Only positive metrics belong under 'worth watching'",
+          "There should only be two status categories total"
+        ],
+        "answer": 1,
+        "why": "The lesson lists failing to distinguish 'needs a decision' items from routine 'worth watching' ones as a common mistake, since it buries urgent items."
+      }
+    ],
+    "ops-i2-vendor-internal-communications": [
+      {
+        "q": "A firm vendor escalation drafted by AI states a specific contract penalty percentage that the manager never actually provided. What's the risk?",
+        "options": [
+          "None - AI can reasonably infer standard contract terms",
+          "The AI stating a specific SLA percentage or penalty clause that isn't accurate to the actual contract could create real liability if sent - this is explicitly banned",
+          "Penalty clauses are always public information anyway",
+          "This risk only applies to internal communications, not vendor ones"
+        ],
+        "answer": 1,
+        "why": "The prompt explicitly bans stating any contract term, penalty, or SLA percentage that wasn't actually given, since an inaccurate figure sent to a vendor could create real liability."
+      },
+      {
+        "q": "Why does the prompt require selecting a tone - neutral, firm, or urgent - up front before drafting?",
+        "options": [
+          "Tone selection is purely cosmetic and has no real effect",
+          "It keeps a vendor escalation appropriately firm without tipping into something that reads as a threat, and keeps internal announcements calm instead of alarmist",
+          "Vendors ignore any message without an explicitly stated tone",
+          "It's a technical requirement of the automation-agents platform"
+        ],
+        "answer": 1,
+        "why": "Choosing the tone up front keeps a firm escalation professional rather than hostile, and keeps a routine internal update calm rather than alarmist."
+      },
+      {
+        "q": "An internal process-update announcement is drafted without any specific call to action at the end. What outcome does the lesson warn about?",
+        "options": [
+          "None - announcements don't really need a call to action",
+          "Teams read it but don't change behavior - a single clear call to action is what actually moves people to respond or act",
+          "This is actually the preferred style for internal communications",
+          "It makes the message read as more professional"
+        ],
+        "answer": 1,
+        "why": "A single clear call to action is what actually moves a team to respond instead of reading and moving on - without it, teams read it but don't change behavior."
+      }
+    ],
+    "ops-i3-identify-automation-candidates": [
+      {
+        "q": "A team decides to fully automate customer escalation triage - a judgment-heavy task - with no human review step, purely because it's the most annoying manual task. What mistake does this represent?",
+        "options": [
+          "Automating the loudest or most annoying task instead of the one that scores best on frequency, rule-based-ness, and error cost, and fully automating a judgment-heavy task with no human-in-the-loop review",
+          "A sound automation decision, since it saves the most time",
+          "Escalation triage is always safe to fully automate",
+          "The task should have been automated even faster than it was"
+        ],
+        "answer": 0,
+        "why": "The lesson lists both automating the loudest task instead of the best-scoring one, and fully automating a judgment-heavy task with no human review, as common mistakes."
+      },
+      {
+        "q": "Why does the prompt ask the AI to flag the single biggest risk of automating the top-ranked candidate?",
+        "options": [
+          "It's a formality with no real purpose",
+          "It forces the team to think through the failure mode before building anything, rather than discovering it after something breaks silently",
+          "Risk analysis is a required setting in Claude and ChatGPT",
+          "It reduces the total number of candidates considered"
+        ],
+        "answer": 1,
+        "why": "Naming the top pick's biggest risk forces the team to think through the failure mode before building, rather than discovering it later after something breaks silently."
+      },
+      {
+        "q": "The AI recommends automating a task using an integration the company doesn't actually have. What does the prompt explicitly guard against here?",
+        "options": [
+          "Nothing - the AI can reasonably assume standard tooling exists",
+          "The prompt explicitly instructs not to assume tools or integrations that haven't been mentioned as available in the company's actual stack",
+          "This is a normal, expected type of suggestion",
+          "Tool assumptions made by the AI are always correct"
+        ],
+        "answer": 1,
+        "why": "The prompt explicitly instructs against recommending tools or integrations that haven't been mentioned as actually available, to keep the shortlist realistic."
+      }
+    ],
+    "ops-a1-rollout-ai-assisted-process-team": [
+      {
+        "q": "A manager rolls out a new AI-assisted report-drafting process to the entire six-person team on day one, with no pilot phase. What risk does this create?",
+        "options": [
+          "None - a faster rollout is always better",
+          "Announcing to the whole team at once instead of piloting with a small group first is a listed common mistake, since a pilot lets you catch a bad output or skipped guardrail while the blast radius is still small",
+          "Pilots are only needed for safety-critical processes",
+          "The rollout will automatically self-correct over time"
+        ],
+        "answer": 1,
+        "why": "Piloting with a small group first lets you catch a bad output or a skipped guardrail while only two people are affected, instead of the whole team at once."
+      },
+      {
+        "q": "Why must the training material explicitly state, in writing, which steps still remain fully human?",
+        "options": [
+          "It's a nice-to-have detail with no real function",
+          "It's the single most important guardrail against the most common AI rollout failure: someone eventually treating a 'draft to review' step as 'final, ready to send'",
+          "Written documentation is a legal requirement for every process change",
+          "It reduces the overall length of training time"
+        ],
+        "answer": 1,
+        "why": "Explicitly naming which steps stay fully human, in writing, is the key guardrail against the most common rollout failure - a review step quietly being treated as final."
+      },
+      {
+        "q": "A rollout plan has no rollback plan and no named decision-maker to trigger one. What does the lesson say this undermines?",
+        "options": [
+          "Nothing significant in practice",
+          "It undermines the team's trust in the rollout - a genuine rollback plan with a named decision-maker is what lets the team trust there's a real off-switch, not just a hopeful announcement",
+          "Rollback plans are only needed after a failure has already occurred",
+          "This is standard and doesn't need to be planned in advance"
+        ],
+        "answer": 1,
+        "why": "A genuine, named rollback plan is what makes the rollout something the team can actually trust, rather than just a hopeful announcement with no real off-switch."
+      }
+    ],
+    "seo-b1-content-briefs-from-keyword-intent": [
+      {
+        "q": "An SEO specialist skips reviewing the actual top-ranking pages and just feeds the target keyword to the AI. What's the resulting risk?",
+        "options": [
+          "None - the AI can accurately guess ranking page formats",
+          "The AI will guess format and subtopics from the keyword alone instead of being grounded in real SERP observations, producing a brief that isn't realistic",
+          "This actually saves time with no real quality tradeoff",
+          "Keyword text alone is always sufficient for a strong brief"
+        ],
+        "answer": 1,
+        "why": "Skipping the SERP observation step is a listed common mistake, since it lets the AI guess format and subtopics from the keyword alone instead of grounding the brief in real data."
+      },
+      {
+        "q": "Why does the prompt require the brief to be grounded in actual observed SERP data rather than general SEO knowledge?",
+        "options": [
+          "General SEO knowledge is always wrong",
+          "A keyword like 'best project management software' needs a comparison-heavy format because that's what's actually satisfying searchers - no generic SEO advice substitutes for looking at the real results page",
+          "SERP data is a requirement of search engine guidelines",
+          "It reduces the brief's total word count"
+        ],
+        "answer": 1,
+        "why": "Real SERP observations reveal what format is actually satisfying the search intent for that specific keyword - generic SEO knowledge can't substitute for that."
+      },
+      {
+        "q": "Two content briefs for different keywords come back nearly identical and generic enough to apply to almost any keyword in the niche. What does the lesson say about this?",
+        "options": [
+          "This is efficient and perfectly acceptable",
+          "This is a listed common mistake - briefs should be specific to the actual keyword, intent, and SERP data, not interchangeable",
+          "Identical briefs save the writer valuable time",
+          "This indicates the site has strong topical authority"
+        ],
+        "answer": 1,
+        "why": "Writing a brief generic enough to apply to almost any keyword in the niche is explicitly listed as a common mistake in this lesson."
+      }
+    ],
+    "seo-b2-title-tags-meta-descriptions-at-scale": [
+      {
+        "q": "A batch of ten generated title tags all start with 'The Ultimate Guide to...' What does this indicate went wrong?",
+        "options": [
+          "This is a strong, consistent brand pattern worth keeping",
+          "The AI fell into the classic templated or spam failure mode the prompt explicitly bans - repeating the same opener across a batch, which reads as spam and hurts click-through rate",
+          "All good titles should start the same way for consistency",
+          "This only matters for meta descriptions, not for titles"
+        ],
+        "answer": 1,
+        "why": "Repeating the same opening phrase across a batch is the classic AI failure mode this prompt explicitly bans, since it reads as spam and hurts click-through rate."
+      },
+      {
+        "q": "Why does the prompt require a distinguishing detail per page, rather than just a keyword and page type?",
+        "options": [
+          "It's optional decorative information with no real function",
+          "Without a distinguishing detail, the AI has nothing to differentiate on besides the keyword, leading to templated repetition across the batch",
+          "Distinguishing details are required by CMS platforms",
+          "It simply makes the output table longer"
+        ],
+        "answer": 1,
+        "why": "A distinguishing detail per page is what gives the AI something to differentiate on besides the shared keyword, which is what prevents templated repetition."
+      },
+      {
+        "q": "A generated title tag comes in at 68 characters and is flagged by the AI as over the limit. What should the specialist do before publishing?",
+        "options": [
+          "Publish it anyway, since the difference is small",
+          "Revise it to fit under the roughly 60-character limit and verify actual rendered length with a SERP preview tool - ignoring character-count flags risks truncation in search results",
+          "Delete the title tag entirely instead of fixing it",
+          "Ignore the flag, since AI-generated character counts are unreliable"
+        ],
+        "answer": 1,
+        "why": "Ignoring the character-count flags and publishing an over-limit title risks it getting truncated in actual search results, which the lesson lists as a common mistake."
+      }
+    ],
+    "seo-i1-competitor-content-gap-research": [
+      {
+        "q": "Gemini's Deep Research claims a competitor doesn't cover pricing comparisons, but the SEO specialist doesn't check the actual competitor page before building a content plan around this gap. What's the risk?",
+        "options": [
+          "None - cited AI research is always accurate",
+          "An unverified claim about competitor content could be wrong, and building a content plan around a gap that doesn't actually exist wastes resources - verification of top findings is required",
+          "Competitor pages never change, so verification isn't necessary",
+          "This is standard practice that requires no follow-up"
+        ],
+        "answer": 1,
+        "why": "The workflow explicitly requires opening and verifying at least the top gap claims yourself, since an uncited or unverified claim being wrong wastes real resources on a gap that doesn't exist."
+      },
+      {
+        "q": "Why does the prompt rank gaps by how many competitors are missing them, rather than listing anything absent from a single page?",
+        "options": [
+          "It's simply easier to calculate that way",
+          "It surfaces subtopics with the broadest opportunity instead of highlighting one competitor's individual oversight, which may not represent a genuine content gap",
+          "Single-competitor gaps are always factually false",
+          "Multiple competitors always agree on content strategy"
+        ],
+        "answer": 1,
+        "why": "Ranking by how many competitors miss a subtopic surfaces the broadest real opportunities, rather than treating one competitor's individual gap as a general trend."
+      },
+      {
+        "q": "An SEO specialist researches a topic too broadly and gets back gaps like 'could cover pricing more.' What issue does this represent?",
+        "options": [
+          "A perfectly actionable finding as-is",
+          "A listed common mistake - researching too broadly produces generic gaps instead of specific, targetable angles worth briefing",
+          "This means the topic genuinely has no real gaps",
+          "Broad gaps are actually easier for writers to act on"
+        ],
+        "answer": 1,
+        "why": "Researching a topic too broadly and getting back vague, generic gaps instead of specific, targetable angles is explicitly listed as a common mistake."
+      }
+    ],
+    "seo-i2-outlines-drafts-satisfy-search-intent": [
+      {
+        "q": "A draft's introduction opens with three paragraphs of generic scene-setting before finally answering the searcher's core question. What problem does this represent?",
+        "options": [
+          "This is good practice for maximizing SEO content length",
+          "It's a listed common mistake - burying the actual answer under generic preamble frustrates readers and hurts satisfaction signals; the core question should be answered in the first 2-3 sentences",
+          "Longer introductions always rank better in search results",
+          "This only matters for informational content, not commercial content"
+        ],
+        "answer": 1,
+        "why": "The lesson requires the core question be answered directly within the first 2-3 sentences - burying it under generic preamble is a listed common mistake."
+      },
+      {
+        "q": "Why does the prompt ask the AI to flag brief subtopics that don't clearly serve the stated search intent as 'consider cutting'?",
+        "options": [
+          "It's a formality with no real function",
+          "It catches scope creep before it reaches the draft stage - content that's keyword-optimized but doesn't serve the real intent struggles to rank and converts poorly",
+          "Cutting subtopics always improves the piece's word count target",
+          "All subtopics from a brief must be included regardless of intent"
+        ],
+        "answer": 1,
+        "why": "Flagging off-intent subtopics for cutting at the outline stage catches scope creep before it reaches the draft, since content that doesn't serve real intent underperforms even when keyword-optimized."
+      },
+      {
+        "q": "The draft includes a specific statistic the writer never verified, and it isn't common, easily verifiable knowledge. What should have happened, per the prompt's rules?",
+        "options": [
+          "Publish it, since AI-generated statistics are generally reliable",
+          "The AI should have flagged it as uncertain, and the writer must fact-check every specific claim or statistic before publishing",
+          "Statistics should never appear in SEO content at all",
+          "Only editors need to check facts, not writers"
+        ],
+        "answer": 1,
+        "why": "The prompt requires flagging uncertain statistics rather than stating them confidently, since AI-generated statistics are a well-documented source of factual errors in published content."
+      }
+    ],
+    "seo-i3-technical-seo-audit-notes-to-client-reports": [
+      {
+        "q": "A client report states an issue is costing the site 'approximately 15% of organic traffic,' though no such traffic loss was ever actually measured. What's the problem?",
+        "options": [
+          "It's a reasonable estimate to include for urgency",
+          "The prompt explicitly bans inventing specific traffic or ranking impact numbers - a claim like this is a credibility risk if the client asks how it was calculated",
+          "All technical SEO reports must include a traffic percentage figure",
+          "This is standard, expected client reporting practice"
+        ],
+        "answer": 1,
+        "why": "The prompt explicitly bans inventing specific traffic or ranking impact numbers, since an unmeasured figure is a real credibility risk if a client later asks how it was calculated."
+      },
+      {
+        "q": "Why does the prompt group findings into 'fix first / fix soon / monitor' based on severity and impact reasoning, rather than the order the crawl tool listed them?",
+        "options": [
+          "Crawl tool order is always already prioritized correctly",
+          "It makes the report immediately actionable for a client deciding where to spend developer time, rather than an arbitrary list order",
+          "Grouping is a formatting requirement of most CMS platforms",
+          "It reduces the overall length of the report"
+        ],
+        "answer": 1,
+        "why": "Grouping by actual severity and impact reasoning, instead of an arbitrary crawl-tool order, is what makes the report immediately actionable for prioritizing developer time."
+      },
+      {
+        "q": "A long list of raw findings gets condensed into a report, and two related issues get silently merged, losing one of the original findings. What does the lesson say about this?",
+        "options": [
+          "Merging findings is fine as long as the report reads cleanly",
+          "Losing or merging findings incorrectly is a listed common mistake - the client report must match the actual audit, so nothing should be dropped or merged incorrectly",
+          "Only high-severity findings need to be preserved in the report",
+          "This is the client's responsibility to catch, not the specialist's"
+        ],
+        "answer": 1,
+        "why": "The lesson explicitly lists losing or incorrectly merging findings on a long raw list as a common mistake, since the client report must match the actual audit exactly."
+      }
+    ],
+    "seo-a1-seo-content-production-pipeline-quality-gates": [
+      {
+        "q": "A team designs a content pipeline that assumes a dedicated fact-checking role, but the team is actually just one strategist, two writers, and a part-time editor. What issue does this create?",
+        "options": [
+          "None - ambitious pipelines improve quality regardless of team size",
+          "A listed common mistake - designing a pipeline sized for a team you don't actually have causes it to collapse under real capacity constraints",
+          "Fact-checking roles are unnecessary in any content pipeline",
+          "This only matters for large content teams, not small ones"
+        ],
+        "answer": 1,
+        "why": "Designing a pipeline sized for headcount the team doesn't actually have is explicitly listed as a common mistake, since it collapses under real capacity constraints."
+      },
+      {
+        "q": "Why does the prompt require 'concrete, checkable' pass/fail criteria at each quality gate instead of a general goal like 'make sure it's good'?",
+        "options": [
+          "Concrete criteria are just a stylistic preference",
+          "A gate like 'every statistic has a live, checked source' is something an editor can actually verify, while 'good quality' is not - checkable criteria is what makes it a real quality system",
+          "Vague goals are simply faster to write down",
+          "Checkable criteria are required by search engines"
+        ],
+        "answer": 1,
+        "why": "Concrete, checkable criteria - like verifying every statistic has a live source - is what turns the pipeline into a real quality system rather than an aspirational flowchart."
+      },
+      {
+        "q": "A team finishes designing a full multi-stage pipeline and immediately rolls it out to their entire content volume without testing it first. What does the lesson recommend instead?",
+        "options": [
+          "Immediate full rollout is the correct approach for efficiency",
+          "Pilot the pipeline on a small batch of real content, like 2-3 pieces, before rolling it out to full production volume",
+          "Skip piloting entirely, since pipelines with quality gates never fail",
+          "Only pilot pipelines that don't include any AI-assisted stages"
+        ],
+        "answer": 1,
+        "why": "Rolling out the full pipeline to full volume immediately, instead of piloting on a small batch first, is explicitly listed as a common mistake."
+      }
+    ]
+  }
+}

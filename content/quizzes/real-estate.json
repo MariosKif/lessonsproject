@@ -1,0 +1,424 @@
+{
+  "quizzes": {
+    "re-b1-listing-from-notes": [
+      {
+        "q": "Your rough notes for a listing never mention square footage, but a good MLS description usually includes it. What should Claude do?",
+        "options": [
+          "Estimate a reasonable square footage based on typical units",
+          "Skip mentioning square footage anywhere in the output, silently",
+          "List it under \"Missing facts to confirm\" rather than guessing at it",
+          "Use the average square footage of nearby listings as a stand-in"
+        ],
+        "answer": 2,
+        "why": "The guardrail prompt explicitly tells Claude to surface any normally-expected fact that's missing from your notes under a \"Missing facts to confirm\" list instead of guessing at it."
+      },
+      {
+        "q": "The prompt states the \"use only my notes\" rule twice — once as a rule, once as an instruction to list missing facts. Why the repetition?",
+        "options": [
+          "Repetition has no functional purpose here, just habit",
+          "Because Claude ignores any instruction stated only once",
+          "It's required for MLS compliance specifically",
+          "It reinforces the constraint so the model surfaces gaps instead of smoothing over missing information with a plausible-sounding guess"
+        ],
+        "answer": 3,
+        "why": "Stating the constraint both as a rule and as an explicit fallback instruction is what stops the model from quietly filling a gap with a plausible detail instead of flagging it."
+      },
+      {
+        "q": "You want to verify the guardrail against inventing facts is actually working. What's the right way to test it?",
+        "options": [
+          "Testing with already-polished notes hides whether the invent-nothing guardrail is actually working — test it with genuinely rough, incomplete notes",
+          "That's the best way to test since it mirrors reality most closely",
+          "Polished notes always generate a materially better draft",
+          "The type of notes used for testing doesn't matter"
+        ],
+        "answer": 0,
+        "why": "Polished, already-complete notes give the model nothing to fill in, so they can't reveal whether the anti-invention guardrail actually holds when facts are genuinely missing."
+      }
+    ],
+    "re-b2-improve-listing-description": [
+      {
+        "q": "You ask Claude to rewrite a listing, and \"updated kitchen\" comes back as \"fully renovated kitchen.\" What happened?",
+        "options": [
+          "Nothing went wrong — this is a normal stylistic improvement",
+          "The rewrite silently changed a fact — this is exactly the kind of risky wording the \"Facts changed or added\" self-audit is meant to catch",
+          "\"Fully renovated\" and \"updated\" always mean the same thing legally",
+          "This is fine as long as the target word count was met"
+        ],
+        "answer": 1,
+        "why": "\"Fully renovated\" is a stronger, different claim than \"updated,\" and the required self-audit step exists precisely to flag this kind of quiet fact drift before it's published."
+      },
+      {
+        "q": "Under the rewrite prompt's rules, what is Claude allowed to change versus not change?",
+        "options": [
+          "May add new features not in the original to make the copy more compelling",
+          "May not change word order or phrasing at all",
+          "May reorder, cut filler, and use more vivid wording for the same fact, but may not add any new fact, feature, or claim",
+          "May only shorten the text, never rephrase it"
+        ],
+        "answer": 2,
+        "why": "The prompt explicitly permits reordering and tightening language while banning any new fact, feature, upgrade, or claim beyond what the original text already stated."
+      },
+      {
+        "q": "You run the rewrite prompt without giving a target word count. What's the likely consequence?",
+        "options": [
+          "Word count has no bearing on anything in this workflow",
+          "Skipping the word count always makes the rewrite shorter",
+          "MLS description fields have no length limits to worry about",
+          "The rewrite may come back a different length than what your MLS field actually allows"
+        ],
+        "answer": 3,
+        "why": "Without a specified target length, the rewrite has no length constraint to match your MLS character limit against, risking a draft that doesn't fit the destination field."
+      }
+    ],
+    "re-b3-buyer-followup-emails": [
+      {
+        "q": "A buyer loved the balcony and asked about the HOA fee during a showing. What makes a follow-up email actually effective, per the lesson?",
+        "options": [
+          "Referencing at least one specific detail from what the buyer liked or asked about during the showing",
+          "Sending a generic \"just checking in!\" template quickly",
+          "Adding several different calls to action to maximize the odds of a reply",
+          "Using urgency language like \"won't last long\" to prompt a fast reply"
+        ],
+        "answer": 0,
+        "why": "Referencing a specific reaction from the buyer's own walkthrough is the single biggest lever for reply rates — generic emails read as mass mail and get ignored."
+      },
+      {
+        "q": "Why does the prompt require ending with one clear next step instead of several different asks?",
+        "options": [
+          "Multiple asks are always more effective at generating a response",
+          "A single, low-friction next step is easier for the buyer to respond to than juggling multiple asks",
+          "Email clients technically block messages containing more than one question",
+          "It's a spam-filter requirement, not a persuasion choice"
+        ],
+        "answer": 1,
+        "why": "One clear, low-friction ask is easier to act on than several competing requests, which is why the prompt explicitly bans multiple asks in a single follow-up."
+      },
+      {
+        "q": "An agent adds \"this unit won't last long!\" to a first follow-up email to create urgency. What's wrong with this?",
+        "options": [
+          "Urgency language builds trust with hesitant buyers",
+          "Urgency language is a required real-estate marketing standard",
+          "Urgency or scarcity language on a first follow-up can feel pushy and risks losing a hesitant buyer's trust",
+          "This concern only applies to luxury listings"
+        ],
+        "answer": 2,
+        "why": "The prompt explicitly bans pressure tactics like \"won't last long\" because urgency language on an early follow-up tends to read as pushy and can cost you a hesitant buyer's trust."
+      }
+    ],
+    "re-b4-seller-update-messages": [
+      {
+        "q": "This week's buyer feedback on a seller's listing was lukewarm — one buyer said the price felt high. What should the weekly update do?",
+        "options": [
+          "Soften the feedback so the seller stays positive and motivated",
+          "Omit the feedback entirely since there's no offer yet",
+          "Wait to send an update until there's positive feedback to report",
+          "Report the feedback honestly, including negative comments, without softening or omitting it"
+        ],
+        "answer": 3,
+        "why": "The prompt's core guardrail explicitly forbids softening or omitting negative feedback, since sellers lose trust fast when they later learn feedback was worse than what they were told."
+      },
+      {
+        "q": "Multiple showings this week mention the same concern about parking. Why ask Claude to flag that repeated pattern?",
+        "options": [
+          "A repeated pattern across multiple showings' feedback is an early warning signal for a pricing or staging conversation that needs to happen",
+          "Repetition should be removed from the update to keep it concise",
+          "Patterns in feedback are only useful for the buyer's agent, not the seller's",
+          "Feedback patterns rarely point to anything actionable"
+        ],
+        "answer": 0,
+        "why": "A pattern repeating across independent showings is a much stronger signal than any single comment, and surfacing it turns a routine update into an early cue for a pricing or staging conversation."
+      },
+      {
+        "q": "A draft update implies strong buyer interest even though the actual numbers were three showings and no offers. What's the problem?",
+        "options": [
+          "A little optimism helps keep sellers motivated during a slow week",
+          "Letting the update imply more buyer interest than the actual numbers support undermines the trust-building purpose of an honest update",
+          "Sellers generally prefer inflated updates over accurate ones",
+          "This is only a problem if the seller later finds out independently"
+        ],
+        "answer": 1,
+        "why": "The whole value of a weekly update is that sellers can trust it even when news is lukewarm; inflating perceived interest defeats that purpose regardless of whether it's ever discovered."
+      }
+    ],
+    "re-b5-summarize-property-documents-safely": [
+      {
+        "q": "An inspection report mentions a water stain but includes no repair cost estimate. Should the summary include a repair cost?",
+        "options": [
+          "Yes, a reasonable market-based repair cost estimate is helpful",
+          "Only estimate costs for safety-related items, not cosmetic ones",
+          "No — do not predict a repair cost unless a specific cost is explicitly stated in the document",
+          "Yes, but only when the item appears in the \"major issues\" category"
+        ],
+        "answer": 2,
+        "why": "The prompt explicitly bans predicting repair costs unless the document itself states one, since an invented cost is exactly the kind of plausible-sounding addition that creates liability."
+      },
+      {
+        "q": "Why does the summary prompt require an exact disclaimer sentence at the end of every output?",
+        "options": [
+          "It's purely a stylistic formality with no real function",
+          "It's required only for inspection reports, not seller disclosures",
+          "It replaces the need to attach the original document to the summary",
+          "It clearly labels the summary as a convenience tool, not a substitute for the full document or advice from a licensed professional"
+        ],
+        "answer": 3,
+        "why": "The required disclaimer keeps every summary you forward clearly labeled as a convenience tool rather than the document of record, protecting both you and your client."
+      },
+      {
+        "q": "You've generated a clean summary of a seller disclosure. How should you share it with your client?",
+        "options": [
+          "The summary should be shared alongside the full original document, never in place of it",
+          "It's fine to forward the summary alone since it covers everything relevant",
+          "Attaching both the summary and original document tends to confuse clients",
+          "The original document becomes optional once a summary exists"
+        ],
+        "answer": 0,
+        "why": "The workflow explicitly says to share the summary alongside the full original document, never instead of it, since the summary is a convenience layer, not a replacement."
+      }
+    ],
+    "re-b6-property-faq-from-listing": [
+      {
+        "q": "A buyer's likely FAQ question about property taxes wasn't included in your facts sheet. How should the FAQ answer it?",
+        "options": [
+          "Estimate a reasonable tax figure based on the listing price",
+          "\"Ask your agent for current details\" instead of guessing at a figure that wasn't provided",
+          "Omit the tax question from the FAQ entirely, without explanation",
+          "Provide a national average property tax rate as a placeholder"
+        ],
+        "answer": 1,
+        "why": "The prompt's explicit fallback instruction is to answer unknowns with \"Ask your agent for current details\" rather than let Claude guess at a figure like taxes or HOA fees."
+      },
+      {
+        "q": "Why does the lesson cap each FAQ answer at 1-3 sentences?",
+        "options": [
+          "Longer answers aren't technically supported by the output format",
+          "It's an MLS compliance requirement for FAQ documents",
+          "It keeps the sheet scannable and printable on a single page for buyers at an open house",
+          "Shorter answers are inherently more factually accurate"
+        ],
+        "answer": 2,
+        "why": "Buyers won't read past a single page at an open house, so keeping each answer brief is what keeps the whole FAQ printable and scannable."
+      },
+      {
+        "q": "A new question keeps coming up at recent showings that isn't in your existing FAQ sheet. What should you do?",
+        "options": [
+          "FAQs should stay static once created, to maintain consistency",
+          "Recurring buyer questions rarely change over the life of a listing",
+          "Updating the FAQ requires rebuilding it from scratch each time",
+          "The FAQ should be updated whenever a new recurring question comes up at a showing"
+        ],
+        "answer": 3,
+        "why": "The lesson's workflow explicitly includes updating the FAQ whenever a new recurring question emerges, keeping the sheet aligned with what buyers actually ask."
+      }
+    ],
+    "re-i1-neighborhood-guide-copy": [
+      {
+        "q": "A draft of neighborhood copy includes a specific walk score and a school rating you never supplied. What went wrong?",
+        "options": [
+          "These are exactly the specific, checkable claims a model will confidently invent unless explicitly banned — a core guardrail failure here",
+          "This is normal, helpful enrichment of the neighborhood copy",
+          "Walk scores don't need verification since they're considered public data",
+          "This is fine as long as it's disclosed to the client afterward"
+        ],
+        "answer": 0,
+        "why": "School ratings, walk scores, and safety claims are exactly the specific, checkable details a model will confidently invent for a recognizable neighborhood name unless the prompt explicitly bans them."
+      },
+      {
+        "q": "Why does the lesson treat the fair-housing rule as a standing instruction applied to every sentence, not a one-time reminder?",
+        "options": [
+          "Because fair-housing law technically only applies to headlines",
+          "Because fair-housing risk can appear in any sentence describing \"who lives\" somewhere, not just an obviously risky one",
+          "Because it's a formality without real practical risk",
+          "Because standing rules are just easier to write, not more effective"
+        ],
+        "answer": 1,
+        "why": "Fair-housing risk can surface in any sentence that describes people rather than places, so the rule needs to apply continuously across the whole draft, not just to one obvious line."
+      },
+      {
+        "q": "You want to state that a listing is a \"12-minute drive to downtown.\" What should you check before using that claim?",
+        "options": [
+          "Estimated times are fine as long as they're vaguely labeled as estimates",
+          "Drive and walk times don't need verification since they change constantly anyway",
+          "Only use drive/walk times you've personally measured or sourced — unverified specific claims are a credibility and accuracy risk",
+          "This concern only matters for luxury listings, not typical ones"
+        ],
+        "answer": 2,
+        "why": "Specific, checkable claims like drive times are high-risk if unverified — the lesson requires using only times you've actually measured or can point to a source for."
+      }
+    ],
+    "re-i2-social-posts-new-listing": [
+      {
+        "q": "You take the same caption text and post it unchanged across Instagram, Facebook, and LinkedIn. What's the issue?",
+        "options": [
+          "Nothing is wrong — consistency across platforms is ideal",
+          "LinkedIn and Instagram actually require identical formatting",
+          "Copy-pasting one caption everywhere helps prevent fair-housing issues",
+          "Each platform has different tone and format conventions — copy-pasting one caption everywhere ignores those platform-specific conventions"
+        ],
+        "answer": 3,
+        "why": "A caption that works casually on Instagram reads wrong on LinkedIn's more professional, context-driven tone, which is why the lesson generates platform-specific versions from one brief."
+      },
+      {
+        "q": "Why does the multi-platform prompt generate all four formats (IG, Facebook, LinkedIn, video script) from a single source brief?",
+        "options": [
+          "It keeps the underlying facts identical across all four formats and avoids drift from re-explaining the listing each time",
+          "It's simply faster to write four completely separate briefs instead",
+          "Only one of the four generated formats is ever actually usable",
+          "It's required to avoid duplicate-content penalties on social platforms"
+        ],
+        "answer": 0,
+        "why": "Generating from one grounded brief keeps facts consistent across every platform version, preventing the drift that comes from re-explaining the listing separately each time."
+      },
+      {
+        "q": "A draft LinkedIn post describes the listing as \"perfect for young professionals.\" What's the problem?",
+        "options": [
+          "This is effective marketing language that boosts engagement with no downside",
+          "This creates fair-housing risk by describing the type of buyer or resident an area suits, rather than the property or location itself",
+          "This is fine as long as it doesn't explicitly reference race",
+          "This concern only applies in commercial real estate, not residential"
+        ],
+        "answer": 1,
+        "why": "Steering language that describes who a listing suits, rather than what the property or location offers, is exactly the kind of fair-housing risk the prompt's guardrail is meant to prevent."
+      }
+    ],
+    "re-i3-objection-handling-scripts": [
+      {
+        "q": "An agent memorizes a Claude-generated negotiation script word-for-word before a tough conversation. What's the risk?",
+        "options": [
+          "Memorized scripts work best since consistency wins negotiations",
+          "Memorizing word for word is required for professionalism in this context",
+          "A memorized script falls apart the instant the conversation goes off-path; talking points that are internalized adapt better",
+          "There's no real downside to memorizing a script verbatim"
+        ],
+        "answer": 2,
+        "why": "The prompt asks for talking points rather than a rigid script precisely because a memorized script breaks down once the real conversation deviates, while internalized approaches can adapt."
+      },
+      {
+        "q": "After generating response approaches, the prompt has Claude roleplay the other side pushing back. Why include this step?",
+        "options": [
+          "It's an optional novelty feature with no real practical value",
+          "It only helps a seller's agent, not a buyer's agent",
+          "It replaces the need to actually know your own deal's facts",
+          "Roleplay practice is what turns this from a reading exercise into actual preparation for a live, unpredictable conversation"
+        ],
+        "answer": 3,
+        "why": "Reading talking points silently is passive; roleplaying pushback is what actually builds the ability to respond under pressure in the real conversation."
+      },
+      {
+        "q": "While preparing talking points, you let Claude supply a specific recent comp figure it wasn't given. What's the risk?",
+        "options": [
+          "Only use your own verified comps and figures — the prompt explicitly bans invented numbers, using placeholders instead",
+          "Claude's estimated comps are reliable enough to cite directly in a live negotiation",
+          "Comp data doesn't really matter for objection handling",
+          "Any plausible-sounding number works fine since it's only for practice"
+        ],
+        "answer": 0,
+        "why": "The prompt explicitly instructs Claude to use a placeholder instead of inventing a comp figure, since citing a made-up number in a live negotiation is a real credibility risk."
+      }
+    ],
+    "re-i4-local-market-research-perplexity": [
+      {
+        "q": "You ask Gemini Deep Research \"how's the market?\" with no area or timeframe specified. What's the likely result?",
+        "options": [
+          "Gemini automatically narrows any query to the agent's exact ZIP code",
+          "Too broad a question fails to return locally specific data — you need to name the exact area and timeframe",
+          "This is actually the recommended way to start every market query",
+          "Vague questions tend to produce more accurate citations"
+        ],
+        "answer": 1,
+        "why": "Naming a specific area and timeframe is what gets Gemini Deep Research to run genuinely local queries; a vague question tends to return generic or national-level results instead."
+      },
+      {
+        "q": "Gemini Deep Research returns a cited market summary. Why click through 2-3 of the citations yourself instead of trusting the summary paragraph alone?",
+        "options": [
+          "Deep Research summaries are usually fabricated and unreliable",
+          "It's required to unlock the client-ready summary feature",
+          "To confirm the underlying sources are actually recent and locally specific, not just present",
+          "Reports from Deep Research never actually contain citations"
+        ],
+        "answer": 2,
+        "why": "Having a citation doesn't guarantee it's current or genuinely local — opening a few links yourself is how you confirm the data actually supports the claim before using it with a client."
+      },
+      {
+        "q": "You have market research from a month ago and want to reuse it in a new client conversation. What should you do first?",
+        "options": [
+          "Market data doesn't change meaningfully over a few weeks, so reuse is fine",
+          "Only re-run research if a client directly asks for a fresh source",
+          "Older research is actually more reliable since it's already been verified once",
+          "Market data ages fast — research should be re-run before reusing it in a new client conversation"
+        ],
+        "answer": 3,
+        "why": "The lesson notes that market data ages quickly, so research needs to be re-run before it's reused in a new conversation rather than treated as still current."
+      }
+    ],
+    "re-i5-lead-notes-weekly-activity-report": [
+      {
+        "q": "A lead never mentioned a buying timeline in your notes. What should the \"suggested next action\" column say for them?",
+        "options": [
+          "A fact-finding action aimed at determining the lead's timeline, since the guardrail forbids assuming urgency that was never stated",
+          "Assume urgency and suggest pushing hard toward a quick close",
+          "Deprioritize the lead entirely since no timeline was given",
+          "Mark the lead as not interested and move on"
+        ],
+        "answer": 0,
+        "why": "The prompt explicitly instructs that when no timeline is stated, the suggested next action should be one that finds out the timeline, not one that assumes urgency that was never expressed."
+      },
+      {
+        "q": "Why does the lesson recommend keeping the same six-column lead table format every single week?",
+        "options": [
+          "Identical formatting is a technical requirement of most CRM software",
+          "It's easier to scan and compare against last week's list when the format stays the same",
+          "Column headers are required to match specific MLS field names",
+          "It has no real benefit — it's just a stylistic convention"
+        ],
+        "answer": 1,
+        "why": "A consistent table structure week over week makes it easy to scan quickly and compare against the prior week's list, which is the point of a repeatable weekly process."
+      },
+      {
+        "q": "You're drafting the weekly activity report and consider rounding up a number to make the week look busier. What does the lesson say?",
+        "options": [
+          "A little embellishment makes the weekly report look more impressive to a broker",
+          "Broker reports are informal enough that accuracy doesn't matter much",
+          "The report should state the numbers exactly as given, with no embellishment, since it needs to be a factual record the broker can trust",
+          "Padding is acceptable as long as the totals are roughly in the right range"
+        ],
+        "answer": 2,
+        "why": "The prompt requires reporting activity numbers exactly as given, with no embellishment, because the report's value depends on being a factual record the broker can rely on."
+      }
+    ],
+    "re-a1-property-landing-page-codex": [
+      {
+        "q": "Codex generates a working contact form for your new listing landing page. What should you do before deploying it?",
+        "options": [
+          "Trust the visual preview and deploy immediately",
+          "Only check that the page loads and looks correct visually",
+          "Ask Codex to confirm it's safe, then deploy without reading the code yourself",
+          "Read the actual generated code — especially how the contact form handles submitted data — before accepting or deploying it"
+        ],
+        "answer": 3,
+        "why": "The lesson's core guardrail is reviewing the diff and files, especially how submitted form data is handled, rather than trusting the preview or Codex's own assurance."
+      },
+      {
+        "q": "Why does the landing-page prompt specify \"static HTML/CSS/JS, no framework needed\"?",
+        "options": [
+          "It keeps the output reviewable and cheap to host without needing a build pipeline you'd have to maintain",
+          "Frameworks are generally broken when used with Codex",
+          "Static sites are specifically required by MLS rules",
+          "Static HTML/CSS/JS is the only format Codex is capable of producing"
+        ],
+        "answer": 0,
+        "why": "Requesting plain static files keeps the site something you can actually read, host cheaply, and maintain without adopting a build pipeline for a single listing page."
+      },
+      {
+        "q": "Before putting a new listing page live, what specific risk should you check for around the contact form?",
+        "options": [
+          "Placeholder contact info is automatically stripped out at deploy time",
+          "Deploying with placeholder or sample contact info accidentally left in the page is a real risk worth explicitly checking for",
+          "This can't happen, since Codex validates all content before deployment",
+          "Placeholder text in a contact form is invisible to site visitors regardless"
+        ],
+        "answer": 1,
+        "why": "The lesson explicitly flags deploying with leftover placeholder or sample contact information as a common mistake worth checking for before the page goes live."
+      }
+    ]
+  }
+}

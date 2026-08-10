@@ -1,0 +1,608 @@
+{
+  "lessons": [
+    {
+      "slug": "tch-b1-lesson-plan-from-objectives",
+      "title": "Turn curriculum objectives into a full lesson plan with Claude",
+      "summary": "Convert a single standard or learning objective into a complete, timed, classroom-ready lesson plan with a hook, activities, and a formative check.",
+      "difficulty": "beginner",
+      "minutes": 10,
+      "isFree": true,
+      "goal": "Turn one curriculum objective or standard into a complete, timed lesson plan with a hook, activities, and a formative check.",
+      "whyItMatters": "Writing a full lesson plan from scratch for every objective is one of the biggest recurring time costs in teaching, especially when curriculum documents just list content standards and leave the pedagogy up to you. Claude can draft a structured plan in minutes, but only if you give it your grade level, time constraints, and prior knowledge — a generic plan is useless if it ignores your actual class.",
+      "beforeYouStart": "Have a Claude account open. Gather the exact standard or objective you're teaching, your class period length, and grade level. Note anything students already know or struggled with in a previous lesson.",
+      "steps": [
+        "Open a new chat in Claude.",
+        "Paste the exact standard or objective you're teaching — not a paraphrase.",
+        "Give Claude your real context: grade level, class length, group size, prior lesson recap, and materials actually available today.",
+        "Use the prompt below, which asks for a hook, direct instruction, guided practice, independent practice, and a formative check, each with a time allotment.",
+        "Read the timing against your own pacing history and adjust — Claude doesn't know your class's rhythm.",
+        "If a section runs long for your real class, ask Claude what to cut rather than silently shortening everything a little.",
+        "Save the finished plan into your plan book or LMS."
+      ],
+      "prompt": "You are helping me plan a single class lesson.\n\nCONTEXT\nGrade level: [GRADE]\nSubject: [SUBJECT]\nClass length: [MINUTES] minutes\nStandard/objective (exact wording): [PASTE STANDARD]\nWhat students already know: [PRIOR KNOWLEDGE]\nMaterials available today: [MATERIALS, e.g. \"whiteboard, Chromebooks, no printer access\"]\n\nBuild a lesson plan with these sections, each with a time allotment that adds up to [MINUTES] minutes:\n1. Hook/warm-up (grab attention, connect to prior knowledge)\n2. Direct instruction (key content, in plain teacher-facing language)\n3. Guided practice (a task I do WITH the class)\n4. Independent practice (a task students do alone or in pairs)\n5. Formative check (a quick way to see who got it before the bell)\n6. Homework/extension (optional, one line)\n\nRules: Do not invent facts about my school, students, or curriculum beyond what I gave you. If the sections don't realistically fit in [MINUTES] minutes, tell me what to cut instead of quietly keeping everything.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "The prompt works because it forces a time budget onto the plan instead of letting each section balloon — asking Claude to say what to cut, rather than silently compress everything, keeps the plan realistic instead of aspirational. Separating guided practice (with you) from independent practice (without you) matches the gradual-release model most curricula are built around. The formative check is requested as its own line item on purpose: it's the section teachers skip when short on time, and it's the one that tells you whether the lesson actually worked.",
+      "example": "Objective: \"Students will be able to explain how supply and demand determine market price\" for a 45-minute 10th-grade economics class, no prior lesson on the topic. Expected output: a plan with a 5-minute hook (e.g. a real scarcity scenario), 12 minutes of direct instruction on the supply/demand model, 10 minutes of guided practice plotting a sample curve together, 12 minutes of independent practice on a new scenario, and a 6-minute formative check (e.g. an exit ticket predicting price movement from a given shift) — all adding to 45 minutes.",
+      "exercise": "In your own Claude account, plan tomorrow's actual lesson using one real standard you're teaching this week, with your real class length and materials.",
+      "expectedResult": "A timed lesson plan that matches your actual class length, with a formative check you can genuinely use before the bell, ready to adjust and use tomorrow.",
+      "commonMistakes": [
+        "Pasting a vague paraphrase of the standard instead of the exact wording, which produces a plan aimed at the wrong depth.",
+        "Skipping the class-length and materials context, so the plan assumes a computer lab or printer access you don't have.",
+        "Treating the generated timing as fixed instead of adjusting it to how your specific class actually paces.",
+        "Leaving out the formative check step because it feels optional — it's the only part of the plan that tells you whether the lesson worked."
+      ],
+      "proTip": "Save this prompt as custom instructions in a Claude Project named after the course, and upload your syllabus or pacing guide — every future plan will already know what you've taught and what's coming next.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "teacher"
+      ],
+      "skills": [
+        "productivity",
+        "writing"
+      ]
+    },
+    {
+      "slug": "tch-b2-differentiated-materials",
+      "title": "Create differentiated materials for mixed-ability classes with Claude",
+      "summary": "Turn one reading or worksheet into three ability-tiered versions that all teach the same objective, instead of writing each tier from scratch.",
+      "difficulty": "beginner",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Take one reading or worksheet and produce three ability-tiered versions that still teach the same underlying objective.",
+      "whyItMatters": "Differentiation is expected in most classrooms but is one of the most time-consuming parts of prep, since it usually means rewriting the same material two or three extra times. Claude can generate tiered versions quickly, but only if you anchor every tier to the same learning objective — otherwise the tiers end up quietly teaching different content instead of the same content at different levels of accessibility.",
+      "beforeYouStart": "Have your original reading or worksheet and the objective it's meant to teach. Know roughly which students fall into your support, on-level, and extension groups.",
+      "steps": [
+        "Paste your original material exactly as students would receive it.",
+        "State the underlying objective and tell Claude it must stay identical across all three tiers.",
+        "Define your three tiers by name (e.g. support, on-level, extension) and briefly describe each group's needs.",
+        "Ask for vocabulary scaffolds and sentence-frame supports for the support tier, not just shorter text.",
+        "Ask for the extension tier to add depth or complexity, not just more volume of the same work.",
+        "Request that the answer key stay aligned across all three tiers so you can grade them consistently.",
+        "Check the support tier especially — confirm it still requires real thinking and hasn't been stripped down to trivia."
+      ],
+      "prompt": "You are helping me differentiate a classroom material into three versions that all teach the SAME objective at different levels of accessibility.\n\nOBJECTIVE (must stay identical across all versions): [OBJECTIVE]\nORIGINAL MATERIAL: [PASTE READING OR WORKSHEET]\n\nCreate three versions:\n1. SUPPORT: for students who need scaffolding — add vocabulary definitions and sentence starters, simplify sentence structure, but keep the core concept and required thinking intact. Do not remove the objective's cognitive demand, only the language barrier.\n2. ON-LEVEL: lightly cleaned-up version of the original.\n3. EXTENSION: same objective, but add a layer of complexity, ambiguity, or an extra analytical step for students ready to go further.\n\nAll three versions must be answerable using the same answer key logic (equivalent questions, adjusted wording). List the answer key once and note where wording differs per tier. Do not invent content that isn't grounded in the original material or the stated objective.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Stating the objective once and requiring it to stay identical across tiers is the core guardrail — without it, a 'simplified' version quietly tests something easier rather than the same thing more accessibly. Asking specifically for scaffolds (vocabulary, sentence starters) rather than just 'make it easier' keeps the support tier rigorous instead of watered down. Requiring one shared answer-key logic means you can grade three physically different worksheets against the same rubric without extra work.",
+      "example": "Original: a 9th-grade reading passage and 5 analysis questions on the causes of a historical conflict. Expected output: a support version with key terms defined inline and sentence starters for each answer, an on-level version close to the original, and an extension version that adds a \"which cause was most significant, and why might a historian disagree with you\" question — all three still assessed against the same 5-point answer key.",
+      "exercise": "Pick a worksheet or reading you're actually using this week and generate the three tiers in your own Claude account, using your real groups.",
+      "expectedResult": "Three versions of the same material, each appropriately pitched to a different group, that all map onto one shared answer key.",
+      "commonMistakes": [
+        "Not stating the objective explicitly, so the tiers drift into testing different skills instead of the same skill at different accessibility levels.",
+        "Over-simplifying the support tier until it no longer requires real thinking — rigor should stay constant, only the language load should drop.",
+        "Making the extension tier just 'more of the same' instead of adding genuine depth or complexity.",
+        "Forgetting to check that all three answer keys are actually compatible before you hand them out."
+      ],
+      "proTip": "Ask Claude to estimate a reading level (grade-equivalent) for each tier so you can verify there's real separation between them, not just cosmetic rewording.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "teacher"
+      ],
+      "skills": [
+        "writing",
+        "productivity"
+      ]
+    },
+    {
+      "slug": "tch-b3-quiz-assessment-generation",
+      "title": "Generate quizzes and assessments with verified answer keys using Gemini",
+      "summary": "Build a mixed-format quiz from your own source material, with an answer key you can verify line by line before you ever hand it out.",
+      "difficulty": "beginner",
+      "minutes": 9,
+      "isFree": false,
+      "goal": "Generate a ready-to-use quiz with mixed question types and a verified answer key, grounded only in your own source material.",
+      "whyItMatters": "Teachers write dozens of quizzes and tests a year, and the highest-risk part isn't drafting the questions — it's the answer key. An AI-generated key with even one wrong answer can slip past a quick glance and cause real classroom problems. Grounding the quiz strictly in material you provide, and asking for a justification behind every answer, turns quiz generation from a liability into a genuine time-saver.",
+      "beforeYouStart": "Have your source content ready — a textbook section, your own notes, or a lecture summary — and a Gemini account. Know the objective the quiz should assess.",
+      "steps": [
+        "Paste your source material in full, not a summary of it.",
+        "Specify the number and mix of question types you want (multiple choice, short answer, true/false, etc.).",
+        "Ask explicitly for a justification behind every answer, citing the specific fact in the source.",
+        "Ask for wrong multiple-choice options to reflect plausible, common misconceptions rather than random distractors.",
+        "Request point values and any instructions students will need.",
+        "Read every question and its justification against the original source, line by line, before trusting the key.",
+        "Format the final version for printing or upload to your LMS."
+      ],
+      "prompt": "You are creating a quiz based ONLY on the source material below. Do not add facts, dates, or details that are not present in this source.\n\nSOURCE MATERIAL: [PASTE FULL SOURCE TEXT]\n\nBuild a 10-question quiz: 4 multiple choice (4 options each), 3 short answer, and 3 true/false where any false statement requires the student to also write the correction.\n\nFor every question, provide:\n- The correct answer.\n- A one-line justification citing the specific sentence or fact in the source that supports it.\n- For multiple choice: a brief note on why each wrong option is plausible but incorrect.\n\nAssign a point value to each question. If you are unsure whether a question is fully supported by the source, flag it instead of guessing.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Requiring a citation-style justification for every answer is what turns the answer key into something you can audit quickly instead of trust blindly — you can scan justifications against the source in a fraction of the time it takes to re-derive each answer yourself. Asking for plausible-but-wrong distractors, grounded in common misconceptions, produces better multiple-choice options than you'd likely write under time pressure, without inventing anything outside the source.",
+      "example": "Source: a paragraph describing the four phases of mitosis in order. Expected output: questions on phase order and key events per phase, each answer citing the exact sentence describing that phase, plus multiple-choice distractors built from commonly confused phases (e.g. mixing up metaphase and anaphase) rather than arbitrary wrong answers.",
+      "exercise": "Generate a quiz on material you're teaching this week in your own Gemini account, then personally check every answer and justification against your source text before using it.",
+      "expectedResult": "A quiz and answer key you've personally verified line by line against your own source material, ready to print or upload with confidence.",
+      "commonMistakes": [
+        "Skipping the line-by-line verification of the key — this is the single most important step and the one most likely to get skipped under time pressure.",
+        "Asking for questions on material you didn't paste in, which invites the model to fill gaps from general knowledge instead of your actual source.",
+        "Forgetting point values or instructions students will need to complete the quiz correctly.",
+        "Reusing the same distractor pattern across questions (e.g. the correct answer is always the longest option), which lets students game the format instead of the content."
+      ],
+      "proTip": "Paste in the actual textbook chapter or full lecture notes rather than a summary you wrote — richer source material produces better-grounded distractors and catches more nuance in the justifications.",
+      "tools": [
+        "gemini"
+      ],
+      "professions": [
+        "teacher"
+      ],
+      "skills": [
+        "productivity",
+        "analysis"
+      ]
+    },
+    {
+      "slug": "tch-i1-feedback-comments",
+      "title": "Write constructive, specific feedback comments on student work with Claude",
+      "summary": "Turn your rubric scores and shorthand notes on a piece of student work into a specific, actionable comment — fast, at scale, without sounding generic or robotic.",
+      "difficulty": "intermediate",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Convert your rubric scores and grading notes on one piece of student work into a specific, encouraging, actionable feedback comment.",
+      "whyItMatters": "Feedback quality drives learning more than the grade itself does, but writing genuinely specific comments for thirty or more students, assignment after assignment, is exhausting — which is how so many comments end up as \"good job, nice effort.\" Claude can turn your real annotations into a full comment quickly, but only if you feed it actual specifics from the student's work, not just a score.",
+      "beforeYouStart": "Have your rubric or grading criteria, your shorthand notes on one student's work, and one or two direct quotes or examples from that student's actual submission.",
+      "steps": [
+        "Paste the rubric or grading criteria you used.",
+        "Paste your shorthand notes and scores for one specific student.",
+        "Include one to three direct quotes or examples pulled from that student's actual work.",
+        "Specify the tone and grade-level appropriateness you want.",
+        "Ask for a glow / grow / next-step structure so the comment stays actionable, not just evaluative.",
+        "Instruct Claude to use only the strengths, weaknesses, and quotes you provided — never invent examples.",
+        "Personalize the output with the student's name and re-read it once for your own voice before sending."
+      ],
+      "prompt": "You are helping me write a feedback comment for a student's [ASSIGNMENT TYPE].\n\nRUBRIC/CRITERIA: [PASTE]\nMY SHORTHAND NOTES AND SCORES: [PASTE]\nSPECIFIC QUOTES OR EXAMPLES FROM THEIR WORK: [PASTE 1-3 EXAMPLES]\nSTUDENT GRADE LEVEL: [GRADE]\n\nWrite a feedback comment (120-180 words) with this structure:\n1. One specific strength, referencing the actual quote or example I gave you — not a generic compliment.\n2. One specific area to improve, referencing my notes and describing the pattern, not just naming a mistake.\n3. One concrete, doable next step for their next piece of work.\n\nRules: Use only the strengths, weaknesses, and quotes I gave you. Do not invent examples from the student's work that I did not provide. Match a warm but honest teacher tone appropriate for [GRADE]-level students, not corporate or clinical language.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Grounding the comment in real quotes from the actual paper is what separates specific, useful feedback from a generic compliment — without it, the model has nothing to reference but adjectives. The glow / grow / next-step structure is a well-established feedback pattern because it pairs recognition with a single actionable change, rather than an overwhelming list. Explicitly banning invented examples matters because the model never saw the actual paper and will otherwise produce a plausible-sounding but fabricated detail.",
+      "example": "Notes: \"strong thesis, but rambles in body paragraph 2\"; quote: \"the character's growth mirrors the setting change.\" Expected output: a comment opening by naming that exact quote as a strong analytical move, describing the rambling pattern in paragraph 2 as a focus issue rather than just \"needs work,\" and suggesting one concrete next step like outlining topic sentences before drafting the next essay.",
+      "exercise": "In your own Claude account, write a feedback comment for one real student's recent assignment using your actual notes and quotes from their work.",
+      "expectedResult": "A comment that sounds like you, references the student's real work specifically, and gives them one clear thing to do differently next time.",
+      "commonMistakes": [
+        "Pasting only a grade or score with no specific notes, which guarantees a generic-sounding comment.",
+        "Letting the model invent quotes or examples from work it never actually saw.",
+        "Reusing the same next-step across many students instead of tailoring it to what you actually flagged for that student.",
+        "Skipping your own tone check, so comments read as generated rather than written by you."
+      ],
+      "proTip": "Keep a short list of your own recurring phrases or tone markers and include two or three of them in the prompt as a style reference, so comments still sound like you even at volume.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "teacher"
+      ],
+      "skills": [
+        "communication",
+        "writing"
+      ]
+    },
+    {
+      "slug": "tch-i2-parent-communication-templates",
+      "title": "Draft parent communication templates for common situations with ChatGPT",
+      "summary": "Build a small library of reusable, tone-calibrated templates for the parent messages you send most often, so only the truly custom ones need to be written from scratch.",
+      "difficulty": "intermediate",
+      "minutes": 8,
+      "isFree": false,
+      "goal": "Create a small library of parent-communication templates for recurring scenarios that you can lightly customize in minutes.",
+      "whyItMatters": "Parent communication takes real emotional labor and tone control — too soft and a real concern doesn't land, too blunt and it damages the relationship. Pre-built, vetted templates for the scenarios that come up again and again free your time and attention for the messages that genuinely need a fully custom touch, and reduce the risk of a poorly worded message causing unnecessary conflict.",
+      "beforeYouStart": "Think through the three to five parent-communication scenarios you handle most often — for example, a missing-homework pattern, a positive shoutout, a grade concern, or an absence follow-up.",
+      "steps": [
+        "List the recurring scenarios you want templates for.",
+        "Specify your audience and the tone you want — warm and professional, even for concerns.",
+        "Ask for clear placeholders in each template (student name, specific behavior or grade, date) so you can personalize quickly.",
+        "For harder scenarios, ask for two versions: one for a first-time issue and one for a repeat pattern.",
+        "Require every concern-type message to end with a collaborative next step, not just a complaint.",
+        "Review the templates against your school's actual communication policy.",
+        "Test one template with a real, anonymized scenario before saving the set."
+      ],
+      "prompt": "You are helping me draft parent communication templates for a [GRADE] classroom.\n\nWrite templates for these scenarios: [LIST SCENARIOS, e.g. 1) missing homework pattern (repeat), 2) positive recognition, 3) grade concern check-in, 4) unexcused absence follow-up].\n\nFor each template:\n- Use a warm, professional, non-alarmist tone even for concerns.\n- Include clear placeholders in brackets for student name, specific behavior or grade, and date, so I can personalize quickly.\n- End every concern-type message with a collaborative next step (a call, a meeting, or a specific ask) — never just a complaint.\n- Keep each template under 120 words so it's realistic to send from a phone.\n\nDo not include specific grades, names, or incidents — these are reusable templates, not messages about a real student yet.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Keeping the templates deliberately generic, with bracketed placeholders instead of any invented specifics, is what makes them safely reusable — a template with fabricated detail risks being sent as-is by mistake. Requiring a collaborative next step on every concern-type message keeps the tone constructive instead of reading as a pure complaint. The word limit is practical: a template you won't actually send from your phone between classes doesn't save you any time.",
+      "example": "Scenario: missing homework pattern (repeat). Expected output: a short message noting the pattern factually, avoiding blame language, and proposing a specific next step such as a five-minute call this week — with [STUDENT NAME], [ASSIGNMENT/DATE RANGE], and [PROPOSED TIME] as placeholders.",
+      "exercise": "Generate your own template set for the scenarios you deal with most, then personalize one for a real, current situation in your own account.",
+      "expectedResult": "A small reusable template library where each template takes under five minutes to personalize for a real family.",
+      "commonMistakes": [
+        "Letting the AI fill in real student specifics on the template itself, which risks a template with someone else's information being sent by mistake.",
+        "Skipping the collaborative next step, so concern messages read as complaints with nothing to do next.",
+        "Writing templates too long to realistically send from a phone between classes.",
+        "Using the same tone for a first-time issue and a repeat pattern, when the situations call for different levels of directness."
+      ],
+      "proTip": "Keep a second, sharper version of each hard template for when the friendly version hasn't worked — so you're not composing that harder message cold, in the moment, under stress.",
+      "tools": [
+        "chatgpt"
+      ],
+      "professions": [
+        "teacher"
+      ],
+      "skills": [
+        "communication",
+        "writing"
+      ]
+    },
+    {
+      "slug": "tch-i3-notebooklm-curriculum-knowledge-base",
+      "title": "Build a curriculum knowledge base with a Claude Project",
+      "summary": "Upload your syllabus, standards, pacing guide, and past unit plans into a Claude Project so you can ask grounded questions and generate new materials that stay traceable to what you've actually taught.",
+      "difficulty": "intermediate",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Set up a Claude Project from your curriculum documents that you can query and generate from, with every answer traceable to your own material.",
+      "whyItMatters": "Across a semester, teachers accumulate fragmented documents — standards, pacing guides, past unit plans, rubrics — scattered across drives and paper. A Claude Project's persistent knowledge is well suited to this problem: you upload your documents once, and every chat in the project can be instructed to answer strictly from them, tracing each claim back to the specific document you uploaded rather than blending or inventing detail from Claude's general training data. Building this once creates a persistent, queryable reference you can return to for the rest of the year.",
+      "beforeYouStart": "Gather PDFs or docs: your syllabus, the state standards for your course, your pacing guide, and two or three past unit plans or rubrics. Have a Claude account on Pro or higher, which is required for Projects.",
+      "steps": [
+        "Create a new Claude Project named clearly for the course, e.g. \"Algebra I — 2026\".",
+        "Upload your standards document, pacing guide, and past unit plans or rubrics to the project's knowledge.",
+        "Start a chat in the project and ask Claude to summarize what it has access to, as a sanity check that it understood the documents correctly.",
+        "Ask a grounded question that references only your uploaded sources, such as a coverage gap analysis.",
+        "Check the answer's claims against the actual source document to confirm each one really traces to the source you expect.",
+        "Ask it to draft a new unit plan that follows your pacing guide's sequencing and terminology.",
+        "Add new materials to the project's knowledge over the course of the year to keep the knowledge base current."
+      ],
+      "prompt": "Using only the documents in this project's knowledge, answer: which standards in [STANDARDS DOCUMENT NAME] have I not yet covered, based on my pacing guide as of week [X]?\n\nFor each uncovered standard:\n- Cite the exact source document it comes from.\n- Suggest which upcoming unit it best fits, based only on what's in the pacing guide and unit plans I uploaded.\n\nIf you are not sure whether a standard has been covered based on these documents, say so rather than guessing.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "A Claude Project's uploaded knowledge means every claim can be traced back to the specific document you provided, which matters enormously for something as consequential as certifying standards coverage — a wrong guess here has real downstream effects on students. This is the key contrast with a general chat outside a project, which has no way to check your specific pacing guide and would otherwise answer from a generic idea of what a typical course covers.",
+      "example": "Uploading an Algebra I pacing guide and the relevant state standards document to a Claude Project, then asking the gap-analysis prompt: expected output is a short list of standard codes, each marked uncovered, with a citation to the exact line in the pacing guide showing it hasn't appeared yet, and a suggested unit from your own unit plans where it fits.",
+      "exercise": "Build a real Claude Project with your own current course's materials and run the gap-analysis prompt above on your actual pacing guide.",
+      "expectedResult": "A working notebook you can return to all year, and one accurate, cited list of coverage gaps you can act on before the current unit ends.",
+      "commonMistakes": [
+        "Uploading only some of your sources to the project, so the gap analysis is silently incomplete without any warning.",
+        "Not checking the answer's claims against the actual source document, which defeats the entire point of grounding answers in your uploaded knowledge.",
+        "Letting the project's knowledge go stale by never adding new unit materials as the year progresses.",
+        "Asking questions that require outside knowledge the project was never given, then treating a hedged or uncertain answer as authoritative."
+      ],
+      "proTip": "Create a separate Claude Project per course or prep rather than one giant project for everything you teach — grounded answers get noticeably sharper against a focused, relevant source set.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "teacher"
+      ],
+      "skills": [
+        "research",
+        "productivity"
+      ]
+    },
+    {
+      "slug": "tch-a1-ai-resilient-assignments-literacy",
+      "title": "Design AI-resilient assignments and teach students AI literacy",
+      "summary": "Redesign an existing assignment so it still meaningfully measures student thinking, and pair it with a short lesson that teaches students the difference between using AI to think and using AI to skip thinking.",
+      "difficulty": "advanced",
+      "minutes": 14,
+      "isFree": false,
+      "goal": "Redesign one existing assignment so it resists AI ghostwriting, and produce a plain-language AI-use policy plus a short lesson that teaches students what responsible use looks like.",
+      "whyItMatters": "Banning AI outright is largely unenforceable and teaches students nothing about a tool they'll use for the rest of their working lives. The more durable fix is redesigning assessments to require process, personal or local evidence, and visible checkpoints that generic AI output can't fake — combined with directly teaching students what responsible use looks like. This is now core curriculum design work, not an afterthought bolted onto an existing assignment.",
+      "beforeYouStart": "Pick one existing assignment you currently give — an essay, lab report, or project — that you suspect is vulnerable to being fully AI-generated.",
+      "steps": [
+        "Paste your existing assignment prompt into Claude.",
+        "Describe specifically what a fully AI-ghostwritten submission would look like for this exact prompt.",
+        "Ask for a redesigned version that requires evidence a generic AI answer can't produce on its own — in-class discussion, a personal interview, or a class-specific dataset or text.",
+        "Ask for two or three checkpoint deliverables spaced across the timeline that make the student's process visible over time.",
+        "Ask for a short, plain-language student-facing policy describing what AI use is allowed and what isn't, with concrete examples of each.",
+        "Ask for a 15-minute AI-literacy mini-lesson to teach before the assignment is due.",
+        "Check the redesign against your school's actual academic integrity policy before piloting it."
+      ],
+      "prompt": "You are helping me redesign an assignment to be resistant to AI ghostwriting while still allowing students to use AI as a legitimate research or thinking tool.\n\nORIGINAL ASSIGNMENT: [PASTE PROMPT]\nGRADE/SUBJECT: [GRADE/SUBJECT]\nWHAT A FULLY AI-GHOSTWRITTEN SUBMISSION WOULD LOOK LIKE FOR THIS PROMPT: [DESCRIBE, e.g. \"a generic five-paragraph essay with no reference to our specific class discussion or local case study\"]\n\nGive me:\n1. A redesigned version of the assignment that requires evidence a generic AI response can't produce on its own — e.g. reference to a specific in-class discussion, a personal interview, a dataset or text unique to our class, or an in-person component.\n2. 2-3 checkpoint deliverables spaced across the timeline (e.g. topic proposal, annotated outline, draft with visible revision history) that make the student's own process visible.\n3. A short, plain-language \"how you may use AI on this assignment\" policy for students, with specific examples of allowed use (e.g. brainstorming, checking grammar) and disallowed use (e.g. generating the final text).\n4. A 15-minute lesson plan teaching students the difference between using AI to think and using AI to skip thinking, with one in-class discussion question.\n\nBase this only on the assignment and context I gave you — don't invent facts about my school's policies.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Requiring specific in-class or personal evidence, plus staged checkpoints that make the student's process visible over time, is the actual mechanism that resists AI ghostwriting — not detection software, which is unreliable and produces real false positives. Pairing the redesign with an explicit AI-literacy lesson treats AI as a taught skill with clear boundaries, rather than a banned tool students quietly use anyway without any guidance on where the line is.",
+      "example": "Original assignment: \"Write a five-paragraph essay on a theme in the novel.\" Redesigned version: requires students to cite specific comments from their own or classmates' contributions to an in-class Socratic seminar, plus a short in-class written reflection on how their view changed during the discussion — something a generic AI response, with no access to that seminar, cannot produce.",
+      "exercise": "Pick one real assignment you currently use, run it through this prompt in your own Claude account, and pilot the checkpointed version on your next unit.",
+      "expectedResult": "A redesigned assignment with built-in process checkpoints, a plain-language AI-use policy for students, and a short lesson plan you can teach before the assignment is due.",
+      "commonMistakes": [
+        "Relying on AI-detection software as your main defense — it is unreliable, has a real false-positive rate, and teaches students nothing.",
+        "Redesigning around banning AI entirely rather than clearly defining what honest use looks like.",
+        "Skipping the checkpoints — the redesign only works if the process is visible over time, not just the final product.",
+        "Writing a policy so vague that students genuinely can't tell what's allowed, which produces more violations, not fewer."
+      ],
+      "proTip": "Reuse the same \"how you may use AI on this assignment\" policy language across your assignments all year, so students learn one consistent standard instead of decoding a new rule for every task.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "teacher"
+      ],
+      "skills": [
+        "analysis",
+        "productivity"
+      ]
+    },
+    {
+      "slug": "stu-b1-ai-tutor-without-cheating",
+      "title": "Study any topic with Claude as a tutor — without cheating yourself",
+      "summary": "Turn Claude into a Socratic tutor that questions and checks your understanding instead of handing you the answer, so the actual work of learning stays with you.",
+      "difficulty": "beginner",
+      "minutes": 10,
+      "isFree": true,
+      "goal": "Turn Claude into a tutor that questions and checks your understanding of a topic instead of just giving you the answer, so the effort of learning stays with you.",
+      "whyItMatters": "It's tempting to ask AI for the answer and move on, but that leaves you with a correct-looking homework problem and none of the actual understanding — which shows up the moment you hit a test or a harder version of the same problem. Working through a topic actively, using AI to check and challenge your own reasoning rather than replace it, is what actually produces retention. The skill worth building is prompting AI to teach, not to answer.",
+      "beforeYouStart": "Pick one specific topic or problem you're currently learning, and have your class notes or textbook section nearby to reference.",
+      "steps": [
+        "Pick a specific topic, not a broad subject — \"how oxidative phosphorylation produces ATP,\" not \"explain biology.\"",
+        "Tell Claude explicitly to act as a Socratic tutor, not an answer key.",
+        "Before asking anything, write out your current understanding of the topic in your own words.",
+        "Let Claude question the gaps in your explanation rather than lecture you from scratch.",
+        "When you're stuck, ask for a small hint, not the full answer.",
+        "Only after a genuine attempt, ask for the full explanation, and compare it to your own reasoning.",
+        "Close the loop by explaining the topic back, from memory, without looking at your notes."
+      ],
+      "prompt": "I'm learning [TOPIC] for [CLASS/EXAM]. I want you to act as a Socratic tutor, not an answer key.\n\nRules:\n- Do not give me the final answer or full explanation up front.\n- Ask me questions that help me find the gaps in my own understanding.\n- When I get something wrong, tell me it's wrong and why, then ask a guiding question rather than giving the correct answer.\n- Give me a hint only when I explicitly ask for one, and make the hint as small as possible.\n- Only give the full explanation if I ask for it directly, and after you do, ask me to explain it back to you in my own words to check I actually understood it.\n\nHere's what I currently understand about [TOPIC], in my own words:\n[YOUR ATTEMPT AT EXPLAINING IT]\n\nStart by identifying what's right and what's missing or wrong in my explanation, then ask me a question.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Writing your own explanation first is the highest-leverage part of this prompt: retrieving what you already know before getting new instruction improves retention far more than instruction alone. The explicit \"no answers up front\" rule matters because a helpful assistant's default is to be maximally direct, which feels friendly but is bad for learning — you have to override it on purpose. Asking you to explain the topic back after the full explanation closes the loop and reveals whether real understanding actually landed.",
+      "example": "Topic: \"why the mitochondria produces ATP via oxidative phosphorylation.\" Your explanation mentions the electron transport chain but incorrectly places glycolysis inside the mitochondria. Expected tutor response: it confirms the electron transport chain point is right, flags that glycolysis actually happens in the cytoplasm, and asks a guiding question about where you think glycolysis's products go next — rather than just stating the correct location outright.",
+      "exercise": "Pick a real topic you're studying right now for an actual class, and work through the steps in your own Claude account for at least 10-15 minutes.",
+      "expectedResult": "By the end, you can explain the topic correctly and in your own words, without having had the full explanation handed to you first.",
+      "commonMistakes": [
+        "Skipping the \"explain your own understanding first\" step and going straight to asking for the explanation, which defeats the entire method.",
+        "Asking for the full answer the moment it gets hard, instead of requesting a small hint.",
+        "Using this mode for the first time the night before a test on totally unfamiliar material, instead of during real study time.",
+        "Treating the tutor's questions as busywork and skimming past them instead of genuinely answering."
+      ],
+      "proTip": "If Claude starts slipping into full explanations, redirect it mid-conversation: \"Stay in Socratic mode — ask, don't tell.\" It responds well to being pulled back to the rule.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "research",
+        "productivity"
+      ]
+    },
+    {
+      "slug": "stu-b2-summarize-question-readings",
+      "title": "Summarize and question your readings with Claude",
+      "summary": "Upload your actual reading to Claude to get a grounded, section-by-section summary and a set of self-check questions, all traceable back to the text.",
+      "difficulty": "beginner",
+      "minutes": 9,
+      "isFree": false,
+      "goal": "Turn one assigned reading into a grounded summary and a set of self-check questions using Claude, without drifting into outside content or treating the output as something to submit as your own.",
+      "whyItMatters": "Reading dense academic material is slow, and a generic AI chat summary risks drifting from what the text actually says, since the model may fill gaps from its general training rather than your specific reading. Uploading the actual reading to Claude and instructing it to answer only from that document keeps every summary and answer grounded in what you gave it, so you can check it against the text instead of trusting it blindly — important, since your exam tests the assigned reading, not the internet's average opinion of the topic. This is a study aid for checking your own understanding, not a way to produce something you hand in as your own writing.",
+      "beforeYouStart": "Have the reading as a PDF, doc, or pasted text, and a Claude account.",
+      "steps": [
+        "Start a new chat with Claude (or a Claude Project if you want to build up a reading library for the course).",
+        "Upload the specific reading itself — not a summary of it you found online.",
+        "Ask for a summary structured by the reading's own sections or headings.",
+        "Ask Claude to generate self-check questions using only this source.",
+        "Ask a clarifying question about a confusing passage, then check the answer against the actual text to confirm it's grounded in what you uploaded.",
+        "Ask for a short list of the reading's key terms with definitions taken from the text.",
+        "Use this as a study aid alongside the actual reading, not a substitute for it — and never submit the generated summary or answers as your own written work."
+      ],
+      "prompt": "Using only the uploaded document, do the following:\n1. Summarize the reading section by section (use the document's own headings if it has them), 2-3 sentences per section.\n2. List the 5 most important terms or concepts, each with a one-sentence definition taken from the text.\n3. Write 6 self-check questions I can use to quiz myself on this reading: 3 factual recall questions and 3 \"explain why/how\" questions that require actual understanding, not just recall.\n4. For every summary point and question, make sure it's traceable to the source document — do not add outside context or information that isn't in this reading.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "The real skill being taught here is checking a grounded claim against the actual text rather than trusting AI output at face value — that habit is what makes this safe to use for material you'll actually be tested on. Separating factual recall from explain-why/how questions mirrors how most exams actually test material at two different depths, so your self-quiz doesn't just check surface recall. This stays a study aid for your own preparation: the summary and self-check questions are for checking your understanding, not for submitting as coursework.",
+      "example": "Reading: a history chapter on the causes of a specific event. Expected output: a summary broken into the chapter's own subsections, five key terms with in-text definitions, and six self-check questions — three asking students to recall specific causes, three asking them to explain why one cause mattered more than another, based only on the chapter's own argument.",
+      "exercise": "Upload your actual assigned reading for this week into your own Claude account, generate the summary and self-quiz, then check at least three of the answers against the actual reading.",
+      "expectedResult": "A section-by-section summary and self-quiz you've personally verified against the source at least a few times, not just accepted on faith.",
+      "commonMistakes": [
+        "Uploading a summary of the reading found online instead of the actual assigned text, which defeats the grounding entirely.",
+        "Never checking the summary or answers against the actual reading, so you never actually confirm it's accurate.",
+        "Treating the AI-generated summary as a substitute for the reading itself, rather than a study aid alongside it.",
+        "Generating self-check questions and never actually attempting to answer them before checking — or submitting the AI's summary as your own written work."
+      ],
+      "proTip": "Keep one Claude Project per course and add each week's reading to its knowledge — by exam time you'll have a fully organized, searchable study base for the whole term instead of scattered chat summaries.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "research",
+        "analysis"
+      ]
+    },
+    {
+      "slug": "stu-b3-exam-prep-practice-spaced-review",
+      "title": "Build practice questions and a spaced-review plan for an exam with ChatGPT",
+      "summary": "Turn your course material into a bank of practice questions and a day-by-day spaced-review schedule that actually fits the time you have before the exam.",
+      "difficulty": "beginner",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Generate a practice question set from your own notes and a day-by-day spaced review schedule leading up to a specific exam date.",
+      "whyItMatters": "Cramming the night before is one of the worst-supported study strategies, while spaced repetition and active recall — testing yourself instead of re-reading notes — are two of the most evidence-backed techniques for retention. AI is well suited to generating both practice questions from your specific material and a personalized schedule that fits your real exam date and available study hours, instead of a generic \"study more\" plan.",
+      "beforeYouStart": "Have your notes or study guide for the exam, the exam date, and a realistic estimate of how many days and minutes per day you can actually study.",
+      "steps": [
+        "Paste your notes or topic list for the exam.",
+        "Specify the exam date and how much study time you actually have per day.",
+        "Ask for practice questions grounded only in your material, with an answer key.",
+        "Ask for a spaced-review schedule that revisits weaker topics more often as the exam approaches.",
+        "Take the first practice set closed-book, honestly, without checking notes mid-question.",
+        "Feed your wrong answers back in so the next round of questions is biased toward those weak topics.",
+        "Follow the schedule and repeat the feedback loop weekly until the exam."
+      ],
+      "prompt": "I have an exam on [SUBJECT/TOPIC LIST] on [DATE]. I have about [X] days left and can study [Y] minutes/day.\n\nMy notes/topics: [PASTE NOTES OR TOPIC LIST]\n\n1. Generate 15 practice questions based only on the material above (mix of multiple choice and short answer), with an answer key.\n2. Build a day-by-day study schedule from today until [DATE] using spaced repetition: earlier topics get revisited at increasing intervals, and don't schedule more than [Y] minutes on any day.\n3. Flag which topics in my notes seem weakest or thinnest, so I know where to focus first.\n\nDo not add topics that aren't in my notes — if the exam might cover something I didn't include, ask me instead of assuming.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Spaced repetition works because revisiting material just as you start to forget it — after a genuine retrieval attempt, not passive re-reading — produces much stronger long-term retention than a single study session. Feeding your wrong answers back into the next round creates a feedback loop that keeps re-testing your actual weak spots instead of the topics you already know cold, which is where most self-directed studying wastes time.",
+      "example": "Exam in 10 days on a statistics unit, 45 minutes/day available. Expected output: a schedule that front-loads full coverage in the first two or three days, then spaces revisits with increasing gaps, weighting more time toward the topics flagged as weakest, and staying within the 45-minute daily cap.",
+      "exercise": "Use your own real upcoming exam, notes, and date in your own ChatGPT account to generate a practice set and schedule, then take the practice set closed-book.",
+      "expectedResult": "A working day-by-day schedule that fits your real available time, plus a first practice set with an answer key you can score yourself against honestly.",
+      "commonMistakes": [
+        "Taking the practice test open-book or open-notes, which destroys the point of active recall.",
+        "Building the schedule but never actually returning to feed wrong answers back into a new question set.",
+        "Cramming all the practice questions into one sitting instead of following the spaced schedule.",
+        "Letting the AI add exam topics you never gave it just because they \"seem related\" to your notes."
+      ],
+      "proTip": "Re-run the practice-question prompt weekly with your latest wrong answers appended — the question set gets sharper and more targeted to your actual gaps as the exam approaches.",
+      "tools": [
+        "chatgpt"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "productivity",
+        "analysis"
+      ]
+    },
+    {
+      "slug": "stu-i1-writing-feedback-not-ghostwriting",
+      "title": "Get AI feedback on your writing without letting AI write it for you",
+      "summary": "Use Claude to critique and strengthen a draft you wrote yourself — structure, clarity, argument — while keeping every sentence of the final text your own, with clear academic-integrity boundaries.",
+      "difficulty": "intermediate",
+      "minutes": 11,
+      "isFree": false,
+      "goal": "Get specific, actionable feedback on a draft you wrote, and revise it yourself, without having AI generate or rewrite your sentences.",
+      "whyItMatters": "Colleges and instructors increasingly draw a hard line between AI as an editor or feedback tool, which is usually allowed, and AI as a ghostwriter, which is usually an academic integrity violation. The skill worth building is asking for feedback that improves your thinking and structure, then doing the actual rewriting yourself. It's also just better for you long-term: having AI rewrite your draft skips the exact revision practice that makes you a better writer.",
+      "beforeYouStart": "Check your assignment's or institution's specific AI policy before using AI on any graded writing — policies vary widely, and this lesson assumes feedback and editing help is permitted, not full drafting. Have your own complete draft ready, not an outline.",
+      "steps": [
+        "Check your course or institution's AI policy before you start.",
+        "Paste your own draft in full.",
+        "Explicitly instruct the AI to give feedback only, and never rewrite your sentences, even as an example.",
+        "Ask for feedback organized by category: argument, structure, evidence, clarity.",
+        "Pick one or two priority issues to revise rather than trying to fix everything at once.",
+        "Rewrite those sections yourself, in your own words, without copying any suggested phrasing.",
+        "Run the revised version through again to check whether the flagged issue actually improved.",
+        "Keep a copy of your original draft as your own evidence of authorship and process."
+      ],
+      "prompt": "You are giving me feedback on my own writing, not rewriting it. Do not rewrite or generate replacement sentences or paragraphs at any point, even as an example — describe problems and ask questions instead.\n\nMy draft: [PASTE YOUR DRAFT]\nAssignment/goal: [PASTE PROMPT OR GOAL]\n\nGive me feedback in these categories:\n1. Argument: Is my thesis clear? Does each paragraph actually support it?\n2. Structure: Does the order of ideas make sense? Where should I move or cut something?\n3. Evidence: Where are claims unsupported, or where does evidence not clearly connect to my point?\n4. Clarity: Point to specific sentences that are unclear or overly complex (quote them), and explain what's unclear about them — but do not rewrite them for me.\n\nEnd with the 2 issues you think would improve this draft the most if I fixed only those.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "The \"describe, don't rewrite\" instruction is what keeps this on the feedback side of the academic-integrity line — the moment the model generates replacement sentences, even as an example, that language can end up in your final draft. Prioritizing two issues instead of a full line edit keeps the revision work, and the actual learning, with you. Keeping your earlier draft is a practical safeguard: it's your own evidence of process if your work is ever questioned.",
+      "example": "Draft paragraph with a vague thesis and one unsupported claim. Expected feedback: a question like \"what specific evidence supports this claim?\" pointing directly at the sentence in question, rather than a rewritten version of that sentence — leaving the actual rewriting to the student.",
+      "exercise": "In your own Claude account, run a real draft you're working on through this prompt after checking your school or course's AI policy, then personally revise the top two flagged issues yourself.",
+      "expectedResult": "A revised draft that is measurably improved on the two priority issues, entirely written in your own words, plus feedback notes you could show a teacher explaining your process.",
+      "commonMistakes": [
+        "Asking for a rewritten version \"just to see,\" then keeping some of that language in your final draft — this is the actual boundary that gets students in academic-integrity trouble.",
+        "Skipping your institution's specific AI-use policy before starting.",
+        "Trying to fix every piece of feedback at once instead of prioritizing the two that matter most.",
+        "Not keeping your own earlier draft as a record of your authorship process."
+      ],
+      "proTip": "Ask for feedback again on the section you just revised yourself, and compare tone — if the follow-up feedback references specific improvements in wording you actually made, that's a good sign the revision is genuinely yours.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "writing",
+        "communication"
+      ]
+    },
+    {
+      "slug": "stu-i2-research-papers-find-organize-synthesize",
+      "title": "Find, organize, and synthesize sources for a research paper with Gemini",
+      "summary": "Use Gemini to surface candidate sources, then organize and synthesize what they actually say into a verified source log — without ever citing a source you haven't personally checked.",
+      "difficulty": "intermediate",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Build a verified, organized source log for a research paper topic, with your own synthesis notes on what each source actually contributes to your argument.",
+      "whyItMatters": "Finding credible sources and then actually synthesizing — not just summarizing one at a time — what they collectively say is one of the hardest, slowest parts of research writing, and also the part most vulnerable to AI hallucination. A fabricated citation or misattributed claim in a bibliography is a serious academic integrity problem, so every source and quote must be independently verified before it goes anywhere near your paper.",
+      "beforeYouStart": "Have your research question or working thesis ready, and know your citation style and source-type requirements, such as a minimum number of peer-reviewed sources.",
+      "steps": [
+        "Give Gemini your research question and any source requirements.",
+        "Ask for candidate sources with real links or DOIs that you will independently verify.",
+        "Open and personally check every suggested source before using it — never cite an unverified one.",
+        "For each verified source, write your own one-paragraph synthesis note in your own words.",
+        "Ask for a synthesis matrix showing where your verified sources agree, disagree, or leave a gap.",
+        "Use the matrix to locate your paper's actual argument — usually in the disagreement or the gap.",
+        "Keep your source log as a running document you update as you read more."
+      ],
+      "prompt": "I'm researching: [RESEARCH QUESTION / WORKING THESIS]\nRequirements: [e.g. \"at least 3 peer-reviewed sources, published after 2015, APA citation style\"]\n\n1. Suggest 6-8 candidate sources (with publication, author, year, and a real link or DOI where possible) that are relevant to this question. Tell me clearly if you are not fully certain a source exists or a detail is correct, rather than presenting an uncertain reference as fact — I will verify every source myself before using it.\n2. For each source, give a 1-sentence description of what angle or argument it likely takes, based only on its title/abstract, so I know what to look for when I read it.\n\nI will read the actual sources myself and confirm before citing anything.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "This lesson leans on the hallucination risk explicitly: language models can generate plausible-looking but fabricated citations, so instructing the model to flag its own uncertainty, combined with personally verifying every source, is not optional — it's the core safeguard against putting a fake reference in your bibliography. The synthesis matrix, a grid of sources against themes, is what turns a pile of individual summaries into actual synthesis, which is the skill research papers are graded on.",
+      "example": "Research question on renewable energy policy. Expected output: a candidate source list with real publication details, followed by a synthesis matrix showing two verified sources agreeing on cost trends but disagreeing on the right regulatory approach — pointing toward a paper thesis built around that specific disagreement.",
+      "exercise": "Run this process on your own current research paper's topic in your own Gemini account, and personally verify at least three suggested sources by opening them before adding anything to your source log.",
+      "expectedResult": "A source log of only verified sources, each with your own synthesis note in your own words, and a matrix that reveals where your paper's actual contribution or argument can sit.",
+      "commonMistakes": [
+        "Citing a source suggested by AI without personally opening and verifying it — the single most common way AI-assisted research produces a fabricated or wrong citation.",
+        "Copying the AI's one-sentence description into your paper as if it were your own synthesis.",
+        "Treating a list of individual summaries as \"synthesis\" instead of building the cross-source matrix.",
+        "Skipping your citation style and source-type requirements, so the suggestions don't even fit your assignment."
+      ],
+      "proTip": "Ask Gemini to specifically look for a source that disagrees with your working thesis — papers built only on supporting sources usually have a weaker argument than ones that also engage a real counterpoint.",
+      "tools": [
+        "gemini"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "research",
+        "analysis"
+      ]
+    },
+    {
+      "slug": "stu-i3-learn-technical-skill-practice-loop",
+      "title": "Learn a technical skill faster with an AI practice loop",
+      "summary": "Use Claude to generate one right-sized practice problem at a time, check your own attempts, and calibrate difficulty — building real skill through repetition instead of passively reading tutorials.",
+      "difficulty": "intermediate",
+      "minutes": 11,
+      "isFree": false,
+      "goal": "Set up a repeatable practice loop — generate a problem at your level, attempt it yourself, get specific feedback, get the next problem calibrated to your result — for a technical skill you're learning.",
+      "whyItMatters": "Technical skills are built through deliberate practice at the edge of your current ability, not by reading more explanations — most students stall out re-reading tutorials or rewatching videos instead of actually producing attempts and getting corrected. AI is well suited to generating an endless supply of right-sized practice problems and giving immediate, specific feedback on your actual attempt, functioning like a patient practice partner rather than a source of finished answers.",
+      "beforeYouStart": "Pick one specific, narrow skill — \"write basic for-loops that iterate over a list,\" not \"learn Python\" — and know roughly your current level honestly.",
+      "steps": [
+        "Name the specific, narrow skill and describe your current level honestly.",
+        "Ask for one problem at that level, not a batch of problems.",
+        "Attempt the problem fully yourself before looking at any hint.",
+        "Submit your attempt for feedback.",
+        "Ask the AI to identify specifically what's right and wrong in your actual attempt, not give a corrected version outright.",
+        "Once you get it right, ask for a slightly harder problem and repeat.",
+        "Keep the loop going for at least 20-30 minutes, logging any problem that took multiple tries."
+      ],
+      "prompt": "I'm practicing [SPECIFIC NARROW SKILL], currently at [YOUR LEVEL, e.g. \"can write a basic for-loop but struggle with nested loops\"].\n\nGive me ONE practice problem at a level that's slightly challenging but achievable for me right now. Do not give me the solution yet.\n\nAfter I submit my attempt:\n- Tell me specifically what's correct and what's wrong, referencing my actual attempt, not a generic explanation.\n- Do not just give me the corrected version — explain the concept I'm missing and let me try again first.\n- Only show a full corrected solution if I get it wrong twice, or if I explicitly ask for it.\n- If I get it right, give me the next problem, one step harder.\n\nMy attempt: [PASTE YOUR ATTEMPT WHEN READY — leave blank for now and just send the first problem]",
+      "promptLabel": "Copyable prompt",
+      "explanation": "The loop of attempt, specific feedback, and controlled difficulty increase is the actual mechanism behind deliberate practice, and the \"one problem at a time, no solution until two tries\" constraint is what forces the retrieval effort that builds durable skill — without it, you'd pattern-match off a shown solution instead of actually solving it yourself. Referencing your specific attempt in the feedback, rather than a generic explanation of the concept, is what makes each round of feedback useful instead of repetitive.",
+      "example": "Skill: reversing a linked list in Python, starter level. Expected flow: a first problem is sent, your attempt has an off-by-one error in the pointer update, the feedback names that exact line and explains the pointer concept you're missing rather than handing you the fix, and once you correct it, a slightly harder follow-up problem (e.g. reversing in groups of k) is sent.",
+      "exercise": "Pick one real, narrow skill you're currently learning and run the loop for at least 20-30 minutes in your own Claude account, logging any problem that took you more than two attempts.",
+      "expectedResult": "Multiple completed practice problems of increasing difficulty, all genuinely attempted by you first, plus a short list of the specific sub-skills that gave you the most trouble.",
+      "commonMistakes": [
+        "Asking for a batch of problems up front instead of one at a time, which removes the calibration benefit.",
+        "Looking at hints before making a genuine attempt.",
+        "Accepting the first corrected solution without trying again yourself.",
+        "Picking a skill too broad to generate a well-calibrated problem, like \"learn calculus\" instead of \"find the derivative of a polynomial.\""
+      ],
+      "proTip": "Keep a running log of which specific sub-skills took multiple tries, and start your next session by asking for one warm-up problem on each logged item — that's your own evidence-based spaced-review list.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "productivity",
+        "coding"
+      ]
+    },
+    {
+      "slug": "stu-a1-personal-learning-system",
+      "title": "Build your personal learning system with AI",
+      "summary": "Combine tutoring dialogue, grounded reading, spaced review, verified research, feedback-only writing help, and practice loops into one integrated weekly system you actually run, using each AI tool where it's strongest.",
+      "difficulty": "advanced",
+      "minutes": 14,
+      "isFree": false,
+      "goal": "Design and start running a weekly personal learning system that pulls together a NotebookLM knowledge base, spaced review, and active practice, tailored to your actual courses and schedule.",
+      "whyItMatters": "The individual techniques — tutoring dialogue, grounded reading summaries, spaced review, verified research, feedback-only writing help, practice loops — each help in isolation, but the real compounding gain comes from running them as one connected weekly system instead of one-off tricks. Building this now is also building the habit of using AI as a thinking tool rather than an answer machine, which is worth more over time than any single technique on its own.",
+      "beforeYouStart": "Have a list of your current courses or topics, your honest weekly available study hours, and, if you've done the earlier lessons, your NotebookLM notebooks and spaced-review notes.",
+      "steps": [
+        "List your current courses or topics and your honest weekly hours available.",
+        "Design a weekly structure that assigns specific AI tools and techniques to specific time blocks.",
+        "Set up or consolidate a NotebookLM notebook per course as your subject knowledge base.",
+        "Build a standing spaced-review rotation across all your courses, not just the one with the nearest deadline.",
+        "Block separate time for practice loops on skill-based courses.",
+        "Block separate time for writing and research work that includes the feedback-only and source-verification safeguards.",
+        "Write the whole system down as a one-page personal plan.",
+        "Review and adjust the plan every 2-3 weeks based on what's actually working."
+      ],
+      "prompt": "Help me design a weekly personal learning system.\n\nMy courses/topics: [LIST]\nHours available per week and roughly when: [LIST]\nWhat I already have: [e.g. \"NotebookLM notebook for Biology, a spaced-review list for Statistics exam in 3 weeks\"]\n\nBuild me a one-page weekly plan that assigns specific study techniques to specific time blocks:\n- Which sessions are for grounded reading/summarizing (NotebookLM) vs. active practice loops vs. spaced review vs. research/writing work.\n- A rotation so every course gets both new-material time and spaced-review time each week, not just the course with the nearest deadline.\n- One weekly checkpoint question I should ask myself to assess whether the system is working (e.g., what did I forget that I \"knew\" last week?).\n\nKeep total weekly hours within what I gave you, and flag if my course load doesn't realistically fit my available hours rather than pretending it does.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Writing the system down as a fixed weekly structure, rather than a vague intention to \"study more with AI,\" is what makes it durable enough to actually follow. The honest-hours check matters because a plan that assumes more time than you actually have gets abandoned in week one. The weekly checkpoint question is what turns this into something you actively revise based on evidence, instead of a plan you set once and quietly stop using.",
+      "example": "A student with 4 courses and 10 hours/week available. Expected output: a one-page plan showing which evenings run NotebookLM reading summaries, which run spaced review across all four courses, which run a practice loop for a skill-based course, and which run writing/research work — plus the weekly checkpoint question to review on Sunday.",
+      "exercise": "Build your own real one-page weekly plan using your actual courses and hours in your own AI account(s), run it for two weeks, then revise it using the checkpoint question.",
+      "expectedResult": "A written, realistic weekly plan you actually followed for at least one full week, plus one honest adjustment you made after your first checkpoint review.",
+      "commonMistakes": [
+        "Designing a system that requires more hours than you actually have, and abandoning it in week one.",
+        "Only ever applying these techniques to whichever course has the nearest deadline, instead of rotating spaced review across all courses.",
+        "Never revisiting or adjusting the plan after the first version.",
+        "Treating the plan itself as the goal instead of the checkpoint review that actually improves it."
+      ],
+      "proTip": "Keep your checkpoint answers in a running log — after a month you'll have real evidence of which techniques actually helped you retain material, versus which ones just felt productive.",
+      "tools": [
+        "gemini"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "productivity",
+        "research"
+      ]
+    }
+  ]
+}

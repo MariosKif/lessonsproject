@@ -1,0 +1,432 @@
+{
+  "lessons": [
+    {
+      "slug": "law-b1-summarize-legal-documents-with-grounding",
+      "title": "Summarize a legal document with strict source grounding in Claude",
+      "summary": "Turn a long contract or filing into an accurate first-pass summary that sticks to what the document actually says, with built-in guardrails against invented facts.",
+      "difficulty": "beginner",
+      "minutes": 9,
+      "isFree": true,
+      "goal": "Produce a grounded, structured summary of a supplied legal document that contains only facts stated in the text, clearly flagged as a non-final review aid.",
+      "whyItMatters": "Reading and summarizing long documents eats hours every week in legal practice, and AI can genuinely speed up the first pass. But legal documents are exactly the wrong place for a model to fill gaps with plausible-sounding guesses: a summary that quietly invents a term or misstates a date can mislead a colleague, a client, or you. Every AI summary is a starting point for your own review, never a substitute for reading the source document yourself, and it is never legal advice.",
+      "beforeYouStart": "A document you are authorized to paste into this tool under your firm's confidentiality and AI-use policy. If the tool is not firm-approved for confidential data, redact or anonymize client names, account numbers, and other identifiers before pasting anything in.",
+      "steps": [
+        "Confirm the document is one you're allowed to paste into this tool under your firm's confidentiality policy; redact client-identifying details if the tool isn't approved for confidential data.",
+        "Open a new chat and paste the full document text, or the specific section you need summarized.",
+        "Instruct the AI to use only what is stated in the text and to flag anything unclear or missing rather than guessing.",
+        "Ask for the summary in a fixed structure: document type and parties, purpose, key terms, dates, and open questions.",
+        "Explicitly instruct it not to characterize enforceability, validity, or favorability - that is your judgment, not the model's.",
+        "Read the summary against the original document line by line, checking every factual claim before relying on it.",
+        "Label the result 'DRAFT - pending attorney review' and only treat it as final after you've personally verified it against the source."
+      ],
+      "prompt": "You are assisting with a first-pass summary of a legal document for internal attorney review. This is NOT legal advice and this summary is NOT a final work product - it exists only to help me review faster, and I will verify every line against the original.\n\nRules:\n- Use ONLY information contained in the document text below. Do not add outside knowledge, assumptions, or general legal principles.\n- Do not state whether any clause is enforceable, valid, favorable, or standard - that is my judgment to make, not yours.\n- If something is unclear, ambiguous, or not addressed in the text, write 'Not stated' or 'Unclear from text' rather than inferring or guessing.\n- Do not predict legal outcomes or consequences.\n\nSummarize the document below using this structure:\n1. Document type and parties\n2. Stated purpose / subject matter\n3. Key terms (5-8 bullet points, closely paraphrased or quoted)\n4. Dates and deadlines mentioned\n5. Anything unclear, missing, or flagged 'Not stated'\n\nDocument text:\n[PASTE DOCUMENT TEXT - REDACT CLIENT-IDENTIFYING DETAILS IF THIS TOOL ISN'T APPROVED FOR CONFIDENTIAL DATA]",
+      "promptLabel": "Copyable prompt",
+      "explanation": "The rules block does the real work here: telling the model to use only the supplied text and to write 'Not stated' instead of inferring closes off the most common failure mode in legal AI use - a fluent, confident-sounding sentence that isn't actually supported by the document. Banning characterizations like 'enforceable' or 'standard' keeps the tool in the lane of describing the text, not practicing law. The fixed structure makes it fast to cross-check the output against the source, and framing it as a non-final draft up front keeps you from treating a fast first pass as a finished review.",
+      "example": "Document: a commercial lease between Harborview Properties LLC (landlord) and Meridian Retail Co. (tenant) for a 5-year retail space term, with a rent escalation clause, a co-tenancy provision, and an assignment clause requiring landlord consent.\n\nGrounded summary output: '1. Document type and parties: Commercial lease; Landlord: Harborview Properties LLC, Tenant: Meridian Retail Co. 2. Stated purpose: Lease of retail premises for a 5-year term. 3. Key terms: Base rent with annual 3% escalation; co-tenancy clause tied to anchor tenant occupancy; assignment/subletting requires landlord's prior written consent; tenant responsible for interior maintenance. 4. Dates: Lease commencement date stated; expiration date stated; 90-day notice period for renewal option. 5. Not stated: the document does not specify a cap on the co-tenancy remedy or define \"anchor tenant.\"' Every line traces to a specific clause, and the gaps are flagged instead of filled in.",
+      "exercise": "In your own Claude account, take a real document you're authorized to share (or a redacted version) and run it through this prompt. Then open the original side by side and check every sentence of the summary against it.",
+      "expectedResult": "A structured summary where every factual claim can be traced to a specific sentence or clause in the source document, with genuine gaps honestly marked 'Not stated' instead of filled in.",
+      "commonMistakes": [
+        "Pasting an unredacted document containing client names, account numbers, or case numbers into a personal-tier consumer AI account without firm approval - a confidentiality and ethics risk, not just a style issue.",
+        "Treating the summary as a substitute for reading the source document rather than a first-pass aid you still verify.",
+        "Letting the model characterize a clause as 'standard,' 'enforceable,' or 'favorable' - those are legal judgments only the attorney can make.",
+        "Accepting a 'Not stated' answer without going back to confirm the document genuinely doesn't address that point."
+      ],
+      "proTip": "Run a second prompt after the summary: 'List every factual claim in your summary above and identify which sentence or clause of the original document it comes from.' This surfaces subtle unsupported claims before the summary reaches a colleague or a client file.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "lawyer"
+      ],
+      "skills": [
+        "analysis",
+        "research"
+      ]
+    },
+    {
+      "slug": "law-b2-extract-parties-dates-and-obligations",
+      "title": "Extract parties, dates and obligations from a document with Claude",
+      "summary": "Pull a clean, structured table of parties, key dates, and who-owes-what-to-whom out of a contract, so nothing critical gets missed on a first read.",
+      "difficulty": "beginner",
+      "minutes": 8,
+      "isFree": true,
+      "goal": "Generate an accurate structured extraction of parties, defined terms, dates, and obligations from a supplied legal document, with gaps clearly flagged.",
+      "whyItMatters": "Missing a deadline or misreading who owes what to whom is one of the most consequential errors in legal work. A structured extraction forces a systematic first pass through a document instead of a skim, and doing it with strict grounding rules turns a tedious manual task into a fast, checkable one - as long as you verify every row against the source before it goes into a calendar, a file memo, or anyone's hands.",
+      "steps": [
+        "Confirm you're authorized to paste this document into the tool; redact identifying details if the tool isn't approved for confidential data.",
+        "Paste the full document text into a new chat.",
+        "Ask for a table with fixed columns: parties, defined terms, dates/deadlines, obligations by party, and governing law.",
+        "Require the model to quote or closely paraphrase the source for each row rather than summarizing loosely.",
+        "Require it to mark any column 'Not stated' when the document doesn't address it, instead of inferring a plausible answer.",
+        "Cross-check every date and obligation against the original text, especially anything that will feed a calendar or docket.",
+        "Save the verified table into the matter file, noting it was AI-assisted and attorney-reviewed."
+      ],
+      "prompt": "You are extracting structured facts from a legal document for internal review. This is NOT legal advice and is NOT a final work product - I will verify every entry against the original text before relying on it.\n\nRules:\n- Use ONLY the document text below. Do not infer dates, obligations, or party roles that aren't explicitly stated.\n- For every entry, note which clause or section it comes from.\n- If a fact isn't stated in the document, write 'Not stated' in that field - never estimate or assume a typical value.\n- Do not offer opinions on whether obligations are reasonable, standard, or enforceable.\n\nExtract the following into a table:\n| Party | Role | Key Obligation(s) | Deadline/Date | Source Clause |\n\nThen list separately:\n- Defined terms and their stated meaning\n- Governing law / jurisdiction (if stated)\n- Any dates or deadlines not yet captured in the table above\n\nDocument text:\n[PASTE DOCUMENT TEXT - REDACT CLIENT-IDENTIFYING DETAILS IF NEEDED]",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Requiring a source clause for every row turns the extraction into something you can audit in seconds rather than re-reading the whole document. Splitting obligations by party surfaces asymmetries (one side owing far more than the other) that are easy to miss in prose. The 'Not stated' rule matters most here: dates and obligations are exactly the kind of specific, checkable facts a model can confidently hallucinate if not explicitly told to flag gaps instead of filling them.",
+      "example": "Document: a mutual non-disclosure agreement between Northwind Innovations, Inc. and Priya Raman, an independent contractor, covering confidential technical information shared during a product evaluation.\n\nExtracted table: Northwind Innovations, Inc. (Disclosing/Receiving Party) - obligation: 'maintain confidentiality of Confidential Information for 3 years from disclosure' (Section 3); Priya Raman (Disclosing/Receiving Party) - same mutual obligation (Section 3); deadline: 'Agreement terminates 2 years from Effective Date unless renewed' (Section 7); governing law: 'State of Delaware' (Section 9); Not stated: the document does not specify a notice period for renewal. Every fact is traceable to a section number, and the missing renewal-notice detail is flagged rather than guessed at.",
+      "exercise": "In your own Claude account, run this prompt on a document with at least two parties and one deadline. Verify each row of the resulting table against the source, and correct any row that isn't fully supported.",
+      "expectedResult": "A table where every obligation, date, and party role can be matched to a specific clause in the source document, with unstated items honestly marked rather than filled in with a plausible guess.",
+      "commonMistakes": [
+        "Letting an extracted deadline go straight into a calendar or docket without checking it against the original clause first.",
+        "Accepting a 'typical' governing-law or notice-period value the model may supply from general knowledge instead of the actual document.",
+        "Skipping the source-clause column, which removes your fastest way to audit the extraction.",
+        "Pasting a document with unredacted client or personal data into a tool your firm hasn't approved for confidential material."
+      ],
+      "proTip": "For documents with multiple related exhibits or amendments, paste them in one message with clear labels ('Exhibit A:', 'Amendment 1:') and ask the model to note in the source-clause column which document each fact came from - this prevents facts from different documents getting silently merged.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "lawyer"
+      ],
+      "skills": [
+        "analysis",
+        "research"
+      ]
+    },
+    {
+      "slug": "law-b3-internal-matter-summaries",
+      "title": "Turn document extracts into an internal matter summary with Claude",
+      "summary": "Combine facts you've already verified into a clean one-page internal matter summary that a colleague or supervising attorney can pick up cold.",
+      "difficulty": "beginner",
+      "minutes": 9,
+      "isFree": false,
+      "goal": "Produce a one-page internal matter summary memo built only from verified facts you supply, ready for a colleague to read without you present.",
+      "whyItMatters": "Matter files accumulate scattered notes, emails, and document extracts that no one outside the immediate team can quickly make sense of. A tight internal summary makes handoffs, status meetings, and conflict checks faster - but only if it's built from facts you've already verified, not from the AI re-reading raw documents and drawing its own conclusions about the matter.",
+      "steps": [
+        "Gather the facts you've already verified: parties, procedural posture, key dates, open issues, next steps.",
+        "Write or paste these facts as clean bullet notes rather than raw documents - you are asking the AI to organize, not to research or investigate.",
+        "Ask for a fixed memo structure: matter overview, parties, procedural posture, key facts, open issues, next steps.",
+        "Instruct the model not to add any fact, inference, or legal characterization beyond what you supplied.",
+        "Use a matter number or code name instead of the client's real name if this tool isn't approved for confidential data.",
+        "Review the memo against your source notes and correct anything that drifted or was rephrased in a misleading way.",
+        "Mark the memo 'Internal use - AI-assisted draft, attorney reviewed' before circulating it."
+      ],
+      "prompt": "You are drafting an internal matter summary memo from notes I provide. This is an internal working document only, NOT legal advice, and NOT a final work product until I review it.\n\nRules:\n- Use ONLY the facts in the notes below. Do not add outside facts, infer motivations, or draw legal conclusions.\n- Do not speculate about outcomes, liability, or strategy beyond what the notes state.\n- If the notes leave a section thin or unclear, say so explicitly rather than padding it with generic language.\n- Keep the tone factual and neutral.\n\nOrganize the notes into this memo structure:\n1. Matter overview (1-2 sentences)\n2. Parties involved\n3. Procedural posture / current status\n4. Key facts (bulleted)\n5. Open issues / questions\n6. Next steps (only if stated in the notes - otherwise write 'Not specified in notes')\n\nNotes:\n[PASTE YOUR VERIFIED NOTES - USE MATTER NUMBER OR CODE NAME IF THIS TOOL ISN'T APPROVED FOR CONFIDENTIAL DATA]",
+      "promptLabel": "Copyable prompt",
+      "explanation": "This lesson deliberately feeds the model your own already-verified notes rather than raw source documents, because a summary-of-a-summary compounds risk if the model is also asked to interpret primary material at the same time. Locking it to a fixed memo structure and banning speculation about outcomes or strategy keeps the output as an organizing tool, not a substitute for the attorney's own case assessment. The 'Not specified in notes' fallback stops the memo from looking more complete than your actual knowledge of the matter.",
+      "example": "Notes supplied: 'Matter: Doe v. Speedy Logistics Inc. (Matter #2026-0417). Personal injury, rear-end collision, 3/14/2026. Plaintiff represented by our firm. Defendant insurer: Continental Mutual. Demand letter sent 5/2/2026, no response yet. Medical records received from two providers, third outstanding. Statute of limitations: 2 years from incident date.'\n\nOutput memo: a one-page document with 'Matter Overview' stating it's a personal injury claim from a rear-end collision; 'Parties' listing plaintiff, defendant, and the insurer; 'Procedural Posture' noting the demand letter is pending response; 'Key Facts' bulleting the incident date and records status; 'Open Issues' flagging the outstanding third provider's records; 'Next Steps' marked 'Not specified in notes' because none were given - prompting the attorney to add them rather than the memo inventing generic ones.",
+      "exercise": "In your own Claude account, take real (or realistic practice) notes from a matter you're working on, strip any unredacted client identifiers if needed, and generate a memo using this prompt.",
+      "expectedResult": "A one-page memo a colleague could read cold and understand the matter's status, built entirely from facts you supplied and verified, with no invented next steps or legal conclusions.",
+      "commonMistakes": [
+        "Pasting raw, unverified documents instead of your own checked notes, which reintroduces the risk of the model drawing its own unverified inferences.",
+        "Letting the model fill in a plausible-sounding 'Next Steps' section when your notes didn't actually specify next steps.",
+        "Using the client's real name and matter details in a tool not cleared for confidential data instead of a matter number or code name.",
+        "Circulating the memo without the 'AI-assisted draft, attorney reviewed' label, so a colleague treats it as an authoritative final record."
+      ],
+      "proTip": "Keep a running plain-text notes file per matter as you work, and regenerate the memo from it each time something material changes - this keeps the internal summary current without re-explaining the matter from scratch every time.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "lawyer"
+      ],
+      "skills": [
+        "writing",
+        "productivity"
+      ]
+    },
+    {
+      "slug": "law-b4-draft-client-communications",
+      "title": "Draft a non-final client status update with Claude or ChatGPT",
+      "summary": "Produce a first-draft client update email from facts you provide, clearly marked as a draft that you'll review, add judgment to, and personally send.",
+      "difficulty": "beginner",
+      "minutes": 8,
+      "isFree": false,
+      "goal": "Generate a draft client communication built strictly from supplied facts, explicitly marked non-final and never sent without attorney review and edits.",
+      "whyItMatters": "Client communication is where tone, precision, and legal judgment matter most - and where an AI-drafted sentence that overstates certainty or implies advice you haven't actually given can create real exposure. Using AI to produce a fast first draft of routine status updates is legitimate and saves time, but only when the draft is treated as raw material: reviewed, edited for accuracy and judgment, and sent by you - never sent as generated.",
+      "steps": [
+        "List the specific facts and status details you want communicated - do not ask the AI to invent updates or infer what's happened.",
+        "State the audience and purpose clearly: is this a status update, a request for documents, a scheduling note?",
+        "Instruct the model explicitly not to give legal advice, predict outcomes, or state opinions about the strength of the matter.",
+        "Ask for a clearly labeled DRAFT with placeholders for anything you need to add personally (advice, next steps requiring your judgment).",
+        "Read the draft for tone, accuracy, and anything that oversteps into advice or certainty you haven't verified.",
+        "Add your own legal judgment, advice, and any required disclaimers where the draft leaves placeholders.",
+        "Send the communication yourself, from your own review - never send an AI draft unedited."
+      ],
+      "prompt": "You are drafting a NON-FINAL first draft of a client communication. This is not legal advice, and this draft must not be sent as-is - I will review, edit, and add my own professional judgment before sending it myself.\n\nRules:\n- Use ONLY the facts listed below. Do not invent updates, outcomes, or reasons for delay that I haven't stated.\n- Do not offer legal advice, predict outcomes, or characterize the strength of the matter.\n- Where a sentence would require my legal judgment or advice, insert a bracketed placeholder like [ATTORNEY TO ADD ADVICE HERE] rather than writing something plausible-sounding.\n- Keep the tone professional, clear, and appropriately reassuring without overpromising.\n\nDraft a [type of communication, e.g. status update email] to [audience, e.g. the client] covering:\nFacts to include: [LIST FACTS]\nPurpose of this communication: [STATE PURPOSE]\nTone: [e.g. warm but professional]\n\nLabel the output 'DRAFT - NOT FOR SENDING' at the top.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "The bracketed-placeholder instruction is the key safeguard: instead of letting the model guess at advice-adjacent language, it visibly marks exactly where your judgment needs to go, so you can't accidentally send a draft that quietly slipped in a legal opinion you never actually formed. Restricting the draft to facts you explicitly list prevents it from padding a thin update with invented reassurances. The 'DRAFT - NOT FOR SENDING' label is a deliberate friction point so the draft is never mistaken for something ready to go.",
+      "example": "Facts supplied: 'Client: Meridian Retail Co. Matter: lease renewal negotiation with Harborview Properties. Status: sent counterproposal on rent escalation cap 6/10/2026, landlord's counsel requested two more weeks to respond. No other updates.'\n\nOutput draft: 'DRAFT - NOT FOR SENDING. Subject: Lease Renewal - Status Update. Hi [Client Contact], Quick update on the lease renewal: we sent our counterproposal on the rent escalation cap on June 10, and the landlord's counsel has asked for two additional weeks to respond, which is a normal part of this stage. [ATTORNEY TO ADD: any guidance on what this timeline means for the client's planning]. We'll follow up as soon as we hear back. Best, [Your name]' - the attorney then fills the bracketed section with actual judgment before sending.",
+      "exercise": "In your own Claude or ChatGPT account, draft a status update for a real (or realistic practice) matter using this prompt, then rewrite the bracketed placeholder yourself with real professional judgment before treating it as done.",
+      "expectedResult": "A clearly labeled draft that accurately reflects only the facts you supplied, with any advice-adjacent content left as a placeholder for you to fill in personally - never sent without your edits.",
+      "commonMistakes": [
+        "Sending an AI-generated client email directly without personally reviewing and editing it first.",
+        "Letting the model fill in a placeholder itself in a later turn instead of you supplying the actual professional judgment.",
+        "Asking the model to explain why something is delayed or predict next steps when you haven't given it that information.",
+        "Pasting real client names and matter specifics into a tool not approved by your firm for client-identifying data."
+      ],
+      "proTip": "Build a short library of your own past client emails (with identifiers removed) as tone references, and paste a snippet into the prompt as a voice sample when tone matters - it keeps drafts sounding like you instead of generically corporate.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "lawyer"
+      ],
+      "skills": [
+        "writing",
+        "communication"
+      ]
+    },
+    {
+      "slug": "law-i1-document-review-checklists",
+      "title": "Build a reusable document-review checklist with Claude",
+      "summary": "Generate a structured, reusable checklist of clauses and issues to check for a given contract type, so first-pass reviews are systematic instead of ad hoc.",
+      "difficulty": "intermediate",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Produce a reusable, editable review checklist for a specific document type that a lawyer applies with their own judgment, not an automated pass/fail tool.",
+      "whyItMatters": "First-pass document review benefits enormously from a consistent checklist - it's how experienced reviewers avoid missing recurring issues under time pressure. AI is well suited to drafting a starting checklist for a familiar document type, but the checklist is only a memory aid: it does not know your jurisdiction's current rules, your firm's playbook positions, or the specific deal context, so every item still requires your own judgment applied against the actual document.",
+      "beforeYouStart": "A clear sense of the document type and jurisdiction you're building the checklist for. If your firm has an existing playbook or precedent checklist, have it ready to paste in so the AI builds on your firm's standards rather than generic ones.",
+      "steps": [
+        "State the document type, jurisdiction, and the reviewer's role (e.g. reviewing on behalf of tenant, buyer, licensor).",
+        "If your firm has an existing playbook or checklist, paste it in and ask the model to build on it, not replace it.",
+        "Ask for a checklist organized by category (e.g. commercial terms, risk allocation, termination, compliance) rather than a flat list.",
+        "Instruct the model to mark items that commonly require jurisdiction-specific verification, since it cannot confirm current local law.",
+        "Review the checklist yourself and remove or adjust anything that doesn't match your firm's actual practice or current law.",
+        "Test the checklist against a real document and note any issue you found that the checklist missed.",
+        "Save the refined checklist as a firm resource, dated and marked as a starting aid, not authoritative guidance."
+      ],
+      "prompt": "You are helping draft a first-pass document review checklist. This is a starting aid for an experienced reviewer, NOT legal advice, and NOT a substitute for jurisdiction-specific research or firm playbook standards.\n\nRules:\n- Organize the checklist by category, not as one flat list.\n- For any item where current law, local rules, or jurisdiction-specific requirements matter, add the tag [VERIFY CURRENT LAW] rather than stating a specific rule as fact.\n- Do not state that any particular clause language is required, standard, or enforceable - phrase items as questions to check, not conclusions.\n- If I provide an existing playbook or checklist below, build on and refine it rather than replacing it with generic content.\n\nBuild a review checklist for:\nDocument type: [e.g. commercial lease]\nReviewing on behalf of: [e.g. tenant]\nJurisdiction: [STATE/COUNTRY]\nExisting playbook/checklist (if any): [PASTE OR WRITE 'NONE']\n\nFormat: category headers, each with 3-6 checklist questions.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Phrasing checklist items as questions rather than assertions ('Does the assignment clause require landlord consent?' instead of 'The assignment clause must require consent') keeps the tool from quietly injecting legal conclusions into what should be a neutral review aid. The [VERIFY CURRENT LAW] tag is doing real work: it flags exactly where the checklist's usefulness ends and your own research begins, since the model cannot confirm what current statutes or local rules require. Anchoring the prompt to an existing firm playbook, when available, keeps the output aligned with your actual practice standards instead of generic contract-review boilerplate.",
+      "example": "Request: checklist for reviewing a commercial lease on behalf of a tenant, jurisdiction California, no existing playbook supplied.\n\nOutput checklist (excerpt): 'Commercial Terms: Is the base rent and escalation schedule clearly stated? Are operating expense pass-throughs capped or itemized? Risk Allocation: Does the indemnification clause run one way or mutually? Is there a landlord insurance requirement, and does it match what the tenant is required to carry? Compliance: [VERIFY CURRENT LAW] Does the lease address ADA / accessibility compliance obligations and which party bears the cost of remediation? Termination: What triggers default, and what cure period is provided?' Each item is a question to investigate against the actual document, not an assertion of what the answer should be.",
+      "exercise": "In your own Claude account, build a checklist for a document type you regularly review. Apply it to a real document and note at least one issue in the document that the checklist prompted you to check but that you might otherwise have skimmed past.",
+      "expectedResult": "A categorized, question-based checklist tailored to your document type and role, with jurisdiction-sensitive items clearly flagged for independent verification, that measurably speeds up a real review without replacing your judgment.",
+      "commonMistakes": [
+        "Treating the checklist as legally authoritative instead of a memory aid that still requires your own current-law and playbook verification.",
+        "Skipping the [VERIFY CURRENT LAW] items instead of actually checking them before relying on the checklist in a real review.",
+        "Using a generic checklist across very different jurisdictions without regenerating or adjusting it for local requirements.",
+        "Letting the checklist replace your firm's actual playbook instead of building on and refining it."
+      ],
+      "proTip": "Keep a version-controlled master checklist per document type and periodically ask the model to compare it against a new document you reviewed manually, asking 'What did I check in this review that isn't on the checklist yet?' - this grows the checklist from real practice instead of staying static.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "lawyer"
+      ],
+      "skills": [
+        "analysis",
+        "productivity"
+      ]
+    },
+    {
+      "slug": "law-i2-compare-two-document-versions",
+      "title": "Get a structured difference report between two document versions with Claude",
+      "summary": "Paste two versions of a contract or clause and get a clean, clause-by-clause summary of what changed, as a screening aid before your own redline review.",
+      "difficulty": "intermediate",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Produce an accurate, structured summary of the differences between two supplied document versions, used to prioritize your own detailed redline review, not to replace it.",
+      "whyItMatters": "Spotting what actually changed between a draft you sent and a counterparty's revision is high-stakes, detail-sensitive work - a missed change to an indemnification cap or a termination trigger can be costly. AI comparison is useful for quickly surfacing likely areas of change so you know where to focus, but it is a screening tool: word-processor track-changes or a manual line-by-line pass remains the authoritative check before anything gets signed off.",
+      "steps": [
+        "Confirm both versions are ones you're authorized to paste in; redact identifiers if the tool isn't approved for confidential data.",
+        "Paste version 1 (your baseline) clearly labeled, followed by version 2 (the revision) clearly labeled.",
+        "Ask for a clause-by-clause comparison noting additions, deletions, and substantive wording changes.",
+        "Instruct the model not to speculate about why a change was made or what the counterparty intended by it.",
+        "Ask it to flag any change it's uncertain about rather than asserting a difference that might be a formatting artifact.",
+        "Open both documents' native track-changes or a diff tool and verify every flagged change against the actual redline.",
+        "Use the AI summary to prioritize which changes to scrutinize first, not as the final record of what changed."
+      ],
+      "prompt": "You are comparing two versions of a legal document to produce a screening summary of differences. This is NOT a substitute for a formal redline/track-changes review, and this is NOT legal advice.\n\nRules:\n- Compare only the text provided below. Do not speculate about the reasons behind any change or the intent of either party.\n- For each substantive difference, quote the relevant language from both versions side by side.\n- Distinguish between substantive changes (meaning changes) and purely stylistic/formatting changes.\n- If you're uncertain whether something is a real change or an artifact of how the text was pasted, flag it as 'Uncertain - verify manually' rather than asserting it confidently.\n- Do not state which version is more favorable to either party - describe the change only.\n\nCompare these two versions clause by clause and list: Section/Clause | Version 1 language | Version 2 language | Type of change (substantive/stylistic/uncertain).\n\nVersion 1 (baseline):\n[PASTE VERSION 1]\n\nVersion 2 (revision):\n[PASTE VERSION 2]",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Explicitly separating substantive from stylistic changes helps you triage fast instead of re-reading every line with equal weight. Banning speculation about intent keeps the tool from editorializing about why the counterparty made a change - that's a judgment call for you, informed by the broader negotiation, not something the model can know. The 'Uncertain - verify manually' fallback matters because AI text comparison over long pasted documents can occasionally misalign paragraphs or miss a change buried in dense formatting, and this is exactly the kind of error that must never reach a client or a signature page unverified.",
+      "example": "Version 1 indemnification clause: 'Each party shall indemnify the other for direct damages arising from a breach of this Agreement, up to a cap of $500,000.' Version 2: 'Each party shall indemnify the other for direct and consequential damages arising from a breach of this Agreement, up to a cap of $750,000.'\n\nOutput: 'Section 8 (Indemnification) | V1: cap of $500,000, direct damages only | V2: cap raised to $750,000, consequential damages added | Type: substantive - both the damages scope and the cap amount changed.' This flags exactly the two changes that matter for negotiation strategy, without commenting on whether the increase favors either side.",
+      "exercise": "In your own Claude account, paste a document you sent and the counterparty's revised version (or two draft versions of your own document) and generate a comparison. Then verify the results against your word processor's actual track-changes output.",
+      "expectedResult": "A clause-by-clause difference report that correctly separates substantive from stylistic changes and flags any uncertain items, matching what a manual track-changes review confirms, used to focus your detailed review rather than replace it.",
+      "commonMistakes": [
+        "Relying on the AI comparison alone for a high-stakes execution version instead of confirming with actual track-changes or a dedicated diff tool.",
+        "Letting the model's framing of a change as 'minor' or 'substantive' substitute for your own assessment of its business and legal significance.",
+        "Pasting large documents in a way that misaligns paragraph structure, which can cause the model to miss or misreport a change - always spot-check formatting-heavy sections manually.",
+        "Asking the model to guess at counterparty intent behind a change instead of treating that as a negotiation judgment call."
+      ],
+      "proTip": "For high-stakes or lengthy agreements, run the comparison twice - once with each version as the 'baseline' - and compare the two outputs. Discrepancies between the two runs are a strong signal to check that section manually before relying on either summary.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "lawyer"
+      ],
+      "skills": [
+        "analysis"
+      ]
+    },
+    {
+      "slug": "law-i3-meeting-prep-questions-from-case-material",
+      "title": "Prepare meeting and interview questions from case material with Claude",
+      "summary": "Turn supplied case material into a focused list of open questions and gaps to raise in a client or witness meeting, instead of walking in underprepared.",
+      "difficulty": "intermediate",
+      "minutes": 9,
+      "isFree": false,
+      "goal": "Generate a list of specific, neutral, grounded questions that surface gaps and inconsistencies in supplied case material, to prepare for a client or witness meeting.",
+      "whyItMatters": "Meeting and interview prep is time-consuming precisely because it requires spotting what's missing, not just what's there - and gaps are easy to miss when you're close to a file. AI is useful for a fast, systematic pass that surfaces timeline gaps, undefined terms, and unanswered questions from the material you supply, but the resulting questions still need your legal judgment to prioritize, and the underlying material may be privileged or attorney work product that should never leave an approved, confidential tool.",
+      "beforeYouStart": "Confirm the case material you plan to paste is authorized for the tool you're using - deposition excerpts, client notes, and case timelines are often privileged or work product, and pasting them into a non-approved consumer AI tool can raise real confidentiality and privilege concerns.",
+      "steps": [
+        "Confirm the material is authorized for this tool under your firm's confidentiality and privilege policies before pasting anything.",
+        "Paste the case material: a timeline, notes, transcript excerpt, or fact summary.",
+        "Ask for questions grouped by purpose: clarifying gaps, resolving inconsistencies, and confirming key facts.",
+        "Instruct the model to generate open, neutral questions rather than leading or conclusory ones.",
+        "Ask it to flag where a question exists because information is simply missing, versus where two supplied facts seem to conflict.",
+        "Review the question list and remove anything that oversteps into legal strategy or an assumption not grounded in the material.",
+        "Prioritize the final list yourself before the meeting - the AI list is a starting menu, not a final agenda."
+      ],
+      "prompt": "You are helping prepare open, fact-finding questions for an upcoming meeting or interview, based on case material I provide. This is NOT legal advice and NOT a final meeting agenda - I will select and prioritize the questions myself.\n\nRules:\n- Base every question strictly on gaps, ambiguities, or inconsistencies in the material below. Do not introduce assumptions or facts not present in the material.\n- Write neutral, open-ended questions (who/what/when/where/how) - do not write leading questions or questions that assume an answer.\n- Do not suggest legal strategy, theories of the case, or conclusions about liability or credibility.\n- Group questions by purpose: (a) filling a timeline or factual gap, (b) resolving an apparent inconsistency between two stated facts, (c) confirming or clarifying a fact already mentioned but not fully detailed.\n\nFor each question, briefly note what in the material prompted it.\n\nCase material:\n[PASTE CASE MATERIAL - CONFIRM THIS TOOL IS APPROVED FOR PRIVILEGED/WORK-PRODUCT MATERIAL BEFORE PASTING]",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Grouping questions by purpose - gap-filling, inconsistency-resolving, or fact-confirming - mirrors how an experienced interviewer actually triages a file, and makes it easy to hand-pick the ones worth the limited time in a real meeting. Requiring neutral, open-ended phrasing keeps the output usable for either a client conversation or a witness interview, where leading questions can be a real problem. Explicitly banning strategy or credibility suggestions keeps the tool in a fact-finding role, leaving case theory and judgment calls about what the answers might mean entirely to the attorney.",
+      "example": "Material supplied: a workplace-dispute timeline noting the employee's complaint was filed 3/1, a manager meeting occurred 3/10 with no notes on outcome, and a formal warning was issued 4/2 with no stated reason referencing the complaint.\n\nOutput questions: '(a) Timeline gap: What was discussed and decided at the 3/10 manager meeting? (Prompted by: no notes exist for this meeting.) (b) Inconsistency: Was the 4/2 warning related to the 3/1 complaint or to a separate, unstated performance issue? (Prompted by: no stated connection between the two events, but the proximity in time is notable.) (c) Clarification: Who else was present at the 3/10 meeting? (Prompted by: material names only the manager and employee, no mention of witnesses or HR presence.)' Each question is traceable to a specific gap in the supplied timeline.",
+      "exercise": "In your own Claude account, paste a real or realistic case timeline or set of notes and generate a question list. Before your next meeting, select and reorder the five most important questions yourself.",
+      "expectedResult": "A grouped list of neutral, specific questions, each traceable to an actual gap or inconsistency in the material, that you then prioritize into a real meeting agenda using your own judgment.",
+      "commonMistakes": [
+        "Pasting privileged or attorney work-product material into a tool that isn't cleared for confidential or privileged data, risking a waiver issue.",
+        "Using the generated list as the meeting agenda verbatim instead of selecting and reordering questions based on what actually matters for that meeting.",
+        "Letting a 'leading' question slip through unedited into a witness interview, where phrasing can affect the value of the answer.",
+        "Asking the model to suggest what a gap 'probably means' instead of treating the gap purely as something to ask about."
+      ],
+      "proTip": "After the meeting, paste your notes on the answers back in and ask for a follow-up list of any newly-created gaps or inconsistencies - this turns question prep into an iterative loop across a series of meetings on the same matter.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "lawyer"
+      ],
+      "skills": [
+        "research",
+        "communication"
+      ]
+    },
+    {
+      "slug": "law-i4-organize-research-notes-with-notebooklm",
+      "title": "Organize scattered research notes into a matter file with a Claude Project",
+      "summary": "Upload case excerpts, statute text, and your own notes into a Claude Project to build a source-grounded, navigable research file for a matter.",
+      "difficulty": "intermediate",
+      "minutes": 11,
+      "isFree": false,
+      "goal": "Build an organized, source-grounded Claude Project from research materials for a matter, with every AI answer traceable to an uploaded source you then verify.",
+      "whyItMatters": "Legal research sprawls across case excerpts, statute text, memos, and scattered notes that become hard to navigate as a matter grows. A Claude Project lets you upload those materials once as project knowledge, so every chat in the project can answer strictly from what you've uploaded rather than Claude's general training data - which makes it a strong fit for organizing a matter's research. But grounding in your uploaded sources is not the same as those sources being correctly cited or currently good law. Every citation and quotation must still be independently verified against the actual reporter or statute before it appears in any filing or advice to a client.",
+      "beforeYouStart": "Research materials you are authorized to upload - case law excerpts, statute text, and your own notes. Confirm with your firm whether Claude Projects (or any cloud tool) is approved for the sensitivity level of this material before uploading anything client-identifying.",
+      "steps": [
+        "Confirm the materials are authorized for upload under your firm's confidentiality and cloud-storage policies.",
+        "Create a Claude Project for the matter and upload case law excerpts, statute text, and your own research notes to the project's knowledge as separate files.",
+        "Label each source clearly (e.g. by case name, statute section, or note date) so answers can be traced back to the right document.",
+        "Ask questions strictly about what's in the uploaded sources, and require Claude to cite which source it drew from.",
+        "Use the project to generate an organized outline or issue list grounded in the uploaded material.",
+        "Independently verify every case citation and quoted statute language against the actual reporter or official statute text - never cite from the AI summary alone.",
+        "Keep the project's knowledge updated as new research comes in, and note in your matter file that it's a working research aid, not a substitute for verified citations."
+      ],
+      "prompt": "Within the matter's Claude Project, ask questions grounded strictly in the uploaded sources:\n\n'Using only the uploaded sources in this project's knowledge, answer the following and cite which specific source (by name) supports each part of your answer: [YOUR RESEARCH QUESTION].\n\nIf the uploaded sources don't address part of the question, say so explicitly rather than filling the gap with general knowledge.\n\nThen generate an organized issue outline for this matter based only on the uploaded sources, grouped by legal issue, with each point citing its source.'\n\nNote: this output is a research organization aid, not verified legal authority. Every citation must be checked against the original case reporter or statute text before use in any filing, memo, or advice.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Uploading sources as distinct, clearly labeled files to a Claude Project's knowledge is what makes Claude's answers useful for legal research organization within that project - each answer can point back to exactly which case excerpt or statute section it came from, which is far more auditable than a general chat response with no uploaded context. But grounding only guarantees Claude is drawing from what you gave it, not that the underlying citation is accurate, current, or that you uploaded the right version of a statute. Courts have sanctioned lawyers for filing briefs with AI-generated citations that turned out to be fabricated or misstated - the independent verification step in this workflow is not optional.",
+      "example": "Uploaded sources: excerpts from three employment-discrimination cases, the relevant state statute section, and the attorney's own issue notes for a wrongful-termination matter, all added to the matter's Claude Project.\n\nQuery: 'Using only the uploaded sources, what standard applies to a retaliation claim under this statute, and what does each case say about it?' Output: an answer citing the statute section for the legal standard, and each case excerpt by name for how it applied that standard - with a note that one aspect of the question (whether a specific defense applies) isn't addressed in the uploaded sources. The attorney then pulls the actual case reporter for each cited case to confirm the quotation and holding before using it in a memo.",
+      "exercise": "In your own Claude account, create a Project for a real or practice matter, upload 2-3 sources (case excerpts, statute text, or your own notes) to its knowledge, and ask a grounded research question in a chat within the project. Verify one citation from the response against the original source.",
+      "expectedResult": "An organized Claude Project where every AI answer cites a specific uploaded source, and where you've personally confirmed at least one citation matches the actual case reporter or statute text before treating it as reliable.",
+      "commonMistakes": [
+        "Citing a case or statute in a memo or filing based solely on the Claude summary without pulling and confirming the actual source text.",
+        "Uploading client-identifying research notes or privileged material without first confirming the tool is approved for that sensitivity level.",
+        "Assuming 'grounded in uploaded sources' means the sources themselves are current, correct, or the right version of a statute - you still have to verify that independently.",
+        "Letting the project's knowledge grow unlabeled and disorganized, which defeats the purpose of source-traceable answers."
+      ],
+      "proTip": "Upload only the specific case excerpts and statute sections you've already pulled and confirmed are current - use the Claude Project to organize verified research, not to discover new authority you haven't checked yet.",
+      "tools": [
+        "claude"
+      ],
+      "professions": [
+        "lawyer"
+      ],
+      "skills": [
+        "research",
+        "productivity"
+      ]
+    },
+    {
+      "slug": "law-a1-reusable-prompt-frameworks-for-document-analysis",
+      "title": "Create a reusable internal prompt framework for document analysis",
+      "summary": "Build a standardized, guardrail-built-in prompt template your team can reuse across recurring document-analysis tasks, instead of everyone improvising prompts from scratch.",
+      "difficulty": "advanced",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Design a versioned, reusable prompt framework for a recurring document-analysis task type that bakes in grounding rules, non-final labeling, and confidentiality checks by default.",
+      "whyItMatters": "As AI use spreads across a team, inconsistent ad hoc prompting means inconsistent quality and inconsistent safeguards - one associate's careful grounding instructions don't help if the next person skips them. A shared, versioned prompt framework turns your best practices from the earlier lessons in this path into a standard the whole team applies automatically, and makes it possible to audit and improve the approach over time instead of re-deriving it in every chat.",
+      "beforeYouStart": "A recurring document-analysis task your team performs often (e.g. first-pass contract review, intake summary, discovery document triage) and, ideally, one or two examples of documents used for that task type.",
+      "steps": [
+        "Pick one recurring, well-defined document-analysis task your team performs often - not a broad catch-all.",
+        "List the fixed guardrails every version of this task must include: grounding-only rules, non-final/draft labeling, no-legal-advice language, and confidentiality reminders.",
+        "Identify the variable parts: what changes each time (document type, jurisdiction, audience, output structure).",
+        "Draft the framework as a template with clear placeholders for the variable parts and fixed language for the guardrails.",
+        "Test the framework on 2-3 real or realistic documents and check that the guardrails actually hold across different inputs.",
+        "Version the framework (e.g. v1.0) and document what it's for, what it's not for, and any known limitations.",
+        "Store it in a shared, firm-approved location and set a review date to revisit it as tools and practices change."
+      ],
+      "prompt": "You are helping me design a reusable prompt framework/template for a recurring legal document-analysis task, for use across my team. This is a meta-task: design the template itself, not a one-off analysis.\n\nContext:\nTask type this template is for: [e.g. first-pass commercial contract review]\nWho will use it: [e.g. junior associates, paralegals]\nOutput needed each time: [e.g. structured issue list, risk flags, summary]\nFixed guardrails that must appear in every use of this template (do not weaken or remove these):\n1. Use only the supplied document text; no outside knowledge or inference.\n2. Mark unclear or missing information explicitly rather than guessing.\n3. Never state legal conclusions, enforceability opinions, or advice - describe the text only.\n4. Label all output 'DRAFT - attorney review required' and state it is not legal advice.\n5. Remind the user to confirm the document is authorized for this tool under firm confidentiality policy before pasting.\n\nDesign a template with:\n- A short reusable rules/guardrails block (incorporating the 5 fixed items above, written naturally)\n- Clear bracketed placeholders for the variable parts: [DOCUMENT TYPE], [JURISDICTION], [DESIRED OUTPUT STRUCTURE], [DOCUMENT TEXT]\n- A one-line usage note for teammates on when this template applies and when it doesn't",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Separating fixed guardrails from variable placeholders is what makes a framework actually reusable and auditable: anyone on the team fills in the brackets, but the safety language never gets accidentally dropped because someone was in a hurry. Testing across multiple real documents before rolling it out catches cases where a guardrail phrase gets ignored on messier or more ambiguous input. Versioning and setting a review date treats the framework as a living firm resource rather than a one-time trick, which matters because tool capabilities and firm policy both change.",
+      "example": "Framework built for 'first-pass commercial contract review,' used by junior associates: a fixed preamble stating the five guardrails in natural language, followed by placeholders '[DOCUMENT TYPE]: ___', '[JURISDICTION]: ___', '[REVIEWING ON BEHALF OF]: ___', '[DOCUMENT TEXT]: ___', and an output structure request for a categorized issue list with source-clause citations. A usage note reads: 'v1.0 - for single contracts under 30 pages. Not designed for multi-document deal sets; use the discovery-triage framework for those.' The team tests it on three past contracts, finds the guardrail against stating enforceability opinions holds consistently, and adopts it as the team standard.",
+      "exercise": "In your own Claude or ChatGPT account, build a framework for one recurring task type from your own practice, following the structure above. Test it on two different documents and note anywhere a guardrail phrase needed strengthening.",
+      "expectedResult": "A versioned, documented prompt template with fixed guardrail language and clear variable placeholders, tested against real documents, ready to store as a shared firm resource with a defined scope and review date.",
+      "commonMistakes": [
+        "Building a framework so broad ('analyze any legal document') that the variable parts swamp the fixed guardrails and quality becomes inconsistent again.",
+        "Skipping the test phase and rolling the framework out to the team without checking that guardrails hold on real, messy documents.",
+        "Letting the framework go unversioned and undocumented, so nobody knows which version is current or why an update was made.",
+        "Treating the framework as a permanent fix instead of scheduling a review date, given how quickly tool behavior and firm policy can change."
+      ],
+      "proTip": "Keep a short changelog alongside each framework version noting what real-world failure prompted each guardrail addition - this turns the framework into institutional memory, not just a template.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "lawyer"
+      ],
+      "skills": [
+        "productivity",
+        "writing"
+      ]
+    },
+    {
+      "slug": "law-a2-verification-protocols-for-high-stakes-work",
+      "title": "Build a verification protocol for high-stakes AI-assisted legal work",
+      "summary": "Design a checklist-based sign-off protocol that every AI-assisted work product must pass - citation checks, source-grounding checks, confidentiality checks - before it moves forward in a matter.",
+      "difficulty": "advanced",
+      "minutes": 13,
+      "isFree": false,
+      "goal": "Create and apply a verification protocol that catches fabricated citations, unsupported claims, and confidentiality lapses in AI-assisted work product before it is filed, sent, or relied upon.",
+      "whyItMatters": "The single most damaging failure mode in AI-assisted legal work is a fabricated citation or unsupported factual claim making it into a filing, memo, or client communication unnoticed - courts have sanctioned attorneys for exactly this. A defined, repeatable verification protocol turns 'I'll double-check it' into an actual checklist step with a sign-off record, which is what protects both the client and the lawyer when AI is part of the workflow. This lesson builds that protocol and gives you a template to apply it.",
+      "beforeYouStart": "A completed piece of AI-assisted work product from an earlier lesson (a summary, extraction, checklist, or draft) to run the protocol against as practice.",
+      "steps": [
+        "List every category of risk AI-assisted output can introduce: fabricated citations, unsupported factual claims, subtle misstatements of a document's terms, and confidentiality/privilege exposure.",
+        "For each risk category, define a specific check: e.g. 'every citation manually confirmed against the original reporter or statute.'",
+        "Define who performs each check and when in the workflow it happens - before internal circulation, and again before external use (filing, sending, signing).",
+        "Build a short sign-off log format: what was checked, by whom, when, and any corrections made.",
+        "Apply the protocol to a real piece of AI-assisted work product and record the results, including anything the check caught.",
+        "Treat any citation, quote, or factual claim that fails verification as blocking - it must be corrected or removed, not flagged and left in.",
+        "Review and update the protocol periodically as your team's AI use expands to new task types."
+      ],
+      "prompt": "You are helping me design a verification protocol checklist for AI-assisted legal work product before it is relied upon, filed, or sent externally. This protocol itself is a process document, not legal advice.\n\nBuild a checklist covering these risk categories, with a specific, concrete check for each:\n1. Fabricated or misstated citations (case law, statutes, regulations) - how will each one be independently confirmed against the primary source?\n2. Unsupported factual claims - how will each factual assertion be traced back to the source document or verified notes?\n3. Subtle misstatement of a document's actual terms - how will the AI output be cross-checked against the original document?\n4. Confidentiality and privilege exposure - how will it be confirmed that no unauthorized client-identifying or privileged material was placed into a non-approved tool?\n5. Non-final labeling - how will it be confirmed the output is marked as a draft requiring attorney review before any external use?\n\nFor each item, specify: the check, who performs it, and when (internal review stage vs. before external use). Then provide a short sign-off log template with columns for: item checked, checked by, date, result, corrections made.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Naming fabricated citations as its own explicit risk category, separate from general factual accuracy, matters because it is the failure mode with the most severe real-world consequences on record and the easiest one to miss - a citation can look completely correct in format while referring to a case that doesn't exist or doesn't say what's claimed. Splitting checks into 'before internal circulation' and 'before external use' creates a second, independent checkpoint for anything leaving the firm, catching errors that slipped through an early review. The sign-off log turns verification from an assumed step into a documented one, which is what actually protects the matter if the work product is later questioned.",
+      "example": "Protocol applied to an AI-drafted summary memo referencing three cases and a statute, ahead of it being incorporated into a motion. Sign-off log entry: 'Item: 3 case citations. Checked by: J. Alvarez. Date: 8/9/2026. Result: 2 of 3 confirmed accurate against the official reporter; 1 case citation was correctly formatted but the AI's description of the holding did not match the actual opinion - corrected before use. Item: statute citation. Result: confirmed current and accurately quoted. Item: confidentiality. Result: confirmed only anonymized facts were used in the AI tool per firm policy.' The flawed case description was caught and fixed before the motion was drafted, exactly because the protocol required an independent check rather than trusting the AI summary.",
+      "exercise": "In your own Claude or ChatGPT account, build this protocol, then apply it to a real piece of AI-assisted work product you produced in an earlier lesson. Fill out the sign-off log honestly, including anything the check caught.",
+      "expectedResult": "A documented verification protocol with a completed sign-off log for at least one real piece of work product, including at least one specific claim, citation, or detail you personally confirmed (or corrected) against the primary source rather than assuming was accurate.",
+      "commonMistakes": [
+        "Treating citation verification as optional for internal drafts, then having an unverified citation carry through unnoticed into an external filing.",
+        "Performing the verification check but not logging it, so there's no record the check ever happened if the work product is later questioned.",
+        "Applying the protocol once at the start of a matter and not repeating it as new AI-assisted drafts are produced later in the same matter.",
+        "Treating a 'mostly accurate' citation or claim as passing, instead of blocking anything that isn't fully confirmed against the primary source."
+      ],
+      "proTip": "Keep an aggregated log across matters of every error the verification protocol has caught. Reviewing it periodically shows you which risk category (citations, factual drift, confidentiality) actually causes the most real problems for your team, so you can tighten that specific check first.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "lawyer"
+      ],
+      "skills": [
+        "analysis",
+        "productivity"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,354 @@
+{
+  "quizzes": {
+    "acc-b1-summarize-financial-document-safely": [
+      {
+        "q": "A colleague wants to summarize a client's unredacted trial balance using a public AI chatbot to save time before a meeting. What should you tell them?",
+        "options": [
+          "Strip or replace client names, account numbers, and other identifying details with placeholders before pasting anything",
+          "Go ahead, as long as the summary is checked for accuracy afterward",
+          "It's fine since the AI tool's chat history is private to their account",
+          "Only remove the client name, since account numbers aren't sensitive"
+        ],
+        "answer": 0,
+        "why": "Pasting an unredacted client file into a general-purpose AI tool creates a confidentiality risk regardless of accuracy checks afterward; identifying details must be stripped or replaced with placeholders first."
+      },
+      {
+        "q": "Why does the summarization prompt explicitly instruct the AI to say \"not stated in the document\" instead of guessing when something is unclear?",
+        "options": [
+          "It makes the summary shorter and faster to generate",
+          "It prevents the AI from filling gaps with plausible-sounding but invented figures that could end up in client advice",
+          "It is required by most AI tools' terms of service",
+          "It allows the AI to skip sections it finds difficult"
+        ],
+        "answer": 1,
+        "why": "The biggest risk with AI summaries of financial material is confident-sounding but wrong numbers; explicitly flagging uncertainty stops the AI from inventing details to fill gaps."
+      },
+      {
+        "q": "After generating a structured summary of a 40-page lease accounting standard, what is the required next step before using any figure from it in client advice?",
+        "options": [
+          "Send it to the client immediately since the AI was told to only use stated facts",
+          "Ask the AI a second time to confirm its own summary is accurate",
+          "Independently verify every number, date, and figure in the summary against the source document",
+          "Round all figures for simplicity before sharing them"
+        ],
+        "answer": 2,
+        "why": "Even with grounding instructions, every number, date, and figure must be independently verified against the original document before it's used in any client communication."
+      }
+    ],
+    "acc-b2-notes-to-client-explanation": [
+      {
+        "q": "You paste rough session notes into the prompt to generate a client-facing explanation. What is the most important check before sending the draft?",
+        "options": [
+          "Checking that the AI used a friendly tone throughout",
+          "Making sure the explanation is at least five paragraphs long",
+          "Verifying the AI defined every accounting term twice",
+          "Confirming every number and fact matches your original notes exactly, with no rounding or restating"
+        ],
+        "answer": 3,
+        "why": "The most common failure mode is the AI 'helpfully' rounding or restating a figure; every number must be confirmed to match the original notes exactly before the draft is used."
+      },
+      {
+        "q": "Why does the prompt ask you to name the specific audience (e.g. \"a small business owner with no accounting background\") rather than just saying \"write for a client\"?",
+        "options": [
+          "Because naming the exact audience is what makes the explanation genuinely readable instead of generic",
+          "Because the AI cannot generate output without an audience specified",
+          "Because it changes the required length of the response",
+          "Because it determines which AI model should be used"
+        ],
+        "answer": 0,
+        "why": "Naming the specific audience and their financial literacy level is what makes the resulting explanation land as genuinely readable rather than a generic, textbook-style answer."
+      },
+      {
+        "q": "What is the correct way to handle the client's real name when using this prompt in a shared or logged AI account?",
+        "options": [
+          "Use the real name so the draft feels more personal",
+          "Replace it with a placeholder like [CLIENT] in the notes you paste, and add the real name back only after moving the text out of the AI tool",
+          "Use only the client's first name as a compromise",
+          "Ask the AI to redact the name automatically after generating the draft"
+        ],
+        "answer": 1,
+        "why": "The client's real name should stay out of the AI tool entirely; a placeholder is used during generation and the real name is added back only after the text has left the AI tool."
+      }
+    ],
+    "acc-b3-client-reminders-and-requests": [
+      {
+        "q": "A client has ignored two prior reminders for missing bank statements. What should change in your next AI-drafted reminder compared to the first one you sent?",
+        "options": [
+          "Nothing, the same friendly tone should always be used to preserve the relationship",
+          "The email should double in length to show seriousness",
+          "The tone should shift to firm, since the prompt is designed to support both a first friendly reminder and a firmer follow-up",
+          "The deadline should be removed since it clearly isn't working"
+        ],
+        "answer": 2,
+        "why": "The prompt is explicitly parameterized for tone (friendly first reminder vs. firm follow-up), and using the same friendly tone indefinitely after being ignored is a listed common mistake."
+      },
+      {
+        "q": "Why does the prompt instruct the AI not to state any penalty amount or legal consequence you haven't specified?",
+        "options": [
+          "Because penalties are never relevant to accounting deadlines",
+          "Because mentioning penalties is against most email service providers' policies",
+          "Because it shortens the email automatically",
+          "Because it prevents the AI from adding a plausible-sounding but inaccurate consequence for that specific client's situation"
+        ],
+        "answer": 3,
+        "why": "Letting the AI invent a penalty or legal consequence you didn't specify risks stating something inaccurate for that client's actual situation, which the guardrail is designed to prevent."
+      },
+      {
+        "q": "What is the single biggest driver of client response rate according to this lesson, and how should it be handled in the prompt?",
+        "options": [
+          "A concrete, clearly stated deadline included in the prompt inputs",
+          "A long, detailed explanation of accounting terminology",
+          "Using bold and colorful formatting in the email",
+          "CC'ing the client's business partner on every reminder"
+        ],
+        "answer": 0,
+        "why": "The lesson identifies a concrete stated deadline as the single biggest driver of client response rate, and forgetting to include one is listed as a common mistake."
+      }
+    ],
+    "acc-b4-explain-financial-concepts-plain-language": [
+      {
+        "q": "A client asks why they owe tax on money they haven't received yet. Why does the prompt explicitly forbid the AI from stating specific tax rates or thresholds?",
+        "options": [
+          "Tax rates are considered trade secrets",
+          "Rates and thresholds vary by jurisdiction and change over time, so an AI stating one with confidence is a common source of bad advice if unchecked",
+          "The AI is incapable of producing numbers accurately",
+          "Clients generally don't care about specific numbers"
+        ],
+        "answer": 1,
+        "why": "Specific tax rates and thresholds depend on jurisdiction and change over time, so banning them from the AI's output is a guardrail against a common source of bad advice."
+      },
+      {
+        "q": "What makes the analogy in a generated explanation actually effective for the client, according to this lesson?",
+        "options": [
+          "Using the most technically precise analogy available, regardless of the client's business",
+          "Using multiple analogies to cover all possible interpretations",
+          "Grounding the request in the client's actual business context so the analogy is relevant rather than generic",
+          "Letting the AI choose any well-known analogy from finance textbooks"
+        ],
+        "answer": 2,
+        "why": "Grounding the explanation in the client's actual business (e.g. a cafe with same-day sales but some supplier credit) is what makes the analogy land instead of feeling like a generic textbook definition."
+      },
+      {
+        "q": "Before sending an AI-generated plain-language explanation of a financial concept to a client, what must the accountant do?",
+        "options": [
+          "Nothing further, since the prompt already bans invented rates",
+          "Ask a second AI tool to double-check the first one's output",
+          "Only check that the word count is under the limit",
+          "Personally confirm the explanation is technically accurate for that client's specific situation and jurisdiction"
+        ],
+        "answer": 3,
+        "why": "The accountant must always verify the explanation is technically accurate for the specific client's situation and jurisdiction before sending, since an oversimplified explanation can become technically incorrect and create liability."
+      }
+    ],
+    "acc-b5-internal-checklists-and-process-docs": [
+      {
+        "q": "The AI suggests an additional step for a month-end close checklist that you never actually described. Where should this suggestion appear in the output?",
+        "options": [
+          "In a separate \"possible gaps to review\" section, not inside the main checklist",
+          "Merged directly into the numbered checklist since the AI is usually right",
+          "It should be silently deleted from the response",
+          "Sent to the whole team as an urgent update"
+        ],
+        "answer": 0,
+        "why": "The prompt requires AI-suggested additions to be listed separately under 'possible gaps to review' rather than folded into the official checklist, preventing an invented step from silently becoming part of the real process."
+      },
+      {
+        "q": "Why does the prompt ask for a \"common failure points\" section listing steps like cutoff errors or unreconciled accounts?",
+        "options": [
+          "Because every checklist must legally include a risk disclaimer",
+          "Because it draws on general accounting risk patterns to highlight where mistakes are most likely, without pretending to know the firm's specific practice",
+          "Because it replaces the need for a technical accuracy review",
+          "Because it makes the checklist longer and more thorough-looking"
+        ],
+        "answer": 1,
+        "why": "The common-failure-points section draws on general accounting risk patterns like cutoff timing and unreconciled control accounts, adding real value without claiming firm-specific knowledge."
+      },
+      {
+        "q": "A junior staff member publishes the first AI-generated checklist draft to the team without changes. What mistake did they make?",
+        "options": [
+          "They should have asked the AI to make the checklist longer first",
+          "They should have used a different AI tool",
+          "They skipped reviewing the checklist against actual practice before publishing it to the team",
+          "There was no mistake, since the AI already flagged uncertain steps"
+        ],
+        "answer": 2,
+        "why": "The workflow requires reviewing the checklist against actual practice and correcting it before it becomes official; skipping this step and publishing the first draft directly is a listed common mistake."
+      }
+    ],
+    "acc-i1-analyze-variance-narrative": [
+      {
+        "q": "Why must variance amounts and percentages be calculated in your accounting system or spreadsheet before being given to the AI, rather than letting the AI calculate them?",
+        "options": [
+          "AI tools cannot process numeric data at all",
+          "It makes the prompt shorter",
+          "Accounting software is always faster than AI at calculations",
+          "Large language models can make arithmetic mistakes, so keeping number-crunching outside the AI removes the risk of a silent error in a management report"
+        ],
+        "answer": 3,
+        "why": "The explicit instruction that all figures are already calculated and must not be recalculated is the most important guardrail, since a single AI arithmetic error inserted into a management report can be costly."
+      },
+      {
+        "q": "A material variance has no explanatory note attached to it. What should the AI do with that line item?",
+        "options": [
+          "List it under \"needs explanation from me\" rather than inventing a reason",
+          "Invent the most statistically likely explanation based on general accounting patterns",
+          "Omit the variance from the report entirely",
+          "Mark it as immaterial regardless of its size"
+        ],
+        "answer": 0,
+        "why": "Unexplained material variances must be routed to a 'needs explanation from me' list rather than filled in with a guessed reason, preventing fabricated explanations from reaching a management report."
+      },
+      {
+        "q": "Who should set the materiality threshold used to separate variances that need a written explanation from those that don't?",
+        "options": [
+          "The AI, based on general best practices it has learned",
+          "The accountant or firm/client, using a threshold they control and specify in the prompt",
+          "Whichever threshold produces the shortest narrative",
+          "It doesn't matter as long as a threshold exists"
+        ],
+        "answer": 1,
+        "why": "Using a materiality threshold the AI invented instead of one the firm or client actually uses is listed as a common mistake; the threshold should be supplied by the accountant."
+      }
+    ],
+    "acc-i2-meeting-agendas-followup-summaries": [
+      {
+        "q": "Your raw meeting notes don't specify who owns a particular action item. How should the follow-up summary prompt handle this?",
+        "options": [
+          "The AI should assign the most likely owner based on typical meeting patterns",
+          "The action item should be dropped from the summary entirely",
+          "Use \"TBD\" for the missing owner or due date rather than inventing one",
+          "The accountant should always be assumed as the default owner"
+        ],
+        "answer": 2,
+        "why": "The prompt specifies a 'TBD' fallback for missing owners or dates, stopping the AI from silently assigning an action item or deadline that was never actually agreed on."
+      },
+      {
+        "q": "Why does the follow-up summary structure keep \"decisions made\" separate from general discussion points and open questions?",
+        "options": [
+          "To make the document longer and more formal-looking",
+          "Because clients prefer longer documents",
+          "It is a legal requirement for meeting minutes",
+          "Because mixing general discussion with firm decisions makes it unclear what was actually agreed"
+        ],
+        "answer": 3,
+        "why": "Mixing general discussion points in with firm decisions is a listed common mistake because it makes it unclear what was actually agreed versus merely discussed."
+      },
+      {
+        "q": "Before sending the post-meeting follow-up summary to the client, what should you do?",
+        "options": [
+          "Verify every number and decision in the summary against your raw notes",
+          "Send it immediately since the AI was instructed to use only the notes provided",
+          "Ask the client to verify it themselves",
+          "Shorten it further to under 50 words"
+        ],
+        "answer": 0,
+        "why": "The workflow requires verifying every number and decision in the summary against your raw notes before sending it to the client, since even grounded summaries can misstate details."
+      }
+    ],
+    "acc-i3-reusable-prompt-templates-client-comms": [
+      {
+        "q": "Why does this lesson start from your own best real example of a message type, instead of asking the AI to write a generic template from scratch?",
+        "options": [
+          "Generic templates take longer for the AI to generate",
+          "Starting from your real example keeps the resulting template in your actual voice and matching how your firm really communicates",
+          "AI tools require a source example to function",
+          "It reduces the number of placeholders needed"
+        ],
+        "answer": 1,
+        "why": "Building the template from your own tested example, rather than generic AI writing, is what keeps the output authentic to your firm's actual communication style."
+      },
+      {
+        "q": "The prompt asks the AI to flag which placeholders are \"especially risky\" if left wrong or outdated. What kind of placeholder does this typically refer to?",
+        "options": [
+          "The greeting and sign-off lines",
+          "The subject line of the email",
+          "Specific dollar amounts and deadlines, since using a stale or wrong figure there is most likely to cause harm",
+          "General tone descriptors like \"warm\" or \"professional\""
+        ],
+        "answer": 2,
+        "why": "The risk-flagging step draws attention to placeholders like dollar amounts and deadlines, which are the most likely to cause real harm if left stale or incorrect."
+      },
+      {
+        "q": "A template uses a vague placeholder like [DETAILS] instead of [REVENUE FIGURE] or [DUE DATE]. What problem does this create?",
+        "options": [
+          "No real problem, since the AI can infer the right value each time",
+          "It only affects formatting, not content",
+          "It makes the template load slower",
+          "It increases the risk of accidentally leaving irrelevant or outdated information in the message since it's not obvious what must change each time"
+        ],
+        "answer": 3,
+        "why": "Vague placeholders instead of specific, clearly bracketed ones is a listed common mistake, since specific placeholders make it obvious at a glance what must be updated each use."
+      }
+    ],
+    "acc-i4-structure-data-cleaning-instructions": [
+      {
+        "q": "You need help writing a data-cleaning procedure for a messy bank export. What should you paste into the AI prompt?",
+        "options": [
+          "A description of the columns and problems, plus a few fake sample rows with the same pattern as the real data",
+          "The full real client export so the AI can see the actual problems",
+          "Only the column headers, with no sample data at all",
+          "A screenshot of the real spreadsheet"
+        ],
+        "answer": 0,
+        "why": "The cleaning logic depends only on the pattern of the mess, not the actual transactions, so a description plus fake sample rows avoids exposing real client data while still producing a usable procedure."
+      },
+      {
+        "q": "Why does the prompt ask for a verification check after each major cleaning step, rather than just one check at the very end?",
+        "options": [
+          "It makes the output longer, which looks more thorough",
+          "It turns the cleanup into something auditable, with checkpoints a reviewer can retrace later",
+          "Spreadsheet software requires a check after every formula",
+          "It reduces the number of formulas needed"
+        ],
+        "answer": 1,
+        "why": "A verification check after each major step creates a documented, auditable procedure with checkpoints, rather than an untraceable series of manual edits if a reviewer later asks how the data was prepared."
+      },
+      {
+        "q": "After running a generated cleaning procedure on the real spreadsheet, what is the most important final check?",
+        "options": [
+          "Confirming the spreadsheet file size decreased",
+          "Checking that all formulas use the same color formatting",
+          "Comparing the original row count and control total to the cleaned row count and total to catch silent data loss",
+          "Verifying the AI's response was under a certain word count"
+        ],
+        "answer": 2,
+        "why": "The final reconciliation check, comparing row count and control total before and after cleaning, is the single most important check for catching silently dropped or duplicated rows."
+      }
+    ],
+    "acc-i5-procedure-docs-and-staff-training": [
+      {
+        "q": "Why does this lesson insist on including the reasoning behind key decisions, not just the mechanical steps, when generating training documentation?",
+        "options": [
+          "It makes the document meet a required minimum length",
+          "Reasoning is only needed for compliance audits",
+          "It reduces the number of practice questions needed",
+          "New hires who understand why a step exists make better judgment calls when they hit an edge case the document didn't anticipate"
+        ],
+        "answer": 3,
+        "why": "Training material built on reasoning, not just mechanical steps, helps trainees adapt when they encounter situations the document didn't explicitly cover."
+      },
+      {
+        "q": "The AI suggests the documentation is missing a step about escalating unresolved discrepancies, something the original expert never mentioned. Where should this go?",
+        "options": [
+          "Into a separate \"gaps to confirm with the author\" section, kept apart from the authoritative content",
+          "Inserted directly into the numbered steps since it sounds reasonable",
+          "Deleted from the response entirely",
+          "Added as a footnote without review"
+        ],
+        "answer": 0,
+        "why": "AI-suggested additions are isolated into a 'gaps to confirm with the author' section so the authoritative document stays limited to what the actual expert verified."
+      },
+      {
+        "q": "What is the most reliable way to catch gaps in a finished training document, according to this lesson's pro tip?",
+        "options": [
+          "Having the original author re-read their own document",
+          "Having a recently onboarded team member follow the document exactly as written and flag anywhere they got stuck",
+          "Running the document through a grammar checker",
+          "Asking the AI to grade its own output"
+        ],
+        "answer": 1,
+        "why": "The lesson notes that having a recently onboarded team member follow the document as written catches gaps far more reliably than the original author reviewing their own work."
+      }
+    ]
+  }
+}

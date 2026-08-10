@@ -1,0 +1,29 @@
+{
+  "paths": [
+    {
+      "slug": "ai-for-real-estate",
+      "title": "AI for Real Estate",
+      "tagline": "Write listings, follow up with clients, research your market, and build a landing page — without ever inventing a fact.",
+      "description": "A 12-lesson path for real estate agents covering the AI workflows that save the most time in the field: writing and improving listing descriptions from rough notes, buyer and seller communication, safely summarizing disclosures and inspection reports, neighborhood and social copy, objection-handling practice, cited local market research with Perplexity, weekly lead and activity reporting, and building a simple listing landing page with Codex. Every lesson is built around one core habit — keep the AI grounded in facts you supply, and have it flag gaps instead of guessing.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "real-estate-agent",
+      "sortOrder": 1,
+      "lessons": [
+        "re-b1-listing-from-notes",
+        "re-b2-improve-listing-description",
+        "re-b3-buyer-followup-emails",
+        "re-b4-seller-update-messages",
+        "re-b5-summarize-property-documents-safely",
+        "re-b6-property-faq-from-listing",
+        "re-i1-neighborhood-guide-copy",
+        "re-i2-social-posts-new-listing",
+        "re-i3-objection-handling-scripts",
+        "re-i4-local-market-research-perplexity",
+        "re-i5-lead-notes-weekly-activity-report",
+        "re-a1-property-landing-page-codex"
+      ]
+    }
+  ]
+}

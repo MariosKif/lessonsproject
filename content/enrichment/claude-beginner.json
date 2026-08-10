@@ -1,0 +1,934 @@
+{
+  "enrichment": {
+    "claude-b1-first-conversation": {
+      "placeholders": [
+        {
+          "name": "WHAT THE MEETING IS, e.g. \"30-minute call with a potential client about redesigning their website\"",
+          "what": "This is the one-line description of the meeting itself — its format, length, and purpose. Look at your calendar invite or the email that set up the meeting for the real details. A good value names the meeting type and duration ('45-minute video call to renew our annual contract'); a bad one just says 'a meeting' with nothing about what it's for.",
+          "examples": [
+            "20-minute phone call with our biggest supplier about a late shipment",
+            "1-hour in-person interview for a marketing coordinator role",
+            "30-minute video call with my landlord to discuss renewing the lease"
+          ]
+        },
+        {
+          "name": "PEOPLE AND ROLES",
+          "what": "List everyone who will be in the room or on the call, and what role each person plays relative to you — decision-maker, gatekeeper, technical expert, and so on. This shapes how Claude phrases talking points, since you speak differently to a final decision-maker than to someone gathering information for their boss. If you don't know someone's exact title, describe their function instead of leaving them out.",
+          "examples": [
+            "Me, and David Cho, the operations director who makes the final call on vendor contracts",
+            "Me, my manager Priya, and two people from the client's finance team I haven't met before",
+            "Me and Ana, a potential co-founder I've spoken with twice online but never in person"
+          ]
+        },
+        {
+          "name": "YOUR DESIRED OUTCOME",
+          "what": "State the concrete result you want once the meeting ends — an agreement, a next step, a decision, or even just clarity on something. Vague hopes ('a good conversation') give Claude nothing to build talking points toward; a specific outcome ('they commit to a trial month') gives every talking point a clear job.",
+          "examples": [
+            "They agree to a paid pilot project for one month before signing a full contract",
+            "We agree on a revised delivery date and I get a written apology for the delay",
+            "I leave with a clear yes or no on whether they want to invest, not more 'let's circle back'"
+          ]
+        },
+        {
+          "name": "CONCERNS, OBJECTIONS YOU EXPECT, OR \"nothing specific\"",
+          "what": "Name anything you're nervous about going wrong — a likely objection, an awkward history, a number they might push back on. If truly nothing comes to mind, type the literal words 'nothing specific' so Claude knows you considered it rather than skipped the question.",
+          "examples": [
+            "They'll compare our price to a cheaper competitor they mentioned last time",
+            "The relationship is tense after we missed a deadline in March",
+            "nothing specific"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a routine internal meeting",
+          "whenToUse": "Use this for a low-stakes recurring meeting, like a weekly team sync, where you need a light agenda in under a minute rather than a fully prepared talking-points document.",
+          "prompt": "I have a short internal meeting coming up.\n\nMeeting: [WHAT THE MEETING IS]\nWho's there: [PEOPLE AND ROLES]\nWhat needs to get decided or updated: [DESIRED OUTCOME]\n\nGive me a 4-5 bullet agenda with rough minutes per item, plus one sentence on what I should say if the meeting starts running long. Keep it under 120 words. Base everything only on what I've told you."
+        },
+        {
+          "label": "High-stakes negotiation version",
+          "whenToUse": "Use when real money, a contract, or a relationship is on the line and you need deeper preparation than a standard agenda — for example, a renewal negotiation or a difficult client conversation.",
+          "prompt": "I have a high-stakes negotiation coming up and need serious preparation.\n\nMeeting: [WHAT THE MEETING IS]\nWho will be there: [PEOPLE AND ROLES]\nWhat I want to get out of it: [YOUR DESIRED OUTCOME]\nMy walk-away point (the worst deal I'd still accept): [WALK-AWAY POINT]\nWhat I'm worried about: [CONCERNS OR OBJECTIONS]\n\nGive me:\n1. A short agenda\n2. My 3 strongest points, in the order I should make them\n3. Their 3 most likely objections, each with a response\n4. One opening line and one line to use if they ask for more than I can give\n\nBase everything only on what I've told you — flag anything you're guessing at."
+        },
+        {
+          "label": "When you don't know the situation well yet",
+          "whenToUse": "Use when you're new to a meeting's context — a handed-off account, an unfamiliar client, or a meeting inherited from someone else — and need Claude to help you figure out what you don't know before it drafts anything.",
+          "prompt": "I have a meeting coming up that I don't have full context on yet: [WHAT THE MEETING IS]. Here's what I do know: [WHATEVER YOU KNOW SO FAR].\n\nBefore preparing anything, ask me the 5 most important questions you'd need answered to prepare me well for this. Once I answer, use my answers to build the agenda and talking points as in the original prompt."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Talking point too vague? Make it specific",
+          "prompt": "Talking point [NUMBER] is too generic — it could apply to any meeting like this. Rewrite it using the specific numbers or facts I gave you, not general language."
+        },
+        {
+          "label": "Forgot a concern? Add it without restarting",
+          "prompt": "I forgot to mention one more thing I'm worried about: [NEW CONCERN]. Add a hard question and suggested answer for this, and fit it into the existing agenda without changing anything else."
+        },
+        {
+          "label": "Too long? Cut it down",
+          "prompt": "This is longer than I can review in two minutes. Cut it to the single most important agenda item, top 2 talking points, and the one hardest question — drop everything else."
+        },
+        {
+          "label": "Want a stronger opening line",
+          "prompt": "Give me 3 options for how I could open this meeting in the first 30 seconds, ranging from very safe and formal to more direct and confident. One sentence each."
+        }
+      ],
+      "walkthrough": "Daniel runs a small print shop and has a call in two days with a client, Renata, who owes 3,200 EUR on an invoice that's six weeks overdue. He's never used Claude before, so he goes to claude.ai, signs up with his email, and takes a moment to notice the layout: a big text box in the middle for typing, and a sidebar on the left where past conversations will appear once he has some.\n\nHe copies the lesson's prompt into the box and fills in the brackets: the meeting is '15-minute call with a long-time client about an overdue invoice', the people are 'me and Renata, the client, who I've worked with for three years', his desired outcome is 'a firm payment date this week, without damaging the relationship', and his concern is 'she'll say cash flow is tight and ask for another extension'.\n\nClaude responds with a short agenda (open warmly, state the invoice plainly, propose two payment options, agree next steps), three talking points, and two hard questions — including 'What if she asks for a 60-day extension?' with a suggested answer offering a split payment instead of an open-ended delay.\n\nDaniel reads it and feels the second talking point is too soft, so he sends a follow-up: 'Talking point 2 is too vague — make it firmer, this is the third time payment has slipped.' Claude tightens the language without sounding aggressive.\n\nHe copies the final version into his notes app. Total time: eight minutes, including account setup — and he walks into the call with an actual plan instead of a vague sense of dread."
+    },
+    "claude-b2-professional-prompts": {
+      "placeholders": [
+        {
+          "name": "TYPE OF BUSINESS",
+          "what": "The kind of business you run or work in, in a few words — this tells Claude what industry norms and constraints apply. Be specific about the category, not just 'business': 'boutique hotel', 'accounting firm', 'landscaping company' each imply different concerns and vocabulary.",
+          "examples": [
+            "family-owned bakery",
+            "B2B software consultancy",
+            "residential plumbing company"
+          ]
+        },
+        {
+          "name": "N",
+          "what": "The number of employees at your business, as a plain number. This helps Claude calibrate advice to your scale — a 3-person shop and a 300-person company need very different solutions to the same problem, even when the problem sounds identical.",
+          "examples": [
+            "4",
+            "15",
+            "1 (just me, plus occasional subcontractors)"
+          ]
+        },
+        {
+          "name": "2-3 SENTENCES ON THE SITUATION — what happened, what you have, who the output is for.",
+          "what": "This is the heart of the prompt: describe, in your own words, what's actually going on — the event, the constraint, the people involved — and who will read or use whatever Claude produces. The more concrete and specific this is, the less generic the output will be; vague situations get vague advice.",
+          "examples": [
+            "Two of my four staff asked for the same week off in July, which is our busiest season. I need a fair way to decide who gets it without playing favorites. This is for me to use when I talk to both of them.",
+            "A long-time supplier just raised prices 12% with two weeks' notice. I have a signed contract but no price-lock clause. This is going to inform an email I'll send back to them.",
+            "We got a one-star review claiming our delivery driver was rude, but our driver denies it happened as described. I need to respond publicly without admitting fault we're not sure of."
+          ]
+        },
+        {
+          "name": "THE EXPERT YOU'D HIRE FOR THIS, e.g. \"a pragmatic operations consultant who has worked with small businesses\"",
+          "what": "Name the kind of professional whose perspective would actually help here — a real job title or specialty, not a vague superlative like 'the best expert'. This steers which knowledge and communication style Claude draws on, so pick someone whose judgment you'd trust for this exact problem.",
+          "examples": [
+            "an experienced small-business employment lawyer",
+            "a blunt, no-nonsense procurement negotiator",
+            "a customer service manager who has handled hundreds of online reviews"
+          ]
+        },
+        {
+          "name": "THE ONE THING YOU WANT, e.g. \"propose how to handle the scheduling conflicts described above\"",
+          "what": "State the single deliverable you actually need — one task, phrased as an instruction. If you find yourself listing two or three different things here, split them into separate prompts instead; one prompt, one deliverable, produces sharper results.",
+          "examples": [
+            "decide who gets the July week off and draft what I'll say to the person who doesn't",
+            "draft my response to the supplier pushing back on the price increase",
+            "write a public response to the review that doesn't admit fault we haven't confirmed"
+          ]
+        },
+        {
+          "name": "BUDGET",
+          "what": "The maximum you're willing or able to spend on a solution, as a real number with currency. This keeps proposed options grounded in what you can actually afford instead of idealized advice you can't use. If money genuinely isn't a factor, say so explicitly rather than leaving it blank.",
+          "examples": [
+            "200 EUR",
+            "no extra budget — needs to be free or nearly free",
+            "$5,000 total, one-time"
+          ]
+        },
+        {
+          "name": "TIMEFRAME",
+          "what": "How quickly this needs to be resolved or implemented — a deadline or a window. This changes which options are even realistic: a same-day fix and a three-month rollout are different conversations.",
+          "examples": [
+            "by end of this week",
+            "within the next 2 months",
+            "immediately — it's already overdue"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Fast version for a low-stakes task",
+          "whenToUse": "Use when the task is routine and doesn't need the full four-part treatment — a quick internal question where a rough structured answer is enough.",
+          "prompt": "CONTEXT: [1-2 SENTENCES ON THE SITUATION]\nTASK: [WHAT YOU WANT]\nCONSTRAINTS: keep it under [LENGTH], plain language.\nFORMAT: a short numbered list."
+        },
+        {
+          "label": "High-stakes version with a role and risk check",
+          "whenToUse": "Use for decisions with real consequences — legal, financial, or reputational — where you want Claude to actively push back on weak reasoning, not just answer.",
+          "prompt": "CONTEXT: I run a [TYPE OF BUSINESS] with [N] employees. [2-3 SENTENCES ON THE SITUATION].\n\nROLE: Act as [THE EXPERT YOU'D HIRE FOR THIS], and before answering, tell me the single biggest risk in the situation as I've described it — even if it's not what I asked about.\n\nTASK: [THE ONE THING YOU WANT].\n\nCONSTRAINTS:\n- Use only the information I've provided; label any assumption\n- Solutions must cost under [BUDGET] and fit within [TIMEFRAME]\n- Flag anything that sounds like it needs a real lawyer or accountant, not just AI advice\n\nFORMAT: Risk flag first, then exactly 3 options as before."
+        },
+        {
+          "label": "Team-facing version (for a message you'll send to staff)",
+          "whenToUse": "Use when the output is going straight to your own team rather than becoming your private decision notes — the tone and framing need to work as a message, not just analysis.",
+          "prompt": "CONTEXT: I manage a team of [N] at a [TYPE OF BUSINESS]. [2-3 SENTENCES ON THE SITUATION].\n\nROLE: Act as [THE EXPERT YOU'D HIRE FOR THIS].\n\nTASK: Draft the message I will send to my team about [THE ONE THING YOU WANT].\n\nCONSTRAINTS:\n- Tone: fair, transparent, doesn't sound like corporate HR-speak\n- Use only the facts I've given you\n- Under [LENGTH] words\n\nFORMAT: The message itself, followed by one sentence flagging anything in it I should double-check before sending."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Constraints too soft? Make them concrete",
+          "prompt": "The constraints in your answer are too abstract. Rewrite the CONSTRAINTS section to use specific numbers and rules instead of general advice like 'be reasonable' or 'communicate clearly'."
+        },
+        {
+          "label": "Role didn't change much? Push it further",
+          "prompt": "This doesn't sound different from generic advice. Really commit to the ROLE — write it the way that specific expert would actually talk, including their typical priorities and blind spots."
+        },
+        {
+          "label": "Reformat into a table",
+          "prompt": "Keep all the same content, but reformat the 3 options as a table with columns: Option, Cost, Timeframe, Main Risk, Recommended? (yes/no)."
+        },
+        {
+          "label": "Ask it to poke holes before you commit",
+          "prompt": "Before I decide, tell me: which of these 3 options would a skeptical colleague push back on hardest, and why?"
+        }
+      ],
+      "walkthrough": "Marisol owns a five-person pet-grooming salon and has just discovered that her two best groomers both requested the same week off in August — her busiest month, right before back-to-school photos season. She opens Claude and decides to try the four-part prompt structure she just learned instead of typing a one-line question.\n\nShe fills in CONTEXT: 'a pet-grooming salon with 5 employees. Two of my groomers, Beth and Tomas, both requested the same week off in August, our busiest month, and I need a fair way to decide.' For ROLE, she writes 'a pragmatic small-business HR consultant who has dealt with scheduling conflicts before.' TASK: 'propose how to handle this scheduling conflict.' CONSTRAINTS: 'use only what I've told you, label any assumption; keep it low-drama, both are valued staff.' FORMAT: 'exactly 3 options, each with a title, 2-3 sentences, and one risk.'\n\nClaude responds with three options: a seniority-based first-request rule, a coin-flip with the loser getting first pick next time, and splitting the week between them with reduced hours. Each includes a labeled assumption ('Assumption: I don't know who asked first').\n\nMarisol realizes she does know who asked first — Beth, by two days — so she sends a follow-up: 'Beth asked first, on July 2nd. Recommend one option using that fact.' Claude recommends the seniority option and drafts a short message she could send to Tomas.\n\nTotal time: about six minutes, and she has a defensible decision plus the exact words to deliver it — instead of stewing over it for another day."
+    },
+    "claude-b3-rewrite-and-tone": {
+      "placeholders": [
+        {
+          "name": "e.g. \"cut it to roughly half the length and make the tone warmer and less bureaucratic — it's going to a long-time client\"",
+          "what": "This is the single most important line in the prompt: state exactly what should change — shorter, warmer, more formal, more direct — and why, if that helps. One clear transformation works far better than a list of five adjectives, which gives Claude too much freedom to rewrite everything.",
+          "examples": [
+            "make it noticeably more formal — this is going to our legal team, not a colleague",
+            "cut it by about a third and remove the passive-aggressive undertone in paragraph two",
+            "warm it up significantly, this reads cold and it's going to someone who just had a bad experience with us"
+          ]
+        },
+        {
+          "name": "AUDIENCE",
+          "what": "Who will actually read this — their role, and your relationship with them. Tone that works for a stranger reads oddly formal to a close colleague, and tone that works for a friendly regular can read unprofessional to a first-time contact, so this single line recalibrates the whole rewrite.",
+          "examples": [
+            "a new client I've only exchanged two emails with",
+            "my direct manager, who I have a casual, friendly relationship with",
+            "an angry customer who already left one complaint"
+          ]
+        },
+        {
+          "name": "ANYTHING ELSE TO PRESERVE, e.g. \"the apology in the first paragraph\"",
+          "what": "Name anything specific in your draft — a phrase, a section, a particular fact — that must survive the rewrite untouched, beyond the general facts-and-numbers rule. If nothing specific comes to mind, you can write 'nothing else' rather than leaving this blank.",
+          "examples": [
+            "the specific mention that this is a one-time exception, not a new policy",
+            "the exact wording of the refund amount and the deadline to claim it",
+            "nothing else — general facts-preservation is enough here"
+          ]
+        },
+        {
+          "name": "PASTE YOUR DRAFT",
+          "what": "The full text of your actual draft, pasted exactly as it stands — not a summary or paraphrase of it. Paste the whole thing, even the parts you're not sure need changing, so Claude has full context and doesn't accidentally contradict a part it never saw.",
+          "examples": [
+            "Hi team, Just a reminder that the deadline for expense reports is this Friday. Please submit late and you may not be reimbursed this cycle. Let me know if you have questions. Thanks, Priya",
+            "Dear Mr. Alvarez, We regret to inform you that your claim #48213 has been denied per section 4.2 of your policy. You may appeal within 30 days. Regards, Claims Department",
+            "hey so about the project timeline — we're gonna be late, prob by 2 weeks, sorry about that. the vendor stuff took longer than we thought. let me know if that's a problem"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Fast version for low-stakes internal messages",
+          "whenToUse": "Use for quick internal notes — Slack messages, casual team emails — where you just need a quick polish, not a formal change log.",
+          "prompt": "Quickly rewrite this to be [WHAT YOU WANT CHANGED, e.g. \"punchier and less wordy\"]. Keep every fact the same. No need for a change log, just give me the rewrite.\n\nDraft:\n[PASTE YOUR DRAFT]"
+        },
+        {
+          "label": "Two-intensity version for a message you're nervous about",
+          "whenToUse": "Use for a message with real stakes — declining work, addressing a mistake, delivering bad news — where you want to compare a cautious version against a more direct one before choosing.",
+          "prompt": "Rewrite the draft below at two intensities.\n\nWhat I want changed: [WHAT YOU WANT CHANGED]\nWho will read it: [AUDIENCE]\nWhat must NOT change: every fact, number, date, name, and commitment.\n\nGive me:\nVERSION A — cautious and safe\nVERSION B — more direct, still professional\nFor each, a short change log noting any possible meaning shift.\n\nDraft:\n[PASTE YOUR DRAFT]"
+        },
+        {
+          "label": "Match my own voice using past examples",
+          "whenToUse": "Use when you want the rewrite to sound like you specifically, not a generic professional tone — most useful once you have 2-3 pieces of writing you're proud of to paste in as style references.",
+          "prompt": "Rewrite the draft below to match the tone and sentence rhythm of these examples of my own past writing, which I consider my authentic voice:\n\n[PASTE 2-3 EXAMPLES OF YOUR OWN WRITING]\n\nWhat I want changed in the new draft: [WHAT YOU WANT CHANGED]\nWhat must NOT change: every fact, number, date, name, and commitment.\n\nDraft to rewrite:\n[PASTE YOUR DRAFT]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check nothing factual shifted",
+          "prompt": "List every number, date, name, and commitment in your rewrite side by side with the original draft, so I can confirm nothing changed."
+        },
+        {
+          "label": "Too formal now? Warm it up",
+          "prompt": "This swung too formal. Keep the same content and length, but bring the warmth back up — imagine you're writing to someone you respect and like, not a stranger."
+        },
+        {
+          "label": "Restore something that got cut",
+          "prompt": "The rewrite lost [WHAT WAS LOST, e.g. \"the apology in paragraph one\"] — add it back in a way that fits the new shorter length."
+        },
+        {
+          "label": "One more pass, smaller cut",
+          "prompt": "Good direction. Now cut it another 20%, but don't touch the opening line — that one's exactly right."
+        }
+      ],
+      "walkthrough": "Theo runs a small events company and has to email a longtime client, Groveworks Ltd, to tell them their venue booking fee is going up 8% next year. He's written a draft but it reads stiff and overly formal, more like a legal notice than something he'd actually send to people he's worked with for five years.\n\nHe opens Claude and pastes the lesson's rewrite prompt. For 'What I want changed', he writes 'make it warmer and more personal — we've worked together for five years — but keep it clear that the increase is not negotiable this cycle.' Audience: 'the client's event coordinator, who I know well and like working with.' What must not change: 'the exact new price and the effective date.' Then he pastes his stiff draft below.\n\nClaude returns a rewrite that opens by naming the five-year relationship directly, states the new price and date unchanged, and explains the increase is tied to rising venue costs rather than sounding punitive — plus a change log confirming the price and date were untouched and noting that 'per our updated pricing schedule' was softened to 'here's what's changing for next year', flagged as a wording adjustment worth reviewing.\n\nTheo reads the change log, agrees the softened phrase still says the same thing, and sends one follow-up: 'Good, now cut it by about 15%, it still runs a bit long.' Claude trims it while keeping the price and date exactly as before.\n\nHe pastes the final version into his email client. Total time: about seven minutes, and the tone finally sounds like him."
+    },
+    "claude-b4-summarize-long-document": {
+      "placeholders": [
+        {
+          "name": "WHAT THE DOCUMENT IS, e.g. \"a 38-page commercial lease agreement\"",
+          "what": "A short description of the document you uploaded — its type and rough length. This tells Claude what kind of structure to expect (a contract has clauses, a report has sections) and helps it read the document with the right frame, rather than guessing from the file name alone.",
+          "examples": [
+            "a 15-page freelance services contract",
+            "a 60-page annual sustainability report from a supplier",
+            "an 8-page insurance policy document"
+          ]
+        },
+        {
+          "name": "YOUR ROLE AND SITUATION, e.g. \"the prospective tenant, deciding this week whether to sign\"",
+          "what": "Who you are in relation to this document and what decision or task you're using the summary for. The same contract read as the person signing it versus the person who wrote it needs a completely different emphasis — this line tells Claude which side to summarize for.",
+          "examples": [
+            "the freelancer being asked to sign this contract before starting work next week",
+            "a procurement manager deciding whether to renew this supplier for another year",
+            "someone filing a claim, trying to understand what's actually covered"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a document you just need the gist of",
+          "whenToUse": "Use when the document isn't a big decision — an FYI report, background reading — and you want the essentials in under a minute rather than a full four-section brief.",
+          "prompt": "I've uploaded [WHAT THE DOCUMENT IS]. Just give me: 3 sentences on what it is and why it matters, plus the 5 most important facts as bullets, each with a page or section reference. Skip anything speculative."
+        },
+        {
+          "label": "When you only have a photo or scan of the document",
+          "whenToUse": "Use when you don't have a clean PDF — just phone photos of pages or a scanned document that might have unclear text in places.",
+          "prompt": "I've uploaded photos/scans of [WHAT THE DOCUMENT IS]. Before summarizing, tell me if any pages or sections were hard to read or came through unclear — I'd rather know that upfront than get a summary built on guessed text.\n\nThen summarize for my situation: I am [YOUR ROLE AND SITUATION].\n\n1. EXECUTIVE SUMMARY — 5 sentences max\n2. KEY POINTS — with page/section references where legible\n3. OBLIGATIONS AND RISKS\n4. WHAT'S MISSING OR UNCLEAR — including anything you couldn't read\n\nUse only what you can actually read; do not fill unclear sections with guesses."
+        },
+        {
+          "label": "Comparing this document to a previous version",
+          "whenToUse": "Use when you have an updated version of a document you've seen before — a renewed contract, a revised policy — and want to know specifically what changed, not a summary from scratch.",
+          "prompt": "I've uploaded a new version of [WHAT THE DOCUMENT IS]. I am [YOUR ROLE AND SITUATION], and I've dealt with an earlier version of this before. Based only on this document (I haven't uploaded the old one), tell me: which clauses look like they'd typically be negotiated or changed between versions, which ones seem non-standard or unusually strict for this type of document, and what I should specifically ask the other party to confirm changed from before."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify a claim word for word",
+          "prompt": "Quote the exact passage from the document that supports point [NUMBER] in your summary, so I can check it myself."
+        },
+        {
+          "label": "Dig into the section that matters most",
+          "prompt": "Expand on [SECTION OR CLAUSE NAME] — give me every detail the document states about it, not just the summary version."
+        },
+        {
+          "label": "Did it actually read the whole thing?",
+          "prompt": "Confirm you read the entire document. Were there any pages or sections that were unclear, cut off, or hard to interpret?"
+        },
+        {
+          "label": "Turn it into questions to ask",
+          "prompt": "Based on the 'what's missing or unclear' section, list the 3 most important questions I should ask the other party before moving forward."
+        }
+      ],
+      "walkthrough": "Yusuf is about to sign a 22-page contract to become the exclusive delivery partner for a local restaurant chain, and he's never fully read a contract this long before. He uploads the PDF to Claude by clicking the paperclip icon in the chat box and dragging the file in.\n\nBefore asking anything, he tells Claude who he is: 'I am the delivery contractor being asked to sign this, deciding within a week.' Then he sends the summarize prompt, filling in 'a 22-page exclusive delivery services contract' and his role and situation.\n\nClaude returns an executive summary describing the exclusivity term and its 12-month length, key points about payment terms and vehicle insurance requirements, and an obligations section flagging a clause requiring him to carry a specific level of commercial insurance — with a page reference. The 'what's missing' section notes the contract never states what happens if the restaurant chain is sold to a new owner.\n\nYusuf picks the insurance clause, since it sounds expensive, and asks: 'Where exactly does the document say this? Quote the passage.' Claude quotes the exact clause, and Yusuf checks it against the PDF himself — it matches word for word.\n\nHe then sends a follow-up: 'List the 3 questions I should ask before signing.' Claude suggests asking about the ownership-change scenario, the exact insurance minimum in dollar terms, and whether exclusivity applies citywide or just to this location.\n\nTotal time: about twelve minutes, and Yusuf walks into his call with the restaurant owner with three sharp questions instead of a vague sense that he should 'read the fine print'."
+    },
+    "claude-b5-extract-structured-data": {
+      "placeholders": [
+        {
+          "name": "UNIT",
+          "what": "The kind of thing you want one table row per — a person, an order, an inquiry, a ticket. Pick the unit that matches how you'll actually use the table afterward; if you get this wrong (for example, one row per email instead of one row per request when an email contains three requests), everything downstream is off.",
+          "examples": [
+            "customer inquiry",
+            "job applicant",
+            "line item in the order"
+          ]
+        },
+        {
+          "name": "FIELD 1, e.g. \"Name\"",
+          "what": "The first column you want extracted, named exactly as you want it to appear in the table header. Simple, unambiguous field names work best — 'Name' rather than 'Details', which could mean almost anything.",
+          "examples": [
+            "Full name",
+            "Order number",
+            "Property address"
+          ]
+        },
+        {
+          "name": "FIELD 2, e.g. \"Company\"",
+          "what": "The second column — typically an identifying or grouping detail like a company, department, or category. State the exact format you want if it matters, since consistent formatting is what makes the table usable in a spreadsheet.",
+          "examples": [
+            "Company name",
+            "Department (Sales / Support / Engineering)",
+            "Property type (apartment / house / commercial)"
+          ]
+        },
+        {
+          "name": "FIELD 3, e.g. \"Request (max 10 words)\"",
+          "what": "The core content column — what the person is actually asking for, said, or reported, usually with a length limit so the table stays scannable rather than turning into paragraphs in a cell.",
+          "examples": [
+            "Main request, summarized in 10 words or fewer",
+            "Reason for contacting us, in one short phrase",
+            "Complaint summary, max 15 words"
+          ]
+        },
+        {
+          "name": "FIELD 4, e.g. \"Budget mentioned (number only, or Not stated)\"",
+          "what": "A numeric or quantitative field with an explicit format and an explicit fallback for when the number isn't mentioned. Spelling out both the format ('number only') and the fallback ('or Not stated') in the field name itself is what keeps this column clean.",
+          "examples": [
+            "Budget mentioned (number only, or Not stated)",
+            "Quantity requested (number only, or Not stated)",
+            "Years of experience (number only, or Not stated)"
+          ]
+        },
+        {
+          "name": "FIELD 5, e.g. \"Deadline (YYYY-MM-DD, or Not stated)\"",
+          "what": "A date field with the exact format you want dates in, plus the same 'Not stated' fallback. Standardizing the date format here, rather than letting Claude choose, is what makes the column sortable once it's in a spreadsheet.",
+          "examples": [
+            "Deadline (YYYY-MM-DD, or Not stated)",
+            "Date of incident (YYYY-MM-DD, or Not stated)",
+            "Preferred start date (YYYY-MM-DD, or Not stated)"
+          ]
+        },
+        {
+          "name": "FIELD 6, e.g. \"Urgency: high / medium / low — based only on explicit wording\"",
+          "what": "A judgment field where you constrain the allowed values to a short fixed list, and explicitly require the judgment to be based on wording actually present in the text, not vibes. This is the field most likely to drift into guessing if you don't add the constraint.",
+          "examples": [
+            "Urgency: high / medium / low — based only on explicit wording",
+            "Sentiment: positive / neutral / negative — based only on explicit wording",
+            "Status: new / follow-up needed / resolved — based only on explicit wording"
+          ]
+        },
+        {
+          "name": "PASTE MESSY TEXT",
+          "what": "The actual unstructured source material — the full email thread, notes, or transcript, pasted in its entirety. Don't pre-clean or summarize it yourself first; Claude does better extraction from the raw, messy original than from your paraphrase of it.",
+          "examples": [
+            "Fwd: quote request — hi, this is Karim from Blue Harbor Cafe, need 200 branded cups by March 1st, budget around 400... Second email: Priya here, want a quote for napkins too, no rush",
+            "Call notes 3/14: candidate Lena Fischer, 5 yrs experience, asked about remote work, salary expectation not mentioned, very responsive, wants to start ASAP",
+            "hey we had 3 complaints this week — one about late delivery (order #5521), one about a broken item (order #5544, wants replacement), one just asking about return policy"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "CSV output for spreadsheet import",
+          "whenToUse": "Use when you're heading straight into Excel or Google Sheets and want a format that pastes cleanly via 'split text to columns', instead of a markdown table you'd have to reformat.",
+          "prompt": "Extract structured data from the text below.\n\nCreate one row per [UNIT] with exactly these columns: [FIELD 1], [FIELD 2], [FIELD 3], [FIELD 4].\n\nRules: use only information explicitly present in the text; write \"Not stated\" for missing values; flag ambiguous readings with \"(?)\".\n\nOutput as CSV in a code block, comma-separated, with a header row.\n\nText:\n[PASTE MESSY TEXT]"
+        },
+        {
+          "label": "Large batch with a verification sample",
+          "whenToUse": "Use when you have a large amount of text to process and want to test the field definitions on a small sample before committing to the full extraction.",
+          "prompt": "I have a large amount of text to extract from. First, here is just a sample — extract from this sample only:\n\n[PASTE A SMALL SAMPLE, 3-5 ITEMS]\n\nCreate one row per [UNIT] with these columns: [FIELD 1], [FIELD 2], [FIELD 3].\nRules: use only explicit information; write \"Not stated\" for gaps; flag ambiguity with \"(?)\".\n\nAfter I confirm the sample looks right, I'll paste the full text and want the same columns applied consistently."
+        },
+        {
+          "label": "Extraction with a required cross-check field",
+          "whenToUse": "Use when accuracy matters enough that you want Claude to also note its own confidence per row, useful for prioritizing which rows to manually verify first.",
+          "prompt": "Extract structured data from the text below.\n\nCreate one row per [UNIT] with these columns: [FIELD 1], [FIELD 2], [FIELD 3], [FIELD 4], plus a final column \"Confidence\" (high / medium / low) reflecting how directly stated (vs. inferred) each row's data was.\n\nRules: use only explicit information; write \"Not stated\" for gaps; never guess.\n\nOutput as a markdown table. Then list the rows marked \"low\" confidence separately, so I know which ones to check first.\n\nText:\n[PASTE MESSY TEXT]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Too many invented values? Tighten the rule",
+          "prompt": "Row [X]'s [FIELD NAME] looks guessed rather than stated. Re-check every row against the source text and replace anything that isn't explicitly written with 'Not stated'."
+        },
+        {
+          "label": "Fix a systematic misreading",
+          "prompt": "You're misreading [FIELD NAME] — it should mean [CORRECT DEFINITION, e.g. \"the date the client mentioned, not the date of the email\"]. Redo the whole table with that corrected definition."
+        },
+        {
+          "label": "Export as CSV instead",
+          "prompt": "Give me the same table again, but as CSV in a code block instead of a markdown table, so I can paste it straight into a spreadsheet."
+        },
+        {
+          "label": "What didn't fit the columns?",
+          "prompt": "Beyond the table, what else in the source text seemed important but didn't fit any of my columns? List it in a few bullets."
+        }
+      ],
+      "walkthrough": "Ingrid manages inbound requests for a small event-rentals company, and her inbox has eleven emails from the past two days asking about tent, chair, and table rentals — all in different formats, some with dates, some without. She normally retypes these into a spreadsheet by hand, which takes about 40 minutes.\n\nShe copies all eleven emails into one text block and opens Claude. Before prompting, she decides on her columns: Name, Event date, Items requested, and Budget mentioned. She pastes the extraction prompt, filling in 'inquiry' for UNIT and her four fields, each with the 'Not stated' format spelled out, then pastes the email block at the bottom.\n\nClaude returns a markdown table with eleven rows. Most fields are filled in cleanly, but she notices one row lists a budget of '500 (?)' — the question mark flags that the sender wrote 'maybe around 500ish', an ambiguous phrasing Claude correctly refused to state as certain. Two rows say 'Not stated' for event date, which she checks against the original emails — correct, those senders never gave a date.\n\nOne thing looks wrong: the 'Items requested' column sometimes includes the sender's greeting text. She sends a follow-up: 'Items requested should only be the physical items mentioned, not any other text — redo that column.' Claude fixes all eleven rows in the redo.\n\nShe pastes the corrected table into her spreadsheet. Total time: about nine minutes, most of it spent gathering the emails, not typing."
+    },
+    "claude-b6-emails-from-bullets": {
+      "placeholders": [
+        {
+          "name": "WHO — role and your relationship, e.g. \"client of 3 years, friendly but professional\"",
+          "what": "Who is receiving this email and how you know them — their role and the nature of your relationship. This single line does most of the tone calibration: the same content reads very differently to a stranger versus someone you've worked with for years.",
+          "examples": [
+            "prospective client, first contact, found us through a referral",
+            "my landlord, professional but slightly tense relationship after a repair dispute",
+            "a vendor I've worked with for 2 years, generally friendly"
+          ]
+        },
+        {
+          "name": "DESIRED ACTION OR FEELING",
+          "what": "What you want the reader to do or feel immediately after reading — reply with an answer, agree to a call, feel reassured, take an action by a date. This gives the email a clear job rather than just conveying information.",
+          "examples": [
+            "reply confirming they can make the new deadline",
+            "feel reassured this was a one-time issue, not a pattern",
+            "click the link and book a call this week"
+          ]
+        },
+        {
+          "name": "e.g. \"warm but direct; apologetic about the delay without groveling\"",
+          "what": "This is the Tone field: the emotional register you want — how warm, formal, apologetic, or firm the email should sound. Describe it the way you'd describe a person's manner, not just a single adjective, since 'friendly' alone leaves too much room for interpretation.",
+          "examples": [
+            "warm but direct; apologetic about the delay without groveling",
+            "firm and matter-of-fact, no unnecessary apology since we did nothing wrong",
+            "upbeat and enthusiastic, this is good news"
+          ]
+        },
+        {
+          "name": "e.g. \"under 150 words\"",
+          "what": "This is the Length field: a word or sentence limit for the finished email. Setting this explicitly stops the draft from padding itself with filler — most professional emails are shorter than the length AI defaults to unless you constrain it.",
+          "examples": [
+            "under 150 words",
+            "3-4 short paragraphs, no more",
+            "as short as possible — ideally under 80 words"
+          ]
+        },
+        {
+          "name": "BULLET 1",
+          "what": "The first substantive point the email must make, written as a rough fragment in your own words — no need for full sentences or polish, since Claude will handle the wording. This is where the actual content and decisions come from; Claude should only be adding phrasing, not inventing points.",
+          "examples": [
+            "can't make the March 3rd deadline, need until March 10th",
+            "the refund has been processed, 3-5 business days to appear",
+            "really appreciated their patience during the outage"
+          ]
+        },
+        {
+          "name": "BULLET 2",
+          "what": "The second point the email must include — continue listing whatever else genuinely needs to be said, including awkward or difficult points you might be tempted to soften into vagueness. Naming the awkward part directly here is easier than trying to word it carefully yourself.",
+          "examples": [
+            "reason for the delay: our supplier shipped the wrong parts",
+            "this won't happen again, we've added a backup supplier",
+            "next steps: we'll send a revised invoice by Friday"
+          ]
+        },
+        {
+          "name": "BULLET 3",
+          "what": "A third point, if you have one — every genuinely necessary piece of content belongs here as its own bullet rather than folded into another point, so nothing gets lost or blended awkwardly in the draft.",
+          "examples": [
+            "want to keep working with them going forward",
+            "offering a 10% discount on the next order as a goodwill gesture",
+            "need their confirmation by end of day Thursday"
+          ]
+        },
+        {
+          "name": "BULLET 4",
+          "what": "A fourth point if needed — not every email needs four bullets; if you only have two or three real points, just delete this line rather than padding it with something unnecessary.",
+          "examples": [
+            "asking if a phone call would be easier than continuing over email",
+            "cc'ing my manager, Elena, for visibility",
+            "no further action needed from them, this is just an update"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Reply to an existing email thread",
+          "whenToUse": "Use when you're replying within an ongoing conversation rather than starting fresh — paste the thread so Claude picks up names, open questions, and the register already established.",
+          "prompt": "Here is the email thread so far:\n[PASTE THE THREAD]\n\nWrite my reply to the last message, from my bullet points.\n\nGoal: after reading, they should [DESIRED ACTION OR FEELING]\nTone: [TONE]\n\nMy points (all must be included; add nothing substantive I haven't listed):\n- [BULLET 1]\n- [BULLET 2]\n- [BULLET 3]\n\nMatch the register already established in the thread. Give me 1 version and a subject line only if this starts a new subject."
+        },
+        {
+          "label": "Difficult news version with extra care",
+          "whenToUse": "Use for genuinely hard messages — layoffs, declining a request, delivering bad news — where you want Claude to specifically check the draft for unintended harshness before you see the final version.",
+          "prompt": "Write an email from my bullet points. This is a difficult message and I want it handled carefully.\n\nTo: [WHO — role and relationship]\nGoal: after reading, they should [DESIRED ACTION OR FEELING] — even though the news itself is not good\nTone: direct but humane; no corporate euphemisms, no false cheerfulness\nLength: [LENGTH]\n\nMy points (all must be included; add nothing I haven't listed):\n- [BULLET 1]\n- [BULLET 2]\n- [BULLET 3]\n\nAfter drafting, review your own draft once: does anything sound colder or harsher than intended? Fix it, then give me the final version."
+        },
+        {
+          "label": "Batch version for several similar emails at once",
+          "whenToUse": "Use when you need to send several similar-but-personalized emails at once, like individual client updates, and want to save time by generating all of them in one pass from shared bullets.",
+          "prompt": "I need to send similar emails to a few different people, personalized. Shared points that apply to everyone: [SHARED BULLETS]\n\nTone: [TONE]. Length: [LENGTH].\n\nPer-recipient details:\n1. [NAME 1] — [WHAT'S SPECIFIC TO THEM]\n2. [NAME 2] — [WHAT'S SPECIFIC TO THEM]\n\nWrite one email per recipient, using the shared points for all and folding in their specific detail naturally. Add nothing beyond what's listed for any of them."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Doesn't sound like me? Fix specific phrases",
+          "prompt": "This doesn't sound like how I actually talk. I'd never say '[PHRASE FROM THE DRAFT]' — cut openers and phrases like that throughout, and make the language plainer."
+        },
+        {
+          "label": "Check nothing extra got added",
+          "prompt": "List every claim, offer, or commitment in this draft, one by one, so I can confirm each one came from my bullets and nothing new was added."
+        },
+        {
+          "label": "Too long? Trim it",
+          "prompt": "This is longer than my limit. Cut it down to fit, and if you have to drop anything, drop tone-softening language before you drop any of my actual points."
+        },
+        {
+          "label": "Need a different subject line",
+          "prompt": "Give me 3 alternative subject lines, ranging from purely informational to a bit more attention-grabbing."
+        }
+      ],
+      "walkthrough": "Felix runs a small graphic design studio and needs to tell a client, Northgate Realty, that their logo revisions will take an extra week because the original brand files they sent were corrupted. He knows exactly what he wants to say but dreads how it'll come out if he just starts typing — his instinct is to over-apologize.\n\nBefore opening Claude, he jots four bullets: 'need one more week, new deadline the 14th', 'reason: the brand files they sent wouldn't open properly, had to request them again', 'not asking them to do anything, just a heads up', 'still on track for everything else in the project'. He notes the relationship: 'client of 8 months, generally easy-going.'\n\nHe pastes the lesson's prompt, filling in Who as the client contact, Goal as 'understand the delay isn't our fault and stay calm about it', Tone as 'apologetic but not groveling, matter-of-fact about the file issue', and Length as 'under 120 words', then adds his four bullets.\n\nClaude returns two versions: a formal one and a warmer one that opens with 'Quick update on timing' rather than a long apology, states the file issue plainly, and confirms the new date without dwelling on it.\n\nFelix reads both aloud and picks the warmer one, but one phrase — 'we sincerely apologize for any inconvenience this may cause' — doesn't sound like him. He sends: 'I'd never say sincerely apologize for any inconvenience — cut lines like that, keep it plain.' Claude replaces it with 'sorry for the extra wait.'\n\nHe copies the result into his email client, reads it once more, and sends it. Total time: about four minutes."
+    },
+    "claude-b7-iterate-with-followups": {
+      "placeholders": [
+        {
+          "name": "READER, e.g. \"CFO\" / \"experienced buyer\"",
+          "what": "The type of skeptical reader you want Claude to imagine when critiquing — pick whoever would actually be hardest to convince for this specific piece of writing. A finance document gets critiqued differently through a CFO's eyes than a sales one-pager gets critiqued through an experienced buyer's eyes.",
+          "examples": [
+            "a CFO who distrusts anything that sounds like a sales pitch",
+            "an experienced buyer who has heard every vendor's pitch before",
+            "a first-time customer who has never used a product like ours"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick single-dial adjustment",
+          "whenToUse": "Use this any time you know exactly what's wrong with the first draft and just need one thing changed — the fastest, most common follow-up move.",
+          "prompt": "Same as before, but [ONE SPECIFIC CHANGE, e.g. \"half the length\" / \"less formal tone\" / \"add a table\"]. Keep everything else exactly as is."
+        },
+        {
+          "label": "Ask for options instead of one rewrite",
+          "whenToUse": "Use when you're not sure exactly what you want and would rather choose from a few directions than describe the perfect version yourself.",
+          "prompt": "Give me 3 different versions of [THE SPECIFIC PART, e.g. \"just the opening paragraph\"], ranging from safe/conservative to bold/unconventional. Keep the rest of the piece as is for now — I just want to compare this one part."
+        },
+        {
+          "label": "Full self-critique and fix, in one combined pass",
+          "whenToUse": "Use on a final piece, right before you use it, when you want both the critique and the fix without a back-and-forth — good for when you're short on time but still want the quality boost.",
+          "prompt": "Critique this draft as a skeptical [READER], listing the 2-3 weakest parts and why. Then, immediately after the critique, fix those specific issues and give me the revised version — but don't change anything you didn't flag as weak."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Point at the exact weak part",
+          "prompt": "[SPECIFIC SECTION, e.g. \"the second paragraph\"] is the weakest part — it's too generic. Rewrite just that part to be specific to [WHAT MAKES IT SPECIFIC, e.g. \"the retail context I described earlier\"], and leave everything else untouched."
+        },
+        {
+          "label": "Ask for the delta, not a full regeneration",
+          "prompt": "Keep everything exactly as is, except replace [THE ONE THING TO CHANGE] with [WHAT IT SHOULD BE INSTEAD]. Don't regenerate the rest."
+        },
+        {
+          "label": "Add context you forgot to mention",
+          "prompt": "I forgot to mention: [NEW INFORMATION, e.g. \"the deadline is actually this Friday, not next week\"]. Rework the result around that, changing as little else as possible."
+        },
+        {
+          "label": "Signal you're going in circles — ask for a clean rebuild",
+          "prompt": "I think we've gone in circles a bit. Here's what's good so far: [LIST THE PARTS YOU LIKE]. Here's my original goal restated: [ORIGINAL GOAL]. Give me one clean version building only from those good parts."
+        }
+      ],
+      "walkthrough": "Nadia is writing a short pitch paragraph for her handmade candle business to put on a wholesale marketplace listing. Her first Claude draft is fine but generic — it could describe almost any candle brand.\n\nInstead of starting a new chat, she uses Move 1 from the lesson: 'Same as before, but half the length.' The shorter version is tighter but still generic, so she uses Move 2 and points at the exact problem: 'The first sentence could describe any candle company. Rewrite just that sentence using the fact that every candle is hand-poured in small batches of 12.' Claude rewrites only that sentence, and it immediately reads more specific.\n\nNext she tries Move 3, asking for three versions of just the closing line, ranging from safe to bold. She picks the boldest one, which mentions the brand's no-synthetic-fragrance policy directly.\n\nBefore finalizing, she runs the self-critique prompt from this lesson, asking Claude to critique it as a skeptical wholesale buyer who's seen hundreds of candle pitches. Claude flags that the phrase 'premium quality' is an unsupported claim a buyer would roll their eyes at. Nadia agrees and sends: 'Fair — replace premium quality with the actual detail that we use only soy wax, which is true and specific.'\n\nSix short follow-up messages later, in about seven minutes total, Nadia has a tight, specific pitch paragraph — reached entirely inside one conversation, without ever retyping her original context or starting over."
+    },
+    "claude-b8-projects-standing-context": {
+      "placeholders": [
+        {
+          "name": "ROLE",
+          "what": "Your job title or role in one or two words — this establishes your perspective for every chat inside the project. Keep it simple and accurate; 'owner', 'marketing manager', 'freelance consultant' are all fine.",
+          "examples": [
+            "owner",
+            "marketing manager",
+            "freelance consultant"
+          ]
+        },
+        {
+          "name": "BUSINESS — one line on what it does and for whom",
+          "what": "A one-line description of your business or organization and who it serves — enough that Claude understands the industry and customer type without you re-explaining it in every chat. Be concrete about who the customers are, not just what you sell.",
+          "examples": [
+            "a 4-person accounting firm serving local small businesses and freelancers",
+            "an online store selling handmade leather goods to individual customers",
+            "a solo consultancy helping restaurants improve their online ordering systems"
+          ]
+        },
+        {
+          "name": "THE STREAM OF WORK, e.g. \"all client-facing writing for my consulting practice\"",
+          "what": "The specific slice of your work this project covers — narrow and specific beats broad. One project should cover one coherent stream of work, like all writing for one client or all content for one product line, not 'everything I do'.",
+          "examples": [
+            "all client-facing writing for my consulting practice",
+            "product descriptions and marketing copy for our online store",
+            "internal reports and updates for the operations team"
+          ]
+        },
+        {
+          "name": "KEY FACT 1, e.g. \"My clients are small manufacturers, 10-100 employees, non-technical\"",
+          "what": "A standing fact about your business, audience, or work that would otherwise need repeating in every chat — who your clients typically are, what your market looks like, or a defining characteristic of your work. Pick facts that actually change how Claude should write, not trivia.",
+          "examples": [
+            "My clients are small manufacturers, 10-100 employees, non-technical",
+            "We only sell to businesses (B2B), never directly to consumers",
+            "Most of our customers are first-time buyers who've never used a product like ours"
+          ]
+        },
+        {
+          "name": "KEY FACT 2, e.g. \"Prices: audit 1,500 EUR; monthly retainer 800 EUR — never discount in writing\"",
+          "what": "A second standing fact, often the most valuable one to have permanently available: pricing, policies, or a hard business rule that Claude would otherwise have to be told, and might otherwise get wrong, every single time.",
+          "examples": [
+            "Prices: audit 1,500 EUR; monthly retainer 800 EUR — never discount in writing",
+            "Standard turnaround is 2 weeks; rush jobs add a 25% fee",
+            "We offer a 30-day return policy, no exceptions, stated clearly on every order confirmation"
+          ]
+        },
+        {
+          "name": "KEY FACT 3",
+          "what": "A third standing fact if you have one — anything else that recurs across your prompts and would save you retyping. If two facts cover everything important, you can leave this one out or write 'none' rather than forcing a third.",
+          "examples": [
+            "Our busiest season is October through December — mention lead times honestly during that window",
+            "We're a two-person team, so we never promise same-day turnaround",
+            "none — the two facts above cover it"
+          ]
+        },
+        {
+          "name": "e.g. \"plain, direct, warm; no hype words like game-changing or unlock\"",
+          "what": "This is the Tone field: how you want everything in this project to sound by default, described concretely enough that it constrains word choice, not just a mood. Naming specific banned words (like 'hype words') is often more useful than a general adjective.",
+          "examples": [
+            "plain, direct, warm; no hype words like game-changing or unlock",
+            "confident and slightly formal, appropriate for enterprise buyers",
+            "casual and friendly, like texting a knowledgeable friend"
+          ]
+        },
+        {
+          "name": "e.g. \"emails under 150 words; UK English; dates as 14 March\"",
+          "what": "This is the language and format defaults field: the formatting conventions this project should follow by default — length limits, spelling conventions (UK vs US English), date formats, or anything else you'd otherwise correct repeatedly.",
+          "examples": [
+            "emails under 150 words; UK English; dates as 14 March",
+            "US English; currency always shown as $1,200 not 1200 USD",
+            "social posts under 60 words; always include one relevant emoji"
+          ]
+        },
+        {
+          "name": "ANY HARD RULE, e.g. \"Never promise delivery dates without me stating one\"",
+          "what": "A non-negotiable rule specific to your business that would be genuinely damaging if broken — a legal boundary, a promise you can never make, a line you never cross in writing. This is your last line of defense against a plausible-sounding mistake.",
+          "examples": [
+            "Never promise delivery dates without me stating one",
+            "Never give specific tax or legal advice — always recommend consulting a professional",
+            "Never mention competitor names, even to compare favorably"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Minimal version for your first project",
+          "whenToUse": "Use this shorter version when setting up your very first project and don't want to overthink it — you can always expand the instructions later once you see what's missing.",
+          "prompt": "You are the writing assistant for [BUSINESS — one line]. This project is for [STREAM OF WORK].\n\nKey facts: [1-2 KEY FACTS]\n\nTone: [TONE IN A FEW WORDS]\n\nIf you're missing information to complete a task well, ask me rather than guessing."
+        },
+        {
+          "label": "Team project shared with colleagues",
+          "whenToUse": "Use when the project will be used by more than one person on your team, so the instructions need to work without you personally clarifying things in each chat.",
+          "prompt": "You are the shared writing assistant for the [TEAM NAME] team at [BUSINESS]. Multiple people on our team use this project, so be extra explicit — do not assume unstated context.\n\nSTANDING CONTEXT: [KEY FACTS]\n\nHOW TO RESPOND:\n- Tone: [TONE]\n- Format defaults: [FORMAT RULES]\n- If the task or facts needed aren't in the project knowledge, ask rather than guessing — different team members may know different pieces, so don't assume the person asking knows everything either.\n- [ANY HARD RULE]"
+        },
+        {
+          "label": "Strict compliance-sensitive version",
+          "whenToUse": "Use in a regulated or high-liability field (legal, medical, financial, insurance) where you need extra-strong guardrails against invented facts or overstepping into advice you're not qualified to give.",
+          "prompt": "You are the writing assistant for [BUSINESS], a [ONE-LINE DESCRIPTION]. This project is for [STREAM OF WORK], which is subject to [REGULATORY OR COMPLIANCE CONTEXT].\n\nHARD RULES (non-negotiable):\n1. Never invent facts, figures, or claims not in the project knowledge or my message\n2. Never state anything that could be read as [SPECIFIC PROHIBITED CLAIM, e.g. \"a guaranteed investment return\"]\n3. Always include [REQUIRED DISCLAIMER OR ELEMENT]\n4. If a request touches [SENSITIVE AREA], flag it for human review rather than drafting\n\nTone: [TONE]. When in doubt, choose the more conservative phrasing."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Drift from the sample? Fix it at the source",
+          "prompt": "This still doesn't match the sample documents closely enough — specifically it drifts in [WHERE IT DRIFTS]. I'm not going to fix this in the chat; help me rewrite the custom instructions so future chats get this right automatically."
+        },
+        {
+          "label": "Found a fact you forgot to include",
+          "prompt": "I noticed the project is missing this fact: [FACT]. Rewrite the STANDING CONTEXT section to include it, so I can update the project instructions."
+        },
+        {
+          "label": "Test with an even vaguer prompt",
+          "prompt": "Now try with almost no instruction from me: [ONE-LINE VAGUE REQUEST]. If the output isn't good enough from that alone, tell me what's missing from the project instructions to get it there."
+        },
+        {
+          "label": "Tighten a rule that got broken",
+          "prompt": "You just broke this rule: [WHICH HARD RULE]. Rewrite the HARD RULES section to make this rule impossible to miss or misinterpret next time."
+        }
+      ],
+      "walkthrough": "Sana runs a two-person copywriting agency and is tired of retyping the same context — her clients, her tone rules, her pricing — every time she starts a new Claude chat for client work. She's on the Pro plan, so she opens the Projects section in the sidebar and creates one called 'Sana Copy — Client Writing'.\n\nShe opens custom instructions and fills in the template: Role is 'freelance copywriter', Business is 'a two-person copywriting agency serving small e-commerce brands', Stream of work is 'all client proposals and website copy'. For key facts, she writes her typical client profile, her pricing structure, and a note that she never works with adult or gambling-related brands. For tone, she specifies 'confident, concrete, no marketing buzzwords like synergy or seamless'. For format defaults, 'proposals under 500 words; US English'. Her hard rule: 'never quote a price without me confirming it first'.\n\nShe uploads three of her best past proposals as knowledge files, then tests with a deliberately vague prompt: 'Draft a proposal for a skincare brand wanting website copy.'\n\nThe output arrives sounding like her — no buzzwords, right length, matching structure to her uploaded examples — but it invents a price. She doesn't fix it in the chat; instead she goes back to the instructions and makes the hard rule more explicit: 'Never state a specific number for price — always write [PRICE TO BE CONFIRMED] instead.'\n\nShe tests the same vague prompt again. This time, pricing is correctly flagged rather than guessed. Total setup time: about fifteen minutes, and every future proposal starts from a one-line prompt instead of a paragraph of repeated context."
+    },
+    "claude-b9-analyze-spreadsheet": {
+      "placeholders": [
+        {
+          "name": "WHAT THE FILE IS, e.g. \"a CSV export of all 2025 orders from my online shop\"",
+          "what": "A short description of the file you uploaded — what kind of data it is and its rough scope (time period, source system). This orients Claude before it even opens the file, so its first reading of the columns starts from the right mental model.",
+          "examples": [
+            "a CSV export of all 2025 orders from my online shop",
+            "an Excel file of monthly expenses for the past two years",
+            "a survey results export from 340 customer responses"
+          ]
+        },
+        {
+          "name": "ONE OR TWO SENTENCES — what the business is, what a row represents, anything odd about the data",
+          "what": "Extra context that isn't obvious from column headers alone: what kind of business this data comes from, what exactly one row represents, and any quirk you already know about — a merged data source, a known data-entry issue, a period with unusual activity. This is where you head off the most common misreadings before they happen.",
+          "examples": [
+            "This is a small bakery's sales data; each row is one transaction, and we started using a new register system in June so early months may be formatted differently",
+            "We're a consulting firm; each row is one invoiced project, and 'status' includes some outdated labels from an old process we no longer use",
+            "This is survey data from an event; each row is one respondent, and about 15% skipped the optional comments field"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick single-question version",
+          "whenToUse": "Use when you have one specific question about the data and don't need a full orientation phase — for a file you already understand reasonably well.",
+          "prompt": "I've uploaded [WHAT THE FILE IS]. Skip full orientation, just tell me: [YOUR SPECIFIC QUESTION]. Compute the answer with code, don't estimate, and show which columns and rows you used."
+        },
+        {
+          "label": "Comparing two time periods",
+          "whenToUse": "Use when your real question is about change over time — this month vs last, this year vs last year — rather than a single-point snapshot.",
+          "prompt": "I've uploaded [WHAT THE FILE IS]. Context: [CONTEXT].\n\nAfter a quick orientation pass (columns, row count, obvious data-quality issues — no conclusions yet), I want to compare [PERIOD A] against [PERIOD B] on [METRIC(S)]. Compute both periods with code, state the percentage change, and tell me if the change is driven by volume, by average size, or both."
+        },
+        {
+          "label": "Building toward a recurring report",
+          "whenToUse": "Use when you'll be running a similar analysis on this same type of file regularly (weekly sales, monthly expenses) and want to end up with a reusable template, not just a one-off answer.",
+          "prompt": "I've uploaded [WHAT THE FILE IS]. Context: [CONTEXT]. I'll be uploading a similar file regularly, so after we get this analysis right, write me a reusable prompt template for future files of this same type — with placeholders for whatever changes, and my confirmed column interpretations locked in as permanent instructions."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Column reading is wrong — correct it",
+          "prompt": "Column [NAME] doesn't mean what you assumed — it's actually [CORRECT MEANING]. Redo your orientation summary with that correction before we go further."
+        },
+        {
+          "label": "Show the actual computation",
+          "prompt": "Show the calculation behind that [FIGURE] — which exact rows and columns went into it, and what formula or logic you used."
+        },
+        {
+          "label": "Sanity-check against something I know",
+          "prompt": "I know independently that [KNOWN FACT, e.g. \"total revenue last quarter was around 40,000 EUR\"]. Does your analysis roughly match that? If not, investigate why."
+        },
+        {
+          "label": "What should I be asking that I'm not?",
+          "prompt": "Based on everything in this data, what question should I be asking that I haven't? Look for things like seasonality, concentration in a few customers, or a quiet decline I might have missed."
+        }
+      ],
+      "walkthrough": "Bram owns a small bike repair shop and has a year's worth of service records exported as a CSV from his booking system — about 900 rows. He's curious whether to hire a second mechanic but has never really looked at the data beyond glancing at monthly totals.\n\nHe uploads the file and sends the orientation prompt, describing it as 'a CSV export of all 2025 service bookings' with context: 'a one-mechanic bike repair shop, each row is one completed job, and I switched booking software in April so early months might look different.'\n\nClaude's orientation reports 8 columns, 900 rows, and flags that 'service_type' has two spellings of 'Tune-up' ('Tune-up' and 'tuneup') that likely need merging, plus that 22 rows from March have a blank duration field. Bram confirms: yes, merge those spellings, and the blank durations are from the old software — treat them as missing, not zero.\n\nHe then asks his real question: 'How many hours of work came in per week on average, and is it trending up?' Claude computes it with code, reporting an average of 34 hours per week with a rising trend since June, driven by more bookings rather than longer jobs.\n\nBram checks this against his own memory of a busier summer — it lines up. He asks one more question: 'What should I be asking that I haven't?' Claude flags that Saturdays alone account for 40% of weekly bookings, a concentration he hadn't noticed.\n\nTotal time: about eighteen minutes, and Bram has real evidence — not a guess — for a hiring decision."
+    },
+    "claude-b10-research-with-web-search": {
+      "placeholders": [
+        {
+          "name": "YOUR QUESTION, e.g. \"What do freelance UX designers in Germany currently charge per day, as of this year?\"",
+          "what": "Your actual research question, phrased specifically enough to search well — include the topic, the relevant timeframe, and any geography or segment that matters. A vague question ('what are good prices?') produces a vague, unfocused search; a specific one produces a targeted one.",
+          "examples": [
+            "What are typical commission rates for real estate agents in my region this year?",
+            "What are the current data privacy requirements for small e-commerce businesses selling to EU customers?",
+            "What pricing are competitors currently charging for similar meal-kit subscription boxes?"
+          ]
+        },
+        {
+          "name": "WHY YOU'RE ASKING, e.g. \"I'm setting my 2026 rates; 6 years of experience, mostly B2B software clients\"",
+          "what": "The context behind your question — what decision this research feeds and any details about your situation that make some findings more relevant than others. This helps Claude weight and select sources for your specific case rather than giving a generic overview of the topic.",
+          "examples": [
+            "I'm setting my 2026 rates; 6 years of experience, mostly B2B software clients",
+            "deciding whether to expand our return policy to match competitors before the holiday season",
+            "preparing to renegotiate my lease and want to know if I'm being asked to pay above market rate"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Competitive comparison version",
+          "whenToUse": "Use when you want to compare specific named competitors or options side by side, rather than researching a general market question.",
+          "prompt": "Research this for me using web search: how do [COMPETITOR/OPTION A], [COMPETITOR/OPTION B], and [COMPETITOR/OPTION C] currently compare on [WHAT TO COMPARE, e.g. \"pricing and key features\"]?\n\nContext: [WHY YOU'RE ASKING]\n\nRequirements:\n- Search each one specifically by name, using their current official pages where possible\n- Build a comparison table with a source link per row\n- Note the date you found each figure\n- If you can't find current information for one of them, say so rather than estimating"
+        },
+        {
+          "label": "Brainstorming grounded in real examples",
+          "whenToUse": "Use when you want ideas or approaches, not just facts — but grounded in what real businesses are actually doing, not generic AI suggestions.",
+          "prompt": "Search for how businesses like mine currently handle [SITUATION, e.g. \"customers who want to cancel a subscription\"]. Context: [YOUR SITUATION].\n\nThen propose 5 approaches for me. For each, note whether it's something you found being used in practice (with a source) or your own suggestion based on the situation (clearly labeled as such, not sourced)."
+        },
+        {
+          "label": "Quick fact-check version",
+          "whenToUse": "Use when you just need to confirm or refute a single specific claim quickly — something you read, heard, or assumed — rather than a full research report.",
+          "prompt": "Fact-check this using web search: [THE CLAIM YOU WANT TO VERIFY, e.g. \"is it true that this regulation takes effect next January?\"]\n\nGive me: true / false / partly true / couldn't confirm, with the source and its date, in 3 sentences or less."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify the highest-stakes claim",
+          "prompt": "Open the source behind [SPECIFIC CLAIM] and quote exactly what it says, including its publication date, so I can confirm it matches your summary."
+        },
+        {
+          "label": "Did sources actually disagree?",
+          "prompt": "Did any of your sources disagree with each other on this? Show me each source's specific number or claim side by side, don't average them."
+        },
+        {
+          "label": "Search again with a narrower focus",
+          "prompt": "Narrow this down — search specifically for [MORE SPECIFIC ANGLE, e.g. \"just companies my size\" / \"just this region\"] and redo the answer with that focus."
+        },
+        {
+          "label": "Check if this is still current",
+          "prompt": "Double check: is there anything more recent than your sources that might have changed this? Search again focusing only on the last few months."
+        }
+      ],
+      "walkthrough": "Wei runs a small pastry wholesale business and wants to know what commercial kitchen rental rates currently look like in her city before she renegotiates her lease — she suspects she might be overpaying compared to newer options.\n\nShe opens Claude and sends the research prompt: 'What are current commercial kitchen rental rates in my city as of this year?' with context, 'I'm renegotiating my lease next month and want to know if my current rate is above market.'\n\nClaude searches and returns a structured answer: sourced facts showing a range from two commercial real estate listing sites, a note that one source is 8 months old while another is from last month, her own inference that her current rate falls in the upper half of the range, and a closing list of two claims to verify herself — the newest listing's exact square footage, since it wasn't stated clearly, and whether utilities were included in the quoted rates.\n\nWei clicks through to the newer listing and finds the square footage is actually smaller than her own kitchen, meaning the comparison isn't quite fair. She sends a follow-up: 'That listing is smaller than my kitchen — search again for spaces closer to 1,200 square feet specifically.' Claude narrows the search and returns a tighter, more comparable range.\n\nArmed with two verified, comparable data points instead of a vague sense of the market, Wei walks into her lease renewal conversation with real numbers. Total time: about ten minutes."
+    },
+    "claude-b11-reusable-prompt-templates": {
+      "placeholders": [
+        {
+          "name": "DESCRIBE IT, e.g. \"every Friday I write a status update email to each active client about their project\"",
+          "what": "A description of the recurring task itself — what it is, how often it comes up, and roughly what triggers it. Being specific about the frequency and trigger helps Claude understand what genuinely varies each time versus what's always the same.",
+          "examples": [
+            "every Friday I write a status update email to each active client about their project",
+            "whenever a new lead fills out our contact form, I write a personalized follow-up email",
+            "every month I turn our sales numbers into a short summary for the founder"
+          ]
+        },
+        {
+          "name": "PASTE YOUR BEST PAST PROMPT AND ANY FOLLOW-UP FIXES",
+          "what": "Your actual best past attempt at this task — the original prompt you sent, plus any follow-up corrections you made to fix its output. Include the corrections even though they feel like extra clutter; they're the most valuable part, since each one marks something the first version got wrong.",
+          "examples": [
+            "Original: 'Write a status update for [Client] about their website redesign project. Include what's done and what's next.' Follow-up 1: 'Don't say issues, say what we're watching.' Follow-up 2: 'Always end with next week's top priority.'",
+            "Original: 'Write a welcome email for a new lead who filled out our form asking about pricing.' Follow-up: 'Don't mention specific prices until we've had a call — just offer to schedule one.'",
+            "Original: 'Summarize this month's sales numbers for the founder.' Follow-up: 'Keep it to 5 bullet points max, she doesn't want a full report, just the headline numbers.'"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Build a template from scratch (no past attempt yet)",
+          "whenToUse": "Use this when you have a recurring task but haven't actually prompted for it before — you're templating from a clear description instead of a proven past conversation.",
+          "prompt": "Help me build a reusable prompt template for a task I do repeatedly but haven't templated before.\n\nThe recurring task: [DESCRIBE IT]\nWhat a good result looks like: [DESCRIBE THE IDEAL OUTPUT]\nAny rules I already know I want enforced: [RULES]\n\nBuild me a template with CAPITALIZED placeholders for what varies, permanent instructions for what doesn't, and a 'HOW TO USE' line at the end. Since I haven't tested this yet, also tell me what to watch for on the first real run."
+        },
+        {
+          "label": "Turn a template into a Claude Project",
+          "whenToUse": "Use once you have a working template and a paid plan, to convert its permanent instructions into standing project context so even less has to be pasted per use.",
+          "prompt": "I have a working prompt template for [TASK]: [PASTE YOUR TEMPLATE]\n\nHelp me split this into two parts: (1) the permanent instructions, rules, and tone guidance, formatted as Claude Project custom instructions, and (2) a short list of just the placeholders I'd still need to fill in per use, once those instructions are living in the project."
+        },
+        {
+          "label": "Template with built-in quality control",
+          "whenToUse": "Use for a higher-stakes recurring task where you want the template to include a self-check step, not just produce the output.",
+          "prompt": "Help me turn a task I do repeatedly into a reusable prompt template that includes a built-in quality check.\n\nThe recurring task: [DESCRIBE IT]\nHere's a past attempt, with corrections: [PASTE YOUR BEST PAST PROMPT AND FIXES]\n\nBuild the template with placeholders and permanent instructions as usual, but add a final step where the output critiques itself against [WHAT COULD GO WRONG, e.g. \"any promises we can't actually keep\"] before presenting the final version."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Placeholder hints too thin — sharpen them",
+          "prompt": "The placeholder [PLACEHOLDER NAME] doesn't have enough guidance — future-me will fill it in lazily. Add a sharper hint that specifies exactly what kind of detail belongs there."
+        },
+        {
+          "label": "Template didn't produce consistent results — tighten it",
+          "prompt": "I tested this template and the output was [WHAT WENT WRONG]. Tighten the permanent instructions so this doesn't happen again, without adding new placeholders."
+        },
+        {
+          "label": "Bake in one more recurring correction",
+          "prompt": "I've now corrected this same thing twice: [THE RECURRING FIX]. Add it to the template's permanent instructions so I never have to say it again."
+        },
+        {
+          "label": "Shorten the template",
+          "prompt": "This template is longer than it needs to be. Tighten the wording while keeping every rule and placeholder — I want the shortest version that still produces consistent results."
+        }
+      ],
+      "walkthrough": "Diego is a freelance social media manager who writes a similar caption-approval message to each client every time a batch of posts is ready for review — but every week he retypes it slightly differently, and clients occasionally get confused about the approval deadline because he phrases it inconsistently.\n\nHe digs through his Claude chat history and finds his best past version, along with two corrections he remembers making: 'always state the exact approval deadline as a specific date, not \"end of week\"' and 'list the posts as a numbered list, not a paragraph.'\n\nHe opens a new chat and pastes the template-builder prompt from this lesson, describing the recurring task as 'every time I finish a batch of social posts, I send the client a message asking them to review and approve by a deadline' and pasting his old prompt plus both corrections.\n\nClaude returns a template with placeholders for client name, number of posts, what they cover, and deadline date, with permanent instructions baking in both of his past corrections automatically, plus a 'HOW TO USE' line reminding him to always write the deadline as an actual date.\n\nDiego tests it immediately on a real client batch — filling in four placeholders takes about 30 seconds, and the message comes out with the exact deadline format and numbered list he'd been inconsistently trying to remember to include. He saves the template in his notes app titled 'Client post-approval message'.\n\nTotal time: about ten minutes to build, and every future approval message now takes under a minute instead of five."
+    },
+    "claude-b12-personal-workflow": {
+      "placeholders": [
+        {
+          "name": "DESCRIBE HONESTLY — your role, the 6-10 tasks that eat most of your time, roughly how many hours each, which you find draining",
+          "what": "An honest, unfiltered description of your actual work week — not an idealized version. List your role, the real tasks that eat your time (including the boring or draining ones), and roughly how many hours each takes. The honesty matters more than the format: a sanitized week produces a workflow plan that doesn't match your real life.",
+          "examples": [
+            "I'm a freelance bookkeeper. My week: client data entry (10h), monthly report writing (4h), client emails answering questions (5h), invoicing (2h), finding new clients (3h, and I find this the most draining). I dread the report writing most.",
+            "I manage a 6-person retail store. Week: staff scheduling (3h), supplier ordering (4h), handling customer complaints (3h), sales reporting to head office (2h), social media posts (2h, low priority but expected of me), hiring when needed (variable). Scheduling is the worst part of my week.",
+            "I'm a wedding photographer. Week: shooting weddings (varies, 1-2 per weekend), editing photos (15h+, by far the most time), client emails and inquiries (4h), invoicing and contracts (2h), posting to Instagram (2h). Editing is what I actually enjoy least despite it being most of my time."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quarterly refresh instead of first-time setup",
+          "whenToUse": "Use this a few months after your first workflow audit, once your tasks or tools have changed, instead of starting from scratch.",
+          "prompt": "I set up a Claude workflow a few months ago. Here's what I decided then: [PASTE YOUR PREVIOUS ONE-PAGE WORKFLOW].\n\nHere's what's changed since: [WHAT'S DIFFERENT NOW — new tasks, tasks that stopped being relevant, tools you've added].\n\nUpdate my workflow: what should I add, what should I drop, and does my plan choice still make sense given what's changed?"
+        },
+        {
+          "label": "Team-wide workflow audit",
+          "whenToUse": "Use this when you're rolling out Claude usage across a small team and want a shared workflow rather than just a personal one.",
+          "prompt": "Help me design a shared Claude workflow for my team. Our team: [ROLES AND WHAT EACH PERSON DOES]. Our shared recurring tasks: [TASKS THE TEAM DOES TOGETHER OR IN SIMILAR WAYS].\n\nGive me: (1) which tasks should have a shared Project versus individual use, (2) which templates should be built once and shared versus personal, (3) a rollout order so the team isn't overwhelmed learning everything at once, (4) which plan tier makes sense for our team's combined usage."
+        },
+        {
+          "label": "Focused single-task deep dive",
+          "whenToUse": "Use when you already know which one task you want to build a workflow around, rather than auditing your whole week.",
+          "prompt": "I want to build a complete Claude workflow around just one task: [THE TASK]. Currently I spend about [TIME] on this weekly, and here's what's draining about it: [WHAT'S DRAINING].\n\nGive me: the specific technique from this course that applies, a starter prompt or template, a realistic weekly time saving, and whether this task alone justifies a paid plan."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Push back on an unrealistic time saving",
+          "prompt": "The time saving you estimated for [TASK] seems optimistic. Walk me through exactly how you got that number, step by step, so I can judge if it's realistic for my situation."
+        },
+        {
+          "label": "I tried a default task and it flopped — diagnose why",
+          "prompt": "I tried using Claude for [TASK YOU MARKED AS A GOOD FIT] and it didn't go well: [WHAT WENT WRONG]. Was this actually a poor fit, or did I set it up wrong? Be honest."
+        },
+        {
+          "label": "Reconsider the plan recommendation with real usage data",
+          "prompt": "I've now used Claude for [TIME PERIOD] following your plan. Here's what actually happened: [DESCRIBE YOUR ACTUAL USAGE, e.g. hitting limits, or barely using it]. Should I change my plan tier?"
+        },
+        {
+          "label": "Turn the plan into a calendar-ready checklist",
+          "prompt": "Turn my workflow into a short checklist I can paste into my calendar's Friday review reminder — just the concrete things to check, nothing else."
+        }
+      ],
+      "walkthrough": "Petra is an independent interior designer finishing this course and wants an actual system, not just a list of things she now knows how to do. She opens Claude and runs the workflow-audit prompt, describing her week honestly: client mood-board creation (6h), client emails and scope questions (5h), supplier quote requests (3h), Instagram content (2h, low priority but expected), and invoicing (1h) — noting that supplier quote requests are the most tedious part of her week.\n\nClaude's answer names her top 3 time-saving opportunities: client emails (using the bullets-to-email technique, roughly 2 hours a week saved), supplier quote requests (extracting structured requirements from client notes into a consistent format to send suppliers, roughly 1.5 hours saved), and a monthly project summary for herself. It flags mood-board creation as a poor fit — that's visual, hands-on creative work Claude can't meaningfully speed up. For setup, it suggests building the email template first, then a Project for one active client. On the plan question, it reasons that her volume of drafting and one weekly data task fits well within Pro, and that she'd likely hit Free's limits during a busy client week.\n\nPetra sets up the email template that afternoon and creates one Project for her biggest current client. She puts a 10-minute Friday review in her calendar.\n\nTotal time: about twenty-five minutes for the whole exercise, and she leaves with a written one-page plan instead of eleven lessons' worth of scattered techniques."
+    }
+  }
+}

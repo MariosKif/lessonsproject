@@ -1,0 +1,42 @@
+{
+  "paths": [
+    {
+      "slug": "ai-for-sales",
+      "title": "AI for Sales Professionals",
+      "tagline": "Personalize outreach at volume, follow up without sounding robotic, handle real objections, and draft proposals fast — without inventing a single fact about a prospect.",
+      "description": "A 6-lesson path for sales professionals covering the AI workflows that actually move pipeline: turning real prospect research into personalized cold outreach, building follow-up sequences that don't repeat the same ask, converting your own logged objections into practiced response scripts, drafting proposals and quotes from discovery notes without inventing scope or pricing, researching a prospect with cited sources before a call using Perplexity, and building a standing Claude Project as a reusable sales messaging library. Every lesson is built around the same core habit — keep the AI grounded in facts you actually know, and never let it invent a claim you'd have to walk back on a real call.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "sales-professional",
+      "sortOrder": 6,
+      "lessons": [
+        "sales-b1-cold-outreach-from-prospect-research",
+        "sales-b2-followup-sequence-that-doesnt-feel-robotic",
+        "sales-b3-objection-handling-from-real-objections",
+        "sales-i1-proposal-quote-from-discovery-notes",
+        "sales-i2-prospect-research-before-a-call-perplexity",
+        "sales-a1-reusable-sales-messaging-library"
+      ]
+    },
+    {
+      "slug": "ai-for-hr",
+      "title": "AI for Recruiters & HR",
+      "tagline": "Write job descriptions and interview kits that work, source candidates who reply, screen fairly with real bias guardrails, and document policy without inventing legal claims.",
+      "description": "A 6-lesson path for recruiters and HR professionals covering the AI workflows that speed up hiring without cutting corners on fairness or compliance: writing job descriptions that attract the right candidates and flag exclusionary language, building competency-based interview question sets free of legally risky questions, personalizing candidate outreach from real profile details, screening CVs against stated criteria with explicit bias guardrails and a hard rule that humans make every decision, drafting HR policy documentation that flags anything needing legal review instead of inventing compliance claims, and mapping a full hiring workflow to decide exactly where AI safely assists and where it must stay human-only. Every lesson treats AI as a drafting and triage tool that speeds up a human decision — never as the decision-maker itself.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "recruiter-hr",
+      "sortOrder": 7,
+      "lessons": [
+        "hr-b1-job-description-that-attracts-right-candidates",
+        "hr-b2-interview-questions-per-role-and-competency",
+        "hr-b3-candidate-outreach-messages",
+        "hr-i1-screen-cvs-against-criteria-fairly",
+        "hr-i2-hr-policy-and-process-documentation",
+        "hr-a1-structured-hiring-workflow-ai-safe-steps"
+      ]
+    }
+  ]
+}

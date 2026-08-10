@@ -1,0 +1,884 @@
+{
+  "enrichment": {
+    "cre-b1-idea-generation-system": {
+      "placeholders": [
+        {
+          "name": "YOUR NICHE, e.g. \"budgeting and money management for freelancers\"",
+          "what": "This is the specific subject plus angle you make content about, described the way you'd say it to a stranger in one sentence — not just a broad topic like \"fitness\" or \"finance.\" Use the same wording you'd put in your bio or channel description. A good value has a clear wedge (who it's for or what makes your take different); a bad value is one generic word.",
+          "examples": [
+            "budgeting and money management for freelancers",
+            "strength training for women over 40 returning to the gym after a break",
+            "sourdough baking for people who travel a lot and can't maintain a daily starter"
+          ]
+        },
+        {
+          "name": "WHO, e.g. \"new freelancers 1-3 years in, anxious about irregular income\"",
+          "what": "Describe the specific segment of people you're making this for — their experience level, a specific fear or goal, or life stage — not just \"freelancers\" or \"women.\" Pull this from your platform analytics demographics or from the pattern of people who actually comment and DM you, not a guess at who you wish was watching.",
+          "examples": [
+            "new freelancers 1-3 years in, anxious about irregular income and afraid to raise their rates",
+            "moms of toddlers who used to lift weights in college and want to get back into it without hurting themselves",
+            "home bakers who bought a starter once, let it die, and feel guilty trying again"
+          ]
+        },
+        {
+          "name": "PASTE 3-5 EXAMPLES OR WRITE \"no data yet\"",
+          "what": "List past pieces of content that clearly outperformed your average, with the title/topic and a short honest guess at why it worked. Pull real numbers from your platform analytics if you have them. If you're new and have no track record, write \"no data yet\" literally — that stops the AI from inventing a pattern that doesn't exist.",
+          "examples": [
+            "\"Why I stopped tracking every invoice in a spreadsheet\" (short-form video, 40K views) — worked because it admitted failure before giving the fix\n\"The $3,200 mistake I made my first year freelancing\" (newsletter) — worked because of the specific dollar figure in the subject line\n\"3 clients who ghosted me and what I do differently now\" (carousel) — worked because it was a relatable list post with concrete numbers",
+            "no data yet",
+            "\"Deadlift form check: the mistake I see in every gym\" (Reel, 120K views) — worked because it called out a mistake viewers could self-diagnose\n\"I took 6 months off lifting, here's what came back and what didn't\" (YouTube, 15 min) — worked because it was an honest personal update, not a tutorial"
+          ]
+        },
+        {
+          "name": "PASTE REAL QUESTIONS, COMMENTS, OR DMs",
+          "what": "Paste actual verbatim text from comments, DMs, or emails from your real audience — not a summary or paraphrase. Scroll the comments on your last 5-10 posts, check saved DMs, or search your email for recurring reader questions. Keeping their exact wording (typos and all) matters because it shows real phrasing your audience uses, which makes the ideas land better.",
+          "examples": [
+            "\"how do you know how much to charge when you're just starting out??\"\n\"I have 3 clients paying wildly different rates for the same work, is that normal\"\n\"do you ever just... not invoice someone because you feel bad\"\n\"what do you do in the months where literally nothing comes in\"",
+            "\"is it too late to start lifting at 45\"\n\"my knees click when I squat, should I stop\"\n\"how long till I feel as strong as before having kids\"",
+            "\"my starter smells like nail polish remover, did I kill it\"\n\"can I put it in the fridge for 2 weeks while I'm on a trip\"\n\"why does everyone's bread look better than mine, mine's always flat\""
+          ]
+        },
+        {
+          "name": "e.g., short-form video, long-form YouTube, newsletter, carousel posts",
+          "what": "List only the formats you actually currently publish in, with rough length/platform if it matters — not formats you wish you made. This keeps the AI from suggesting a 20-minute documentary idea when you only have a pipeline for 30-second clips.",
+          "examples": [
+            "short-form video (Reels/TikTok, 30-60 sec), weekly newsletter",
+            "long-form YouTube (10-15 min), Instagram carousel posts, short-form video",
+            "podcast episodes (25-40 min), show notes newsletter, 3 short-form clips per episode"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Fast weekly top-up",
+          "whenToUse": "Use this on a normal week when you just need a quick refill of ideas for your existing content calendar, not a full strategic batch — e.g. a 10-minute Monday planning session.",
+          "prompt": "You are helping me build a quick weekly content idea top-up. Do not give me generic ideas anyone in this niche could post — every idea must connect to a specific detail I give you below.\n\nMy niche: [YOUR NICHE]\nMy audience: [WHO]\nRecurring questions/comments from my audience this week: [PASTE REAL QUESTIONS, COMMENTS, OR DMs]\nFormats I create in: [YOUR FORMATS]\n\nGenerate 6 content ideas, each with: a specific title/hook (not a vague topic), which of my inputs it's grounded in, and the best format for it. Keep it fast — no long explanations, just the list."
+        },
+        {
+          "label": "Trend-aware batch",
+          "whenToUse": "Use when you want ideas that also account for what's currently trending in your niche or what competitors are covering right now, without directly copying anyone.",
+          "prompt": "You are helping me build a content idea list that's grounded in my own audience data but also aware of what's happening right now in my niche. Do not give me generic ideas — every idea must connect to a specific detail I give you below.\n\nMy niche: [YOUR NICHE]\nMy audience: [WHO]\nMy best-performing past content: [PAST HITS OR \"no data yet\"]\nRecurring questions/comments from my audience: [PASTE REAL QUESTIONS, COMMENTS, OR DMs]\nWhat's trending in my niche right now or what competitors are covering: [PASTE TRENDING TOPICS OR COMPETITOR CONTENT YOU'VE NOTICED]\nFormats I create in: [YOUR FORMATS]\n\nGenerate 15 ideas, each with a specific hook, which input it's grounded in, and a flag for whether it's timely (should go out this week) or evergreen (can wait). Don't suggest anything that would just be copying a competitor's exact angle — my ideas need my own audience's questions or my own past hits as the anchor."
+        },
+        {
+          "label": "Single-pillar deep dive",
+          "whenToUse": "Use when you already know one content pillar you want to focus a whole month on, rather than getting variety across all your pillars.",
+          "prompt": "You are helping me build a deep, focused content idea list for one specific pillar of my niche. Do not give me generic ideas anyone in this niche could post — every idea must connect to a specific detail I give you below.\n\nMy niche: [YOUR NICHE]\nThe one pillar I want to focus on this month: [NAME THE PILLAR, e.g. \"pricing and rate negotiation\"]\nMy audience: [WHO]\nRecurring questions/comments related to this pillar: [PASTE REAL QUESTIONS, COMMENTS, OR DMs]\nFormats I create in: [YOUR FORMATS]\n\nGenerate 15 ideas, all within this one pillar, but make sure each explores a genuinely different angle (a myth to debunk, a personal story, a step-by-step, a comparison, a mistake to flag) so it doesn't feel repetitive across a month of posting. For each, note the angle and which input it's grounded in."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Cut ideas that aren't actually traceable",
+          "prompt": "Look back through your list and remove any idea where the traceability to my inputs feels like a stretch. For the ones you keep, quote the exact phrase from my inputs above each idea is grounded in."
+        },
+        {
+          "label": "Push for sharper hooks",
+          "prompt": "Some of these titles are still too safe or generic. Rewrite the 5 weakest hooks to be more specific, using a number, a contradiction, or a named mistake instead of a general statement."
+        },
+        {
+          "label": "Prioritize into a shortlist",
+          "prompt": "From all 20 ideas, pick the 5 I should make first. Rank them by a combination of how proven the input is (a past hit beats a guess) and how fast I could realistically produce it, and explain why each ranks where it does."
+        },
+        {
+          "label": "Add a production note",
+          "prompt": "For the top 5 you just picked, add one line each on what I'd actually need to produce it — b-roll, an interview, a screen recording, data I'd need to look up — so I know what's involved before committing."
+        }
+      ],
+      "walkthrough": "Dana runs a small Instagram and newsletter about budgeting for freelancers. She opens Claude and pastes the idea-generation prompt. For \"my niche\" she writes \"budgeting and money management for freelancers.\" For \"my audience\" she writes \"new freelancers 1-3 years in, anxious about irregular income.\" She has no analytics dashboard handy, so for past hits she just types \"no data yet.\" She opens her Instagram app, scrolls her last few posts' comments, and copies four real comments word for word, including \"do you ever just... not invoice someone because you feel bad.\" For formats she writes \"short-form video, weekly newsletter.\"\n\nClaude replies with 20 ideas grouped under the three headers. Under \"Answers a question my audience already asked,\" the first idea is: \"The Invoice I Almost Didn't Send (And What It Cost Me)\" — grounded directly in her pasted comment about feeling bad invoicing people, flagged as better suited to a personal story than a how-to.\n\nDana sends the follow-up \"Prioritize into a shortlist\" because 20 ideas feel overwhelming and she only has time to film one video this week. Claude ranks the top 5, putting the invoice story first because it's grounded in a real, recent comment and needs no research — just her talking to camera.\n\nDana copies that top idea into her notes app and starts scripting that afternoon. The whole session, from opening Claude to having a ranked shortlist, took about 12 minutes — faster than the 45 minutes she usually spent staring at a blank notes doc trying to think of something to post."
+    },
+    "cre-b2-scripts-outlines-own-voice": {
+      "placeholders": [
+        {
+          "name": "PASTE 100-200 WORDS OF YOUR OWN WRITING OR A TRANSCRIPT OF YOU TALKING",
+          "what": "An actual sample of you writing or speaking — a past caption, an auto-generated transcript from one of your videos, or an email you sent — long enough (100-200 words) for the AI to detect your real sentence length and word choices. This must be a genuine sample, not a description like \"I'm casual and funny,\" which is an instruction, not evidence.",
+          "examples": [
+            "So okay here's the thing nobody tells you about pricing your first client project — you're going to lowball it. Everyone does. I quoted $400 for a logo package that ended up taking me 30 hours, and I remember doing the math in the shower and just laughing because I made less than minimum wage. But here's what I did after that one job that actually changed things. I started asking one question before I ever sent a quote, and it's saved me probably ten thousand dollars since.",
+            "Look, I'm not going to sugarcoat this: your first six months back in the gym after having a kid are going to feel humiliating if you compare yourself to before. I had a client last week nearly cry because she couldn't squat the bar empty. That's not weakness. That's your body having done something extraordinary and now needing to rebuild. So we're not chasing your old numbers. We're building new ones, and I'll show you exactly how.",
+            "People ask me constantly why their starter died and honestly 90% of the time it's the same reason — you fed it once, panicked when it didn't double in size after 4 hours, and threw it out. Starters are slow. They're not sourdough-Instagram slow. Give it a week before you give up on it, and stop judging it against someone else's jar."
+          ]
+        },
+        {
+          "name": "YOUR IDEA/HOOK",
+          "what": "The specific content idea this script or outline is for, ideally lifted straight from an idea you already generated (from your idea list or a comment you're responding to) rather than a vague topic like \"pricing tips.\"",
+          "examples": [
+            "The $3,200 mistake I made my first year freelancing",
+            "Deadlift form check: the mistake I see in every gym",
+            "Why your sourdough starter isn't the problem, your schedule is"
+          ]
+        },
+        {
+          "name": "short-form video script / long-form video script / written post outline / newsletter outline",
+          "what": "Pick exactly one of these four options — whichever this specific piece is actually being made for — and replace the whole slash-separated list with just that one choice.",
+          "examples": [
+            "short-form video script",
+            "newsletter outline",
+            "long-form video script"
+          ]
+        },
+        {
+          "name": "LIST 2-5 POINTS",
+          "what": "The specific facts, steps, or story beats that must appear somewhere in the finished piece, written as short notes in your own words — not a full script. This is what keeps the AI from inventing claims or missing the actual point you wanted to make.",
+          "examples": [
+            "1) I quoted way too low on my first project, 2) the exact question I now ask before quoting, 3) how I raised rates without losing the client, 4) the one line I say when a client pushes back",
+            "1) form breakdown of the mistake (hips rising early), 2) why it happens (weak posterior chain), 3) the one cue that fixed it for me, 4) when to deload instead of pushing through",
+            "1) most starters aren't actually dead, 2) the 3 signs it's really dead vs just sluggish, 3) how to revive a sluggish one in 48 hours"
+          ]
+        },
+        {
+          "name": "e.g., 60 seconds spoken / 800 words / 5 outline sections",
+          "what": "How long the finished piece should be, in units that match the format you chose — seconds for a spoken video, words for written pieces, number of sections for an outline. Without a concrete target the AI defaults to a generic length that may not fit your platform's actual runtime or attention span.",
+          "examples": [
+            "45 seconds spoken",
+            "900 words",
+            "6 outline sections"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Series version",
+          "whenToUse": "Use when one idea is big enough to become a 2-3 part series and you want each part scripted with its own hook while still feeling connected.",
+          "prompt": "Here is a sample of my own writing/speaking voice:\n[PASTE 100-200 WORDS OF YOUR OWN WRITING OR A TRANSCRIPT OF YOU TALKING]\n\nMatch this voice exactly — including sentence length, how formal or casual I am, and words I'd actually use. Do not add hype phrases like \"let's dive in,\" \"game-changer,\" or \"in today's video\" unless they appear in my sample.\n\nContent idea: [YOUR IDEA/HOOK]\nThis is a [2 or 3]-part series. Format: [short-form video script / long-form video script / written post outline / newsletter outline]\nKey points across the whole series: [LIST 2-5 POINTS, noting which part each belongs to]\nLength target per part: [e.g., 60 seconds spoken each]\n\nWrite all parts. Give each part its own hook in the first 3 seconds that stands alone even if someone hasn't seen the earlier parts, but end each part (except the last) with a specific reason to watch the next one. Do not introduce a new angle or claim I didn't ask for."
+        },
+        {
+          "label": "Responding to someone else's words",
+          "whenToUse": "Use when the piece is a duet, reply, or response to a specific comment or another creator's clip, and that other person's words need to be woven in accurately.",
+          "prompt": "Here is a sample of my own writing/speaking voice:\n[PASTE 100-200 WORDS OF YOUR OWN WRITING OR A TRANSCRIPT OF YOU TALKING]\n\nMatch this voice exactly — including sentence length, how formal or casual I am, and words I'd actually use. Do not add hype phrases unless they appear in my sample.\n\nWhat I'm responding to (paste their exact words): [PASTE THE COMMENT OR CLIP TRANSCRIPT YOU'RE RESPONDING TO]\nMy actual take on it: [YOUR IDEA/HOOK]\nFormat: [short-form video script / long-form video script / written post outline / newsletter outline]\nKey points I want covered: [LIST 2-5 POINTS]\nLength target: [e.g., 60 seconds spoken]\n\nWrite the script/outline. Quote or paraphrase what I'm responding to accurately in the first few seconds so it's clear what I'm reacting to, then move into my take. Do not put words in the other person's mouth that they didn't say."
+        },
+        {
+          "label": "Voice style-guide only",
+          "whenToUse": "Use the first time you try this system, before writing anything, to get a written description of your voice back so you can sanity-check it and reuse it as a reference.",
+          "prompt": "Here is a sample of my own writing/speaking voice:\n[PASTE 100-200 WORDS OF YOUR OWN WRITING OR A TRANSCRIPT OF YOU TALKING]\n\nDon't write any content yet. Instead, analyze this sample and give me a short voice style guide: typical sentence length, how formal or casual I am, words/phrases I actually use, words or phrases I'd never say (like generic hype phrases), and how I typically open a piece. I'll reuse this guide alongside future scripts."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Flag anything that still sounds like AI",
+          "prompt": "Read this back and highlight every phrase that sounds more like generic AI writing than something I'd actually say out loud. Rewrite just those phrases to match my sample voice."
+        },
+        {
+          "label": "Tighten the hook",
+          "prompt": "The first line needs to be stronger. Give me 3 alternative hooks in my voice, each testing a different angle (a question, a bold claim, jumping into the middle of the story)."
+        },
+        {
+          "label": "Check length against target",
+          "prompt": "Read this out loud at a natural speaking pace (or count the words) and tell me the actual length. If it's over my target, cut it down without losing any of my key points."
+        },
+        {
+          "label": "Verify nothing extra was added",
+          "prompt": "Go through this line by line and flag any claim or detail that wasn't in my key points list. I want to check nothing was invented, and if something was added, tell me exactly where."
+        }
+      ],
+      "walkthrough": "Priya makes fitness content for women returning to lifting after having kids. She opens ChatGPT and pastes the voice-matching prompt. For her voice sample, she copies a caption from a post that did well: \"Look, I'm not going to sugarcoat this: your first six months back in the gym after having a kid are going to feel humiliating if you compare yourself to before...\"\n\nFor content idea she writes \"Deadlift form check: the mistake I see in every gym.\" Format: \"short-form video script.\" Key points: \"1) form breakdown of the mistake — hips rising early, 2) why it happens — weak posterior chain, 3) the one cue that fixed it for me.\" Length target: \"45 seconds spoken.\"\n\nChatGPT returns a script opening with \"If your squat breaks down here, it's not your legs\" and continuing in short, direct sentences matching her sample, ending with the cue she gave it.\n\nPriya reads it out loud once and it runs closer to 65 seconds, so she sends the follow-up \"Check length against target.\" ChatGPT trims two sentences that repeated the same point twice and confirms the new version lands at about 44 seconds when spoken normally.\n\nShe copies the trimmed script into her teleprompter app and films it that evening. From opening ChatGPT to having a shootable script took about 9 minutes, and unlike scripts she'd written from scratch before, she didn't need to rewrite any lines to sound like herself — she only changed one word before filming."
+    },
+    "cre-i1-repurpose-one-piece-ten-posts": {
+      "placeholders": [
+        {
+          "name": "video transcript / article / newsletter",
+          "what": "State which one of these three source types you're pasting below — this tells the AI whether to expect spoken, conversational structure (a transcript) or written prose (an article/newsletter), which changes how it splits the content into posts.",
+          "examples": [
+            "video transcript",
+            "article",
+            "newsletter"
+          ]
+        },
+        {
+          "name": "PASTE FULL SOURCE TEXT",
+          "what": "Paste the entire piece here, not a summary — every fact, number, and claim the AI is allowed to reuse across the 10 posts has to actually be visible in this text, not something you remember being in it. Get this from your video's auto-generated transcript (export from YouTube Studio or a tool like Descript) or the full published text of your article/newsletter.",
+          "examples": [
+            "Most freelancers think pricing is the hard part. It's not. The hard part is the conversation you have with yourself at 2am after a client says 'can you do it for less'... [continues for 1,400 words through 6 sections on rate-setting, client conversations, and a personal story about a $3,200 underquote]",
+            "[Full YouTube transcript, ~1,800 words, of a talking-head video titled 'Why your squat form breaks down at heavier weight,' covering hip drive, bracing technique, and 3 common coaching cues, with timestamps from the auto-caption export]",
+            "[Full newsletter text, ~900 words, titled 'The starter isn't dead, your schedule is,' including a personal anecdote about almost throwing out a 3-year-old starter, 3 diagnostic questions, and a 48-hour revival routine]"
+          ]
+        },
+        {
+          "name": "ONE SENTENCE",
+          "what": "The single core idea every one of the 10 posts must trace back to, written as one clear sentence. This is the throughline that keeps 10 separate posts feeling like one coherent piece of content instead of 10 unrelated fragments pulled from the same source.",
+          "examples": [
+            "Most freelancers underprice because they've never been taught to separate 'what I'd charge a friend' from 'what the market actually pays.'",
+            "Your squat form breaks down at heavier weight because of a bracing problem, not a mobility problem.",
+            "A sourdough starter that seems dead is almost always just sluggish from an inconsistent feeding schedule, not actually dead."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Single-platform deep batch",
+          "whenToUse": "Use when you only need posts for one platform this week — for example 10 Instagram Reel ideas from one piece — rather than a spread across formats.",
+          "prompt": "Here is my source content, a [video transcript / article / newsletter]:\n[PASTE FULL SOURCE TEXT]\n\nCore idea I want preserved across everything: [ONE SENTENCE]\n\nRepurpose this into 10 short-form video scripts for one platform, not a mix of formats. Do not just shorten or copy-paste sections — genuinely reformat each one as its own standalone hook/angle on the core idea, while keeping every fact and claim traceable to the source above (do not add new information).\n\nFor each of the 10 scripts, include: the hook line, the full spoken script (under 45 seconds each), a [VISUAL: ...] cue for each beat, and which specific part of the source it's drawn from. Vary the hooks across all 10 — no two should open the same way or use the same structure (question, bold claim, mid-story, myth-bust, etc.)."
+        },
+        {
+          "label": "Evergreen vs timely split",
+          "whenToUse": "Use when the source content mixes timeless advice with something time-sensitive (a trend, a recent event, a seasonal detail) and you want the repurposed posts organized by how long they stay relevant.",
+          "prompt": "Here is my source content, a [video transcript / article / newsletter]:\n[PASTE FULL SOURCE TEXT]\n\nCore idea I want preserved across everything: [ONE SENTENCE]\n\nRepurpose this into 10 platform-native posts, following the same format mix as usual (short-form scripts, carousel outlines, captions, LinkedIn-style posts, newsletter blurb). Do not add new information beyond the source.\n\nAdditionally, sort all 10 posts into two groups: \"Evergreen — post anytime\" and \"Timely — post within the next 2 weeks while still relevant,\" based on whether the post references anything time-sensitive from the source. For each post, note which specific part of the source it's drawn from."
+        },
+        {
+          "label": "Fast subset for a light week",
+          "whenToUse": "Use when you only have capacity to produce 3-4 repurposed posts this week instead of the full 10, and want the highest-leverage ones first.",
+          "prompt": "Here is my source content, a [video transcript / article / newsletter]:\n[PASTE FULL SOURCE TEXT]\n\nCore idea I want preserved across everything: [ONE SENTENCE]\n\nI only have time to produce 4 posts this week. Recommend the 4 highest-leverage platform-native posts from this source — mix of formats is fine, your call — that each stand alone without requiring the full source piece for context. For each: the format, the full post/script, which part of the source it's drawn from, and one sentence on why you picked it over the other possible angles."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check nothing was invented",
+          "prompt": "Go through all 10 posts and flag any fact, number, or claim that doesn't appear in my source text. I need to confirm nothing was added before I publish any of these."
+        },
+        {
+          "label": "Vary the hooks more",
+          "prompt": "A few of these hooks open too similarly. Rewrite the openings so no two of the 10 start with the same sentence structure or word."
+        },
+        {
+          "label": "Pick today's best 3",
+          "prompt": "I can only produce 3 of these this week. Recommend which 3 to prioritize based on which best stand alone without needing the full source piece for context, and explain why."
+        },
+        {
+          "label": "Tighten short-form scripts to true spoken length",
+          "prompt": "Read the 3 short-form video scripts out loud at a natural pace and tell me if any run over 45 seconds. Cut whichever ones do without losing the hook or the core idea."
+        }
+      ],
+      "walkthrough": "Marcus writes a weekly newsletter about freelance pricing. He just published a 900-word issue and wants to stretch it further instead of writing something new from scratch. He opens Claude and pastes the repurposing prompt.\n\nFor the source type he writes \"newsletter,\" then pastes the full 900-word text, including the anecdote about underquoting a client by $3,200. For the core idea he writes one sentence: \"Most freelancers underprice because they've never been taught to separate 'what I'd charge a friend' from 'what the market actually pays.'\"\n\nClaude returns all 10 pieces. The first short-form script opens with \"I lost $3,200 by being nice\" and uses [VISUAL: hands typing an invoice, then deleting a number] as a cue. A carousel outline breaks the newsletter's 3-question pricing framework into 6 slides, one question per slide plus an intro and closer. Each item lists which paragraph of the newsletter it pulled from.\n\nMarcus reads through and notices two of the three short-form scripts both open with a question, so he sends the follow-up \"Vary the hooks more.\" Claude rewrites one to open mid-story instead: \"So I'm doing the math in the shower, and I start laughing, because I just realized I made less than minimum wage.\"\n\nMarcus copies the reworked scripts, carousel outline, and captions into his content calendar. The whole session took about 20 minutes, and he came away with a week and a half of posts from one newsletter he'd already written — instead of the usual scramble to think of something new each day."
+    },
+    "cre-i2-thumbnails-visuals-ai-image": {
+      "placeholders": [
+        {
+          "name": "YOUR TITLE OR HOOK",
+          "what": "The exact title or on-thumbnail text you plan to publish with this piece, so the image composition and its empty space work together with the real words that will sit on top of it. Use your actual planned title, not a placeholder like \"my video title.\"",
+          "examples": [
+            "The $3,200 mistake I made my first year freelancing",
+            "Your squat form breaks down for this ONE reason",
+            "I killed my starter (here's how I brought it back)"
+          ]
+        },
+        {
+          "name": "e.g., YouTube 16:9, Instagram 1:1, Pinterest 2:3",
+          "what": "The exact platform and aspect ratio/pixel dimensions the image needs to be built for. GPT Image 2 composes differently depending on the canvas shape, and each platform crops or displays images differently, so this has to be specific, not just \"a thumbnail.\"",
+          "examples": [
+            "YouTube thumbnail, 16:9, 1280x720px",
+            "Instagram feed post, 1:1, 1080x1080px",
+            "Pinterest pin, 2:3, 1000x1500px"
+          ]
+        },
+        {
+          "name": "e.g., curious, urgent, calm, surprised",
+          "what": "The single primary emotion you want someone to feel in the half-second they glance at this image while scrolling — this drives facial expression, color intensity, and composition tension. Pick one dominant emotion, not a list of several, or the result will come out muddled.",
+          "examples": [
+            "urgent, slightly alarmed",
+            "curious, a little confused",
+            "calm, reassured"
+          ]
+        },
+        {
+          "name": "YOUR COLORS, e.g., \"warm oranges and cream, minimal, one clear subject\"",
+          "what": "Your actual established brand colors and style, taken from your channel banner, logo, or past thumbnails — not colors that would just look nice for this one image. Staying consistent across every thumbnail is what makes your channel instantly recognizable in someone's feed.",
+          "examples": [
+            "warm oranges and cream, minimal, one clear subject",
+            "navy blue and bright yellow, bold, high-contrast",
+            "sage green and terracotta, soft, slightly muted tones"
+          ]
+        },
+        {
+          "name": "left/right/center",
+          "what": "A single-word choice: which third of the frame the main subject should sit in. GPT Image 2's composition planning follows this instruction precisely, so it determines where the empty space for your text overlay ends up — pick it based on where your channel usually places text.",
+          "examples": [
+            "left",
+            "right",
+            "center"
+          ]
+        },
+        {
+          "name": "e.g., \"photographic, not illustrated\" or \"flat vector illustration\" — be specific, don't leave it generic",
+          "what": "The specific rendering style GPT Image 2 should use — name a concrete photography type, illustration technique, or specific art reference, not a vague word like \"nice\" or \"eye-catching,\" which produces a generic-looking result.",
+          "examples": [
+            "photographic, natural light, shot like an iPhone photo, not a polished studio shoot",
+            "flat vector illustration, 2-color palette, like a modern editorial icon",
+            "photorealistic, dramatic side lighting, shallow depth of field"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Batch across several upcoming titles",
+          "whenToUse": "Use when planning thumbnails for several upcoming videos at once, so they stay visually consistent as a set instead of designed one at a time in isolation.",
+          "prompt": "Generate thumbnail/cover image concepts for a batch of upcoming pieces, keeping a consistent visual system across all of them.\n\nTitles/hooks: [LIST YOUR UPCOMING TITLES, ONE PER LINE]\nPlatform and dimensions: [e.g., YouTube 16:9]\nBrand style (must stay identical across all): [YOUR COLORS]\nComposition rule (must stay identical across all): one clear focal point in the [left/right/center] third, leaving negative space in the opposite third for a text overlay.\nStyle reference: [e.g., \"photographic, not illustrated\"]\n\nFor each title, generate one concept with its own mood/emotion suited to that specific title, but keep the color palette, composition rule, and style reference identical across every one so the set reads as one channel when displayed side by side."
+        },
+        {
+          "label": "A/B headline test",
+          "whenToUse": "Use when you want to test two different text-overlay headlines on the same visual concept to see which one performs better before committing.",
+          "prompt": "Generate one thumbnail/cover image concept, then show it with two different headline options for me to A/B test.\n\nTopic: [YOUR TITLE OR HOOK]\nHeadline option A (on-image text): [HEADLINE A]\nHeadline option B (on-image text): [HEADLINE B]\nPlatform and dimensions: [e.g., YouTube 16:9]\nMood/emotion: [e.g., curious, urgent]\nBrand style: [YOUR COLORS]\nComposition: one clear focal point in the [left/right/center] third, leaving negative space in the opposite third for the text overlay.\nStyle reference: [e.g., \"photographic, not illustrated\"]\n\nGenerate one image concept only, but describe how the negative space would accommodate each headline option (line breaks, font size) since option A and B are different lengths. Avoid warped text, generic stock-photo people, and more than one focal subject."
+        },
+        {
+          "label": "Reusable series template",
+          "whenToUse": "Use when designing a repeatable visual template for a recurring content series (same layout and colors every episode) rather than a one-off thumbnail.",
+          "prompt": "Design a reusable thumbnail template concept for a recurring series, not a one-off image.\n\nSeries name: [YOUR SERIES NAME, e.g. \"Form Check Friday\"]\nWhat changes each episode: [e.g., \"the subject/exercise being demonstrated\"]\nWhat must stay identical every episode: [e.g., \"the color palette, the badge/logo placement, the font style for text overlay\"]\nPlatform and dimensions: [e.g., YouTube 16:9]\nBrand style: [YOUR COLORS]\nComposition: one clear focal point in the [left/right/center] third, leaving negative space in the opposite third for text overlay, kept identical every episode.\nStyle reference: [e.g., \"photographic, not illustrated\"]\n\nDescribe the template as a fixed formula I can hand to myself or an editor every week: what stays fixed, what's the one variable element, and generate one example using this week's topic: [THIS WEEK'S TITLE]."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Simplify a too-busy result",
+          "prompt": "Variation [1/2/3] still feels cluttered. Remove any secondary elements and describe a version with only the single subject and empty negative space, nothing else in frame."
+        },
+        {
+          "label": "Check readability at small size",
+          "prompt": "Describe how each of the 3 variations would look shrunk down to the size of a thumbnail on a phone screen — would the subject still read clearly, would the negative space still fit my text overlay legibly?"
+        },
+        {
+          "label": "Fix off-brand color drift",
+          "prompt": "This result doesn't match my brand palette closely enough. Regenerate the concept keeping the same composition and subject but strictly limiting the palette to my stated brand colors."
+        },
+        {
+          "label": "Confirm text-overlay space is clean",
+          "prompt": "Confirm exactly which third of the frame is empty enough for me to place bold text without it overlapping the subject, and adjust the composition if the negative space isn't clean."
+        }
+      ],
+      "walkthrough": "Elena makes YouTube videos about strength training for women over 40. She's about to publish a video titled \"Your squat form breaks down for this ONE reason\" and needs a thumbnail. She opens ChatGPT and pastes the thumbnail prompt into a new chat, since GPT Image 2 is available directly in the composer.\n\nShe fills in: topic \"Your squat form breaks down for this ONE reason,\" platform \"YouTube, 16:9, 1280x720px,\" mood \"urgent, slightly alarmed,\" brand style \"navy blue and bright yellow, bold, high-contrast\" (pulled from her channel banner), composition \"left\" since she always puts her bold yellow text on the right side of her thumbnails, and style reference \"photographic, natural light, shot like an iPhone photo, not a polished studio shoot.\"\n\nChatGPT generates 3 variations: subject on the left with clean negative space on the right, subject on the right, and subject centered. Because she specified \"left,\" that version matches her usual layout best — a woman mid-squat, weight visibly loaded, expression focused, with a clean navy gradient background on the right third, and the negative space genuinely empty since she told GPT Image 2 not to render her title text.\n\nElena sends the follow-up \"Check readability at small size\" because she remembers a past thumbnail that looked great full-size but got muddy once shrunk down in search results. ChatGPT tells her the centered version's subject gets too small to read at thumbnail size, while the left-aligned version holds up because the subject fills more of its third.\n\nShe picks the left-aligned version, adds her yellow bold text over the empty right third herself in Canva, and publishes. Total time from opening ChatGPT to a finished thumbnail: about 15 minutes, versus the 40 minutes she used to spend testing random prompts with no brief."
+    },
+    "cre-i3-short-form-video-concepts-ai-video": {
+      "placeholders": [
+        {
+          "name": "PASTE YOUR FULL SCRIPT",
+          "what": "Your complete, word-for-word script broken into the lines you'll actually say, not a summary or bullet outline — Gemini needs to match specific visuals to specific lines, so it has to see the exact wording and order.",
+          "examples": [
+            "Line 1: 'Everyone told me pricing gets easier. It didn't, I just got better at the conversation.' Line 2: 'Here's the exact question I ask now before quoting anything.' Line 3: 'What's your budget range for this, even a rough one?' Line 4: 'That one sentence saved me probably $10,000 last year.'",
+            "Line 1: 'If your squat breaks down here, it's not your legs.' Line 2: 'It's your brace.' Line 3: 'Watch what happens when I actually fill my belly with air before descending.' Line 4: 'Same weight. Completely different bar path.'",
+            "Line 1: 'Your starter isn't dead. I promise.' Line 2: 'It's just sluggish from inconsistent feeding.' Line 3: 'Here's the 48-hour routine that brought mine back from the edge.' Line 4: 'Day one: two feeds, 12 hours apart.'"
+          ]
+        },
+        {
+          "name": "e.g., \"clean, minimal, soft natural light\" or \"bold, high-contrast, fast cuts\"",
+          "what": "The overall visual mood and editing style for the whole video, used to keep every generated shot — and its ambient audio — consistent with the others rather than looking and sounding like mismatched clips stitched together.",
+          "examples": [
+            "clean, minimal, soft natural light, calm pacing",
+            "bold, high-contrast, fast cuts, punchy energy",
+            "warm, homey, slightly grainy, handheld feel"
+          ]
+        },
+        {
+          "name": "e.g., \"45 seconds total, 6-8 shots\"",
+          "what": "The total runtime and roughly how many shots that should break into, so the shot list comes out realistic — not so sparse it feels empty, and not so over-cut it's impossible to actually edit in the time you have.",
+          "examples": [
+            "45 seconds total, 6-8 shots",
+            "60 seconds total, 8-10 shots",
+            "30 seconds total, 5 shots"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Talking-head primary, Veo for a couple cutaways only",
+          "whenToUse": "Use when most of the video is you speaking directly to camera and you only need Veo-generated visuals for one or two B-roll cutaway moments, not a fully shot-listed video.",
+          "prompt": "Turn this script into a shot list for a short-form video that's mostly me talking to camera, with Veo-generated B-roll only where I flag it.\n\nScript:\n[PASTE YOUR FULL SCRIPT]\n\nParts I've already flagged as needing a cutaway (mark the rest as 'talking head, filmed by me'): [LIST THE LINE NUMBERS OR PHRASES WHERE YOU WANT A CUTAWAY]\nVisual style for cutaways: [e.g., \"clean, minimal, soft natural light\"]\nDuration target: [e.g., \"45 seconds total\"]\n\nFor every line, mark it as either 'talking head, filmed by me' or 'Veo-generated cutaway.' For the cutaways only, write a specific generation prompt with subject, action, camera angle, lighting, and ambient sound — recommend Veo generation only for generic visual concepts, never for anything requiring a specific real fact, number, product, or place."
+        },
+        {
+          "label": "Fully Veo-generated concept video",
+          "whenToUse": "Use for an explainer or story-style video with no filmed footage at all, where every visual except text graphics should be Veo-generated.",
+          "prompt": "Turn this script into a shot list for a fully Veo-generated short-form video, with a generation prompt for every visual shot.\n\nScript:\n[PASTE YOUR FULL SCRIPT]\n\nVisual style: [e.g., \"bold, high-contrast, fast cuts\"]\nDuration target: [e.g., \"45 seconds total, 6-8 shots\"]\n\nFor each line or beat, output: the script line, shot type (Veo-generated B-roll or text-graphic overlay — no filmed-by-me option, this is a fully generated video), a specific generation prompt with subject, action, camera angle, lighting, and ambient sound for every Veo-generated shot, and approximate shot length. Flag any beat where a Veo-generated clip would risk implying a specific fact (a dollar figure, a named brand, a real location) — for those, recommend a text graphic instead, since a generated shot could look like a real, specific claim."
+        },
+        {
+          "label": "Multi-format crop",
+          "whenToUse": "Use when the same shot list needs to work for both a 9:16 vertical video and a 1:1 square crop for a different platform.",
+          "prompt": "Turn this script into a shot list for a short-form video that needs to work in two aspect ratios: 9:16 vertical and 1:1 square.\n\nScript:\n[PASTE YOUR FULL SCRIPT]\n\nVisual style: [e.g., \"clean, minimal, soft natural light\"]\nDuration target: [e.g., \"45 seconds total, 6-8 shots\"]\n\nFor each line or beat, output the script line, shot type, a generation prompt for Veo-generated shots (subject, action, camera angle, lighting, ambient sound), approximate shot length, and a note on whether the subject/action still reads clearly when cropped to 1:1 from a 9:16 composition — flag any shot where the key visual would get cut off in the square crop and suggest a framing adjustment. Flag any beat implying a specific fact, brand, or location that should be a text graphic instead."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Double-check the fact-flagging",
+          "prompt": "Go back through the shot list and double-check every shot flagged as Veo-generated — is there any dollar figure, brand name, real place, or specific claim implied visually that I missed? Flag anything borderline."
+        },
+        {
+          "label": "Make vague generation prompts more specific",
+          "prompt": "Some of the Veo generation prompts are still too vague. For each one, add a specific camera angle, lighting direction, one concrete visual detail, and a note on whether I want Veo's native audio for that shot or plan to mute it, so it doesn't come out generic."
+        },
+        {
+          "label": "Recheck shot lengths add up",
+          "prompt": "Add up all the shot lengths and tell me if the total matches my duration target. If it's over or under, tell me which shots to trim or extend."
+        },
+        {
+          "label": "Suggest what to film myself instead",
+          "prompt": "For every shot marked 'footage I'll film myself,' give me a one-line direction — what to point the camera at, roughly how long to hold it — so I know exactly what to capture."
+        }
+      ],
+      "walkthrough": "Jordan posts short-form videos about sourdough baking. He has a script written for a video about reviving a sluggish starter and wants to turn it into something he can actually shoot and generate visuals for, instead of guessing what to film as he goes. He opens the Gemini app on his Google AI Pro plan and pastes the shot-list prompt.\n\nHe pastes his four-line script: \"Your starter isn't dead. I promise. It's just sluggish from inconsistent feeding. Here's the 48-hour routine that brought mine back from the edge. Day one: two feeds, 12 hours apart.\" For visual style he writes \"warm, homey, slightly grainy, handheld feel.\" For duration he writes \"40 seconds total, 6 shots.\"\n\nGemini returns a shot list: shot 1 pairs line 1 with a close-up of hands holding a jar of starter, marked \"Veo-generated B-roll,\" with a specific prompt describing warm window light, shallow depth of field, a slow push-in, and quiet kitchen room tone with no dialogue. Shot 4, tied to the feeding-schedule line, is flagged \"text-graphic overlay\" instead, since it involves a specific numbered routine that shouldn't be shown as a generic scene implying false precision.\n\nJordan notices two of the generation prompts are a bit generic, so he sends the follow-up to sharpen them and specify the audio for each. Gemini rewrites them with exact camera angles, lighting notes, and a note that both shots should use quiet ambient room tone rather than any dialogue, since he'll add his own voiceover later.\n\nHe generates the two Veo 3.1 B-roll shots — each arriving with usable ambient audio baked in — films the rest himself, and has a rough cut assembled that evening. Total time from pasting the script to a finished shot list: about 12 minutes."
+    },
+    "cre-a1-content-operating-system": {
+      "placeholders": [
+        {
+          "name": "e.g., \"YouTube: 1x/week, Instagram: 5x/week, Newsletter: 1x/week\"",
+          "what": "Your real current or committed posting frequency per platform — pulled from your actual publishing history or a schedule you've genuinely decided on, not an aspirational number you saw a creator coach mention. Include every platform you post to, not just your main one.",
+          "examples": [
+            "YouTube: 1x/week, Instagram: 5x/week, Newsletter: 1x/week",
+            "TikTok: 4x/week, YouTube long-form: 2x/month",
+            "Podcast: 1x/week, 3 short-form clips per episode, newsletter: 1x/week"
+          ]
+        },
+        {
+          "name": "e.g., \"6 hours total: 2 hrs Monday morning, 3 hrs Thursday afternoon, 1 hr Sunday\"",
+          "what": "Your actual weekly time budget for content, broken into real blocks tied to real days — check your calendar for the hours you genuinely protect for content work right now, not a wished-for total you don't actually have free.",
+          "examples": [
+            "6 hours total: 2 hrs Monday morning, 3 hrs Thursday afternoon, 1 hr Sunday evening",
+            "10 hours total: 4 hrs Tuesday, 4 hrs Friday, 2 hrs scattered evenings",
+            "3 hours total: 1.5 hrs Wednesday lunch, 1.5 hrs Saturday morning"
+          ]
+        },
+        {
+          "name": "e.g., \"weekly ideation prompt, scripting, repurposing one long piece into shorts\"",
+          "what": "The specific workflows, prompts, or processes you already use regularly (from earlier lessons or habits you've built on your own), so the system builds on what's already working instead of throwing it out and starting over.",
+          "examples": [
+            "weekly ideation prompt on Sundays, script-in-my-voice prompt, repurposing one long video into 10 posts monthly",
+            "batch filming once every 2 weeks, editing myself, no repurposing system yet",
+            "AI thumbnail generation, manual scripting, no consistent ideation process"
+          ]
+        },
+        {
+          "name": "e.g., \"I have ideas but rarely finish scripts\" or \"I make content but forget to post consistently\"",
+          "what": "The one honest, specific point where your process breaks down most often — name the exact stage (ideation, writing, filming, editing, posting) rather than a vague \"I'm not consistent,\" since the fix is different depending on where the bottleneck actually is.",
+          "examples": [
+            "I have ideas but rarely finish scripts — they sit half-written for weeks",
+            "I make content but forget to post consistently, sometimes 2 weeks go by with nothing published",
+            "I batch-film fine but editing takes so long I fall behind and skip weeks"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Solo-to-team transition",
+          "whenToUse": "Use when you're about to bring on an editor, VA, or scriptwriter and need to see clearly what to delegate versus what only you should keep doing.",
+          "prompt": "Help me redesign my content operating system now that I'm bringing on help, not staying fully solo.\n\nMy platforms and current/target posting frequency: [e.g., \"YouTube: 1x/week, Instagram: 5x/week\"]\nMy real available working hours for content per week: [e.g., \"6 hours total: 2 hrs Monday, 3 hrs Thursday, 1 hr Sunday\"]\nWho I'm bringing on and their hours/skills: [e.g., \"an editor, 5 hrs/week, video editing only, no filming or scripting\"]\nWorkflows I already use: [YOUR CURRENT WORKFLOWS]\nBiggest current bottleneck: [YOUR BOTTLENECK]\n\nDesign: 1) which stages (ideation, scripting, filming/generating visuals, editing, batching, scheduling) stay mine versus get handed to the new hire, based on their actual skills and hours — don't assume skills they don't have. 2) an updated weekly schedule for just my hours now that editing is off my plate. 3) a handoff checklist describing exactly what I give the hire and in what format. 4) one recommendation directly addressing my bottleneck now that I have help."
+        },
+        {
+          "label": "Recovery reset after falling off",
+          "whenToUse": "Use when you haven't posted in weeks and the old system has completely broken down — you need a minimal restart, not the full ideal system.",
+          "prompt": "I've fallen off my content schedule completely and haven't posted in a while. Help me design a minimal, realistic restart plan, not an aspirational full system.\n\nMy platforms and how long it's been since I last posted on each: [e.g., \"YouTube: 6 weeks, Instagram: 3 weeks\"]\nMy real available working hours for content this coming week only: [e.g., \"3 hours: 1.5 hrs Wednesday, 1.5 hrs Saturday\"]\nWhat used to work before I fell off: [e.g., \"batching 4 videos in one session\"]\nWhat caused me to fall off: [e.g., \"got overwhelmed trying to do too many platforms at once\"]\n\nDesign the smallest possible plan to get one piece of content published this week, using only my stated hours. Don't try to fix my whole system at once — recommend I temporarily drop or slow any platform that isn't sustainable right now, and tell me honestly which one that should be."
+        },
+        {
+          "label": "Launch/seasonal push",
+          "whenToUse": "Use when a specific product launch or seasonal event is coming up and your normal system needs to flex around it temporarily without collapsing afterward.",
+          "prompt": "Help me design a temporary adjustment to my content operating system around an upcoming launch, then a plan to return to normal after.\n\nMy normal platforms and posting frequency: [e.g., \"YouTube: 1x/week, Instagram: 5x/week\"]\nMy real available working hours for content per week (including any extra hours I can free up just for launch week): [e.g., \"6 hours normally, 10 hours during launch week\"]\nWhat's launching and when: [e.g., \"a paid course launching in 3 weeks, cart open for 7 days\"]\nWorkflows I already use: [YOUR CURRENT WORKFLOWS]\n\nDesign: 1) a week-by-week plan for the 3 weeks leading up to launch plus launch week itself, showing what content shifts toward promotion versus stays normal. 2) what to temporarily pause or reduce to make room, being honest about what's not sustainable alongside a launch. 3) a one-page checklist for launch-specific content. 4) a plan for returning to my normal schedule the week after, so the launch push doesn't become the new (unsustainable) normal."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Stress-test against a bad week",
+          "prompt": "Assume one week I only get half my usual hours (something comes up). Adjust the schedule to show me what to cut first and what must still happen to keep my system from collapsing."
+        },
+        {
+          "label": "Turn the checklist into something copyable",
+          "prompt": "Reformat the one-page checklist as a plain numbered list I can paste directly into a Notion/Trello template, with checkboxes and no extra commentary."
+        },
+        {
+          "label": "Push back harder on frequency honesty",
+          "prompt": "Be blunter: if my stated posting frequency still isn't realistic given my hours even with this system, tell me directly what to cut, and don't soften it."
+        },
+        {
+          "label": "Add a monthly review step",
+          "prompt": "Add a short monthly review step to this system — 3-4 questions I ask myself once a month to check whether the schedule and batching plan are still working, and what to adjust if not."
+        }
+      ],
+      "walkthrough": "Theo runs a weekly podcast about small business marketing and posts clips from it, but he keeps missing weeks and his ideas pile up unfinished. He opens ChatGPT and pastes the content operating system prompt.\n\nHe fills in platforms: \"Podcast: 1x/week, 3 short-form clips per episode, newsletter: 1x/week.\" Hours: \"6 hours total: 2 hrs Monday morning, 3 hrs Thursday afternoon, 1 hr Sunday evening.\" Existing workflows: \"batch recording once every 2 weeks, editing myself, no repurposing system yet.\" Bottleneck: \"I have ideas but rarely finish scripts — they sit half-written for weeks.\"\n\nChatGPT responds with a schedule mapping Monday morning to scripting and outlining (directly addressing his bottleneck), Thursday afternoon to recording plus generating the 3 clips, and Sunday evening to scheduling and the newsletter. It recommends batching 2 episodes per recording session, not 4, given his actual hours. It flags that his target of weekly podcast plus 3 weekly clips plus a weekly newsletter isn't fully realistic on 6 hours and suggests dropping the newsletter to biweekly instead.\n\nTheo isn't ready to give up the newsletter, so he sends the follow-up \"Stress-test against a bad week,\" wanting to know what actually breaks first if a week gets cut short. ChatGPT tells him to protect the Monday scripting block above all else, since a half-finished script is what causes full weeks to get skipped, and to let the newsletter slip that week specifically rather than the episode.\n\nTheo copies the schedule and checklist into his own planner. Building this system took about 18 minutes, and for the first time his Monday block has one specific job instead of a vague \"work on content.\""
+    },
+    "smm-b1-month-of-posts-from-strategy-doc": {
+      "placeholders": [
+        {
+          "name": "PASTE FULL STRATEGY DOC: pillars, audience, brand voice notes, this month's goals/campaigns",
+          "what": "This is the actual content strategy document your team or client already has — usually a Google Doc, Notion page, or slide deck that lists your content pillars (the 3-5 recurring themes you post about), your target audience description, brand voice notes, and this month's specific goals or campaigns. Paste the real text, not a summary — the AI needs the actual pillar names and goal language so it doesn't invent its own. A bad value is a one-line guess like 'we post about our products'; a good value includes labeled pillars, audience, voice notes, and goals as separate sections.",
+          "examples": [
+            "CONTENT PILLARS:\n1. Client transformations (before/after, testimonials)\n2. Training tips (form cues, workout structure)\n3. Studio culture (trainer intros, behind-the-scenes)\n4. Nutrition basics (simple, non-restrictive advice)\n\nAUDIENCE: Women 28-45 in the metro area, busy professionals, intimidated by big-box gyms, want community and accountability.\n\nBRAND VOICE: Encouraging, no-nonsense, never shame-based, avoid diet culture language like 'earn your food.'\n\nTHIS MONTH'S GOALS: Promote the new 6-week Fall Reset challenge (starts Sept 1, enrollment closes Aug 25), grow Instagram followers by 5%, drive 20 challenge sign-ups.",
+            "PILLARS: Product education, customer stories, industry trends, team/culture.\nAUDIENCE: Marketing ops managers at mid-size B2B companies, already using a CRM, evaluating automation tools.\nVOICE: Confident but not salesy, plain language, no buzzwords like 'synergy' or 'game-changer.'\nGOALS THIS MONTH: Drive webinar registrations for the Sept 18 automation webinar, build awareness ahead of Q4 renewal season, publish 2 customer case studies."
+          ]
+        },
+        {
+          "name": "e.g., \"Instagram 5x/week, LinkedIn 3x/week, TikTok 4x/week\"",
+          "what": "This tells the AI exactly which platforms you post to and how often on each, so it can build the right number of posts per week per platform instead of guessing a cadence. Pull this from your actual posting schedule or media plan, or decide it now based on your real capacity. A bad value is 'social media daily'; a good value names each platform with its own frequency.",
+          "examples": [
+            "Instagram 5x/week, TikTok 3x/week",
+            "LinkedIn 3x/week only",
+            "Instagram 4x/week, Facebook 2x/week, TikTok 3x/week"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Single-platform deep plan",
+          "whenToUse": "Use this when you only manage one platform and want more granular post ideas per week than a multi-platform spread would produce.",
+          "prompt": "Here is my content strategy document:\n[PASTE FULL STRATEGY DOC: pillars, audience, brand voice notes, this month's goals/campaigns]\n\nPlatform and posting frequency: [e.g., \"Instagram 6x/week\"]\n\nBuild a month of post concepts (roughly 4 weeks) for this one platform only, using only the pillars, goals, and voice described above — do not introduce a new content pillar or campaign angle that isn't in the document. For each post, give me:\n1. Week and day-of-week suggestion\n2. Content pillar it maps to (must match one from my document)\n3. A specific concept/hook (not a vague topic label)\n4. Format specific to this platform (e.g., Reels, carousel, static, Story)\n5. Which stated goal it supports (as named in my document)\n\nGroup the output by week. Flag any week where one pillar is overrepresented and the others are thin, and suggest a rebalance. If my document doesn't specify enough detail for this platform, say so explicitly rather than inventing strategy to fill the gap."
+        },
+        {
+          "label": "Launch-week heavy plan",
+          "whenToUse": "Use this when a specific launch or campaign date needs a concentrated push in one particular week rather than an even month-long spread.",
+          "prompt": "Here is my content strategy document:\n[PASTE FULL STRATEGY DOC: pillars, audience, brand voice notes, this month's goals/campaigns]\n\nPlatforms and posting frequency: [e.g., \"Instagram 5x/week, TikTok 4x/week\"]\nLaunch date and what's launching: [e.g., \"Sept 1, the Fall Reset 6-week challenge\"]\n\nBuild a month of post concepts (roughly 4 weeks) using only the pillars, goals, and voice described above — do not introduce a new content pillar or campaign angle that isn't in the document. Weight the two weeks immediately before the launch date more heavily toward the launch, while still including other pillars so the account doesn't read as one long ad. For each post, give me:\n1. Week and platform\n2. Content pillar it maps to (must match one from my document)\n3. A specific concept/hook (not a vague topic label)\n4. Format (static, carousel, short video, article/text post)\n5. Which stated goal it supports\n\nGroup the output by week and clearly mark which posts are launch-specific vs. regular pillar content. Flag any week where the launch push has crowded out other pillars too much, and suggest a rebalance. If my document doesn't specify enough detail for a given platform, say so explicitly rather than inventing strategy to fill the gap."
+        },
+        {
+          "label": "Quick 2-week sprint",
+          "whenToUse": "Use this when you only need the next two weeks planned right now rather than a full month, such as mid-month planning or a short sprint.",
+          "prompt": "Here is my content strategy document:\n[PASTE FULL STRATEGY DOC: pillars, audience, brand voice notes, this month's goals/campaigns]\n\nPlatforms and posting frequency: [e.g., \"Instagram 5x/week, LinkedIn 3x/week\"]\n\nBuild the next 2 weeks of post concepts using only the pillars, goals, and voice described above — do not introduce a new content pillar or campaign angle that isn't in the document. For each post, give me:\n1. Week and platform\n2. Content pillar it maps to (must match one from my document)\n3. A specific concept/hook (not a vague topic label)\n4. Format (static, carousel, short video, article/text post)\n5. Which stated goal it supports (as named in my document)\n\nGroup the output by week. Flag any week where one pillar is overrepresented and the others are thin, and suggest a rebalance. If my document doesn't specify enough detail for a given platform, say so explicitly rather than inventing strategy to fill the gap."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Rebalance an overrepresented pillar",
+          "prompt": "Week 2 is too heavy on [PILLAR NAME] and thin on the others. Rework week 2 only, keeping the same platforms and goal, to bring it into better balance across pillars — don't touch the other weeks."
+        },
+        {
+          "label": "Add concrete direction for one platform's posts",
+          "prompt": "For every TikTok post in this plan, add one line describing the specific opening shot/hook I'd actually film — not just the concept."
+        },
+        {
+          "label": "Turn it into a spreadsheet-ready table",
+          "prompt": "Reformat this whole month as a single table with columns: Week, Date (approx), Platform, Pillar, Concept, Format, Goal — so I can paste it directly into a spreadsheet."
+        },
+        {
+          "label": "Flag design/asset needs",
+          "prompt": "Go through this plan and flag which posts will need a designer or video editor vs. which I can shoot or write myself, so I can plan resourcing for the month."
+        }
+      ],
+      "walkthrough": "Maya manages social media for a boutique fitness studio and needs August's content calendar done before her Monday planning meeting.\n\nShe opens Claude and pastes the lesson's prompt. In the first bracket she pastes her actual strategy doc — four pillars (client transformations, training tips, studio culture, nutrition basics), the audience description, brand voice notes about avoiding diet-culture language, and this month's goal: driving sign-ups for a 6-week Fall Reset challenge that opens August 25. In the second bracket she types \"Instagram 5x/week, TikTok 3x/week.\"\n\nClaude returns four weeks of posts grouped by week, each with platform, pillar, a specific hook (like \"POV: you tried three gyms before finding one that didn't make you feel small\" for TikTok), format, and which goal it supports. It flags that Week 3 leans heavily on training tips with almost nothing from studio culture, and suggests swapping two posts.\n\nMaya reads through and notices the TikTok posts are solid concepts but too vague to actually film, so she sends the follow-up: \"For every TikTok post in this plan, add one line describing the specific opening shot/hook I'd actually film — not just the concept.\" Claude adds concrete directions, like \"open on a client mid-set, cut to her reaction when she hits a new personal record.\"\n\nShe copies the final plan into her team's shared spreadsheet using the table-reformat follow-up. Total time: about 20 minutes, most of it spent gathering the strategy doc she already had on hand rather than writing anything from scratch."
+    },
+    "smm-b2-platform-native-captions-hooks": {
+      "placeholders": [
+        {
+          "name": "Instagram / LinkedIn / TikTok / X / Facebook — name exactly one",
+          "what": "This tells the AI which single platform the caption is for — not a list, just one name copied from the options given. Pick the platform where the post will actually be published, because each one has a completely different reading pattern (LinkedIn readers scan for professional insight, TikTok viewers read captions as an afterthought to the video). A bad value is leaving multiple platforms in, like 'Instagram and Facebook' — that produces a generic caption that fits neither well.",
+          "examples": [
+            "Instagram",
+            "LinkedIn",
+            "TikTok"
+          ]
+        },
+        {
+          "name": "YOUR CONCEPT",
+          "what": "This is the specific idea or message the post is built around — not a topic, an actual angle. It comes from your content calendar or the raw idea you started with today. A bad value is a topic label like 'new product'; a good value is a full sentence describing what the post is actually saying, what changed, what the audience gets, or what the hook is.",
+          "examples": [
+            "We just added oat milk as a permanent menu option after three months of customer requests — this post announces it and thanks people for asking.",
+            "Behind-the-scenes look at how our roastery sources beans directly from three family farms in Guatemala, tying it to our 'know your farmer' value.",
+            "A lighthearted post poking fun at the fact that our regulars now have a 'usual order' memorized by every barista on staff."
+          ]
+        },
+        {
+          "name": "e.g., \"direct, a little playful, no corporate jargon\"",
+          "what": "Describe how this brand actually sounds when it talks, in plain adjectives plus at least one concrete rule about what to avoid. Pull this from a brand voice guide if one exists, or from how the brand's best-performing past captions actually read. A bad value is a vague word like 'professional' alone; a good value pairs tone words with a specific dos/don'ts.",
+          "examples": [
+            "Warm and conversational, like texting a friend, never uses exclamation-point-heavy hype language",
+            "Confident and a little dry-humored, avoids emojis except sparingly, never says 'game-changer' or 'revolutionary'",
+            "Encouraging and plainspoken, avoids diet-culture phrases like 'guilt-free' or 'earn your workout'"
+          ]
+        },
+        {
+          "name": "awareness / engagement / drive traffic / conversion",
+          "what": "State which single outcome this specific post is meant to achieve, chosen from the four listed. This shapes everything from the CTA to the hook — an awareness post can be looser and more shareable, a conversion post needs urgency and clarity. A bad value is picking more than one goal or leaving it blank; a good value is one word matching your actual campaign objective for this post.",
+          "examples": [
+            "engagement",
+            "drive traffic",
+            "conversion"
+          ]
+        },
+        {
+          "name": "WHAT YOU WANT THE READER TO DO",
+          "what": "The literal next action you want someone to take after reading, stated as an instruction, not a vague hope. This should match the goal above — if the goal is 'drive traffic,' the CTA should be a click action, not just 'like this post.' A bad value is something abstract like 'engage more'; a good value is a specific action tied to a specific destination.",
+          "examples": [
+            "Tap the link in bio to see the full oat milk menu and which locations carry it",
+            "Comment which farm's beans is your favorite so far",
+            "Save this post if you're planning a trip to try the new seasonal menu"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Repurpose one concept across two platforms",
+          "whenToUse": "Use this when the same core message needs to go out on two different platforms in one sitting and you want both captions written together so they stay consistent in message but different in delivery.",
+          "prompt": "Write two captions for the same post concept, one for each platform below — each fully adapted to that platform's actual reading pattern, not the same text reused.\n\nPlatform 1: [PLATFORM 1]\nPlatform 2: [PLATFORM 2]\nPost concept/core message: [YOUR CONCEPT]\nBrand voice: [YOUR VOICE DESCRIPTION]\nGoal: [awareness / engagement / drive traffic / conversion]\nCall to action: [WHAT YOU WANT THE READER TO DO]\n\nFor each platform, respect its typical caption length, hook convention, and formatting norms (line breaks, hashtag placement and count, emoji use). Give 2 hook options per platform, then the full caption using the stronger one. Clearly label which caption is for which platform, and do not let one platform's phrasing bleed into the other."
+        },
+        {
+          "label": "Short-form video script + caption combo",
+          "whenToUse": "Use this when writing for TikTok or Instagram Reels and you need the on-screen text/spoken hook for the video itself, not just the caption underneath it.",
+          "prompt": "I'm writing a short-form video (TikTok/Reels), not just a caption. Give me both the video script and the caption.\n\nPlatform: [TikTok / Instagram Reels]\nPost concept/core message: [YOUR CONCEPT]\nBrand voice: [YOUR VOICE DESCRIPTION]\nGoal: [awareness / engagement / drive traffic / conversion]\nCall to action: [WHAT YOU WANT THE READER TO DO]\n\nFirst, give me 3 opening-line hook options for the first 1-2 seconds of the video (spoken or on-screen text) — this is what determines whether someone keeps watching. Then write a beat-by-beat script (what's said/shown, roughly how many seconds each beat gets) using the strongest hook. Then write the caption that goes underneath, following TikTok/Reels caption conventions (short, casual, hashtags placed at the end, minimal formatting). The script and caption should reinforce each other, not repeat the same sentence twice."
+        },
+        {
+          "label": "No hard CTA — pure engagement/community post",
+          "whenToUse": "Use this for posts that intentionally don't push toward a click or sale, like a community question, meme, or relatable moment, where a hard CTA would feel out of place.",
+          "prompt": "Write a caption for a social media post.\n\nPlatform: [Instagram / LinkedIn / TikTok / X / Facebook — name exactly one]\nPost concept/core message: [YOUR CONCEPT]\nBrand voice: [YOUR VOICE DESCRIPTION]\nGoal: engagement — specifically getting comments/shares, not clicks or sales\n\nThis post has no hard call to action — do not add a 'shop now' or 'link in bio' style push. Instead, end with something that naturally invites a comment (a question, a relatable statement, an 'agree or disagree' prompt) that fits the concept and voice. Write it for how people actually read on this platform — respect typical caption length, hook convention, and formatting norms. Give me 3 different hook/opening line options, then the full caption using the strongest one."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Tighten a caption that's running too long",
+          "prompt": "This caption is longer than what actually performs on this platform. Cut it by about a third without losing the hook or the CTA — tighten sentences rather than deleting whole ideas."
+        },
+        {
+          "label": "Make the hashtags more specific",
+          "prompt": "The hashtags feel generic and overused. Replace them with a mix of a couple of broad, high-volume tags and several narrower, more specific ones actually related to this post's content."
+        },
+        {
+          "label": "Check it against our brand voice more strictly",
+          "prompt": "Re-read this caption against the brand voice I gave you and point out any word or phrase that doesn't actually match it, then rewrite just those parts."
+        },
+        {
+          "label": "Give me more hook options to test",
+          "prompt": "Give me 3 more hook/opening line options I haven't seen yet, as different in approach from each other as possible, so I can test which one performs best."
+        }
+      ],
+      "walkthrough": "Jordan handles Instagram and LinkedIn for a small-batch coffee roastery and needs a caption today announcing that oat milk is now a permanent menu item after months of customer requests.\n\nJordan opens ChatGPT and pastes the lesson's prompt. For Platform, Jordan types \"Instagram.\" For the concept: \"We just added oat milk as a permanent menu option after three months of customer requests — this post announces it and thanks people for asking.\" For brand voice: \"warm and conversational, like texting a friend, never uses exclamation-point-heavy hype language.\" Goal: \"engagement.\" CTA: \"comment which milk alternative we should add next.\"\n\nChatGPT returns three hook options, including \"you asked. we listened. oat milk is here to stay\" and \"the most-requested menu change just became permanent,\" then builds the full caption around the second one, formatted with short line breaks, a warm middle section thanking regulars, the CTA question at the end, and five hashtags placed after a line break at the bottom — matching how Instagram captions actually get read.\n\nJordan likes the structure but notices the caption runs long for how their regulars typically skim captions on mobile, so Jordan sends the follow-up: \"This caption is longer than what actually performs on this platform. Cut it by about a third without losing the hook or the CTA.\" ChatGPT trims two middle sentences and tightens the wording, keeping the hook and CTA intact.\n\nJordan copies the shortened caption straight into the scheduling tool. Total time from opening the prompt to having a ready-to-post caption: about 10 minutes, most of it spent deciding on the exact concept sentence rather than waiting on the AI."
+    },
+    "smm-i1-engagement-replies-brand-voice": {
+      "placeholders": [
+        {
+          "name": "e.g., \"warm, direct, a little playful, never use corporate phrases like 'we appreciate your feedback,' sign off with our first names when it fits\"",
+          "what": "This describes exactly how the brand talks when responding to people directly — not the same as a general marketing voice, since replies are more personal and one-to-one. Pull this from an actual brand voice guide, or from real examples of past replies that got a good reaction. A bad value is a single adjective like 'friendly'; a good value includes tone words plus specific banned phrases and sign-off style, since those are what actually keep replies from sounding like a corporate copy-paste.",
+          "examples": [
+            "Warm, direct, a little playful, never use corporate phrases like 'we appreciate your feedback' or 'thank you for reaching out,' sign off with our first names (Sam or Alex) when it fits naturally",
+            "Calm, precise, no exclamation points, never over-apologize for minor issues, always confirm next steps clearly rather than just sympathizing",
+            "Enthusiastic but not gushing, uses one emoji max per reply, avoids the word 'amazing,' always thanks people by referencing what they specifically said"
+          ]
+        },
+        {
+          "name": "PASTE EACH COMMENT/DM, ONE PER LINE, NUMBERED",
+          "what": "This is the actual, unedited text of each comment or DM pulled from your platform's inbox or comment section — copied exactly as the person wrote it, numbered so the AI's replies map back to the right one. A bad value is paraphrasing what people said; a good value is the verbatim text, including typos, tone, and any details the person mentioned, since the AI needs those specifics to write a reply that responds to what was actually said.",
+          "examples": [
+            "1. love this!! do you ship to canada?\n2. this didn't work for me at all, my order arrived broken and customer service hasn't answered in 4 days\n3. can you do a tutorial on the technique you used in the last video?\n4. following since day one, so proud of how far this account has grown\n5. is this safe to use if I'm pregnant?\n6. y'all are a scam, I'm reporting this page",
+            "1. what font is that in your last carousel?\n2. just cancelled my subscription, this is way overpriced for what it is\n3. can you tag the jacket she's wearing??\n4. my daughter has severe allergies, does this product contain tree nuts?\n5. lol relatable content as always\n6. DM'd you 3 times about a refund and no response, this is ridiculous"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "High-volume comment backlog (20+ items)",
+          "whenToUse": "Use this when clearing a large backlog of comments at once and you want them grouped by type instead of replied to one by one, so you can scan and approve faster.",
+          "prompt": "Draft replies to this large batch of comments in our brand voice.\n\nBrand voice guide: [YOUR VOICE GUIDE]\n\nComments (numbered):\n[PASTE EACH COMMENT, ONE PER LINE, NUMBERED]\n\nFirst, sort them into three groups: (1) straightforward replies you can draft directly, (2) comments similar enough to reply with near-identical wording (like repeated 'do you ship internationally' questions), and (3) comments to escalate. For group 1 and 2, write a specific reply for each numbered comment — group 2 replies can share a template but each must reference what that person actually asked. For group 3, write \"ESCALATE\" and briefly say why — this includes complaints, safety/legal concerns, sensitive personal situations, or anything angry or ambiguous enough that a wrong-toned reply could make it worse."
+        },
+        {
+          "label": "DM-only, product/purchase questions",
+          "whenToUse": "Use this for a batch of direct messages that are mostly pre-purchase questions, where factual accuracy about the product matters more than tone alone.",
+          "prompt": "Draft replies to this batch of DMs in our brand voice. These are mostly product questions from people considering a purchase, so accuracy matters as much as tone.\n\nBrand voice guide: [YOUR VOICE GUIDE]\nFacts you're allowed to state (only use these, don't infer product details I haven't given you): [PASTE KNOWN PRODUCT FACTS: pricing, shipping, ingredients/materials, policies]\n\nDMs (numbered):\n[PASTE EACH DM, ONE PER LINE, NUMBERED]\n\nFor each one, write a specific reply that answers what that person actually asked, using only the facts I gave you above — if a DM asks something you don't have facts for (like a specific allergen or a delivery date), don't guess, write \"NEEDS INFO\" and note exactly what's missing. Flag anything that should be escalated to a human instead — complaints, safety concerns, or refund/legal requests — with \"ESCALATE\" and a brief reason."
+        },
+        {
+          "label": "Single high-stakes comment",
+          "whenToUse": "Use this when there's just one sensitive or semi-public comment that needs a careful, considered reply rather than a batch pass.",
+          "prompt": "Help me think through how to respond to this one comment before I draft anything.\n\nBrand voice guide: [YOUR VOICE GUIDE]\nThe comment: [PASTE THE FULL COMMENT TEXT]\nContext I know: [WHAT YOU KNOW ABOUT THE SITUATION, e.g. \"this customer's order actually was delayed by our carrier, we already know about it\"]\n\nFirst tell me plainly whether this is something you think should be escalated to a human rather than replied to directly — and if so, stop there and explain why rather than drafting a reply. If it's safe to draft, give me two versions: a short public reply (for the comment thread, assuming other people will see it) and, separately, a private DM I could send if I want to move the conversation off the public thread."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Shorten replies that read too formal or long",
+          "prompt": "Several of these replies are longer and more formal than how we actually talk to people. Tighten them to match a real conversational reply length for this platform, without losing what makes each one specific to that comment."
+        },
+        {
+          "label": "Double-check the escalation calls",
+          "prompt": "Go back through the ones you marked as regular replies (not ESCALATE) and double-check each one — are any of them actually ambiguous, sensitive, or risky enough that they should have been flagged? Explain your reasoning for any you change."
+        },
+        {
+          "label": "Match our specific phrasing quirks more closely",
+          "prompt": "These sound close to our voice but not quite right. We always sign off with a first name when replying to a direct question, and we never use the word 'awesome.' Revise the drafts to fix that."
+        },
+        {
+          "label": "Write escalation notes for whoever picks these up",
+          "prompt": "For each comment you marked ESCALATE, write a one-line internal note for the teammate who will handle it — what happened, what tone/response it likely needs, and any urgency flag."
+        }
+      ],
+      "walkthrough": "Priya works at a small agency handling comment moderation for a skincare brand's Instagram account, and Monday mornings mean clearing the weekend's backlog of comments and DMs before the brand's founder checks in at 10am.\n\nShe opens Claude and pastes the lesson's prompt. For brand voice, she pastes: \"warm, direct, a little playful, never use corporate phrases like we appreciate your feedback, sign off with our first names when it fits.\" Then she copies six real comments straight from the Instagram app into the numbered list — including a simple shipping question, a compliment, a tutorial request, and one comment that reads: \"this broke me out badly, my skin is still irritated three days later, is this even tested properly?\"\n\nClaude drafts short, specific replies for five of the comments — the shipping question gets a real answer about international shipping, the tutorial request gets a reply pointing to a saved highlight. For the breakout comment, Claude writes \"ESCALATE — this describes a possible adverse skin reaction; a wrong-toned reply could look dismissive of a safety concern, and this needs a human who can ask for details and involve the team if needed,\" with no drafted reply.\n\nPriya reads through and thinks a couple of the 'safe' replies still sound slightly too formal for how this brand actually talks, so she sends the follow-up: \"These sound close to our voice but not quite right — we never use the word amazing. Revise the drafts to fix that.\" Claude adjusts the wording.\n\nPriya posts the five approved replies directly and forwards the escalated comment to the brand's customer care lead with the note Claude drafted attached. Total time: about 12 minutes for a backlog that used to take her half an hour."
+    },
+    "smm-i2-analytics-narratives": {
+      "placeholders": [
+        {
+          "name": "DATE RANGE",
+          "what": "The specific start and end dates this report covers, matching whatever period your analytics tool exported (weekly, monthly, or a campaign window). This anchors every comparison the AI makes, so be exact rather than vague. A bad value is 'last month'; a good value is the actual dates as shown in your analytics dashboard.",
+          "examples": [
+            "July 1 - July 31, 2026",
+            "Week of August 3-9, 2026",
+            "Q2 2026 (April 1 - June 30)"
+          ]
+        },
+        {
+          "name": "PASTE: reach, impressions, engagement rate, follower change, top 3 posts by performance, bottom 3 posts by performance, any other metrics tracked",
+          "what": "The actual numbers pulled from your platform's native analytics or a reporting tool, not rounded guesses or a memory of how the month felt. Include the prior period's numbers too if you want the AI to compare trends, since it can't invent a comparison you didn't give it. A bad value is a vague summary like 'engagement was up'; a good value is the raw figures with labels, including which specific posts were the top and bottom performers and why (format, topic).",
+          "examples": [
+            "Reach: 84,200 (prior period: 71,500)\nImpressions: 211,000 (prior: 198,300)\nEngagement rate: 4.1% (prior: 3.4%)\nFollower change: +312 (prior: +190)\nTop 3 posts: (1) Carousel 'behind the scenes at our farm' - 6,100 likes, 340 comments (2) Reel 'day in the life' - 5,800 likes (3) Static 'customer testimonial' - 3,200 likes\nBottom 3 posts: (1) Static product photo, no caption hook - 210 likes (2) Repost of press mention - 180 likes (3) Poll story with low response",
+            "Reach: 12,400 (prior: 15,900)\nImpressions: 29,000 (prior: 33,500)\nEngagement rate: 2.1% (prior: 2.8%)\nFollower change: +45 (prior: +120)\nTop 3 posts: LinkedIn article on industry trend (890 reactions), customer case study post (410 reactions), team hire announcement (380 reactions)\nBottom 3 posts: generic product update (22 reactions), repost of a stat graphic (18 reactions), event recap posted 2 weeks late (15 reactions)"
+          ]
+        },
+        {
+          "name": "PASTE: campaigns run, posting frequency or format changes, external events, platform changes you're aware of — or write \"none known\"",
+          "what": "Anything you actually know happened during this period that could plausibly explain a change in the numbers — a paid campaign, a change in how often you posted, a holiday, a platform outage, an algorithm change you read about from an official source. This is the only material the AI is allowed to use for explanations, so leaving it out forces the report to stay purely factual. If you genuinely don't know of anything, write 'none known' rather than leaving it blank.",
+          "examples": [
+            "Ran a paid boost on the 'behind the scenes at our farm' carousel for 5 days ($200 budget). Posted 2 more times per week than the prior period. No known platform changes. Instagram had a widely reported outage on July 14 for about 3 hours.",
+            "none known",
+            "Switched from posting daily to 4x/week starting mid-month to focus more on quality. Ran a LinkedIn ad campaign promoting the webinar from July 10-20. No external events we're aware of."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Multi-platform combined report",
+          "whenToUse": "Use this when reporting across more than one platform in a single document instead of just one, so leadership or a client can see the whole picture at once.",
+          "prompt": "Turn these analytics numbers into a report explaining what happened this period, across multiple platforms.\n\nPeriod: [DATE RANGE]\nInstagram numbers: [PASTE METRICS]\nTikTok numbers: [PASTE METRICS]\nLinkedIn numbers: [PASTE METRICS]\nKnown context (things that actually happened this period): [PASTE CONTEXT OR \"none known\"]\n\nWrite the report with a platform-by-platform breakdown, each following the same two-section structure: (1) \"What happened\" — a factual summary of the numbers only, comparing to the prior period if given, no interpretation, and (2) \"Possible explanations\" — grounded hypotheses connecting only to context I actually gave you or patterns visible in the numbers, clearly labeled as hypotheses. End with a short cross-platform summary noting where platforms moved in the same direction vs. diverged. If you don't have enough context to explain a change on any platform, say so directly instead of guessing."
+        },
+        {
+          "label": "Quick internal weekly check-in",
+          "whenToUse": "Use this for a fast, informal update to your own team, such as a Slack message, rather than a formal client-facing report.",
+          "prompt": "Turn these numbers into a short, informal weekly check-in for my team — this is going in Slack, not to a client, so keep it brief and conversational rather than formal.\n\nPeriod: [DATE RANGE]\nNumbers: [PASTE METRICS]\nKnown context: [PASTE CONTEXT OR \"none known\"]\n\nGive me 4-6 bullet points total: what moved (up or down, with the number), and only where I've given you context or a visible pattern in the numbers, a short grounded guess at why — label any guess clearly as a guess. If a number moved and I haven't given you anything to explain it, just say it moved and that the cause is unclear, don't speculate."
+        },
+        {
+          "label": "Quarterly rollup for leadership",
+          "whenToUse": "Use this for a longer, higher-level report covering a full quarter, meant for people who care about overall trend direction more than individual post performance.",
+          "prompt": "Turn these analytics numbers into a quarterly report explaining what happened, written for leadership who care about overall trend, not individual post details.\n\nPeriod: [DATE RANGE, e.g. Q3 2026]\nMonthly numbers for each month in the quarter: [PASTE: reach, impressions, engagement rate, follower change per month]\nKnown context (campaigns, strategy changes, external events across the quarter): [PASTE CONTEXT OR \"none known\"]\n\nWrite the report in two sections: (1) \"What happened\" — the quarter-over-quarter and month-over-month trend in each metric, factually, no interpretation, and (2) \"Possible explanations\" — grounded hypotheses for the trend, connected only to context I actually gave you, clearly labeled as hypotheses rather than facts. Close with one short paragraph on what to watch next quarter, based only on patterns actually shown in this data."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Double-check for unsupported causal claims",
+          "prompt": "Re-read the 'Possible explanations' section and point out anywhere it states a cause more confidently than the evidence supports. Rewrite those lines to be clearly hedged or move them to a 'not enough context to explain' note."
+        },
+        {
+          "label": "Add a short executive summary at the top",
+          "prompt": "Add a 2-3 sentence plain-English summary at the very top of this report — the headline takeaway a busy client would want if they only read one paragraph. Keep it factual, don't introduce new interpretation that isn't already in the report below."
+        },
+        {
+          "label": "Turn findings into next-period recommendations",
+          "prompt": "Based only on what's in the 'What happened' and 'Possible explanations' sections above, suggest 3 concrete things to try next period. Don't introduce new strategic ideas that aren't grounded in what we actually observed this period."
+        },
+        {
+          "label": "Shorten for a client with limited time",
+          "prompt": "This is too long for this client — they only skim reports. Cut it to about half the length, keeping the two-section structure and the fact-vs-hypothesis distinction, but trim to only the highest-impact numbers and explanations."
+        }
+      ],
+      "walkthrough": "Tomas manages social for a client's outdoor apparel brand and owes them a monthly report by Friday explaining July's performance, including why engagement jumped compared to June.\n\nHe opens ChatGPT and pastes the lesson's prompt. For the period, he types \"July 1 - July 31, 2026.\" For numbers, he pastes the export from Instagram's native analytics: reach, impressions, engagement rate, follower change, and the top and bottom three posts with their exact like and comment counts, noting the top post was a behind-the-scenes carousel. For known context, he writes that they ran a five-day paid boost on that carousel, increased posting frequency by two posts a week compared to June, and that Instagram had a documented three-hour outage on July 14.\n\nChatGPT returns a report with a \"What happened\" section stating the raw numbers and comparisons to June with no interpretation, followed by \"Possible explanations,\" which notes: \"The top-performing post was a carousel, and carousels also outperformed other formats last period — this suggests the format itself may be a factor (hypothesis).\" It also flags that a reach dip on July 14 aligns with the reported outage that day, labeled as a hypothesis based on timing, and explicitly states it doesn't have enough context to explain the follower growth rate beyond noting it tracks with increased posting frequency.\n\nTomas wants to be extra careful before sending it to the client, so he sends the follow-up asking ChatGPT to re-check the explanations section for anything stated too confidently. It flags one line that implied the paid boost caused the whole engagement jump rather than just the top post, and softens it.\n\nHe adds the executive-summary follow-up, then sends the final report. Total time: about 30 minutes."
+    },
+    "smm-i3-campaign-visuals-ai-image": {
+      "placeholders": [
+        {
+          "name": "ONE SENTENCE, e.g. \"summer product launch, bright and energetic\"",
+          "what": "A single sentence naming the campaign and its overall mood — this is the anchor idea every visual in the set needs to share. Pull this from your campaign brief or come up with it based on what the campaign is actually promoting. A bad value is a vague word like 'fun'; a good value names what's being promoted plus 2-3 mood words.",
+          "examples": [
+            "fall sweater restock, cozy and warm-toned",
+            "back-to-school supply bundle, bright and organized-feeling",
+            "10-year anniversary sale, celebratory and a little nostalgic"
+          ]
+        },
+        {
+          "name": "YOUR EXACT COLORS/HEX CODES",
+          "what": "The literal hex codes or precise color names from your brand guidelines, not a general description like 'blue.' Find these in your brand style guide, past design files, or by asking whoever manages brand assets. A bad value is 'our brand colors'; a good value lists exact hex codes so every generated image actually matches, since both GPT Image 2 and Gemini's native generation can drift in color without this.",
+          "examples": [
+            "#2D5A3D (forest green), #F4E9D8 (cream), #C9622B (rust orange)",
+            "#1A1A2E (near-black navy), #E94560 (coral red), #FFFFFF (white) — no other colors allowed",
+            "#7C9885 (sage), #F7F3E9 (off-white), #3D3D3D (charcoal, text/dark elements only)"
+          ]
+        },
+        {
+          "name": "e.g., \"flat vector illustration style, bold color blocking, one clear subject, minimal detail, no gradients\"",
+          "what": "A precise description of the visual style ChatGPT or Gemini should render in, specific enough that you can paste this exact wording again for every future image and get a matching look. Base this on an existing brand style if one exists, or decide it now and treat it as fixed for the whole campaign. A bad value is 'nice looking image'; a good value names the rendering technique, level of detail, and what to avoid.",
+          "examples": [
+            "flat vector illustration style, bold color blocking, one clear subject, minimal detail, no gradients, no drop shadows",
+            "warm natural photography style, soft daylight, shallow depth of field, single product in focus, no studio lighting look",
+            "hand-drawn line art style, single-weight black outlines, one flat accent color fill, no shading, no background texture"
+          ]
+        },
+        {
+          "name": "WHAT SHOULD BE SHOWN",
+          "what": "The specific subject of this particular visual — what a viewer should see when they look at it. This changes for every image in the set even though the style and colors stay fixed. A bad value is something abstract like 'the brand feeling'; a good value describes a concrete subject and its pose or arrangement.",
+          "examples": [
+            "a single knit sweater laid flat at an angle, sleeve slightly folded",
+            "a backpack standing upright with a few school supplies spilling out beside it, arranged neatly",
+            "a birthday cake with a single lit candle, viewed from a slight overhead angle"
+          ]
+        },
+        {
+          "name": "FORMAT, e.g. \"a square 1:1 feed image\" / \"a vertical 9:16 story image\" / \"a wide banner\"",
+          "what": "The exact dimensions or aspect ratio and platform placement this specific image is for, since composition needs to change with the format — a story image needs vertical breathing room, a banner needs horizontal focal balance. Check this against where the image will actually be used, such as Instagram feed vs. Story vs. a website hero. A bad value is 'normal size'; a good value names the aspect ratio and its use.",
+          "examples": [
+            "a square 1:1 feed image",
+            "a vertical 9:16 story image",
+            "a wide 3:1 website banner"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Photography-style instead of illustration",
+          "whenToUse": "Use this when the brand's existing visual identity is photo-based rather than illustrated, and ChatGPT or Gemini needs to mimic a photographic look consistently.",
+          "prompt": "Generate a set of campaign visuals that need to look like one consistent campaign across formats, in a photographic style.\n\nCampaign theme: [ONE SENTENCE]\nBrand colors: [YOUR EXACT COLORS/HEX CODES]\nStyle description (I will reuse this exact wording for every format): [e.g., \"natural daylight photography, shallow depth of field, warm color grading, single product or subject in sharp focus, softly blurred background\"]\nSubject/concept for this visual: [WHAT SHOULD BE SHOWN]\n\nGenerate this as: [FORMAT], with a clear focal point and negative space suitable for a text overlay I'll add separately.\n\nAvoid: in-image text, any color cast outside my stated palette, studio-lighting look if I specified natural light, a different depth of field or angle than what I specified.\n\nAfter this one, I'll ask for the same style description in a different format/dimension — keep the style description identical each time so the set matches."
+        },
+        {
+          "label": "Quote/testimonial card with baked-in text",
+          "whenToUse": "Use this for a testimonial or quote graphic where the text is part of the visual design itself and needs to be generated or laid out as part of the image, not added afterward.",
+          "prompt": "Generate a quote/testimonial card graphic for this campaign.\n\nCampaign theme: [ONE SENTENCE]\nBrand colors: [YOUR EXACT COLORS/HEX CODES]\nStyle description (reuse this exact wording for every card in the set): [YOUR STYLE DESCRIPTION]\nQuote text to feature: [EXACT QUOTE TEXT AND ATTRIBUTION]\n\nGenerate this as: [FORMAT], designed with the quote text as the central visual element — clear, legible typography treatment consistent with the brand style, generous margins around the text, no competing imagery that would make the quote hard to read.\n\nAvoid: any color outside my stated palette, a busy background that reduces legibility, a different rendering style than specified.\n\nSince exact typography may not render perfectly, tell me if I should expect to need to redo the text in a design tool afterward, and if so, describe the background/layout in enough detail that I can recreate it."
+        },
+        {
+          "label": "Icon set for Highlight covers or small repeated motifs",
+          "whenToUse": "Use this when generating a small set of simple repeated icons, like Instagram Highlight covers, rather than full campaign scenes.",
+          "prompt": "Generate a set of simple icon-style images that need to look like one consistent set.\n\nBrand colors: [YOUR EXACT COLORS/HEX CODES]\nStyle description (I will reuse this exact wording for every icon): [e.g., \"single-line minimal icon, one color fill, centered on a plain circular background, no text, no shading\"]\nIcon subject for this one: [WHAT SHOULD BE SHOWN, e.g. \"a coffee cup\"]\n\nGenerate this as: a square 1:1 image sized for use as a small icon (will be cropped into a circle).\n\nAvoid: any color outside my stated palette, added background elements, inconsistent line weight from icon to icon, any text.\n\nAfter this one, I'll ask for more icons in the same set using this exact style description — keep it identical each time so the icons look like a matched set."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Fix an off-palette color",
+          "prompt": "The background came out in a color that's not in my palette. Regenerate this using only [YOUR EXACT COLORS/HEX CODES] — no other colors, including no unintended tints or gradients between them."
+        },
+        {
+          "label": "Improve negative space for text overlay",
+          "prompt": "There isn't enough clear, uncluttered space for me to add a text overlay afterward. Regenerate this with a larger area of flat negative space in the top third, keeping the subject and style otherwise the same."
+        },
+        {
+          "label": "Fix style drift from the rest of the set",
+          "prompt": "This one doesn't match the rendering style of the other images in this set — it looks more detailed and shaded than the flat, minimal look of the others. Regenerate it using exactly this style description again: [YOUR STYLE DESCRIPTION], matching the others as closely as possible."
+        },
+        {
+          "label": "Get focal-point options to choose from",
+          "prompt": "Generate 3 variations of this same image with different focal point placement or subject arrangement, keeping the same style description and color palette, so I can pick the one with the best composition."
+        }
+      ],
+      "walkthrough": "Renee is launching a plant-based snack brand's back-to-school campaign and needs a matching square feed image and vertical story image before the campaign goes live Monday.\n\nShe opens ChatGPT and pastes the lesson's prompt, since GPT Image 2 is her default for anything needing precise brand-color matching. Campaign theme: \"back-to-school snack bundle, bright and organized-feeling.\" Brand colors: \"#4A7C59 (green), #F2C14E (yellow), #FFFFFF (white).\" Style description: \"flat vector illustration style, bold color blocking, one clear subject, minimal detail, no gradients.\" Subject: \"a lunchbox open on a table with three snack bars arranged neatly inside.\" Format: \"a square 1:1 feed image.\"\n\nThe result mostly matches, but the background has a subtle gradient behind the lunchbox instead of a flat color, and a small doodle of a pencil that wasn't requested. Renee sends a follow-up: \"The background came out with a gradient, not flat color. Regenerate using only #4A7C59, #F2C14E, #FFFFFF — no gradients, and remove the pencil doodle.\" The correction fixes both issues.\n\nFor the story format, she considers switching to Gemini to try its conversational editing, but decides to stay in the same ChatGPT thread instead, since the lesson warns that switching tools mid-campaign risks drift even with the same wording. She pastes the identical style description and colors, changing only the format line to \"a vertical 9:16 story image\" and the subject to \"the same lunchbox, cropped closer with more empty space above for a headline.\" The result matches the feed image's style closely, but the focal point sits a little low.\n\nShe sends the negative-space follow-up, asking for more flat space in the top third. The revised version works. Total time for both finished visuals: about 15 minutes, most of it spent on the two correction rounds rather than the initial generation."
+    },
+    "smm-a1-multi-client-workflows": {
+      "placeholders": [
+        {
+          "name": "PASTE FOR EACH CLIENT: name, 3-5 tone words, phrases/words they never use, typical CTA style, any hard rules (e.g., \"never mentions competitors by name\")",
+          "what": "This is the actual voice profile for every client you manage, listed one after another — pulled from each client's brand guidelines, kickoff notes, or your own observations from past approved content. A bad value is one vague line per client like 'client A is friendly'; a good value gives each client a name, several specific tone words, banned words/phrases, how they like CTAs phrased, and any hard rule that would be a real problem if broken.",
+          "examples": [
+            "CLIENT: Northstar Dental. Tone: warm, reassuring, plainspoken, family-friendly, never clinical-sounding. Never use: 'procedure' (say 'visit' instead), never use fear-based language about pain. CTA style: soft, always frames booking as easy, e.g. 'grab a spot that works for you.' Hard rule: never post patient photos without a signed release on file.\n\nCLIENT: Ridgeline Outdoor Gear. Tone: rugged, confident, minimal, a little dry-humored. Never use: exclamation points, the word 'adventure' (overused in the category). CTA style: direct and short, e.g. 'shop the drop.' Hard rule: never mentions competitor brands by name, even to compare favorably.",
+            "CLIENT: Bloom & Co Florist. Tone: gentle, poetic but not overwrought, seasonal. Never use: 'affordable' or any price-focused language (positioned as premium). CTA style: invitational, e.g. 'stop by and see what's blooming.' Hard rule: always credit the specific flower variety by name, never just say 'flowers.'\n\nCLIENT: Vantage Legal Group. Tone: authoritative, calm, precise, zero humor. Never use: contractions (write 'do not' not 'don't'), never use emojis. CTA style: formal, e.g. 'contact our office for a consultation.' Hard rule: never state a legal outcome as guaranteed."
+          ]
+        },
+        {
+          "name": "PASTE FOR EACH CLIENT: what needs sign-off before posting, who approves it, typical turnaround",
+          "what": "The actual approval process for each client — what kind of content needs a human sign-off before it goes live, the specific person's name or role who approves it, and how long that usually takes. This comes from your contract or working agreement with each client, not a guess. A bad value is 'they like to review things'; a good value states exactly what needs approval, who the approver is by name/role, and a realistic turnaround time.",
+          "examples": [
+            "Northstar Dental: all posts need approval, approver is Dr. Patel (practice owner), turnaround usually 24 hours but can be 48 hours on weekends.\nRidgeline Outdoor Gear: only paid/promotional posts need approval, approver is Casey (marketing director), turnaround same-day usually.",
+            "Bloom & Co Florist: only posts mentioning pricing or promotions need approval, approver is owner Maritza, turnaround 1-2 days.\nVantage Legal Group: every single post needs approval before posting, approver is the managing partner's assistant Renee who routes it to the partner, turnaround 3-5 business days — plan ahead."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Two-client minimal starter version",
+          "whenToUse": "Use this when you're a freelancer just starting out with two clients and want a lighter system to build the habit before scaling to more accounts.",
+          "prompt": "Help me build a simple two-client system that prevents me from mixing up brand voice or missing approvals.\n\nMy two clients and their voice profiles:\n[PASTE FOR EACH CLIENT: name, 3-5 tone words, phrases/words they never use, typical CTA style, any hard rules]\n\nApproval requirements per client:\n[PASTE FOR EACH CLIENT: what needs sign-off, who approves it, typical turnaround]\n\nBuild just three things, kept as simple as possible since I'm doing this solo: (1) a one-page voice card per client, identical format for both so I can compare at a glance, (2) one standing rule to put at the top of every prompt I write — always name the exact client first and check the draft against their card before sending anything, and (3) a 5-item pre-send checklist starting with confirming which client this is for. Don't build an approval-tracking system yet — I don't need it with just two clients."
+        },
+        {
+          "label": "Adding a new client to an existing system",
+          "whenToUse": "Use this once the system already exists and you're onboarding one additional client, so you extend the system instead of rebuilding it from scratch.",
+          "prompt": "I already have a multi-client voice-card and approval-tracking system for my other clients. I'm adding one new client and want their card and approval entry to match the existing format exactly.\n\nHere's the format my existing voice cards use: [PASTE ONE EXISTING VOICE CARD AS A TEMPLATE EXAMPLE]\n\nNew client's voice profile: [PASTE: name, 3-5 tone words, phrases/words they never use, typical CTA style, any hard rules]\nNew client's approval requirements: [PASTE: what needs sign-off, who approves it, typical turnaround]\n\nBuild a voice card for this new client in the exact same format/structure as my existing one, and a new row/entry for my approval-tracking log in the same format. Also tell me if anything about this client's voice is similar enough to one of my other clients that I should add an explicit contrast note to avoid mixing them up — [NAME YOUR OTHER SIMILAR CLIENT(S) IF ANY]."
+        },
+        {
+          "label": "Managing multiple owned brands instead of agency clients",
+          "whenToUse": "Use this if you're not an agency managing external clients but you personally run more than one brand or page, such as a personal brand plus a side business, and need the same mix-up prevention.",
+          "prompt": "Help me build a system that prevents me from mixing up voice or missing steps across the multiple brands/pages I personally run.\n\nMy brands and their voice profiles:\n[PASTE FOR EACH BRAND: name, 3-5 tone words, phrases/words never used, typical CTA style, any hard rules]\n\nMy own review process per brand (since I'm approving my own content, this is about catching mistakes, not client sign-off):\n[PASTE FOR EACH BRAND: what you personally double-check before posting, e.g. \"always re-read against the voice card,\" \"check I didn't cross-post the wrong brand's content to the wrong account\"]\n\nBuild: (1) a one-page voice-profile reference card per brand, identical format across all so I can compare quickly, (2) a standing rule to put at the top of every prompt — always name which brand this is for before asking for content, (3) a pre-send checklist starting with confirming which brand's account I'm about to post to, since cross-posting to the wrong account is my biggest real risk, and (4) a simple log format to track what's drafted, posted, and when per brand. Keep all of it simple enough I'll actually use it daily."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Add a new client without rebuilding everything",
+          "prompt": "I'm adding a new client called [CLIENT NAME]. Here's their voice profile and approval process: [PASTE VOICE PROFILE AND APPROVAL DETAILS]. Build just their voice card and approval-log entry in the exact same format as the others above — don't change the format of my existing clients' cards."
+        },
+        {
+          "label": "Make the voice cards more scannable",
+          "prompt": "These voice cards are a little too long for me to scan quickly when I'm switching between clients fast. Condense each one to fit in about 8-10 lines max, keeping the tone words, banned phrases, CTA style, and hard rules, but tightening the wording."
+        },
+        {
+          "label": "Flag clients whose voices could get confused with each other",
+          "prompt": "Look at all the voice cards you've built and tell me which clients have similar enough tone words or styles that I could realistically mix them up under time pressure. For those specific pairs, add a short 'don't confuse with X' contrast note to each card."
+        },
+        {
+          "label": "Turn the approval log into a reusable weekly template",
+          "prompt": "Turn the approval-tracking format into a blank weekly template I can copy and reuse every week, with the client names already filled in as row headers and empty cells for status, date, and notes."
+        }
+      ],
+      "walkthrough": "Dana is a freelance social media manager with four clients — a dental practice, an outdoor gear brand, a florist, and a law firm — and last month she accidentally posted a casual, joke-filled caption meant for the outdoor brand onto the law firm's account before catching it in the scheduler. She wants a system that makes that impossible going forward.\n\nShe opens Claude and pastes the lesson's prompt. In the first bracket she pastes four short profiles, one per client: name, tone words, banned phrases, CTA style, and hard rules — for the law firm, she includes 'never use contractions, never state a legal outcome as guaranteed.' In the second bracket she pastes each client's approval process: who signs off and how long it takes, noting the law firm needs 3-5 business days because it routes through a partner's assistant.\n\nClaude returns four identically formatted one-page voice cards, a standing rule to paste at the top of every future prompt ('always name the exact client before asking for content'), a five-item pre-send checklist starting with 'confirm which client this is for and open their voice card,' and a simple table for tracking draft, approved, and posted status per client.\n\nReading it over, Dana realizes two of her clients — the florist and the dental practice — both use a 'warm and gentle' tone, which is exactly the kind of pair she could mix up. She sends the follow-up asking Claude to flag confusable clients and add contrast notes. Claude adds a line to each card: 'Bloom & Co is poetic and seasonal; Northstar Dental is plainspoken and reassuring — don't blend the two.'\n\nShe pins all four cards and the checklist in a doc she reuses daily. Total time: about 25 minutes."
+    }
+  }
+}

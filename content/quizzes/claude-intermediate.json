@@ -1,0 +1,424 @@
+{
+  "quizzes": {
+    "claude-i1-on-brand-project": [
+      {
+        "q": "A marketer sets up a Claude Project and describes voice only as 'professional but friendly' in the custom instructions, without uploading any sample documents. What's the most likely effect on outputs?",
+        "options": [
+          "The talking points and drafts will likely become more generic, since adjectives alone don't pin down tone as precisely as real writing samples do",
+          "Claude will refuse to respond until adjectives are replaced with samples",
+          "Claude will randomly alternate between several tones in the same draft",
+          "Claude will default to a neutral corporate voice automatically regardless of the instructions given"
+        ],
+        "answer": 0,
+        "why": "The lesson's core point is that adjectives are interpreted generically while uploaded examples pin down tone precisely — this is exactly the commonMistakes trap of describing voice without providing samples."
+      },
+      {
+        "q": "A colleague reviews a Project's output and finds Claude confidently stated a specific discount percentage that was never given to it anywhere in the chat or knowledge files. Which guardrail was missing from the custom instructions?",
+        "options": [
+          "A stricter word-count limit",
+          "A hard rule telling Claude to ask instead of guessing when a needed fact isn't in the project knowledge or the message",
+          "A longer list of banned words and phrases",
+          "More uploaded brand samples, with no change to the rules"
+        ],
+        "answer": 1,
+        "why": "The lesson's anti-invention rule ('ask me instead of guessing') exists specifically to stop Claude from fabricating facts like prices or features in customer-facing copy — a listed commonMistake when it's left out."
+      },
+      {
+        "q": "During testing, a vague one-line request inside a Project produces a draft that drifts from the uploaded brand samples. What does the lesson say is the correct way to fix this?",
+        "options": [
+          "Correct the output inside that same chat every time it drifts",
+          "Switch to a different target audience in the prompt",
+          "Update the project's custom instructions instead of the chat, since chat-level fixes are lost but instruction-level fixes are permanent",
+          "Remove the uploaded sample documents and rely on adjectives instead"
+        ],
+        "answer": 2,
+        "why": "The workflow explicitly says to fix drift at the instruction level, not inside individual chats, because chat-level corrections don't carry over to future conversations."
+      }
+    ],
+    "claude-i2-multi-document-analysis": [
+      {
+        "q": "A user uploads three vendor proposals to Claude and simply types 'summarize these files.' Based on the lesson, what is the most likely result?",
+        "options": [
+          "Claude will ask which decision the comparison should support before responding",
+          "Claude will automatically produce a structured conflicts table",
+          "Claude will refuse to respond since the files weren't explicitly framed as a comparison",
+          "Claude will likely produce three separate, polite standalone summaries with no real cross-referencing between the documents"
+        ],
+        "answer": 3,
+        "why": "The lesson's top commonMistake is exactly this: asking to 'summarize' without a comparison structure yields sequential summaries instead of genuine cross-referencing, which the prompt's explicit agreements/conflicts/gaps structure is designed to prevent."
+      },
+      {
+        "q": "While comparing two contract drafts, one document specifies liability insurance limits and the other two say nothing about it at all. How should a well-built reconciliation handle this?",
+        "options": [
+          "Flag it explicitly in a gaps section, since silence in the other documents is not the same as agreement",
+          "Treat the silence as implicit agreement that no insurance limits apply",
+          "Leave the topic out of the analysis since only one document raises it",
+          "Average the positions across all three documents"
+        ],
+        "answer": 0,
+        "why": "The prompt explicitly instructs 'silence is not agreement' — points one document covers while others are silent must be flagged as gaps, not smoothed over or ignored."
+      },
+      {
+        "q": "Claude produces a reconciliation table and a recommendation from three overlapping documents. What should the user do before acting on the recommendation for a decision that matters?",
+        "options": [
+          "Trust the recommendation fully, since attribution rules were already applied",
+          "Spot-check two or three attributed claims against the original documents before relying on the analysis",
+          "Ask Claude to delete the conflicts section since it complicates the recommendation",
+          "Re-upload the same documents again to confirm the output repeats"
+        ],
+        "answer": 1,
+        "why": "The lesson stresses that attribution makes claims checkable but doesn't make them verified — the user remains responsible for spot-checking accuracy before relying on the synthesis for a real decision."
+      }
+    ],
+    "claude-i3-build-artifacts": [
+      {
+        "q": "A freelancer asks Claude to 'make me a pricing tool' without providing exact rates or rules. What is the likely outcome?",
+        "options": [
+          "Claude will leave the pricing fields blank for the user to fill in later",
+          "Claude will refuse to build the tool until exact numbers are supplied",
+          "Claude will invent plausible-looking rates and structure, so the user ends up spending more time un-guessing than they saved",
+          "The tool will default to a generic industry-standard pricing template"
+        ],
+        "answer": 2,
+        "why": "The lesson warns that vague briefs lead Claude to fill gaps with plausible invented numbers, which is exactly the failure mode the 'use these exact numbers, do not invent your own' instruction is designed to prevent."
+      },
+      {
+        "q": "A colleague looks at a newly built quote calculator artifact, says it looks clean and professional, and approves it without ever entering test values. What risk does this create?",
+        "options": [
+          "No risk, since polished styling reflects thorough business logic underneath",
+          "Artifacts built with Claude cannot contain logic errors since they run real code",
+          "The risk described only applies to static documents, not interactive artifacts",
+          "Polished styling can hide a broken calculation, such as a discount rule, so the tool needs to actually be tested with realistic and edge-case inputs, not just looked at"
+        ],
+        "answer": 3,
+        "why": "The lesson's commonMistakes explicitly call out judging an artifact by its looks: 'polished styling routinely hides a broken discount rule,' which is why the workflow requires entering realistic values and edge cases."
+      },
+      {
+        "q": "A user wants ten changes made to an artifact and sends them all in one message. Afterward the layout is broken and they can't tell which request caused it. What does the lesson recommend instead?",
+        "options": [
+          "Batch 2-3 changes at a time, referring to specifically what's wrong, so it's clear which change caused which effect",
+          "Request all ten changes in one message for efficiency",
+          "Start a brand-new chat from scratch since a feature misbehaved",
+          "Only ever use in-place highlighted edits and never describe changes in a message"
+        ],
+        "answer": 0,
+        "why": "The lesson explicitly warns against requesting many changes in one message because it becomes impossible to isolate what broke, and recommends batching 2-3 changes at a time instead."
+      }
+    ],
+    "claude-i4-claude-skills": [
+      {
+        "q": "One custom skill has the description 'helps with client communication.' Another has 'Use when I ask to turn project notes into a client-facing status update.' What's the practical difference?",
+        "options": [
+          "There's no practical difference — Claude treats both descriptions the same way",
+          "The precise description means the skill reliably activates for the intended request, while the vague one triggers on everything or nothing, since the description is what Claude matches against",
+          "The precise description restricts the skill to certain team members only",
+          "The vague description makes the skill run faster but less accurately"
+        ],
+        "answer": 1,
+        "why": "The lesson's explanation states the one-line description is the single highest-leverage sentence because Claude decides whether to load a skill by matching requests against it — a vague description is a named commonMistake that causes unreliable activation."
+      },
+      {
+        "q": "Someone tries to package a workflow as a Claude Skill for a process they have never actually run manually with Claude before. What problem is this likely to cause?",
+        "options": [
+          "No problem — Claude will infer the correct process from context anyway",
+          "The skill will simply trigger too often as a result",
+          "They risk encoding guesses into the skill and end up debugging both the underlying process and the packaging at the same time",
+          "Nothing changes, since skills work equally well for brand-new, unproven workflows"
+        ],
+        "answer": 2,
+        "why": "The lesson's beforeYouStart and commonMistakes both stress picking a workflow already done manually at least twice — building a skill on an unstabilized process means debugging the process and the packaging simultaneously."
+      },
+      {
+        "q": "A skill's output consistently follows the right template and rules, but it fails to activate when the user phrases requests naturally on a busy day. Per the lesson, what should be fixed?",
+        "options": [
+          "Rewrite the output template even though the format is already correct",
+          "Add more hard rules to the procedure section",
+          "Cram additional example outputs into the procedure text",
+          "Sharpen the trigger language in the one-line description, since activation problems point to the description, not the procedure or template"
+        ],
+        "answer": 3,
+        "why": "The lesson explicitly says to 'fix failures at the right layer': activation problems mean the description needs sharper trigger language, while output problems mean the procedure or template needs work."
+      }
+    ],
+    "claude-i5-deep-research-briefs": [
+      {
+        "q": "A consultant types 'research the refurbished electronics market' as a one-line request instead of writing a structured brief. What's the likely result compared to using a brief?",
+        "options": [
+          "A generic overview aimed at no particular decision, since there's no scope, key questions, or deliverable format directing the research",
+          "Confidence labels applied automatically regardless of prompt structure",
+          "Claude will still ask for a research plan and wait for approval by default",
+          "A decision-ready, cited report just as useful as one produced from a structured brief"
+        ],
+        "answer": 0,
+        "why": "This is the lesson's named commonMistake: a one-line question produces a generic overview aimed at no decision, which is precisely why the brief anchors every search to a stated decision and key questions."
+      },
+      {
+        "q": "Why does the research brief require labeling each major finding as WELL-ESTABLISHED, SINGLE-SOURCE, or UNCERTAIN?",
+        "options": [
+          "The labels are required to satisfy citation-formatting software",
+          "Without them, a claim sourced from a single press release would read just as authoritative as one confirmed by three independent official sources",
+          "The labels exist to replace the need for scope boundaries in the brief",
+          "The labels are a purely cosmetic formatting requirement with no effect on how findings are read"
+        ],
+        "answer": 1,
+        "why": "The lesson calls confidence labels the 'professional-grade element' precisely because they turn uniform-sounding prose into a map of strong versus weak evidence, preventing thin sourcing from masquerading as solid fact."
+      },
+      {
+        "q": "The brief asks Claude to show a 5-line research plan and wait for approval before actually researching. Why is this checkpoint valuable?",
+        "options": [
+          "It's required by Claude's usage terms before any web search can run",
+          "It guarantees more total sources will be found",
+          "It lets the user steer or correct the research's direction and sequencing cheaply, before a full research run has already happened",
+          "It speeds up the research since Claude skips a planning step afterward"
+        ],
+        "answer": 2,
+        "why": "The lesson explains the plan-first checkpoint 'costs one message and routinely saves the whole run' — it's a cheap chance to catch a wrong direction before twenty minutes of reading happens."
+      }
+    ],
+    "claude-i6-advanced-prompting-contracts": [
+      {
+        "q": "In the support-triage prompt, why does the reasoning order require checking churn-risk signals and identifying the owning team BEFORE assigning severity?",
+        "options": [
+          "It's purely a formatting convention with no effect on the actual answer",
+          "The order doesn't matter — only the fields in the output contract matter",
+          "Severity must always be assessed first under standard support frameworks",
+          "Without an enforced order, severity tends to get decided first from surface tone and rationalized afterward, missing signals like churn risk that should inform it"
+        ],
+        "answer": 3,
+        "why": "The lesson's explanation states that without the reasoning order, 'severity gets decided first from surface tone and rationalized afterward' — the mandated order forces evaluation before conclusion."
+      },
+      {
+        "q": "A triage prompt has a SEVERITY field with no enumerated allowed values and no rule for handling missing information. What problem is likely to emerge across dozens of processed tickets?",
+        "options": [
+          "Outputs drift in format — e.g. 'fairly high', '7/10', 'significant' — and missing information tends to get filled in with confident-sounding guesses instead of being flagged",
+          "Nothing changes, since Claude infers a single consistent style on its own",
+          "Claude refuses to output anything without enumerated values defined",
+          "The output remains just as machine-readable regardless of enumerated values"
+        ],
+        "answer": 0,
+        "why": "This is drawn directly from the lesson's commonMistakes: open-ended fields produce inconsistent phrasing across runs, and missing a defined 'UNKNOWN' behavior means gaps get filled with plausible-looking guesses."
+      },
+      {
+        "q": "Why does the lesson include one fully worked example in the prompt rather than relying on prose description of the desired format alone?",
+        "options": [
+          "Examples only affect style, never the structure of the response",
+          "A worked example resolves ambiguities that instructions alone leave open, and demonstrates edge cases — like two requests packed into one message — better than a paragraph of rules could",
+          "The only benefit of an example is that it shortens the prompt",
+          "A worked example removes the need for an output contract entirely"
+        ],
+        "answer": 1,
+        "why": "The lesson states a worked example 'resolves every ambiguity the instructions leave' and teaches more than prose description, such as handling a message that mixes two different requests."
+      }
+    ],
+    "claude-i7-meetings-to-decisions": [
+      {
+        "q": "In a meeting transcript, Maria talked extensively about design work but never explicitly agreed to own any resulting action item. How should the extraction handle ownership of that item?",
+        "options": [
+          "Assign the action item to Maria, since she discussed the topic the most",
+          "Assign it to whoever spoke last on that topic",
+          "Mark it UNASSIGNED rather than inferring ownership, since talking about work and actually committing to own it are different things",
+          "Drop the item from the list entirely since no owner was stated"
+        ],
+        "answer": 2,
+        "why": "The lesson explicitly warns against inferring owners from who spoke most, since 'talking about work and committing to it are different things' — this is precisely the failure the UNASSIGNED rule guards against."
+      },
+      {
+        "q": "Why does the prompt require each extracted decision to include a quote or reference to where it was made in the conversation?",
+        "options": [
+          "It's purely a formatting nicety with no practical effect",
+          "It's required to keep the summary length balanced across sections",
+          "It helps Claude generate fewer attendee names in the output",
+          "It makes the record auditable — anyone who remembers a decision differently can check the actual source instead of arguing from memory"
+        ],
+        "answer": 3,
+        "why": "The lesson's explanation says requiring a quote or reference 'makes the record auditable — anyone who remembers differently checks the source, not their memory.'"
+      },
+      {
+        "q": "The extraction returns a NEEDS CLARIFICATION item: someone said 'we should probably drop the video hero,' met only with 'mm-hm.' What should the project manager do with this before sending the follow-up?",
+        "options": [
+          "Resolve it with a human judgment call — for example, confirming directly with the person who made the comment — before treating it as settled",
+          "Auto-categorize it as a confirmed decision since it was said out loud in the meeting",
+          "Delete the item from the notes since it's too ambiguous to be useful",
+          "Treat it as an action item with no owner and no deadline"
+        ],
+        "answer": 0,
+        "why": "The lesson states NEEDS CLARIFICATION items exist because they need a human judgment call, and warns against sending the follow-up without reading and resolving that section."
+      }
+    ],
+    "claude-i8-outline-first-longform": [
+      {
+        "q": "Why does the outline-first workflow make fixing a weak argument cheaper than catching it after a full draft is written?",
+        "options": [
+          "Outlines and finished drafts take about the same effort to restructure",
+          "Reordering or cutting bullet points in an outline takes seconds, while restructuring already-written prose takes much longer and often just doesn't happen",
+          "Claude cannot revise prose it has already drafted, only outlines",
+          "Outlines are required to satisfy a hard word-count limit"
+        ],
+        "answer": 1,
+        "why": "The lesson's explanation states directly that 'reordering bullets takes seconds; restructuring finished prose takes an hour and usually doesn't happen' — this is the core rationale for outline-first drafting."
+      },
+      {
+        "q": "After the outline is approved, a writer requests all remaining sections in a single message instead of one at a time. What problem does this recreate?",
+        "options": [
+          "No problem, since the outline was already approved before drafting began",
+          "The piece ends up too short to meet the target length",
+          "It quietly recreates single-shot drafting and its drift — repeated points, a sagging middle, a conclusion mismatched to the intro — since no section gets reviewed before the next is written",
+          "All [VERIFY] flags disappear from the draft"
+        ],
+        "answer": 2,
+        "why": "This is a listed commonMistake: requesting all sections at once after outline approval 'quietly recreates single-shot drafting and its drift,' defeating the purpose of section-by-section review."
+      },
+      {
+        "q": "All sections have been drafted individually and corrected along the way. What step does the lesson say is still necessary before calling the piece done, and why?",
+        "options": [
+          "Nothing further, since each section was already individually approved",
+          "Only a check that the total word count matches the target",
+          "Re-running the outline stage from scratch",
+          "A whole-piece consistency pass, because section-by-section drafting is precisely what creates cross-section repetition and drift, and only reading the full piece catches it"
+        ],
+        "answer": 3,
+        "why": "The lesson explicitly states that shipping without the consistency pass is a mistake because 'section-by-section work is precisely what creates cross-section repetition, and only a whole-piece read catches it.'"
+      }
+    ],
+    "claude-i9-csv-to-executive-summary": [
+      {
+        "q": "A user uploads a CSV and immediately asks Claude to 'find interesting insights,' skipping the profiling phase. What risk does this create?",
+        "options": [
+          "The entire analysis risks being built on duplicate rows, misread columns, or other unnoticed data-quality problems",
+          "No risk, since the analysis tool automatically cleans data before computing anything",
+          "The only downside is a slower runtime for the analysis",
+          "The charts produced will simply lack descriptive titles"
+        ],
+        "answer": 0,
+        "why": "The lesson's commonMistakes warn that skipping profiling means 'building the entire analysis on duplicates or misread columns' — issues that profiling exists specifically to surface before analysis begins."
+      },
+      {
+        "q": "During profiling, Claude flags a set of numeric outliers in a sales dataset. Who should decide whether these are data errors or the business's most important customers?",
+        "options": [
+          "Claude should decide automatically using a standard statistical threshold",
+          "The user — whether outliers are data errors or the most important customers is a business judgment call, not something to let Claude silently decide",
+          "Whichever choice keeps the most rows in the dataset",
+          "The analysis tool's built-in default outlier detector"
+        ],
+        "answer": 1,
+        "why": "The lesson states plainly that letting Claude silently choose how to handle outliers is a mistake because 'those are business decisions that belong to you and to the caveats section.'"
+      },
+      {
+        "q": "Claude's executive summary reports that two product categories drive 71% of net revenue, with every number traced to executed code. Before circulating the summary, what should the user still do?",
+        "options": [
+          "Trust the numbers fully, since they came from executed code and need no further check",
+          "Ask Claude to re-run the identical computation a second time for reassurance",
+          "Sanity-check one or two headline numbers against the raw file or an independent calculation before circulating the summary",
+          "Remove the specific numbers from the summary to avoid any risk of an error"
+        ],
+        "answer": 2,
+        "why": "The lesson's final step and commonMistakes both stress spot-checking a headline number independently before circulating — traceable computation makes this easy, which is exactly why skipping it is called inexcusable."
+      }
+    ],
+    "claude-i10-memory-conversation-strategy": [
+      {
+        "q": "A user working on a multi-week project keeps re-pasting the same client background into every new chat instead of using a Project. What does the lesson recommend instead?",
+        "options": [
+          "Keep pasting it into each new chat, since that's what refreshes what Claude remembers",
+          "Rely exclusively on Claude's automatic memory feature instead of using Projects at all",
+          "Consolidate everything into one long-running mega-chat instead of separate chats",
+          "Put durable facts into the Project's custom instructions or knowledge once, rather than retyping the same background into every new chat"
+        ],
+        "answer": 3,
+        "why": "This is a direct commonMistake in the lesson: 'pasting the same background into every new chat instead of putting it in project instructions once — re-typing what persistence should handle.'"
+      },
+      {
+        "q": "Why does the lesson recommend one-chat-per-task rather than a single long-running mega-chat for a project spanning several weeks?",
+        "options": [
+          "Small, focused chats keep context sharp and findable by title, while a mega-chat buries earlier decisions beyond practical retrieval",
+          "Claude enforces a strict per-chat message limit that forces this habit",
+          "Multiple smaller chats process noticeably faster than one long chat",
+          "A mega-chat is technically incompatible with being inside a Project"
+        ],
+        "answer": 0,
+        "why": "The lesson explains that a mega-chat leaves 'early decisions... buried' and that small chats 'keep context sharp and make past work findable by title.'"
+      },
+      {
+        "q": "The lesson recommends periodically reading and editing the Claude memory summary in Settings. Why does this matter?",
+        "options": [
+          "Memory summaries are wiped automatically every week, so editing has no lasting effect",
+          "Stale or wrong entries in the memory summary silently shape future answers, so pruning it — like removing a preference from a finished past project — is real maintenance",
+          "Editing the memory summary is a prerequisite for creating a Project",
+          "Memory summary edits only ever affect the current open chat"
+        ],
+        "answer": 1,
+        "why": "The lesson states this summary 'silently shapes future answers, so curating it is maintenance, not housekeeping,' and gives the example of a stale preference from a past client coloring new suggestions."
+      }
+    ],
+    "claude-i11-quality-control-verification": [
+      {
+        "q": "A user adds 'and double-check everything' to the end of their drafting prompt instead of running a separate review pass afterward. What's the problem with this approach?",
+        "options": [
+          "No issue — this is functionally equivalent to running a separate review pass",
+          "It makes the resulting draft noticeably shorter",
+          "A generator grading itself in the middle of generation does both jobs worse; a dedicated review pass with its own checklist catches substantially more",
+          "It removes the need for any grounding rules in the drafting prompt"
+        ],
+        "answer": 2,
+        "why": "The lesson's commonMistakes state directly that 'a dedicated pass with a checklist finds substantially more' than bundling review into the drafting prompt, since generation and fault-finding are different cognitive jobs."
+      },
+      {
+        "q": "The review prompt asks Claude to act as a skeptical CFO or opposing counsel rather than simply 'check this please.' Why does this framing matter?",
+        "options": [
+          "The adversarial role is only meant to change the tone of the feedback, not its substance",
+          "Role-play mainly speeds up how quickly the review pass runs",
+          "It eliminates the need for the human to check anything afterward",
+          "An adversarial role reliably surfaces problems — like a claim that CONTRADICTS the source — that a plain 'check this please' review pass tends to smooth over"
+        ],
+        "answer": 3,
+        "why": "The lesson explains that 'a fresh pass with an adversarial role reliably surfaces problems the drafting pass smoothed over,' distinguishing genuine scrutiny from mere reassurance."
+      },
+      {
+        "q": "A lawyer's self-review pass on a settlement letter comes back clean except for one flagged discrepancy in a payment deadline. What should happen with that specific claim before the letter is sent?",
+        "options": [
+          "A human should still independently verify that specific claim against the source document, since the self-review shows where to look but doesn't substitute for a human check on exact dates or commitments",
+          "Nothing further is needed, since the clean self-review already confirmed grounding",
+          "Run the exact same review prompt a second time for extra confidence",
+          "Ask Claude to rewrite the draft instead of verifying the underlying facts"
+        ],
+        "answer": 0,
+        "why": "The lesson's verification hierarchy holds that exact numbers, dates, and legal commitments still need a human check even after a clean review — the review tells you where to look, not a substitute for looking."
+      }
+    ],
+    "claude-i12-cross-platform-workflow": [
+      {
+        "q": "Why does the lesson recommend routing quick idea capture to mobile and document-heavy analysis to desktop or web, rather than always using whichever surface is closest at hand?",
+        "options": [
+          "The mobile app simply has more features overall than the desktop app",
+          "Each surface fits different moments — quick capture on the move versus document- and screen-heavy deep work — and defaulting to whichever surface is nearest out of habit is exactly why cross-surface workflows fail to click",
+          "Desktop cannot access Projects, so mobile has to be used for anything project-related",
+          "There's no real functional difference between the surfaces; routing is purely cosmetic"
+        ],
+        "answer": 1,
+        "why": "The lesson's commonMistakes state that 'using whichever surface is nearest for everything... routing is a decision, not a default' — each surface exists for different moments in the workflow."
+      },
+      {
+        "q": "A user keeps a banking tab open in the same Chrome window while running Claude in Chrome on other tabs. What risk does the lesson highlight here?",
+        "options": [
+          "No risk, since Claude in Chrome is architecturally unable to read content in other open tabs",
+          "The risk described only applies to mobile browsing, not desktop Chrome",
+          "Prompt injection from untrusted page content combined with proximity to a sensitive, logged-in account is the documented risk — keeping sensitive tabs out of active Claude sessions is the discipline that addresses it",
+          "The risk disappears automatically the moment site permissions are granted"
+        ],
+        "answer": 2,
+        "why": "The lesson explicitly names prompt injection via malicious page content as 'the documented risk' and instructs keeping sensitive-account tabs out of sessions where Claude is active."
+      },
+      {
+        "q": "According to the lesson, how should a new Claude in Chrome user approach granting site-level permissions?",
+        "options": [
+          "Grant broad access to all sites immediately for maximum convenience",
+          "Permissions are applied automatically based on prior browsing history",
+          "Permissions must be manually re-granted every single session no matter the settings",
+          "Start narrow — grant access deliberately to the handful of sites where browser help pays off most — and expand permissions gradually as trust builds"
+        ],
+        "answer": 3,
+        "why": "The lesson's steps and commonMistakes both emphasize starting narrow with permissions and expanding as trust builds, warning specifically against granting broad access on day one."
+      }
+    ]
+  }
+}

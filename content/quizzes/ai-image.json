@@ -1,0 +1,284 @@
+{
+  "quizzes": {
+    "img-b1-first-effective-image-prompts": [
+      {
+        "q": "You're generating a hero image for a bakery website in ChatGPT and write: \"a nice photo of a bakery, professional, beautiful.\" What's the most likely problem with this prompt?",
+        "options": [
+          "The adjectives \"professional\" and \"beautiful\" have no concrete visual meaning for the model to render, so it produces a generic, unusable result",
+          "It doesn't specify the aspect ratio for the website format",
+          "It is missing only the mood/color palette element",
+          "ChatGPT requires exact camera brand names to work correctly"
+        ],
+        "answer": 0,
+        "why": "\"Beautiful\" and \"professional\" describe no renderable scene, so the model has to guess — while concrete nouns and camera language like \"medium shot, eye level, golden-hour side lighting\" describe something it can actually draw."
+      },
+      {
+        "q": "Your first generation in Gemini is close, but the lighting is flat and wrong. Per the lesson's iteration approach, what should you do next?",
+        "options": [
+          "Start a new chat and rewrite the whole prompt from scratch to be safe",
+          "Reply in the same conversation asking it to fix only the lighting line and regenerate to test the change in isolation",
+          "Immediately request the highest-resolution export, then fix the lighting afterward",
+          "Abandon the prompt and try a different app entirely"
+        ],
+        "answer": 1,
+        "why": "Isolating one change per pass, in the same conversation, lets you see exactly which phrase caused which visual result, while starting over and rewriting the whole prompt throws away everything that was already working."
+      },
+      {
+        "q": "You generate an image for Instagram Stories in ChatGPT or Gemini but forgot to state an aspect ratio in the prompt. What's the likely consequence?",
+        "options": [
+          "The model automatically infers the correct crop for your intended platform",
+          "This only matters for print work, not digital platforms",
+          "You'll likely have to crop or regenerate to fit the destination platform, wasting a cycle",
+          "It has no impact, since both tools default to a 9:16 vertical format"
+        ],
+        "answer": 2,
+        "why": "Naming the destination format up front is part of the fixed prompt structure specifically because skipping it forces a wasted regeneration or crop to fix the mismatch."
+      }
+    ],
+    "img-b2-choose-the-right-image-tool": [
+      {
+        "q": "A client needs a poster with a legible headline baked directly into the image. Which tool should you lead with?",
+        "options": [
+          "Gemini, because it's tied into Google Workspace",
+          "Either tool — text rendering is identical between them for this kind of job",
+          "ChatGPT (GPT Image 2), since it leads on prompt adherence and text rendering",
+          "Whichever tool happens to be open on your screen right now"
+        ],
+        "answer": 2,
+        "why": "GPT Image 2 in ChatGPT is a reasoning-based model that plans text layout before rendering and leads on prompt adherence and text rendering — exactly what a headline-driven poster needs."
+      },
+      {
+        "q": "You're building an infographic that needs to slot directly into a Google Slides deck you're already editing. Which factor should most influence your tool choice?",
+        "options": [
+          "Gemini's integration with Google Workspace and its strength at infographics and diagrams",
+          "Whichever tool has the flashier marketing",
+          "Whichever tool is cheapest per generation",
+          "ChatGPT, since it's always the safer default regardless of context"
+        ],
+        "answer": 0,
+        "why": "Gemini is best-in-class for infographics and diagrams and integrates directly with Google Workspace, making it the natural fit when the deliverable is already living inside a Google Slides deck."
+      },
+      {
+        "q": "A marketer always uses ChatGPT because that's the account they already have open, even for a project that's an infographic already being built in Google Slides. What's the mistake here?",
+        "options": [
+          "This is the correct approach — consistency matters most",
+          "Defaulting to the familiar tool even though the job needs strengths the other tool provides",
+          "Using both tools would be a bigger mistake than sticking with one",
+          "None — the lesson recommends always defaulting to ChatGPT"
+        ],
+        "answer": 1,
+        "why": "The lesson's core guardrail is matching the job's actual requirements to the tool's real strengths, not defaulting to whatever's already open regardless of fit."
+      }
+    ],
+    "img-b3-iterate-refine-vary-upscale": [
+      {
+        "q": "A product flat-lay generated in ChatGPT has the right composition and lighting, but a distracting background. What's the best next step?",
+        "options": [
+          "Start a new chat and regenerate entirely with a brand-new prompt",
+          "Request the highest-quality export immediately, then fix the background afterward",
+          "Reply in the same conversation with a targeted refinement stating exactly what to change and what to preserve",
+          "Generate 10 fresh attempts in a new chat hoping one has the right background"
+        ],
+        "answer": 2,
+        "why": "Naming what to change alongside what to preserve, in the same conversation, is what stops a small fix from becoming a full re-roll that discards the composition and lighting you already liked."
+      },
+      {
+        "q": "Why does the recommended workflow save the highest-resolution export for the very last step?",
+        "options": [
+          "Exporting at high resolution is free, so timing doesn't matter",
+          "Exporting first actually improves the model's ability to iterate further",
+          "Both tools disable further edits after any export",
+          "Requesting the highest quality only once, on a version you've already confirmed is right, avoids wasting the step on a draft you'll discard"
+        ],
+        "answer": 3,
+        "why": "Requesting the final quality pass early just locks flaws in; doing it last means you only pay that cost once, on the finalized keeper."
+      },
+      {
+        "q": "You generate several variations of a keeper image in Gemini but start a brand-new chat instead of continuing the same conversation. What problem does this create, per the lesson?",
+        "options": [
+          "It makes returning to the keeper image and requesting another variation harder, since the tool loses the image as context",
+          "Starting a new chat always improves image quality",
+          "You only ever need to save the final exported image, so this doesn't matter",
+          "Variations automatically transfer between chats, so this is never a problem"
+        ],
+        "answer": 0,
+        "why": "Keeping the whole iteration in one conversation is what lets you return to a keeper image later for another variation; starting a new chat loses that context."
+      }
+    ],
+    "img-i1-product-photos-and-mockups": [
+      {
+        "q": "You generate a product photo of a candle in ChatGPT and notice the model added a label design that doesn't exist on the real product. What should you do?",
+        "options": [
+          "Trust the AI, since it usually gets branding right",
+          "Compare every generated image against the real product and reject any version that invents branding",
+          "Add more adjectives about branding to the prompt to fix it",
+          "Assume the marketplace will catch any branding errors during review"
+        ],
+        "answer": 1,
+        "why": "The explicit \"do not add\" rule in the prompt doesn't guarantee accuracy on its own, which is why manually comparing every generated image against the real product stays a required step in the workflow."
+      },
+      {
+        "q": "You're generating the primary listing image for a marketplace SKU. What convention should you match?",
+        "options": [
+          "Any creative background works fine for a primary listing image",
+          "Only lifestyle scenes are accepted by marketplaces",
+          "Many marketplaces require a pure white background for the primary listing image",
+          "A vertical 9:16 aspect ratio is always required"
+        ],
+        "answer": 2,
+        "why": "Matching the destination platform's photography conventions — often a pure white background for the primary image — means the output is usable without a rejection or redo."
+      },
+      {
+        "q": "Both ChatGPT and Gemini support uploading a reference photo of your actual product, but you skip it and generate from a text description alone. What's the risk?",
+        "options": [
+          "Uploaded reference images make outputs less accurate than text alone",
+          "Reference images are only useful for video generation",
+          "Uploading a reference image violates most marketplaces' rules",
+          "Skipping an image upload when it's available risks a \"similar but wrong\" product"
+        ],
+        "answer": 3,
+        "why": "An uploaded reference photo grounds the generated version in what the product actually looks like; without it, the model is more likely to drift from the real product's exact details."
+      }
+    ],
+    "img-i2-social-marketing-visuals-brand-style": [
+      {
+        "q": "Over a week of social posts, you slightly reword the style description in each new ChatGPT prompt instead of reusing a saved one. What's the likely result?",
+        "options": [
+          "Gradual visual drift across the set, since even small paraphrasing changes how the model interprets tone and palette",
+          "Nothing — models normalize slightly different style wording automatically",
+          "It only affects color choices, never composition",
+          "It actually improves variety, which is desirable for a campaign"
+        ],
+        "answer": 0,
+        "why": "Reusing the identical style block wording matters more than it seems — even small paraphrasing changes tone and palette interpretation, which is how a set quietly drifts by the sixth post."
+      },
+      {
+        "q": "What does the lesson recommend for keeping a month of content visually consistent without retyping the style every time?",
+        "options": [
+          "Rewrite the full creative brief for every new image in the set",
+          "Save the style block as a ChatGPT Project's custom instructions or as a Gemini Gem, and reuse it automatically",
+          "Rely on the tool's default style setting instead of writing one",
+          "Use a different aspect ratio for each post within the same campaign"
+        ],
+        "answer": 1,
+        "why": "ChatGPT Projects store custom instructions for every chat inside them, and Gemini Gems are saved, reusable instructions — both remove the retyping step that causes style drift."
+      },
+      {
+        "q": "Why review a batch of campaign images side by side rather than one at a time?",
+        "options": [
+          "It's slower and generally unnecessary for small batches",
+          "It's only needed for very large sets of over 20 images",
+          "Reviewing the full set side by side is the only reliable way to catch visual drift before publishing",
+          "It's required specifically by Instagram's content policy"
+        ],
+        "answer": 2,
+        "why": "Drift between images is often only obvious when they're compared together — reviewing one at a time misses gradual shifts in palette or mood that a side-by-side view catches immediately."
+      }
+    ],
+    "img-i3-text-in-images-graphic-design": [
+      {
+        "q": "You need a full paragraph of body copy rendered accurately inside a generated poster. Is this reliable with ChatGPT or Gemini?",
+        "options": [
+          "Yes, both tools handle long paragraphs of text reliably",
+          "Only Gemini handles long text blocks well",
+          "Text length has no effect on rendering accuracy",
+          "No — accuracy drops as text length grows, so full paragraphs remain unreliable across both tools"
+        ],
+        "answer": 3,
+        "why": "Keeping requested text short is a direct accuracy lever — every additional word compounds the chance of a misspelling or garbled letterform somewhere in the line."
+      },
+      {
+        "q": "What's the recommended way to specify exact wording for a headline and subtext?",
+        "options": [
+          "Write the exact text in quotation marks and specify placement and hierarchy explicitly",
+          "Describe the general theme and let the model choose the wording",
+          "Avoid specifying placement so the model has creative freedom",
+          "Use synonyms instead of exact wording to reduce spelling errors"
+        ],
+        "answer": 0,
+        "why": "Quoting the exact text and separating it into an explicit headline/subtext hierarchy is what both models key off — an unstructured request leaves far more room for error."
+      },
+      {
+        "q": "A client-facing poster is generated in ChatGPT with the requested headline text. What should you do before it ships?",
+        "options": [
+          "Assume the text is correct, since a strong text-rendering model was used",
+          "Proofread every character in the output against your exact intended wording before publishing",
+          "Only check the headline, not the subtext",
+          "Spellcheck the prompt only, not the generated output"
+        ],
+        "answer": 1,
+        "why": "Even a strong text-rendering model can occasionally drop or duplicate a character, so a full letter-by-letter proofread of the actual output stays a required step, not an optional one."
+      }
+    ],
+    "img-a1-commercial-safety-licensing": [
+      {
+        "q": "A prompt for a client's paid campaign, typed into ChatGPT, includes \"in the style of [a specific living illustrator].\" What's the concern?",
+        "options": [
+          "No risk, since an artist's style isn't copyrightable",
+          "This only matters for logos, not general images",
+          "Naming a specific living artist's style in a prompt for client or paid work is a flagged commercial-safety risk",
+          "Risk only applies if the artist personally finds out"
+        ],
+        "answer": 2,
+        "why": "Naming a specific living artist's style is one of the checklist's explicit red flags for commercial work, independent of which tool generated the result."
+      },
+      {
+        "q": "Why does the risk checklist ask you to specify your ChatGPT or Gemini plan/tier separately from just the tool name?",
+        "options": [
+          "All tiers of a given tool grant identical commercial rights and data handling",
+          "Plan tier only affects generation speed, not usage rights",
+          "Plan tier doesn't matter, only the country of use does",
+          "Commercial usage rights and data-handling guarantees often differ by plan tier, e.g. ChatGPT Plus vs. ChatGPT Business"
+        ],
+        "answer": 3,
+        "why": "ChatGPT Business and Enterprise exclude data from training in ways lower tiers may not, and Gemini's Workspace Business/Enterprise editions add governance the free tier lacks — so the tool name alone isn't enough to assess risk."
+      },
+      {
+        "q": "You want to use a ChatGPT or Gemini generated image of a recognizable real person in a paid campaign, without their consent. Is this safe?",
+        "options": [
+          "Yes, using AI-generated images of recognizable real people without their consent or a release is a commercial-safety risk",
+          "It's fine as long as the tool's terms of service allow generating people",
+          "This concern only applies to political figures",
+          "This concern only applies outside the United States"
+        ],
+        "answer": 0,
+        "why": "The checklist flags recognizable real people as one of the most common sources of an actual commercial claim, regardless of which tool generated the image."
+      }
+    ],
+    "img-a2-repeatable-creative-pipeline": [
+      {
+        "q": "When drafting your pipeline document, why restrict the assistant to only the details you personally supply?",
+        "options": [
+          "It makes the resulting document shorter overall",
+          "It keeps the document an accurate reflection of your real process instead of a generic template padded with invented tools or steps",
+          "It's a formality with no real functional purpose",
+          "It has no measurable effect either way"
+        ],
+        "answer": 1,
+        "why": "Restricting the assistant to your real answers means the document reflects your actual workflow instead of a plausible-sounding but inaccurate generic process."
+      },
+      {
+        "q": "An agency builds a solid ChatGPT-and-Gemini image pipeline but keeps it as one designer's private habit instead of writing it down for the team. What's the risk?",
+        "options": [
+          "A private mental process works just as well as documentation",
+          "Documentation is only useful for legal compliance purposes",
+          "Building the pipeline as a private habit instead of a shared team document loses much of its value",
+          "Pipelines shouldn't be written down at all, since tools change too fast"
+        ],
+        "answer": 2,
+        "why": "A pipeline's value comes from surviving a new hire, a team change, or a busy week — that only works if it's documented and shared, not kept as one person's private habit."
+      },
+      {
+        "q": "Why does the lesson recommend revisiting the pipeline's \"default tool per job type\" section periodically?",
+        "options": [
+          "Once built, a pipeline document should never be changed",
+          "You should revisit only if a client specifically complains",
+          "Revisiting the pipeline is unnecessary busywork",
+          "ChatGPT and Gemini both ship new image features often enough that this quarter's default tool per job type may not be right next quarter"
+        ],
+        "answer": 3,
+        "why": "Both tools update their image-generation capabilities frequently, so a pipeline that's never revisited risks defaulting to a tool that's no longer the best choice for a given job type."
+      }
+    ]
+  }
+}

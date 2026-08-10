@@ -1,0 +1,42 @@
+{
+  "paths": [
+    {
+      "slug": "ai-for-restaurants",
+      "title": "AI for Restaurants",
+      "tagline": "Write menu copy that sells, handle reviews with the right tone, and keep a marketing routine running without a marketing department.",
+      "description": "A 6-lesson path for restaurant owners and managers covering the AI workflows that pay off fastest on the floor and behind the scenes: menu descriptions built from real ingredients and prep methods, calibrated responses to praise, fair complaints, and unfair reviews, a season's worth of social posts paired with AI-generated visuals, staff training documents and checklists built from your own know-how, event and catering proposals that read as tailored rather than templated, and a realistic weekly marketing routine sized to the time a small team actually has. Every lesson keeps the AI grounded in your real menu, policies, and pricing instead of letting it invent details.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "restaurant-owner",
+      "sortOrder": 19,
+      "lessons": [
+        "rest-b1-menu-descriptions-that-sell",
+        "rest-b2-review-responses-praise-complaints-unfair",
+        "rest-i1-social-posts-seasonal-promotions",
+        "rest-i2-staff-training-documents-and-checklists",
+        "rest-i3-event-and-catering-proposals",
+        "rest-a1-weekly-marketing-routine"
+      ]
+    },
+    {
+      "slug": "ai-for-hospitality",
+      "title": "AI for Hotels & Tourism",
+      "tagline": "Guest messages for every stage of the stay, listings that convert, reviews that win future bookings, and multilingual communication that stays accurate.",
+      "description": "A 6-lesson path for hotel and tourism professionals covering the AI workflows that move the needle on bookings and guest experience: guest messages from booking through post-stay, listing descriptions adapted for OTAs and your own site, review responses written for the future guests reading them, local guides built from real firsthand knowledge, upsell and package copy that increases booking value without feeling pushy, and a documented multilingual communication workflow with a built-in accuracy check. Every lesson keeps the AI grounded in your property's real policies, pricing, and local knowledge instead of letting it invent details.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "hotel-tourism",
+      "sortOrder": 20,
+      "lessons": [
+        "hot-b1-guest-messages-booking-to-post-stay",
+        "hot-b2-listing-descriptions-for-otas-and-your-site",
+        "hot-i1-review-responses-that-win-future-bookings",
+        "hot-i2-local-guides-and-experience-recommendations",
+        "hot-i3-upsell-and-package-copy",
+        "hot-a1-multilingual-guest-communication-workflow"
+      ]
+    }
+  ]
+}

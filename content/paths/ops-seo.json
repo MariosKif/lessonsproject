@@ -1,0 +1,42 @@
+{
+  "paths": [
+    {
+      "slug": "ai-for-operations",
+      "title": "AI for Operations Managers",
+      "tagline": "From tribal knowledge to documented process, then to a team that trusts AI-assisted workflows.",
+      "description": "A 6-lesson ladder for operations managers covering the AI workflows that make a process function without any one person carrying it in their head: turning tribal knowledge into SOPs people actually follow, mapping and improving processes through describe-question-improve, writing operational report narratives leadership will read, drafting vendor and internal communications that get action, identifying which recurring tasks are genuinely worth automating, and rolling out an AI-assisted process across a team with real guardrails and a rollback plan.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "operations-manager",
+      "sortOrder": 23,
+      "lessons": [
+        "ops-b1-sops-from-tribal-knowledge",
+        "ops-b2-process-mapping-describe-question-improve",
+        "ops-i1-operational-reports-dashboards-narratives",
+        "ops-i2-vendor-internal-communications",
+        "ops-i3-identify-automation-candidates",
+        "ops-a1-rollout-ai-assisted-process-team"
+      ]
+    },
+    {
+      "slug": "ai-for-seo",
+      "title": "AI for SEO Specialists",
+      "tagline": "From keyword intent to a production pipeline with quality gates built in.",
+      "description": "A 6-lesson ladder for SEO specialists covering the AI workflows that scale content production without sacrificing search-intent accuracy: turning keyword and intent data into content briefs writers can actually use, writing title tags and meta descriptions at scale without spam patterns, researching competitor content gaps with cited sources, building outlines and drafts that satisfy real search intent, turning technical audit findings into client-ready reports, and designing a full content production pipeline with named quality gates.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "seo-specialist",
+      "sortOrder": 27,
+      "lessons": [
+        "seo-b1-content-briefs-from-keyword-intent",
+        "seo-b2-title-tags-meta-descriptions-at-scale",
+        "seo-i1-competitor-content-gap-research",
+        "seo-i2-outlines-drafts-satisfy-search-intent",
+        "seo-i3-technical-seo-audit-notes-to-client-reports",
+        "seo-a1-seo-content-production-pipeline-quality-gates"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,214 @@
+{
+  "quizzes": {
+    "vid-b1-what-ai-video-can-do-first-clip": [
+      {
+        "q": "A colleague on the free Gemini app plan wants to start generating Veo clips today. What should you tell them?",
+        "options": [
+          "Veo access requires at least a Google AI Pro (~$19.99/mo) plan — the Gemini free tier doesn't include meaningful Veo access",
+          "The free tier includes unlimited Veo generations",
+          "Veo only works through a separate app, never through Gemini",
+          "Free tier users get Veo access but only in black and white"
+        ],
+        "answer": 0,
+        "why": "Veo has no meaningful free tier — it's accessed through a Google AI Pro or Ultra plan inside the Gemini app, which is worth knowing before budgeting a video project."
+      },
+      {
+        "q": "A colleague wants one prompt to generate a full 3-scene story with dialogue in a single Veo generation. Is this realistic today?",
+        "options": [
+          "Yes, one generation reliably creates a full multi-shot sequence with dialogue",
+          "No — one generation is one short clip (typically 5-8 seconds), not a multi-shot story; plan per-shot and use scene extension for longer sequences",
+          "Only through Google AI Studio, never the Gemini app",
+          "Yes, as long as the prompt is written long enough"
+        ],
+        "answer": 1,
+        "why": "Veo reliably produces one short clip per generation; a multi-scene story requires planning individual shots and stitching or extending them, not one giant prompt."
+      },
+      {
+        "q": "You write a prompt for your first Veo clip but leave out any description of sound. What actually happens?",
+        "options": [
+          "Veo generates the clip completely silent, with no audio track at all",
+          "Veo pauses generation and asks you to add a sound description first",
+          "Veo generates synchronized audio anyway, since it produces sound natively — leaving the cue unstated just means you didn't control what it is",
+          "Sound can only be added afterward in a separate app; Veo never generates audio"
+        ],
+        "answer": 2,
+        "why": "Veo generates synchronized audio as part of every clip. If you don't describe the sound you want, Veo still produces something — so an unstated sound cue is a missed control, not a way to get silence."
+      }
+    ],
+    "vid-b2-motion-first-prompts": [
+      {
+        "q": "A prompt describes \"she stands up, walks to the door, opens it\" as the action for one 5-second clip. What's the problem?",
+        "options": [
+          "That's ideal, since it packs more story into the clip",
+          "This works fine, as long as the camera line is also detailed",
+          "Sequential actions actually improve prompt adherence in Veo",
+          "A 5-8 second clip can't reliably show three sequential beats — the action should be described as one continuous motion"
+        ],
+        "answer": 3,
+        "why": "A short clip can't cleanly render three distinct sequential events; describing one continuous motion is what Veo can actually follow within that duration."
+      },
+      {
+        "q": "Why does the lesson add \"Sound\" as one of the six prompt elements, alongside subject, action, camera, setting/lighting, and style?",
+        "options": [
+          "Because Veo generates synchronized audio natively, so describing sound is part of controlling the shot, not an optional extra",
+          "Because sound only matters for dialogue-heavy clips",
+          "Because it's required by the Gemini app's upload form",
+          "Because it replaces the need to describe camera movement"
+        ],
+        "answer": 0,
+        "why": "Veo produces audio together with the video by default, so leaving sound undescribed still results in an audio track — just one you didn't control. Naming it deliberately is how you take charge of that element too."
+      },
+      {
+        "q": "You leave the camera movement unstated in your prompt. What should you expect?",
+        "options": [
+          "Veo always pauses and asks you to clarify the camera move first",
+          "Leaving camera movement unstated leads to generic default motion, since Veo defaults to something if you don't specify",
+          "Unspecified camera always defaults to a dramatic orbit shot",
+          "It has no effect on the resulting clip"
+        ],
+        "answer": 1,
+        "why": "Veo falls back to a default — often static or a generic push — when camera movement isn't named explicitly, so being explicit is how you actually take control of the shot."
+      }
+    ],
+    "vid-i1-storyboard-prompts": [
+      {
+        "q": "ChatGPT hands you a 4-shot list for your concept. What should you do with it next?",
+        "options": [
+          "Paste each shot description straight into Veo exactly as ChatGPT wrote it",
+          "Rewrite each beat into a proper motion-first Veo prompt with camera, sound, and a shared continuity block — ChatGPT's list is a planning draft, not a finished prompt",
+          "Discard it, since ChatGPT can't be used for planning video content",
+          "Only use it to pick a title for the finished video"
+        ],
+        "answer": 1,
+        "why": "ChatGPT is useful for structuring the beats, but it doesn't know Veo's prompt conventions — each shot still needs to be rewritten as a proper motion-first prompt with a shared continuity block before generating."
+      },
+      {
+        "q": "What is the continuity block's primary purpose in a multi-shot Veo sequence?",
+        "options": [
+          "To decorate the prompt with extra adjectives",
+          "To satisfy a required minimum prompt length",
+          "To specify only camera angles for each shot",
+          "A reusable phrase describing the subject's appearance, environment, and style, pasted identically into every shot's prompt to prevent drift"
+        ],
+        "answer": 3,
+        "why": "Pasting an identical continuity block into every shot is what stops Veo from quietly re-imagining the subject or setting between separate generations."
+      },
+      {
+        "q": "In your shot list, you call the mug \"a red mug\" in shot 1 and \"a ceramic cup\" in shot 3. What happens?",
+        "options": [
+          "No issue — Veo recognizes synonyms perfectly across shots",
+          "This actually improves visual variety intentionally",
+          "This reads to Veo as a different element, causing continuity drift — reuse the exact same wording for the same element across shots",
+          "It only affects the audio, not the object's appearance"
+        ],
+        "answer": 2,
+        "why": "Different wording for the same recurring element is interpreted by Veo as a genuinely different object, which is exactly how continuity drifts between shots."
+      }
+    ],
+    "vid-i2-product-promo-clips-social": [
+      {
+        "q": "You need a promo clip where the product's exact label and logo stay accurate. What approach should you use?",
+        "options": [
+          "Text-to-video, describing the product's appearance in exhaustive detail",
+          "Image-to-video from a real product photo, since text-to-video risks Veo reinventing label text or the logo",
+          "Ask Veo to render the logo carefully within a text prompt",
+          "Use a generic stock photo of a similar product instead"
+        ],
+        "answer": 1,
+        "why": "Animating a real product photo with Veo's image-to-video keeps packaging, logo, and color accurate, sidestepping text-to-video's known unreliability at rendering exact text and logos."
+      },
+      {
+        "q": "When animating a real product photo, why should the prompt describe only motion and sound, not the product's appearance?",
+        "options": [
+          "Because appearance descriptions are ignored by image-to-video anyway",
+          "Because it saves characters in the prompt, nothing more",
+          "Because the source photo already defines the product's appearance — describing it again invites Veo to reinvent details like label text",
+          "Because appearance and motion can never both be described in one prompt"
+        ],
+        "answer": 2,
+        "why": "The photo already fixes what the product looks like; re-describing it in text gives Veo an opening to change details like label wording that should stay untouched."
+      },
+      {
+        "q": "You want a clean product clip with no music, just quiet ambient sound. What should you do?",
+        "options": [
+          "Leave the sound cue out of the prompt entirely, since silence is the default",
+          "State it explicitly, e.g. \"ambient room tone only, no music\" — Veo generates audio either way, so an unstated cue risks an unwanted soundtrack",
+          "Add the phrase \"no audio\" and expect a fully silent file",
+          "Sound can only be controlled after generation, in the editor"
+        ],
+        "answer": 1,
+        "why": "Since Veo produces synchronized audio natively, getting the clean, quiet track you want means stating that intent directly in the prompt, not assuming silence is the default."
+      }
+    ],
+    "vid-i3-iterate-extend-retime-fix": [
+      {
+        "q": "A clip is good overall but has one glitchy hand at second 3. What's the most efficient fix?",
+        "options": [
+          "Regenerate with a small, targeted addition naming the exact fix (e.g., \"keep hands out of frame\"), leaving the rest of the prompt unchanged",
+          "Rewrite the entire prompt from scratch",
+          "Use scene extension to try to move past the glitch",
+          "Switch to describing the scene in a completely different way"
+        ],
+        "answer": 0,
+        "why": "A targeted fix changes as little as possible on top of a prompt that was already mostly working, preserving everything correct while addressing only the specific flaw."
+      },
+      {
+        "q": "Why should a Veo extension prompt avoid re-describing the whole scene, including the sound?",
+        "options": [
+          "Re-describing the scene is actually required for extensions to work correctly",
+          "Re-describing the scene and sound risks Veo treating it as a new, disconnected shot instead of continuing from the last frame with matching audio",
+          "It has no real effect on continuity either way",
+          "Sound is never generated during scene extension, so it doesn't matter"
+        ],
+        "answer": 1,
+        "why": "Scene extension continues from the clip's final frame and audio automatically; re-describing the whole scene is exactly what causes Veo to treat it as a fresh, unrelated generation instead."
+      },
+      {
+        "q": "A generated take is fundamentally wrong in composition and mood, not just one detail off. What should you do?",
+        "options": [
+          "Never — always patch, regardless of how wrong the take is",
+          "Only regenerate fully when the clip's duration is too short",
+          "When the take is fundamentally wrong in composition, mood, or subject placement — patching a bad take usually costs more attempts than starting over",
+          "Whenever any hand glitch appears, however minor"
+        ],
+        "answer": 2,
+        "why": "Patching is reserved for a mostly-working shot with one flaw; a fundamentally wrong take is cheaper to fix by regenerating from a revised prompt than by trying to patch it repeatedly."
+      }
+    ],
+    "vid-a1-production-workflow": [
+      {
+        "q": "A creator generates three great individual Veo clips and publishes them stitched together with no editing pass. What's likely to happen?",
+        "options": [
+          "This is fine, since Veo clips already look polished on their own",
+          "Editing is optional specifically for social platforms",
+          "Editing only matters for videos over 60 seconds long",
+          "Skipping editing usually reads as unpolished even when individual clips look great — cuts, text, a clean audio mix, and a hook/CTA are what make it finished content"
+        ],
+        "answer": 3,
+        "why": "Veo generates footage and audio, it doesn't finish a piece of content — the edit pass (trimming, audio mix, text, hook, CTA) is what turns raw clips into something that reads as produced content."
+      },
+      {
+        "q": "Why does the lesson recommend adding on-screen marketing text and captions in the video editor rather than relying on Veo?",
+        "options": [
+          "Editors render exact text reliably, while Veo doesn't reliably render exact on-screen text or logos",
+          "Veo is technically incapable of ever generating any audio",
+          "It's simply cheaper to add text inside Veo",
+          "Captions must legally be added only in post-production"
+        ],
+        "answer": 0,
+        "why": "Veo is known to be unreliable at rendering exact text, while a standard editor renders typed text reliably, so final marketing copy and captions belong in the edit."
+      },
+      {
+        "q": "Before publishing, you paste your edit description into Claude with a review prompt that restricts it to only the pacing, hook, and cut details you've described. Why restrict it that way?",
+        "options": [
+          "It's a formality that has no real function in the review",
+          "Restricting the review to only what you've described produces a grounded critique on pacing, hook, and CTA instead of generic advice or invented assumptions",
+          "It replaces the need to actually watch the final export before publishing",
+          "It guarantees the finished video will perform well"
+        ],
+        "answer": 1,
+        "why": "Feeding the reviewer only the facts you supply keeps its critique grounded in your actual edit rather than generic advice based on assumptions about details you never gave it."
+      }
+    ]
+  }
+}

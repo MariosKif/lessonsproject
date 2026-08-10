@@ -1,0 +1,27 @@
+{
+  "paths": [
+    {
+      "slug": "automation-academy",
+      "title": "Automation & Agents Academy",
+      "tagline": "Connect AI to your real tools and build automations you can actually trust",
+      "description": "A ladder from understanding what AI agents and automations really are through mapping a business process, connecting your first MCP connector, and building recurring AI-powered workflows with ChatGPT Tasks and scripted Claude Code automations, to designing safe, reviewed agent deployments — Claude Cowork delegations, Custom GPTs, and Claude Code hooks — with human checkpoints, error handling, and ongoing maintenance.",
+      "kind": "tool-course",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": null,
+      "sortOrder": 12,
+      "lessons": [
+        "auto-b1-what-agents-automations-are",
+        "auto-b2-map-a-process-to-automate",
+        "auto-b3-mcp-explained",
+        "auto-i1-connect-first-mcp-connector",
+        "auto-i2-zapier-ai-automation",
+        "auto-i3-n8n-make-workflow-ai-step",
+        "auto-a1-design-safe-agent-instructions",
+        "auto-a2-human-in-the-loop-error-handling",
+        "auto-a3-cross-tool-pipeline",
+        "auto-a4-evaluate-maintain-automations"
+      ]
+    }
+  ]
+}

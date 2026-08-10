@@ -1,0 +1,424 @@
+{
+  "quizzes": {
+    "rest-b1-menu-descriptions-that-sell": [
+      {
+        "q": "A wholesale-sourced tomato gets described in AI-generated menu copy as 'locally sourced heirloom tomatoes.' What's the issue?",
+        "options": [
+          "This is exactly the kind of sourcing claim - like 'organic' or 'locally sourced' - the prompt explicitly forbids unless true, and it can trigger complaints or a bad review if false",
+          "It sounds better and will increase sales",
+          "Menu copy doesn't need factual sourcing claims",
+          "'Heirloom' and 'local' mean the same thing"
+        ],
+        "answer": 0,
+        "why": "The prompt specifically names forbidden claims like 'organic' and 'locally sourced' because menus are a legal and trust surface - an untrue sourcing claim risks complaints or refunds."
+      },
+      {
+        "q": "Why does the guardrail prompt ban empty adjectives like 'delicious' or 'amazing' and ask for sensory detail instead?",
+        "options": [
+          "Adjectives are grammatically incorrect in menu copy",
+          "Specific sensory language like 'charred' or 'slow-braised' consistently outsells vague words, since empty adjectives describe nothing the reader can picture",
+          "It shortens the description to fit character limits",
+          "Allergen regulations prohibit using adjectives"
+        ],
+        "answer": 1,
+        "why": "Sensory, technique-based language gives the reader something concrete to picture, which is exactly what sells a dish - generic adjectives don't."
+      },
+      {
+        "q": "A chef gives the AI only 'chicken sandwich, $12' with no ingredients or prep method. What's the likely outcome, and what's the fix?",
+        "options": [
+          "The AI will still write vivid, specific copy - no fix needed",
+          "The description will come out generic, since the prep method is what makes copy specific; the chef should add ingredients and prep detail (e.g., 'brined 24 hours') before generating",
+          "The restaurant should skip writing menu copy for this dish",
+          "The AI should be asked to guess a plausible prep method"
+        ],
+        "answer": 1,
+        "why": "Skipping the prep method in your notes forces the model to write generically instead of specifically - it's listed as a common mistake in the lesson."
+      }
+    ],
+    "rest-b2-review-responses-praise-complaints-unfair": [
+      {
+        "q": "Responding to an unfair 1-star review, an owner drafts 'You're clearly lying about the wait time.' How does this compare to the lesson's guidance?",
+        "options": [
+          "It's appropriate to correct lies directly like this",
+          "The lesson requires staying calm and factual, correcting only the specific inaccuracy with real facts, without arguing with the reviewer's opinion or getting accusatory",
+          "All negative reviews should simply be ignored instead",
+          "The owner should delete the review instead of responding"
+        ],
+        "answer": 1,
+        "why": "The prompt requires correcting only the specific factual inaccuracy calmly, never arguing with the reviewer's opinion or getting sarcastic - arguing usually does more damage than the original review."
+      },
+      {
+        "q": "Why does the prompt require the owner - not the AI - to classify a review as praise, legitimate complaint, or unfair first?",
+        "options": [
+          "The AI is technically incapable of reading review text",
+          "Only the owner actually knows what happened, which keeps that judgment call where it belongs, since the three categories need opposite response instincts",
+          "It's a requirement of the review platform itself",
+          "It makes the resulting prompt shorter to run"
+        ],
+        "answer": 1,
+        "why": "Only the owner knows what actually happened, and the three review types need genuinely different responses - warmth for praise, accountability for a fair complaint, calm correction for an unfair one."
+      },
+      {
+        "q": "A legitimate complaint mentions cold food, but the owner isn't sure what caused it. What should go in the prompt's 'what actually happened' field?",
+        "options": [
+          "A guess about kitchen timing that sounds plausible",
+          "'Unclear, will look into it' - real facts only, since over-apologizing or admitting unconfirmed fault is a listed mistake",
+          "Leave it blank and let the AI invent a plausible explanation",
+          "Blame the delivery driver in the response"
+        ],
+        "answer": 1,
+        "why": "The prompt explicitly instructs writing 'unclear, will look into it' rather than a guessed fact, since over-apologizing for something unconfirmed is a common failure mode."
+      }
+    ],
+    "rest-i1-social-posts-seasonal-promotions": [
+      {
+        "q": "A generated caption reads 'Almost sold out - order now!' for a promotion that has no real scarcity. What's the problem?",
+        "options": [
+          "Urgency language always boosts engagement, so it's fine to use",
+          "The prompt explicitly bans urgency language that isn't true - using it when untrue is a listed common mistake that damages trust",
+          "This is standard, expected restaurant marketing practice",
+          "Only Instagram enforces accuracy in captions, not Facebook"
+        ],
+        "answer": 1,
+        "why": "The prompt bans urgency language unless it's genuinely true - a fabricated 'almost sold out' claim is called out directly as a common mistake."
+      },
+      {
+        "q": "Why does the workflow write captions in Claude and generate matching image prompts in ChatGPT (GPT Image 2), instead of asking one model call to do both?",
+        "options": [
+          "It's a technical requirement of the AI tools being used",
+          "Asking one model call to write great copy and design a great visual at once usually produces mediocre versions of both - separating passes keeps each output higher quality",
+          "It reduces the total word count of the output",
+          "Images and captions must legally be posted separately"
+        ],
+        "answer": 1,
+        "why": "Splitting the caption pass from the image-prompt pass keeps each output high quality, since asking for both at once usually produces mediocre versions of each."
+      },
+      {
+        "q": "The image-prompt step for GPT Image 2 is restricted to only the dishes/offers actually listed in the brief. Why does this restriction matter?",
+        "options": [
+          "It reduces the cost of generating images",
+          "An AI-generated image of a dish the restaurant doesn't actually serve is a fast way to disappoint a customer who orders based on it",
+          "GPT Image 2 is technically unable to generate unlisted food",
+          "It's an Instagram platform requirement"
+        ],
+        "answer": 1,
+        "why": "Restricting image subjects to actual menu items keeps the visuals honest - a false-looking image of a dish that doesn't exist sets a bad expectation for a customer."
+      }
+    ],
+    "rest-i2-staff-training-documents-and-checklists": [
+      {
+        "q": "The AI-generated training document adds a step about checking fire extinguishers that the manager never mentioned. What should happen to this addition?",
+        "options": [
+          "Keep it in the main steps, since safety rules are always good to include",
+          "It should be listed separately under 'Questions to confirm with the owner,' not silently added into the steps, since the prompt restricts the document to only what was described",
+          "Delete the entire document and start completely over",
+          "Assume it's accurate since AI generally knows industry standards"
+        ],
+        "answer": 1,
+        "why": "The prompt explicitly routes anything the model thinks is missing into a separate questions list rather than silently adding a plausible but unconfirmed step into the procedure itself."
+      },
+      {
+        "q": "Why does the lesson recommend documenting one role or task at a time, rather than an entire role in a single pass?",
+        "options": [
+          "The AI tool has a strict length limit per request",
+          "Documenting an entire role in one pass produces an unusably long document - one task at a time keeps it focused and usable",
+          "Each task requires a separate AI account to generate",
+          "Staff members can only absorb one document per week"
+        ],
+        "answer": 1,
+        "why": "Trying to cover an entire role in one pass produces something too long to be usable - the lesson explicitly recommends breaking work into one task at a time."
+      },
+      {
+        "q": "A manager explains 'closing side work' in rambling, out-of-order notes. What is the AI expected to do with this input?",
+        "options": [
+          "Reject the notes and ask for a formal outline first",
+          "Reorder the rough, out-of-order explanation into correct logical sequence - this is where the tool earns its value, since managers often explain exceptions rather than step order",
+          "Copy the rambling notes verbatim into the final document",
+          "Ask a different employee to rewrite the notes first"
+        ],
+        "answer": 1,
+        "why": "Reordering a rough, out-of-order verbal explanation into a logical step sequence is exactly the value this workflow provides - most owners explain a process the way they remember exceptions, not the order a new hire needs."
+      }
+    ],
+    "rest-i3-event-and-catering-proposals": [
+      {
+        "q": "A client asks about a gluten allergy accommodation, but the kitchen hasn't confirmed it can safely do so. What should the generated proposal say?",
+        "options": [
+          "Promise a full gluten-free menu to help win the booking",
+          "State 'we'll confirm accommodations for this with our kitchen' instead of promising something specific, since the prompt only allows commitments the kitchen has actually confirmed",
+          "Ignore the dietary restriction entirely in the proposal",
+          "Recommend the client book a different restaurant instead"
+        ],
+        "answer": 1,
+        "why": "The prompt only allows dietary accommodation claims that the kitchen has actually confirmed - a promise your kitchen can't keep ending up in a signed proposal is a much worse outcome."
+      },
+      {
+        "q": "Why must the proposal's opening line reference the client's specific event details rather than a generic 'thank you for your interest'?",
+        "options": [
+          "It's a legal requirement for catering contracts",
+          "Clients comparing multiple venues notice generic openings immediately - a personalized reference makes the proposal feel considered rather than templated, increasing the close rate",
+          "Generic openings simply take longer to write",
+          "It reduces the total length of the proposal"
+        ],
+        "answer": 1,
+        "why": "A tailored opening referencing the client's actual event is what makes a proposal read as attentive rather than an afterthought, directly affecting close rate."
+      },
+      {
+        "q": "The restaurant's pricing sheet changed last month, but the proposal still uses old per-person pricing. What does this represent?",
+        "options": [
+          "An acceptable rounding error that doesn't matter",
+          "Sending a proposal with pricing that doesn't match the current rate sheet because it wasn't updated in the prompt - a listed common mistake",
+          "A mistake that's entirely the AI's fault, not the owner's",
+          "Something that never actually causes real problems"
+        ],
+        "answer": 1,
+        "why": "The lesson explicitly lists outdated pricing in the prompt as a common mistake - the reference block needs to be updated whenever real prices change."
+      }
+    ],
+    "rest-a1-weekly-marketing-routine": [
+      {
+        "q": "An owner designs a marketing routine assuming two hours a day, though they realistically only have about two hours a week. What does the lesson say will likely happen?",
+        "options": [
+          "The routine will work fine since more planned time is always better",
+          "A routine sized for time nobody has gets abandoned by week three - it must be built around actual, honest available time",
+          "Staff will automatically pick up the extra slack",
+          "The AI will adjust the routine automatically as needed"
+        ],
+        "answer": 1,
+        "why": "The lesson is explicit that most marketing routines fail not from bad ideas but from being sized for time nobody actually has."
+      },
+      {
+        "q": "Why does the prompt require a '15-minutes-only' fallback version of the routine?",
+        "options": [
+          "It's a nice-to-have detail with no real function",
+          "A routine with no degraded mode tends to collapse entirely during a busy week instead of just shrinking - the fallback keeps the highest-impact task alive",
+          "It reduces the AI's processing time",
+          "15 minutes is a legal minimum for marketing activity"
+        ],
+        "answer": 1,
+        "why": "Without a fallback, a routine tends to go to zero entirely during a bad week rather than just shrinking - the fallback preserves at least the most important task."
+      },
+      {
+        "q": "After running the new routine for two weeks, one task consistently gets skipped. What does the lesson recommend?",
+        "options": [
+          "Redesign the entire routine from scratch immediately",
+          "Cut or adjust just that single hardest task, rather than overhauling the whole routine",
+          "Abandon the routine entirely and go back to ad hoc marketing",
+          "Add even more tasks to compensate for the gap"
+        ],
+        "answer": 1,
+        "why": "The lesson recommends adjusting only the single hardest task after a trial run, rather than redesigning the whole routine over one difficult task."
+      }
+    ],
+    "hot-b1-guest-messages-booking-to-post-stay": [
+      {
+        "q": "A pre-arrival message is generated for a guest, but the host never actually provided the door code, so the draft leaves that detail out. What is the correct next step?",
+        "options": [
+          "Let the AI invent a plausible-looking code so the message feels complete",
+          "Leave the access instructions out and send the host's actual code separately once confirmed - the prompt explicitly bans inventing access codes or policies not provided",
+          "Assume the guest already knows the code from a previous stay",
+          "Cancel the booking rather than send an incomplete message"
+        ],
+        "answer": 1,
+        "why": "The prompt explicitly bans inventing access codes or policies - a wrong or fabricated code sent confidently is worse than no message at all."
+      },
+      {
+        "q": "Why does the prompt require naming the specific stage - booking confirmation, pre-arrival, in-stay, or post-stay - rather than one generic guest message template?",
+        "options": [
+          "Each stage legally requires different letterhead",
+          "The four stages have genuinely different completeness bars - a pre-arrival message missing access instructions is far more damaging than a slightly generic confirmation",
+          "Guests automatically filter messages by stage",
+          "It's a requirement set by OTA platforms"
+        ],
+        "answer": 1,
+        "why": "Each stage carries a different completeness bar, since a missing access instruction pre-arrival is far more damaging than a generic-sounding confirmation."
+      },
+      {
+        "q": "A guest mentions traveling with a toddler, but the host hasn't confirmed a crib is actually available. What should the AI-drafted message do?",
+        "options": [
+          "Promise that a free crib will be provided",
+          "Omit the crib mention rather than promise an accommodation that was never actually confirmed as available",
+          "Ask the guest to bring their own crib in the message",
+          "Automatically add a crib rental charge to the booking"
+        ],
+        "answer": 1,
+        "why": "The example in the lesson explicitly shows omitting an accommodation rather than promising something that was never confirmed as actually available."
+      }
+    ],
+    "hot-b2-listing-descriptions-for-otas-and-your-site": [
+      {
+        "q": "The website listing description ends up as a word-for-word copy of the OTA listing. What issue does this create?",
+        "options": [
+          "None - consistency between platforms is always good",
+          "It misses the chance to say more to an already-interested visitor and reads like a copy-paste job to a returning guest comparing both versions",
+          "OTAs require identical copy across all platforms by policy",
+          "Search engines prefer duplicate content across pages"
+        ],
+        "answer": 1,
+        "why": "The lesson requires the website version to differ in tone and length from the OTA version while staying factually consistent - repeating it word-for-word wastes the opportunity of an already-interested visitor."
+      },
+      {
+        "q": "Why does the prompt generate both the OTA and website versions from a single fact set in one pass?",
+        "options": [
+          "It's cheaper computationally to run one request",
+          "It keeps the two versions consistent with each other even though tone and length differ - separate edits over time are a common way listings quietly start to contradict each other",
+          "OTA platforms require simultaneous submission of both versions",
+          "One pass avoids grammar errors entirely"
+        ],
+        "answer": 1,
+        "why": "Generating both from one fact set keeps them consistent even as tone differs - a common failure mode is an OTA listing and website page for the same unit quietly contradicting each other after separate edits."
+      },
+      {
+        "q": "A listing claims 'a 5-minute walk to the beach,' but this distance was never actually measured or verified. What should happen before publishing?",
+        "options": [
+          "Publish it - AI-generated distances are generally accurate",
+          "Verify every amenity, view, or distance claim before publishing, since letting a distance claim go unverified is a listed common mistake",
+          "Round the distance to the nearest ten minutes",
+          "Remove all location details from the listing entirely"
+        ],
+        "answer": 1,
+        "why": "The lesson explicitly lists letting a distance or view claim go unverified before publishing as a common mistake - every such claim needs confirmation."
+      }
+    ],
+    "hot-i1-review-responses-that-win-future-bookings": [
+      {
+        "q": "A property manager responds to a fair complaint about noise with only 'We're so sorry you had this experience!' and nothing else. What's missing, per the lesson?",
+        "options": [
+          "Nothing - a sincere apology is sufficient on its own",
+          "A concrete action taken or planned - an apology alone reads as empty to a future guest deciding whether to book",
+          "The response should simply have been longer",
+          "The manager should have offered a refund instead"
+        ],
+        "answer": 1,
+        "why": "The prompt requires stating a concrete action for a fair complaint, since an apology with nothing else reads as empty to a skeptical future guest."
+      },
+      {
+        "q": "Why does the prompt frame the audience as 'a stranger reading this response six months from now,' rather than the original reviewer?",
+        "options": [
+          "It's a technical requirement of the review platform",
+          "The response's real job is to demonstrate to future guests that the property takes feedback seriously and fixes real problems - that matters more to booking decisions than winning an argument with the original reviewer",
+          "Original reviewers never actually read responses",
+          "It makes the response shorter to write"
+        ],
+        "answer": 1,
+        "why": "Future guests deciding whether to book read the review response far more than the original reviewer does, so the response needs to reassure that future audience."
+      },
+      {
+        "q": "Responding to an inaccurate review claiming 'staff were rude,' the manager has no camera footage to disprove it. What's the correct approach?",
+        "options": [
+          "Accuse the guest directly of lying",
+          "Correct only verifiable facts calmly, without disputing the guest's character or arguing with subjective opinions",
+          "Ignore the review entirely and don't respond",
+          "Offer a refund immediately just to make it go away"
+        ],
+        "answer": 1,
+        "why": "The prompt requires correcting only verifiable facts and never disputing a guest's character or honesty, keeping the correction calm and factual."
+      }
+    ],
+    "hot-i2-local-guides-and-experience-recommendations": [
+      {
+        "q": "A host asks ChatGPT to build a local guide, and the output includes a well-known tourist attraction the host has never actually visited or mentioned. What went wrong?",
+        "options": [
+          "This is expected and helpful - more recommendations are always better",
+          "The model added a place from its own general knowledge of the city, which the prompt explicitly bans - the guide should reflect only the host's own firsthand knowledge",
+          "The AI is always accurate about popular tourist attractions",
+          "Guests generally prefer more comprehensive guides regardless of source"
+        ],
+        "answer": 1,
+        "why": "The prompt explicitly bans adding places from general knowledge of the city - the entire value of the guide is that a local personally vetted every recommendation."
+      },
+      {
+        "q": "Why does the lesson require secondhand recommendations to appear under a separately labeled heading, rather than blended into the main list?",
+        "options": [
+          "It's purely a formatting preference with no real function",
+          "It protects the host's credibility if a secondhand tip turns out wrong, since guests can then tell which claims the host personally stands behind",
+          "Secondhand tips are always inaccurate and should be minimized",
+          "OTA platforms require this exact separation"
+        ],
+        "answer": 1,
+        "why": "Keeping secondhand tips clearly separated protects the host's credibility - guests can tell the difference between personally vetted picks and unverified ones."
+      },
+      {
+        "q": "A local guide was written eight months ago and hasn't been reviewed since. What risk does the lesson flag?",
+        "options": [
+          "None - local guides don't need to change over time",
+          "Publishing a guide with outdated hours or a since-closed business because it wasn't re-verified recently",
+          "Guests never actually check business hours before visiting",
+          "Old guides are actually preferred by guests for nostalgia"
+        ],
+        "answer": 1,
+        "why": "The lesson recommends re-verifying the guide every few months, since a since-closed business or outdated hours actively damages trust the moment a guest notices."
+      }
+    ],
+    "hot-i3-upsell-and-package-copy": [
+      {
+        "q": "Upsell copy for a room upgrade says 'Only 2 rooms left at this price!' though availability was never actually limited. What's the issue?",
+        "options": [
+          "Urgency language always increases conversions, so it's fine",
+          "This is false urgency, explicitly banned unless genuinely true - it damages trust in every future offer once a guest catches one fake claim",
+          "Only late-checkout offers need honesty about availability",
+          "Only the exact price matters, not the urgency claim"
+        ],
+        "answer": 1,
+        "why": "The prompt bans false urgency language unless it's genuinely true, because a guest who catches one fake scarcity claim discounts every future offer too."
+      },
+      {
+        "q": "Why does the prompt require a 'genuine, specific reason' for each offer instead of generic excitement language like 'treat yourself'?",
+        "options": [
+          "Specific reasons simply take less time to write",
+          "Specific reasons target a real guest situation, like wanting extra hours before a late flight, which converts better than language aimed at no one in particular",
+          "Generic language violates OTA marketing policy",
+          "It shortens the resulting copy"
+        ],
+        "answer": 1,
+        "why": "Targeting a real, specific guest situation converts better than vague excitement language aimed at nobody in particular."
+      },
+      {
+        "q": "An upsell for a breakfast package states 'special discounted rate' without a number. What does the lesson say about this phrasing?",
+        "options": [
+          "It's fine - vague pricing creates helpful curiosity",
+          "Exact pricing should be stated plainly; vague 'special price' language is a listed common mistake since guests need a clear price to say yes confidently",
+          "Prices should never appear in upsell copy at all",
+          "The AI should be asked to estimate a fair price"
+        ],
+        "answer": 1,
+        "why": "The lesson requires exact, plainly stated pricing, since vague language makes guests do extra work to figure out if the offer is worth it, which is a listed common mistake."
+      }
+    ],
+    "hot-a1-multilingual-guest-communication-workflow": [
+      {
+        "q": "A host translates house rules, including the door code and checkout time, into another language using AI and sends them to a guest without any review. What's the risk?",
+        "options": [
+          "None - machine translation is always accurate for numbers",
+          "Sending a machine-translated safety or access document without human verification is a listed common mistake - high-stakes documents need a fluent-speaker review before use",
+          "Only English-language documents actually need review",
+          "AI translation tools are technically unable to translate numbers"
+        ],
+        "answer": 1,
+        "why": "High-stakes documents like house rules or access instructions require a native or fluent speaker's verification before use with a real guest - this is never skippable."
+      },
+      {
+        "q": "Why does the prompt require a back-translation - translating the output back into the source language - as part of the workflow?",
+        "options": [
+          "It simply doubles the word count for thoroughness",
+          "It lets a host who doesn't speak the target language compare the back-translated version against the original to catch meaning that drifted",
+          "Back-translation is a legal requirement for hospitality businesses",
+          "It makes the overall translation process faster"
+        ],
+        "answer": 1,
+        "why": "The back-translation is the core self-check mechanism, letting a host who doesn't speak the target language confirm nothing was lost or changed in meaning."
+      },
+      {
+        "q": "A property picks which languages to support for guest documents based on a guess about likely guest nationalities, rather than actual booking data. What does the lesson say?",
+        "options": [
+          "This is the recommended approach since guesses are usually close enough",
+          "Languages should be picked based on actual guest booking or nationality data, not assumption - this is listed as a common mistake",
+          "All properties should support the same fixed set of five languages",
+          "Guessing is acceptable only for lower-stakes documents"
+        ],
+        "answer": 1,
+        "why": "The lesson explicitly lists picking languages by assumption, rather than real booking history, as a common mistake."
+      }
+    ]
+  }
+}

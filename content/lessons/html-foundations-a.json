@@ -1,0 +1,1503 @@
+{
+  "lessons": [
+    {
+      "slug": "html-b01-what-is-html",
+      "title": "Understand what HTML is and publish your first tiny page",
+      "summary": "Learn what HTML actually is, how it differs from a programming language, how browsers turn it into a page, and write your first heading and paragraph.",
+      "difficulty": "beginner",
+      "minutes": 10,
+      "isFree": true,
+      "goal": "Explain what HTML does in the browser and complete a minimal page with a heading and a paragraph.",
+      "whyItMatters": "Every website you have ever visited arrived in your browser as HTML text. Whatever you go on to build — apps, shops, dashboards, blogs — the final thing users receive is an HTML document, so understanding what that document is and how the browser reads it is the foundation for everything else in web development. Even developers who mostly work in frameworks debug real problems by reading the HTML the browser ended up with.",
+      "steps": [
+        "Read the first two theory sections to understand what a markup language is.",
+        "Read how the browser requests a page and turns the text into pixels.",
+        "Open the starter code in the editor: a valid document with an empty body.",
+        "Add the h1 heading (task 1 and 2), then press Run.",
+        "Add the paragraph (task 3 and 4) and press Run again.",
+        "Watch the preview update and all four checks turn green."
+      ],
+      "prompt": "<body>\n  <h1>My first web page</h1>\n  <p>This page is written in HTML.</p>\n</body>",
+      "promptLabel": "Key code example",
+      "explanation": "The body element holds everything a visitor sees. Inside it, the h1 tag labels its text as the page's main heading and the p tag labels its text as a paragraph. The browser reads those labels, builds an internal tree of elements, and draws each one with sensible default styling — large bold text for the heading, normal text for the paragraph. Nothing here is executed as instructions; the tags only describe what each piece of content is.",
+      "example": "Imagine handing a printed article to a typesetter with sticky notes on it: 'this line is the title', 'these sentences are one paragraph'. The typesetter decides how a title looks and lays the page out accordingly.\n\nHTML works the same way. You never tell the browser 'draw 32px bold text here' — you tell it 'this is a heading', and the browser (helped later by CSS) decides how a heading should look.",
+      "exercise": "In the editor on the right, the document's body is empty. Add an h1 element containing 'My first web page' and, below it, a p element containing 'This page is written in HTML.' Press Run to execute the checks.",
+      "expectedResult": "The preview shows a large bold heading with a normal-sized sentence underneath, and all four checks pass in the feedback console.",
+      "commonMistakes": [
+        "Forgetting the closing tag, e.g. writing <h1>My first web page and moving on. Most elements need a matching closing tag like </h1>.",
+        "Putting visible content outside the body element. Everything a visitor should see belongs between <body> and </body>.",
+        "Expecting HTML to 'run' like a program. It cannot calculate, loop or make decisions — it only describes content.",
+        "Mistyping tag names, e.g. <heading> or <para>. The browser silently ignores tags it does not recognise, so nothing errors — the styling just never appears."
+      ],
+      "proTip": "Right-click any real web page and choose 'View page source'. You will see the exact HTML text the server sent — the same kind of document you are writing in this lesson, just longer.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will learn what an HTML document is and complete your first one by adding a heading and a paragraph to an empty body.",
+        "sections": [
+          {
+            "heading": "A markup language, not a programming language",
+            "body": "HTML stands for HyperText Markup Language. The important word is markup: HTML is a system for labelling pieces of content so that software knows what each piece is. 'This line is the main heading.' 'These sentences form one paragraph.' 'This word links to another page.' That is the entire job.\n\nA programming language, by contrast, expresses instructions: store this value, repeat that step, decide between two branches. HTML has none of that. There are no variables, no loops, no conditions, and nothing in an HTML file ever 'executes'. This is not a weakness — it is a deliberate division of labour. Structure lives in HTML, appearance lives in CSS, and behaviour lives in JavaScript. You are starting with the layer every other layer depends on.\n\nThe 'HyperText' half of the name refers to HTML's founding feature: documents that link to other documents. The ability to jump from page to page through links is what turned a collection of files into the web.",
+            "code": "<!-- HTML describes, it never computes -->\n<h1>Quarterly report</h1>\n<p>Sales rose in March.</p>"
+          },
+          {
+            "heading": "Tags: labels wrapped around content",
+            "body": "The labelling is done with tags. A tag is a name between angle brackets: <p> means 'a paragraph starts here' and </p> — same name with a slash — means 'the paragraph ends here'. The opening tag, the content, and the closing tag together form an element.\n\nBrowsers ship with around a hundred element names, each with an agreed meaning: h1 for the top-level heading, p for a paragraph, a for a link, img for an image, and so on. You cannot invent your own names and expect meaning — <bigtext> is not an error, but no browser attaches any significance to it. Learning HTML is largely learning which element exists for which kind of content, and that is exactly what this course walks through element by element.",
+            "code": "<p>This whole line is one element.</p>\n<!--^opening tag   content    closing tag^-->"
+          },
+          {
+            "heading": "How a page reaches your browser",
+            "body": "Before the browser can display anything, it has to obtain the document. When you type an address and press Enter, the browser sends a request across the internet to the server that hosts that site — essentially a short message saying 'please send me the page at this address'. The server answers with a response, and the body of that response is plain HTML text.\n\nThat is the whole transaction at this level of detail: request goes out, text comes back. There is no magic format — if you saved the response to a file and opened it in a text editor, you would see angle brackets and readable content. Later lessons touch on how images, stylesheets and scripts trigger further requests of their own, but the first thing a browser ever receives for a page is the HTML document.",
+            "code": "Browser:  GET /index.html  ->  Server\nServer:   200 OK + the HTML text  ->  Browser"
+          },
+          {
+            "heading": "From characters to pixels: parsing and rendering",
+            "body": "Once the HTML text arrives, the browser parses it: it reads the characters from top to bottom, recognises the tags, and builds an internal tree of elements called the DOM (Document Object Model). Every element becomes a node in the tree, nested exactly the way the tags nest in your file.\n\nWith the tree built, the browser renders it: it works out where each element sits on the screen, applies default styles (headings large and bold, paragraphs with a little vertical spacing), and paints the pixels. This is why HTML files need no compiling and no installation — the browser is the runtime, and reloading the page simply repeats the parse-and-render cycle on the latest text.\n\nOne consequence worth knowing early: browsers are extremely forgiving parsers. If you forget a closing tag or misspell an element, the browser will not stop with an error message — it silently guesses a repair and renders something. That is convenient, but it means broken HTML often 'looks fine' until it suddenly does not, which is why the checks in this course push you toward writing it correctly from the start."
+          },
+          {
+            "heading": "Your first page, line by line",
+            "body": "The starter code in the editor is already a complete, valid document. The first line, <!DOCTYPE html>, tells the browser to use modern parsing rules. The html element wraps everything. Inside it, head holds information about the page (like its title, shown in the browser tab), and body holds everything a visitor actually sees. A later lesson dissects each of these parts properly; for now you only need to know that your content goes inside body.\n\nYour job is to give the empty body its first two elements: an h1 — the page's single main heading — and a p with one sentence of text. When you press Run, the platform parses your code exactly the way a browser would and verifies each task in the feedback console.",
+            "code": "<body>\n  <h1>My first web page</h1>\n  <p>This page is written in HTML.</p>\n</body>"
+          },
+          {
+            "heading": "What HTML deliberately leaves out",
+            "body": "Notice what you have not written: no colours, no fonts, no sizes, no click-handlers. HTML on its own produces black text on a white background with browser-default sizing, and that is by design. Visual design belongs to CSS, a separate language that reads your HTML structure and dresses it. Interactivity belongs to JavaScript, which can react to clicks and change the page after it loads.\n\nKeeping structure separate pays off constantly: the same HTML can be restyled for print, dark mode or mobile without touching the content, and screen readers or search engines can understand the page without caring how it looks. Throughout this course, whenever you feel the urge to make something 'look right', the answer will almost always be 'correct element now, styling later'."
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>My first web page</title>\n</head>\n<body>\n  <!-- TODO 1: add an <h1> element with the text: My first web page -->\n\n  <!-- TODO 2: add a <p> element with the text: This page is written in HTML. -->\n\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>My first web page</title>\n</head>\n<body>\n  <h1>My first web page</h1>\n\n  <p>This page is written in HTML.</p>\n\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Add an <h1> element inside the body.",
+            "hint": "An h1 needs an opening and a closing tag: <h1>...</h1>. Place it where the first TODO comment sits.",
+            "errorMessage": "No <h1> found — add a main heading element inside the body.",
+            "check": {
+              "type": "selector",
+              "selector": "h1"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Give the heading the text: My first web page.",
+            "hint": "The text goes between the tags: <h1>My first web page</h1>.",
+            "errorMessage": "The <h1> exists but its text should read 'My first web page'.",
+            "check": {
+              "type": "text",
+              "selector": "h1",
+              "pattern": "my first web page"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Add a <p> element below the heading.",
+            "hint": "Paragraphs use the p tag: <p>...</p>. Place it where the second TODO comment sits.",
+            "errorMessage": "No <p> found — add a paragraph element below your heading.",
+            "check": {
+              "type": "selector",
+              "selector": "p"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Give the paragraph the text: This page is written in HTML.",
+            "hint": "Write the sentence between the tags: <p>This page is written in HTML.</p>",
+            "errorMessage": "The paragraph's text should read 'This page is written in HTML.'",
+            "check": {
+              "type": "text",
+              "selector": "p",
+              "pattern": "written in html"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b02-editors-setup",
+      "title": "Set up a working environment and master the edit-run-see loop",
+      "summary": "Choose an editor, create and save .html files, open them in a browser, inspect pages with view-source and DevTools, and learn how this course's built-in editor mirrors that workflow.",
+      "difficulty": "beginner",
+      "minutes": 9,
+      "isFree": true,
+      "goal": "Prove you can drive the full editing loop: change code, run it, and confirm the result in the preview.",
+      "whyItMatters": "Web development is thousands of tiny cycles of changing a file and checking the result, so a comfortable setup directly multiplies your speed. Knowing how to open any page's source and inspect it in DevTools also turns the entire web into a learning resource — you can look at how any site is built. The habits you form here carry unchanged into professional work.",
+      "steps": [
+        "Read about editors and why plain text matters.",
+        "Read how .html files are created, saved and opened in a browser.",
+        "Read the view-source and DevTools section — try both on any real website.",
+        "Read how this course's built-in editor compresses the same loop.",
+        "Complete tasks 1 and 2: retitle the page and fix the heading, then press Run.",
+        "Complete task 3: add the second paragraph and press Run again."
+      ],
+      "prompt": "1. Edit index.html in your editor\n2. Save the file (Ctrl+S / Cmd+S)\n3. Refresh the browser tab (F5)\n4. See the change — then repeat",
+      "promptLabel": "Key code example",
+      "explanation": "This four-step cycle is the whole workflow of hand-written HTML. The editor changes the text on disk, saving makes the change real, and refreshing makes the browser re-request and re-render the file. Nothing is compiled and nothing is installed, which is why HTML is the friendliest possible starting point: the feedback loop is seconds long. This course's built-in editor shortens the loop further by combining save and refresh into a single Run button.",
+      "example": "A designer notices a typo on their portfolio page. They open the folder in VS Code, click index.html, fix the word, press Cmd+S, switch to the browser, press F5 — done in fifteen seconds.\n\nWithout an editor-plus-browser setup they would be uploading files to some server just to check a change, turning a fifteen-second fix into a ten-minute chore. Fast local feedback is the point of this lesson.",
+      "exercise": "In the editor on the right, make three small edits to prove the loop works: change the title text to 'My workspace', change the heading to 'Hello, world!', and add a second paragraph containing the words 'edit, run, see'. Press Run after each edit.",
+      "expectedResult": "The preview shows the corrected heading with two paragraphs beneath it, the checks all pass, and — on the real web — the new title would appear in the browser tab.",
+      "commonMistakes": [
+        "Writing HTML in a word processor like Word or Google Docs. Those save formatting data, not plain text, and browsers cannot read the result — always use a code editor or plain-text editor.",
+        "Saving the file as page.html.txt. Some systems hide extensions and quietly append .txt; make sure the file really ends in .html.",
+        "Editing the file but forgetting to save before refreshing the browser, then concluding the change 'did not work'.",
+        "Refreshing a different tab or an old copy of the file. Check the address bar points at the file you are actually editing."
+      ],
+      "proTip": "In VS Code, type ! on the first line of an empty .html file and press Tab — the Emmet shortcut expands into a complete valid HTML skeleton so you never type the boilerplate by hand.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will practise the fundamental workflow of web development — edit, run, see — by making three small verified changes to a page.",
+        "sections": [
+          {
+            "heading": "Editors: any plain-text tool, but a code editor helps",
+            "body": "An HTML file is plain text, so technically Notepad on Windows or TextEdit on a Mac can write one. What a dedicated code editor adds is comfort: colouring for tags and attributes so mistakes jump out, automatic closing tags, indentation help, and a file tree for whole projects.\n\nThe most common free choice is Visual Studio Code (VS Code), which runs on Windows, macOS and Linux. Alternatives include Sublime Text, Zed, and heavier IDEs like WebStorm — for HTML they all do the same core job, so pick one and do not agonise over it.\n\nOne tool to actively avoid: word processors. Word and Google Docs store text with embedded formatting in their own file formats; even if you type perfect tags into them, the saved file is not plain text and a browser cannot use it. If you use TextEdit on macOS, switch it to plain-text mode first (Format menu, Make Plain Text)."
+          },
+          {
+            "heading": "Creating and saving an .html file",
+            "body": "A web page starts life as an ordinary file whose name ends in .html — for example index.html or about.html. The extension is how your operating system and other tools know to treat the contents as HTML; the file itself is still just text.\n\nThe workflow: create a folder for your project, open that folder in your editor, create a new file, name it with the .html extension, type your markup, and save. Get in the habit of saving constantly (Ctrl+S on Windows/Linux, Cmd+S on macOS) — an unsaved change exists only in the editor's memory, and the browser can only ever see what is on disk.\n\nTwo naming habits will save you pain later: use only lowercase letters, digits and hyphens in file names (about-us.html, not About Us.html), and name your site's front page index.html — a convention web servers rely on, covered fully in the file-paths lesson."
+          },
+          {
+            "heading": "Opening the file in a browser",
+            "body": "To view your page, open the saved file in any browser: double-click it in your file manager, drag it onto a browser window, or use the browser's File-Open command. The address bar will show a path beginning with file:// instead of https:// — that means the browser loaded the document straight from your disk with no server and no internet involved.\n\nThis local viewing is exactly how you will work through most of this course's ideas: no hosting, no uploading, no build step. When your page changes, the browser does not notice by itself; you refresh the tab (F5, or Ctrl+R / Cmd+R) to make it re-read the file and re-render.\n\nMany developers eventually add a small convenience like VS Code's Live Server extension, which auto-refreshes the browser on every save. Nice to have, never required."
+          },
+          {
+            "heading": "View-source and the DevTools inspector",
+            "body": "Browsers offer two windows into any page's HTML, and both are worth learning immediately. View-source (right-click the page, then 'View page source', or Ctrl+U / Cmd+Option+U) shows the raw text the server sent, exactly as written — the same kind of document you are typing in this course.\n\nDevTools (right-click, 'Inspect', or F12) is more powerful: its Elements panel shows the live DOM tree the browser built after parsing, including any repairs the browser made and any changes scripts applied. You can hover elements to highlight them on the page, expand and collapse the tree, and even edit values temporarily to experiment — the edits vanish on refresh and never touch the real file.\n\nThe difference matters: view-source is what was written, the inspector is what the browser understood. When those two disagree, you have usually found your bug. One more consequence to internalise early: because anyone can open either view on your page, nothing in HTML is ever secret."
+          },
+          {
+            "heading": "How this course's built-in editor works",
+            "body": "The editor on the right side of every coding lesson is a compressed version of the setup above, so you can practise without installing anything. The code pane is your editor; the Run button is 'save plus refresh' in one click; the preview renders your document just as a browser tab would; and the feedback console below plays the role of a very patient reviewer, re-checking each task against your code on every Run.\n\nA green check means the task's requirement was found in your code; a red one shows a diagnostic message telling you what is missing. The checks parse your code the same way a browser parses a page, so everything you write here transfers directly to files on your own machine — and you are encouraged to redo any lesson locally in VS Code for practice."
+          },
+          {
+            "heading": "The loop that runs your whole career",
+            "body": "Edit, run, see. Every change you ever make to a web page — today's first paragraph or a production fix years from now — travels through this loop, and the three tasks in this lesson exist purely to make you execute it consciously several times.\n\nWork in small steps: make one change, run it, confirm it, move on. Beginners who type for ten minutes before checking anything end up debugging ten changes at once; developers who loop tightly always know exactly which edit broke what. If a change does not show up, the cause is almost always mechanical — file not saved, wrong tab refreshed, wrong file edited — so check those three before doubting your code."
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <!-- TODO 1: change the title text to: My workspace -->\n  <title>Untitled</title>\n</head>\n<body>\n  <!-- TODO 2: change this heading to read exactly: Hello, world! -->\n  <h1>Hi</h1>\n\n  <p>This page lives in the course's built-in editor.</p>\n\n  <!-- TODO 3: add a second paragraph containing the words: edit, run, see -->\n\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>My workspace</title>\n</head>\n<body>\n  <h1>Hello, world!</h1>\n\n  <p>This page lives in the course's built-in editor.</p>\n\n  <p>The workflow never changes: edit, run, see.</p>\n\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Change the page title from 'Untitled' to 'My workspace'.",
+            "hint": "Edit the text between <title> and </title> in the head.",
+            "errorMessage": "The <title> should read 'My workspace' — in a real browser this is the text on the tab.",
+            "check": {
+              "type": "text",
+              "selector": "title",
+              "pattern": "my workspace"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Change the heading text to: Hello, world!",
+            "hint": "Only the text between <h1> and </h1> changes — the tags stay as they are.",
+            "errorMessage": "The <h1> should read 'Hello, world!'.",
+            "check": {
+              "type": "text",
+              "selector": "h1",
+              "pattern": "hello,\\s*world"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Add a second paragraph to the body.",
+            "hint": "Write another <p>...</p> below the existing paragraph.",
+            "errorMessage": "Expected at least two <p> elements in the body — add a second paragraph.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "p",
+              "min": 2
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Make the new paragraph contain the words: edit, run, see.",
+            "hint": "Any sentence works as long as it includes the exact phrase 'edit, run, see'.",
+            "errorMessage": "Could not find the phrase 'edit, run, see' anywhere in your code.",
+            "check": {
+              "type": "source",
+              "pattern": "edit,\\s*run,\\s*see"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b03-document-anatomy",
+      "title": "Build the complete anatomy of a valid HTML document",
+      "summary": "Understand every part of the standard skeleton — doctype, html, head, body, lang and title — and assemble a fully valid document from an incomplete one.",
+      "difficulty": "beginner",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Assemble a minimal, fully valid HTML document and explain what each structural part is for.",
+      "whyItMatters": "Every page you will ever write sits inside this same skeleton, and small omissions in it cause disproportionate trouble: a missing doctype flips browsers into a legacy rendering mode, a missing lang attribute makes screen readers mispronounce the whole page, and a missing charset declaration can garble every non-English character. Getting the skeleton right is thirty seconds of work that prevents whole categories of bugs, so professionals type it (or expand it from a snippet) without thinking.",
+      "steps": [
+        "Read what the doctype line does and why it must come first.",
+        "Read about the html root element and its lang attribute.",
+        "Read what belongs in head versus body.",
+        "Study the minimal valid document section as a reference.",
+        "In the editor, add the doctype (task 1) and lang attribute (task 2).",
+        "Add the title in the head (task 3) and wrap the content in a body (task 4), running the checks after each step."
+      ],
+      "prompt": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Document anatomy</title>\n</head>\n<body>\n  <h1>Hello</h1>\n</body>\n</html>",
+      "promptLabel": "Key code example",
+      "explanation": "The doctype line switches the browser into standards mode before any parsing happens. The html element is the single root that contains everything, and its lang attribute declares the page's human language for screen readers, translators and search engines. The head carries information about the document — here the character encoding and the tab title — while the body carries everything rendered in the viewport. This exact skeleton, plus your content, is a complete valid web page.",
+      "example": "Two copies of the same page differ by one line: one starts with <!DOCTYPE html>, the other omits it.\n\nThe first renders in standards mode with modern, predictable CSS behaviour. The second silently drops into 'quirks mode', where the browser imitates 1990s bugs for backwards compatibility — box sizes compute differently and layouts subtly break. Nothing warns you; the page just misbehaves. That is why the doctype is non-negotiable, even though the page 'works' without it.",
+      "exercise": "In the editor on the right, the document is incomplete: no doctype, no lang, no title, and content floating outside any body element. Repair all four problems so the document is fully valid.",
+      "expectedResult": "The preview looks almost unchanged — a heading and a paragraph — but the document underneath is now structurally valid, and all four checks pass.",
+      "commonMistakes": [
+        "Placing the doctype anywhere but the very first line. Even a blank comment above it can push some browsers into quirks mode.",
+        "Writing visible content inside head, or metadata like <title> inside body. Browsers attempt repairs, but the results are unpredictable.",
+        "Forgetting lang on the html element, or setting it wrong (lang=\"en\" on a Greek page) — screen readers will read the text with the wrong pronunciation rules.",
+        "Nesting html, head or body more than once. Each of the three appears exactly one time per document."
+      ],
+      "proTip": "The W3C's free validator at validator.w3.org checks any HTML file or URL against the standard and lists every structural mistake — run your practice pages through it until valid skeletons become muscle memory.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will repair an incomplete document until it is fully valid: doctype, html with lang, a titled head, and a body wrapping the content.",
+        "sections": [
+          {
+            "heading": "The doctype: one line, one job",
+            "body": "The first line of every modern HTML document is <!DOCTYPE html>. It is not an element and it has no closing tag — it is a declaration aimed at the parser, and its single job is to switch the browser into standards mode, where HTML and CSS behave according to the current specifications.\n\nWithout it, browsers fall back to quirks mode, a compatibility mode that deliberately reproduces the bugs of ancient browsers so that 1990s pages still render as their authors intended. Your CSS will compute widths differently, some defaults change, and layouts drift in ways that are miserable to debug because no error is ever reported.\n\nOlder doctypes were long and unmemorable, referencing DTD files for HTML 4.01 or XHTML. HTML5 reduced all of that to the shortest string that reliably triggers standards mode. The declaration is case-insensitive — <!doctype html> works — but the uppercase DOCTYPE spelling is the near-universal convention.",
+            "code": "<!DOCTYPE html>\n<!-- must be the very first thing in the file -->"
+          },
+          {
+            "heading": "html: the root element and its lang attribute",
+            "body": "Directly after the doctype comes <html>, the root element. Everything else in the document nests inside it, and it appears exactly once. Its closing tag </html> is the last line of the file.\n\nThe root element should always carry a lang attribute stating the primary human language of the page's content: lang=\"en\" for English, lang=\"el\" for Greek, lang=\"de\" for German, and so on, using standard short language codes. Regional variants exist too, like lang=\"en-GB\" for British English.\n\nThis one attribute does a surprising amount of work. Screen readers pick their pronunciation engine from it — an English page without lang read with the wrong voice is close to unintelligible. Browsers use it to decide when to offer translation, search engines use it for language targeting, and CSS features like hyphenation rules depend on it. It is the single cheapest accessibility win in HTML.",
+            "code": "<html lang=\"en\">\n  <!-- entire document lives in here -->\n</html>"
+          },
+          {
+            "heading": "head: information about the page",
+            "body": "The head element is the document's control panel: nothing inside it renders in the page area, but everything inside it describes or configures the page. It must be the first child of html, before body.\n\nTwo residents matter immediately. <meta charset=\"UTF-8\"> declares the character encoding, telling the browser how to decode the file's bytes into characters; UTF-8 covers essentially every language and symbol, and declaring it early prevents accented letters, Greek text or emoji from rendering as garbage. <title> sets the text shown in the browser tab, in bookmarks, and as the clickable headline in search results — every page needs exactly one, and it belongs only in the head.\n\nAs your pages grow, the head accumulates more: <link> tags that attach CSS files, <meta name=\"description\"> for search snippets, <meta name=\"viewport\"> for mobile scaling, favicons, and scripts. All of that arrives in later lessons; the pattern to fix now is simply that machine-facing information lives in head.",
+            "code": "<head>\n  <meta charset=\"UTF-8\">\n  <title>Document anatomy</title>\n</head>"
+          },
+          {
+            "heading": "body: everything the visitor sees",
+            "body": "The body element is the second and last child of html, and it holds every piece of rendered content: headings, paragraphs, images, links, forms — if a visitor can see it or interact with it in the page, it lives inside body.\n\nLike html and head, body appears exactly once. Content written outside it — floating directly inside html, or after </body> — is technically invalid; browsers will rescue it by silently relocating it into the body during parsing, but relying on error recovery makes your source misleading: what you read in the file no longer matches the tree the browser built. Keeping the boundary clean means view-source and DevTools tell the same story."
+          },
+          {
+            "heading": "The minimal valid document",
+            "body": "Putting the parts together produces the canonical skeleton — worth memorising, because you will start every project from it, and every framework you ever use generates some variation of it.\n\nRead it top to bottom as a browser would: switch to standards mode (doctype), open the root and learn the language (html lang), decode text as UTF-8 and note the tab title (head), then render the visible content (body). Ten lines, four concepts, and a foundation that the rest of this course builds on without ever changing.",
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Page title</title>\n</head>\n<body>\n  <h1>Visible content starts here</h1>\n</body>\n</html>"
+          },
+          {
+            "heading": "What happens when parts are missing",
+            "body": "HTML parsers never give up, so each omission has a specific, quiet consequence rather than an error. No doctype: quirks mode, and CSS behaves oddly forever after. No lang: assistive technology guesses, often wrongly. No charset meta: the browser guesses the encoding, and non-ASCII characters may display as mojibake like Î± or â€™. No title: the tab shows the file name or URL, search results look broken, and validators flag the page.\n\nOmitting the html, head or body tags themselves is the strangest case: the HTML5 parser actually synthesises the missing elements, so document.querySelector('body') finds a body even in a file that never wrote one. The page 'works', which is precisely the trap — the structure exists only in the browser's imagination, not in your source, and the mismatches surface later as confusing bugs. Write the full skeleton every time; it costs seconds."
+          }
+        ],
+        "starterCode": "<!-- TODO 1: add the doctype declaration on the very first line -->\n<!-- TODO 2: add lang=\"en\" to the html element -->\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <!-- TODO 3: add a <title> element reading: Document anatomy -->\n</head>\n<!-- TODO 4: wrap the two elements below in a <body> element -->\n<h1>Document anatomy</h1>\n<p>Every valid page starts from the same skeleton.</p>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Document anatomy</title>\n</head>\n<body>\n  <h1>Document anatomy</h1>\n  <p>Every valid page starts from the same skeleton.</p>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Add <!DOCTYPE html> as the very first line of the document.",
+            "hint": "It goes above <html>, with nothing before it — replace the first TODO comment.",
+            "errorMessage": "The document does not start with <!DOCTYPE html> — without it browsers use quirks mode.",
+            "check": {
+              "type": "doctype"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Declare the page language by adding lang=\"en\" to the <html> tag.",
+            "hint": "Attributes go inside the opening tag: <html lang=\"en\">.",
+            "errorMessage": "The <html> element has no lang=\"en\" attribute — screen readers need it to pronounce the page correctly.",
+            "check": {
+              "type": "attr",
+              "selector": "html",
+              "attr": "lang",
+              "value": "en"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Add a <title> element inside the head with the text: Document anatomy.",
+            "hint": "It belongs between <head> and </head>: <title>Document anatomy</title>.",
+            "errorMessage": "No <title> found inside <head> — the browser tab would show only the file name.",
+            "check": {
+              "type": "selector",
+              "selector": "head > title"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Wrap the heading and paragraph in a <body> element.",
+            "hint": "Open <body> before the <h1> and close it with </body> after the paragraph, just before </html>.",
+            "errorMessage": "The visible content should sit inside an explicit <body> element.",
+            "check": {
+              "type": "selector",
+              "selector": "body"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Make sure the title text reads: Document anatomy.",
+            "hint": "The words between <title> and </title> should be exactly 'Document anatomy'.",
+            "errorMessage": "The <title> element exists but its text should read 'Document anatomy'.",
+            "check": {
+              "type": "text",
+              "selector": "title",
+              "pattern": "document anatomy"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b04-elements-nesting",
+      "title": "Master elements, tags, nesting and the void-element rules",
+      "summary": "Learn the anatomy of an element, how elements nest inside each other, which elements never take a closing tag, and why lowercase is the universal convention.",
+      "difficulty": "beginner",
+      "minutes": 11,
+      "isFree": false,
+      "goal": "Nest elements correctly, use void elements properly, and explain the difference between the two kinds.",
+      "whyItMatters": "Almost every malformed page in the wild traces back to broken nesting or a misunderstood void element, and because browsers silently repair such mistakes, they surface later as mysterious styling and scripting bugs rather than clear errors. Nesting is also the mental model behind everything advanced: CSS selectors, JavaScript DOM traversal and framework components all operate on the element tree you learn to build here.",
+      "steps": [
+        "Read the anatomy of an element: opening tag, content, closing tag.",
+        "Read the nesting rules — the 'last opened, first closed' principle.",
+        "Read the void elements section and skim the full list.",
+        "Read about the self-closing slash myth and the lowercase convention.",
+        "In the editor, complete the strong and em nesting tasks (1 and 2).",
+        "Add the hr and br void elements (tasks 3 and 4) and run all checks."
+      ],
+      "prompt": "<p>Every element starts with an <strong>opening <em>tag</em></strong>.</p>\n<hr>\n<p>Void elements need<br>no closing tag.</p>",
+      "promptLabel": "Key code example",
+      "explanation": "The first paragraph shows correct nesting: em opens inside strong, so it must close before strong does — tags close in the reverse order they opened, like boxes inside boxes. The hr and br lines show the other kind of element: void elements consist of a single tag, carry no content, and never take a closing tag. Between these two patterns — container elements that wrap content and void elements that stand alone — you can read or write any HTML structure.",
+      "example": "A developer writes <strong><em>warning</strong></em>, crossing the tags. The page still shows bold italic text, so the mistake goes unnoticed.\n\nBut the browser had to guess a repair while parsing, and the DOM tree it built does not match the source. Weeks later a CSS rule targeting 'em inside strong' applies inconsistently, and a script that walks the tree finds an element in an unexpected place. Correctly nested tags — closed in reverse order of opening — keep the file and the browser's tree identical, which is what makes pages debuggable.",
+      "exercise": "In the editor on the right, wrap the marked words in a strong element, nest an em element inside it, insert an hr between the two paragraphs, and add a br inside the last paragraph. Run the checks as you go.",
+      "expectedResult": "The preview shows a paragraph with bold text containing an italic word, a horizontal rule across the page, and a second paragraph broken across two lines. All four checks pass.",
+      "commonMistakes": [
+        "Crossing tags, e.g. <strong><em>text</strong></em>. Close the most recently opened element first — always.",
+        "Writing closing tags for void elements, such as </br> or </img>. They do not exist; the browser discards them.",
+        "Believing the trailing slash in <br/> does something in HTML. It is permitted and ignored — it does not 'close' anything.",
+        "Mixing letter cases like <P> and </p>. Browsers accept it, but the universal convention is lowercase everywhere."
+      ],
+      "proTip": "When you cannot spot a nesting error by eye, open DevTools and compare the Elements panel against your source — wherever the browser's tree differs from what you wrote is exactly where it repaired your markup.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will practise the two structural patterns of HTML — container elements that nest and void elements that stand alone — inside one small page.",
+        "sections": [
+          {
+            "heading": "Anatomy of an element",
+            "body": "Most HTML elements have three parts: an opening tag, some content, and a closing tag. The opening tag is the element name in angle brackets, like <p>. The closing tag repeats the name with a leading slash, </p>. Everything between them is the element's content — text, other elements, or both.\n\nTerminology worth fixing early, because documentation uses it precisely: the tag is the bracketed marker itself, while the element is the whole package of opening tag, content and closing tag. So a page does not 'contain p tags with text in them'; it contains p elements, each delimited by a pair of tags.\n\nThe closing tag is not decoration. It tells the parser where the element's influence ends — where the paragraph stops, where the bold text stops. Omit one and the browser must guess, and although the HTML standard actually permits omitting a few specific closing tags (p and li among them) under exact rules, professionals close everything explicitly rather than memorise the exceptions.",
+            "code": "<p>content lives here</p>\n<!--^opening        closing^-->"
+          },
+          {
+            "heading": "Nesting: boxes inside boxes",
+            "body": "Elements can contain other elements, and that containment is what gives a page its structure: the body contains paragraphs, a paragraph contains an emphasised phrase, the phrase might contain a link. The result is a tree — each element has one parent and any number of children — and this tree is exactly the DOM the browser builds when parsing.\n\nThe single rule of nesting: an element must close before its parent does. Put differently, the most recently opened element always closes first, like taking nested boxes apart. <strong><em>text</em></strong> is correct; <strong><em>text</strong></em> is crossed and forces the browser into repair mode.\n\nIndentation makes trees readable. Each level of nesting steps in by two spaces (the most common convention), so the visual shape of your source mirrors the shape of the tree. Browsers ignore the indentation completely — it exists purely for humans, and it is the difference between a file you can scan and a file you have to decode.",
+            "code": "<body>\n  <p>\n    This is <strong>very <em>important</em></strong> news.\n  </p>\n</body>"
+          },
+          {
+            "heading": "Void elements: no content, no closing tag",
+            "body": "A minority of elements represent things that cannot contain content: a line break is just a break, an image is a self-contained box, a metadata declaration is a single statement. These are void elements, and they consist of exactly one tag — writing a closing tag for them is invalid.\n\nThe full list is short enough to know: area, base, br, col, embed, hr, img, input, link, meta, source, track and wbr. From this course so far you have already met three — meta in the head, and br and hr in upcoming text lessons. The ones you will use constantly are br (line break), hr (thematic break), img (image), input (form field), meta and link (both head-only).\n\nVoid elements still take attributes — in fact attributes are their whole interface, since they have no content: <img src=\"cat.jpg\" alt=\"A sleeping cat\"> is configured entirely through attributes. What they never have is anything 'inside' them.",
+            "code": "<br>\n<hr>\n<img src=\"cat.jpg\" alt=\"A sleeping cat\">\n<input type=\"text\">\n<meta charset=\"UTF-8\">"
+          },
+          {
+            "heading": "The self-closing slash myth",
+            "body": "You will constantly meet void elements written with a trailing slash: <br/> or <br />. Many tutorials call this 'self-closing' and imply the slash closes the element. In HTML5 that is a myth: the slash is permitted, completely ignored by the parser, and changes nothing. <br> and <br/> produce the identical result.\n\nThe slash is a fossil from XHTML, an early-2000s XML-based variant of HTML where every element genuinely had to be closed and <br/> was the required form. The syntax survived in muscle memory, tooling, and frameworks — JSX, the templating language of React, still requires it. So you must be able to read the slash form; whether you write it in plain HTML is a style choice, and this course writes void elements without the slash, matching the HTML standard's own examples.\n\nThe trap to avoid is the reverse inference: seeing <br/> work does not mean <div/> works. On non-void elements the slash is also ignored, so <div/> is parsed as an ordinary opening <div> that now needs a closing tag — a genuinely confusing bug when it bites."
+          },
+          {
+            "heading": "Case-insensitivity and the lowercase convention",
+            "body": "HTML tag and attribute names are case-insensitive: <P>, <p> and even <pArAgRaPh-style mixtures of case in longer names all parse identically. Uppercase tags were actually the dominant style in the 1990s, and you will still see them in old codebases.\n\nModern practice is lowercase, everywhere, without exception, and the reasons are practical rather than aesthetic: lowercase is what every current style guide, formatter and linter enforces; XML-based contexts such as SVG embedded in HTML are case-sensitive, so a lowercase habit never betrays you; and mixed-case markup reads as noise once your eyes are trained. Values you write — like the text of a title attribute — keep whatever case you give them; only the names of tags and attributes are case-blind.\n\nOne related habit: the DOCTYPE from the previous lesson is conventionally uppercase (<!DOCTYPE html>) — it is a declaration, not a tag, and follows its own tradition."
+          },
+          {
+            "heading": "Reading the tree like the browser does",
+            "body": "Put the pieces together and you can now parse HTML in your head the way the browser does: walk the file top to bottom, push each opening tag onto a mental stack, attach content to whatever is currently open, and pop the stack at each closing tag. Void elements attach and complete in one step, since nothing can nest inside them.\n\nThis mental model is the lesson's real payoff. CSS selectors like 'p strong' mean 'a strong somewhere inside a p' — a statement about the tree. JavaScript's parentElement and children walk the same tree. When this course later introduces lists, tables and forms, each is just a prescribed nesting pattern: which children are allowed inside which parents. Master the tree now and every later structure is a variation, not a new idea."
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Elements and nesting</title>\n</head>\n<body>\n  <h1>Elements and nesting</h1>\n\n  <!-- TODO 1: wrap the words \"opening tag\" in a <strong> element -->\n  <!-- TODO 2: then, inside that strong, wrap just the word \"tag\" in an <em> element -->\n  <p>Every element starts with an opening tag.</p>\n\n  <!-- TODO 3: add a <hr> element between the two paragraphs -->\n\n  <!-- TODO 4: add a <br> inside this paragraph, right before the words \"no closing tag\" -->\n  <p>Void elements need no closing tag.</p>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Elements and nesting</title>\n</head>\n<body>\n  <h1>Elements and nesting</h1>\n\n  <p>Every element starts with an <strong>opening <em>tag</em></strong>.</p>\n\n  <hr>\n\n  <p>Void elements need<br>no closing tag.</p>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Wrap the words 'opening tag' in the first paragraph in a <strong> element.",
+            "hint": "Place <strong> before 'opening' and </strong> after 'tag', inside the paragraph.",
+            "errorMessage": "No <strong> element found inside a paragraph — wrap the words 'opening tag' in <strong>...</strong>.",
+            "check": {
+              "type": "selector",
+              "selector": "p strong"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Nest an <em> element around just the word 'tag', inside the strong element.",
+            "hint": "The em opens after the strong and closes before it: <strong>opening <em>tag</em></strong>.",
+            "errorMessage": "No <em> found inside the <strong> — remember: last opened, first closed.",
+            "check": {
+              "type": "selector",
+              "selector": "strong em"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Add an <hr> element between the two paragraphs.",
+            "hint": "hr is a void element: a single tag, no closing tag — just <hr> on its own line.",
+            "errorMessage": "No <hr> found — add a thematic break between the two paragraphs.",
+            "check": {
+              "type": "selector",
+              "selector": "hr"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Add a <br> inside the last paragraph so 'no closing tag' starts on a new line.",
+            "hint": "Insert <br> into the sentence: ...need<br>no closing tag. No closing </br> exists.",
+            "errorMessage": "No <br> found inside a paragraph — insert a single <br> tag before 'no closing tag'.",
+            "check": {
+              "type": "selector",
+              "selector": "p br"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b05-attributes",
+      "title": "Configure any element with attributes",
+      "summary": "Learn attribute syntax inside out — quoting rules, boolean attributes, multiple attributes per tag — and preview the global attributes id, class, title, lang and style.",
+      "difficulty": "beginner",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Write well-formed attributes of every kind: valued, boolean, multiple on one tag, and values containing spaces.",
+      "whyItMatters": "Attributes are how every element is configured: where a link points, what an image shows, which field is disabled, how CSS and JavaScript find an element at all. From this lesson onward, every element the course introduces comes with its own attributes, so the syntax rules you learn here — quoting, booleans, globals — repeat in every single lesson that follows. Sloppy attribute habits, like unquoted values, are also a classic source of silently broken pages.",
+      "steps": [
+        "Read the attribute syntax section and the quoting rules.",
+        "Read about boolean attributes and multiple attributes on one tag.",
+        "Skim the global attributes tour — you will meet each one again later.",
+        "In the editor, add id and class to the intro paragraph (tasks 1 and 2).",
+        "Describe the image with alt and give it a multi-word title (tasks 3 and 4).",
+        "Disable the button with a boolean attribute (task 5) and run all checks."
+      ],
+      "prompt": "<p id=\"intro\" class=\"note\">Attributes configure elements.</p>\n<img src=\"kitten.jpg\" alt=\"A grey kitten\" title=\"Adopted in 2026\">\n<button disabled>Send</button>",
+      "promptLabel": "Key code example",
+      "explanation": "Each attribute is a name, an equals sign, and a quoted value, written inside the opening tag and separated from its neighbours by spaces. The paragraph carries two attributes; the img carries three, including values with spaces that the quotes hold together. The button shows the other form: disabled is a boolean attribute whose bare presence switches the behaviour on — it needs no value at all. These two forms cover every attribute in HTML.",
+      "example": "A developer writes <img src=cat photo.jpg> without quotes. The browser reads the value as just 'cat', treats 'photo.jpg' as a nonsense attribute named photo.jpg, and the image breaks with no error message.\n\nWith quotes — <img src=\"cat photo.jpg\"> — the space is safely part of the value and the image loads. Quoting every value, every time, deletes this entire class of bug for the cost of two keystrokes.",
+      "exercise": "In the editor on the right, give the intro paragraph an id and a class, describe the image with an alt attribute, add a title whose value contains spaces, and disable the button with a boolean attribute. Run the checks after each addition.",
+      "expectedResult": "The preview shows the same page — plus a greyed-out, unclickable Send button, and a tooltip when you hover the image. All five checks pass; most attribute work is invisible until CSS, JavaScript or assistive technology reads it.",
+      "commonMistakes": [
+        "Leaving values unquoted. It works until the value contains a space or special character, then fails silently — quote everything, always.",
+        "Writing attributes outside the opening tag, e.g. <p>text</p id=\"intro\">. Attributes only ever live inside the opening tag.",
+        "Repeating an attribute on one tag, like class=\"a\" class=\"b\". Only the first survives; to give two classes, put both names in one value: class=\"a b\".",
+        "Writing boolean attributes as disabled=\"false\" and expecting them to turn off. Presence is what counts — any value, even \"false\", still means on. Remove the attribute to disable it."
+      ],
+      "proTip": "In DevTools' Elements panel you can double-click any attribute to edit it live — toggle a disabled off, change a class — and watch the page react instantly. It is the fastest way to build intuition for what each attribute controls.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will configure a paragraph, an image and a button with every kind of attribute: identifiers, descriptions, multi-word values and a boolean switch.",
+        "sections": [
+          {
+            "heading": "Attribute syntax: name equals quoted value",
+            "body": "An attribute is extra configuration attached to an element, and it is always written inside the opening tag (or the single tag of a void element), never in the closing tag and never in the content. The pattern is name=\"value\": the attribute's name, an equals sign, and the value in quotes. Multiple attributes are separated by spaces, and their order never matters — src before alt or after, the browser does not care.\n\nAttribute names, like tag names, are case-insensitive and conventionally lowercase. Values keep their exact case: alt=\"A grey Kitten\" preserves that capital K.\n\nEach element understands its own set of attributes. src means something on an img and nothing on a p; unknown attributes are not errors, they are simply ignored — which means a typo like scr=\"cat.jpg\" fails silently. When an attribute 'does not work', check its spelling first.",
+            "code": "<img src=\"kitten.jpg\" alt=\"A grey kitten\">\n<!--  name=\"value\"    name=\"value\"     -->"
+          },
+          {
+            "heading": "Quoting: double, single, and why unquoted is a trap",
+            "body": "Values may be wrapped in double quotes or single quotes — the two are functionally identical, and the only rule is that the closing quote must match the opening one. Double quotes are the dominant convention in HTML, and this course uses them throughout. The practical use for single quotes is a value that itself contains a double quote: title='She said \"hello\"'.\n\nTechnically, HTML also permits unquoted values when they contain no spaces or special characters: <img src=cat.jpg> parses fine. Do not build the habit. The moment a value gains a space — a file name like cat photo.jpg, or a title with several words — the unquoted version shatters: the parser cuts the value at the first space and mangles the rest of the tag into junk attributes, with no error reported.\n\nThe professional rule is absolute and simple: quote every attribute value, every time. It costs nothing and makes the failure mode impossible.",
+            "code": "<a href=\"page.html\" title=\"Opens the about page\">About</a>\n<p title='She said \"hello\" twice'>Quoted quote inside.</p>"
+          },
+          {
+            "heading": "Boolean attributes: presence is the whole message",
+            "body": "Some attributes carry no information beyond existing. disabled on a form control, hidden on any element, checked on a checkbox, required on an input, readonly, autofocus — these are boolean attributes: if the attribute is present, the feature is on; if absent, off. No value is needed, and <button disabled> is the idiomatic form.\n\nThe counterintuitive part: the value, if you write one, is ignored. disabled=\"true\", disabled=\"disabled\" and even disabled=\"false\" all mean exactly the same as bare disabled — present, therefore on. There is no way to write the attribute and have it mean off; the only off switch is removing the attribute entirely. This trips up beginners constantly, especially those arriving from programming languages where false means false.\n\nYou will meet most boolean attributes properly in the forms lessons; for now, recognise the pattern and remember the rule: presence on, absence off, value irrelevant.",
+            "code": "<button disabled>Send</button>\n<input type=\"checkbox\" checked>\n<p hidden>Not rendered at all.</p>\n\n<!-- trap: this button is STILL disabled -->\n<button disabled=\"false\">Send</button>"
+          },
+          {
+            "heading": "The global attributes: a guided preview",
+            "body": "Most attributes belong to specific elements, but a set of global attributes is valid on every element. Five of them matter immediately.\n\nid gives an element a unique name on the page — unique meaning exactly that: each id value may appear once per document. CSS targets it with #intro, JavaScript finds it with getElementById, and links can jump straight to it. class attaches one or more reusable labels; unlike id, any number of elements can share a class, and one element can hold several class names separated by spaces inside a single value: class=\"note highlight\". Classes are the workhorse of CSS styling.\n\ntitle attaches advisory text that most desktop browsers reveal as a tooltip on hover — useful as a supplement, but never put essential information there, since touch-screen and keyboard users may never see it. lang, which you set on the html root in the anatomy lesson, can also mark a smaller region as being in another language: <span lang=\"el\">. And style embeds CSS declarations directly on one element — you will see it in examples and DevTools experiments, but real styling belongs in stylesheets, where one rule can serve a thousand elements.",
+            "code": "<p id=\"intro\" class=\"note highlight\" title=\"Shown as a tooltip\">\n  One paragraph, three global attributes.\n</p>"
+          },
+          {
+            "heading": "Reading a heavily attributed tag",
+            "body": "Real-world tags often stack four or five attributes, and beginners find them noisy until they adopt the right reading strategy: identify the element name first, then scan the attributes as independent name=\"value\" pairs, in any order, each answering one question about the element.\n\nTake <input type=\"email\" id=\"user-email\" class=\"field wide\" required placeholder=\"you@example.com\">. Element: input, so a form field. type says which kind. id names this one field uniquely. class labels it for styling, twice. required is boolean — the field must be filled. placeholder supplies the grey hint text. Five independent facts, no interactions between them, no order to memorise.\n\nWriting is the same in reverse: start with the element, then add one attribute per fact you need to state. If you find yourself unsure whether an attribute exists for a job, that is what documentation is for — even experienced developers look attributes up daily."
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Attributes</title>\n</head>\n<body>\n  <h1>Attributes</h1>\n\n  <!-- TODO 1: give this paragraph the attribute id=\"intro\" -->\n  <!-- TODO 2: also give it a class attribute containing: note -->\n  <p>Attributes add settings to an element.</p>\n\n  <!-- TODO 3: add an alt attribute describing the image, e.g. alt=\"A grey kitten\" -->\n  <!-- TODO 4: add a title attribute with a multi-word value, e.g. title=\"A very small kitten\" -->\n  <img src=\"kitten.jpg\">\n\n  <!-- TODO 5: disable this button with a boolean attribute -->\n  <button>Send</button>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Attributes</title>\n</head>\n<body>\n  <h1>Attributes</h1>\n\n  <p id=\"intro\" class=\"note\">Attributes add settings to an element.</p>\n\n  <img src=\"kitten.jpg\" alt=\"A grey kitten\" title=\"A very small kitten\">\n\n  <button disabled>Send</button>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Give the paragraph the attribute id=\"intro\".",
+            "hint": "Attributes go inside the opening tag: <p id=\"intro\">. The value must be quoted.",
+            "errorMessage": "The paragraph has no id=\"intro\" attribute — add it inside the opening <p> tag.",
+            "check": {
+              "type": "attr",
+              "selector": "p",
+              "attr": "id",
+              "value": "intro"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Add a class attribute containing the word 'note' to the same paragraph.",
+            "hint": "Separate multiple attributes with a space: <p id=\"intro\" class=\"note\">.",
+            "errorMessage": "The intro paragraph needs a class attribute containing 'note'.",
+            "check": {
+              "type": "attr",
+              "selector": "#intro",
+              "attr": "class",
+              "pattern": "note"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Describe the image with an alt attribute, e.g. alt=\"A grey kitten\".",
+            "hint": "Add alt=\"...\" inside the img tag, next to src. Write what the image shows.",
+            "errorMessage": "The <img> has no alt text — every image needs a description for users who cannot see it.",
+            "check": {
+              "type": "attr",
+              "selector": "img",
+              "attr": "alt",
+              "pattern": "\\w"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Give the image a title attribute whose value contains more than one word.",
+            "hint": "Because the value has spaces, the quotes are essential: title=\"A very small kitten\".",
+            "errorMessage": "The <img> needs a title attribute with a multi-word value — remember to quote it.",
+            "check": {
+              "type": "attr",
+              "selector": "img",
+              "attr": "title",
+              "pattern": "\\w\\s+\\w"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Disable the button by adding the boolean attribute disabled.",
+            "hint": "Boolean attributes need no value — just <button disabled>Send</button>.",
+            "errorMessage": "The button is not disabled — add the bare attribute 'disabled' to its opening tag.",
+            "check": {
+              "type": "attr",
+              "selector": "button",
+              "attr": "disabled"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b06-headings",
+      "title": "Structure any page with the six heading levels",
+      "summary": "Use h1–h6 to give a page a real outline that readers, search engines and screen readers can navigate.",
+      "difficulty": "beginner",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Build a correctly nested heading outline for a multi-section page.",
+      "whyItMatters": "Headings are the skeleton of every web page. Search engines weigh them heavily when deciding what a page is about, and screen-reader users jump between headings to navigate — a broken heading order makes a page confusing or unusable for them. Teams also rely on heading structure to keep long documents maintainable.",
+      "steps": [
+        "Read the theory sections on the left, starting with what headings are for.",
+        "Look at the starter code in the editor: a recipe page with all text in plain paragraphs.",
+        "Add the single h1 for the page title (task 1).",
+        "Add h2 section headings for Ingredients and Instructions (task 2).",
+        "Demote the sub-note under Instructions to an h3 (task 3).",
+        "Press Run after each change and watch the checks in the feedback console turn green."
+      ],
+      "prompt": "<h1>Slow-cooked tomato soup</h1>\n<h2>Ingredients</h2>\n<p>...</p>\n<h2>Instructions</h2>\n<h3>Before you start</h3>\n<p>...</p>",
+      "promptLabel": "Key code example",
+      "explanation": "The h1 states what the whole page is about, so there is exactly one. Each major section gets an h2, and subsections nest one level deeper with h3 — levels are never skipped downwards. Browsers style headings with decreasing size by default, but the tags exist for structure, not size: styling belongs to CSS.",
+      "example": "A recipe page with everything in <p> tags looks uniform and tells machines nothing.\n\nThe same page with one h1 (the dish), h2s (Ingredients, Instructions) and an h3 (Before you start) gains a visible hierarchy, appears correctly in Google results, and lets a screen-reader user jump straight to Instructions.",
+      "exercise": "In the editor on the right, convert the flat recipe page into a proper outline: one h1 page title, two h2 section headings, and one h3 subsection heading. Run the checks to confirm.",
+      "expectedResult": "The preview shows a clear visual hierarchy — large page title, medium section titles, smaller subsection title — and all four checks pass in the console.",
+      "commonMistakes": [
+        "Using more than one h1 per page. Keep exactly one h1 that describes the whole page.",
+        "Skipping levels downwards (h1 straight to h3) because the h3 'looks right'. Sizes are a CSS job; keep the outline sequential.",
+        "Choosing heading tags for their default size instead of their meaning.",
+        "Writing bold paragraphs (<b> or <strong>) instead of real headings — they look similar but carry no structure."
+      ],
+      "proTip": "In any browser's DevTools console you can audit a page's outline instantly: document.querySelectorAll('h1,h2,h3,h4,h5,h6') — read the list top to bottom and check no level is skipped.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will turn a flat, unstructured recipe page into a properly outlined document with h1–h3.",
+        "sections": [
+          {
+            "heading": "What headings actually do",
+            "body": "HTML gives you six heading elements, h1 through h6. They are not six font sizes — they are six outline levels, like the numbered layers in a book: the book title, its chapters, the sections inside each chapter.\n\nThree different audiences read your headings. Human visitors scan them to decide where to look. Search engines parse them to understand what the page and each section is about — the h1 is one of the strongest on-page ranking signals. Screen-reader users navigate with them directly: pressing a single key jumps to the next heading, which is why a page with a clean outline can be skimmed by ear in seconds.",
+            "code": "<h1>Most important — the page title</h1>\n<h2>A major section</h2>\n<h3>A subsection inside it</h3>\n<h4>Rarely needed</h4>\n<h5>Almost never needed</h5>\n<h6>Least important</h6>"
+          },
+          {
+            "heading": "The one-h1 rule",
+            "body": "Every page should have exactly one h1, and it should say what the whole page is about. Think of it as the page's internal title — usually similar to, but not necessarily identical with, the <title> in the head.\n\nHTML technically allows multiple h1s, and you will find old tutorials defending them. Modern practice, accessibility guidance and SEO tooling all converge on one h1 per page: it removes ambiguity about the page's main topic and gives assistive technology a single, predictable starting point.",
+            "code": "<body>\n  <h1>Slow-cooked tomato soup</h1>\n  <!-- everything else nests under this one h1 -->\n</body>"
+          },
+          {
+            "heading": "Never skip levels downwards",
+            "body": "Going down the outline, move one level at a time: h1 to h2, h2 to h3. Jumping from h1 straight to h3 creates a hole in the outline — screen readers announce the level, so a listener hears 'heading level 3' and wonders whether they missed a section.\n\nGoing back up you can jump freely: after a deep h4 subsection, the next major section starts again at h2. The rule only constrains descent, not ascent.\n\nIf you are ever tempted to skip a level because the deeper heading 'looks better', that is a styling problem: keep the correct level and change its appearance with CSS instead."
+          },
+          {
+            "heading": "Headings are not for sizing",
+            "body": "Browsers ship default styles — h1 large and bold, h6 small — but those defaults are just a convenience. Choosing h4 because you want smaller text breaks the document outline for every machine reading it.\n\nThe reverse mistake is also common: making a paragraph bold and large with CSS so it looks like a heading. Sighted users see a heading; screen readers and search engines see an ordinary paragraph. If it acts as a heading, mark it as one.",
+            "code": "<!-- Wrong: fake heading -->\n<p style=\"font-size: 24px; font-weight: bold\">Ingredients</p>\n\n<!-- Right: real heading, styled later with CSS -->\n<h2>Ingredients</h2>"
+          },
+          {
+            "heading": "Reading a page as an outline",
+            "body": "A quick habit that catches most heading mistakes: read only the headings of your page top to bottom and ask whether they work as a table of contents.\n\nFor the recipe page you are about to build, the outline should read: Slow-cooked tomato soup (h1) — Ingredients (h2) — Instructions (h2) — Before you start (h3). Each entry summarises its block of content, no level is skipped, and the single h1 covers everything beneath it."
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Slow-cooked tomato soup</title>\n</head>\n<body>\n  <!-- TODO 1: make this the single h1 of the page -->\n  <p>Slow-cooked tomato soup</p>\n\n  <!-- TODO 2: make Ingredients and Instructions h2 headings -->\n  <p>Ingredients</p>\n  <p>Six ripe tomatoes, one onion, olive oil, salt.</p>\n\n  <p>Instructions</p>\n  <!-- TODO 3: make this subsection an h3 -->\n  <p>Before you start</p>\n  <p>Let the tomatoes reach room temperature.</p>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Slow-cooked tomato soup</title>\n</head>\n<body>\n  <h1>Slow-cooked tomato soup</h1>\n\n  <h2>Ingredients</h2>\n  <p>Six ripe tomatoes, one onion, olive oil, salt.</p>\n\n  <h2>Instructions</h2>\n  <h3>Before you start</h3>\n  <p>Let the tomatoes reach room temperature.</p>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Turn the page title into the page's single <h1>.",
+            "hint": "Replace the first <p>Slow-cooked tomato soup</p> with <h1>Slow-cooked tomato soup</h1>.",
+            "errorMessage": "No <h1> found. The page title should be wrapped in exactly one <h1> element.",
+            "check": {
+              "type": "selector",
+              "selector": "h1"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Make 'Ingredients' and 'Instructions' <h2> section headings.",
+            "hint": "Both section names get the same level: <h2>Ingredients</h2> and <h2>Instructions</h2>.",
+            "errorMessage": "Expected two <h2> headings (Ingredients and Instructions).",
+            "check": {
+              "type": "selectorCount",
+              "selector": "h2",
+              "min": 2
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Make 'Before you start' an <h3> subsection under Instructions.",
+            "hint": "It sits one level below its h2 parent: <h3>Before you start</h3>.",
+            "errorMessage": "No <h3> subsection found under Instructions.",
+            "check": {
+              "type": "text",
+              "selector": "h3",
+              "pattern": "before you start"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Keep exactly one h1 on the page.",
+            "hint": "If you added h1 elsewhere, demote it — only the page title is an h1.",
+            "errorMessage": "The outline needs a single h1: your h1 must contain the soup title.",
+            "check": {
+              "type": "text",
+              "selector": "h1",
+              "pattern": "tomato soup"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b07-paragraphs",
+      "title": "Control text flow with paragraphs, breaks and preserved whitespace",
+      "summary": "Master the p element, understand how browsers collapse whitespace, and use br, hr and pre for the cases where normal paragraph flow is not what you want.",
+      "difficulty": "beginner",
+      "minutes": 11,
+      "isFree": false,
+      "goal": "Split running text into proper paragraphs and apply br, hr and pre each in its one legitimate role.",
+      "whyItMatters": "Body text is most of the web, and paragraphs are its unit of thought — get them right and pages become scannable, translatable and stylable. Whitespace collapsing is the single behaviour that surprises every newcomer to HTML, and misunderstanding it leads to the classic anti-pattern of stacking br tags to fake layout, which breaks on every screen size and confuses screen readers. Knowing exactly when br, hr and pre are appropriate separates clean markup from hacks.",
+      "steps": [
+        "Read what the p element does and how default spacing works.",
+        "Read the whitespace-collapsing section — it explains most 'why did my spacing vanish' confusion.",
+        "Read when br is legitimate and when it is a hack, then the hr and pre sections.",
+        "In the editor, split the wall of text into two paragraphs (task 1).",
+        "Add line breaks to the poem (task 2) and an hr before the footer (task 3).",
+        "Add the pre block (task 4) and run all checks."
+      ],
+      "prompt": "<p>First thought, as one block.</p>\n<p>Second thought, separately.</p>\n<p>Roses are red<br>Violets are blue</p>\n<hr>\n<pre>  indentation\n    survives here</pre>",
+      "promptLabel": "Key code example",
+      "explanation": "Each p element is one self-contained thought, and the browser separates them with vertical margins automatically — no manual spacing needed. Inside the poem, br forces a line break at a point the text itself demands, which is the element's only proper job. The hr draws a thematic dividing line between unrelated content, and pre switches off whitespace collapsing entirely so that the spaces and newlines typed in the source reach the screen intact.",
+      "example": "A writer pastes three paragraphs into an HTML file as plain text with blank lines between them. In the browser, everything collapses into one dense block — the blank lines counted for nothing.\n\nWrapping each passage in its own p element restores the structure: three visually separated blocks, each stylable, each announced separately by screen readers. The blank lines in the source were for humans; the p tags are for the browser.",
+      "exercise": "In the editor on the right, split the merged text into two paragraphs, rebuild the poem with br line breaks, place an hr before the footer line, and add a pre block that keeps its indentation. Run the checks as you go.",
+      "expectedResult": "The preview shows two separated paragraphs, a two-line poem, a horizontal rule above the footer text, and an indented block in monospaced font that preserves its spacing exactly.",
+      "commonMistakes": [
+        "Using empty paragraphs or stacked <br><br> to create vertical space. Spacing between blocks is CSS's job (margin); br is only for breaks that are part of the content itself.",
+        "Expecting source-code line breaks and indentation to appear on the page. Outside pre, all runs of whitespace collapse to a single space.",
+        "Using hr as a decorative underline for headings. It marks a thematic shift between blocks of content, not decoration — borders belong to CSS.",
+        "Putting block elements like headings or other paragraphs inside a p. A paragraph holds only text and inline elements; the parser will forcibly close it otherwise."
+      ],
+      "proTip": "Paste any code snippet into a pre element and it keeps its indentation without any extra work — pair it with the code element (<pre><code>...</code></pre>) and you have the standard pattern for displaying source code on a page.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will fix a page whose text flow is wrong in four different ways, using p, br, hr and pre — each for its intended purpose.",
+        "sections": [
+          {
+            "heading": "The p element: one thought per block",
+            "body": "The p element marks a paragraph — a self-contained block of running text. Browsers render each paragraph as its own block with vertical margin above and below, which is why properly marked-up text has that comfortable breathing room without any styling effort from you.\n\nThe division into paragraphs is semantic, not visual: split where the thought changes, exactly as you would in print. Screen readers pause between paragraphs and let users jump paragraph by paragraph; search engines treat them as coherent text units; CSS can restyle them wholesale. None of that works if your page is one giant undivided block of text.\n\nParagraphs hold text and inline elements — links, emphasis, images. They cannot contain block elements: no headings, lists or other paragraphs inside a p. The parser enforces this bluntly, silently closing your paragraph the moment a block element appears, which produces a DOM you did not intend.",
+            "code": "<p>The first idea, complete in itself.</p>\n<p>The second idea, in its own block with\n  <strong>inline elements</strong> allowed inside.</p>"
+          },
+          {
+            "heading": "Whitespace collapsing: the rule that surprises everyone",
+            "body": "Inside normal HTML text, the browser collapses every run of whitespace — spaces, tabs, and line breaks alike — into a single space. Ten spaces render as one. A line break in your source renders as one space, not a new line. Three blank lines between sentences: one space.\n\nThis is a feature, not a bug. It frees you to format source code for human readability — indent nested elements, wrap long lines wherever convenient — without any of that formatting leaking into the rendered page. The browser lays text out to fit the reader's window width, re-wrapping lines as the window resizes; your source's line breaks would only fight it.\n\nThe corollary: whitespace in the source cannot be used for on-page layout. Pressing Enter twice does not make a paragraph — p does. Pressing space five times does not indent — CSS does. Once you internalise 'source whitespace is for me, elements are for the browser', the behaviour stops being surprising and starts being convenient.",
+            "code": "<p>These    words\n   are separated by\n\n   exactly one space each.</p>\n<!-- renders: These words are separated by exactly one space each. -->"
+          },
+          {
+            "heading": "br: real line breaks only",
+            "body": "The br element forces a line break inside a block of text. It is a void element — a single <br> tag, no closing tag, no content — and it exists for text whose meaning includes its line breaks: lines of a poem or song lyric, the lines of a postal address, and very little else.\n\nThe test for legitimate use: would the break survive translation to plain text? A poem's line endings would; the gap you want between two sections would not — that gap is presentation, and presentation is CSS margin. The notorious anti-pattern is <br><br> to fake paragraph spacing or push content downward: it hard-codes distances that break at other font sizes and window widths, and screen readers announce content interrupted by meaningless breaks.\n\nIf you find yourself typing two br tags in a row, stop — whatever you are trying to achieve, an element boundary or a CSS rule is the correct tool.",
+            "code": "<p>\n  Roses are red<br>\n  Violets are blue<br>\n  Whitespace collapses<br>\n  Unless I tell it to\n</p>"
+          },
+          {
+            "heading": "hr: a thematic break between blocks",
+            "body": "The hr element renders as a horizontal rule, but its meaning is a thematic break: the content changes direction — a scene change in a story, a shift to unrelated closing remarks, a boundary between question groups. Like br it is void: a single <hr> tag placed between the blocks it separates.\n\nBecause it carries meaning, use it only where a reader would sense a topic shift, not wherever a line would look nice. Decorative lines — under a heading, around a quote — belong to CSS borders, which can draw far better lines anyway. Screen readers announce hr as a separator, so a purely decorative one adds noise for those users.\n\nA reasonable rule of thumb: if you removed all styling from the page, would the break still convey something about the content's organisation? If yes, hr. If no, CSS.",
+            "code": "<p>...the hero finally sleeps.</p>\n<hr>\n<p>Three years later, in another city...</p>"
+          },
+          {
+            "heading": "pre: when whitespace is the content",
+            "body": "Sometimes the whitespace is the point: source code where indentation shows structure, ASCII diagrams, terminal output, text-based tables. The pre element (for 'preformatted') switches collapsing off — inside it, every space and every line break in your source is preserved exactly, and browsers render the content in a monospaced font where every character is the same width, so columns line up.\n\nTwo practical warnings. First, indentation inside pre is content: if you indent the pre block's contents to match your surrounding markup's indentation, that indentation appears on the page. Convention is to start pre content flush left even when it looks odd in the source. Second, long lines in pre do not wrap by default — they can force horizontal scrolling, which CSS can manage when needed.\n\nThe standard pairing for code samples is pre wrapping code: pre preserves the layout while code marks the meaning. You will use this combination any time a page needs to display programming output.",
+            "code": "<pre>\nname      role\n----      ----\nAda       engineer\nGrace     admiral\n</pre>"
+          },
+          {
+            "heading": "Choosing the right tool: a decision summary",
+            "body": "The four elements of this lesson divide cleanly by intent. New thought, new block: p — and let the browser's margins handle the spacing. A break that belongs to the text itself, inside one block: br. A shift of topic between blocks: hr. Whitespace that must survive exactly as typed: pre.\n\nEvery misuse of these elements comes from reaching for a visual outcome instead of a meaning: br for vertical space, hr for decoration, spaces for indentation, empty paragraphs for gaps. The pattern to build now, while the vocabulary is small, is to ask 'what is this content?' before 'how should this look?' — the entire rest of HTML rewards that habit, and CSS exists to answer the second question properly."
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Paragraphs and text flow</title>\n</head>\n<body>\n  <h1>Paragraphs and text flow</h1>\n\n  <!-- TODO 1: split this into TWO <p> elements — one per thought -->\n  <p>Browsers collapse whitespace, so line breaks in the source become single spaces. Separate ideas therefore need separate paragraph elements, not blank lines.</p>\n\n  <!-- TODO 2: put each line of the poem on its own line using <br> -->\n  <p>Roses are red Violets are blue</p>\n\n  <!-- TODO 3: add a <hr> above this closing note -->\n  <p>End of the demo page.</p>\n\n  <!-- TODO 4: add a <pre> element containing at least two lines of indented text -->\n\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Paragraphs and text flow</title>\n</head>\n<body>\n  <h1>Paragraphs and text flow</h1>\n\n  <p>Browsers collapse whitespace, so line breaks in the source become single spaces.</p>\n  <p>Separate ideas therefore need separate paragraph elements, not blank lines.</p>\n\n  <p>Roses are red<br>Violets are blue</p>\n\n  <hr>\n  <p>End of the demo page.</p>\n\n  <pre>\nstep 1: edit\n  step 2: run\n    step 3: see\n  </pre>\n\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Split the first block into two separate <p> elements, one per idea.",
+            "hint": "Close the first paragraph after 'single spaces.' and open a new <p> for the second sentence.",
+            "errorMessage": "Expected at least three <p> elements — the wall of text should become two separate paragraphs.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "p",
+              "min": 3
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Use <br> so each line of the poem renders on its own line.",
+            "hint": "Insert <br> after 'red': Roses are red<br>Violets are blue. No closing tag.",
+            "errorMessage": "No <br> found inside a paragraph — the poem's line break needs an explicit <br>.",
+            "check": {
+              "type": "selector",
+              "selector": "p br"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Add an <hr> thematic break above the closing note.",
+            "hint": "Place a single <hr> tag on its own line before the 'End of the demo page.' paragraph.",
+            "errorMessage": "No <hr> found — separate the closing note from the content above with a thematic break.",
+            "check": {
+              "type": "selector",
+              "selector": "hr"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Add a <pre> element containing at least two lines of indented text.",
+            "hint": "Anything works — try three steps, each indented a bit more. Whitespace inside <pre> is preserved exactly.",
+            "errorMessage": "No <pre> element found — add one to show whitespace surviving uncollapsed.",
+            "check": {
+              "type": "selector",
+              "selector": "pre"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b08-text-formatting",
+      "title": "Choose the right inline element for every kind of emphasis",
+      "summary": "Learn the full inline text toolkit — strong vs b, em vs i, mark, small, sub, sup, ins, del, u and s — and when meaning, not appearance, decides which to use.",
+      "difficulty": "beginner",
+      "minutes": 13,
+      "isFree": false,
+      "goal": "Apply the correct semantic inline element for importance, stress, highlighting, edits, and scientific notation.",
+      "whyItMatters": "Half of these elements look identical in the browser — strong and b are both bold, em and i are both italic — but they say different things to screen readers, search engines and future maintainers of your code. Choosing by meaning keeps pages accessible and machine-readable, and it is one of the clearest signals separating professional markup from amateur markup. These elements also appear constantly in real content: prices, edits, formulas, legal small print.",
+      "steps": [
+        "Read the strong-vs-b and em-vs-i sections — the meaning/appearance split is the heart of this lesson.",
+        "Read about mark and small, then sub and sup.",
+        "Read the edits section (ins, del) and the u and s cautionary notes.",
+        "In the editor, mark the warning word with strong and the stressed word with em (tasks 1 and 2).",
+        "Highlight the search term with mark and fix the chemical formula with sub (tasks 3 and 4).",
+        "Show the price change with del and ins (tasks 5 and 6), then run all checks."
+      ],
+      "prompt": "<p><strong>Never</strong> share your password.</p>\n<p>The account belongs to <em>you</em>.</p>\n<p>Water is H<sub>2</sub>O; E = mc<sup>2</sup>.</p>\n<p>Price: <del>$50</del> <ins>$40</ins></p>",
+      "promptLabel": "Key code example",
+      "explanation": "Each element states why the text differs, not how: strong marks serious importance, em marks spoken stress, sub and sup position characters as chemistry and mathematics require, and del/ins record an edit — the old price struck through, the new one inserted. Browsers add the familiar styling (bold, italics, strikethrough) as a default, but the meaning travels with the markup even when the styling changes, which is what screen readers and search engines rely on.",
+      "example": "A store page shows 'Price: $50 $40' in plain text — confusing at best, and a screen reader reads two contradictory prices with nothing to distinguish them.\n\nMarked up as <del>$50</del> <ins>$40</ins>, sighted users see the old price struck through and the new one following it, and assistive technology can announce the deletion and insertion explicitly. Same characters, but now the page records what actually happened: a price was updated.",
+      "exercise": "In the editor on the right, six sentences each need one correct inline element: strong for the warning, em for the stressed word, mark for the search hit, sub for the chemical formula, and del plus ins for the price change. Run the checks after each fix.",
+      "expectedResult": "The preview shows bold 'Never', italic 'you', a highlighted 'HTML', a correctly written H2O with a lowered 2, and the old price struck through beside the new one. All six checks pass.",
+      "commonMistakes": [
+        "Choosing strong or em just to get bold or italic looks. If the text carries no extra importance or stress, style it with CSS instead.",
+        "Using u for emphasis. On the web, underlining signals a link — underlined non-links send readers on pointless clicks.",
+        "Writing formulas as plain text (H2O, m2) when sub and sup exist precisely for lowered and raised characters.",
+        "Using s or del interchangeably. s marks content that is no longer accurate; del records a document edit — pick by what actually happened."
+      ],
+      "proTip": "When you cannot decide between the semantic element and its visual twin, read the sentence aloud. If your voice naturally leans on the word, it is em; if the content is a warning or something the reader must not miss, it is strong; if you only want a different look with no change in meaning, it is CSS.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will repair six sentences that all render as plain text, giving each the inline element whose meaning matches the content.",
+        "sections": [
+          {
+            "heading": "strong vs b: importance vs bold",
+            "body": "Both strong and b render as bold text by default, and that coincidence is the source of endless confusion. The difference is entirely in what they claim about the content.\n\nstrong marks text of serious importance, urgency or warning — the part of the sentence the reader must not miss: 'Never share your password.' Screen readers can voice it with changed emphasis, and machines reading your page treat it as genuinely more important than its surroundings.\n\nb, by contrast, marks text that is visually offset without being more important — keywords in a summary, a product name in a review, the lead-in phrase of an article. It says 'draw the eye here' and nothing more. If you are hesitating between them: warnings and must-read content take strong; typographic convention takes b; and pure decoration takes neither — that is CSS's font-weight.",
+            "code": "<p><strong>Warning:</strong> this action cannot be undone.</p>\n<p>The <b>SkyLite 3</b> is the lightest tent we tested.</p>"
+          },
+          {
+            "heading": "em vs i: stress vs convention",
+            "body": "The same split repeats in italics. em marks stress emphasis — the word your voice would lean on, changing the sentence's meaning with its position. 'I never said she took it' means five different things depending on which word carries the em. Screen readers can reflect that stress; that is why the element exists.\n\ni marks text set in italics by typographic convention without any stress: book and film titles, foreign-language phrases, technical terms on first use, a ship's name, a person's internal thought. 'She boarded the <i>Aurora</i>' claims nothing extra about the ship — italics are simply how ship names are written.\n\nBoth elements nest meaningfully: emphasis inside emphasis (<em>really <em>truly</em></em>) reads as increasing intensity, and you can stress a word inside a book title by nesting em inside i. Nesting these inline elements is routine and correct whenever the meanings genuinely stack.",
+            "code": "<p>I <em>never</em> said she took it.</p>\n<p>Have you read <i>The Left Hand of Darkness</i>?</p>\n<p>The menu says <i lang=\"fr\">plat du jour</i>.</p>"
+          },
+          {
+            "heading": "mark and small: relevance and side notes",
+            "body": "mark highlights text that is relevant in the current context, like a highlighter pen on paper — the default rendering is a yellow background. Its classic uses: showing where the search term appears in each result, or drawing attention to the crucial phrase in a quoted passage that the quoter wants examined. The highlighting belongs to the current viewing context, not to the original text — which is exactly why it is distinct from strong and em.\n\nsmall marks side comments and small print: legal disclaimers, copyright lines, licensing notes, the asterisked caveat under an offer. Browsers render it one size smaller, but as always the styling is a default and the meaning — 'this is a side comment to the main content' — is the point. A footer's copyright line is the canonical example.",
+            "code": "<p>Results for <mark>coffee</mark>: Best <mark>coffee</mark> grinders of 2026...</p>\n<p><small>Prices include VAT. Offer ends Friday.</small></p>"
+          },
+          {
+            "heading": "sub and sup: lowered and raised characters",
+            "body": "Some notation genuinely requires characters below or above the text baseline, and sub and sup provide it. sub (subscript) lowers: chemical formulas like H2O need the 2 written as <sub>2</sub>, and mathematical variable indices like x1 use it the same way. sup (superscript) raises: exponents (mc<sup>2</sup>), ordinal abbreviations in some languages, and footnote reference markers that link down to the note itself.\n\nThese two are unusual in this lesson: the visual change is the meaning, because the notation is defined by position. That makes them the wrong tool for decorative shrinking or raising of ordinary text — if no chemical, mathematical or footnote convention demands the position, the element does not apply.\n\nScreen-reader support for announcing sub and sup varies, so critical formulas in scientific content sometimes need supplementary clarification; for the everyday cases — water, squared units, footnotes — the elements are exactly right.",
+            "code": "<p>Water is H<sub>2</sub>O.</p>\n<p>Energy: E = mc<sup>2</sup>.</p>\n<p>See the appendix<sup>1</sup> for details.</p>"
+          },
+          {
+            "heading": "ins and del: recording edits",
+            "body": "Documents change, and HTML can record the change in the document itself. del marks content that has been removed — rendered with a strikethrough — and ins marks content that has been added, rendered underlined by default. Together they show an edit trail: the classic example is a price drop, where the old price stays visible but struck through, followed by the new price.\n\nBoth accept two optional attributes worth knowing: cite can hold a URL explaining the change, and datetime can record when the change happened, in machine-readable form. Meeting minutes, changelogs, versioned terms of service and edited forum posts all use this pair.\n\nScreen readers can announce deletions and insertions explicitly, which is why <del>$50</del> <ins>$40</ins> is genuinely better than styling the same characters with CSS strikethrough — the meaning 'this was replaced by that' survives for every reader.",
+            "code": "<p>Price: <del>$50</del> <ins>$40</ins></p>\n<p>Meeting moved to <del datetime=\"2026-08-01\">Tuesday</del>\n   <ins datetime=\"2026-08-01\">Thursday</ins>.</p>"
+          },
+          {
+            "heading": "u and s: handle with care",
+            "body": "Two more elements complete the set, and both come with warnings. u renders an underline and today means text with a non-textual annotation — its accepted uses are narrow, like marking misspelled words (the wavy red line effect) or proper names in Chinese text. The warning: on the web, underlining means 'link' to every user alive, so underlined non-link text actively misleads. Reach for u almost never, and for decorative underlines use CSS.\n\ns renders a strikethrough and means content that is no longer accurate or relevant while remaining visible: yesterday's price when you are not framing it as an edit, a sold-out event on a listing, a superseded instruction. The boundary with del is intent — del records that a document was edited; s states that a fact went stale. A concert listing marks the sold-out show with s; a tracked-changes contract marks removed clauses with del.\n\nAcross the whole lesson the rule compresses to one sentence: pick the element whose meaning matches the content, and leave pure appearance to CSS. If no element's meaning fits, the styling you want is a CSS job on a neutral element.",
+            "code": "<p><s>Saturday show — 8pm</s> SOLD OUT</p>\n<p><u class=\"spelling\">recieve</u> should be 'receive'.</p>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Text with meaning</title>\n</head>\n<body>\n  <h1>Text with meaning</h1>\n\n  <!-- TODO 1: mark the word \"Never\" as seriously important with <strong> -->\n  <p>Never share your password.</p>\n\n  <!-- TODO 2: stress the word \"you\" with <em> -->\n  <p>The account belongs to you alone.</p>\n\n  <!-- TODO 3: highlight the search term \"HTML\" with <mark> -->\n  <p>Search results for HTML tutorials.</p>\n\n  <!-- TODO 4: write the formula correctly: the 2 in H2O belongs in a <sub> -->\n  <p>Water is H2O.</p>\n\n  <!-- TODO 5: wrap the old price $50 in <del> -->\n  <!-- TODO 6: wrap the new price $40 in <ins> -->\n  <p>Price: $50 $40</p>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Text with meaning</title>\n</head>\n<body>\n  <h1>Text with meaning</h1>\n\n  <p><strong>Never</strong> share your password.</p>\n\n  <p>The account belongs to <em>you</em> alone.</p>\n\n  <p>Search results for <mark>HTML</mark> tutorials.</p>\n\n  <p>Water is H<sub>2</sub>O.</p>\n\n  <p>Price: <del>$50</del> <ins>$40</ins></p>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Wrap the word 'Never' in a <strong> element — it is a warning the reader must not miss.",
+            "hint": "<strong>Never</strong> share your password. The element marks importance, not just boldness.",
+            "errorMessage": "No <strong> element containing 'Never' found — the warning word needs strong importance.",
+            "check": {
+              "type": "text",
+              "selector": "strong",
+              "pattern": "never"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Wrap the word 'you' in an <em> element — the sentence stresses it.",
+            "hint": "The account belongs to <em>you</em> alone. Read it aloud: your voice leans on 'you'.",
+            "errorMessage": "No <em> element found inside a paragraph — stress the word 'you' with <em>.",
+            "check": {
+              "type": "selector",
+              "selector": "p em"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Highlight the search term 'HTML' with a <mark> element.",
+            "hint": "Search results for <mark>HTML</mark> tutorials — like a highlighter pen on the matching word.",
+            "errorMessage": "No <mark> element found — highlight the search term with <mark>...</mark>.",
+            "check": {
+              "type": "selector",
+              "selector": "mark"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Fix the chemical formula: the 2 in H2O must be a subscript.",
+            "hint": "Replace the plain 2 with <sub>2</sub>: H<sub>2</sub>O.",
+            "errorMessage": "No <sub> element found — chemical formulas lower their numbers with <sub>.",
+            "check": {
+              "type": "selector",
+              "selector": "sub"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Wrap the old price $50 in a <del> element.",
+            "hint": "<del>$50</del> — the deletion stays visible but struck through.",
+            "errorMessage": "The old price should be inside <del> — expected a <del> element containing 50.",
+            "check": {
+              "type": "text",
+              "selector": "del",
+              "pattern": "50"
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Wrap the new price $40 in an <ins> element.",
+            "hint": "<del>$50</del> <ins>$40</ins> — deletion and insertion together record the edit.",
+            "errorMessage": "The new price should be inside <ins> — expected an <ins> element containing 40.",
+            "check": {
+              "type": "text",
+              "selector": "ins",
+              "pattern": "40"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b09-quotations",
+      "title": "Quote, cite and annotate text with the citation elements",
+      "summary": "Use blockquote, q, cite, abbr, address, time and the direction elements bdo/bdi to mark quotations, sources, abbreviations, contact details and machine-readable dates.",
+      "difficulty": "beginner",
+      "minutes": 13,
+      "isFree": false,
+      "goal": "Mark up quoted, cited and annotated content so both humans and machines can identify each piece correctly.",
+      "whyItMatters": "Articles, documentation and blogs constantly quote sources, abbreviate terms and reference dates — and this family of elements is how that content stays trustworthy and machine-readable. A time element with a datetime attribute lets search engines show accurate publish dates; abbr expansions help every reader who meets an acronym for the first time; and proper blockquote markup visually and semantically separates your words from someone else's, which matters for credibility.",
+      "steps": [
+        "Read the blockquote section, including the cite attribute.",
+        "Read how q handles inline quotes and generates quotation marks automatically.",
+        "Read the cite element, abbr, and address sections.",
+        "Read the time element and the bdo/bdi direction notes.",
+        "In the editor, build the blockquote and inline q quote (tasks 1 and 2).",
+        "Expand the abbreviation, add the machine-readable date, and wrap the contact block (tasks 3 to 5), running checks as you go."
+      ],
+      "prompt": "<blockquote cite=\"https://www.example.com/speech\">\n  <p>The web is for everyone.</p>\n</blockquote>\n<p>She called it <q>the universality principle</q>.</p>\n<p><abbr title=\"HyperText Markup Language\">HTML</abbr>\n   turns 35 on <time datetime=\"2026-11-12\">12 November</time>.</p>",
+      "promptLabel": "Key code example",
+      "explanation": "The blockquote sets the quoted paragraph apart as a block, and its cite attribute records the source URL in machine-readable form. The q element handles the short quote inside a sentence, and the browser supplies its quotation marks automatically. abbr attaches the expansion of an acronym so any reader can recover it, and time pairs a human-friendly date with an unambiguous datetime value that software can parse. Every element here does the same job: it keeps information accurate for machines while staying natural for humans.",
+      "example": "A news article quotes a speech in plain italic text with hand-typed quotation marks and mentions the date as 'last Thursday'.\n\nRewritten with real markup, the quote sits in a blockquote whose cite attribute links the transcript, and the date becomes <time datetime=\"2026-08-06\">last Thursday</time>. Readers see the same article — but now search engines can attribute the quote, calendars can interpret the date, and the styling of quotes can change site-wide from one CSS rule.",
+      "exercise": "In the editor on the right, convert the plain quote into a blockquote with a cite attribute, wrap the inline quote in q, give the abbreviation its title expansion, mark the date with time and a datetime value, and wrap the contact line in address. Run the checks after each change.",
+      "expectedResult": "The preview shows an indented block quotation, an inline quote with automatic quotation marks, a dotted underline under the abbreviation with a hover tooltip, and italic contact details — with all five checks green.",
+      "commonMistakes": [
+        "Using blockquote for indentation. It marks quoted content — visual indentation of your own words is a CSS margin job.",
+        "Typing quotation marks inside a q element. The browser adds them; hand-typed ones double up.",
+        "Confusing the cite attribute (an invisible source URL on blockquote/q) with the cite element (the visible title of a work).",
+        "Writing only a human-readable date. Without datetime=\"2026-08-10\", software cannot reliably parse 'next Sunday' or '10/08/26'."
+      ],
+      "proTip": "For date-and-time values, the datetime attribute accepts precise forms like 2026-08-10T14:30 and even durations like PT2H30M — one attribute covers publish dates, event start times and reading-time estimates.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will mark up a short article fragment so every quote, abbreviation, date and contact detail is announced for what it is.",
+        "sections": [
+          {
+            "heading": "blockquote: quoting at block level",
+            "body": "When you reproduce someone else's words as their own block — a full sentence or paragraph lifted from a speech, book or another site — wrap them in blockquote. Browsers indent it by default, but the indentation is a symptom; the meaning is 'these words are quoted from elsewhere', and that separation between your voice and the source's is what the element exists to record.\n\nThe optional cite attribute holds a URL identifying where the quotation came from. It is machine-readable metadata, not visible on the page — if you want readers to see the source, add a visible attribution line as well, conventionally in a footer or paragraph following the quote. Content inside a blockquote is normal flow content, so quoted paragraphs keep their p tags.\n\nThe classic abuse is using blockquote to indent your own text because the default styling looks right. Screen readers announce quoted content as quoted; indentation for looks is a one-line CSS margin.",
+            "code": "<blockquote cite=\"https://www.example.com/speech\">\n  <p>The web is for everyone.</p>\n</blockquote>\n<p>— Opening address, WebConf 2026</p>"
+          },
+          {
+            "heading": "q: quoting inside a sentence",
+            "body": "For a short quotation that flows inside your own sentence, use q instead of blockquote. Its defining convenience: the browser generates the quotation marks automatically, so you write the quoted words bare and the rendering adds curly quotes around them.\n\nThis is better than typing the marks yourself for two reasons. Quotation conventions differ by language — English uses one style, German and French others — and because q respects the lang attribute, the same markup renders correct marks per language. And nested q elements automatically switch to inner quotation marks, handling a quote-within-a-quote correctly with zero effort.\n\nThe corresponding pitfall: never type quotation marks inside a q, or readers see doubled marks. And like blockquote, q takes an optional cite attribute holding a source URL. Choosing between the two elements is purely a question of size and flow: standalone block, blockquote; inside your sentence, q.",
+            "code": "<p>Berners-Lee called it <q>the universality principle</q>.</p>\n<p lang=\"de\">Sie sagte <q>guten Morgen</q>.</p>"
+          },
+          {
+            "heading": "The cite element: naming the work",
+            "body": "Distinct from the cite attribute, the cite element marks the visible title of a creative work: a book, article, film, song, painting, or website being referenced. Browsers render it in italics, matching the typographic convention for titles.\n\nThe element marks titles of works, not people's names — 'as <cite>The Art of Computer Programming</cite> explains' is correct, while wrapping the author's name in cite is a common misuse the specification explicitly rules out. Person names take no special element (or i, if a typographic convention applies).\n\nThe attribute and the element cooperate naturally: a blockquote can carry cite=\"URL\" for machines while a caption below names the source with a cite element for humans. Same word, two tools, two audiences.",
+            "code": "<p>The proof appears in <cite>Introduction to Algorithms</cite>.</p>\n<blockquote cite=\"https://www.example.com/article\">\n  <p>Simplicity scales.</p>\n</blockquote>\n<p>— from <cite>The Example Journal</cite></p>"
+          },
+          {
+            "heading": "abbr: expanding abbreviations",
+            "body": "The abbr element marks an abbreviation or acronym, and its title attribute carries the expansion: <abbr title=\"HyperText Markup Language\">HTML</abbr>. Desktop browsers show the expansion as a tooltip on hover and typically render a dotted underline as a hint that one is available.\n\nBecause tooltips never appear for touch and keyboard users, the accessible pattern for an important term is to write the expansion in plain text on first use — 'HyperText Markup Language (HTML)' — and use abbr on subsequent occurrences. For casual abbreviations every reader knows, abbr with a title is a courtesy rather than a necessity.\n\nUse it wherever a document leans on jargon: legal texts, medical content, technical documentation. It costs one attribute and saves every unfamiliar reader a search.",
+            "code": "<p><abbr title=\"HyperText Markup Language\">HTML</abbr> and\n   <abbr title=\"Cascading Style Sheets\">CSS</abbr> are separate languages.</p>"
+          },
+          {
+            "heading": "address: contact information",
+            "body": "The address element wraps contact information for the author or owner of a page or article: an email link, a postal address, a phone number, social links. Browsers render it in italics by default, and it conventionally lives in a page footer or at the end of an article, telling both readers and machines 'this is how you reach whoever is responsible for this content'.\n\nDespite its name, it is not for arbitrary postal addresses — the venue of an event or a customer's shipping address in body text is just content, not page contact info, and takes a plain p. The element's scope is authorship: whose page or article this is and how to contact them.\n\nInside it, ordinary elements work as usual — an a element for the email link, br for the line breaks of a postal format.",
+            "code": "<address>\n  Editorial team<br>\n  <a href=\"mailto:editor@example.com\">editor@example.com</a>\n</address>"
+          },
+          {
+            "heading": "time: dates machines can read",
+            "body": "Humans write dates ambiguously — '10/08/26' means different days in different countries, and 'next Friday' means nothing a year later. The time element solves this by pairing human text with a machine-readable datetime attribute in ISO format: year-month-day, so <time datetime=\"2026-08-10\">10 August 2026</time>.\n\nThe attribute accepts more than plain dates: a time of day (14:30), a full timestamp (2026-08-10T14:30), a month (2026-08), even durations (PT2H30M for two and a half hours). Search engines use it to display accurate publish dates in results, and browsers or scripts can offer calendar integration.\n\nIf the visible text is already a complete machine-readable date, the attribute may be omitted — but in practice you write dates for humans, so the attribute is nearly always doing the real work. Mark up publish dates, event times and deadlines with it as a habit.",
+            "code": "<p>Published on <time datetime=\"2026-08-10\">10 August 2026</time>.</p>\n<p>Doors open at <time datetime=\"19:30\">half past seven</time>.</p>"
+          },
+          {
+            "heading": "bdo and bdi: controlling text direction",
+            "body": "Some scripts — Arabic, Hebrew — run right to left, and browsers usually handle mixed-direction text automatically through the Unicode bidirectional algorithm. Two elements exist for the cases where the automation needs instructions.\n\nbdo (bidirectional override) forces a direction, using the required dir attribute with the value ltr or rtl: everything inside renders in the stated direction regardless of what the characters would normally do. It is a blunt tool for special situations — demonstrating scripts, fixing data that arrives with direction markers stripped.\n\nbdi (bidirectional isolate) is subtler and more common in real applications: it isolates a span of text — typically user-generated content like a username — so that its natural direction cannot scramble the surrounding line. A leaderboard that prints Arabic usernames into English sentences without bdi can display ranks and punctuation in shuffled order; wrapping each name in bdi contains the effect. You will rarely need either element on an English-only site, but recognising them completes the internationalisation picture that lang and dir begin.",
+            "code": "<p><bdo dir=\"rtl\">This renders right to left</bdo></p>\n<p>User <bdi>مستخدم</bdi> scored 90 points.</p>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Quoting and citing</title>\n</head>\n<body>\n  <h1>Quoting and citing</h1>\n\n  <!-- TODO 1: turn this into a <blockquote> with cite=\"https://www.example.com/speech\" -->\n  <p>The web is for everyone.</p>\n\n  <!-- TODO 2: wrap the words: the universality principle — in a <q> element -->\n  <p>Berners-Lee called it the universality principle.</p>\n\n  <!-- TODO 3: give the abbr a title attribute with the expansion: HyperText Markup Language -->\n  <p><abbr>HTML</abbr> is the language of this course.</p>\n\n  <!-- TODO 4: wrap the date in a <time> element with datetime=\"2026-08-10\" -->\n  <p>Published on 10 August 2026.</p>\n\n  <!-- TODO 5: wrap the contact line in an <address> element -->\n  <p>Contact: editor@example.com</p>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Quoting and citing</title>\n</head>\n<body>\n  <h1>Quoting and citing</h1>\n\n  <blockquote cite=\"https://www.example.com/speech\">\n    <p>The web is for everyone.</p>\n  </blockquote>\n\n  <p>Berners-Lee called it <q>the universality principle</q>.</p>\n\n  <p><abbr title=\"HyperText Markup Language\">HTML</abbr> is the language of this course.</p>\n\n  <p>Published on <time datetime=\"2026-08-10\">10 August 2026</time>.</p>\n\n  <address>Contact: editor@example.com</address>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Wrap the standalone quote in a <blockquote> with a cite attribute pointing at https://www.example.com/speech.",
+            "hint": "Put <blockquote cite=\"https://www.example.com/speech\"> around the quoted paragraph — the p stays inside.",
+            "errorMessage": "No <blockquote> with a cite attribute found — the block quote needs its source URL recorded.",
+            "check": {
+              "type": "attr",
+              "selector": "blockquote",
+              "attr": "cite",
+              "pattern": "example"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Wrap 'the universality principle' in a <q> element — do not type any quotation marks.",
+            "hint": "Berners-Lee called it <q>the universality principle</q>. The browser adds the quote marks.",
+            "errorMessage": "No <q> element found — the inline quote should be wrapped in <q>...</q>.",
+            "check": {
+              "type": "selector",
+              "selector": "q"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Give the <abbr> a title attribute containing its expansion: HyperText Markup Language.",
+            "hint": "<abbr title=\"HyperText Markup Language\">HTML</abbr> — the expansion appears as a tooltip.",
+            "errorMessage": "The <abbr> has no title with the expansion — add title=\"HyperText Markup Language\".",
+            "check": {
+              "type": "attr",
+              "selector": "abbr",
+              "attr": "title",
+              "pattern": "markup"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Mark the date with a <time> element carrying datetime=\"2026-08-10\".",
+            "hint": "<time datetime=\"2026-08-10\">10 August 2026</time> — ISO order: year, month, day.",
+            "errorMessage": "No <time> element with a machine-readable datetime (YYYY-MM-DD) found.",
+            "check": {
+              "type": "attr",
+              "selector": "time",
+              "attr": "datetime",
+              "pattern": "\\d{4}-\\d{2}-\\d{2}"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Wrap the contact line in an <address> element.",
+            "hint": "Replace the paragraph's p tags with address tags: <address>Contact: ...</address>.",
+            "errorMessage": "No <address> element found — page contact details belong in <address>.",
+            "check": {
+              "type": "selector",
+              "selector": "address"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b10-comments",
+      "title": "Annotate and control your markup with comments",
+      "summary": "Write HTML comments correctly, use them for notes and for temporarily disabling markup, adopt TODO conventions, and understand why comments are never private.",
+      "difficulty": "beginner",
+      "minutes": 9,
+      "isFree": false,
+      "goal": "Use comments for their three real jobs — explaining, tracking work, and switching markup off — without leaking anything sensitive.",
+      "whyItMatters": "Comments are how HTML files talk to their future maintainers — including you in six months, staring at your own markup with no memory of why it is shaped that way. Commenting-out is also the fastest debugging tool in HTML: disable half the page, re-run, and you have halved the search space without deleting anything. And because every comment ships to every visitor in view-source, knowing what never to put in one is a small but real security lesson.",
+      "steps": [
+        "Read the comment syntax section, including the no-nesting rule.",
+        "Read the three legitimate jobs of comments.",
+        "Read the visibility warning — comments are public — and the TODO conventions.",
+        "In the editor, add the explanatory note comment (task 1).",
+        "Add a TODO comment for the missing pricing table (task 2).",
+        "Comment out the draft paragraph without deleting it (task 3) and confirm the visible paragraph still renders (task 4)."
+      ],
+      "prompt": "<!-- note for editors: keep this intro under 50 words -->\n<p>This paragraph is visible to every visitor.</p>\n\n<!-- TODO: add the pricing table before launch -->\n\n<!-- <p>Draft: the pricing section is not ready yet.</p> -->",
+      "promptLabel": "Key code example",
+      "explanation": "Everything between <!-- and --> is skipped by the parser: it never becomes part of the DOM and never renders. The first comment explains intent to the next maintainer, the second flags unfinished work in the greppable TODO convention, and the third shows commenting-out — the draft paragraph still sits in the file, ready to be re-enabled by deleting the comment markers, but visitors never see it. All three comments remain readable to anyone who opens view-source.",
+      "example": "A developer needs to hide a half-finished pricing section before a demo. Deleting it means recreating it later from memory; instead they wrap the whole block in comment markers.\n\nThe demo shows a clean page, the markup survives intact in the file, and restoring the section afterwards takes two keystrokes of deletion. That save-restore cycle — with the file as the single source of truth throughout — is why commenting-out beats deleting for anything temporary.",
+      "exercise": "In the editor on the right, add a note comment above the visible paragraph, write a TODO comment recording the missing pricing table, and disable the draft paragraph by commenting it out — keeping the visible paragraph untouched. Run the checks after each step.",
+      "expectedResult": "The preview shows only the heading and the visible paragraph — the draft paragraph has vanished without being deleted from the source — and all four checks pass.",
+      "commonMistakes": [
+        "Nesting comments. The first --> ends the comment, so wrapping a commented block in another comment breaks the file and spills raw markup onto the page.",
+        "Putting secrets in comments — passwords, internal URLs, API keys, unreleased details. Every visitor can read them with view-source.",
+        "Writing two hyphens (--) inside a comment's text. It is invalid inside HTML comments and can end the comment early in some parsers.",
+        "Leaving huge graveyards of commented-out markup forever. Comment-out is for temporary switches; long-dead code should be deleted (version control remembers it)."
+      ],
+      "proTip": "Editors toggle comments with one shortcut — select any markup and press Ctrl+/ (Cmd+/ on macOS) to comment or uncomment it instantly. It makes disable-test-restore debugging effortless.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will practise all three real uses of comments on one page: an explanatory note, a TODO marker, and temporarily disabling a draft paragraph.",
+        "sections": [
+          {
+            "heading": "The syntax: open, anything, close",
+            "body": "An HTML comment starts with <!-- and ends with -->. Everything between the two markers — text, tags, line breaks, entire blocks of markup — is ignored by the parser: it never enters the DOM, never renders, and has no effect on the page. Comments can sit almost anywhere: between elements, inside them around child content, on one line or across fifty.\n\nTwo syntax rules cause every comment bug. First, comments do not nest: the parser ends the comment at the first --> it meets, so wrapping an already-commented section in another comment ends early and dumps the leftovers onto the page as visible text. Second, the character pair -- (two hyphens) is not allowed inside a comment's text; some parsers treat it as the start of the closing marker. Avoid decorative rows of hyphens inside comments — use another character like = if you want a divider line.\n\nOne place a comment must never go: above the doctype. The doctype has to be the first thing in the file, and a comment before it can drop older browsers into quirks mode.",
+            "code": "<!-- a short note -->\n<p>Visible content.</p>\n<!--\n  a longer comment\n  across several lines\n-->"
+          },
+          {
+            "heading": "Job one: notes for humans",
+            "body": "The primary purpose of comments is explanation — recording the why that the markup alone cannot express. Which template section a block belongs to, why an odd-looking structure is required by some third-party embed, where a maintainer should be careful. Files read many more times than they are written, and a two-line comment routinely saves a future reader (usually you) twenty minutes of reverse-engineering.\n\nA related convention you will meet in large files: comments as section signposts, like <!-- ===== footer ===== -->, letting maintainers navigate a long document by scanning. Useful in moderation; a file that needs many signposts is often asking to be split up.\n\nThe judgement to develop is against restating the obvious. <!-- a paragraph --> above a p tag is noise that ages badly — comments should say what the markup cannot: intent, context, constraints.",
+            "code": "<!-- hero section: copy owned by marketing, do not edit text here -->\n<h1>Ship faster with SkillStack</h1>"
+          },
+          {
+            "heading": "Job two: temporarily disabling markup",
+            "body": "Because the parser skips comment contents entirely, wrapping markup in <!-- and --> switches it off without deleting it — the standard move for anything temporary. Hiding an unfinished section before a release, disabling a banner outside campaign season, and above all debugging: when a page misbehaves, commenting out half of it and re-running tells you instantly which half holds the problem, and repeating the split corners the bug in a few steps.\n\nThe non-nesting rule bites hardest here: if the block you are disabling already contains a comment, the outer comment ends at the inner one's -->, and everything after it renders. Check for existing comments before wrapping a large region.\n\nCommenting-out is for the short term. Markup that has been dead for months is clutter that misleads readers into thinking it might come back — delete it, and let version control be the archive."
+          },
+          {
+            "heading": "Comments are public: no secrets, ever",
+            "body": "Comments are invisible in the rendered page but fully present in the HTML file the server sends — anyone who presses view-source reads every one of them. Treat comments as publicly published text that merely skips rendering.\n\nThat rules out a whole category of content: passwords and API keys, internal server names and URLs, colleagues' contact details, unannounced product information, or disparaging notes about clients and users. Security researchers genuinely scan site comments for exactly these leaks, and 'developer left credentials in an HTML comment' is a recurring, entirely avoidable incident category.\n\nA historical footnote while you are looking at strange comments in the wild: old sites often contain conditional comments like <!--[if IE 8]>...<![endif]-->, a syntax only ancient Internet Explorer versions interpreted, used to serve those browsers special markup — modern browsers treat them as ordinary comments, and no modern site writes them.",
+            "code": "<!-- BAD — every visitor can read this:\n     admin password is hunter2 -->\n\n<!-- fine: layout constraint note for maintainers -->"
+          },
+          {
+            "heading": "TODO conventions: comments as a work log",
+            "body": "Teams standardise a few uppercase keywords inside comments so that unfinished work is findable by search: TODO for work that remains ('TODO: add the pricing table'), FIXME for something known to be broken, and HACK or NOTE appearing in some codebases for workarounds and warnings. Editors and code-quality tools recognise these keywords, highlight them, and can list every occurrence across a project.\n\nThe convention only works if the keyword is greppable — always the same spelling, uppercase, at the start of the comment, ideally followed by a colon and a specific description. 'TODO: replace placeholder logo before launch' tells the next person exactly what and when; a bare 'TODO' helps no one.\n\nWrite one the moment you defer anything. The alternative — trusting yourself to remember — is how placeholder text ends up on production sites."
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Comments</title>\n</head>\n<body>\n  <h1>Comments</h1>\n\n  <!-- TASK 1: above the paragraph below, add a comment that reads: note for editors: this stays public -->\n  <p>This paragraph is visible to every visitor.</p>\n\n  <!-- TASK 2: add a comment starting with TODO: recording that the pricing table is missing -->\n\n  <!-- TASK 3: comment out the draft paragraph below so it stops rendering (do not delete it) -->\n  <p>Draft: the pricing section is not ready yet.</p>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Comments</title>\n</head>\n<body>\n  <h1>Comments</h1>\n\n  <!-- note for editors: this stays public -->\n  <p>This paragraph is visible to every visitor.</p>\n\n  <!-- TODO: add the pricing table before launch -->\n\n  <!-- <p>Draft: the pricing section is not ready yet.</p> -->\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Add a comment above the visible paragraph reading: note for editors: this stays public.",
+            "hint": "Comments open with <!-- and close with -->, so: <!-- note for editors: this stays public -->",
+            "errorMessage": "Could not find a comment containing 'note for editors' — add it above the visible paragraph.",
+            "check": {
+              "type": "source",
+              "pattern": "<!--\\s*note for editors"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Add a TODO comment recording the missing pricing table.",
+            "hint": "Start the comment text with the uppercase keyword: <!-- TODO: add the pricing table before launch -->",
+            "errorMessage": "No comment starting with TODO found — use the greppable convention: <!-- TODO: ... -->",
+            "check": {
+              "type": "source",
+              "pattern": "<!--\\s*TODO"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Comment out the draft paragraph so it no longer renders — without deleting it.",
+            "hint": "Wrap the whole line in comment markers: <!-- <p>Draft: ...</p> -->",
+            "errorMessage": "The draft paragraph is still active — wrap the entire <p>Draft: ...</p> line in <!-- and -->.",
+            "check": {
+              "type": "source",
+              "pattern": "<!--\\s*<p>\\s*draft"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Keep the visible paragraph uncommented and rendering.",
+            "hint": "Only the draft paragraph gets commented out — the 'visible to every visitor' one stays live.",
+            "errorMessage": "The visible paragraph disappeared — make sure your comment markers wrap only the draft line.",
+            "check": {
+              "type": "text",
+              "selector": "p",
+              "pattern": "visible to every visitor"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b11-links",
+      "title": "Connect pages with links that say where they lead",
+      "summary": "Master the a element and href, choose between absolute and relative URLs, write link text that works out of context, and link images and larger blocks.",
+      "difficulty": "beginner",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Create external, internal and image links with href values and link text that serve every kind of reader.",
+      "whyItMatters": "Links are the defining feature of the web — the 'hypertext' in HTML — and every navigation, every citation and every call-to-action button ultimately rests on the a element. Link text quality has outsized reach: screen-reader users often navigate by listing a page's links out of context, and search engines read link text as a description of the destination, so 'click here' fails both audiences at once. Understanding absolute versus relative URLs here also sets up the file-paths lesson that follows.",
+      "steps": [
+        "Read how the a element and href work.",
+        "Read the absolute vs relative URL section.",
+        "Read the link text quality section — it changes how you write every link from now on.",
+        "Read about linking images and blocks, and the visited/unvisited states.",
+        "In the editor, create the external link (task 1) and the internal about-page link with descriptive text (tasks 2 and 3).",
+        "Wrap the logo image in a home link (task 4) and run all checks."
+      ],
+      "prompt": "<a href=\"https://developer.mozilla.org\">MDN Web Docs</a>\n<a href=\"about.html\">About this site</a>\n<a href=\"index.html\"><img src=\"logo.png\" alt=\"SkillStack home\"></a>",
+      "promptLabel": "Key code example",
+      "explanation": "Each a element turns its content into a clickable link, and href states the destination. The first link uses an absolute URL — a complete address that works from anywhere — because it leaves the site. The second uses a relative URL that the browser resolves against the current page's location, which is the right choice for pages within the same site. The third wraps an image: the img becomes the clickable area, and its alt text doubles as the link's accessible name, which is why it describes the destination rather than the picture.",
+      "example": "A resources page lists ten links all reading 'click here'. A screen-reader user pulls up the links list and hears 'click here' ten times — the page is unnavigable without reading every surrounding sentence.\n\nThe same page rewritten — 'HTML validator', 'Contrast checker', 'Course syllabus' — becomes scannable by everyone: sighted readers skim the highlighted phrases, assistive technology lists meaningful destinations, and search engines finally learn what those target pages contain.",
+      "exercise": "In the editor on the right, link the MDN reference with its absolute URL, add a link to the local about.html page whose text describes the destination, and turn the logo image into a link back to index.html. Run the checks after each link.",
+      "expectedResult": "The preview shows two text links — styled in the browser's default link colours — and a clickable logo image. All four checks pass.",
+      "commonMistakes": [
+        "Writing 'click here' or 'read more' as link text. The link should name its destination so it works out of context.",
+        "Forgetting href entirely. An a element without href is not a functional link — it is not focusable and not clickable.",
+        "Using an absolute URL with your own domain for internal links. It breaks on your local copy and staging site; keep internal links relative.",
+        "Linking an image without alt text. The link's accessible name comes from the alt, so screen readers announce a nameless mystery link."
+      ],
+      "proTip": "Audit any page's link quality in seconds: skim only the underlined phrases and ask whether each one, read alone, tells you where it goes. If a link needs its surrounding sentence to make sense, rewrite the link text.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will wire up a small page with all three everyday link types: an external absolute link, an internal relative link with descriptive text, and a linked image.",
+        "sections": [
+          {
+            "heading": "The a element: content plus destination",
+            "body": "A link is an a element ('anchor') whose href attribute holds the destination URL: <a href=\"https://example.com\">Example</a>. The content between the tags — the link text — is what the visitor sees and clicks; the href is where activating it navigates. Browsers style links to be recognisable (blue and underlined by default), make them focusable with the keyboard, and let them activate with Enter as well as a click.\n\nBoth halves are essential. An a element without href renders as plain text: not clickable, not focusable, announced as nothing special. And an href without meaningful link text is a destination nobody can identify.\n\nThe a element is an inline element, so it lives naturally inside sentences and paragraphs — a few linked words mid-sentence is the web's native pattern, not a limitation to work around.",
+            "code": "<p>The full reference lives at\n  <a href=\"https://developer.mozilla.org\">MDN Web Docs</a>.</p>"
+          },
+          {
+            "heading": "Absolute URLs: the complete address",
+            "body": "An absolute URL is self-contained: scheme (https://), domain (developer.mozilla.org), and optionally a path to a specific page (/docs/Web/HTML). Because it carries every part of the address, it works identically no matter which page contains it — which makes it the required form for links leaving your site.\n\nAlways prefer the https:// scheme when linking out; linking to the insecure http:// version of a site that supports encryption sends visitors through an unnecessary redirect at best. You will sometimes see scheme-variants in the wild — mailto:someone@example.com opens the visitor's mail client, tel:+301234567 dials on phones — all still absolute URLs, just with different schemes.\n\nThe temptation to resist is using absolute URLs for your own pages. <a href=\"https://mysite.com/about.html\"> works in production and silently breaks everywhere else — your local files, a staging server, a moved domain. Internal links have a better tool.",
+            "code": "<a href=\"https://developer.mozilla.org/docs/Web/HTML\">HTML reference</a>\n<a href=\"mailto:hello@example.com\">Email us</a>"
+          },
+          {
+            "heading": "Relative URLs: addresses from here",
+            "body": "A relative URL omits the scheme and domain and states only a path, which the browser resolves against the current page's location: on any page of your site, href=\"about.html\" means 'the file about.html next to this page'. The same markup then works on your laptop's file:// copy, on staging, and in production, because the destination travels with the site.\n\nRelative URLs can reach into folders (articles/first-post.html), climb out of them (../index.html) and anchor to the site root (/contact.html) — the full path grammar gets its own dedicated lesson next. For now, the rule of thumb: external links absolute, internal links relative.\n\nOne more relative form worth recognising: href=\"#section-id\" jumps to the element with that id on the current page — the mechanism behind tables of contents and 'back to top' links. It combines with paths too: articles/guide.html#setup opens the page and scrolls to the section.",
+            "code": "<a href=\"about.html\">About this site</a>\n<a href=\"articles/first-post.html\">My first post</a>\n<a href=\"#top\">Back to top</a>"
+          },
+          {
+            "heading": "Link text: name the destination",
+            "body": "Link text is read in three situations you must design for. In context, by sighted readers scanning for the highlighted phrases. Out of context, by screen-reader users who list all links on a page and jump between them — each link is announced by its text alone. And by search engines, which treat the text as a human-written description of the target page.\n\n'Click here', 'here', 'read more' and bare URLs fail all three. The fix is to link the phrase that names the destination: instead of 'Click here to see the syllabus', write 'See the course syllabus' with 'course syllabus' as the link. The surrounding sentence usually gets shorter, not longer — the instruction to click was never information.\n\nTwo related quality rules: keep link text reasonably short (a phrase, not a paragraph), and never give two links with the same text different destinations on one page — 'Details' four times pointing four places is a maze for anyone navigating by links.",
+            "code": "<!-- weak -->\n<p>Click <a href=\"syllabus.html\">here</a> for the syllabus.</p>\n\n<!-- strong -->\n<p>See the <a href=\"syllabus.html\">course syllabus</a>.</p>"
+          },
+          {
+            "heading": "Linking images and larger blocks",
+            "body": "Anything inside an a element becomes clickable, and the most common non-text content is an image: wrap an img in a link and the picture is the button. The site logo linking to the home page is the canonical example, a convention users expect on effectively every site.\n\nA linked image's accessible name comes from the img's alt attribute, so the alt should describe the link's destination, not the artwork: alt=\"SkillStack home\", not alt=\"Blue hexagon logo\". An empty alt on a linked image creates a link with no name at all — one of the most common accessibility failures on the web.\n\nModern HTML also permits wrapping entire blocks — a card with a heading, image and teaser paragraph — in one a element, making the whole card clickable. It is legitimate and widely used; the trade-offs to know are that the link's announced name becomes everything inside it (keep card content concise) and that you cannot nest another link inside. What remains invalid is a link inside a link, and links inside buttons.",
+            "code": "<a href=\"index.html\">\n  <img src=\"logo.png\" alt=\"SkillStack home\">\n</a>"
+          },
+          {
+            "heading": "Link states: unvisited, visited, and friends",
+            "body": "Browsers track which URLs you have visited and style links accordingly — the classic scheme is blue for unvisited links, purple for visited ones. The state lives in the browser's history, not in your markup: the same link renders differently for different visitors, helping them remember which paths they have already explored. On content-heavy sites like documentation or search results, that purple is genuinely useful wayfinding.\n\nTwo more states complete the set: active, the moment a link is being pressed (briefly red by default), and — though not a link-specific state — focus, the outline shown when a keyboard user tabs onto the link. CSS can restyle all of these (with :link, :visited, :active and :focus selectors, in that order), which you will meet in the CSS course.\n\nThe design lesson to carry from here: these states carry real information, so when styling links later, keep visited and unvisited distinguishable where history matters, and never remove the focus outline without replacing it — keyboard users navigate by it."
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Read more about the web</title>\n</head>\n<body>\n  <h1>Read more about the web</h1>\n\n  <!-- TODO 1: link the words \"MDN Web Docs\" to https://developer.mozilla.org -->\n  <p>MDN Web Docs explains every HTML element.</p>\n\n  <!-- TODO 2 + 3: add a link to about.html whose text describes the destination,\n       for example: About this site -->\n  <p></p>\n\n  <!-- TODO 4: wrap the logo image in a link to index.html -->\n  <img src=\"logo.png\" alt=\"SkillStack home\">\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Read more about the web</title>\n</head>\n<body>\n  <h1>Read more about the web</h1>\n\n  <p><a href=\"https://developer.mozilla.org\">MDN Web Docs</a> explains every HTML element.</p>\n\n  <p><a href=\"about.html\">About this site</a></p>\n\n  <a href=\"index.html\"><img src=\"logo.png\" alt=\"SkillStack home\"></a>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Turn 'MDN Web Docs' into a link with the absolute URL https://developer.mozilla.org.",
+            "hint": "Wrap the words in an anchor: <a href=\"https://developer.mozilla.org\">MDN Web Docs</a>.",
+            "errorMessage": "No link with an absolute https:// URL found — external links need the complete address.",
+            "check": {
+              "type": "selector",
+              "selector": "a[href^='https://']"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Add a link to the local page about.html using a relative URL.",
+            "hint": "Same-site pages use relative paths: <a href=\"about.html\">...</a> — no domain needed.",
+            "errorMessage": "No link with href=\"about.html\" found — add a relative link to the about page.",
+            "check": {
+              "type": "selector",
+              "selector": "a[href='about.html']"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Give the about link text that names its destination, e.g. 'About this site' — not 'click here'.",
+            "hint": "The link text is what screen readers announce out of context — make it say where it leads.",
+            "errorMessage": "The about.html link's text should describe the destination (it should mention 'about').",
+            "check": {
+              "type": "text",
+              "selector": "a[href='about.html']",
+              "pattern": "about"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Wrap the logo image in a link pointing to index.html.",
+            "hint": "The img goes inside the anchor: <a href=\"index.html\"><img ...></a>.",
+            "errorMessage": "The logo is not linked — wrap the <img> in an <a> element pointing home.",
+            "check": {
+              "type": "selector",
+              "selector": "a img"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-b12-file-paths",
+      "title": "Navigate any project with file paths that never break",
+      "summary": "Read and write every kind of path — same-folder, subfolder, parent with ../, and root-relative with / — plus the index.html convention and the file-naming rules that keep links working.",
+      "difficulty": "beginner",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Link the pages and images of a small multi-folder site using the correct path form for each relationship.",
+      "whyItMatters": "Broken images and dead links are the most common beginner bugs, and virtually all of them are path mistakes — a file moved, a ../ miscounted, a space in a filename. Paths are also universal knowledge: the same grammar addresses files in CSS url() values, JavaScript imports, terminal commands and configuration files, so mastering it once pays off across every tool you will ever use. A site whose internal links are written correctly can move between your laptop, staging and production without a single edit.",
+      "steps": [
+        "Read the path anatomy section and keep the folder map beside you.",
+        "Read same-folder and subfolder paths, then the ../ parent section.",
+        "Read about root-relative paths and when they are safe.",
+        "Read the naming rules and the index.html convention.",
+        "In the editor, add the same-folder and subfolder links (tasks 1 and 2) and the image path (task 3).",
+        "Add the ../ link for the article page and the root-relative link (tasks 4 and 5), then run all checks."
+      ],
+      "prompt": "my-site/\n  index.html        <a href=\"contact.html\">\n  contact.html      <a href=\"articles/first-post.html\">\n  images/logo.png   <img src=\"images/logo.png\">\n  articles/\n    first-post.html <a href=\"../index.html\">",
+      "promptLabel": "Key code example",
+      "explanation": "Every relative path is read from the location of the file that contains it. From index.html at the top of the project, contact.html is a plain filename because the two files share a folder, and the logo and article need one folder step down — images/ and articles/ — before the filename. From first-post.html inside articles/, reaching index.html requires one step up, written ../. The path is not a property of the target file but of the journey from source to target, which is why the same destination gets different paths from different pages.",
+      "example": "A student builds a site where every image loads perfectly — until they reorganise pages into folders, and every picture breaks at once.\n\nNothing is wrong with the images: the pages moved, so every relative journey from page to image now starts somewhere else. Rewriting the paths relative to each page's new location (or switching shared assets to root-relative paths like /images/logo.png before deploying to a server) fixes the whole site. Understanding that paths describe journeys, not destinations, turns this from a mystery into a two-minute fix.",
+      "exercise": "In the editor on the right, you are editing index.html of a small site whose folder map sits in a comment at the top. Add links to the contact page and the article, show the logo from the images folder, write the ../ link the article page would use to come home, and add one root-relative link. Run the checks as you go.",
+      "expectedResult": "The preview shows a navigation list of links and the logo's alt text (the image file does not exist in the editor sandbox — the path is what is being checked). All five checks pass.",
+      "commonMistakes": [
+        "Counting ../ steps wrong. Each ../ climbs exactly one folder; from articles/first-post.html one ../ reaches the site root, not two.",
+        "Spaces and capitals in file names. 'My Page.HTML' becomes %20-encoded in URLs and breaks on case-sensitive servers — use lowercase-with-hyphens.html.",
+        "Starting a path with / while testing from file://. Root-relative paths resolve to your disk's root locally; they only behave on a web server.",
+        "Writing paths that work by accident on Windows with backslashes. URLs always use forward slashes, on every operating system."
+      ],
+      "proTip": "When an image or link breaks, open DevTools' Network tab and reload: the failed request shows the exact URL the browser assembled from your path — compare it with where the file actually lives and the miscounted step is usually obvious.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "student"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will link together the pages and assets of a small multi-folder site, using each of the four path forms exactly where it belongs.",
+        "sections": [
+          {
+            "heading": "Path anatomy: journeys, not names",
+            "body": "A path is a journey from one file to another, written as folder steps separated by forward slashes with the target filename at the end: articles/first-post.html means 'enter the articles folder, then open first-post.html'. The slash is always forward — URLs use / on every operating system, including Windows.\n\nThe defining fact about relative paths, worth reading twice: they are resolved from the location of the file that contains them. The same target has different paths from different starting points, and moving a file invalidates every relative path written inside it. When a link or image breaks, your first question is always 'where does this journey start?'\n\nA project's folder tree is therefore something you must be able to picture. Sketch it, keep it shallow, and group by type or section — an images/ folder for pictures, an articles/ folder for posts — so that paths stay short and predictable.",
+            "code": "my-site/\n  index.html\n  contact.html\n  images/\n    logo.png\n  articles/\n    first-post.html"
+          },
+          {
+            "heading": "Same folder and subfolders",
+            "body": "The two simplest journeys cover most links on a small site. When source and target sit in the same folder, the path is just the filename: from index.html, href=\"contact.html\" reaches its neighbour. No slash, no prefix — the browser looks right next to the current page.\n\nTo descend into a subfolder, name the folder, a slash, then the file: from index.html, the logo is src=\"images/logo.png\" and the article is href=\"articles/first-post.html\". Deeper nesting chains naturally — articles/2026/august/report.html — each slash one step down.\n\nYou may also see a leading ./ meaning 'the current folder': ./contact.html is identical to contact.html. Some developers and tools prefer the explicit form; in hand-written HTML the bare filename is the norm and this course uses it.",
+            "code": "<!-- written inside index.html -->\n<a href=\"contact.html\">Contact</a>\n<img src=\"images/logo.png\" alt=\"Site logo\">\n<a href=\"articles/first-post.html\">First post</a>"
+          },
+          {
+            "heading": "Climbing out: the ../ parent step",
+            "body": "The special segment ../ means 'the parent folder — one level up'. A page inside articles/ reaches the site's front page with href=\"../index.html\": climb out of articles/, then open index.html. Steps chain: ../../ climbs two levels, and climbs combine with descents — from articles/first-post.html, the logo in images/ is ../images/logo.png (up out of articles, down into images).\n\nMiscounted ../ steps are the classic path bug, and the reliable technique is to trace with a finger on the folder tree: start at the file containing the path, move up once per ../, then follow the named folders down. Every professional debugs paths exactly this way; nobody computes three levels of ../ in their head reliably.\n\nIf a path needs more than two ../ steps, treat it as a signal: either the folder structure is deeper than the site needs, or the next section's tool — root-relative paths — is the better fit.",
+            "code": "<!-- written inside articles/first-post.html -->\n<a href=\"../index.html\">Home</a>\n<img src=\"../images/logo.png\" alt=\"Site logo\">"
+          },
+          {
+            "heading": "Root-relative paths: anchored to the site root",
+            "body": "A path that starts with / ignores the current page's location entirely and begins at the site root — the top of the domain: href=\"/contact.html\" reaches the same file from every page on the site, however deeply nested. For shared elements like navigation menus that appear on every page, this is a huge simplification: one identical set of paths works everywhere, and pages can move between folders without their nav breaking.\n\nThe critical caveat: 'site root' is defined by a web server. When you open files directly from disk with file://, the leading / resolves to your drive's root — nowhere near your project — and every root-relative path breaks. So the rule of thumb: while learning with local files, use relative paths; once a site lives on a server (or a local development server), root-relative paths become available and are the standard choice for shared assets and navigation.\n\nThis also explains a pattern you will meet in real projects and templates: full sites tend to write /images/logo.png and /css/main.css, precisely so the references are location-independent.",
+            "code": "<!-- identical on every page of the deployed site -->\n<a href=\"/index.html\">Home</a>\n<a href=\"/contact.html\">Contact</a>"
+          },
+          {
+            "heading": "File naming: the rules that keep URLs clean",
+            "body": "File and folder names become parts of URLs, and two naming habits prevent almost all name-related breakage. First, no spaces: a space is not legal in a URL and gets encoded as %20, producing addresses like my%20page.html that are ugly, error-prone and easily mangled when shared. Use hyphens where a space wants to be: my-page.html. (Hyphens are also preferred over underscores — they are the word separator search engines expect.)\n\nSecond, all lowercase, always. Your laptop's file system is probably case-insensitive, so About.html and about.html look interchangeable — but most web servers run on case-sensitive systems, where a link to about.html cannot find About.html. Sites that 'worked on my machine' and 404 in production are overwhelmingly casing bugs. A strict lowercase-with-hyphens policy makes the mistake impossible.\n\nKeep extensions honest too: .html for pages, and the real extension of each image format. The name before the extension should say what the file is — first-post.html beats page2.html for every human and search engine that reads the URL."
+          },
+          {
+            "heading": "index.html: the front-door convention",
+            "body": "When a browser requests a folder rather than a file — https://example.com/ or https://example.com/articles/ — the web server looks inside that folder for a conventionally named default file and serves it. That name is index.html. It is why a homepage URL needs no visible filename: example.com quietly serves example.com/index.html.\n\nThe convention shapes how you structure and link sites. Name every folder's landing page index.html, and link to the folder for cleaner URLs: href=\"/articles/\" reads better than href=\"/articles/index.html\" and reaches the same document. Your site's front page is always index.html at the project root — build tools, hosting platforms and other developers all assume it.\n\nWith this, the path toolkit is complete: same-folder names, subfolder descents, ../ climbs, root-relative anchors, clean naming and index defaults. Every asset reference in the rest of this course — images, stylesheets, scripts — reuses exactly this grammar."
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>My small site</title>\n</head>\n<body>\n  <!-- Folder map of this project:\n       index.html      (the file you are editing)\n       contact.html\n       images/logo.png\n       articles/first-post.html\n  -->\n  <h1>My small site</h1>\n\n  <!-- TODO 1: link to the contact page (same folder) -->\n\n  <!-- TODO 2: link to the first post inside the articles folder -->\n\n  <!-- TODO 3: show the logo from the images folder (give it alt text) -->\n\n  <!-- TODO 4: the article page needs a way home — write here the link\n       that first-post.html would use to reach index.html (one level up) -->\n\n  <!-- TODO 5: add a root-relative link to /index.html labelled Home -->\n\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>My small site</title>\n</head>\n<body>\n  <!-- Folder map of this project:\n       index.html      (the file you are editing)\n       contact.html\n       images/logo.png\n       articles/first-post.html\n  -->\n  <h1>My small site</h1>\n\n  <a href=\"contact.html\">Contact</a>\n\n  <a href=\"articles/first-post.html\">First post</a>\n\n  <img src=\"images/logo.png\" alt=\"Site logo\">\n\n  <a href=\"../index.html\">Home (from the article page)</a>\n\n  <a href=\"/index.html\">Home</a>\n\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Link to contact.html — it sits in the same folder as this page.",
+            "hint": "Same folder means the bare filename is the whole path: <a href=\"contact.html\">Contact</a>.",
+            "errorMessage": "No link with href=\"contact.html\" found — a same-folder target needs only its filename.",
+            "check": {
+              "type": "selector",
+              "selector": "a[href='contact.html']"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Link to first-post.html inside the articles folder.",
+            "hint": "Folder, slash, filename: <a href=\"articles/first-post.html\">First post</a>.",
+            "errorMessage": "No link with href=\"articles/first-post.html\" found — descend into the folder with folder/file.",
+            "check": {
+              "type": "selector",
+              "selector": "a[href='articles/first-post.html']"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Display the logo stored at images/logo.png.",
+            "hint": "<img src=\"images/logo.png\" alt=\"Site logo\"> — the src path descends into images/.",
+            "errorMessage": "No <img> with src=\"images/logo.png\" found — the logo lives one folder down.",
+            "check": {
+              "type": "selector",
+              "selector": "img[src='images/logo.png']"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Write the link that first-post.html (inside articles/) would use to reach index.html.",
+            "hint": "From inside articles/, index.html is one level up: href=\"../index.html\".",
+            "errorMessage": "No link with href=\"../index.html\" found — climbing one folder up is written ../",
+            "check": {
+              "type": "selector",
+              "selector": "a[href='../index.html']"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Add a root-relative Home link: href=\"/index.html\".",
+            "hint": "A leading slash anchors the path to the site root: <a href=\"/index.html\">Home</a>.",
+            "errorMessage": "No link with href=\"/index.html\" found — root-relative paths start with a single /.",
+            "check": {
+              "type": "selector",
+              "selector": "a[href='/index.html']"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

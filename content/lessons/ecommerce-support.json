@@ -1,0 +1,529 @@
+{
+  "lessons": [
+    {
+      "slug": "ecom-b1-product-descriptions-that-sell",
+      "title": "Write product descriptions that sell without overclaiming",
+      "summary": "Turn a spec sheet or rough notes into a persuasive, accurate product description that highlights real benefits without invented claims.",
+      "difficulty": "beginner",
+      "minutes": 8,
+      "isFree": true,
+      "goal": "Produce a persuasive, factually accurate product description ready to publish, built only from real product specs and features.",
+      "whyItMatters": "The product description is one of the highest-leverage pages on your store — nearly every buyer reads it before checking out. Vague AI copy full of empty superlatives (\"premium,\" \"game-changing\") hurts conversion because it sounds like every other listing, and unverifiable claims (\"clinically proven,\" \"lasts a lifetime\") create real return, chargeback, and platform-suspension risk on Amazon, Shopify, and Etsy. Descriptions that lead with the buyer's real problem and back every benefit with a fact convert better and hold up to scrutiny.",
+      "beforeYouStart": "Your product's real specs, materials, dimensions, and 2-3 genuine differentiators — nothing you'd have to guess at or hope is true.",
+      "steps": [
+        "Gather the real spec sheet or your own notes: materials, dimensions, what it does, what's included, and any certifications or test results you can back up.",
+        "Name the single buyer you're writing for and the one problem they're trying to solve when they land on this page.",
+        "List 2-3 genuine differentiators versus typical alternatives — concrete facts, not vague superlatives.",
+        "Feed the specs, buyer, and differentiators into the prompt and ask for a description built only from what you supplied.",
+        "Instruct the AI to flag any benefit it would otherwise infer that isn't explicitly backed by a fact you gave it.",
+        "Read the draft and delete or rewrite any adjective-only claim that isn't tied to a specific, verifiable fact.",
+        "Check the description against your platform's advertising rules (no unverified health, safety, or performance claims) before publishing."
+      ],
+      "prompt": "Write a product description for [PRODUCT NAME] that will sell it honestly.\n\nFacts about the product (use ONLY these — do not invent materials, results, or claims not listed):\n[PASTE SPECS: materials, dimensions, weight, what it does, what's included, certifications/test results]\n\nBuyer: [WHO IS BUYING THIS, e.g. \"home cooks who are tired of pans warping on high heat\"]\nReal differentiators vs typical alternatives: [LIST 2-3 FACTS]\n\nRequirements:\n- [LENGTH, e.g. 120-160 words] plus a 5-bullet feature list.\n- Lead with the buyer's problem, not the product name.\n- Every benefit claim must trace directly to a fact I gave you. If you want to make a claim I didn't support with a fact, put it in a separate \"needs a source\" list instead of the main copy.\n- No unverifiable superlatives (\"best,\" \"revolutionary,\" \"clinically proven\") unless I explicitly gave you data supporting it.\n- Match tone to: [e.g. \"warm and direct, like a knowledgeable friend, not a hype ad\"].",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Restricting the AI to only the facts you supply is the core guardrail against hallucinated specs and results, which is the single biggest risk in AI-written product copy. Leading with the buyer's problem rather than the product name is what actually improves conversion, since shoppers skim for \"is this for me\" before they read features. The \"needs a source\" list catches plausible-sounding claims the model wants to add on its own, so you see exactly what to verify or cut instead of publishing it by accident. Matching tone explicitly keeps the description consistent with the rest of your brand voice instead of defaulting to generic ad-speak.",
+      "example": "Input specs for a cast-iron skillet (10.25\", pre-seasoned, 3-layer seasoning process, oven-safe to 500°F, foundry-certified), buyer = home cooks frustrated with warping cheap pans, differentiators = triple-seasoned vs. single-coat competitors, lifetime warranty against warping.\n\nOutput: a description opening on the frustration of pans warping or sticking, describing the skillet's real specs in plain language, a 5-bullet list covering size, oven-safe temperature, seasoning process, and warranty, and a separate \"needs a source\" note flagging that a \"handed down for generations\" style claim wasn't supported by anything provided and should be added only if actually true.",
+      "exercise": "In your own Claude or ChatGPT account, take the spec sheet from a real product listing and generate a description with this prompt, then check the \"needs a source\" list against what you can actually verify.",
+      "expectedResult": "A 120-160 word description plus a bullet list, ready to post pending your own review, with zero claims you can't back up.",
+      "commonMistakes": [
+        "Letting the AI fill blank spec fields with plausible-sounding but invented numbers.",
+        "Leading with the product name or brand instead of the buyer's problem.",
+        "Accepting vague superlatives that don't actually differentiate from any competitor.",
+        "Skipping a check against your platform's advertising-claim rules before publishing."
+      ],
+      "proTip": "Save the finished description's \"needs a source\" flags as a running list of claims to actually go test or verify — over time this becomes real proof you can add back into future copy.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "ecommerce-owner"
+      ],
+      "skills": [
+        "writing",
+        "marketing"
+      ]
+    },
+    {
+      "slug": "ecom-b2-ad-copy-variants-for-testing",
+      "title": "Generate ad copy variants built for real A/B testing",
+      "summary": "Produce a batch of genuinely different headline and body ad variants — not repeats of the same idea — so your testing actually learns something.",
+      "difficulty": "beginner",
+      "minutes": 8,
+      "isFree": true,
+      "goal": "Produce a batch of ad copy variants that each test a distinct angle, ready to load into your ad platform's A/B test.",
+      "whyItMatters": "AI makes it cheap to generate a dozen ad variants in seconds, but if every variant says the same thing in different words, the test tells you nothing except which wording you like better. Real testing value comes from pitting genuinely different angles against each other — price, social proof, urgency, problem-solution — so you learn what actually moves your specific audience, not just which synonym performs marginally better.",
+      "steps": [
+        "Define one specific offer and audience for this ad set — don't try to cover every audience with one batch.",
+        "List the real angles you want to test (price/value, social proof, urgency/scarcity, problem-solution, feature-led, lifestyle) — pick 4-6.",
+        "Note the platform and its character/format limits (Meta primary text and headline, Google RSA headline limits, etc.).",
+        "Ask the AI to write exactly one variant per angle, explicitly labeled, not near-duplicate rewordings of each other.",
+        "Check each variant actually differs in core message, not just phrasing — if two feel the same, ask for one to be replaced.",
+        "Verify every factual claim in the copy against your actual offer before uploading.",
+        "Load into your platform's test and record which angle is running in each ad name so you can track results back to it."
+      ],
+      "prompt": "Write [NUMBER, e.g. 6] ad copy variants for [PRODUCT/OFFER] on [PLATFORM, e.g. Meta feed ad].\n\nOffer facts (use only these): [PRICE, PROMO, KEY FEATURES, SHIPPING/RETURN TERMS]\nAudience: [WHO, e.g. \"first-time buyers who abandoned a cart in the last 7 days\"]\nCharacter limits: [e.g. \"primary text 125 chars, headline 40 chars\"]\n\nAngles to test — write exactly ONE variant per angle, and make sure each is a genuinely different core message, not a reworded version of another:\n1. [ANGLE 1, e.g. Price/value]\n2. [ANGLE 2, e.g. Social proof]\n3. [ANGLE 3, e.g. Urgency/scarcity]\n4. [ANGLE 4, e.g. Problem → solution]\n5. [ANGLE 5, e.g. Feature-led]\n6. [ANGLE 6, e.g. Lifestyle/aspirational]\n\nFor each: label the angle, give the headline + primary text, and stay within the character limits. Do not add a claim, discount, or guarantee I didn't list above.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Naming distinct angles up front is the mechanism that prevents near-duplicate outputs — asking for \"10 variations\" without structure almost always produces ten rewordings of one idea. Baking in the platform's character limits avoids manual trimming and awkward truncation after publish. Labeling each variant by angle makes it possible to trace test results back to a hypothesis instead of just knowing \"variant C won\" with no idea why. The ban on inventing offers or guarantees protects you from ad rejections and false-advertising exposure.",
+      "example": "Input: offer = eco-packaging skincare set, $38, free shipping over $35, audience = cart abandoners; output: 6 labeled variants — price/value emphasizing the free-shipping threshold, social proof citing the review count you supplied, urgency noting limited stock, problem-solution addressing dry skin, feature-led about ingredients, and lifestyle framed around a self-care routine — each within the stated character limits.",
+      "exercise": "In your own Claude or ChatGPT account, run this prompt for a real upcoming campaign and load at least 3 of the resulting variants into your ad platform's test.",
+      "expectedResult": "A set of clearly labeled, genuinely distinct ad variants within character limits, ready for platform upload with zero invented claims.",
+      "commonMistakes": [
+        "Asking for \"10 variations\" without specifying angles, getting 10 rewordings of the same idea.",
+        "Ignoring platform character limits so copy gets truncated oddly on publish.",
+        "Letting the AI invent a discount percentage or guarantee that isn't real.",
+        "Not labeling variants by angle, making it impossible to learn which angle won after the test."
+      ],
+      "proTip": "Keep a running log of which angle wins for which product category — after a few campaigns you'll see a real pattern for your specific audience instead of guessing each time.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "ecommerce-owner"
+      ],
+      "skills": [
+        "marketing",
+        "writing"
+      ]
+    },
+    {
+      "slug": "ecom-i1-product-lifestyle-photos-ai-image",
+      "title": "Create product and lifestyle shots with ChatGPT and Gemini",
+      "summary": "Generate on-brand lifestyle and styled scenes around your real product using ChatGPT's GPT Image 2 or Gemini's Nano Banana 2, without misrepresenting the product itself.",
+      "difficulty": "intermediate",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Produce a usable, on-brand lifestyle or styled product image with ChatGPT or Gemini's image generator, while keeping the actual product accurately represented.",
+      "whyItMatters": "Professional photo and lifestyle shoots are expensive and slow, especially for new SKUs or seasonal variants. ChatGPT's GPT Image 2 and Gemini's Nano Banana 2 can fill real gaps — social ad backgrounds, styled scenes, seasonal banners — both accept an uploaded reference photo so the real product isn't reinvented, but the output must never create a false impression of the product's real appearance, features, or scale. Most marketplaces also require the primary listing photo to be an actual photograph of the real item, so AI-generated images belong in secondary and marketing placements, not the primary listing slot.",
+      "beforeYouStart": "A real photo of your actual product on a clean background, and a ChatGPT account (Plus or higher, for GPT Image 2) or a Gemini account (Google AI Pro/Ultra, for Nano Banana 2) — both let you upload that photo as a reference so the real product appears accurately inside the generated scene.",
+      "steps": [
+        "Decide exactly which use case this image is for — social ad background, lifestyle scene, seasonal banner — never a marketplace primary listing photo, which must be a real photograph.",
+        "Open a chat in ChatGPT or Gemini and attach your real product photo as a reference image so the object itself isn't reinvented by the model.",
+        "Build the prompt in order: subject placement, setting, composition, lighting, style, mood, and aspect ratio for the destination platform.",
+        "Generate several variations and compare them against your brand's actual color palette and the product's real appearance.",
+        "Reject any generation that alters or misrepresents the product itself — wrong color, wrong proportions, invented features.",
+        "Use the tool's in-chat editing (ask it to adjust lighting, framing, or color in the same conversation) to refine the chosen image instead of rewriting the whole prompt.",
+        "Save the working prompt and reference-image combination as a template for future seasonal shots of the same product line."
+      ],
+      "prompt": "Generate a lifestyle/styled scene for [PRODUCT], for use as [PLATFORM/PLACEMENT, e.g. \"Instagram feed ad background\" — NOT a marketplace primary listing photo].\n\nReference image attached = my actual product photo, unchanged.\n\nScene: [SETTING, e.g. \"sunlit kitchen counter, morning\"], [COMPOSITION, e.g. \"product on left third, negative space right for text overlay\"], [LIGHTING], [STYLE, e.g. \"photorealistic, editorial food photography\"], [MOOD/PALETTE matching brand colors: LIST HEX/DESCRIPTION], [ASPECT RATIO for platform].\n\nRequirements:\n- Keep the product itself exactly as shown in the reference — do not redesign its shape, color, label, or add features it doesn't have.\n- No text or logos rendered into the image (I'll add those separately).\n- Generate [N] variations so I can compare.",
+      "promptLabel": "Copyable prompt (ChatGPT or Gemini)",
+      "explanation": "Anchoring the generation to a reference image of your real product is the key guardrail against the model \"helpfully\" reinventing the product's actual appearance, which becomes a truth-in-advertising problem the moment it appears in a paid ad — both GPT Image 2 (ChatGPT) and Nano Banana 2 (Gemini) accept an uploaded reference photo for exactly this reason. Banning rendered text or logos avoids the garbled-text failure mode that still shows up when a model isn't explicitly told to leave a space alone — add typography afterward in a design tool instead. Requesting multiple variations reflects reality: the first generation is rarely the final shot, and both tools let you keep refining a shot conversationally (\"make the light warmer,\" \"shift the mug slightly left\") in the same chat instead of rewriting the whole prompt each time. Naming the exact use case up front keeps AI imagery out of marketplace primary-listing slots where platforms require a literal photograph.",
+      "example": "Input: reference photo of a ceramic mug uploaded to Gemini, scene = a cozy reading nook in morning light, editorial photography, brand palette warm terracotta and cream; output: 4 Nano Banana 2 variations placing the actual mug — unchanged shape and glaze — into styled scenes with matching light and color grading, none altering the mug's real design, ready to pick one for a social ad background with text added afterward in a design tool.",
+      "exercise": "In your own ChatGPT or Gemini account, attach a real product photo as a reference and generate 3-4 lifestyle variations using this prompt, then check each against the actual product photo for accuracy before using it anywhere.",
+      "expectedResult": "One or more usable lifestyle images where the real product is depicted accurately and only the surrounding scene is AI-generated, ready for text and logo overlay in a design tool.",
+      "commonMistakes": [
+        "Using a pure AI-generated product image as a marketplace's primary listing photo, which most platforms prohibit and customers notice.",
+        "Letting the model \"improve\" the product's actual color, proportions, or label without catching it before publishing.",
+        "Asking ChatGPT or Gemini to render logos or text directly into the image instead of adding them afterward in a design tool.",
+        "Not comparing the generated product against the real one side by side before use in paid ads."
+      ],
+      "proTip": "Build a small library of 3-4 reusable scene templates for your product line (kitchen counter, outdoor lifestyle, minimalist studio, seasonal) in whichever tool you use, so new SKUs get on-brand imagery in minutes instead of a full prompt built from scratch.",
+      "tools": [
+        "chatgpt",
+        "gemini"
+      ],
+      "professions": [
+        "ecommerce-owner"
+      ],
+      "skills": [
+        "creative",
+        "marketing"
+      ]
+    },
+    {
+      "slug": "ecom-i2-customer-service-replies-refunds-delays-complaints",
+      "title": "Draft customer-service replies for refunds, delays, and complaints",
+      "summary": "Produce accurate, empathetic reply drafts for refund requests, shipping delays, and complaints that state only real policy and order facts.",
+      "difficulty": "intermediate",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Produce an empathetic, policy-accurate reply draft for a refund, delay, or complaint situation, stating only commitments you can actually honor.",
+      "whyItMatters": "Refund requests, delay complaints, and unhappy customers show up daily in any store, and response speed and tone directly affect reviews, chargebacks, and repeat purchases. The real risk with AI-drafted replies is a confidently invented promise — a specific refund timeline, an exception to policy, a guarantee — that you never actually authorized. Grounding every draft in your real order facts and real policy keeps replies fast without creating commitments the business can't keep.",
+      "beforeYouStart": "Your actual current policy for the situation (refund window, return conditions, who can approve exceptions) and the real order details relevant to this customer.",
+      "steps": [
+        "Gather the real order facts: order date, item, current status, and tracking information if relevant.",
+        "Note your actual, current policy for this situation, including any real exceptions and who approves them.",
+        "Identify the customer's core complaint or emotion in one sentence.",
+        "Feed the order facts, policy, and complaint into the prompt, and specify the tone.",
+        "Instruct the AI not to promise anything — refund amount, timeline, replacement — beyond what your policy and the facts support.",
+        "Review the draft to confirm every commitment stated is one you can actually honor.",
+        "Personalize the greeting and sign-off, then send from your own support platform."
+      ],
+      "prompt": "Draft a reply to a customer email about [SITUATION: refund request / shipping delay / complaint about damaged or wrong item].\n\nCustomer's message (or summary): [PASTE OR SUMMARIZE]\nOrder facts: [ORDER #, ITEM, ORDER DATE, CURRENT STATUS, TRACKING INFO IF RELEVANT]\nOur actual policy for this situation: [PASTE POLICY, e.g. \"refunds within 30 days of delivery, no restocking fee, replacement offered for damaged items with photo proof\"]\n\nRequirements:\n- Open by acknowledging the specific issue, not a generic \"sorry for the inconvenience.\"\n- State only commitments (refund amount, timeline, replacement, etc.) directly supported by the policy and facts I gave you — do not promise anything beyond that, and do not invent a resolution I didn't authorize.\n- If the right resolution isn't clear from what I gave you, say so and list what you need from me to finalize the reply, instead of guessing.\n- Keep it under [WORD COUNT], warm but professional, no corporate-sounding filler phrases.\n- Tone: [firm / apologetic / neutral — pick what fits].",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Grounding the reply in your real order facts and real policy is the essential guardrail against the AI inventing a promise you can't back — a fabricated \"your refund will arrive in 2 business days\" when your actual processor takes 5-10 is exactly the kind of error that turns one bad experience into two. Naming the specific issue instead of a generic apology changes how the reply lands with an already-frustrated customer. The explicit fallback — say so and list what's needed instead of guessing — stops the AI from confidently inventing a resolution when the facts you gave it are incomplete, which is the biggest source of a bad promise.",
+      "example": "Input: situation = shipping delay, customer message expresses frustration over an order 12 days late, order facts show tracking stuck at a hub for 5 days, policy = refund of shipping cost or store credit for delays over 7 business days; output: a reply acknowledging the specific 12-day delay and frustration, stating the tracking status honestly, offering the two real remedies from policy and asking which the customer prefers, with no invented delivery date since none was given.",
+      "exercise": "In your own Claude or ChatGPT account, draft a reply to a real (or realistic) refund, delay, or complaint situation using your actual policy, and check every commitment against what you can truly deliver.",
+      "expectedResult": "An empathetic, policy-accurate draft with zero invented promises, ready to personalize and send, or a clear list of what you need to decide before it can be sent.",
+      "commonMistakes": [
+        "Letting the AI invent a specific refund timeline or dollar amount not actually stated in your policy.",
+        "Opening with a generic \"sorry for the inconvenience\" instead of naming the specific problem.",
+        "Sending a promised resolution you haven't actually confirmed you can deliver.",
+        "Using the same tone for a first-time delay complaint as for a customer's third angry email — match the tone to the real relationship history."
+      ],
+      "proTip": "Build a short reference doc of your 5-6 most common situations and their real policy responses, and paste the relevant one into the prompt each time — this cuts drafting time further while keeping every reply accurate.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "ecommerce-owner"
+      ],
+      "skills": [
+        "communication",
+        "writing"
+      ]
+    },
+    {
+      "slug": "ecom-i3-email-flows-welcome-abandoned-cart-post-purchase",
+      "title": "Build welcome, abandoned-cart, and post-purchase email flows",
+      "summary": "Produce a complete automated email sequence — welcome, abandoned cart, or post-purchase — with copy ready to load into your email platform.",
+      "difficulty": "intermediate",
+      "minutes": 11,
+      "isFree": false,
+      "goal": "Produce a complete automated email flow with distinct, purposeful emails, ready to load into your email platform's automation builder.",
+      "whyItMatters": "Welcome, abandoned-cart, and post-purchase flows drive a disproportionate share of ecommerce revenue, yet many small stores never build them past the platform's default templates. Writing genuinely good multi-email sequences by hand is real work, but each flow type has well-understood beats — which makes AI a strong drafting partner once you supply your real voice, real offer, and real timing instead of letting it invent them.",
+      "beforeYouStart": "Your brand voice notes, the actual discount or policy details you're willing to offer, and real product or catalog links to feature.",
+      "steps": [
+        "Pick one flow to build first — welcome, abandoned cart, or post-purchase — and build it well rather than three shallow ones at once.",
+        "Gather the real inputs: brand voice reference, any discount you're actually willing to offer, timing between emails, and links or products to feature.",
+        "Ask for the flow broken into individual emails with subject line, preview text, send delay, and body for each.",
+        "Specify the distinct job of each email (e.g. email 1 sets expectations, email 2 builds trust, email 3 creates urgency) so no two emails do the same work.",
+        "Instruct the AI not to invent a discount, deadline, or guarantee you didn't specify.",
+        "Review each email for tone match and factual accuracy, then load into your email platform's automation builder.",
+        "Test the full flow end to end by triggering it yourself before turning it on for real customers."
+      ],
+      "prompt": "Write a [FLOW TYPE: welcome / abandoned cart / post-purchase] email flow of [NUMBER] emails for [BRAND/STORE], selling [PRODUCT CATEGORY].\n\nBrand voice: [DESCRIBE, e.g. \"casual, a little playful, short sentences, no corporate jargon\"]\nReal offer I'm willing to include (if any): [DISCOUNT/OFFER, or \"none — no discount\"]\nTiming: [e.g. \"email 1 immediately, email 2 at +24h, email 3 at +72h\"]\nLinks/products to feature: [LIST]\n\nFor each email, give me:\n- Subject line + preview text\n- Send delay (from the timing above)\n- The specific job this email does (e.g. \"build trust,\" \"create urgency,\" \"ask for a review\") — no two emails in the flow should have the same job\n- Full body copy\n\nRules: do not invent a discount, percentage, or deadline beyond what I specified above. If I said \"no discount,\" do not add one anywhere in the flow.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Assigning a distinct job to each email is what prevents a flow from collapsing into three versions of the same generic message — the most common failure in both hand-written and naively AI-written sequences. The explicit no-invented-discount guardrail matters because models default to adding urgency with a made-up percentage off even when never asked, which can cost real margin if shipped unreviewed. Requesting subject line and preview text together lets you judge open-rate appeal, not just body copy, before it ever goes live.",
+      "example": "Input: abandoned-cart flow, 3 emails, casual brand voice, no discount, timing immediate/24h/72h; output: email 1 immediately reminding what's in the cart with light urgency about stock and no discount, email 2 at 24h adding social proof to address hesitation, email 3 at 72h with a stronger urgency angle around limited stock, each with a distinct subject line and job, and no invented discount anywhere in the sequence.",
+      "exercise": "In your own Claude or ChatGPT account, build one real flow for your store with this prompt using your actual brand voice and offer, then load it into your email platform and test-trigger it yourself.",
+      "expectedResult": "A complete, ready-to-load flow where each email has a distinct purpose, correct timing, and zero invented offers, tested end to end before going live.",
+      "commonMistakes": [
+        "Letting the AI add a discount or urgency deadline you never authorized, especially in \"no discount\" flows.",
+        "Writing all the emails with essentially the same message and just a different subject line.",
+        "Skipping the end-to-end test-trigger before turning the flow on for real customers.",
+        "Copying a generic flow structure that ignores your actual timing or segmentation logic in your email platform."
+      ],
+      "proTip": "Once one flow performs well, ask the AI to adapt the same structure and jobs-per-email logic to your next flow (e.g. reuse the abandoned-cart skeleton for a browse-abandonment flow) instead of starting from a blank prompt.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "ecommerce-owner"
+      ],
+      "skills": [
+        "writing",
+        "marketing"
+      ]
+    },
+    {
+      "slug": "ecom-a1-automate-recurring-store-content",
+      "title": "Automate your store's recurring content work with Claude or ChatGPT",
+      "summary": "Design an AI-in-the-loop automation for one recurring store content task using Claude's Cowork and MCP connectors or ChatGPT's Agent mode, with a mandatory human approval step before anything publishes.",
+      "difficulty": "advanced",
+      "minutes": 13,
+      "isFree": false,
+      "goal": "Design and set up an automation that handles one recurring, high-frequency content task using Claude (Cowork + MCP connectors) or ChatGPT (Agent mode + Scheduled tasks), with an AI drafting step and a human approval checkpoint.",
+      "whyItMatters": "Ecommerce stores generate the same categories of content on a recurring cadence — new SKU descriptions, weekly social posts, restock announcements, review-response drafts. Doing each by hand every week doesn't scale as the catalog grows. Claude's Cowork with MCP connectors and ChatGPT's Agent mode with Scheduled tasks now let a store owner set up this kind of AI-in-the-loop automation (trigger, AI drafts, human approves, then it publishes) without an engineer or a separate automation platform — which captures most of the time savings while keeping a human check on anything customer-facing, because unreviewed AI content going live automatically is a real brand risk.",
+      "beforeYouStart": "The specific recurring task you want to automate, where the trigger data lives (e.g. new product added in Shopify, item restocked), and a Claude Pro/Max account with Cowork and MCP connectors, or a ChatGPT Plus/Pro account with Agent mode and Scheduled tasks.",
+      "steps": [
+        "Pick one single recurring content task to automate first, not the whole content calendar at once.",
+        "Map the trigger: what event starts the task (new product added, item restocked, order flagged as delayed) and where that data actually lives (Shopify, your inbox, a spreadsheet).",
+        "Decide exactly what the AI step should produce and from what real inputs, reusing a prompt template from earlier lessons in this path.",
+        "In Claude, connect the relevant MCP connector(s) (your store platform, Google Drive, Gmail) so Cowork can read the real trigger data — or in ChatGPT, connect the equivalent app inside Agent mode or a custom GPT's actions.",
+        "Add a mandatory human-approval checkpoint before anything publishes or sends — never let AI-drafted customer-facing content go live unreviewed in this first version.",
+        "Set the recurring check: a Scheduled task in ChatGPT that runs on a cadence and checks for new trigger events, or a Cowork routine in Claude you run or schedule to check the connected source, draft, and notify you for approval.",
+        "Run it end to end on a test product or test order to confirm each step fires correctly and the AI step receives the right real data.",
+        "Monitor the first 2-3 weeks of real runs closely, adjusting the prompt template when you notice a recurring quality issue, before considering a lighter review for low-risk content only."
+      ],
+      "prompt": "I want to set up this recurring content task using AI: [TASK, e.g. \"draft a product description and Instagram caption every time a new product is added in Shopify\"].\n\nTrigger: [WHAT STARTS IT, e.g. \"new product created in Shopify\"]\nReal inputs available at trigger time: [LIST FIELDS, e.g. \"product title, price, category, spec fields, uploaded photos\"]\nDesired AI output: [WHAT SHOULD BE DRAFTED, e.g. \"150-word product description + 1 Instagram caption with 3 hashtag options\"]\nTool: [Claude with Cowork + MCP connectors / ChatGPT with Agent mode + Scheduled tasks]\n\nHelp me:\n1. Map this as a sequence of steps: trigger → data pull (via the MCP connector or connected app) → AI drafting step (with a prompt template using only the real input fields) → human approval step → publish/send step.\n2. Write the exact prompt template the AI step should use, built only from the real fields listed above — flag anywhere it would need to guess or invent information.\n3. Specify what the human approval step should show me (draft plus original inputs side by side) so I can approve, edit, or reject in one glance — and how that approval step actually works in the tool I named (a Cowork check-in, or a ChatGPT scheduled-task result I review before it acts).\n4. Note the single biggest failure risk in this automation and how to guard against it.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Scoping the automation to one task first prevents building a fragile multi-step system before you know the pattern actually works. The mandatory approval checkpoint is the core safety guardrail here, because unreviewed AI output publishing directly to customers — a wrong price mentioned, a promise you don't actually make, an off-brand tone — is the realistic failure mode of automating store content. Naming the actual tool matters because each handles the approval step differently — Claude's Cowork can pause and check in with you mid-task through its connected MCP servers, while a ChatGPT scheduled task typically hands you a result to review before you tell it to proceed with anything customer-facing. Requiring the prompt template to use only real available fields prevents the automation from silently fabricating content when a field is empty. Asking for the single biggest failure risk builds the habit of designing automations defensively instead of just for the happy path.",
+      "example": "Input: task = draft description + Instagram caption whenever a new product is added in Shopify, trigger = new product created, available fields = title/price/category/specs/photos, tool = Claude with Cowork and a Shopify MCP connector; output: a mapped sequence (Shopify MCP connector detects a new product → Cowork pulls the fields → an AI step drafts using a prompt template referencing only those fields → Cowork checks in with a draft alongside the original inputs → you approve, edit, or reject → publish only after approval), the ready-to-paste prompt template itself, a note on how the Cowork check-in should display the draft, and a flagged risk that products with missing spec fields could produce thin drafts, with a suggested guard of flagging you directly instead of auto-drafting when key fields are empty.",
+      "exercise": "In your own Claude (with Cowork and an MCP connector to your store platform) or ChatGPT (with Agent mode and Scheduled tasks) account, set up this exact flow for one real recurring task in your store, run it end to end on a test item, and keep the approval step in place for at least two weeks before considering removing it.",
+      "expectedResult": "A working automation that drafts one category of recurring store content from real trigger data, routes every draft through you before anything publishes, and has at least one identified failure risk with a guard in place.",
+      "commonMistakes": [
+        "Automating a task end to end with no human approval step on the first version, letting AI-drafted content reach customers unreviewed.",
+        "Trying to automate the entire content calendar at once instead of proving out one task first.",
+        "Building the AI prompt step around fields that aren't reliably present at trigger time, causing thin or broken drafts.",
+        "Never revisiting the prompt template after launch, so a recurring quality issue keeps showing up unaddressed."
+      ],
+      "proTip": "Once a flow has run cleanly for a few weeks with every draft approved with minimal edits, consider a lighter-touch spot-check for that specific low-risk task only — keep full approval on anything involving pricing, promises, or policy.",
+      "tools": [
+        "chatgpt",
+        "claude"
+      ],
+      "professions": [
+        "ecommerce-owner"
+      ],
+      "skills": [
+        "automation",
+        "productivity"
+      ]
+    },
+    {
+      "slug": "cs-b1-rewrite-difficult-reply-firm-kind-correct",
+      "title": "Rewrite a difficult reply to be firm, kind, and correct",
+      "summary": "Turn a blunt or emotionally-charged draft reply into one that stays firm on the real decision while sounding kind and staying factually accurate.",
+      "difficulty": "beginner",
+      "minutes": 8,
+      "isFree": true,
+      "goal": "Produce a reply that states a genuine \"no\" or firm decision clearly, explains it honestly, and stays kind without implying flexibility that doesn't exist.",
+      "whyItMatters": "The hardest replies in support are the ones where the honest answer is no — a denied refund, a policy that can't be overridden, a request that can't be fulfilled. Many agents either soften the reply until the decision sounds negotiable, which produces more follow-up tickets, or write too bluntly, which escalates the situation. A reliable process for staying firm, honest, and kind at the same time reduces both outcomes.",
+      "steps": [
+        "Write down the real decision or policy limit exactly as it stands — don't soften it in your own head yet.",
+        "Identify the specific thing the customer is upset or worried about, in one sentence.",
+        "Note anything you genuinely can offer instead — only include what's real.",
+        "Feed the draft, the real decision, and what you can or can't offer into the prompt.",
+        "Ask for a version that states the decision clearly in the first two sentences, explains why in plain terms, and offers only what you actually can.",
+        "Check the result doesn't accidentally soften the decision into sounding negotiable, or come across as cold and dismissive.",
+        "Read it once more as if you were the customer receiving it before sending."
+      ],
+      "prompt": "Rewrite this reply so it is firm, kind, and factually correct — the customer needs a clear answer, not a vague or overly soft one, but it also shouldn't sound cold.\n\nMy rough/blunt draft: [PASTE DRAFT]\nThe actual decision (do not soften or change this): [e.g. \"we cannot refund — the return window closed 11 days ago and the item was used\"]\nWhat I can genuinely offer instead, if anything: [e.g. \"a 15% discount on next order, or store credit\" / \"nothing — this is a firm no\"]\nCustomer's core concern: [ONE SENTENCE]\n\nRequirements:\n- State the decision clearly within the first two sentences — no burying it or implying flexibility that doesn't exist.\n- Explain the real reason in plain language, not policy-speak.\n- If I said there's nothing further to offer, do not invent an exception, discount, or workaround.\n- Acknowledge the customer's frustration genuinely, without apologizing for the decision itself if it's the correct one.\n- Keep it under [WORD COUNT].",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Forcing the actual decision to be stated up front and unchanged is the core discipline this lesson teaches — the most common failure in written support replies is burying a \"no\" under so much hedging that the customer walks away thinking it's negotiable, which produces more tickets, not fewer. Explicitly banning invented exceptions when none exist prevents the AI from manufacturing a workaround that oversteps your actual authority. Separating \"acknowledge frustration\" from \"apologize for the decision\" keeps empathy genuine without implying you did something wrong when you didn't.",
+      "example": "Input: blunt draft \"no refunds after 30 days per policy,\" real decision = return window closed 11 days ago and the item was used, no exception available, customer concern = feels the timeframe wasn't clearly communicated; output: a reply opening by clearly stating a refund isn't possible, explaining the 30-day window and item condition, genuinely acknowledging the timing feels frustrating, and closing without inventing any discount or workaround since none was authorized.",
+      "exercise": "In your own Claude or ChatGPT account, take a real difficult reply you've had to send — or a draft you're dreading sending — and rewrite it using this prompt.",
+      "expectedResult": "A reply that states the real decision clearly in the opening, sounds human rather than robotic or cold, and contains zero invented exceptions or offers.",
+      "commonMistakes": [
+        "Letting the AI soften the decision into sounding negotiable when it isn't, creating false hope and more follow-up tickets.",
+        "Accepting an invented workaround or discount the AI added even though none was authorized.",
+        "Apologizing for a decision that was actually correct, which undermines your own policy.",
+        "Sending a reply that's firm but reads as cold — genuinely acknowledging the customer's frustration fixes this."
+      ],
+      "proTip": "Keep two or three of your own past examples of a \"firm no\" reply that landed well, and reference them explicitly in future prompts (\"match this tone\") so your team's replies stay consistent even when the news is bad.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "customer-support"
+      ],
+      "skills": [
+        "communication",
+        "writing"
+      ]
+    },
+    {
+      "slug": "cs-b2-macro-library-from-real-tickets",
+      "title": "Build a macro library from your own real tickets",
+      "summary": "Turn your best real replies to recurring ticket types into a reusable, clearly-placeholdered macro library your team can actually trust.",
+      "difficulty": "beginner",
+      "minutes": 9,
+      "isFree": true,
+      "goal": "Build a small library of reusable macros, each grounded in a real proven reply and marked with clear placeholders and a fill-in checklist.",
+      "whyItMatters": "Support teams answer the same handful of question types dozens or hundreds of times — where's my order, how do I return this, how do I reset my password. Canned macros save enormous time, but macros written from scratch often read stiff and robotic. Turning your own best real replies into macros keeps them in your team's actual voice, and building the library once is far cheaper than every agent writing every reply from scratch.",
+      "steps": [
+        "Pull 5-8 real past tickets that represent your most common question or issue types.",
+        "For each, pick or write your single best reply to that type of ticket — the one you'd be proud to reuse.",
+        "Feed each best-reply example to the AI and ask it to convert it into a macro with bracketed placeholders.",
+        "Ask for a short label or category name for each macro so your team can find it quickly.",
+        "Ask for a placeholder checklist noting exactly what must be filled in before sending each macro.",
+        "Test each macro by filling in a real or realistic example and reading it as if you were the customer.",
+        "Store the finished library somewhere your whole team can access and search, with a review date noted."
+      ],
+      "prompt": "I'm building a macro library from my team's real support replies. Here are [N] of our best real replies to common ticket types.\n\n[PASTE REPLY 1 — with a one-line label for what kind of ticket it answers]\n[PASTE REPLY 2 — label]\n...\n\nFor each reply:\n1. Convert it into a reusable macro, replacing every ticket-specific or customer-specific detail with a clearly labeled placeholder in [BRACKETS] (e.g. [CUSTOMER NAME], [ORDER #], [ISSUE DATE]).\n2. Keep the tone, structure, and wording as close to my original as possible — do not rewrite it into generic customer-service language.\n3. Give it a short category label so my team can find it quickly (e.g. \"Shipping delay — first contact\").\n4. Add a one-line \"fill in before sending\" checklist of exactly what needs to be personalized.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Starting from your team's own real, effective replies rather than asking the AI to write generic macros from scratch is what keeps the library in your actual brand voice instead of sounding like a template mill. The instruction to preserve wording and structure rather than \"improve\" it protects tone that's already proven to work with your customers. The fill-in checklist is what prevents the most common macro failure — an agent sending a macro with a placeholder left in, or with a wrong detail from a previous customer still there.",
+      "example": "Input: a real reply about a shipping delay that acknowledges the wait, gives a real tracking status, and offers store credit for delays over 7 days; output: a macro labeled \"Shipping delay — over 7 days\" with [CUSTOMER NAME], [ORDER #], [CURRENT TRACKING STATUS], and [DAYS DELAYED] as placeholders, structure and tone unchanged from the original, plus a checklist reminding the agent to confirm the actual tracking status and delay count before sending.",
+      "exercise": "In your own Claude or ChatGPT account, pull 5 of your team's real replies to your most common ticket types and build the first version of your macro library using this prompt.",
+      "expectedResult": "A small library of macros in your team's real voice, each with clear placeholders and a fill-in checklist, ready to store somewhere searchable.",
+      "commonMistakes": [
+        "Letting the AI rewrite your proven reply into generic customer-service boilerplate instead of preserving your real voice.",
+        "Leaving vague placeholders like [DETAILS] instead of specific ones like [ORDER #] or [DAYS DELAYED].",
+        "Skipping the fill-in checklist, so agents send macros with a placeholder or an old detail still in it.",
+        "Building the whole library at once instead of starting with your 5-8 highest-frequency ticket types."
+      ],
+      "proTip": "Revisit the library every few months and swap in a newer real reply whenever an agent writes a noticeably better version than what's saved — the library should improve over time, not stay frozen at its first version.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "customer-support"
+      ],
+      "skills": [
+        "writing",
+        "productivity"
+      ]
+    },
+    {
+      "slug": "cs-i1-knowledge-base-articles-from-resolved-tickets",
+      "title": "Turn resolved tickets into knowledge-base articles",
+      "summary": "Draft a clear, accurate help-center article from one or more resolved tickets, with uncertain steps flagged for human verification before publishing.",
+      "difficulty": "intermediate",
+      "minutes": 11,
+      "isFree": false,
+      "goal": "Produce a structured knowledge-base article from a real resolved ticket, ready for a technical review before it goes live.",
+      "whyItMatters": "Every resolved ticket that could have been self-served is a knowledge-base article the team hasn't written yet. But turning one specific ticket exchange into a generalized help article requires stripping customer-specific details, restructuring a Q&A into a real procedure, and checking it still holds across variants of the situation. AI drafts this well from a real resolved conversation, but a human review for accuracy and edge cases is still required before publishing.",
+      "beforeYouStart": "One or more resolved ticket transcripts with any customer PII removed or replaced with placeholders.",
+      "steps": [
+        "Pick a resolved ticket, or a few similar ones, about an issue you expect other customers to hit again.",
+        "Strip or replace any customer name, email, order number, or account-specific detail with a placeholder before using it anywhere.",
+        "Identify the general version of the problem — what would trigger this for any customer, not just this one.",
+        "Feed the cleaned ticket transcript(s) to the AI and ask for a structured help-article draft.",
+        "Ask the AI to flag any step in the resolution that depended on something specific to this customer's account rather than being generally true.",
+        "Have someone with product or technical knowledge verify the article is accurate and complete for the general case, not just this one ticket.",
+        "Publish only after that verification, and link the article back into your macro or reply templates where relevant."
+      ],
+      "prompt": "Turn this resolved support ticket into a general knowledge-base/help-center article. All customer-identifying details below have already been replaced with placeholders.\n\nTicket transcript (cleaned): [PASTE CLEANED TRANSCRIPT — CUSTOMER ISSUE + HOW IT WAS RESOLVED]\n\nStructure the article as:\n1. Title (a question or task a customer would search for)\n2. Short summary (1-2 sentences: what this article solves)\n3. Step-by-step resolution/instructions, generalized for any customer in this situation — not tied to this specific customer's account details\n4. A \"when this might not work\" section listing any condition under which this resolution wouldn't apply, based only on what's in the ticket\n5. Related issues to check if this doesn't solve it\n\nDo not state anything as generally true that was actually specific to this one customer's account or situation — if you're not sure whether a detail generalizes, flag it under a separate \"needs verification\" note instead of stating it as fact.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "The requirement to flag anything uncertain about whether a resolution generalizes is the central safeguard here, because a resolved ticket is evidence for one case, not proof the same steps work for every customer — publishing an unverified \"always do X\" step that only worked because of this customer's specific account state is a realistic way for a KB article to actively mislead future readers. The \"when this might not work\" section forces the article to acknowledge its own limits instead of reading as universally authoritative. Requiring the title to be phrased as a real search query is what actually makes the article findable.",
+      "example": "Input: a cleaned ticket where a customer's app wouldn't sync and the fix was clearing cache and re-logging in, but the agent's notes mention the customer was also on an outdated app version; output: an article titled around \"why isn't my data syncing,\" a step-by-step covering updating the app, clearing cache, and logging back in, a \"when this might not work\" section noting the fix was applied alongside an app update, and a \"needs verification\" flag on whether the cache-clear step alone resolves it without the update, prompting the reviewer to test that specifically before publishing.",
+      "exercise": "In your own Claude or ChatGPT account, take one real resolved ticket, fully de-identified, and draft a KB article using this prompt, then have a teammate with product knowledge verify it before you'd publish.",
+      "expectedResult": "A structured, well-organized draft article with a clearly separated verification-needed note, ready for a technical reviewer to confirm before it goes live.",
+      "commonMistakes": [
+        "Publishing a KB article straight from the AI draft without a technical or product review confirming it holds generally, not just for one ticket.",
+        "Leaving customer-identifying details in the transcript before pasting it into the prompt.",
+        "Stating a resolution as universal when the ticket only showed it working for one customer's specific situation.",
+        "Writing a title that describes the internal issue rather than how a customer would actually phrase their search."
+      ],
+      "proTip": "After publishing, tag the article's title and keywords into your macro library so agents can link customers to it directly instead of retyping the same explanation in future tickets.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "customer-support"
+      ],
+      "skills": [
+        "writing",
+        "research"
+      ]
+    },
+    {
+      "slug": "cs-i2-escalation-summaries-engineers-managers",
+      "title": "Write escalation summaries for engineers and managers",
+      "summary": "Turn a messy ticket thread into two accurate escalation summaries from the same facts — a technical one for engineers and a decision-focused one for managers.",
+      "difficulty": "intermediate",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Produce two consistent, audience-appropriate escalation summaries from the same underlying facts, with any missing detail or unknown impact clearly flagged.",
+      "whyItMatters": "Escalations lose time when the person writing them either dumps the entire raw thread on the receiving team, forcing a full re-read, or over-summarizes and drops the detail an engineer needs to reproduce the bug. Managers and engineers need different things from the same escalation — a manager needs impact, urgency, and the decision needed; an engineer needs reproduction steps, environment, and the exact error. Writing both from one clean prompt keeps them consistent and saves the escalating agent from writing two summaries from scratch under time pressure.",
+      "beforeYouStart": "The raw ticket thread or your notes on it, with customer PII replaced by placeholders if it will pass through a shared or logged AI tool.",
+      "steps": [
+        "Gather the raw ticket thread or your working notes, including any error messages, timestamps, or steps already tried.",
+        "Replace customer-identifying details with placeholders if required by your tool or policy.",
+        "Note the real urgency and impact if known — how many customers affected, revenue impact, whether there's a workaround.",
+        "Feed the thread into the prompt and ask for both a technical summary and a manager summary from the same facts.",
+        "Check the technical summary includes only steps and errors actually present in the thread, not inferred causes.",
+        "Check the manager summary states the decision or action needed clearly, without technical jargon.",
+        "Route each summary to the right audience and log the escalation in whatever tracking system your team uses."
+      ],
+      "prompt": "I need to escalate this support issue. Here is the raw ticket thread / my notes:\n[PASTE THREAD OR NOTES — include error messages, timestamps, steps already tried]\n\nKnown impact: [e.g. \"affecting an estimated 40+ customers since yesterday, no known workaround\" / \"unknown — flag as unknown\"]\n\nGive me two separate summaries from these facts only — do not infer a root cause or fix that wasn't stated:\n\n1. TECHNICAL SUMMARY (for engineers): exact error message(s) as written, steps to reproduce as far as known, what's already been tried and ruled out, environment/version details if mentioned. Flag anything needed to reproduce that isn't in the thread as \"missing — need to obtain.\"\n\n2. MANAGER SUMMARY (for a non-technical manager): 2-3 sentences on what's broken in plain language, the real impact/scale as I stated it above, whether there's a workaround, and what decision or resource is being requested (if any). No technical jargon.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Generating both summaries from the exact same source facts in one pass keeps them from drifting into inconsistent stories as the escalation gets retold. Explicitly forbidding inferred root causes matters because a support agent guessing at a technical cause and stating it confidently to an engineer can send debugging in the wrong direction and waste real engineering time. Flagging missing reproduction details as \"missing — need to obtain\" turns a gap into an action item instead of a silent hole in the report. Keeping the manager summary jargon-free and impact-first is what actually gets a fast decision instead of being skimmed past.",
+      "example": "Input: a thread where several customers report checkout failing with a specific error code, one agent tried clearing cache with no success, impact stated as ~40 customers since yesterday with no workaround; output: a technical summary quoting the exact error code, noting the cache-clear attempt and its result, and flagging that browser and checkout-step details weren't captured and are needed to reproduce; a manager summary stating checkout is failing for an estimated 40+ customers since yesterday with no workaround, and requesting engineering prioritization.",
+      "exercise": "In your own Claude or ChatGPT account, take a real, or realistic, messy ticket thread you'd need to escalate and generate both summaries using this prompt.",
+      "expectedResult": "Two consistent, audience-appropriate summaries built from the same facts, with any missing technical detail or unknown impact clearly flagged instead of guessed at.",
+      "commonMistakes": [
+        "Letting the AI infer and state a likely root cause that wasn't actually confirmed, sending engineers down the wrong path.",
+        "Sending an engineer a summary without flagging what reproduction information is still missing.",
+        "Writing the manager summary with the same technical detail as the engineer one, so it doesn't get read or acted on quickly.",
+        "Understating or overstating impact instead of using the real numbers you actually have."
+      ],
+      "proTip": "Save the two-summary prompt as your team's default escalation template so every escalation, regardless of who's on shift, arrives in the same structure the receiving team already knows how to scan.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "customer-support"
+      ],
+      "skills": [
+        "communication",
+        "analysis"
+      ]
+    },
+    {
+      "slug": "cs-i3-tone-consistency-across-support-team",
+      "title": "Build a tone guide to keep replies consistent across your team",
+      "summary": "Build a practical tone-and-style guide from your team's own best replies, with a checklist agents can run a draft through before sending.",
+      "difficulty": "intermediate",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Produce a concrete tone guide grounded in your team's real replies, with a usable pre-send checklist for keeping tone consistent as the team grows.",
+      "whyItMatters": "As a support team grows, replies start drifting in tone — one agent overly formal, another too casual, another apologizing for things that aren't the company's fault. Customers notice inconsistency, especially when following up on the same issue with a different agent. A written tone guide built from your own team's actual best examples, rather than generic customer-service advice, gives new and existing agents something concrete to check drafts against.",
+      "steps": [
+        "Collect 4-6 real replies your team agrees represent the tone you want, mixing easy and difficult situations.",
+        "Also collect 1-2 real examples that missed the mark — too stiff, too casual, over-apologetic — if you have them, for contrast.",
+        "Feed both sets to the AI and ask it to extract the concrete patterns that make the good examples work and name what's off in the weaker ones.",
+        "Ask for the output as a practical guide: specific do's and don'ts with a short example next to each, not abstract adjectives like \"be friendly.\"",
+        "Ask for a short checklist an agent could run a draft reply through before sending.",
+        "Review the guide with your team and adjust anything that doesn't match how you actually want to sound.",
+        "Use the checklist to spot-check a sample of real sent replies periodically, not just new drafts."
+      ],
+      "prompt": "I want to build a practical tone guide for my support team from our own real replies, not generic advice.\n\nExamples of replies that hit our tone well: [PASTE 4-6 REAL REPLIES]\nExamples that missed the mark, if any (too stiff / too casual / over-apologetic / other): [PASTE 1-2, OR \"none provided\"]\n\nFrom these examples only:\n1. Identify the concrete, specific patterns that make the good examples work (sentence length, how they open, how they handle disagreement, how much they apologize, specific phrases that recur).\n2. If I gave you weaker examples, name specifically what's off about each one, tied to a concrete pattern, not a vague label.\n3. Turn this into a short do's-and-don'ts guide with a real example next to each point — not abstract adjectives like \"be warm\" or \"be professional\" on their own.\n4. Add a 5-point checklist an agent can run a draft reply through before sending.\n\nDo not invent a tone rule that isn't actually reflected in the examples I gave you.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Grounding the guide entirely in your team's real examples, rather than asking for generic customer-service tone advice, is what makes it something agents can actually pattern-match against instead of another set of abstract adjectives everyone interprets differently. Requiring a real example next to every do or don't point is the mechanism that keeps the guide concrete. Banning invented tone rules not reflected in the examples prevents the guide from drifting into generic advice that doesn't describe how your team actually writes. The closing checklist turns the guide into something usable in the 30 seconds before hitting send, not just a document read once during onboarding.",
+      "example": "Input: 5 real replies showing a pattern of leading with the specific answer before context, minimal hedging language, and apologizing only when the company was actually at fault, plus one weak example that over-apologized for a policy that wasn't the company's error; output: a guide noting the pattern \"state the answer in sentence one, context after\" with a quoted example, a \"don't\" pointing at the weak example specifically for apologizing when no fault existed, a note on typical sentence length pulled from the good examples, and a 5-point pre-send checklist including \"does this apologize only where we're actually at fault.\"",
+      "exercise": "In your own Claude or ChatGPT account, pull 4-6 of your team's real replies, and a weak one if you have it, and build your team's tone guide using this prompt, then review it together as a team.",
+      "expectedResult": "A short, concrete tone guide with a real example for every point and a usable pre-send checklist, built from your team's actual writing rather than generic advice.",
+      "commonMistakes": [
+        "Asking for generic tone advice instead of grounding the guide in your team's own real replies, producing something nobody actually references.",
+        "Writing do's and don'ts as abstract adjectives (\"be empathetic\") without a concrete example attached.",
+        "Building the guide once and never revisiting it as the team's real tone naturally evolves.",
+        "Using the checklist only for training new hires instead of spot-checking real sent replies periodically."
+      ],
+      "proTip": "Pick a few real sent replies each month and run them through the checklist as a team exercise — this keeps the whole team's tone from drifting even after everyone's already been trained on the guide.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "customer-support"
+      ],
+      "skills": [
+        "communication",
+        "writing"
+      ]
+    },
+    {
+      "slug": "cs-a1-triage-workflows-ai-assistance-human-judgment",
+      "title": "Design a ticket triage workflow with AI assistance and human judgment",
+      "summary": "Design a workflow where AI classifies and routes incoming tickets by type and urgency, with an explicit boundary for which decisions must stay with a human.",
+      "difficulty": "advanced",
+      "minutes": 13,
+      "isFree": false,
+      "goal": "Design a documented triage workflow with a clear AI/human boundary, a low-confidence-to-human default rule, and a real accuracy check against past tickets.",
+      "whyItMatters": "As ticket volume grows, manually reading and routing every incoming ticket becomes the bottleneck before an agent even starts working the issue. AI is genuinely good at the first pass — classifying by category, flagging urgency signals, drafting a suggested macro — but letting it fully auto-resolve or auto-close tickets without a human checkpoint is where support automation goes wrong: it can misjudge a sarcastic or ambiguous message, miss a churn-risk signal, or close something that isn't actually resolved. This lesson designs that boundary explicitly instead of leaving it implicit.",
+      "beforeYouStart": "Your current ticket categories and priority levels, your helpdesk platform's real signals for urgency, and a Claude or ChatGPT account to design and pressure-test the classification step before you build it into your helpdesk platform.",
+      "steps": [
+        "List your real ticket categories and priority levels exactly as your team currently uses them — don't invent new ones.",
+        "Identify the signals a human triager currently uses to judge urgency (specific words, repeat contact, account tier, sentiment) that you can describe to the AI.",
+        "Decide which triage decisions are safe for AI to make alone versus which must always go to a human — escalation for possible churn or legal risk, anything the AI is uncertain about.",
+        "Ask the AI to help design the workflow: trigger → AI classification step → routing → human checkpoint for the decisions you flagged as human-only.",
+        "Build a confidence rule: any ticket the AI can't confidently classify routes to a human queue by default, rather than guessing.",
+        "Test the workflow against a batch of your real past tickets, with the correct category and priority you already know, and measure how often the AI's classification matches what a human triager actually decided.",
+        "Roll it out for classification and routing only at first, keep a human in the loop for any resolution or closing action, and review misclassifications weekly."
+      ],
+      "prompt": "Help me design a ticket triage workflow that uses AI for the first pass and keeps a human in the loop for judgment calls.\n\nOur real ticket categories: [LIST, e.g. \"billing, shipping, technical, account access, general question, complaint/escalation\"]\nOur real priority levels: [LIST, e.g. \"urgent, standard, low\"]\nSignals we currently use to judge urgency/priority: [LIST, e.g. \"repeat contact within 48h, words like 'cancel'/'refund my money now', VIP account tag, angry tone\"]\n\nDesign the workflow as:\n1. Trigger and AI classification step: what the AI should read (ticket text + any account metadata available) and what it outputs (category + priority + confidence level).\n2. A rule for what happens when AI confidence is low or the ticket is ambiguous — it should route to a human review queue by default, not guess.\n3. Which decisions in this workflow should always require a human regardless of AI confidence (e.g. anything flagged as a possible churn/legal/safety issue, any auto-close or auto-resolve action) — list these explicitly and explain why each one stays human.\n4. A short test plan: how I can validate the AI's classification accuracy against a batch of past tickets before trusting it on live traffic.\n\nDo not suggest fully automating ticket resolution or closing in this design — this workflow is for classification and routing only, with a human handling the actual response and any close/resolve action.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Explicitly separating what's safe for AI alone — classification, routing — from what always requires a human — escalation judgment calls, closing, anything ambiguous — is the central design decision this lesson teaches, because the realistic failure mode in support automation isn't the AI being occasionally wrong, it's an ambiguous or high-stakes ticket being auto-routed or auto-closed with nobody noticing until a customer is angrier or a churn signal was missed. The low-confidence-routes-to-human default rule keeps genuinely uncertain cases from being silently mishandled. Requiring a validation test against real past tickets before trusting the workflow on live traffic is standard practice for any classification system and catches systematic misclassification patterns before they cost real tickets.",
+      "example": "Input: categories billing/shipping/technical/account/general/complaint, priorities urgent/standard/low, urgency signals include repeat contact, words like \"cancel,\" VIP tag, and angry tone; output: a workflow mapping ticket text and account metadata into an AI classification step producing category, priority, and confidence, a rule that anything below a stated confidence threshold routes to a human review queue, an explicit list of always-human decisions (any ticket mentioning cancellation or legal terms, any VIP account regardless of AI-assessed priority, any auto-close action), and a test plan running the classifier against 100 recent resolved tickets and comparing results to what a human actually assigned before trusting it on new tickets.",
+      "exercise": "In your own Claude or ChatGPT account, design this workflow for your real categories and signals using this prompt, then test the AI classification step against a batch of your own recent resolved tickets in your helpdesk platform before turning it on live.",
+      "expectedResult": "A documented triage workflow with a clear AI/human boundary, a low-confidence-to-human default rule, and a real accuracy check against past tickets completed before any live rollout.",
+      "commonMistakes": [
+        "Letting the AI auto-close or auto-resolve tickets in the first version instead of keeping resolution and closing entirely human.",
+        "Not defining a low-confidence fallback, so ambiguous tickets get force-classified into the wrong queue instead of routed to a human.",
+        "Skipping the validation test against real past tickets and trusting the workflow on live traffic from day one.",
+        "Treating VIP, legal, or churn-risk signals as just another category instead of explicitly routing them to a human every time regardless of AI confidence."
+      ],
+      "proTip": "Once the classification accuracy has been validated and stable for a few weeks, consider layering in an AI-drafted suggested reply alongside the routing (still requiring human send) as a separate, later automation step rather than part of the initial triage rollout.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "customer-support"
+      ],
+      "skills": [
+        "automation",
+        "analysis"
+      ]
+    }
+  ]
+}

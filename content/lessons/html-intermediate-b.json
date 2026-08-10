@@ -1,0 +1,1430 @@
+{
+  "lessons": [
+    {
+      "slug": "html-i11-select-textarea",
+      "title": "Collect structured choices with select, textarea and button",
+      "summary": "Build drop-down menus with select, option and optgroup, capture free text with textarea, and understand the three button types.",
+      "difficulty": "intermediate",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Assemble a support-request form that uses a grouped drop-down, a multi-line text field and a real submit button.",
+      "whyItMatters": "Almost every real form needs more than single-line text boxes: users pick a category, write a longer message, and press a button that actually submits. The select, textarea and button elements are the workhorses behind those interactions, and each has quirks — like textarea storing its default text as content instead of a value attribute — that regularly trip up developers. Knowing them cold means your forms submit exactly the data you expect.",
+      "steps": [
+        "Read the theory on select and option first — pay attention to which part of an option is submitted.",
+        "Add the department drop-down with named options (tasks 1 and 2).",
+        "Preselect the most common choice with the selected attribute (task 3).",
+        "Group the options into two labelled optgroups (task 4).",
+        "Build the message textarea with rows, cols and default content (task 5).",
+        "Finish with a real submit button and run all checks (task 6)."
+      ],
+      "prompt": "<select name=\"department\">\n  <optgroup label=\"Technical\">\n    <option value=\"bug\" selected>Bug report</option>\n    <option value=\"outage\">Service outage</option>\n  </optgroup>\n  <optgroup label=\"Account\">\n    <option value=\"billing\">Billing</option>\n    <option value=\"access\">Access request</option>\n  </optgroup>\n</select>\n<textarea name=\"message\" rows=\"4\" cols=\"40\">Describe your issue here.</textarea>\n<button type=\"submit\">Send request</button>",
+      "promptLabel": "Key code example",
+      "explanation": "The select carries the name, so the form submits one pair like department=bug. Each option keeps a short machine-friendly value while showing human-friendly text, and selected marks the default choice. The optgroup labels organise a long list without becoming selectable themselves. The textarea's default text sits between its tags — it has no value attribute — and the button declares type=\"submit\" explicitly so its behaviour never depends on browser defaults.",
+      "example": "A helpdesk form that asks users to type the department name by hand receives 'billing', 'Billing dept', 'bills' and countless typos, which no backend can route reliably.\n\nReplace it with a select whose options carry fixed values (bug, outage, billing, access) grouped under Technical and Account headings: every submission now contains one of four known strings, the default case is preselected, and a textarea gives users room to explain the problem in their own words.",
+      "exercise": "In the editor on the right, complete the support-request form: add a department select with four valued options, preselect one, organise them into two optgroups, add a message textarea with rows, cols and default text, and finish with an explicit submit button.",
+      "expectedResult": "The preview shows a drop-down with two grouped sections of options (one already chosen), a multi-line text box containing starter text, and a Send request button. All six checks pass.",
+      "commonMistakes": [
+        "Putting the name attribute on option instead of select. The select owns the name; each option only supplies a value.",
+        "Writing <textarea value=\"...\"> to set default text. Textarea ignores a value attribute — its default content goes between the opening and closing tags.",
+        "Forgetting type on button. Inside a form, a bare <button> defaults to type=\"submit\", so a button you meant as a helper accidentally submits the form.",
+        "Making optgroup labels do the work of a first option. An optgroup label cannot be selected — if you need a 'please choose' entry, add a real option with an empty value."
+      ],
+      "proTip": "Leave the textarea's tags on the same line when it should start empty: any whitespace or line break between <textarea> and </textarea> becomes real default content, and users end up submitting invisible newlines.",
+      "tools": [
+        "html"
+      ],
+      "professions": [],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will build the input side of a support-request form: a grouped drop-down, a multi-line message box and a proper submit button.",
+        "sections": [
+          {
+            "heading": "select and option: a drop-down with a contract",
+            "body": "A select element renders as a drop-down list. Its children are option elements, one per choice. Two attributes make the pair useful: name on the select and value on each option. When the form submits, the browser sends one name/value pair — the select's name combined with the value of whichever option the user picked.\n\nThe text between an option's tags is what the user sees; the value attribute is what the server receives. Keeping them separate is the whole point: the visible label can say 'Bug report — something is broken' while the submitted value stays a clean machine token like bug. If you omit value entirely, the browser falls back to submitting the option's visible text, which couples your backend to your on-screen wording — rename a label and you silently change your data.\n\nA select always submits something (the first option, if the user never touches it), so the classic 'please choose' prompt is written as a real option with an empty value. Combined with the required attribute on the select, an empty value blocks submission until the user makes an actual choice.",
+            "code": "<label for=\"dept\">Department</label>\n<select id=\"dept\" name=\"department\">\n  <option value=\"\">-- Please choose --</option>\n  <option value=\"bug\">Bug report</option>\n  <option value=\"billing\">Billing question</option>\n</select>"
+          },
+          {
+            "heading": "Preselecting with the selected attribute",
+            "body": "By default the first option in the list is shown when the page loads. To start on a different choice, add the boolean selected attribute to exactly one option. Boolean means its presence alone activates it — <option selected> and <option selected=\"selected\"> behave identically, and there is no way to write it as 'false'.\n\nPreselecting is a design decision, not just a convenience. If eighty percent of tickets are bug reports, preselecting bug saves most users a click. But a preselected option also means users can submit without ever looking at the field — never preselect anything with legal or financial consequences, such as an opt-in to marketing email.\n\nIf you accidentally mark several options selected in a single-choice select, the browser keeps only the last one. In a multiple select (covered below), several selected attributes are legitimate and all of them start highlighted.",
+            "code": "<select name=\"priority\">\n  <option value=\"low\">Low</option>\n  <option value=\"normal\" selected>Normal</option>\n  <option value=\"high\">High</option>\n</select>"
+          },
+          {
+            "heading": "Organising long lists with optgroup",
+            "body": "Once a drop-down grows past a handful of entries, users start scanning instead of reading. The optgroup element groups related options under a bold, non-selectable heading supplied by its label attribute. The browser indents the options beneath each heading, so a thirty-item list reads as three or four short lists.\n\nAn optgroup is purely structural: it never submits anything and cannot be picked. Its label attribute is required in practice — a group without a label renders as an unlabelled gap and tells the user nothing. Options that belong to no group can sit directly inside the select alongside groups, before or after them.\n\nScreen readers announce the group label when the user enters a group, so optgroup is also an accessibility win: 'Technical, group, Bug report' is far clearer than a flat wall of thirty options.",
+            "code": "<select name=\"department\">\n  <optgroup label=\"Technical\">\n    <option value=\"bug\">Bug report</option>\n    <option value=\"outage\">Service outage</option>\n  </optgroup>\n  <optgroup label=\"Account\">\n    <option value=\"billing\">Billing</option>\n    <option value=\"access\">Access request</option>\n  </optgroup>\n</select>"
+          },
+          {
+            "heading": "size and multiple: from drop-down to list box",
+            "body": "Two attributes change how a select looks and behaves. The size attribute sets how many rows are visible at once: size=\"1\" is the familiar drop-down, while size=\"5\" turns the control into an always-open scrolling list box five rows tall. No options are hidden either way — size only controls the viewport.\n\nThe boolean multiple attribute allows the user to pick more than one option, using Ctrl-click (Cmd-click on macOS) or Shift-click for ranges. Browsers render a multiple select as an open list box automatically, because a closed drop-down cannot show several highlighted rows at once. On submission, the browser sends one name/value pair per selected option, so the server receives the same name repeated — backends must be written to expect a list, not a single string.\n\nBe honest about the usability cost: many users do not know the Ctrl-click convention, and on touch screens it barely works. For most multi-choice interfaces a group of checkboxes is friendlier; reserve select multiple for dense administrative screens where space is tight.",
+            "code": "<select name=\"affected\" multiple size=\"4\">\n  <option value=\"web\">Web app</option>\n  <option value=\"api\">API</option>\n  <option value=\"mobile\">Mobile app</option>\n  <option value=\"email\">Email delivery</option>\n</select>"
+          },
+          {
+            "heading": "textarea: multi-line text with content, not value",
+            "body": "The textarea element captures multi-line free text: bug descriptions, comments, cover letters. Unlike input, it is not self-closing and — crucially — it has no value attribute. Its default text is whatever sits between <textarea> and </textarea>. Writing value=\"...\" on a textarea does nothing; the attribute is silently ignored. This is the single most common textarea mistake.\n\nThe rows and cols attributes set the initial visible size: rows counts lines of text, cols counts average character widths. They shape the starting box only — users can usually drag-resize it, and CSS width/height override both. Still, supplying sensible rows and cols means the control is usable even before any stylesheet loads.\n\nThe wrap attribute controls how line breaks are submitted. With the default wrap=\"soft\", text visually wraps in the box but the submitted value contains only the line breaks the user actually typed. With wrap=\"hard\" (which requires cols to be set), the browser inserts a real newline at every visual wrap point before submitting — useful for systems that expect fixed-width text, and surprising everywhere else. Like every form control, a textarea needs a name to be submitted and a label for accessibility.",
+            "code": "<label for=\"msg\">Describe the problem</label>\n<textarea id=\"msg\" name=\"message\" rows=\"6\" cols=\"50\" wrap=\"soft\">Describe your issue here.</textarea>"
+          },
+          {
+            "heading": "The button element and its three types",
+            "body": "The button element creates a clickable control, and its type attribute decides what clicking does. type=\"submit\" sends the surrounding form to the server. type=\"reset\" restores every control in the form to its initial value — a feature users hit by accident far more often than on purpose, so use it rarely. type=\"button\" does nothing on its own; it exists purely as a hook for JavaScript.\n\nHere is the trap: inside a form, a button with no type attribute behaves as type=\"submit\". Add an innocent 'Show password' helper button without a type, and every click submits the half-finished form. Professional habit: always write the type explicitly on every button.\n\nWhat makes button better than the older <input type=\"submit\">? Content freedom. An input renders only the plain text of its value attribute, while a button is a container: it can hold formatted text, an icon image, an svg, or any combination. That flexibility is why modern interfaces are built almost exclusively with the button element.",
+            "code": "<button type=\"submit\">Send request</button>\n<button type=\"reset\">Clear form</button>\n<button type=\"button\">Preview <img src=\"eye.svg\" alt=\"\"></button>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Support request</title>\n</head>\n<body>\n  <h1>Support request</h1>\n  <form action=\"/tickets\" method=\"post\">\n    <label for=\"dept\">Department</label>\n    <!-- TODO 1+2: add a select with name=\"department\" and four options,\n         each with a value: bug, outage, billing, access -->\n    <!-- TODO 3: preselect the \"bug\" option with the selected attribute -->\n    <!-- TODO 4: wrap the options in two optgroups labelled\n         \"Technical\" and \"Account\" -->\n\n    <label for=\"msg\">Your message</label>\n    <!-- TODO 5: add a textarea, name=\"message\", with rows and cols,\n         containing the default text: Describe your issue here. -->\n\n    <!-- TODO 6: add a submit button that says Send request -->\n  </form>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Support request</title>\n</head>\n<body>\n  <h1>Support request</h1>\n  <form action=\"/tickets\" method=\"post\">\n    <label for=\"dept\">Department</label>\n    <select id=\"dept\" name=\"department\">\n      <optgroup label=\"Technical\">\n        <option value=\"bug\" selected>Bug report</option>\n        <option value=\"outage\">Service outage</option>\n      </optgroup>\n      <optgroup label=\"Account\">\n        <option value=\"billing\">Billing question</option>\n        <option value=\"access\">Access request</option>\n      </optgroup>\n    </select>\n\n    <label for=\"msg\">Your message</label>\n    <textarea id=\"msg\" name=\"message\" rows=\"5\" cols=\"40\">Describe your issue here.</textarea>\n\n    <button type=\"submit\">Send request</button>\n  </form>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Add a <select> element with name=\"department\" after the Department label.",
+            "hint": "The select owns the submitted name: <select id=\"dept\" name=\"department\">...</select>.",
+            "errorMessage": "No <select name=\"department\"> found. The drop-down needs a name so the form can submit it.",
+            "check": {
+              "type": "selector",
+              "selector": "select[name='department']"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Give the select four options, each with a value attribute: bug, outage, billing, access.",
+            "hint": "Each choice is an <option value=\"...\">Visible text</option> inside the select.",
+            "errorMessage": "Expected at least four <option> elements with value attributes inside the select.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "select option[value]",
+              "min": 4
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Preselect the bug option by adding the selected attribute to it.",
+            "hint": "selected is boolean — just write <option value=\"bug\" selected>Bug report</option>.",
+            "errorMessage": "No preselected option found. Add the selected attribute to the bug option.",
+            "check": {
+              "type": "selector",
+              "selector": "option[selected]"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Group the options into two optgroups: label=\"Technical\" (bug, outage) and label=\"Account\" (billing, access).",
+            "hint": "Wrap related options: <optgroup label=\"Technical\"> ...options... </optgroup>.",
+            "errorMessage": "Expected two <optgroup> elements with label attributes inside the select.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "select optgroup[label]",
+              "min": 2
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Add a <textarea> with name=\"message\", rows and cols attributes, containing the default text 'Describe your issue here.' between its tags.",
+            "hint": "Textarea has no value attribute — the default text goes between <textarea ...> and </textarea>.",
+            "errorMessage": "No textarea with both rows and cols found. Remember: default text is content, not a value attribute.",
+            "check": {
+              "type": "selector",
+              "selector": "textarea[rows][cols]"
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Finish the form with a <button type=\"submit\"> labelled 'Send request'.",
+            "hint": "Always write the type explicitly: <button type=\"submit\">Send request</button>.",
+            "errorMessage": "No button with type=\"submit\" found. Add an explicit submit button at the end of the form.",
+            "check": {
+              "type": "selector",
+              "selector": "button[type='submit']"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-i12-input-attributes",
+      "title": "Fine-tune every input with the full attribute toolkit",
+      "summary": "Control defaults, hints, editability, length, numeric ranges, focus, autofill and mobile keyboards with the input element's attribute set.",
+      "difficulty": "intermediate",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Configure a checkout-style form where every input uses the right combination of value, placeholder, constraints, autocomplete and inputmode.",
+      "whyItMatters": "The input element is one tag with dozens of behaviours, and the attributes are where the real control lives. The difference between readonly and disabled decides whether data reaches your server; autocomplete tokens decide whether browsers can autofill a checkout in two seconds or force users to type everything; inputmode decides which keyboard a phone shows. Forms built with the right attributes convert measurably better and generate cleaner data.",
+      "steps": [
+        "Read the theory sections in order — the readonly vs disabled distinction is the most important.",
+        "Add a placeholder hint to the search field (task 1).",
+        "Lock the account ID as readonly with a prefilled value (task 2).",
+        "Constrain the quantity field with min, max and step (task 3).",
+        "Cap the username length with maxlength (task 4).",
+        "Wire up autocomplete on the email field and a numeric keyboard for the code field (tasks 5 and 6), then run the checks."
+      ],
+      "prompt": "<input type=\"text\" name=\"account\" value=\"AC-10442\" readonly>\n<input type=\"number\" name=\"qty\" min=\"1\" max=\"10\" step=\"1\" value=\"1\">\n<input type=\"email\" name=\"email\" autocomplete=\"email\" placeholder=\"you@example.com\">\n<input type=\"text\" name=\"otp\" inputmode=\"numeric\" autocomplete=\"one-time-code\" maxlength=\"6\">",
+      "promptLabel": "Key code example",
+      "explanation": "The readonly account field shows a prefilled value the user cannot edit but that still submits with the form. The number input constrains quantity to whole numbers from 1 to 10, enforced by the spinner and by validation. The email field's autocomplete token lets the browser fill a saved address instantly, and the one-time-code field asks phones for a digits-only keyboard with inputmode while capping input at six characters.",
+      "example": "A checkout form with bare <input type=\"text\"> fields makes users type their email on a full letter keyboard, lets them order -3 items, and loses the account number when someone edits it by accident.\n\nThe same form with attributes applied: the account ID is visible but locked, quantity is clamped to a sane range, email autofills from the browser's saved profile, and the SMS code field pops a large numeric keypad on phones. Nothing changed on the server — every improvement came from attributes.",
+      "exercise": "In the editor on the right, upgrade the plain order form: add a placeholder, a readonly prefilled field, numeric range constraints, a length cap, an autocomplete token and a numeric inputmode.",
+      "expectedResult": "The preview shows a form where the account ID cannot be edited, quantity uses spinner arrows within 1–10, and hint text appears in the empty search box. All six checks pass.",
+      "commonMistakes": [
+        "Using disabled when you meant readonly. A disabled control is skipped at submission, so the server never receives its value; readonly submits normally.",
+        "Treating placeholder as a label. Placeholder text vanishes the moment typing starts — every field still needs a real <label>.",
+        "Confusing size with maxlength. size only widens the visible box; it does not stop the user typing more characters.",
+        "Writing autocomplete=\"false\". The valid off switch is autocomplete=\"off\", and even that is a hint browsers may overrule for saved logins."
+      ],
+      "proTip": "When you want a numeric keypad but the value is not really a number — card numbers, postal codes, one-time codes — use type=\"text\" with inputmode=\"numeric\" instead of type=\"number\". You keep leading zeros and avoid the spinner arrows.",
+      "tools": [
+        "html"
+      ],
+      "professions": [],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will take a bare order form and apply the attributes that control defaults, editability, length, ranges, autofill and mobile keyboards.",
+        "sections": [
+          {
+            "heading": "value and placeholder: defaults versus hints",
+            "body": "The value attribute sets an input's initial content — real data that sits in the field on page load, can be edited, and is submitted with the form. Use it to prefill known information: a saved shipping city, a suggested quantity of 1, the user's current display name on a settings page.\n\nThe placeholder attribute is entirely different: pale hint text shown only while the field is empty. It never submits, and it disappears the instant the user types. Its job is to show an example of the expected format, like you@example.com or DD/MM/YYYY.\n\nA placeholder must never replace a label. Because the hint vanishes during typing, users who get interrupted return to a form full of anonymous boxes and cannot remember what each one wanted. Screen readers also treat placeholders inconsistently. The reliable pattern is both: a visible label naming the field, plus an optional placeholder demonstrating the format.",
+            "code": "<label for=\"city\">City</label>\n<input type=\"text\" id=\"city\" name=\"city\" value=\"Athens\">\n\n<label for=\"email\">Email</label>\n<input type=\"email\" id=\"email\" name=\"email\" placeholder=\"you@example.com\">"
+          },
+          {
+            "heading": "readonly versus disabled: the submission difference",
+            "body": "Both attributes stop the user editing a field, and that surface similarity hides a critical difference. A readonly input cannot be typed into, but it is still a live part of the form: it can be focused, its text can be selected and copied, and — the key point — its value IS submitted to the server.\n\nA disabled input is switched off entirely: greyed out, unfocusable, unclickable, and excluded from submission. When the form serialises, a disabled field simply does not exist. If your server expects that field's name, it receives nothing.\n\nChoose by intent. Readonly says 'this is confirmed data you may see but not change' — an order number, a locked username, a calculated total that must still reach the server. Disabled says 'this option does not currently apply' — a shipping-speed choice that is impossible for the selected country. Disabled also works on button, select and textarea, and on a whole fieldset to switch off an entire section at once.",
+            "code": "<!-- Submits value AC-10442 -->\n<input type=\"text\" name=\"account\" value=\"AC-10442\" readonly>\n\n<!-- Submits nothing at all -->\n<input type=\"text\" name=\"coupon\" value=\"EXPIRED\" disabled>"
+          },
+          {
+            "heading": "size versus maxlength and minlength",
+            "body": "Three attributes deal with length, and only two of them limit anything. The size attribute is purely visual: size=\"30\" makes the box wide enough for roughly thirty average characters, but the user can keep typing past it and the text scrolls. In modern work CSS usually controls width, so size is mostly seen in legacy code.\n\nmaxlength is a hard input cap: with maxlength=\"12\" the browser refuses to accept a thirteenth character, whether typed or pasted. It is the right tool when a backend column or protocol has a fixed limit, such as a 12-character username or a 6-digit code.\n\nminlength sets the shortest acceptable entry, but works differently: it cannot stop short input from being typed — it flags the field invalid at submission time instead, blocking submit until the text reaches the minimum. Note that minlength only fires once the user has entered something; an empty non-required field passes. Pair it with required when a value must exist and be long enough.",
+            "code": "<label for=\"user\">Username (3-12 chars)</label>\n<input type=\"text\" id=\"user\" name=\"username\"\n       minlength=\"3\" maxlength=\"12\" size=\"15\">"
+          },
+          {
+            "heading": "min, max and step for numeric and date inputs",
+            "body": "Inputs that carry ordered values — number, range, date, time, month, week and the datetime types — accept three constraint attributes. min and max define the allowed interval: a quantity from 1 to 10, a birth date no later than today, an appointment no earlier than tomorrow. The spinner arrows and pickers respect the bounds, and typed values outside them make the field invalid at submit time.\n\nstep sets the spacing between allowed values, counted from min (or from zero if min is absent). step=\"1\" means whole numbers; step=\"0.5\" allows halves; on a date input step counts days. A value that does not land on the grid is invalid — with min=\"0\" and step=\"5\", the value 7 is rejected. If you genuinely want any decimal, write step=\"any\".\n\nThese constraints double as documentation: a colleague reading min=\"1\" max=\"10\" step=\"1\" knows the business rule without opening the backend. But remember they run in the user's browser and are trivially bypassed — the server must re-check every bound.",
+            "code": "<label for=\"qty\">Quantity</label>\n<input type=\"number\" id=\"qty\" name=\"qty\" min=\"1\" max=\"10\" step=\"1\" value=\"1\">\n\n<label for=\"rating\">Rating</label>\n<input type=\"range\" id=\"rating\" name=\"rating\" min=\"0\" max=\"5\" step=\"0.5\">"
+          },
+          {
+            "heading": "multiple and autofocus",
+            "body": "The boolean multiple attribute lets one input hold several values, and it applies to exactly two types. On type=\"email\" it accepts a comma-separated list of addresses, each validated individually. On type=\"file\" it lets the user pick several files in one dialog. On any other input type it does nothing.\n\nautofocus, also boolean, moves keyboard focus into a control as soon as the page loads, so the user can start typing immediately — the classic example is a search page whose whole purpose is one field. Only one element per page may carry it; if several do, the first one wins.\n\nUse autofocus sparingly. Jumping focus scrolls the page to the control and, for screen-reader users, skips them past everything above it — headings, instructions, error summaries. It belongs on pages with a single dominant task, never on the third field of a long form.",
+            "code": "<input type=\"search\" name=\"q\" autofocus placeholder=\"Search products\">\n<input type=\"email\" name=\"cc\" multiple placeholder=\"a@x.com, b@y.com\">"
+          },
+          {
+            "heading": "autocomplete: off, on, and the field tokens",
+            "body": "The autocomplete attribute tells the browser what a field contains so it can offer saved data. autocomplete=\"on\" (the default in most cases) lets the browser guess; autocomplete=\"off\" asks it not to autofill — a request browsers honour unevenly, and often ignore for login fields because password managers deliberately override it.\n\nThe real power is the token vocabulary. Standardised values name the data precisely: name, given-name, family-name, email, tel, organization, street-address, address-line1, postal-code, country, bday, cc-number, cc-exp, new-password, current-password and one-time-code, among others. A checkout marked up with the right tokens autofills completely in one click, on every major browser, from data the user already saved.\n\nTwo tokens deserve special mention. new-password on a registration form tells password managers to offer a generated password instead of filling the old one. one-time-code on an SMS-verification field lets mobile browsers read the incoming code and suggest it above the keyboard — turning a copy-and-paste chore into a single tap.",
+            "code": "<input type=\"text\" name=\"fullname\" autocomplete=\"name\">\n<input type=\"email\" name=\"email\" autocomplete=\"email\">\n<input type=\"password\" name=\"pw\" autocomplete=\"new-password\">\n<input type=\"text\" name=\"otp\" autocomplete=\"one-time-code\">"
+          },
+          {
+            "heading": "spellcheck and inputmode",
+            "body": "spellcheck controls the red squiggly underline. It takes explicit values — spellcheck=\"true\" or spellcheck=\"false\" — and matters most where checking is noise: usernames, code snippets, product SKUs, email addresses. Browsers decide the default per element, so set it explicitly when you care either way.\n\ninputmode does not validate anything; it chooses which virtual keyboard touch devices show. Its values: none (no keyboard — the page supplies its own widget), text (standard layout), numeric (digits 0-9), decimal (digits plus the decimal separator), tel (phone keypad with * and #), email (letters plus @ and .), url (with / and .com), and search (Enter key relabelled Search).\n\ninputmode pairs naturally with type=\"text\": a card-number field wants a digit keypad but must keep leading zeros and spaces that type=\"number\" would destroy. Desktop browsers ignore inputmode completely — it costs nothing there and dramatically improves phone ergonomics, which is where most form abandonment happens.",
+            "code": "<input type=\"text\" name=\"card\" inputmode=\"numeric\" spellcheck=\"false\"\n       autocomplete=\"cc-number\" placeholder=\"1234 5678 9012 3456\">"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Order details</title>\n</head>\n<body>\n  <h1>Order details</h1>\n  <form action=\"/order\" method=\"post\">\n    <label for=\"search\">Find a product</label>\n    <!-- TODO 1: add a placeholder like \"Search products\" -->\n    <input type=\"search\" id=\"search\" name=\"q\">\n\n    <label for=\"account\">Account ID</label>\n    <!-- TODO 2: prefill value \"AC-10442\" and make it readonly -->\n    <input type=\"text\" id=\"account\" name=\"account\">\n\n    <label for=\"qty\">Quantity</label>\n    <!-- TODO 3: constrain with min=1, max=10, step=1 -->\n    <input type=\"number\" id=\"qty\" name=\"qty\" value=\"1\">\n\n    <label for=\"user\">Username</label>\n    <!-- TODO 4: cap length with maxlength=\"12\" -->\n    <input type=\"text\" id=\"user\" name=\"username\">\n\n    <label for=\"email\">Email</label>\n    <!-- TODO 5: add autocomplete=\"email\" -->\n    <input type=\"email\" id=\"email\" name=\"email\">\n\n    <label for=\"otp\">SMS code</label>\n    <!-- TODO 6: request a numeric keyboard with inputmode -->\n    <input type=\"text\" id=\"otp\" name=\"otp\" autocomplete=\"one-time-code\">\n\n    <button type=\"submit\">Place order</button>\n  </form>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Order details</title>\n</head>\n<body>\n  <h1>Order details</h1>\n  <form action=\"/order\" method=\"post\">\n    <label for=\"search\">Find a product</label>\n    <input type=\"search\" id=\"search\" name=\"q\" placeholder=\"Search products\">\n\n    <label for=\"account\">Account ID</label>\n    <input type=\"text\" id=\"account\" name=\"account\" value=\"AC-10442\" readonly>\n\n    <label for=\"qty\">Quantity</label>\n    <input type=\"number\" id=\"qty\" name=\"qty\" value=\"1\" min=\"1\" max=\"10\" step=\"1\">\n\n    <label for=\"user\">Username</label>\n    <input type=\"text\" id=\"user\" name=\"username\" maxlength=\"12\">\n\n    <label for=\"email\">Email</label>\n    <input type=\"email\" id=\"email\" name=\"email\" autocomplete=\"email\">\n\n    <label for=\"otp\">SMS code</label>\n    <input type=\"text\" id=\"otp\" name=\"otp\" autocomplete=\"one-time-code\" inputmode=\"numeric\" maxlength=\"6\">\n\n    <button type=\"submit\">Place order</button>\n  </form>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Give the search input a placeholder that shows example text, e.g. \"Search products\".",
+            "hint": "placeholder=\"Search products\" — hint text that disappears when typing starts.",
+            "errorMessage": "The search input has no placeholder attribute yet.",
+            "check": {
+              "type": "attr",
+              "selector": "input[type='search']",
+              "attr": "placeholder"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Prefill the Account ID with value=\"AC-10442\" and lock it with the readonly attribute.",
+            "hint": "readonly keeps the value visible, uneditable, and still submitted: value=\"AC-10442\" readonly.",
+            "errorMessage": "The account field must have both a prefilled value and the readonly attribute (not disabled — the value must still submit).",
+            "check": {
+              "type": "selector",
+              "selector": "input[name='account'][value][readonly]"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Constrain the quantity input with min=\"1\", max=\"10\" and step=\"1\".",
+            "hint": "All three go on the number input: min=\"1\" max=\"10\" step=\"1\".",
+            "errorMessage": "The quantity input needs min, max and step attributes to clamp it to whole numbers 1-10.",
+            "check": {
+              "type": "selector",
+              "selector": "input[type='number'][min][max][step]"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Cap the username at 12 characters with maxlength=\"12\".",
+            "hint": "maxlength blocks further typing; size would only change the visible width.",
+            "errorMessage": "The username input needs maxlength=\"12\" — the browser should refuse a 13th character.",
+            "check": {
+              "type": "attr",
+              "selector": "input[name='username']",
+              "attr": "maxlength",
+              "value": "12"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Add the autocomplete token \"email\" to the email input so browsers can autofill it.",
+            "hint": "autocomplete=\"email\" — the standardised token, not just on/off.",
+            "errorMessage": "The email input has no autocomplete=\"email\" token, so browsers cannot autofill it reliably.",
+            "check": {
+              "type": "attr",
+              "selector": "input[type='email']",
+              "attr": "autocomplete",
+              "value": "email"
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Request a digits-only phone keyboard on the SMS code field with inputmode=\"numeric\".",
+            "hint": "Keep type=\"text\" (codes can start with 0) and add inputmode=\"numeric\".",
+            "errorMessage": "The SMS code field should carry inputmode=\"numeric\" so phones show a digit keypad.",
+            "check": {
+              "type": "attr",
+              "selector": "input[name='otp']",
+              "attr": "inputmode",
+              "value": "numeric"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-i13-validation",
+      "title": "Validate form input in the browser before it ever leaves the page",
+      "summary": "Use required, pattern, length and range constraints plus type-driven checks to catch bad input instantly — and learn when to switch validation off.",
+      "difficulty": "intermediate",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Add complete client-side validation to a sign-up form: required fields, a regex pattern with a helpful hint, length and range limits, and a draft button that bypasses it all.",
+      "whyItMatters": "Every round-trip to the server for a missing email address wastes seconds and frustrates users. HTML's built-in validation catches empty fields, malformed addresses and out-of-range numbers before submission, with zero JavaScript. Just as importantly, knowing its limits — and why the server must always re-validate — separates developers who build secure forms from those who build breachable ones.",
+      "steps": [
+        "Read how required and type-driven validation work, then look at the starter sign-up form.",
+        "Mark the username and email fields required (task 1).",
+        "Switch the email field to the validating email type (task 2).",
+        "Add a pattern with a title hint to the invite code (task 3).",
+        "Enforce a minimum password length (task 4) and an age range (task 5).",
+        "Add a Save draft button that skips validation with formnovalidate (task 6), then run the checks."
+      ],
+      "prompt": "<form action=\"/signup\" method=\"post\">\n  <input type=\"text\" name=\"username\" required minlength=\"3\">\n  <input type=\"email\" name=\"email\" required>\n  <input type=\"text\" name=\"invite\" pattern=\"[A-Z]{3}-[0-9]{4}\"\n         title=\"Three capital letters, a dash, four digits, e.g. ABC-1234\">\n  <input type=\"password\" name=\"pw\" minlength=\"8\" required>\n  <input type=\"number\" name=\"age\" min=\"18\" max=\"120\">\n  <button type=\"submit\">Create account</button>\n  <button type=\"submit\" formnovalidate>Save draft</button>\n</form>",
+      "promptLabel": "Key code example",
+      "explanation": "Each constraint lives on the field it protects: required blocks empty submission, type=\"email\" checks the address shape, pattern enforces a custom invite-code format with title supplying the human explanation shown in the error bubble, minlength guards the password, and min/max bound the age. The Save draft button carries formnovalidate, so incomplete drafts can still be stored — validation is per-submission, not per-form, when you need it to be.",
+      "example": "Without validation, a sign-up form happily posts an empty username, 'asdf' as an email and an age of -5; the server rejects it, the page reloads, and the user starts over.\n\nWith the constraints in place, the browser blocks submission instantly, focuses the first broken field, and shows a message next to it — 'Please fill in this field', or the pattern's title text for the invite code. The user fixes everything in one pass without a single network request.",
+      "exercise": "In the editor on the right, harden the sign-up form: required fields, a validating email type, a pattern with title on the invite code, a minimum password length, an age range, and a draft button that bypasses the checks.",
+      "expectedResult": "Submitting the empty form in the preview triggers browser error bubbles instead of a submission; the Save draft button submits regardless. All six checks pass.",
+      "commonMistakes": [
+        "Trusting client-side validation as security. Anyone can bypass it with DevTools or curl — the server must re-validate everything, always.",
+        "Writing a pattern without a title. The browser's default error ('Please match the requested format') tells users nothing about what the format actually is.",
+        "Wrapping the pattern in slashes or anchors like /^...$/. HTML patterns are automatically anchored to the whole value; write just the expression body.",
+        "Adding required to a radio group's every button but forgetting it works per-group: one required on any radio in the group makes the whole group mandatory."
+      ],
+      "proTip": "Style broken fields live with the :invalid and :valid CSS pseudo-classes — for example input:invalid { border-color: #c00; }. Consider :user-invalid where supported, which waits until the user has actually interacted with the field instead of marking a pristine form red.",
+      "tools": [
+        "html"
+      ],
+      "professions": [],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will equip a sign-up form with the complete built-in validation toolkit, then deliberately punch one hole in it for saving drafts.",
+        "sections": [
+          {
+            "heading": "How built-in validation works",
+            "body": "When a form is submitted, the browser first walks every control and checks its constraints. If any control fails, submission stops: nothing is sent, the first invalid field receives focus, and a message bubble explains the problem. All of this ships with the browser — no JavaScript, no library.\n\nConstraints come from attributes you already know as data hints: required, pattern, minlength, maxlength, min, max, step, and the input type itself. Validation only runs at submission (and for some checks while typing), so users are never interrupted mid-thought with premature errors.\n\nThe browser also reflects validity into CSS: at any moment every control matches either the :valid or :invalid pseudo-class, which lets a stylesheet tint broken fields red or valid ones green without any script. That is the entire styling hook in one sentence — the logic stays in HTML, the paint job in CSS.",
+            "code": "<form action=\"/signup\" method=\"post\">\n  <label for=\"u\">Username</label>\n  <input type=\"text\" id=\"u\" name=\"username\" required>\n  <button type=\"submit\">Sign up</button>\n</form>"
+          },
+          {
+            "heading": "required: the non-negotiable fields",
+            "body": "The boolean required attribute marks a control that must hold a value before the form can submit. On text-like inputs it rejects the empty string; on a checkbox it demands the box be ticked (the classic terms-and-conditions pattern); on a select it rejects an option whose value is empty, which is why placeholder options are written as <option value=\"\">.\n\nFor radio buttons, required is evaluated per group: putting it on any one button of a name-sharing group makes the whole group mandatory — the user must pick some option, not that specific one.\n\nMark fields required deliberately, not defensively. Every mandatory field measurably increases abandonment, so a good form demands only what the process genuinely needs and labels the rest optional.",
+            "code": "<input type=\"checkbox\" id=\"terms\" name=\"terms\" required>\n<label for=\"terms\">I accept the terms</label>\n\n<select name=\"country\" required>\n  <option value=\"\">-- Choose a country --</option>\n  <option value=\"gr\">Greece</option>\n</select>"
+          },
+          {
+            "heading": "Type-driven validation: email and url",
+            "body": "Some input types are constraints in themselves. type=\"email\" requires the value to look like an address: something, an @ sign, and a domain part. type=\"url\" requires an absolute URL including its scheme — https://example.com passes, example.com alone does not, which surprises users often enough that many sites pre-fill or auto-repair the scheme.\n\nBe clear about what email validation does and does not promise. It checks shape, not existence: a@b passes the browser check even though it points nowhere. Verifying that an address is real and owned by the user requires a server-side confirmation email — the browser can only stop obvious typos.\n\nThese types stack with other attributes: type=\"email\" required multiple validates a mandatory, comma-separated list of addresses, each checked individually.",
+            "code": "<input type=\"email\" name=\"email\" required>\n<input type=\"url\" name=\"website\" placeholder=\"https://example.com\">"
+          },
+          {
+            "heading": "pattern and title: custom formats with human hints",
+            "body": "When no input type matches your format, the pattern attribute accepts a regular expression that the entire value must match. The expression is implicitly anchored — the browser wraps it as ^(?:pattern)$ — so pattern=\"[A-Z]{3}-[0-9]{4}\" means the whole value is exactly three capitals, a dash, four digits. Do not add slashes or ^...$ yourself.\n\nA pattern without explanation produces the least helpful error on the web: 'Please match the requested format.' The title attribute fixes this — its text is appended to the browser's error bubble, so title=\"Three capital letters, a dash, four digits, e.g. ABC-1234\" turns a dead end into an instruction. Treat pattern and title as a mandatory pair.\n\nAn empty value passes a pattern check: pattern constrains what a value looks like if present, while required makes it present. Format-critical mandatory fields need both. Pattern applies to text, search, tel, url, email and password inputs — not to number, where min/max/step do the work.",
+            "code": "<label for=\"invite\">Invite code</label>\n<input type=\"text\" id=\"invite\" name=\"invite\" required\n       pattern=\"[A-Z]{3}-[0-9]{4}\"\n       title=\"Three capital letters, a dash, four digits, e.g. ABC-1234\">"
+          },
+          {
+            "heading": "Length and range constraints at validation time",
+            "body": "minlength and maxlength bound the character count. They behave asymmetrically: maxlength prevents over-typing outright, while minlength lets the user type freely and flags the field invalid at submission if the text is present but too short. A password field with minlength=\"8\" is the canonical use.\n\nmin, max and step validate ordered types — number, range, date, time and friends. A typed value below min or above max fails; so does a value that misses the step grid counted from min. Date inputs accept ISO strings for their bounds: min=\"2026-01-01\" refuses any earlier date, and the picker greys those days out.\n\nAll length and range failures produce specific browser messages ('Value must be greater than or equal to 1'), localised to the user's language automatically — one more thing you do not have to build.",
+            "code": "<input type=\"password\" name=\"pw\" minlength=\"8\" required>\n<input type=\"number\" name=\"age\" min=\"18\" max=\"120\">\n<input type=\"date\" name=\"start\" min=\"2026-01-01\">"
+          },
+          {
+            "heading": "Switching validation off: novalidate and formnovalidate",
+            "body": "Sometimes you need a form to submit despite broken constraints. The novalidate attribute on the form element disables built-in validation for every submission of that form — common when a site replaces browser bubbles with its own JavaScript validation UI but keeps the attributes for semantics.\n\nThe finer tool is formnovalidate on a specific submit button: only submissions triggered by that button skip validation, while every other button still enforces it. The textbook case is Save draft next to Publish — a half-finished draft should be storable even though the title field is still empty.\n\nformnovalidate belongs on submit buttons (button or input type=\"submit\") and is one of a family of form* button attributes (formaction, formmethod) that override the parent form's settings per button.",
+            "code": "<form action=\"/articles\" method=\"post\">\n  <input type=\"text\" name=\"title\" required>\n  <button type=\"submit\">Publish</button>\n  <button type=\"submit\" formnovalidate>Save draft</button>\n</form>"
+          },
+          {
+            "heading": "Why the server must validate anyway",
+            "body": "Client-side validation is a user-experience feature, not a security boundary. Every check described here runs in software the user fully controls: opening DevTools and deleting a required attribute takes five seconds, and tools like curl skip the browser entirely, posting whatever bytes an attacker likes straight to your endpoint.\n\nSo the rule is absolute: the server re-validates everything — presence, type, length, range, format, and business rules the browser cannot know, like whether the username is already taken. Client-side validation exists to catch honest mistakes instantly and cut server round-trips; server-side validation exists to protect your data. You always need both, and they should enforce the same rules so honest users never see a server rejection the browser missed."
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Create account</title>\n</head>\n<body>\n  <h1>Create account</h1>\n  <form action=\"/signup\" method=\"post\">\n    <label for=\"u\">Username</label>\n    <!-- TODO 1: make this required (and the email below) -->\n    <input type=\"text\" id=\"u\" name=\"username\" maxlength=\"12\">\n\n    <label for=\"e\">Email</label>\n    <!-- TODO 2: switch the type so the browser validates the address shape -->\n    <input type=\"text\" id=\"e\" name=\"email\">\n\n    <label for=\"i\">Invite code</label>\n    <!-- TODO 3: enforce format AAA-1234 with pattern + a title hint -->\n    <input type=\"text\" id=\"i\" name=\"invite\">\n\n    <label for=\"p\">Password</label>\n    <!-- TODO 4: require at least 8 characters -->\n    <input type=\"password\" id=\"p\" name=\"pw\" required>\n\n    <label for=\"a\">Age</label>\n    <!-- TODO 5: allow only 18 to 120 -->\n    <input type=\"number\" id=\"a\" name=\"age\">\n\n    <button type=\"submit\">Create account</button>\n    <!-- TODO 6: add a Save draft submit button that skips validation -->\n  </form>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Create account</title>\n</head>\n<body>\n  <h1>Create account</h1>\n  <form action=\"/signup\" method=\"post\">\n    <label for=\"u\">Username</label>\n    <input type=\"text\" id=\"u\" name=\"username\" maxlength=\"12\" required>\n\n    <label for=\"e\">Email</label>\n    <input type=\"email\" id=\"e\" name=\"email\" required>\n\n    <label for=\"i\">Invite code</label>\n    <input type=\"text\" id=\"i\" name=\"invite\" pattern=\"[A-Z]{3}-[0-9]{4}\" title=\"Three capital letters, a dash, four digits, e.g. ABC-1234\">\n\n    <label for=\"p\">Password</label>\n    <input type=\"password\" id=\"p\" name=\"pw\" required minlength=\"8\">\n\n    <label for=\"a\">Age</label>\n    <input type=\"number\" id=\"a\" name=\"age\" min=\"18\" max=\"120\">\n\n    <button type=\"submit\">Create account</button>\n    <button type=\"submit\" formnovalidate>Save draft</button>\n  </form>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Make the username and email fields mandatory with the required attribute.",
+            "hint": "required is boolean — add the bare word to both inputs.",
+            "errorMessage": "Expected at least two required inputs (username and email). Empty submissions should be blocked.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "input[required]",
+              "min": 2
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Change the email field's type from text to email so the browser checks the address shape.",
+            "hint": "type=\"email\" validates that the value contains an @ and a domain part.",
+            "errorMessage": "No input with type=\"email\" found — the email field is still an unvalidated text input.",
+            "check": {
+              "type": "selector",
+              "selector": "input[type='email']"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Enforce the invite-code format with pattern=\"[A-Z]{3}-[0-9]{4}\" and add a title explaining the format.",
+            "hint": "pattern supplies the rule, title supplies the human hint shown in the error bubble. No slashes, no ^ or $.",
+            "errorMessage": "The invite input needs both a pattern and a title — a pattern alone produces a useless error message.",
+            "check": {
+              "type": "selector",
+              "selector": "input[name='invite'][pattern][title]"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Require passwords of at least 8 characters with minlength=\"8\".",
+            "hint": "minlength flags short values at submit time; maxlength would block typing instead.",
+            "errorMessage": "The password field needs minlength=\"8\".",
+            "check": {
+              "type": "attr",
+              "selector": "input[type='password']",
+              "attr": "minlength",
+              "value": "8"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Bound the age input to the range 18-120 with min and max.",
+            "hint": "min=\"18\" max=\"120\" on the number input.",
+            "errorMessage": "The age input needs both min and max so out-of-range values fail validation.",
+            "check": {
+              "type": "selector",
+              "selector": "input[type='number'][min][max]"
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Add a second submit button labelled 'Save draft' that bypasses validation with formnovalidate.",
+            "hint": "<button type=\"submit\" formnovalidate>Save draft</button> — only this button's submissions skip the checks.",
+            "errorMessage": "No button with the formnovalidate attribute found. Drafts must be savable even when fields are incomplete.",
+            "check": {
+              "type": "selector",
+              "selector": "button[formnovalidate]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-i14-datalist-output-meter",
+      "title": "Suggest, calculate and measure with datalist, output, meter and progress",
+      "summary": "Give text fields autocomplete suggestions with datalist, show calculated results with output, and pick correctly between the meter gauge and the progress bar.",
+      "difficulty": "intermediate",
+      "minutes": 11,
+      "isFree": false,
+      "goal": "Build a system-status panel that combines a suggesting input, a live-result output, a disk-usage meter and a backup progress bar.",
+      "whyItMatters": "These four elements replace common JavaScript widgets with native HTML: datalist gives you autocomplete without a library, output marks calculation results so assistive tech announces them, and meter and progress render accessible gauges and bars styled by the operating system. Knowing the semantic line between meter (a measurement within known bounds) and progress (task completion) keeps your interfaces meaningful to screen readers, not just visually plausible.",
+      "steps": [
+        "Read how datalist differs from select — suggestions versus a closed list.",
+        "Create the datalist of server names and connect it to the input with the list attribute (tasks 1-3).",
+        "Add an output element wired to its source fields with the for attribute (task 4).",
+        "Build the disk-usage meter with full gauge semantics: value, min, max, low, high, optimum (task 5).",
+        "Add the backup progress bar with value and max (task 6).",
+        "Run the checks and compare how the meter and the bar render."
+      ],
+      "prompt": "<input list=\"servers\" name=\"server\">\n<datalist id=\"servers\">\n  <option value=\"web-01\">\n  <option value=\"web-02\">\n  <option value=\"db-01\">\n</datalist>\n\n<output name=\"result\" for=\"a b\">42</output>\n<meter value=\"0.72\" min=\"0\" max=\"1\" low=\"0.25\" high=\"0.75\" optimum=\"0.1\">72%</meter>\n<progress value=\"30\" max=\"100\">30%</progress>",
+      "promptLabel": "Key code example",
+      "explanation": "The input's list attribute points at the datalist's id, turning a free-text field into one with drop-down suggestions the user may ignore. The output element declares 'this is a result computed from the fields named in for'. The meter shows a scalar measurement — 72% disk usage — with low/high/optimum telling the browser which zones are good (it recolours the bar accordingly), while progress reports how much of a running task is done.",
+      "example": "A deployment form with a plain text field forces operators to remember exact server names; a select would block the new server added yesterday.\n\nA datalist gives the best of both: typing 'we' suggests web-01 and web-02, but typing a brand-new name still works. Next to it, a meter shows the chosen server's disk at 72% — amber, because usage crossed the high mark — and a progress bar tracks the backup that is 30% complete.",
+      "exercise": "In the editor on the right, finish the status panel: a suggesting server field backed by a datalist, an output for the calculated total, a fully-specified disk meter and a backup progress bar.",
+      "expectedResult": "The preview shows an input that suggests server names as you type, a results line, a coloured gauge sitting in its warning zone, and a partially-filled progress bar. All six checks pass.",
+      "commonMistakes": [
+        "Forgetting that datalist offers suggestions, not restrictions — users can type anything. If only listed values are valid, validate with pattern or server-side, or use a select.",
+        "Mismatching the input's list attribute and the datalist's id. The connection is by exact id; a typo silently disables all suggestions.",
+        "Using meter for task completion or progress for a measurement. Meter answers 'how full/high is this value?', progress answers 'how much of the work is done?'.",
+        "Omitting max on progress and wondering why value=\"30\" renders full — without max the scale defaults to 1.0, so any value of 1 or more reads as complete."
+      ],
+      "proTip": "A progress element with no value attribute at all renders as an indeterminate animated bar — the correct way to say 'working, duration unknown'. Add the value later from JavaScript when you can measure real progress.",
+      "tools": [
+        "html"
+      ],
+      "professions": [],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will assemble a small server-status panel that exercises all four elements: datalist suggestions, an output result, a meter gauge and a progress bar.",
+        "sections": [
+          {
+            "heading": "datalist: suggestions, not a closed list",
+            "body": "A datalist holds a set of option elements that a browser offers as autocomplete suggestions for a text-like input. The wiring has two ends: the datalist gets an id, and the input gets a list attribute whose value is that exact id. When the user focuses the input or starts typing, matching options drop down; picking one fills the field.\n\nThe crucial contrast with select: a select is a closed vocabulary — the user must pick a listed option — while a datalist is advisory. The user can accept a suggestion, or type something entirely absent from the list, and both submit fine. That makes datalist ideal for 'common answers plus free text' fields: departure cities, tags, server names, job titles.\n\nOptions inside a datalist are usually written as void-style tags with only a value attribute: <option value=\"web-01\">. They can carry label text too, which some browsers show as a secondary line. The datalist itself renders nothing — it can sit anywhere in the body, and one datalist can serve several inputs. The list attribute also works with some non-text types: range inputs use it to draw tick marks, and color inputs to offer swatches.",
+            "code": "<label for=\"server\">Target server</label>\n<input type=\"text\" id=\"server\" name=\"server\" list=\"servers\">\n<datalist id=\"servers\">\n  <option value=\"web-01\">\n  <option value=\"web-02\">\n  <option value=\"db-01\">\n  <option value=\"cache-01\">\n</datalist>"
+          },
+          {
+            "heading": "When to choose datalist versus select",
+            "body": "Choose by asking one question: is the answer space closed or open? Shipping country is closed — you deliver to a fixed set, so a select guarantees valid data. Job title is open — no list covers every title, so a datalist accelerates common cases without blocking rare ones.\n\nRemember that a datalist provides zero validation. If a user types 'web-99' into the server field and that server does not exist, the form still submits it. When listed values are strongly preferred but not absolutely required, pair the datalist with server-side handling of unknowns; when they are required, either add a pattern or switch to a select.\n\nOne practical caveat: suggestion UI varies noticeably between browsers — how many options show, how matching works (prefix versus substring) — so treat datalist as progressive enhancement, never as a load-bearing part of your layout."
+          },
+          {
+            "heading": "output: a labelled home for results",
+            "body": "The output element marks text that is the result of a calculation or user action: an order total, a converted currency amount, the value a range slider currently points at. Visually it is unremarkable inline text; semantically it tells the browser 'this region shows computed results'.\n\nTwo attributes matter. name makes the output addressable through the form like any control (though outputs are not submitted — they are display, not input). The for attribute lists the ids of the fields the result was computed from, space-separated, documenting the data flow: for=\"price qty\" says this number derives from those two inputs.\n\nThe accessibility payoff is built in: browsers treat output as a live region, meaning screen readers automatically announce its new content when a script updates it. A plain span updated by JavaScript changes silently for a blind user; an output speaks. That single behaviour is the best reason to use the element.",
+            "code": "<form>\n  <input type=\"number\" id=\"price\" name=\"price\" value=\"25\">\n  <input type=\"number\" id=\"qty\" name=\"qty\" value=\"2\">\n  <p>Total: <output name=\"total\" for=\"price qty\">50</output> EUR</p>\n</form>"
+          },
+          {
+            "heading": "meter: a gauge with judgement zones",
+            "body": "The meter element displays a scalar measurement within a known range: disk usage, a test score, password strength, relevance. The essentials are value, min and max — value=\"0.72\" min=\"0\" max=\"1\" renders a bar 72% full. If min and max are omitted they default to 0 and 1.\n\nWhat elevates meter beyond a styled bar are its judgement attributes: low, high and optimum. They divide the range into zones — below low, between low and high, above high — and optimum declares which zone is desirable. The browser then colours the bar by how far the value sits from the good zone: green when the value is in the optimum region, amber or red as it drifts into bad territory. For disk usage, optimum sits low (empty disk is good), so a value above high renders as a warning without a line of CSS.\n\nContent between the tags — like the text 72% — is fallback for environments that cannot render the gauge, and good practice for accessibility. One firm rule: meter is for measurements at a point in time, and it requires known bounds. It is never for task completion — that is the next element's job.",
+            "code": "<label for=\"disk\">Disk usage</label>\n<meter id=\"disk\" value=\"0.72\" min=\"0\" max=\"1\"\n       low=\"0.25\" high=\"0.75\" optimum=\"0.1\">72%</meter>"
+          },
+          {
+            "heading": "progress: how much of the task is done",
+            "body": "The progress element reports completion of a task: a file upload, an installation, steps of a wizard. With value and max it renders a determinate bar — value=\"30\" max=\"100\" shows 30% done. min does not exist on progress; the scale always starts at zero, because no task starts 'partially negative'.\n\nOmit the value attribute entirely and the bar becomes indeterminate: an animated sweep meaning 'working, cannot say how far along'. This is the semantically correct spinner for unknown-duration work, and scripts typically start indeterminate, then set value once the total becomes known.\n\nA subtle default bites often: without max, the scale runs 0 to 1. So value=\"30\" alone is clamped to a full bar. Always state max explicitly unless your values genuinely are fractions of one. As with meter, text between the tags serves as fallback.",
+            "code": "<label for=\"backup\">Backup</label>\n<progress id=\"backup\" value=\"30\" max=\"100\">30%</progress>\n\n<!-- Indeterminate: no value attribute -->\n<progress></progress>"
+          },
+          {
+            "heading": "meter or progress? The decision rule",
+            "body": "Both render horizontal bars, and that visual similarity causes constant misuse. Decide by what the number means, not how it looks. If it answers 'how much of a task has completed and will eventually reach the end?', it is progress. If it answers 'where does this measurement sit within its known range right now?', it is meter.\n\nDisk usage is a meter: the disk is not trying to reach 100%, and 100% is bad. An upload is progress: it marches to completion, and 100% is success. Password strength is a meter; a course-completion tracker is progress. Screen readers announce the two elements differently — 'progress bar, 30%' versus a gauge with its value — so the wrong choice actively misinforms users who cannot see the styling.\n\nWhen neither fits — say, a decorative skill bar with no real scale — use neither; a styled div lies less than a misused semantic element."
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Server status</title>\n</head>\n<body>\n  <h1>Server status</h1>\n  <form>\n    <label for=\"server\">Target server</label>\n    <!-- TODO 1+3: connect this input to a datalist with list=\"servers\" -->\n    <input type=\"text\" id=\"server\" name=\"server\">\n    <!-- TODO 1+2: add a <datalist id=\"servers\"> with at least four\n         <option value=\"...\"> suggestions (web-01, web-02, db-01, cache-01) -->\n\n    <p>Estimated transfer:\n      <!-- TODO 4: wrap 42 in an <output name=\"eta\" for=\"server\"> -->\n      42\n      minutes</p>\n  </form>\n\n  <h2>Disk usage</h2>\n  <!-- TODO 5: add a meter with value, min, max, low, high and optimum -->\n\n  <h2>Backup</h2>\n  <!-- TODO 6: add a determinate progress bar: value=\"30\" max=\"100\" -->\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Server status</title>\n</head>\n<body>\n  <h1>Server status</h1>\n  <form>\n    <label for=\"server\">Target server</label>\n    <input type=\"text\" id=\"server\" name=\"server\" list=\"servers\">\n    <datalist id=\"servers\">\n      <option value=\"web-01\">\n      <option value=\"web-02\">\n      <option value=\"db-01\">\n      <option value=\"cache-01\">\n    </datalist>\n\n    <p>Estimated transfer:\n      <output name=\"eta\" for=\"server\">42</output>\n      minutes</p>\n  </form>\n\n  <h2>Disk usage</h2>\n  <meter value=\"0.72\" min=\"0\" max=\"1\" low=\"0.25\" high=\"0.75\" optimum=\"0.1\">72%</meter>\n\n  <h2>Backup</h2>\n  <progress value=\"30\" max=\"100\">30%</progress>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Add a <datalist> with id=\"servers\" after the server input.",
+            "hint": "The datalist renders nothing itself — it is a container of suggestions: <datalist id=\"servers\">...</datalist>.",
+            "errorMessage": "No <datalist id=\"servers\"> found. The suggestions need a datalist container with that exact id.",
+            "check": {
+              "type": "selector",
+              "selector": "datalist#servers"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Fill the datalist with at least four <option value=\"...\"> suggestions: web-01, web-02, db-01, cache-01.",
+            "hint": "Datalist options are usually value-only: <option value=\"web-01\">.",
+            "errorMessage": "Expected at least four options with value attributes inside the datalist.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "datalist option[value]",
+              "min": 4
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Connect the server input to the datalist with list=\"servers\".",
+            "hint": "The input's list attribute must exactly match the datalist's id.",
+            "errorMessage": "The server input has no list=\"servers\" attribute — without it, no suggestions appear.",
+            "check": {
+              "type": "attr",
+              "selector": "input[name='server']",
+              "attr": "list",
+              "value": "servers"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Wrap the calculated 42 in an <output> element with name=\"eta\" and for=\"server\".",
+            "hint": "<output name=\"eta\" for=\"server\">42</output> — for documents which field the result derives from.",
+            "errorMessage": "No <output> element with a for attribute found around the calculated result.",
+            "check": {
+              "type": "selector",
+              "selector": "output[for]"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Add a disk-usage meter with the full gauge set: value=\"0.72\" min=\"0\" max=\"1\" low=\"0.25\" high=\"0.75\" optimum=\"0.1\".",
+            "hint": "low/high/optimum define the judgement zones; optimum is low because an empty disk is the good state.",
+            "errorMessage": "The meter needs all six gauge attributes: value, min, max, low, high, optimum.",
+            "check": {
+              "type": "selector",
+              "selector": "meter[value][min][max][low][high][optimum]"
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Add a determinate backup progress bar with value=\"30\" and max=\"100\".",
+            "hint": "Without max the scale is 0-1 and value 30 renders full. State max=\"100\" explicitly.",
+            "errorMessage": "No <progress> with both value and max found — remember max, or the bar misreads as complete.",
+            "check": {
+              "type": "selector",
+              "selector": "progress[value][max]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-i15-video",
+      "title": "Embed self-hosted video that plays everywhere",
+      "summary": "Master the video element: multiple sources with MIME types, controls, autoplay's muted requirement, poster frames, preload strategy and fallback content.",
+      "difficulty": "intermediate",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Embed a product video with two encoded sources, a poster frame, native controls, sensible dimensions and honest fallback text.",
+      "whyItMatters": "Video is the heaviest asset most pages ship, and the video element's attributes decide whether it plays smoothly, silently wastes gigabytes of bandwidth, or shows a blank rectangle on half your users' browsers. Understanding source selection, codec compatibility and the autoplay rules keeps your media working across devices — and keeps you out of the browser's autoplay-blocking penalty box.",
+      "steps": [
+        "Read how the browser picks between src and source children, then study the format section.",
+        "Add the video element with controls (task 1) and fixed width/height (task 2).",
+        "Provide two sources — WebM first, MP4 second — each with its MIME type (tasks 3 and 4).",
+        "Set a poster image so the player looks intentional before playback (task 5).",
+        "Add fallback text with a download link for unsupported browsers (task 6).",
+        "Run the checks, then experiment with muted, autoplay and loop in the preview."
+      ],
+      "prompt": "<video controls width=\"640\" height=\"360\" poster=\"preview.jpg\" preload=\"metadata\">\n  <source src=\"demo.webm\" type=\"video/webm\">\n  <source src=\"demo.mp4\" type=\"video/mp4\">\n  Your browser does not support HTML video.\n  <a href=\"demo.mp4\">Download the video</a> instead.\n</video>",
+      "promptLabel": "Key code example",
+      "explanation": "The browser walks the source children top to bottom and plays the first format it supports, using the type attribute to decide without downloading anything. WebM comes first as the more efficient codec, MP4 second as the universal safety net. The poster fills the frame before playback, width and height reserve layout space so the page does not jump, and the text inside the element only ever appears in browsers too old to know what video is.",
+      "example": "A page with <video src=\"demo.avi\"> shows a dead grey box for nearly everyone — AVI is not a web format, and single-src markup offers no alternative.\n\nRe-encoded to WebM and MP4 and listed as two typed sources with a poster and controls, the same clip plays natively in every current browser, shows a designed preview frame instead of a black rectangle, and costs users no bandwidth until they press play thanks to preload=\"metadata\".",
+      "exercise": "In the editor on the right, build the product-demo player: a controlled, sized video with WebM and MP4 sources (each typed), a poster frame and fallback content containing a download link.",
+      "expectedResult": "The preview shows a video player with native controls and a poster frame at 640x360. All six checks pass; the fallback text stays invisible because your browser supports video.",
+      "commonMistakes": [
+        "Using both src on the video tag and source children. The src attribute wins and the alternatives are ignored — pick one mechanism, and use source children when you offer formats.",
+        "Writing autoplay without muted. Modern browsers block audible autoplay, so the video simply never starts; autoplay muted (with controls for the sound button) is the working pattern.",
+        "Treating the fallback text as an error message for failed loads. It only renders in browsers that do not implement the video element at all — a 404 on the file shows a broken player, not your fallback.",
+        "Omitting width and height, causing the page to reflow with a visible jump when video metadata arrives."
+      ],
+      "proTip": "Order sources by preference, not popularity: put the smaller, more efficient WebM first and MP4 last. Browsers stop at the first playable source, so everyone capable of WebM saves bandwidth and everyone else falls through to MP4.",
+      "tools": [
+        "html"
+      ],
+      "professions": [],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will embed a self-hosted product demo the professional way: two codec sources, poster, controls, stable dimensions and a fallback.",
+        "sections": [
+          {
+            "heading": "The video element and its two source styles",
+            "body": "The video element embeds a media player directly in the page. In its simplest form it takes a src attribute pointing at one file: <video src=\"demo.mp4\" controls></video>. That works — as long as every visitor's browser can decode that one file.\n\nThe robust form drops the src attribute and nests source elements instead. Each source carries its own src plus a type attribute stating the MIME type, like video/mp4 or video/webm. The browser reads the list top to bottom and commits to the first type it can play. The type attribute is what makes this efficient: without it, the browser must download a chunk of each candidate file to sniff the format; with it, rejection is instant and free.\n\nNever mix the two styles. If the video tag has a src attribute, all source children are ignored. And because selection stops at the first playable source, order expresses preference — put your best-compressed format first.",
+            "code": "<!-- One-format shorthand -->\n<video src=\"demo.mp4\" controls></video>\n\n<!-- Multi-format, browser picks the first playable -->\n<video controls>\n  <source src=\"demo.webm\" type=\"video/webm\">\n  <source src=\"demo.mp4\" type=\"video/mp4\">\n</video>"
+          },
+          {
+            "heading": "Formats and codecs: mp4 and webm",
+            "body": "A video file is a container holding separately-encoded video and audio streams, and compatibility depends on both layers. The two containers that matter on the web: MP4 (typically H.264 video with AAC audio), supported effectively everywhere and the universal baseline; and WebM (VP9 or the newer AV1 video with Opus audio), an open, royalty-free format that usually compresses noticeably better, supported by all current browsers but absent from some older Safari versions.\n\nThe professional pattern is therefore: encode twice, serve both, WebM first. Users on modern browsers get the smaller file; anyone else falls through to MP4. Formats like AVI, MKV or MOV are not web formats — browsers will not reliably play them regardless of markup, so conversion is a prerequisite, not an option.\n\nOne more layer of precision exists when you need it: the type attribute can include a codecs parameter, such as type=\"video/mp4; codecs=avc1.42E01E\". It matters for advanced cases (like offering AV1-in-MP4 with an H.264 fallback) but plain container types cover everyday work."
+          },
+          {
+            "heading": "controls, width and height",
+            "body": "The boolean controls attribute asks the browser for its native player chrome: play/pause, a seek bar, volume, fullscreen and (where tracks exist) caption toggles. Without it the video renders with no interface at all — playable only through JavaScript. Unless you are building a fully custom player, controls is effectively mandatory: shipping video a keyboard or screen-reader user cannot operate is an accessibility failure.\n\nwidth and height set the display size in pixels (write the numbers without units). Their real job is layout stability: stated up front, the browser reserves the correct box immediately, and the page does not lurch when the video's metadata finally reveals its dimensions. Give them the video's intrinsic aspect ratio — a 1280x720 clip belongs in a 16:9 box like 640x360 — or the picture letterboxes inside the element.\n\nCSS can then scale the element responsively (max-width: 100% is typical); the attributes still help by fixing the aspect ratio before any stylesheet loads.",
+            "code": "<video controls width=\"640\" height=\"360\">\n  <source src=\"demo.webm\" type=\"video/webm\">\n  <source src=\"demo.mp4\" type=\"video/mp4\">\n</video>"
+          },
+          {
+            "heading": "autoplay, muted and loop",
+            "body": "autoplay asks the video to start the moment it can. Browsers, after years of tab-blaring abuse, now enforce a strict policy: audible autoplay is blocked. An autoplaying video must also carry the muted attribute, or most browsers will simply refuse to start it. The working combination for a hero background is autoplay muted loop playsinline — playsinline preventing iOS from hijacking the clip into fullscreen.\n\nmuted starts playback with audio off; users can unmute through the controls. loop restarts the video automatically at the end, endlessly — right for short ambient clips, wrong for content people actually watch.\n\nEven correctly-muted autoplay deserves restraint: it burns mobile bandwidth and motion distracts. Reserve it for short, silent, decorative video, and let users start anything with sound themselves.",
+            "code": "<!-- Decorative background clip -->\n<video autoplay muted loop playsinline width=\"640\" height=\"360\">\n  <source src=\"ambient.webm\" type=\"video/webm\">\n  <source src=\"ambient.mp4\" type=\"video/mp4\">\n</video>"
+          },
+          {
+            "heading": "poster and preload",
+            "body": "Before playback begins, an unstyled video shows either a black box or its first frame — often a mid-blink face. The poster attribute replaces that with a chosen image: a title card, a clean keyframe, a designed thumbnail. It costs one image request and transforms how deliberate the page looks.\n\npreload tells the browser how much to fetch before the user presses play. Its three values: none (fetch nothing — cheapest, best for pages where playback is unlikely), metadata (fetch just duration and dimensions, a few kilobytes — the sensible default for most pages), and auto (the browser may buffer aggressively, appropriate only when playback is near-certain). An autoplay attribute makes preload moot, since the whole video is needed immediately.\n\nTogether they define your bandwidth ethics: poster plus preload=\"metadata\" gives users a rich-looking player that costs almost nothing until they opt in.",
+            "code": "<video controls width=\"640\" height=\"360\"\n       poster=\"preview.jpg\" preload=\"metadata\">\n  <source src=\"demo.webm\" type=\"video/webm\">\n  <source src=\"demo.mp4\" type=\"video/mp4\">\n</video>"
+          },
+          {
+            "heading": "Fallback content: for whom, exactly",
+            "body": "Anything inside the video element after the source children is fallback content, rendered only by browsers that do not implement the video element at all. Every current browser does implement it, so this text serves ancient browsers, some text-mode agents, and — importantly — anywhere your HTML gets reproduced outside a browser, like an email client or a feed reader.\n\nUnderstand what fallback is not: it is not an error handler. If the files 404 or every source format is unsupported, a video-capable browser shows a broken player, not your fallback text. Handling that gracefully requires JavaScript listening for error events.\n\nMake the fallback useful rather than scolding. 'Your browser does not support HTML video' helps nobody by itself; add a direct download link to the MP4 so the person can still watch the content some other way. A one-line fallback with a link is the professional standard.",
+            "code": "<video controls width=\"640\" height=\"360\">\n  <source src=\"demo.webm\" type=\"video/webm\">\n  <source src=\"demo.mp4\" type=\"video/mp4\">\n  Your browser does not support HTML video.\n  <a href=\"demo.mp4\">Download the video</a> instead.\n</video>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Product demo</title>\n</head>\n<body>\n  <h1>Product demo</h1>\n\n  <!-- TODO 1: add a <video> element with the controls attribute -->\n  <!-- TODO 2: give it width=\"640\" and height=\"360\" -->\n  <!-- TODO 3: inside it, add <source src=\"demo.webm\" type=\"video/webm\"> -->\n  <!-- TODO 4: then <source src=\"demo.mp4\" type=\"video/mp4\"> -->\n  <!-- TODO 5: add poster=\"preview.jpg\" to the video element -->\n  <!-- TODO 6: after the sources, add fallback text with a download\n       link to demo.mp4 -->\n\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Product demo</title>\n</head>\n<body>\n  <h1>Product demo</h1>\n\n  <video controls width=\"640\" height=\"360\" poster=\"preview.jpg\" preload=\"metadata\">\n    <source src=\"demo.webm\" type=\"video/webm\">\n    <source src=\"demo.mp4\" type=\"video/mp4\">\n    Your browser does not support HTML video.\n    <a href=\"demo.mp4\">Download the video</a> instead.\n  </video>\n\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Add a <video> element with the controls attribute so users get the native player interface.",
+            "hint": "controls is boolean: <video controls> ... </video>.",
+            "errorMessage": "No <video> element with controls found — without controls users cannot start playback.",
+            "check": {
+              "type": "selector",
+              "selector": "video[controls]"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Reserve layout space with width=\"640\" and height=\"360\" on the video element.",
+            "hint": "Plain numbers, no px unit: width=\"640\" height=\"360\" — a 16:9 box.",
+            "errorMessage": "The video needs both width and height attributes so the page does not jump when metadata loads.",
+            "check": {
+              "type": "selector",
+              "selector": "video[width][height]"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Add two <source> children, each with src and a type attribute (WebM first, MP4 second).",
+            "hint": "Order is preference: <source src=\"demo.webm\" type=\"video/webm\"> then the mp4 line.",
+            "errorMessage": "Expected two typed <source> elements inside the video. The type attribute lets the browser skip formats without downloading them.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "video source[type]",
+              "min": 2
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Make sure the MP4 fallback source declares type=\"video/mp4\".",
+            "hint": "The MIME type for MP4 video is exactly video/mp4.",
+            "errorMessage": "No source with type=\"video/mp4\" found — MP4 is the universal safety net and must be declared.",
+            "check": {
+              "type": "selector",
+              "selector": "source[type='video/mp4']"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Show a preview frame before playback with poster=\"preview.jpg\".",
+            "hint": "poster goes on the video element itself, not on a source.",
+            "errorMessage": "The video has no poster attribute — before play it will render as a black box.",
+            "check": {
+              "type": "attr",
+              "selector": "video",
+              "attr": "poster"
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "After the sources, add fallback text ('Your browser does not support HTML video.') including an <a> download link to demo.mp4.",
+            "hint": "The fallback lives inside <video>, after the last source, and only ancient browsers render it.",
+            "errorMessage": "No fallback text found inside the video element. Add a sentence with a download link after the sources.",
+            "check": {
+              "type": "text",
+              "selector": "video",
+              "pattern": "does not support"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-i16-audio-track",
+      "title": "Publish audio with captions using audio, source and track",
+      "summary": "Embed sound with the audio element and its source fallbacks, then make media accessible with WebVTT text tracks for captions, subtitles and descriptions.",
+      "difficulty": "intermediate",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Embed a podcast episode with two audio formats, a sensible preload strategy, and a captions track wired up with kind, srclang, label and default.",
+      "whyItMatters": "Audio embedding looks trivial until you meet the details: which formats actually decode everywhere, why autoplaying sound gets your page muted by the browser, and how much bandwidth preload silently spends. The track element is the other half of professional media work — captions are a legal accessibility requirement in many contexts, and WebVTT is the format every browser understands. Together these skills let you ship media that everyone can use.",
+      "steps": [
+        "Read the audio element theory, then the format comparison.",
+        "Add the audio player with controls (task 1).",
+        "Provide MP3 and OGG sources with MIME types (tasks 2 and 3).",
+        "Set preload=\"metadata\" so the page stays light (task 4).",
+        "Study the WebVTT section, then attach a captions track with kind, srclang, label and default (task 5).",
+        "Add fallback text with a download link (task 6) and run the checks."
+      ],
+      "prompt": "<audio controls preload=\"metadata\">\n  <source src=\"episode.ogg\" type=\"audio/ogg\">\n  <source src=\"episode.mp3\" type=\"audio/mpeg\">\n  <track src=\"episode.vtt\" kind=\"captions\" srclang=\"en\" label=\"English\" default>\n  Your browser does not support HTML audio.\n  <a href=\"episode.mp3\">Download the episode</a>.\n</audio>",
+      "promptLabel": "Key code example",
+      "explanation": "The browser tries the OGG source first and falls back to MP3, choosing by the type attribute without downloading either. preload=\"metadata\" fetches only the duration until the user presses play. The track element points at a WebVTT file: kind=\"captions\" says it transcribes speech plus meaningful sounds, srclang declares the text language, label names it in the player menu, and default switches it on automatically.",
+      "example": "A podcast page with a bare link to episode.mp3 forces users into their download folder, and deaf visitors get nothing at all.\n\nThe same episode inside an audio element plays right on the page with native controls, streams only metadata until requested, and carries an English captions track — so a user in a loud train, or one who cannot hear, reads the conversation as it plays.",
+      "exercise": "In the editor on the right, build the podcast player: a controlled audio element with OGG and MP3 typed sources, metadata-only preloading, a fully-attributed captions track and a fallback download link.",
+      "expectedResult": "The preview shows a compact native audio player. All six checks pass; the captions track and fallback are present in the markup even though the audio bar itself looks minimal.",
+      "commonMistakes": [
+        "Writing type=\"audio/mp3\". The registered MIME type for MP3 is audio/mpeg — audio/mp3 is a common guess that some browsers tolerate and others do not.",
+        "Autoplaying audio. Browsers block audible autoplay outright, and unlike video there is no useful muted-autoplay pattern for sound — let users press play.",
+        "Marking a track default without checking kind. A default subtitles track switches on translation for everyone; captions as default is usually the safer choice.",
+        "Forgetting that WebVTT files must start with the exact header line WEBVTT — without it the whole track silently fails to parse."
+      ],
+      "proTip": "Captions versus subtitles is an intent distinction, not a technical one: captions serve people who cannot hear the audio (they include sounds like [door slams]), subtitles serve people who cannot understand the language. Choose kind accordingly — screen readers and player menus present them differently.",
+      "tools": [
+        "html"
+      ],
+      "professions": [],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will publish a podcast episode properly: multi-format audio, restrained preloading, WebVTT captions and a fallback for everything else.",
+        "sections": [
+          {
+            "heading": "The audio element",
+            "body": "The audio element embeds a sound player. With the controls attribute it renders the browser's compact native bar — play/pause, a timeline, volume — and without controls it is invisible and inert until JavaScript drives it. Like video, it accepts either a single src attribute or nested source children, and the same rule applies: an src attribute on the audio tag makes the browser ignore every source child.\n\nThe attribute set mirrors video where it makes sense: autoplay, loop, muted, preload all exist. loop is genuinely useful for ambience in web apps; muted on audio is mostly a scripting tool, since a muted sound player serves little purpose to humans.\n\nContent inside the element after the sources is fallback, shown only by agents that do not implement audio at all — same contract as video, same best practice: one honest sentence plus a download link.",
+            "code": "<audio controls>\n  <source src=\"episode.ogg\" type=\"audio/ogg\">\n  <source src=\"episode.mp3\" type=\"audio/mpeg\">\n  Your browser does not support HTML audio.\n  <a href=\"episode.mp3\">Download the episode</a>.\n</audio>"
+          },
+          {
+            "heading": "Audio formats: mp3, ogg, wav",
+            "body": "Three formats cover web audio. MP3 (MIME type audio/mpeg — note, not audio/mp3) is the universal baseline: lossy, small, decodable by every browser in use. If you ship only one format, ship MP3.\n\nOGG (audio/ogg, usually containing the Vorbis or Opus codec) is the open alternative: royalty-free and typically better quality per kilobyte than MP3, especially with Opus. Historical Safari versions lacked it, which is why OGG is offered first with MP3 beneath, never alone.\n\nWAV (audio/wav) is essentially uncompressed PCM: perfect fidelity at brutal size — a minute of CD-quality WAV weighs around ten megabytes. It has niche uses (tiny UI sounds, audio-editing tools) but is the wrong choice for music or speech delivery. As with video, list sources in preference order and always include the type attribute so browsers can reject formats without downloading them.",
+            "code": "<audio controls>\n  <source src=\"clip.ogg\" type=\"audio/ogg\">\n  <source src=\"clip.mp3\" type=\"audio/mpeg\">\n  <source src=\"clip.wav\" type=\"audio/wav\">\n</audio>"
+          },
+          {
+            "heading": "autoplay pitfalls and preload strategy",
+            "body": "Autoplaying sound is the most-hated behaviour on the web, and browsers have codified the hatred: audible autoplay is blocked by default in every major browser. An audio element with autoplay will usually just not start, and pages that fight the policy with scripts get their whole tab muted by the browser UI. Unlike video, audio has no meaningful silent-autoplay use, so the practical rule is simple: never autoplay audio; let the user press play.\n\npreload manages the cost of the player before anyone interacts. none fetches nothing — right for pages listing fifty episodes where loading fifty files would be absurd. metadata fetches just enough to show duration — the best default for a typical single-episode page. auto invites the browser to buffer the whole file — defensible only when playback is nearly certain.\n\nA subtlety worth knowing: preload is a hint, not a command. Browsers may fetch less than requested on metered connections or when many players share a page. Design as if preload were advisory — because it is.",
+            "code": "<!-- Episode list: pay nothing until a user chooses -->\n<audio controls preload=\"none\">\n  <source src=\"ep42.mp3\" type=\"audio/mpeg\">\n</audio>"
+          },
+          {
+            "heading": "The track element: text for your media",
+            "body": "The track element attaches a timed text file to an audio or video element. It is a void element placed inside the media element after the sources, and its kind attribute declares the text's purpose: subtitles (translation or transcription for people who do not understand the language), captions (transcription plus meaningful non-speech sounds, for people who cannot hear the audio), descriptions (a spoken-by-screen-reader account of important visuals, for blind users), chapters (named navigation points), and metadata (machine-readable cues for scripts, never displayed).\n\nThree more attributes complete the wiring. srclang states the language of the track text as a language code like en or el — required when kind is subtitles, wise always. label gives the human name shown in the player's caption menu, like 'English' or 'Greek'. The boolean default marks the one track per kind that should be enabled without user action.\n\nA player can hold several tracks — English captions, Greek subtitles, chapter markers — and the native controls grow a menu to switch between them. For audio elements specifically, browser UI support for showing captions is weaker than for video; many podcast sites also render the transcript as visible page text, which helps SEO too.",
+            "code": "<video controls width=\"640\" height=\"360\">\n  <source src=\"talk.webm\" type=\"video/webm\">\n  <source src=\"talk.mp4\" type=\"video/mp4\">\n  <track src=\"talk-en.vtt\" kind=\"captions\" srclang=\"en\" label=\"English\" default>\n  <track src=\"talk-el.vtt\" kind=\"subtitles\" srclang=\"el\" label=\"Greek\">\n</video>"
+          },
+          {
+            "heading": "WebVTT in five minutes",
+            "body": "The file a track points at is WebVTT — Web Video Text Tracks — a plain-text format with a .vtt extension. Its grammar is small: the file must begin with the literal line WEBVTT, followed by a blank line, then any number of cues. Each cue is an optional identifier line, a timing line of the form 00:00:01.000 --> 00:00:04.500 (start and end, with a period before milliseconds), and one or more lines of text, all separated from the next cue by a blank line.\n\nCue text may contain simple markup — <b>, <i>, and voice spans like <v Maria> to name speakers — and captions conventionally put sound effects in square brackets: [phone buzzes]. Timing must be sequential within a cue (end after start), and overlapping cues are allowed for dialogue.\n\nTwo operational details cause most real-world failures: the header line must be exactly WEBVTT (a missing header kills the entire track with no visible error), and when the page and the .vtt file live on different origins, the media element needs crossorigin handling — same-origin hosting is the simple path.",
+            "code": "WEBVTT\n\n1\n00:00:01.000 --> 00:00:04.500\n<v Host>Welcome back to the show.\n\n2\n00:00:04.800 --> 00:00:07.000\n[intro music fades]"
+          },
+          {
+            "heading": "Choosing kinds, and why captions are not optional",
+            "body": "Pick kind by who is served. A viewer who cannot hear needs captions — the speech plus the [door slams] that a subtitles file would omit. A viewer who hears fine but speaks another language needs subtitles. A blind viewer of video needs descriptions of what happens on screen. Publishing a lecture series? chapters tracks turn a one-hour file into navigable sections.\n\nCaptions carry legal weight: accessibility legislation in many jurisdictions (and procurement rules in many organisations) require captioned media. Beyond compliance, captions are used far past their target audience — people in open offices, language learners, anyone in a loud or silent environment. Studies of social platforms consistently show most video is watched muted.\n\nThe markup cost, as you have seen, is one line per track plus a text file. There is no cheaper accessibility win anywhere in HTML."
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Episode 42</title>\n</head>\n<body>\n  <h1>Episode 42: Shipping late</h1>\n\n  <!-- TODO 1: add an <audio> element with controls -->\n  <!-- TODO 2: give it two typed sources:\n       episode.ogg (audio/ogg) first, episode.mp3 second -->\n  <!-- TODO 3: the mp3 source must declare type=\"audio/mpeg\" -->\n  <!-- TODO 4: add preload=\"metadata\" to the audio element -->\n  <!-- TODO 5: add a captions track: src=\"episode.vtt\" kind=\"captions\"\n       srclang=\"en\" label=\"English\" default -->\n  <!-- TODO 6: after the track, add fallback text with a download link -->\n\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Episode 42</title>\n</head>\n<body>\n  <h1>Episode 42: Shipping late</h1>\n\n  <audio controls preload=\"metadata\">\n    <source src=\"episode.ogg\" type=\"audio/ogg\">\n    <source src=\"episode.mp3\" type=\"audio/mpeg\">\n    <track src=\"episode.vtt\" kind=\"captions\" srclang=\"en\" label=\"English\" default>\n    Your browser does not support HTML audio.\n    <a href=\"episode.mp3\">Download the episode</a>.\n  </audio>\n\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Add an <audio> element with the controls attribute.",
+            "hint": "Without controls the player is invisible: <audio controls> ... </audio>.",
+            "errorMessage": "No <audio controls> element found — users need the native play bar.",
+            "check": {
+              "type": "selector",
+              "selector": "audio[controls]"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Give the audio two <source> children with type attributes: episode.ogg (audio/ogg) first, then episode.mp3.",
+            "hint": "Preference order: OGG first for efficiency, MP3 as the universal fallback.",
+            "errorMessage": "Expected two typed <source> elements inside the audio element.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "audio source[type]",
+              "min": 2
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Declare the MP3 source's MIME type correctly as audio/mpeg.",
+            "hint": "It is audio/mpeg, not audio/mp3 — a classic trap.",
+            "errorMessage": "No source with type=\"audio/mpeg\" found. Remember the MP3 MIME type is audio/mpeg.",
+            "check": {
+              "type": "selector",
+              "selector": "source[type='audio/mpeg']"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Keep the page light with preload=\"metadata\" on the audio element.",
+            "hint": "metadata fetches only the duration until the user presses play.",
+            "errorMessage": "The audio element should carry preload=\"metadata\" so the file is not buffered before anyone plays it.",
+            "check": {
+              "type": "attr",
+              "selector": "audio",
+              "attr": "preload",
+              "value": "metadata"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Attach a captions track: <track src=\"episode.vtt\" kind=\"captions\" srclang=\"en\" label=\"English\" default>.",
+            "hint": "track is a void element placed after the sources; default switches it on automatically.",
+            "errorMessage": "No fully-attributed captions track found — it needs kind=\"captions\", srclang, label and default.",
+            "check": {
+              "type": "selector",
+              "selector": "track[kind='captions'][srclang][label][default]"
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Add fallback text after the track: a sentence saying the browser does not support HTML audio, plus a download link.",
+            "hint": "Fallback content lives inside <audio>, after sources and tracks, and includes <a href=\"episode.mp3\">.",
+            "errorMessage": "No fallback text found inside the audio element — add the 'does not support' sentence with a download link.",
+            "check": {
+              "type": "text",
+              "selector": "audio",
+              "pattern": "does not support"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-i17-iframes-embeds",
+      "title": "Embed other pages safely with iframes",
+      "summary": "Master the iframe element: required titles, lazy loading, the sandbox permission system, named frames as link targets, and the security realities of third-party embeds.",
+      "difficulty": "intermediate",
+      "minutes": 13,
+      "isFree": false,
+      "goal": "Build a dashboard that embeds an external page with a title, lazy loading, dimensions and a sandbox, plus a named frame driven by links.",
+      "whyItMatters": "Iframes power the embedded maps, videos and payment widgets on virtually every commercial site — a page inside your page, with its own document and its own security context. Used carelessly they are also a classic attack surface: an unsandboxed third-party frame runs someone else's code adjacent to your users. Knowing title, loading, sandbox and the framing headers is the difference between embedding responsibly and embedding dangerously.",
+      "steps": [
+        "Read what an iframe actually is — a nested browsing context, not a fancy image.",
+        "Embed the status page with src and an accessible title (task 1), then size it (task 2).",
+        "Defer offscreen loading with loading=\"lazy\" (task 3).",
+        "Restrict the embed's powers with a sandbox allowing only scripts (task 4).",
+        "Create the named preview frame (task 5) and point a link at it with target (task 6).",
+        "Read the security section, then run all checks."
+      ],
+      "prompt": "<iframe src=\"https://status.example.com\" title=\"Live service status\"\n        width=\"600\" height=\"400\" loading=\"lazy\"\n        sandbox=\"allow-scripts allow-same-origin\"></iframe>\n\n<a href=\"report-a.html\" target=\"preview\">Report A</a>\n<a href=\"report-b.html\" target=\"preview\">Report B</a>\n<iframe name=\"preview\" src=\"report-a.html\" title=\"Report preview\"\n        width=\"600\" height=\"300\"></iframe>",
+      "promptLabel": "Key code example",
+      "explanation": "The first iframe embeds an external status page: title describes it for screen-reader users (who otherwise hear just 'frame'), width and height reserve stable space, loading=\"lazy\" defers the fetch until the frame nears the viewport, and sandbox strips every capability except the two explicitly allowed. The second pattern uses name: links elsewhere on the page target the frame by that name, so clicking Report B loads it inside the frame instead of navigating the whole tab.",
+      "example": "A dashboard that links out to the status page loses the user to another tab; pasting the status HTML into your page is impossible since you do not control it.\n\nAn iframe threads the needle: the live external page renders inside a 600x400 region of your dashboard, isolated in its own browsing context, loading lazily below the fold, and — because it is third-party content — locked in a sandbox that removes popups, form submission and top-level navigation.",
+      "exercise": "In the editor on the right, complete the dashboard: an embedded status page with title, dimensions, lazy loading and a sandbox, then a named preview frame with two links that load reports into it.",
+      "expectedResult": "The preview shows the sandboxed status frame and a report frame that swaps content when the two links are clicked. All six checks pass.",
+      "commonMistakes": [
+        "Shipping iframes without title. Screen readers announce an untitled frame as just 'frame', leaving users to guess; title is effectively mandatory for accessibility.",
+        "Writing sandbox=\"allow-scripts allow-same-origin\" on a frame whose content you also serve — that combination lets framed code reach up and remove its own sandbox. For same-origin content, question whether you need sandbox at all.",
+        "Expecting any site to be embeddable. Sites send X-Frame-Options or CSP frame-ancestors headers to refuse framing — google.com in an iframe renders a blank refusal, and that is by design.",
+        "Lazy-loading an iframe at the top of the page. loading=\"lazy\" on above-the-fold content delays what users see first; reserve it for frames below the fold."
+      ],
+      "proTip": "Never build a login or checkout form inside a third-party iframe context you do not fully control, and prefer embedding via the provider's documented embed URL (like youtube.com/embed/ID) — those endpoints are designed and hardened for framing, unlike normal site pages.",
+      "tools": [
+        "html"
+      ],
+      "professions": [],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will embed an external status page defensively and build a link-driven preview frame — the two iframe patterns you will meet most in real work.",
+        "sections": [
+          {
+            "heading": "What an iframe really is",
+            "body": "An iframe (inline frame) embeds one complete HTML document inside another. The framed page is not merged into yours: it is a separate browsing context with its own document, its own styles, its own scripts and its own security origin. Your CSS cannot reach into it, and — when the origins differ — its scripts cannot reach out to your page either. That isolation is exactly why iframes are the standard vehicle for third-party widgets.\n\nThe src attribute names the document to load. Two sizing attributes, width and height, set the viewport in pixels; like images and videos, stating them prevents layout shift. The frame shows scrollbars automatically when the inner document overflows.\n\nOne attribute is non-negotiable: title. A screen reader reaching an untitled iframe can only announce 'frame' — the user has no idea whether it holds a map, an ad or their bank balance. A short description like title=\"Live service status\" fixes it. Treat a missing iframe title as an error, because accessibility audits will.",
+            "code": "<iframe src=\"https://status.example.com\"\n        title=\"Live service status\"\n        width=\"600\" height=\"400\"></iframe>"
+          },
+          {
+            "heading": "loading=\"lazy\" and frame performance",
+            "body": "Iframes are expensive: each one loads a whole page — HTML, CSS, scripts, images — and historically all of it loaded up front, even for frames three screens below the fold. The loading attribute fixes this: loading=\"lazy\" tells the browser to defer fetching the frame until the user scrolls near it, while loading=\"eager\" (the default) loads immediately.\n\nThe rule of thumb mirrors images: lazy-load everything below the fold, eager-load anything visible at page open. A lazily-loaded map at the bottom of a contact page can cut hundreds of kilobytes and multiple third-party connections from the initial load.\n\nBecause a deferred frame occupies zero network time until needed, always pair loading=\"lazy\" with explicit width and height — otherwise the page reflows twice: once at first paint, again when the frame finally materialises.",
+            "code": "<!-- Bottom of a long page -->\n<iframe src=\"https://maps.example.com/embed?q=office\"\n        title=\"Map of our office\"\n        width=\"600\" height=\"450\" loading=\"lazy\"></iframe>"
+          },
+          {
+            "heading": "sandbox: a permission system for embeds",
+            "body": "The sandbox attribute strips the framed document of nearly every capability, then lets you add specific ones back as space-separated tokens. A bare sandbox=\"\" is maximum restriction: no scripts, no form submission, no popups, no navigation of your page, no plugins, and the content is forced into a unique opaque origin (so it cannot use cookies or storage even from its own site).\n\nThe important tokens: allow-scripts re-enables JavaScript; allow-forms permits form submission; allow-popups lets it open windows; allow-same-origin lets the content keep its real origin instead of the opaque one, restoring its cookies and storage; allow-top-navigation lets the frame navigate your whole tab (rarely wise); allow-modals re-enables alert/confirm dialogs; allow-downloads permits downloads. You grant the minimum set the embed needs to function — a widget that only draws needs allow-scripts and nothing else.\n\nOne dangerous combination to memorise: allow-scripts plus allow-same-origin on content from your own origin means the framed script can reach into the parent and remove its own sandbox attribute — the sandbox becomes decoration. For genuinely third-party content the pair is common and acceptable (the cross-origin wall still stands); for same-origin content it defeats the purpose.",
+            "code": "<!-- Third-party widget: scripts only, nothing else -->\n<iframe src=\"https://widget.example.com/chart\"\n        title=\"Market chart\" width=\"400\" height=\"300\"\n        sandbox=\"allow-scripts\"></iframe>"
+          },
+          {
+            "heading": "allow and allowfullscreen: granting device features",
+            "body": "Separate from sandbox, the allow attribute controls which powerful browser features the framed page may use — camera, microphone, geolocation, autoplay, clipboard and more. Each feature is named with an allowlist, semicolon-separated: allow=\"camera; microphone\" for a video-call widget, allow=\"autoplay; fullscreen\" for a media player. Features not granted are denied inside the frame regardless of what the inner page requests.\n\nallowfullscreen is the older boolean that permits the framed content to enter fullscreen — you still see it everywhere because YouTube's embed code includes it. Modern syntax expresses the same thing as allow=\"fullscreen\", and including both harms nothing.\n\nThe division of labour: sandbox takes capabilities away from untrusted content, allow grants sensitive device features to trusted content. A well-defended embed often carries both, each list as short as possible.",
+            "code": "<iframe src=\"https://www.youtube.com/embed/VIDEO_ID\"\n        title=\"Product launch keynote\"\n        width=\"560\" height=\"315\"\n        allow=\"autoplay; fullscreen; picture-in-picture\"\n        allowfullscreen></iframe>"
+          },
+          {
+            "heading": "Named frames as link targets",
+            "body": "Give an iframe a name attribute and it becomes a navigation target: any link whose target matches that name loads its href inside the frame instead of the current tab. No JavaScript involved — this is the same target mechanism as target=\"_blank\", pointed at a frame instead of a new tab.\n\nThe pattern builds instant master-detail interfaces: a list of report links on the left, a single named frame on the right, each click swapping the frame's document. Forms can do the same with target on the form element, submitting into a frame.\n\nGive the frame an initial src so the region is never blank, and remember the frame still needs its title — name is for the linking machinery, title for humans. If no frame matches a link's target name, the browser opens a new tab with that name, which is almost never what you wanted; keep names and targets in exact sync.",
+            "code": "<a href=\"report-a.html\" target=\"preview\">Report A</a>\n<a href=\"report-b.html\" target=\"preview\">Report B</a>\n\n<iframe name=\"preview\" src=\"report-a.html\"\n        title=\"Report preview\" width=\"600\" height=\"300\"></iframe>"
+          },
+          {
+            "heading": "Embedding YouTube and maps properly",
+            "body": "Big platforms publish dedicated embed endpoints, and using them matters. YouTube videos embed via https://www.youtube.com/embed/VIDEO_ID — not the watch URL, which refuses framing. The embed endpoint serves a page designed for iframes: minimal chrome, the player API, correct framing headers. Map providers work the same way, offering an 'embed' or 'share' snippet that wraps a purpose-built URL in an iframe with sensible attributes.\n\nWhen you paste a provider's snippet, still audit it against this lesson: does it carry a title (usually you must add one)? Should it be loading=\"lazy\" (usually yes, below the fold)? Are the width and height right for your layout?\n\nA note on the legacy elements you will meet in old code: object (with a data attribute) and embed were the pre-iframe ways to include external resources like PDFs and Flash content. object still has a niche for inline PDFs, but for embedding web content both are obsolete — new work uses iframe, full stop.",
+            "code": "<iframe src=\"https://www.youtube.com/embed/dQw4w9WgXcQ\"\n        title=\"Launch video\" width=\"560\" height=\"315\"\n        loading=\"lazy\" allowfullscreen></iframe>\n\n<!-- Legacy, for recognition only -->\n<object data=\"manual.pdf\" type=\"application/pdf\" width=\"600\" height=\"800\"></object>"
+          },
+          {
+            "heading": "Why third-party frames demand care",
+            "body": "Framing runs in both directions, and both have security stakes. When you embed others: the framed page executes its own scripts with its own origin's cookies. Inside an unsandboxed frame it can open popups, start downloads, navigate your tab to a phishing page, or mine cryptocurrency. Every third-party iframe is a trust decision — sandbox it to the minimum, and only embed origins you would vouch for.\n\nWhen others embed you: a hostile site can frame your page invisibly and trick users into clicking your buttons — the attack called clickjacking. Defence happens in HTTP headers your server sends: the legacy X-Frame-Options header (DENY or SAMEORIGIN), and its modern successor, the CSP frame-ancestors directive, which can name exactly which origins may frame you. This is why most login pages refuse to render inside your iframe — their servers forbid framing, correctly.\n\nThe takeaway for an HTML author: expect embeds of serious sites to fail unless they offer an embed endpoint, protect your own sensitive pages with framing headers (a server configuration task to raise with your team), and treat sandbox as seatbelt-mandatory for any frame whose content you do not control."
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Ops dashboard</title>\n</head>\n<body>\n  <h1>Ops dashboard</h1>\n\n  <h2>Service status</h2>\n  <!-- TODO 1: embed https://status.example.com in an iframe with a\n       descriptive title attribute -->\n  <!-- TODO 2: give it width=\"600\" and height=\"400\" -->\n  <!-- TODO 3: defer it with loading=\"lazy\" -->\n  <!-- TODO 4: sandbox it, allowing only allow-scripts -->\n\n  <h2>Reports</h2>\n  <!-- TODO 6: make these links load into the preview frame\n       with target=\"preview\" -->\n  <a href=\"report-a.html\">Report A</a>\n  <a href=\"report-b.html\">Report B</a>\n  <!-- TODO 5: add an iframe named \"preview\" with src=\"report-a.html\",\n       title=\"Report preview\", width=\"600\", height=\"300\" -->\n\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Ops dashboard</title>\n</head>\n<body>\n  <h1>Ops dashboard</h1>\n\n  <h2>Service status</h2>\n  <iframe src=\"https://status.example.com\" title=\"Live service status\"\n          width=\"600\" height=\"400\" loading=\"lazy\"\n          sandbox=\"allow-scripts\"></iframe>\n\n  <h2>Reports</h2>\n  <a href=\"report-a.html\" target=\"preview\">Report A</a>\n  <a href=\"report-b.html\" target=\"preview\">Report B</a>\n  <iframe name=\"preview\" src=\"report-a.html\" title=\"Report preview\"\n          width=\"600\" height=\"300\"></iframe>\n\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Embed the status page: an iframe with src=\"https://status.example.com\" and a descriptive title attribute.",
+            "hint": "title is what screen readers announce — e.g. title=\"Live service status\".",
+            "errorMessage": "No iframe with both src and title found. Every iframe needs a title for accessibility.",
+            "check": {
+              "type": "selector",
+              "selector": "iframe[src][title]"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Size the status frame with width=\"600\" and height=\"400\".",
+            "hint": "Explicit dimensions prevent layout shift, especially with lazy loading.",
+            "errorMessage": "The status iframe needs both width and height attributes.",
+            "check": {
+              "type": "selector",
+              "selector": "iframe[width][height]"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Defer the status frame until it is scrolled near with loading=\"lazy\".",
+            "hint": "loading=\"lazy\" on the iframe element — same idea as lazy images.",
+            "errorMessage": "The status iframe should carry loading=\"lazy\" so it does not load with the initial page.",
+            "check": {
+              "type": "attr",
+              "selector": "iframe",
+              "attr": "loading",
+              "value": "lazy"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Sandbox the status frame, granting only allow-scripts.",
+            "hint": "sandbox=\"allow-scripts\" strips everything else: no forms, no popups, no navigation of your tab.",
+            "errorMessage": "The status iframe needs a sandbox attribute containing allow-scripts (and nothing more).",
+            "check": {
+              "type": "attr",
+              "selector": "iframe[sandbox]",
+              "attr": "sandbox",
+              "pattern": "allow-scripts"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Add the preview frame: an iframe with name=\"preview\", src=\"report-a.html\", title=\"Report preview\", width=\"600\", height=\"300\".",
+            "hint": "name is for link targeting; title is still required for humans.",
+            "errorMessage": "No iframe named \"preview\" found — the report links need a frame to load into.",
+            "check": {
+              "type": "selector",
+              "selector": "iframe[name='preview'][title]"
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Point both report links at the frame by adding target=\"preview\" to each.",
+            "hint": "target on a link matches the iframe's name — clicks then swap the frame content, not the tab.",
+            "errorMessage": "Expected two links with target=\"preview\". Without target, clicking navigates the whole page away.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "a[target='preview']",
+              "min": 2
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-i18-computercode",
+      "title": "Document code the right way with code, pre, kbd, samp and var",
+      "summary": "Use HTML's five computer-text elements with their exact semantics, escape angle brackets with entities, and present multi-line listings that survive whitespace.",
+      "difficulty": "intermediate",
+      "minutes": 11,
+      "isFree": false,
+      "goal": "Mark up a small API documentation page with inline code, an escaped multi-line listing, keyboard shortcuts, sample output and variable placeholders.",
+      "whyItMatters": "Technical documentation lives or dies on precise code presentation. Browsers collapse whitespace by default, so unprepared code listings flatten into soup; raw angle brackets get parsed as tags and vanish. The five computer-text elements — each with a distinct meaning — plus entity escaping are the toolkit behind every readable docs page, README render and developer blog on the web.",
+      "steps": [
+        "Read the semantics of each of the five elements first — they are not interchangeable.",
+        "Wrap the inline function name in <code> (task 1).",
+        "Build the multi-line listing with the pre>code pattern (task 2).",
+        "Escape the angle brackets in the HTML sample with entities (task 3).",
+        "Mark the keyboard shortcut with kbd elements (task 4).",
+        "Mark the program output with samp (task 5) and the placeholder with var (task 6), then run the checks."
+      ],
+      "prompt": "<p>Call <code>fetchUser(<var>id</var>)</code>, press <kbd>Ctrl</kbd> + <kbd>Enter</kbd>,\nand the console prints <samp>User loaded.</samp></p>\n\n<pre><code>&lt;section&gt;\n  &lt;h2&gt;Results&lt;/h2&gt;\n&lt;/section&gt;</code></pre>",
+      "promptLabel": "Key code example",
+      "explanation": "Each element states what kind of computer text it wraps: code for source fragments, var for a placeholder the reader replaces, kbd for keys the user presses, samp for what the machine prints back. The listing combines pre (preserve whitespace and line breaks) with code (this is source), and its angle brackets are written as &lt; and &gt; entities so the browser displays them instead of parsing them as real tags.",
+      "example": "A docs page written with plain paragraphs renders 'call fetchUser(id) and press Ctrl Enter' as indistinguishable prose, and its example markup disappears entirely because the browser parsed the tags.\n\nThe same page with the five elements shows the function in monospace, the keys as keycap-styled tokens, the output visually distinct from the input, and the HTML example displayed exactly as written, indentation intact.",
+      "exercise": "In the editor on the right, convert a flat documentation snippet into proper computer-text markup: inline code, a pre>code listing with escaped brackets, kbd keys, samp output and a var placeholder.",
+      "expectedResult": "The preview shows monospace inline fragments, an indented multi-line code block displaying literal angle brackets, and distinct keyboard/output styling. All six checks pass.",
+      "commonMistakes": [
+        "Using pre alone for code. pre only means 'preserve whitespace' — the pre>code combination states both formatting and meaning, and is what syntax highlighters target.",
+        "Leaving raw < and > inside code samples. The browser parses them as real tags: your example markup vanishes from the page and may even break its layout. Escape as &lt; and &gt;.",
+        "Wrapping a whole shortcut in one kbd. Each key gets its own element — <kbd>Ctrl</kbd> + <kbd>S</kbd> — so styling and screen readers treat the keys individually.",
+        "Using code for output or samp for input. code is what a human writes for the machine; samp is what the machine prints back — mixing them misleads readers scanning for what to type."
+      ],
+      "proTip": "Indentation inside pre starts at the source: any leading spaces you use to indent the pre block itself in your HTML file become visible output. Docs authors conventionally left-align the content of pre against column zero, even when it breaks the file's indentation rhythm.",
+      "tools": [
+        "html"
+      ],
+      "professions": [],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will mark up a mini documentation page for a JavaScript function, exercising all five computer-text elements and entity escaping.",
+        "sections": [
+          {
+            "heading": "code: fragments of source",
+            "body": "The code element marks a fragment of computer code: a function name, a filename, an HTML tag name, a JSON key, a shell command. Browsers render it in the system monospace font, but as always the styling is a side effect — the meaning is 'this token belongs to a machine language, not to English'.\n\nUse it inline and liberally in technical prose: every identifier mentioned mid-sentence belongs in code. Beyond consistent styling, this gives CSS a single hook (code { ... }) to restyle every fragment site-wide, and helps tools — from search indexers to screen readers with verbosity settings — treat the tokens correctly.\n\ncode carries no line-break behaviour of its own. Inline it flows with the sentence; for multi-line listings it partners with pre, covered next.",
+            "code": "<p>The <code>filter()</code> method returns a new array;\nconfigure it in <code>settings.json</code>.</p>"
+          },
+          {
+            "heading": "pre, and the pre>code pattern",
+            "body": "HTML collapses whitespace: any run of spaces, tabs and newlines in your source renders as a single space. Essential for prose, fatal for code — a carefully indented listing flattens onto one line. The pre element (preformatted text) switches that off: inside pre, every space and line break renders exactly as written, in monospace.\n\npre alone says only 'preserve my formatting'; it is equally valid for ASCII diagrams or poetry. To say 'this preserved block is source code', nest code inside: <pre><code>...</code></pre>. This pairing is the standard idiom across documentation tooling, and syntax-highlighting libraries target it by convention, often via a class like language-js on the code element.\n\nOne mechanical detail: the preservation applies to your HTML source itself. A line break immediately after the opening <pre><code> becomes a visible blank first line, and the indentation your editor adds to nested markup becomes visible leading space. Start the content flush against the opening tags.",
+            "code": "<pre><code>function greet(name) {\n  return `Hello, ${name}`;\n}</code></pre>"
+          },
+          {
+            "heading": "Escaping < and > inside code samples",
+            "body": "Here is the trap every documentation author hits once: put example HTML inside a code block, and it disappears. The browser has no way to know your <section> was meant as display text — it parses it as a real element, renders it, and your 'code sample' becomes invisible structure.\n\nThe fix is character entities: write &lt; for < and &gt; for >. The browser renders the symbols but never parses them as markup. Strictly, only < requires escaping (a bare > is usually harmless), but escaping both is the professional habit — symmetry makes samples easier to audit. And if your sample itself contains entities you want shown literally, escape the ampersand too: &amp;lt; renders as the four characters &lt;.\n\nThis is tedious by hand, which is why real documentation pipelines (Markdown renderers, static site generators) escape automatically. But generators fail, snippets get pasted, and when a code sample mysteriously vanishes from a page, unescaped brackets are the first thing to check.",
+            "code": "<pre><code>&lt;article&gt;\n  &lt;h2&gt;Title&lt;/h2&gt;\n  &lt;p&gt;Body text.&lt;/p&gt;\n&lt;/article&gt;</code></pre>"
+          },
+          {
+            "heading": "kbd: what the user presses",
+            "body": "The kbd element marks user input — most commonly keyboard keys, by extension anything the user enters or activates: menu paths, spoken commands, button names in instructions. Browsers render it monospace; documentation sites usually add CSS to draw each kbd as a keycap with a border and shadow.\n\nThe composition convention: one kbd per key, punctuation between them outside the elements — <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>. This keeps each keycap individually styleable and reads correctly in assistive tech. The specification also blesses nesting for whole shortcuts (a kbd wrapping kbds), but per-key elements joined by plus signs is the pattern you will see and write.\n\nDistinguish intent: <code>git status</code> is a command as a piece of text; 'type <kbd>git status</kbd> and press <kbd>Enter</kbd>' is the user performing input. The overlap is real, and the deciding question is whether you are naming a token or instructing an action.",
+            "code": "<p>Open the palette with <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>,\nthen press <kbd>Enter</kbd>.</p>"
+          },
+          {
+            "heading": "samp: what the machine says back",
+            "body": "The samp element marks sample output from a program: a console line, an error message, a status response. It is the mirror image of kbd — kbd flows from human to machine, samp from machine to human — and both default to monospace, so without semantic markup readers cannot tell command from result.\n\nThat distinction is the whole value. In a terminal transcript, the reader must know which lines to type and which to expect. Docs sites often style samp differently (dimmed, or prefixed visually) precisely to carry that difference; the semantics make it possible.\n\nThe elements nest to express interleaving: a pre block can contain kbd lines (what you typed) alternating with samp lines (what came back). And samp may contain kbd for echoed input, or code when output happens to be code. Choose by direction of flow and the transcript stays honest.",
+            "code": "<pre><kbd>npm run build</kbd>\n<samp>Build complete in 3.2s\n0 warnings, 0 errors</samp></pre>"
+          },
+          {
+            "heading": "var, and choosing between the five",
+            "body": "The var element marks a variable or placeholder: a mathematical variable (<var>x</var>), a named quantity in prose, or — its docs superpower — the part of an example the reader must replace with their own value. In a usage line like ssh <var>user</var>@<var>host</var>, the var elements say 'these two words are yours to substitute; the rest is literal'. Browsers render var in italics by default.\n\nA quick decision guide for documentation pages: naming a token of code, a file, a tag, a command? code. Showing a multi-line listing? pre>code, with entities for any angle brackets. Telling the user which keys to press or what to type? kbd. Quoting what the program printed? samp. Marking the substitutable part of any of the above? var, nested where needed.\n\nFive elements, five directions of meaning. Pages that use them correctly can restyle all code presentation from one stylesheet, feed accurate structure to assistive technology, and never leave a reader guessing whether a monospace word is input, output or placeholder.",
+            "code": "<p>Usage: <code>ssh <var>user</var>@<var>host</var></code></p>\n<p>Connect and you will see <samp>Welcome, <var>user</var>.</samp></p>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>renderCard() docs</title>\n</head>\n<body>\n  <h1>renderCard()</h1>\n\n  <!-- TODO 1: wrap renderCard(data) below in <code>,\n       and TODO 6: wrap data in <var> inside it -->\n  <p>Call renderCard(data) to draw a card.</p>\n\n  <h2>Example markup</h2>\n  <!-- TODO 2: present this as <pre><code> ... </code></pre> -->\n  <!-- TODO 3: escape the angle brackets with &lt; and &gt; -->\n  <p><div class=\"card\"><h3>Title</h3></div></p>\n\n  <h2>Try it</h2>\n  <!-- TODO 4: mark Ctrl and Enter as separate <kbd> keys -->\n  <p>Press Ctrl + Enter to run.</p>\n\n  <!-- TODO 5: wrap the printed output in <samp> -->\n  <p>The console prints: Card rendered.</p>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>renderCard() docs</title>\n</head>\n<body>\n  <h1>renderCard()</h1>\n\n  <p>Call <code>renderCard(<var>data</var>)</code> to draw a card.</p>\n\n  <h2>Example markup</h2>\n  <pre><code>&lt;div class=\"card\"&gt;\n  &lt;h3&gt;Title&lt;/h3&gt;\n&lt;/div&gt;</code></pre>\n\n  <h2>Try it</h2>\n  <p>Press <kbd>Ctrl</kbd> + <kbd>Enter</kbd> to run.</p>\n\n  <p>The console prints: <samp>Card rendered.</samp></p>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Wrap the inline function call renderCard(data) in a <code> element.",
+            "hint": "Inline code flows with the sentence: Call <code>renderCard(data)</code> to draw a card.",
+            "errorMessage": "No inline <code> element found inside a paragraph — the function call should be marked as code.",
+            "check": {
+              "type": "selector",
+              "selector": "p code"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Turn the example markup into a proper listing using the <pre><code> pattern.",
+            "hint": "pre preserves the line breaks and indentation; the nested code says the block is source.",
+            "errorMessage": "No <pre> with a nested <code> found — multi-line listings use the pre>code pattern.",
+            "check": {
+              "type": "selector",
+              "selector": "pre > code"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Escape the angle brackets in the listing as &lt; and &gt; so the browser displays them instead of parsing them.",
+            "hint": "Every < in the sample becomes &lt; and every > becomes &gt; — otherwise the div renders as a real element.",
+            "errorMessage": "No &lt; entities found in your source. Raw angle brackets in code samples get parsed as real tags and vanish.",
+            "check": {
+              "type": "source",
+              "pattern": "&lt;"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Mark Ctrl and Enter as two separate <kbd> elements with the + between them outside the tags.",
+            "hint": "One element per key: <kbd>Ctrl</kbd> + <kbd>Enter</kbd>.",
+            "errorMessage": "Expected two <kbd> elements — each key of the shortcut gets its own.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "kbd",
+              "min": 2
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Wrap the program's printed message 'Card rendered.' in a <samp> element.",
+            "hint": "samp is machine-to-human: the output the console prints back.",
+            "errorMessage": "No <samp> element containing the printed output found.",
+            "check": {
+              "type": "text",
+              "selector": "samp",
+              "pattern": "card rendered"
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Inside the inline code call, mark the placeholder data as a <var>.",
+            "hint": "Nesting is expected: <code>renderCard(<var>data</var>)</code> — var flags what the reader replaces.",
+            "errorMessage": "No <var> element found inside the <code> call — the data argument is a placeholder the reader substitutes.",
+            "check": {
+              "type": "selector",
+              "selector": "code var"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-i19-responsive-basics",
+      "title": "Make any page mobile-ready with the responsive fundamentals",
+      "summary": "Set up the viewport meta tag, make images fluid, size text in relative units, and understand where media queries and srcset fit in the responsive toolkit.",
+      "difficulty": "intermediate",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Convert a fixed desktop-era page into one that renders correctly on a phone: correct viewport, fluid images, rem-based text and a first media query.",
+      "whyItMatters": "More than half of all web traffic is mobile, and a page without responsive foundations renders on a phone as a zoomed-out desktop miniature with microscopic text. One meta tag, one image rule and a habit of relative units fix ninety percent of that — before any advanced CSS. These fundamentals are also assumed knowledge for every CSS framework and every job interview that mentions 'mobile-first'.",
+      "steps": [
+        "Read what the viewport meta tag does and what breaks without it.",
+        "Add the viewport tag with width=device-width and initial-scale=1 (tasks 1 and 2).",
+        "Make the hero image fluid with the max-width pattern (tasks 3 and 4).",
+        "Convert the fixed pixel font size to rem (task 5).",
+        "Read the media-query and srcset sections, add the min-width query (task 6), and run the checks.",
+        "Open your browser DevTools device mode and watch the page adapt."
+      ],
+      "prompt": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n\n<style>\n  body { font-size: 1rem; }\n  img { max-width: 100%; height: auto; }\n  @media (min-width: 40rem) {\n    body { font-size: 1.125rem; }\n  }\n</style>",
+      "promptLabel": "Key code example",
+      "explanation": "The viewport tag tells mobile browsers to lay the page out at the device's real width instead of a simulated 980px desktop canvas, and initial-scale=1 opens it at 100% zoom. The image rule lets pictures shrink with their container but never overflow it, height auto preserving their proportions. Text in rem scales with the user's browser setting, and the media query adds a size bump only when the viewport is wide enough.",
+      "example": "Open a viewport-less page on a phone: the browser pretends the screen is 980px wide, renders a tiny desktop layout, and the user pinch-zooms to read every paragraph. A 1600px hero image forces horizontal scrolling on top of that.\n\nAfter the fixes, the same page opens at readable size, the hero shrinks to fit the screen edge-to-edge, text respects the user's font preferences, and wider screens get comfortably larger type — all from a handful of lines.",
+      "exercise": "In the editor on the right, retrofit the fixed page: add the viewport meta tag, make the image fluid with max-width, convert the body font to rem, and add a min-width media query for larger screens.",
+      "expectedResult": "In the preview (and especially in DevTools device mode) the page fills small screens without horizontal scrolling, the image scales with the window, and all six checks pass.",
+      "commonMistakes": [
+        "Forgetting the viewport tag entirely — the single most common reason a 'finished' site looks broken on phones. No CSS can compensate for the wrong viewport.",
+        "Blocking zoom with user-scalable=no or maximum-scale=1. Users with low vision depend on pinch zoom; disabling it is an accessibility violation, and modern browsers increasingly ignore the restriction anyway.",
+        "Writing width:100% instead of max-width:100% on images. Full width stretches small images past their natural size into blur; max-width only ever shrinks.",
+        "Sizing text in px everywhere. Pixel-locked text ignores the user's chosen browser font size; rem respects it and scales the whole page proportionally."
+      ],
+      "proTip": "In Chrome or Firefox DevTools, toggle device mode (the phone icon, Ctrl+Shift+M) and test at 320px width — the narrowest common phone. If nothing overflows horizontally at 320px, your page survives almost any real device.",
+      "tools": [
+        "html"
+      ],
+      "professions": [],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will take a page built for 2005-era desktops and give it the four responsive fundamentals: viewport, fluid images, relative units and a first media query.",
+        "sections": [
+          {
+            "heading": "The viewport meta tag — and what breaks without it",
+            "body": "When smartphones arrived, the web was full of desktop-only pages, so mobile browsers adopted a survival trick: pretend the screen is a desktop-sized canvas (roughly 980px wide), render the page onto it, then shrink the whole picture to fit the physical screen. Every page 'worked' — as an unreadable miniature the user zooms around.\n\nThat legacy behaviour is still the default. The viewport meta tag is how you opt out: <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> in the head. width=device-width says 'lay out at the device's real CSS width' (around 360-430px on typical phones), and initial-scale=1 says 'open at 100% zoom'. With it, your text renders at readable size and your responsive CSS actually has a small viewport to respond to.\n\nWithout it, nothing else in this lesson functions: media queries never see a narrow width because the browser is simulating a wide one. Every page you ship should carry this exact tag — it is boilerplate in the best sense.",
+            "code": "<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <title>My page</title>\n</head>"
+          },
+          {
+            "heading": "Viewport values you should and should not use",
+            "body": "The content attribute takes comma-separated directives. Beyond the essential two, you will encounter: minimum-scale and maximum-scale (bounds on zoom), and user-scalable=no (disable pinch zoom entirely).\n\nTreat the zoom-restricting ones as forbidden in normal work. Low-vision users rely on pinch zoom to read; locking it out is an accessibility failure serious enough that iOS Safari deliberately ignores user-scalable=no. The rare legitimate exceptions (a full-screen drawing app where pinch means something else) are exactly that — rare.\n\nYou may also see width set to a fixed number like width=600 in old code, forcing a specific layout width. It solves nothing that device-width plus fluid design does not solve better. The modern rule fits on a sticky note: always width=device-width, initial-scale=1, and nothing that restricts the user's zoom.",
+            "code": "<!-- Correct, always -->\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n\n<!-- Accessibility violation: do not ship -->\n<meta name=\"viewport\" content=\"width=device-width, user-scalable=no\">"
+          },
+          {
+            "heading": "Fluid images: the max-width pattern",
+            "body": "Images have fixed intrinsic sizes, and a 1600px photo in a 360px viewport means horizontal scrolling — the definitive symptom of a non-responsive page. The universal fix is one CSS rule: img { max-width: 100%; height: auto; }.\n\nUnpack it: max-width: 100% lets an image render at its natural size when space allows, but never wider than its container — on a narrow phone it shrinks to fit. height: auto keeps the shrunken image's proportions; without it, an HTML height attribute would hold the old fixed height and the picture would squash.\n\nNote what max-width does that width: 100% does not: it only ever shrinks. A 200px icon stays 200px instead of being inflated to fill a 1200px column as a blurry mess. Keep writing width and height attributes in the HTML — the browser uses their ratio to reserve space before the image loads, preventing layout jumps — and let this CSS rule govern the final rendered size.",
+            "code": "<style>\n  img { max-width: 100%; height: auto; }\n</style>\n\n<img src=\"hero.jpg\" alt=\"Team at the summit\" width=\"1600\" height=\"900\">"
+          },
+          {
+            "heading": "Relative units: % and rem",
+            "body": "Fixed pixel sizes fight responsiveness; relative units cooperate with it. Percentages size boxes relative to their parent — a sidebar at width: 30% occupies thirty percent of whatever its container currently is, on any screen. This is the oldest responsive tool and still the backbone of fluid layout.\n\nrem sizes relative to the root font size — 1rem equals the html element's font size, which is 16px by default but crucially follows the user's browser preference. Text set in rem scales when a user bumps their default font size; text locked in px ignores them. Sizing text, spacing and even media-query breakpoints in rem makes the entire design scale as one system.\n\nYou will also meet em (relative to the current element's own font size — useful, but it compounds through nesting in ways that surprise) and viewport units like vw and vh (percent of the viewport itself). A practical starting policy: rem for text and spacing, percentages for fluid boxes, px only for genuinely fixed details like a 1px border.",
+            "code": "<style>\n  body { font-size: 1rem; }      /* = user's preferred size */\n  h1   { font-size: 2rem; }      /* always double body text */\n  .col { width: 50%; }           /* half of the parent, any screen */\n</style>"
+          },
+          {
+            "heading": "Media queries: the concept in one section",
+            "body": "Fluid sizing bends a layout; media queries restructure it. A media query is a CSS block applied only when a condition about the environment holds — most commonly viewport width: @media (min-width: 40rem) { ... } applies its rules only on viewports at least that wide.\n\nThe mobile-first discipline: write your base CSS for the narrowest screen, then add min-width queries that progressively enhance wider ones — more columns, larger type, revealed sidebars. The widths where design changes are called breakpoints, and good practice derives them from where your content starts looking wrong, not from a list of device names.\n\nMedia queries are CSS territory, and this HTML course only opens the door — the CSS path teaches layout switching in depth. What belongs to HTML is the enabling contract you have already built: without the viewport meta tag, a phone reports the fake 980px width and your min-width queries match wrongly. HTML sets the stage; CSS performs.",
+            "code": "<style>\n  /* Base: narrow screens */\n  body { font-size: 1rem; }\n\n  /* Enhancement: wider screens */\n  @media (min-width: 40rem) {\n    body { font-size: 1.125rem; }\n  }\n</style>"
+          },
+          {
+            "heading": "srcset teaser, and testing in DevTools",
+            "body": "The fluid-image rule scales one file for every screen — a phone downloads the same 1600px hero it shows at 360px, wasting most of the bytes. HTML's answer is the srcset attribute (with sizes, and the picture element for art direction): you list the same image at several widths and the browser downloads only the size the situation needs. It deserves its own lesson, and the advanced responsive-images lesson in this course covers it fully — for now, know that fluid display and efficient delivery are separate problems, and today you solved the first.\n\nTesting is where responsiveness becomes real. Every desktop browser's DevTools includes a device mode (in Chrome and Firefox: the phone icon, or Ctrl+Shift+M / Cmd+Shift+M) that renders your page at chosen device dimensions, simulates touch, and can throttle the network. Drag the viewport edge and watch your breakpoints engage.\n\nA sanity checklist to run in device mode before calling any page done: no horizontal scrollbar at 320px, text readable without zooming, images inside their containers, and tap targets not crowded together. Five minutes of device-mode checking catches what a maximised desktop window never will."
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <!-- TODO 1+2: add the viewport meta tag with width=device-width\n       and initial-scale=1 -->\n  <title>Trail report</title>\n  <style>\n    /* TODO 5: convert to 1rem */\n    body { font-size: 16px; }\n    /* TODO 3+4: make images fluid: max-width 100%, height auto */\n\n    /* TODO 6: add a media query: at (min-width: 40rem),\n       set body font-size to 1.125rem */\n  </style>\n</head>\n<body>\n  <h1>Trail report: Mount Olympus</h1>\n  <img src=\"summit.jpg\" alt=\"Hikers at the summit\" width=\"1600\" height=\"900\">\n  <p>The north route opened this weekend after the spring melt.</p>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <title>Trail report</title>\n  <style>\n    body { font-size: 1rem; }\n    img { max-width: 100%; height: auto; }\n\n    @media (min-width: 40rem) {\n      body { font-size: 1.125rem; }\n    }\n  </style>\n</head>\n<body>\n  <h1>Trail report: Mount Olympus</h1>\n  <img src=\"summit.jpg\" alt=\"Hikers at the summit\" width=\"1600\" height=\"900\">\n  <p>The north route opened this weekend after the spring melt.</p>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Add the viewport meta tag to the head with width=device-width in its content.",
+            "hint": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> — the opt-out from the fake 980px canvas.",
+            "errorMessage": "No viewport meta tag with width=device-width found — phones will render a shrunken desktop layout.",
+            "check": {
+              "type": "attr",
+              "selector": "meta[name='viewport']",
+              "attr": "content",
+              "pattern": "width\\s*=\\s*device-width"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Include initial-scale=1 in the same viewport content value.",
+            "hint": "Directives are comma-separated inside content: width=device-width, initial-scale=1.",
+            "errorMessage": "The viewport tag should also set initial-scale=1 so the page opens at 100% zoom.",
+            "check": {
+              "type": "attr",
+              "selector": "meta[name='viewport']",
+              "attr": "content",
+              "pattern": "initial-scale\\s*=\\s*1"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "In the style block, make images fluid with max-width: 100%.",
+            "hint": "img { max-width: 100%; height: auto; } — shrink to fit, never stretch.",
+            "errorMessage": "No max-width: 100% rule found — the 1600px image will overflow narrow screens.",
+            "check": {
+              "type": "source",
+              "pattern": "max-width\\s*:\\s*100%"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Add height: auto to the same image rule so proportions survive the scaling.",
+            "hint": "Without height auto, the HTML height attribute keeps the old fixed height and the image squashes.",
+            "errorMessage": "No height: auto found in your CSS — scaled images will distort without it.",
+            "check": {
+              "type": "source",
+              "pattern": "height\\s*:\\s*auto"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Convert the body font size from 16px to 1rem.",
+            "hint": "1rem equals the user's preferred root size — 16px only if they never changed it.",
+            "errorMessage": "The body font-size is still in px — express it as 1rem so it follows the user's browser setting.",
+            "check": {
+              "type": "source",
+              "pattern": "font-size\\s*:\\s*1rem"
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Add a media query that raises body font-size to 1.125rem on viewports at least 40rem wide.",
+            "hint": "@media (min-width: 40rem) { body { font-size: 1.125rem; } } — base styles serve narrow screens, the query enhances wide ones.",
+            "errorMessage": "No @media (min-width: ...) block found — wider screens should get the larger type via a media query.",
+            "check": {
+              "type": "source",
+              "pattern": "@media[^{]*min-width"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-i20-project-registration",
+      "title": "Capstone: build a complete event registration form",
+      "summary": "Combine everything from the forms lessons — semantic structure, fieldsets, every major control type and validation — into one production-shaped registration page.",
+      "difficulty": "intermediate",
+      "minutes": 15,
+      "isFree": false,
+      "goal": "Ship a full conference registration form: semantic skeleton, grouped fieldsets, labelled personal fields, radio and checkbox groups, a grouped select, date and textarea inputs, and working validation.",
+      "whyItMatters": "Registration forms are where every forms concept meets reality at once: structure, grouping, labelling, control choice and validation all interact, and a weakness in any one shows up as bad data or abandoned signups. This capstone is deliberately shaped like a ticket you would receive at work — building it end to end proves you can plan a form, not just recite its elements.",
+      "steps": [
+        "Read the planning sections first: fields, then grouping, then labels, then validation, then submission.",
+        "Set up the form with method=\"post\" and its submit button (task 1).",
+        "Build the personal-details fieldset with labelled name, email and phone inputs (task 2).",
+        "Add the ticket-type radio group in its own fieldset (task 3).",
+        "Add the workshop checkboxes and the grouped session select (task 4).",
+        "Add the arrival date and dietary-notes textarea (task 5), then finish the validation layer (task 6) and run all checks."
+      ],
+      "prompt": "<form action=\"/register\" method=\"post\">\n  <fieldset>\n    <legend>Personal details</legend>\n    <label for=\"name\">Full name</label>\n    <input type=\"text\" id=\"name\" name=\"name\" required autocomplete=\"name\">\n    <label for=\"email\">Email</label>\n    <input type=\"email\" id=\"email\" name=\"email\" required autocomplete=\"email\">\n    <label for=\"phone\">Phone</label>\n    <input type=\"tel\" id=\"phone\" name=\"phone\" pattern=\"[0-9 +-]{7,15}\"\n           title=\"7 to 15 digits, spaces, + or - allowed\">\n  </fieldset>\n  <button type=\"submit\">Register</button>\n</form>",
+      "promptLabel": "Key code example",
+      "explanation": "The form posts its data because registrations change server state and contain personal information — never GET. The fieldset/legend pair names the group for everyone, including screen readers that announce 'Personal details' before each field. Every input is tied to a visible label by for/id, required marks the fields the process cannot proceed without, and the phone pattern comes with a title so its error message explains the expected format.",
+      "example": "The ticket: 'Registration page for DevConf — collect attendee details, ticket type, optional workshops, session preference, arrival date and dietary needs.'\n\nPlanned as markup: personal details become labelled text/email/tel inputs in one fieldset; the one-of-three ticket choice becomes radios in a second fieldset; multi-choice workshops become checkboxes; the long session list becomes a select with optgroups; arrival is a date input; dietary needs a textarea. Required and pattern attributes encode the business rules, and a single submit button posts the lot.",
+      "exercise": "In the editor on the right, complete the DevConf registration form task by task: form setup, personal fieldset, ticket radios, workshops and session select, date and textarea, then the validation pass.",
+      "expectedResult": "The preview shows a fully structured registration form with two boxed field groups; submitting it empty triggers validation on name and email, and a malformed phone number shows the pattern hint. All six checks pass.",
+      "commonMistakes": [
+        "Using method=\"get\" for a registration. Personal data would appear in the URL, get logged and cached, and GET signals a read, not a state change — registrations are POST.",
+        "Giving the radio buttons different name values. Radios only become mutually exclusive when they share one name; different names let users select several ticket types at once.",
+        "Skipping fieldset legends. Sighted users infer groups from spacing, but screen-reader users hear fields without context — the legend is announced with each control inside the group.",
+        "Validating only the fun fields. Decide required/pattern from the business rules first — what the process genuinely needs — not from which attributes are easy to add."
+      ],
+      "proTip": "Before writing any markup for a real form, list every field in a plain table with four columns: name, control type, required or optional, validation rule. Ten minutes of that table saves an hour of restructuring — and the table converts almost line-by-line into HTML.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "software-developer"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will build the DevConf registration form the way a working developer would: plan the fields, group them, label them, validate them, then wire up submission.",
+        "sections": [
+          {
+            "heading": "Step 1 — from requirements to a field list",
+            "body": "Every good form starts as a list, not as markup. Read the requirement — 'collect attendee details, ticket type, optional workshops, session preference, arrival date and dietary needs' — and translate each noun into a field with a control type chosen by the shape of its answer.\n\nFree short text with a known format? An input with the most specific type available: text for the name, email for the address, tel for the phone. Exactly one choice from a small visible set? Radio buttons — the ticket type. Any number of choices? Checkboxes — the workshops. One choice from a long list? A select, with optgroups once the list needs organising — the session preference. A calendar value? A date input. Free-form prose? A textarea — the dietary notes.\n\nThis mapping is the highest-leverage decision in form design: choosing radios where checkboxes belong changes what data can exist, and choosing text where date belongs throws away the browser's picker, keyboard and validation for free."
+          },
+          {
+            "heading": "Step 2 — grouping with fieldset and legend",
+            "body": "A flat run of twelve controls reads as a wall. The fieldset element draws related controls into one group, and its first child, legend, names the group. Browsers render a light border with the legend set into it — instantly scannable structure with zero CSS.\n\nGroup by topic as the user thinks of it: who I am (name, email, phone), what I am buying (ticket type), what I want to attend (workshops, session). Radio groups almost always deserve their own fieldset, because the legend asks the question — 'Ticket type' — and the radio labels answer it: Standard, Student, Speaker.\n\nThe accessibility payoff is concrete: when a screen-reader user lands on a radio labelled 'Student', the legend is announced with it — 'Ticket type, Student' — restoring the context that sighted users get from proximity. A fieldset can also be disabled as a unit, switching off a whole section while its data stays visible.",
+            "code": "<fieldset>\n  <legend>Ticket type</legend>\n  <input type=\"radio\" id=\"t-std\" name=\"ticket\" value=\"standard\" checked>\n  <label for=\"t-std\">Standard</label>\n  <input type=\"radio\" id=\"t-stu\" name=\"ticket\" value=\"student\">\n  <label for=\"t-stu\">Student</label>\n  <input type=\"radio\" id=\"t-spk\" name=\"ticket\" value=\"speaker\">\n  <label for=\"t-spk\">Speaker</label>\n</fieldset>"
+          },
+          {
+            "heading": "Step 3 — labels on every control, no exceptions",
+            "body": "Every control gets a label element tied to it by for on the label matching the id on the control. The binding does three jobs at once: screen readers announce the label when the field gains focus, clicking the label focuses or toggles the control (a big target win for checkboxes and radios on touch screens), and the association survives any CSS repositioning.\n\nConvention differs by control shape: for text-like inputs, selects and textareas the label sits before the control; for each radio and checkbox it sits after its box. Placeholders, as always, are format hints inside the box — never a substitute for the label naming the field.\n\nRemember the parallel naming system: id serves labels and fragment links and must be unique; name serves submission and repeats across a radio group on purpose. The ticket radios share name=\"ticket\" — that shared name is what makes them mutually exclusive — while each keeps a unique id for its own label.",
+            "code": "<label for=\"email\">Email</label>\n<input type=\"email\" id=\"email\" name=\"email\" required autocomplete=\"email\">\n\n<input type=\"checkbox\" id=\"w-a11y\" name=\"workshops\" value=\"a11y\">\n<label for=\"w-a11y\">Accessibility deep-dive</label>"
+          },
+          {
+            "heading": "Step 4 — the long list: select with optgroups",
+            "body": "The session preference has nine options across three time blocks — too many for radios, which excel up to about five visible choices. A select compresses the list into one control, and optgroup elements with label attributes split it into Morning, Afternoon and Evening blocks the user can scan.\n\nGive each option a stable machine value distinct from its display text, so the talk can be renamed without breaking the backend. Lead with a 'please choose' option holding an empty value; combined with required on the select, it forces a real selection while giving the closed control an honest initial state.\n\nThe workshops question next to it is the deliberate contrast: it allows zero, one or many selections, so it is checkboxes sharing a name — never a multiple select, whose Ctrl-click convention loses data to every user who does not know it.",
+            "code": "<label for=\"session\">Preferred session</label>\n<select id=\"session\" name=\"session\" required>\n  <option value=\"\">-- Choose a session --</option>\n  <optgroup label=\"Morning\">\n    <option value=\"html-forms\">Forms in depth</option>\n    <option value=\"css-grid\">Grid layouts</option>\n  </optgroup>\n  <optgroup label=\"Afternoon\">\n    <option value=\"a11y\">Accessibility clinic</option>\n    <option value=\"perf\">Performance tuning</option>\n  </optgroup>\n</select>"
+          },
+          {
+            "heading": "Step 5 — the validation layer",
+            "body": "Validation is a layer you apply after the structure works, and it starts from business rules: registration is impossible without a name and a reachable email, so those two are required. The phone is optional — but if present it must look like a phone number, so it gets a pattern like [0-9 +-]{7,15} and, inseparably, a title spelling out the format for the error bubble.\n\nThe date input can encode the event window: min and max bound arrival to the conference dates, and the browser's picker greys out everything else. The email field validates its shape by type alone. Radios with a checked default cannot be submitted empty; checkboxes are genuinely optional, so they carry no constraints at all.\n\nAnd the rule that has ended careers when forgotten: everything re-validates on the server. Browser validation is the courtesy layer that catches typos in milliseconds; the server is the enforcement layer that attackers cannot switch off. Both check the same rules, stated once in your field-planning table.",
+            "code": "<input type=\"text\" id=\"name\" name=\"name\" required>\n<input type=\"email\" id=\"email\" name=\"email\" required>\n<input type=\"tel\" id=\"phone\" name=\"phone\"\n       pattern=\"[0-9 +-]{7,15}\"\n       title=\"7 to 15 digits, spaces, + or - allowed\">\n<input type=\"date\" id=\"arrival\" name=\"arrival\"\n       min=\"2026-09-14\" max=\"2026-09-16\">"
+          },
+          {
+            "heading": "Step 6 — submission: method, action and the button",
+            "body": "The form element's action names the URL that processes the data and method chooses the HTTP verb. Registrations are method=\"post\" without debate: the submission changes server state, and it carries personal data that must not appear in URLs, browser history, server logs or shared links — all places GET query strings end up. GET is for safe, repeatable reads like searches; POST is for everything that creates or changes.\n\nClose the form with an explicit <button type=\"submit\">. The explicit type is a discipline from earlier lessons — any typeless button inside a form is a submit button in disguise — and the button element leaves room for richer content than an input ever could.\n\nBefore calling a form finished, run the submission checklist: does every control have a name (unnamed controls silently vanish from the data)? Do the radios share exactly one name? Does the empty-value placeholder option pair with required? Does keyboard-only Tab-and-Space operation reach everything? Five questions, and every one of them is a bug you now know how to prevent."
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>DevConf registration</title>\n</head>\n<body>\n  <header><h1>DevConf 2026 registration</h1></header>\n  <main>\n    <!-- TODO 1: give the form method=\"post\" and add a\n         <button type=\"submit\">Register</button> at its end -->\n    <form action=\"/register\">\n\n      <!-- TODO 2: fieldset + legend \"Personal details\" containing\n           labelled inputs: text (name), email (email), tel (phone) -->\n\n      <!-- TODO 3: fieldset + legend \"Ticket type\" with three radios\n           sharing name=\"ticket\": standard, student, speaker -->\n\n      <!-- TODO 4: two workshop checkboxes (name=\"workshops\") and a\n           select name=\"session\" with two optgroups: Morning, Afternoon -->\n\n      <!-- TODO 5: a date input name=\"arrival\" and a textarea\n           name=\"diet\" for dietary notes, both labelled -->\n\n      <!-- TODO 6: validation — required on name and email; on the phone\n           input add pattern=\"[0-9 +-]{7,15}\" with a title hint -->\n\n    </form>\n  </main>\n  <footer><p>Questions? hello@devconf.example</p></footer>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>DevConf registration</title>\n</head>\n<body>\n  <header><h1>DevConf 2026 registration</h1></header>\n  <main>\n    <form action=\"/register\" method=\"post\">\n\n      <fieldset>\n        <legend>Personal details</legend>\n        <label for=\"name\">Full name</label>\n        <input type=\"text\" id=\"name\" name=\"name\" required autocomplete=\"name\">\n        <label for=\"email\">Email</label>\n        <input type=\"email\" id=\"email\" name=\"email\" required autocomplete=\"email\">\n        <label for=\"phone\">Phone</label>\n        <input type=\"tel\" id=\"phone\" name=\"phone\" pattern=\"[0-9 +-]{7,15}\" title=\"7 to 15 digits, spaces, + or - allowed\">\n      </fieldset>\n\n      <fieldset>\n        <legend>Ticket type</legend>\n        <input type=\"radio\" id=\"t-std\" name=\"ticket\" value=\"standard\" checked>\n        <label for=\"t-std\">Standard</label>\n        <input type=\"radio\" id=\"t-stu\" name=\"ticket\" value=\"student\">\n        <label for=\"t-stu\">Student</label>\n        <input type=\"radio\" id=\"t-spk\" name=\"ticket\" value=\"speaker\">\n        <label for=\"t-spk\">Speaker</label>\n      </fieldset>\n\n      <input type=\"checkbox\" id=\"w-a11y\" name=\"workshops\" value=\"a11y\">\n      <label for=\"w-a11y\">Accessibility deep-dive</label>\n      <input type=\"checkbox\" id=\"w-perf\" name=\"workshops\" value=\"perf\">\n      <label for=\"w-perf\">Performance tuning</label>\n\n      <label for=\"session\">Preferred session</label>\n      <select id=\"session\" name=\"session\">\n        <option value=\"\">-- Choose a session --</option>\n        <optgroup label=\"Morning\">\n          <option value=\"html-forms\">Forms in depth</option>\n          <option value=\"css-grid\">Grid layouts</option>\n        </optgroup>\n        <optgroup label=\"Afternoon\">\n          <option value=\"a11y-clinic\">Accessibility clinic</option>\n          <option value=\"perf-lab\">Performance lab</option>\n        </optgroup>\n      </select>\n\n      <label for=\"arrival\">Arrival date</label>\n      <input type=\"date\" id=\"arrival\" name=\"arrival\" min=\"2026-09-14\" max=\"2026-09-16\">\n\n      <label for=\"diet\">Dietary notes</label>\n      <textarea id=\"diet\" name=\"diet\" rows=\"4\" cols=\"40\"></textarea>\n\n      <button type=\"submit\">Register</button>\n    </form>\n  </main>\n  <footer><p>Questions? hello@devconf.example</p></footer>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Set the form's method to post and add a <button type=\"submit\">Register</button> at the end of the form.",
+            "hint": "Registrations change server state and carry personal data — method=\"post\", never get.",
+            "errorMessage": "The form must declare method=\"post\" — registration data cannot travel in a GET query string.",
+            "check": {
+              "type": "attr",
+              "selector": "form",
+              "attr": "method",
+              "pattern": "post"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Build the Personal details fieldset with a legend, then the Ticket type fieldset with its own legend (task 3 fills it).",
+            "hint": "Each group is <fieldset><legend>Group name</legend> ...controls... </fieldset>.",
+            "errorMessage": "Expected at least two fieldsets, each starting with a <legend>.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "fieldset > legend",
+              "min": 2
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Inside the Ticket type fieldset, add three radios sharing name=\"ticket\" (values standard, student, speaker), each with its own label.",
+            "hint": "The shared name makes them mutually exclusive; each keeps a unique id for its label.",
+            "errorMessage": "Expected three radio buttons all named \"ticket\" — different names would allow multiple ticket types at once.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "input[type='radio'][name='ticket']",
+              "min": 3
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Add two workshop checkboxes (name=\"workshops\") and a session select containing two optgroups (Morning, Afternoon) with options inside.",
+            "hint": "Checkboxes for any-number choices; <optgroup label=\"Morning\"> groups the long select list.",
+            "errorMessage": "The session select needs at least two <optgroup> elements — and do not forget the workshop checkboxes.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "select optgroup",
+              "min": 2
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Add a labelled arrival date input (type=\"date\", name=\"arrival\") and a labelled dietary-notes textarea (name=\"diet\").",
+            "hint": "The date type gives you the native picker; the textarea takes rows and cols for its initial size.",
+            "errorMessage": "No date input found — arrival needs <input type=\"date\"> with a label (plus the dietary textarea).",
+            "check": {
+              "type": "selector",
+              "selector": "input[type='date']"
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Apply the validation layer: required on name and email, and on the phone input a pattern of [0-9 +-]{7,15} with a title explaining it.",
+            "hint": "Pattern and title travel together — the title text appears in the browser's error bubble.",
+            "errorMessage": "The tel input needs both a pattern and a title (and name/email should be required).",
+            "check": {
+              "type": "selector",
+              "selector": "input[type='tel'][pattern][title]"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

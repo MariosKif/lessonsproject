@@ -1,0 +1,42 @@
+{
+  "paths": [
+    {
+      "slug": "ai-for-founders",
+      "title": "AI for Business Owners & Founders",
+      "tagline": "Delegate real work, communicate with customers, research the market, and build repeatable systems — without losing control of the decisions that are actually yours.",
+      "description": "A 6-lesson path for business owners and founders covering the AI workflows that matter most when you're running the business, not just working in it: choosing the right first task to delegate and checking the work, customer communication across announcements and difficult messages, cited market and competitor research before a real decision, turning your actual process into an SOP your team will follow, explaining your financial numbers in plain language, and designing an AI-assisted operations layer with clear human checkpoints. Every lesson keeps the business decisions — what you commit to, what you price, what you sign — in your hands.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "business-owner",
+      "sortOrder": 10,
+      "lessons": [
+        "biz-b1-delegate-first-task",
+        "biz-b2-customer-communication",
+        "biz-i1-market-competitor-research-perplexity",
+        "biz-i2-standard-operating-procedures",
+        "biz-i3-financial-narratives",
+        "biz-a1-ai-operations-layer"
+      ]
+    },
+    {
+      "slug": "ai-for-freelancers",
+      "title": "AI for Freelancers",
+      "tagline": "Win the proposal, onboard the client, draft the contract, market yourself, handle the hard conversation, and build workflows you can reuse on every project.",
+      "description": "A 6-lesson path for freelancers covering the AI workflows that speed up client work without losing the personal touch that wins repeat business: tailoring proposals to a specific brief fast, building onboarding documents and kickoff messages, drafting scope, quotes and contract language with review guardrails, marketing yourself with honest portfolio copy and targeted outreach, writing client updates and difficult messages that protect the relationship, and productizing a repeated deliverable into a reusable AI-assisted workflow. Every lesson keeps pricing, legal terms, and client commitments as decisions you make deliberately, not defaults AI hands you.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "freelancer",
+      "sortOrder": 18,
+      "lessons": [
+        "fl-b1-proposals-that-win",
+        "fl-b2-client-onboarding-docs",
+        "fl-i1-scope-quote-contract-drafts",
+        "fl-i2-marketing-yourself-portfolio-outreach",
+        "fl-i3-client-updates-difficult-conversations",
+        "fl-a1-productize-your-service"
+      ]
+    }
+  ]
+}

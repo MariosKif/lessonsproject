@@ -1,0 +1,455 @@
+{
+  "enrichment": {
+    "cx-b1-sign-in-first-task": {
+      "variations": [
+        {
+          "label": "Explain-only first task (safest possible start)",
+          "whenToUse": "For an even more cautious first task — pure read/explain, zero file writes — ideal if you're nervous about giving any write access at all.",
+          "prompt": "In read-only mode, explain what the file [FILE PATH] does, in plain language, citing the specific lines that support your explanation. Do not propose any edits."
+        },
+        {
+          "label": "First task inside an existing real project (not a scratch repo)",
+          "whenToUse": "Once you're comfortable from the scratch-repo test and want to try Codex inside an actual work repo, but still cautiously.",
+          "prompt": "Add a new file called NOTES.md to this repository containing a 3-bullet summary of what you understand this project's purpose to be, based only on reading the repo. Do not modify or delete any existing files. Show me the exact content before you write it."
+        },
+        {
+          "label": "Slightly bigger first task, still bounded",
+          "whenToUse": "Once the CONTRIBUTING.md task went smoothly and you want to try something with slightly more judgment involved, still low-risk.",
+          "prompt": "Add a .gitignore file appropriate for this project's language/framework (detect it from the repo). Do not modify or delete any existing files. Show me the exact content and explain why each entry is included before you write it."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Approval mode confusion? Ask it to explain",
+          "prompt": "Before I approve, explain in one sentence what 'suggest mode' means for what you're about to do — will any file actually be written before I say yes?"
+        },
+        {
+          "label": "Content looks off? Ask for a specific fix",
+          "prompt": "One of the bullet points isn't accurate. Fix just that bullet — here's the correct detail: [CORRECT DETAIL]. Leave the rest unchanged."
+        },
+        {
+          "label": "Check nothing else changed",
+          "prompt": "Before I approve, confirm explicitly: did you touch, create, or delete any file other than CONTRIBUTING.md?"
+        },
+        {
+          "label": "Check your usage window",
+          "prompt": "How much of my 5-hour usage window have I used so far in this session?"
+        }
+      ],
+      "walkthrough": "Priya just joined a small startup as a junior developer and wants to try Codex before using it on the team's real codebase. She opens a terminal, creates an empty test folder called codex-practice, and runs npm install -g @openai/codex. It installs cleanly.\n\nInside the empty folder, she types codex to start a session. A prompt asks her to choose a sign-in method. She picks 'Sign in with ChatGPT' since her company already pays for a ChatGPT Plus plan, rather than setting up a separate API key that would bill per token. A browser window opens for authentication, and after confirming, she's back in the terminal, signed in.\n\nNext, Codex asks which approval mode to use. She picks 'suggest' mode, the most conservative option, meaning Codex will propose changes but not write anything until she explicitly approves it.\n\nShe pastes in the CONTRIBUTING.md prompt from the lesson: add a new file with 4-6 bullet points about the (empty) project, without touching anything else, and show the content before writing.\n\nCodex reads the folder, notices it's empty, and drafts a short CONTRIBUTING.md explaining there's no build step yet, how to run it locally, where the entry point would go, and the PR description requirement, then shows Priya the full text and waits.\n\nShe reads it, it looks reasonable, and she approves. Codex creates exactly one new file. She checks the usage indicator and sees she's used a small fraction of her 5-hour window. The whole first session took about six minutes, and she now understands the sign-in and approval mechanics before touching any real code."
+    },
+    "cx-b2-understand-a-repository": {
+      "placeholders": [
+        {
+          "name": "describe one real flow, e.g. 'a user submits the checkout form'",
+          "what": "One specific, real user action or system event you want traced step by step through the code. Pick something concrete and checkable, not 'how does the whole app work' — a single button click, form submission, or API call whose path through the code you could later verify by opening the cited files.",
+          "examples": [
+            "a user submits the checkout form",
+            "a scheduled job runs the nightly data sync",
+            "a user resets their password"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Focused on one file or folder, not the whole repo",
+          "whenToUse": "When the repo is huge and you only need to understand one subsystem, like the auth module.",
+          "prompt": "You are in read-only mode. Do not edit any files. Focus only on the [folder/module name] directory. Give me: 1) what this module is responsible for, 2) its main files and what each does, with paths, 3) which other parts of the codebase call into it, and from where. For anything you're not confident about, say so explicitly instead of guessing."
+        },
+        {
+          "label": "Onboarding checklist version",
+          "whenToUse": "For your very first day on a new project, when you need practical setup steps as much as architectural understanding.",
+          "prompt": "You are in read-only mode. Do not edit any files. Give me an onboarding checklist for this repo: 1) how to install dependencies and run it locally, 2) the exact command(s) to run tests, 3) any environment variables or config files I'll need to set up, 4) the 3 files a new contributor is most likely to touch first. Cite paths for each."
+        },
+        {
+          "label": "Comparing two flows to find shared logic",
+          "whenToUse": "When you suspect two features share underlying logic and want to confirm before making a change that could affect both.",
+          "prompt": "You are in read-only mode. Trace these two flows separately, file by file with citations: 1) [describe first flow], 2) [describe second flow]. Then tell me explicitly whether they share any files, functions, or logic in common."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify the trace yourself",
+          "prompt": "List the exact file paths you cited in your trace, in the order they're called, so I can open each one myself."
+        },
+        {
+          "label": "Push on the uncertain part",
+          "prompt": "You said you weren't fully confident about one part of the trace. Explain exactly what's unclear and what you'd need to check to be sure."
+        },
+        {
+          "label": "Ask for the AGENTS.md draft",
+          "prompt": "Based only on what you found in this repo, draft an AGENTS.md covering build/test commands, key conventions, and any directories that seem off-limits or auto-generated."
+        },
+        {
+          "label": "Sanity-check the test command",
+          "prompt": "Confirm the exact test command again, and tell me what output looks like when tests pass versus fail, so I know what to expect when I run it myself."
+        }
+      ],
+      "walkthrough": "Owen just joined a contract project: a mid-sized Next.js e-commerce app he's never seen before, with no documentation beyond a short README. Rather than clicking through folders guessing at structure, he opens a terminal in the repo and starts Codex explicitly in read-only mode so nothing gets edited during exploration.\n\nHe pastes in the repo-tour prompt, filling in the flow as 'a user submits the checkout form.' Codex reads through the codebase and returns: a one-paragraph summary describing it as a Next.js storefront with a Stripe-based checkout; the entry point at src/app/layout.tsx and src/app/page.tsx; a directory breakdown noting src/components, src/lib, and src/app/api as the three folders doing most of the work; and then the requested trace. The checkout form's client component in src/components/CheckoutForm.tsx calls an API route at src/app/api/checkout/route.ts, which creates a Stripe session and writes an order record via src/lib/db.ts, after which a webhook handler at src/app/api/webhooks/stripe/route.ts confirms payment and triggers a confirmation email. It closes by naming the exact test command, npm run test, and flags that it isn't fully confident how the confirmation email template is rendered since it couldn't find that file.\n\nOwen opens two of the cited files, the API route and the webhook handler, and confirms they match what Codex described. The uncertain part about the email template turns out to be in a separate package Codex didn't have access to, which Owen now knows to check separately.\n\nSince the repo has no AGENTS.md, Owen asks Codex to draft one based on what it just found. He edits it lightly and commits it, saving the next contractor this same exploration. Total time: about nine minutes."
+    },
+    "cx-b3-writing-specs-for-agents": {
+      "variations": [
+        {
+          "label": "Bug-fix spec instead of a new feature",
+          "whenToUse": "For fixing broken behavior rather than adding something new — the structure shifts to describing current versus expected behavior.",
+          "prompt": "Task: Fix incorrect total calculation on the Orders page.\n\nCurrent behavior: The order total shown on screen doesn't include tax, but the exported CSV does — the two numbers don't match.\n\nExpected behavior: Both the on-screen total and the exported CSV should include tax, matching each other exactly.\n\nAcceptance criteria:\n- On-screen total equals unit price × quantity + tax for every order.\n- Exported CSV total matches the on-screen total exactly.\n\nConstraints:\n- Do not change the tax calculation logic itself, only where it's applied.\n- Do not touch the discount logic.\n\nLikely files: src/components/OrdersTable.tsx, src/lib/exportCsv.ts\n\nDefinition of done: `npm run test` passes, and a manual check on 2 sample orders confirms on-screen and exported totals match.\n\nBefore implementing, show me your plan."
+        },
+        {
+          "label": "Very small spec for a tiny task",
+          "whenToUse": "For a genuinely small change where a full template feels heavy, but you still want the core discipline of acceptance criteria and a definition of done.",
+          "prompt": "Task: [one-sentence goal].\nAcceptance criteria: [1-2 checkable statements].\nConstraints: Do not touch [area to leave alone].\nDefinition of done: [command to run] passes.\nShow me your plan before implementing."
+        },
+        {
+          "label": "Spec for a non-technical stakeholder to review before it goes to Codex",
+          "whenToUse": "When you want a colleague or manager to sign off on scope before you hand the spec to Codex.",
+          "prompt": "Rewrite this spec in plain, non-technical language a product manager could review and approve, keeping the same acceptance criteria and constraints but removing implementation-specific file paths: [PASTE YOUR FULL SPEC]."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Plan touches something it shouldn't",
+          "prompt": "Your plan mentions touching a file or area outside what I asked for. Revise the plan to avoid it, or explain why it's actually necessary."
+        },
+        {
+          "label": "Acceptance criteria too vague — tighten one",
+          "prompt": "One of the acceptance criteria is still too vague. Make it a specific, checkable statement instead."
+        },
+        {
+          "label": "Missing a definition of done",
+          "prompt": "You didn't confirm how you'll verify this is done. State the exact command or manual check you'll use before implementing."
+        },
+        {
+          "label": "Ask for a second opinion on scope",
+          "prompt": "Is there anything about this spec that's ambiguous or could be interpreted more than one way? Point it out before you start."
+        }
+      ],
+      "walkthrough": "Grace maintains a small internal admin tool by herself and has been burned before by typing quick requests like 'add an export option to the orders page' into Codex and getting back a feature that didn't match what she actually meant — once it added a new backend endpoint she didn't want.\n\nThis time, before opening Codex, she writes a spec first. Goal: users can download the currently filtered orders as a CSV. Acceptance criteria: a button labeled 'Export CSV' appears above the table; clicking it downloads a file with only the visible, filtered rows and the same columns shown on screen; if there are zero visible rows, the button is disabled with a tooltip explaining why. Constraints: don't change the filtering logic itself, don't add a new backend endpoint, generate the CSV client-side from data already loaded. Likely files: src/components/OrdersTable.tsx. Definition of done: npm run test passes, and she manually confirms the downloaded file matches what's on screen.\n\nShe opens Codex and pastes the full spec, ending with 'before implementing, show me your plan.' Codex responds with a short plan: it will add a button component, a CSV-generation helper function using the data already in the table's state, and one new test file — no backend changes, matching her constraint exactly.\n\nShe approves, and the implementation matches the plan. She runs the test suite herself to double check, and it passes. The whole process, spec-writing included, took about fifteen minutes: longer than her old one-line prompts, but she got exactly what she asked for on the first try instead of needing a second round to undo an unwanted backend endpoint."
+    },
+    "cx-i1-implement-a-feature": {
+      "variations": [
+        {
+          "label": "Smaller scope, single checkpoint",
+          "whenToUse": "For a smaller, well-understood change where a full plan-then-diff cycle feels heavy, but you still want at least one review point.",
+          "prompt": "Task: [PASTE SMALL SPEC]. Implement this directly, then run the full test suite and paste the actual output. I'll review the diff after, so keep the change as small and focused as possible."
+        },
+        {
+          "label": "High-stakes feature, extra checkpoint before merge",
+          "whenToUse": "For a feature touching sensitive code (auth, payments, data deletion) where you want an additional review pass focused specifically on risk.",
+          "prompt": "Task: [PASTE SPEC]. First, give me your implementation plan. Once approved, implement it, run the full test suite, and paste output. Before I approve the diff, also answer: what's the single riskiest part of this change, and what could go wrong in production if it's subtly incorrect?"
+        },
+        {
+          "label": "Comparing two implementation approaches first",
+          "whenToUse": "For a genuinely ambiguous task where more than one reasonable approach exists and picking wrong would be costly to unwind.",
+          "prompt": "Task: [PASTE SPEC]. Before implementing, propose two different approaches to this, with the trade-offs of each (complexity, performance, how much existing code changes). I'll pick one, then you implement only that one, run the test suite, and paste output."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Plan looks wrong — redirect before code exists",
+          "prompt": "Your plan proposes something that conflicts with my constraints — [RESTATE THE CONSTRAINT]. Revise the plan to respect that before writing any code."
+        },
+        {
+          "label": "Diff touches something unexpected",
+          "prompt": "The diff changes a file or area that wasn't part of the acceptance criteria. Explain why, or revert that part."
+        },
+        {
+          "label": "Tests pass but coverage feels thin",
+          "prompt": "Add a test for an edge case that isn't currently covered — [DESCRIBE THE EDGE CASE] — and rerun the full suite."
+        },
+        {
+          "label": "Ready to ship — final check",
+          "prompt": "Before I merge, summarize in 2-3 sentences exactly what changed and confirm it satisfies every acceptance criterion I listed, one by one."
+        }
+      ],
+      "walkthrough": "Dev needs to add rate limiting to a login endpoint that's been getting hit by credential-stuffing attempts. He writes the spec first: more than 5 failed attempts from the same IP within 15 minutes should return a 429 with a specific error body; successful logins shouldn't count against the limit; the limit should reset after 15 minutes; only the login route and its middleware should be touched; no new database table, since Redis is already configured in src/lib/redis.ts; and npm test must pass including a new test for the 429 case.\n\nHe opens Codex in his repo, pastes the spec, and ends with a request for the implementation plan before any code. Codex proposes a small middleware function that reads and writes attempt counts in the existing Redis client, plus one new test file, matching the no-new-database constraint exactly, which Dev confirms before approving.\n\nCodex implements it, then runs npm test and pastes the full output: 34 tests passing, including a new one confirming the 429 response after 6 failed attempts. Dev reviews the diff file by file, 12 lines added to the middleware, 18 lines in the new test file, and checks each acceptance criterion against what's actually in the diff: the status code, the error body shape, and the reset behavior are all there.\n\nOne thing catches his eye: the diff doesn't explicitly test that successful logins don't count toward the limit. He sends a follow-up asking Codex to add that specific test case. Codex adds it, reruns the suite, and pastes output showing 35 tests passing.\n\nSatisfied, Dev merges. Total time: about eighteen minutes for a feature that also required him to think carefully about a security-sensitive edge case he might have missed writing it alone."
+    },
+    "cx-i2-debug-a-failing-build": {
+      "placeholders": [
+        {
+          "name": "PASTE FULL ERROR OUTPUT AND STACK TRACE",
+          "what": "The complete, unedited error message and stack trace from your failing test or build, not a paraphrase or just the first line. Find this in your terminal output or CI log and copy from the actual error type down through every 'at file:line' frame the stack trace shows, since the exact line numbers and function names are what let Codex pinpoint the real cause instead of guessing.",
+          "examples": [
+            "TypeError: Cannot read properties of null (reading 'toISOString')\n    at formatDate (src/lib/dates.ts:14:22)\n    at OrderRow (src/components/OrderRow.tsx:31:18)\n    at renderWithHooks (node_modules/react-dom/...)\n\nTest: OrderRow > renders a cancelled order without a ship date\nExpected: no error\nReceived: TypeError above",
+            "FAIL src/api/checkout.test.ts\n  ✕ returns 400 when cart is empty (12 ms)\n\n  Expected status 400, received 500\n  at Object.<anonymous> (src/api/checkout.test.ts:47:20)\n\n  Console output:\n  Error: Cannot read properties of undefined (reading 'items')\n      at calculateTotal (src/lib/cart.ts:8:19)\n      at handler (src/api/checkout.ts:22:34)",
+            "Build failed with 1 error:\n\nsrc/components/Header.tsx:19:5: error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n\n  19   title={pageTitle}\n       ~~~~~\n\nFound 1 error in src/components/Header.tsx:19"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Intermittent/flaky failure, not a consistent one",
+          "whenToUse": "When the test fails only sometimes, which changes the diagnostic approach — reproduction itself becomes the hard part.",
+          "prompt": "This test fails intermittently, not every run:\n\n[PASTE FULL ERROR OUTPUT AND STACK TRACE]\n\nRun it 10 times locally and tell me the failure rate. Then, without changing any code yet, form a hypothesis for why it's flaky (timing, shared state between tests, unordered async, etc.) and cite what makes you think so. Only propose a fix once I confirm the hypothesis makes sense."
+        },
+        {
+          "label": "Passes locally but fails in CI (environment difference)",
+          "whenToUse": "When the failure only happens in CI, pointing at an environment difference rather than a code bug.",
+          "prompt": "This fails in CI but passes locally:\n\n[PASTE FULL ERROR OUTPUT AND STACK TRACE]\n\nDo not assume it's a code bug yet. First list every plausible environment difference between local and CI (Node version, environment variables, timezone, file system case-sensitivity, etc.) that could explain this specific error. Tell me which one is most likely and why, before proposing any fix."
+        },
+        {
+          "label": "Fix needs to touch a shared/critical module",
+          "whenToUse": "When the root cause lives in code many other features depend on, raising the stakes of the fix.",
+          "prompt": "Here is the failure:\n\n[PASTE FULL ERROR OUTPUT AND STACK TRACE]\n\nReproduce it and confirm the root cause as usual. Before implementing any fix, also tell me: what else in this codebase calls the function/module you're about to change, and could this fix affect any of those other call sites? List them by file path."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Hypothesis feels off — push back",
+          "prompt": "I don't think that's the actual root cause — [YOUR REASON]. Look again, specifically at the area you suspect, and reconsider."
+        },
+        {
+          "label": "Confirm the fix doesn't mask the symptom",
+          "prompt": "Explain in plain language why this fix addresses the actual bug rather than just making the specific error message go away."
+        },
+        {
+          "label": "Full rerun after the fix",
+          "prompt": "Now run the entire test suite, not just the previously failing test, and paste the complete output so I can confirm nothing else broke."
+        },
+        {
+          "label": "Write up the reasoning for the commit",
+          "prompt": "Write a 2-3 sentence commit message explaining the root cause and the fix, suitable for a teammate reviewing this later with no other context."
+        }
+      ],
+      "walkthrough": "Farah's CI pipeline fails overnight with a cryptic TypeError in a date-formatting function. Her first instinct in the past would have been to wrap the failing line in a try/catch and move on, but she's learned that tends to hide the real bug rather than fix it.\n\nShe copies the entire error block from the CI log, not just the summary line, but the full stack trace showing TypeError: Cannot read properties of null (reading 'toISOString') at formatDate (src/lib/dates.ts:14:22), plus the test name and every frame beneath it, and pastes it into Codex with the debugging prompt, explicitly asking it to reproduce locally first and hold off on any fix until the hypothesis is confirmed.\n\nCodex runs the specific failing test locally, confirms it sees the identical error, and reports a hypothesis: a recent change to an upstream component removed a null check before calling formatDate, so when an order has no ship date, null gets passed in and the formatting function crashes trying to call a method on it. It cites the exact line in the upstream component where the check used to be.\n\nFarah agrees the hypothesis makes sense — she remembers a refactor from last week touching that exact area. She gives the go-ahead. Codex restores the null check at the actual source rather than adding a defensive check inside the formatter itself, and confirms explicitly that no existing test needed to change.\n\nIt reruns the full suite, not just the one test, and pastes output showing all 210 tests passing. Farah reviews the small diff, four lines, and merges, along with a commit message Codex drafted explaining the root cause for whoever reads the history later. Total time: about eleven minutes, and the actual bug is fixed, not just hidden."
+    },
+    "cx-i3-code-review-with-codex": {
+      "variations": [
+        {
+          "label": "Focused review of just the risky part",
+          "whenToUse": "For a large diff where you want Codex's attention concentrated on the one area you're most unsure about, not spread across the whole PR.",
+          "prompt": "Review only the changes in [specific file or function] for correctness bugs, security issues, and missed edge cases. Ignore the rest of the diff — I've already reviewed that part myself. Cite exact lines, explain concretely why each is a problem, and suggest a minimal fix."
+        },
+        {
+          "label": "Security-focused pass on sensitive code",
+          "whenToUse": "For a change touching auth, payments, or user data, where you want a review pass specifically calibrated to security risk.",
+          "prompt": "Review the current diff specifically for security issues: injection risks, missing authorization checks, unvalidated input, secrets or credentials in code, and unsafe handling of user data. Cite exact file and line for each finding, and explain the specific attack or failure scenario it enables — not just that it's 'a risk.'"
+        },
+        {
+          "label": "Second pass after fixes, changed lines only",
+          "whenToUse": "After you've addressed the first round of comments and want a fast recheck without re-reviewing the whole PR again.",
+          "prompt": "I've addressed the previous review comments. Review only the lines that changed since your last review for correctness bugs, security issues, and missed edge cases. Confirm explicitly whether each previously flagged issue is now resolved."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Comment feels wrong — push back",
+          "prompt": "I don't think this is actually a bug — [YOUR REASON]. Confirm whether you still think it's a real issue, or agree it isn't."
+        },
+        {
+          "label": "Ask for the actual fix, not just the flag",
+          "prompt": "For the issue you flagged, show me the exact minimal code change that would fix it, not just a description."
+        },
+        {
+          "label": "Check severity, not just existence",
+          "prompt": "Rank the issues you found by actual severity — which one, if shipped, would cause the worst real-world outcome? Explain why."
+        },
+        {
+          "label": "Confirm style noise was excluded",
+          "prompt": "Did any of your comments touch on style or formatting that's already enforced by our linter? If so, remove those and give me only the substantive ones."
+        }
+      ],
+      "walkthrough": "Tariq's team has Codex code review enabled on their GitHub repo, so it comments automatically on every new pull request. He opens a PR he wrote adding a payment webhook handler and reads through the three automatic comments Codex left.\n\nThe first flags that the handler doesn't verify the webhook's signature before processing the payload, citing the exact line where the raw request body gets parsed, and explains concretely that without this check, anyone who discovers the webhook URL could send a fake payment confirmation. It suggests adding the same signature-check pattern already used elsewhere in the codebase. Tariq recognizes this as a real, serious gap he missed and fixes it immediately.\n\nThe second comment flags a variable name as unclear. Tariq checks — this is exactly the kind of thing their ESLint config would catch, and it's not actually configured to flag naming like that, so he decides it's a minor style preference, not a bug, and dismisses it with a one-line reason: 'style preference, not enforced by linter, leaving as is.'\n\nThe third comment questions whether a specific error case is handled, but Tariq isn't sure if Codex is right. Rather than guessing, he uses the CLI directly and asks it to explain the specific scenario it's worried about. Codex clarifies: if the webhook arrives with a valid signature but a malformed payload, the current code would throw an unhandled exception instead of returning a clean 400 response. Tariq agrees this is real and fixes it too.\n\nAfter making both fixes, he asks for a second pass focused only on the changed lines, rather than the whole PR again. It comes back clean. Total review-and-fix time: about ten minutes, and he caught a genuine security gap he'd have otherwise shipped."
+    },
+    "cx-i4-landing-page-from-spec": {
+      "placeholders": [
+        {
+          "name": "PASTE 2-3 SENTENCES",
+          "what": "A short, factual description of the property or offer for the 'About' section — real details only, no invented claims like 'stunning' or 'must-see' unless you actually wrote them yourself. Pull this from your actual listing notes or write it fresh in plain language.",
+          "examples": [
+            "This beautifully maintained 3-bedroom home sits on a quiet tree-lined street just 5 minutes from downtown. The kitchen was fully renovated in 2024 with new appliances and quartz countertops. A private backyard and attached 2-car garage complete the property.",
+            "Built in 2019, this townhouse features an open-concept living area with 10-foot ceilings and large windows facing south. The primary bedroom includes a walk-in closet and en-suite bathroom. HOA fees cover landscaping and exterior maintenance.",
+            "This corner-lot property offers 1,850 square feet with three bedrooms and two full bathrooms. Recent updates include a new roof (2023) and updated electrical panel. Walking distance to the elementary school and a local park."
+          ]
+        },
+        {
+          "name": "NAME",
+          "what": "The real estate agent's or contact person's full name as it should appear on the page.",
+          "examples": [
+            "Maria Papadopoulou",
+            "James Whitfield",
+            "Aisha Osei"
+          ]
+        },
+        {
+          "name": "PHONE",
+          "what": "The real phone number visitors should call or text — double-check the format matches how you actually answer, mobile versus office line.",
+          "examples": [
+            "(555) 812-3040",
+            "+30 694 123 4567",
+            "(212) 555-0148"
+          ]
+        },
+        {
+          "name": "EMAIL",
+          "what": "The real email address the RSVP button and contact section should use. This becomes a clickable mailto: link, so it must be an inbox you actually check. It appears twice in the prompt — once in the contact section, once in the CTA line — use the same address both times.",
+          "examples": [
+            "maria@sunriverrealty.com",
+            "j.whitfield@coastalhomesgroup.com",
+            "aisha.osei@urbannestrealty.com"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Service/promotion page instead of a listing",
+          "whenToUse": "For a local business promotion or service offer rather than a real estate open house — same discipline, different content shape.",
+          "prompt": "Build a single static landing page for a limited-time promotion.\n\nContent (use exactly this, do not add or invent anything):\n- Headline: [YOUR HEADLINE]\n- Subheading: [YOUR SUBHEADING]\n- Sections in order: (1) Hero with headline, subheading, and a large 'Book Now' or 'Claim Offer' button, (2) 3 bullet points describing what's included: [PASTE 3 BULLET POINTS], (3) a short business description: [PASTE 2-3 SENTENCES], (4) a contact section with business name \"[NAME]\", phone \"[PHONE]\", email \"[EMAIL]\".\n- CTA: the button should be a mailto: link to [EMAIL] with subject line \"[SUBJECT LINE]\".\n\nStyle: clean and professional, mobile-first, one accent color ([COLOR]). No stock photography, no invented testimonials, no invented pricing.\n\nTechnical constraints: a single static page — plain HTML, CSS, and vanilla JS only. No frameworks, no build step, no backend, no database.\n\nDefinition of done: opens correctly as a local file, looks correct at a 375px-wide mobile viewport, and contains only the content listed above.\n\nFirst give me a short plan, then implement it."
+        },
+        {
+          "label": "Handing this off to a developer colleague to build",
+          "whenToUse": "When you're not comfortable running the terminal yourself and a developer or technical colleague will run Codex on your behalf.",
+          "prompt": "This is a spec for a landing page. Please run it through Codex exactly as written and send me back the resulting HTML file and a screenshot at both desktop and mobile width, plus the folder it lives in so I can open it myself:\n\n[PASTE FULL LANDING PAGE SPEC]"
+        },
+        {
+          "label": "Adding a real photo instead of placeholder boxes",
+          "whenToUse": "Once you actually have listing photos ready to use, instead of the placeholder grid.",
+          "prompt": "I now have real photos to use instead of the placeholder gallery grid. The photo files are named [FILE NAMES, e.g. 'photo1.jpg, photo2.jpg, photo3.jpg, photo4.jpg'] and are in the same folder as the page. Replace the placeholder boxes with an actual image gallery using these files, keeping the same layout and mobile responsiveness. Do not change any other section."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check mobile layout more carefully",
+          "prompt": "Show me what CSS is controlling the layout at a 375px viewport width specifically, and confirm the RSVP button and phone number are both still fully visible and tappable without zooming."
+        },
+        {
+          "label": "Content drifted — restore exact wording",
+          "prompt": "Compare the headline and subheading in the built page against exactly what I specified in the spec — word for word. Fix anything that doesn't match exactly."
+        },
+        {
+          "label": "Make the contact info more prominent",
+          "prompt": "Make the phone number larger and move it into the header so it's visible without scrolling, on both desktop and mobile."
+        },
+        {
+          "label": "Sanity-check for invented content",
+          "prompt": "Read through the entire page and list anything — any phrase, claim, or detail — that wasn't explicitly in my original content. I want to confirm nothing was invented."
+        }
+      ],
+      "walkthrough": "Maria has an open house this Saturday at 123 Maple St and no time to brief a designer for a one-page site. She's used Codex once before for a small task, so she opens a terminal, navigates to a new empty folder called openhouse-maple, and runs codex.\n\nShe fills in the landing page spec template with her real details: headline 'Open House: 123 Maple St, Saturday 1-4 PM,' subheading about the 3-bed/2-bath renovated kitchen, an About section she writes herself, two real sentences about the renovated kitchen and the quiet street, her own name, her mobile number, and her work email for both the contact section and the RSVP mailto link. She keeps the technical constraint line exactly as written: static HTML/CSS/JS only, no framework, no backend.\n\nShe pastes the spec and asks for a plan first. Codex proposes creating index.html and styles.css only, with vanilla JavaScript for nothing more than a mobile menu toggle if needed, no framework, matching her constraint. She approves.\n\nA minute later, the files exist. She opens index.html directly in her browser by double-clicking it, and sees a clean hero section with her exact headline, a four-box photo placeholder grid she can swap in real photos later, her About paragraph, and a contact section with her real name, phone, and email. The RSVP button opens her email client with the subject line pre-filled, exactly as specified.\n\nShe resizes her browser window down to simulate a phone screen and notices the phone number is a bit small. She sends one follow-up: 'make the phone number larger and put it in the header.' Codex adjusts it, and the page is ready.\n\nTotal time: about twelve minutes, and she has a page to send straight to her broker to host, no invented content, since every word came from her own spec."
+    },
+    "cx-a1-cloud-tasks-vs-local": {
+      "variations": [
+        {
+          "label": "Multiple small cloud tasks fired in parallel",
+          "whenToUse": "When you have 2-3 genuinely independent, well-bounded tasks and want to use cloud parallelism instead of running them one at a time locally.",
+          "prompt": "Cloud task: [PASTE FIRST SMALL, BOUNDED SPEC].\n\n(Fire this alongside separate, non-overlapping cloud tasks for other independent work, each written as its own full spec with goal, constraints, and definition of done, so they can run independently without touching the same files.)"
+        },
+        {
+          "label": "Cloud task for a dependency/version bump",
+          "whenToUse": "For routine maintenance work that's mechanical and low-risk, one of the best-suited cloud task types.",
+          "prompt": "Cloud task: Upgrade [PACKAGE NAME] from version [OLD VERSION] to [NEW VERSION].\n\nConstraints:\n- Only touch package.json, the lockfile, and any code that breaks due to the version bump — do not refactor unrelated code.\n- If the upgrade requires a non-trivial code change (not just a mechanical fix), stop and describe what's needed instead of guessing at the right change.\n\nDefinition of done: `npm test` passes, `npm run build` passes, and the PR description lists the exact version change and any files touched beyond package.json/lockfile."
+        },
+        {
+          "label": "Deciding local vs. cloud out loud, before starting",
+          "whenToUse": "When you're unsure which mode fits a specific task and want a second opinion before committing.",
+          "prompt": "Here's a task I'm considering: [DESCRIBE THE TASK]. Based on how bounded, well-specified, and low-stakes it is, would this be better run as a local interactive session or a cloud task? Explain your reasoning in 2-3 sentences."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "PR looks bigger than expected — ask why",
+          "prompt": "This PR touches more files than I expected for this scope. Explain why each additional file was necessary."
+        },
+        {
+          "label": "Before merging, get the verification story",
+          "prompt": "Before I pull this down, tell me exactly what was run to verify it (tests, build, lint) and paste that output as part of the PR description if it isn't already there."
+        },
+        {
+          "label": "Ambiguity was resolved silently — surface it",
+          "prompt": "Was there any point during this task where the instructions were ambiguous and you had to make a judgment call? Tell me what you decided and why."
+        },
+        {
+          "label": "Check usage impact",
+          "prompt": "How much of the shared 5-hour usage window did this cloud task use, and is it shared with my local CLI sessions?"
+        }
+      ],
+      "walkthrough": "Lena's team has a backlog of small, well-understood maintenance tasks nobody has time for during the week: an ESLint config upgrade, a dependency bump, and adding tests to a payment-calculation module everyone already understands well. None of these need close supervision — they're the kind of task Lena would comfortably hand to a competent contractor with a written brief and no follow-up questions allowed.\n\nOn Friday afternoon, she goes to chatgpt.com/codex and confirms the team's GitHub repo is connected. She writes each task as a full spec, not a one-line request. For the ESLint upgrade: upgrade to the latest recommended ruleset, don't touch business logic, don't touch the intentionally-excluded src/legacy/ directory, leave anything needing a non-trivial logic change with a TODO instead of guessing, and require the PR description to list every file touched and why.\n\nShe fires all three specs off as separate cloud tasks, each running in its own isolated sandbox against the connected repo, and closes her laptop for the weekend.\n\nMonday morning, three pull requests are waiting. She reviews each one as a finished PR, not code-in-progress, since cloud tasks aren't meant to be watched live. The lint and dependency PRs look clean: scoped exactly to what she asked, with PR descriptions listing every touched file. She pulls both down locally and runs the full test suite herself before merging, rather than trusting the GitHub UI's green checkmark alone.\n\nThe third PR, adding payment tests, gets sent back once. Two of the new tests don't actually assert anything meaningful, just check that a function runs without throwing. She asks for a revision with a specific ask: assert the actual calculated values, not just 'no error.' The corrected version merges after one more review pass.\n\nTotal oversight time across all three tasks: about twenty-five minutes, for work that would otherwise have sat in the backlog for weeks."
+    },
+    "cx-a2-tests-and-verification-habits": {
+      "variations": [
+        {
+          "label": "Verification for a UI-heavy change",
+          "whenToUse": "When the change is mostly visual/UI, so the manual-verification part matters more than usual.",
+          "prompt": "Before you tell me this task is complete:\n1. Run the exact test command and paste the full output.\n2. Run the exact build command and paste the full output.\n3. List every visual/UI element this change affects, and for each one, tell me the exact page and viewport width I should check manually — you cannot verify rendered appearance yourself.\n4. Tell me explicitly whether any existing test was modified and why.\nDo not summarize results as 'all passing' — show the actual output."
+        },
+        {
+          "label": "Verification involving a real third-party API",
+          "whenToUse": "When the change calls a real external service (payment processor, email provider, etc.) whose live behavior Codex can't fully verify itself.",
+          "prompt": "Before you tell me this task is complete:\n1. Run the exact test command and paste the full output, including how the third-party API calls were mocked.\n2. Tell me explicitly: were any tests run against the real third-party API, or only against mocks?\n3. List the exact manual test I should run against the real API myself before this ships (what to click, what response to expect).\n4. Confirm no real API keys or secrets appear anywhere in the diff.\nDo not summarize results as 'all passing' — show the actual output."
+        },
+        {
+          "label": "Lightweight version for a tiny, low-risk change",
+          "whenToUse": "For a small change where the full checklist is overkill, but you still want real command output, not a claim.",
+          "prompt": "Run the test command and the build command and paste the complete output of both — not a summary. Confirm no existing test was modified."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Output looks incomplete — ask for the rest",
+          "prompt": "That output looks truncated or summarized. Paste the complete, unedited output from the actual command."
+        },
+        {
+          "label": "Push on a test that changed",
+          "prompt": "You mentioned modifying an existing test. Explain in plain language exactly what the old expectation was, what the new expectation is, and why the change is correct rather than a workaround."
+        },
+        {
+          "label": "Build the manual checklist into something reusable",
+          "prompt": "Turn the 'things I need to verify manually' list into a short reusable checklist I can use again next time a similar change happens."
+        },
+        {
+          "label": "Confirm nothing was skipped or loosened",
+          "prompt": "Search the diff specifically for any skipped test, loosened assertion, or added try/catch around the code you changed. List anything you find."
+        }
+      ],
+      "walkthrough": "Kenji used to accept 'all tests pass' from Codex at face value and move on, until a change he approved that way turned out to have quietly skipped a failing test instead of fixing it, which he only discovered a week later when a bug shipped to production.\n\nNow, for every task, he ends his spec with the verification checklist: run the exact test command and paste full output, run the exact build command and paste full output, state explicitly whether any test file was added or modified and why, and list anything that couldn't be verified automatically, like things requiring a running browser or third-party API behavior.\n\nHe's currently adding a discount-calculation feature to a checkout flow. After implementation, Codex reports back following the checklist: it pastes the full npm test output showing 187 passing tests, including three new ones it added for the discount logic; it confirms no existing test was modified; and it flags one thing it couldn't verify itself, how the discount badge actually renders visually on the checkout page, since that requires a running browser to see.\n\nKenji doesn't skip that flag. He starts the app locally, navigates to checkout, applies a test discount code, and checks the badge renders correctly at both a normal desktop width and a narrow mobile width. It looks right at desktop but the badge text wraps awkwardly on mobile, something Codex genuinely couldn't have caught on its own.\n\nHe sends a follow-up describing the wrapping issue precisely, Codex fixes the CSS, and Kenji rechecks manually one more time before merging. Total time: about fifteen minutes, five of which were the manual check that caught a real, visible bug the automated output alone would have missed entirely."
+    },
+    "cx-a3-delivery-workflow-end-to-end": {
+      "placeholders": [
+        {
+          "name": "PASTE TICKET TITLE AND DESCRIPTION",
+          "what": "The raw ticket text exactly as it was written by whoever filed it — a bug report, a feature request, a support ticket forwarded to engineering. Paste it unedited so Codex works from the same source information you did, including any vague or incomplete parts you'll need to clarify into a real spec.",
+          "examples": [
+            "Title: Discount codes stack incorrectly at checkout\nDescription: A customer reported that using two discount codes together applied way more discount than expected — should only be one code active at a time, but the second one seems to be adding on top of the first instead of replacing it. Happened on order #48213.",
+            "Title: Export button missing on mobile\nDescription: Support ticket #991: Customer says the 'Export CSV' button that shows on desktop isn't visible at all when they're on their phone browser. Can't tell if it's hidden or just not rendering.",
+            "Title: Slow page load on Orders tab\nDescription: Internal report from ops team — the Orders tab has been taking 8-10 seconds to load for accounts with more than 500 orders. Was fine last month. No error in the console, just slow."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Starting from a bug report with reproduction steps already known",
+          "whenToUse": "When you already know how to reproduce the bug yourself, so the spec-writing step can skip straight to root cause work.",
+          "prompt": "Ticket: [PASTE TICKET TITLE AND DESCRIPTION]\n\nI've already confirmed how to reproduce this: [YOUR REPRODUCTION STEPS]. Skip straight to: reproduce it yourself and confirm you see the same failure, then explain your root-cause hypothesis before proposing a fix. Once confirmed, follow the full pipeline: plan, implement, verify with real command output, then draft a PR description."
+        },
+        {
+          "label": "Starting from a feature request instead of a bug",
+          "whenToUse": "When the ticket describes a new capability rather than something broken — the spec needs a goal and acceptance criteria more than a root-cause investigation.",
+          "prompt": "Ticket: [PASTE TICKET TITLE AND DESCRIPTION]\n\nWrite this as a full spec (goal, acceptance criteria, constraints, definition of done) and show it to me before implementing anything. Since this is a new feature, not a bug fix, make sure the acceptance criteria describe exactly what a user should be able to do when this is done, not just what changed in the code."
+        },
+        {
+          "label": "Fast-track for a trivial, obviously safe ticket",
+          "whenToUse": "For a genuinely tiny, unambiguous ticket where the full checkpoint pipeline is more process than the task warrants.",
+          "prompt": "Ticket: [PASTE TICKET TITLE AND DESCRIPTION]\n\nThis is small and low-risk. Skip the separate plan-approval step, but still: implement it, run the full test suite/build/lint and paste actual output, tell me if any existing test changed and why, and draft a one-paragraph PR description before I open the PR."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Spec missed something from the ticket",
+          "prompt": "Re-read the original ticket — you missed a detail from it. Revise the spec's acceptance criteria to include it."
+        },
+        {
+          "label": "PR description doesn't map to acceptance criteria",
+          "prompt": "Your PR description doesn't clearly show how the change satisfies each acceptance criterion. Rewrite it so each one is addressed explicitly."
+        },
+        {
+          "label": "Ask what should go into AGENTS.md",
+          "prompt": "Looking back at this whole task, was there anything you had to ask me or guess about that a single line in AGENTS.md would have prevented? Draft that line."
+        },
+        {
+          "label": "Final gate before merge",
+          "prompt": "Give me a final summary: what changed, what the verification output showed, and any review comments that are still unresolved. I want the complete picture before I merge."
+        }
+      ],
+      "walkthrough": "Priyanka gets a support ticket forwarded to engineering: 'Title: Discount codes stack incorrectly at checkout. Description: A customer reported that using two discount codes together applied way more discount than expected — should only be one code active at a time, but the second one seems to be adding on top of the first instead of replacing it. Happened on order #48213.'\n\nShe pastes the ticket into Codex along with the delivery-pipeline prompt, asking it to first turn this into a full spec before touching anything. Codex drafts a spec: goal is that only one discount code can be active at checkout, with a second code replacing rather than stacking with the first; acceptance criteria describe the expected total in a two-code scenario; constraints limit changes to the discount-calculation module; definition of done is npm test passing plus a new test for the two-code case.\n\nPriyanka reviews and approves the spec, then approves the implementation plan Codex proposes next, a small change to how codes are applied in src/pricing/discounts.ts. Codex implements it, then pastes real output: npm test showing 198 passing including one new test, npm run build succeeding, and confirms no existing test was modified.\n\nCodex drafts a PR description mapping the fix directly to the acceptance criteria, and Priyanka opens the PR herself using that text. Codex's own automated review leaves two comments; she fixes one real edge case it caught and rejects the other as a pre-existing pattern used elsewhere in the codebase, with a one-line reason. She does a final personal read of the 40-line diff, then merges.\n\nAfterward, she adds one line to AGENTS.md: 'discount stacking rules live in src/pricing/discounts.ts — check that file before touching pricing logic.' Total time: about twenty-five minutes for a fix she can now trust was verified at every stage."
+    }
+  }
+}

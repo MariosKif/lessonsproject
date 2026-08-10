@@ -1,0 +1,42 @@
+{
+  "paths": [
+    {
+      "slug": "ai-for-ecommerce",
+      "title": "AI for E-commerce Owners",
+      "tagline": "From product descriptions that convert to automating your store's recurring content work.",
+      "description": "A 6-lesson path for e-commerce owners covering the AI workflows that move the needle in a real store: writing product descriptions that sell without overclaiming, generating genuinely distinct ad copy for A/B testing, creating on-brand product and lifestyle photos with AI image tools, handling refund, delay, and complaint replies accurately, building welcome, abandoned-cart, and post-purchase email flows, and automating recurring content work with a human approval checkpoint.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "ecommerce-owner",
+      "sortOrder": 14,
+      "lessons": [
+        "ecom-b1-product-descriptions-that-sell",
+        "ecom-b2-ad-copy-variants-for-testing",
+        "ecom-i1-product-lifestyle-photos-ai-image",
+        "ecom-i2-customer-service-replies-refunds-delays-complaints",
+        "ecom-i3-email-flows-welcome-abandoned-cart-post-purchase",
+        "ecom-a1-automate-recurring-store-content"
+      ]
+    },
+    {
+      "slug": "ai-for-support",
+      "title": "AI for Customer Support",
+      "tagline": "From rewriting one difficult reply to designing a full triage workflow your team can trust.",
+      "description": "A 6-lesson path for customer support professionals covering the AI skills that make a team faster without sacrificing accuracy or tone: rewriting difficult replies to be firm and kind, building a macro library from your own best replies, turning resolved tickets into knowledge-base articles, writing escalation summaries for engineers and managers, keeping tone consistent across a growing team, and designing an AI-assisted triage workflow that keeps judgment calls with a human.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "customer-support",
+      "sortOrder": 22,
+      "lessons": [
+        "cs-b1-rewrite-difficult-reply-firm-kind-correct",
+        "cs-b2-macro-library-from-real-tickets",
+        "cs-i1-knowledge-base-articles-from-resolved-tickets",
+        "cs-i2-escalation-summaries-engineers-managers",
+        "cs-i3-tone-consistency-across-support-team",
+        "cs-a1-triage-workflows-ai-assistance-human-judgment"
+      ]
+    }
+  ]
+}

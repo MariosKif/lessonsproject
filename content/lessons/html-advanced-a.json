@@ -1,0 +1,1158 @@
+{
+  "lessons": [
+    {
+      "slug": "html-a01-global-attributes",
+      "title": "Control any element with the global attributes",
+      "summary": "Master the attributes every HTML element accepts — id, class, lang, dir, hidden, tabindex, contenteditable and the rest — and know exactly when each one is the right tool.",
+      "difficulty": "advanced",
+      "minutes": 14,
+      "isFree": true,
+      "goal": "Apply the full global attribute set correctly on a real page, including language, direction, visibility and focus control.",
+      "whyItMatters": "Global attributes are the shared control panel of HTML: they work on every element and they quietly drive styling hooks, translation, screen-reader pronunciation, keyboard behavior and text direction. Senior developers are expected to know not just that these attributes exist but where each one breaks — title tooltips that touch users never see, positive tabindex values that wreck keyboard order, accesskey shortcuts that collide with assistive technology. Getting them right costs nothing; getting them wrong produces bugs that only appear for users you did not test with.",
+      "steps": [
+        "Read the theory sections on the left, starting with the identity attributes (id, class, style, title).",
+        "Open the starter code: a team profile page missing language, direction and visibility information.",
+        "Declare the document language on the html element (task 1).",
+        "Mark the French quotation and the right-to-left Arabic line with lang and dir (tasks 2-3).",
+        "Hide the retired promo banner with the hidden attribute (task 4).",
+        "Make the error-summary section reachable by script focus with tabindex=\"-1\" (task 5).",
+        "Expand the UX abbreviation with a title attribute (task 6), then press Run and confirm every check passes."
+      ],
+      "prompt": "<html lang=\"en\">\n  <blockquote lang=\"fr\">Le design, c'est l'intelligence rendue visible.</blockquote>\n  <p lang=\"ar\" dir=\"rtl\">مرحبا بكم</p>\n  <div id=\"promo\" hidden>Expired banner</div>\n  <section id=\"errors\" tabindex=\"-1\">…</section>",
+      "promptLabel": "Key code example",
+      "explanation": "The lang on html sets the default language for the whole document, and each inline lang overrides it only for that element, so screen readers switch pronunciation exactly where the text switches. dir=\"rtl\" tells the browser the Arabic line flows right to left, which fixes both alignment and punctuation placement. hidden removes the banner from rendering and from the accessibility tree in one move, with no CSS required. tabindex=\"-1\" keeps the section out of the Tab order but lets JavaScript call focus() on it — the standard pattern for jumping users to an error summary.",
+      "example": "A form page shows a validation summary after a failed submit, but keyboard and screen-reader users are left at the bottom of the form with no idea anything happened.\n\nAdd tabindex=\"-1\" to the summary container and call focus() on it when errors appear: focus lands on the summary, the screen reader announces it, and Tab continues naturally into the first broken field. One attribute turns a silent failure into an accessible flow.",
+      "exercise": "In the editor on the right, complete the team profile page: declare the page language, mark the French quote and the right-to-left Arabic greeting, hide the expired promo banner, make the error summary focusable by script, and expand the abbreviation with a tooltip.",
+      "expectedResult": "The preview shows the profile without the old banner, the Arabic line aligned to the right, and all six checks green in the console.",
+      "commonMistakes": [
+        "Using a positive tabindex (tabindex=\"3\") to 'fix' focus order. Positive values create a parallel focus sequence that runs before everything else and breaks as soon as the page changes — reorder the source instead.",
+        "Relying on title for important information. The tooltip only appears on mouse hover, so touch users and most keyboard users never see it — treat it as a bonus, never the only copy of a message.",
+        "Hiding content with CSS opacity or off-screen positioning when hidden is meant: visually invisible content can still be read by screen readers and found by Ctrl+F, which is rarely what you wanted.",
+        "Setting dir=\"rtl\" on the html element for one Arabic sentence. Direction, like language, belongs on the smallest element that contains the foreign-direction text."
+      ],
+      "proTip": "For anything users type or paste — comments, usernames, search echoes — use dir=\"auto\". The browser inspects the first strongly directional character and picks ltr or rtl per element, which is the only strategy that survives mixed-language user content.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "software-developer"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will finish a team profile page by applying the global attributes that control identity, language, direction, visibility and focus.",
+        "sections": [
+          {
+            "heading": "The identity attributes: id, class, style, title",
+            "body": "Global attributes are the ones every HTML element accepts, from div to video. Four of them handle identity and presentation. id gives an element a name that must be unique in the document; it powers fragment links (page.html#pricing), label-to-input wiring (for=\"email\"), aria-labelledby references and fast JavaScript lookup. Because so many systems key off it, a duplicated id is a real bug: getElementById and fragment navigation will silently pick the first match and ignore the rest.\n\nclass holds a space-separated list of reusable tokens, so class=\"card featured urgent\" puts the element in three groups at once. Unlike id, classes are meant to repeat across elements — they are the primary hook for CSS and for selecting groups of elements in JavaScript. style injects CSS declarations directly onto one element. It works everywhere but scales terribly: inline styles cannot be reused, are painful to override, and mix presentation into markup, so in production they are mostly reserved for values computed at runtime, such as a progress bar width set by script.\n\ntitle attaches advisory text that desktop browsers reveal as a small tooltip after the pointer rests on the element. The trap is the word 'desktop pointer': touch screens have no hover, keyboard navigation does not trigger it, and screen-reader support is inconsistent. The one place title has a solid, conventional role is expanding an abbreviation: <abbr title=\"User Experience\">UX</abbr>. Anywhere else, if the information matters, it must also exist as visible text or a proper accessible name.",
+            "code": "<section id=\"pricing\" class=\"card featured\">\n  <p>Our <abbr title=\"User Experience\">UX</abbr> team is remote-first.</p>\n  <div style=\"width: 64%\">progress</div>\n</section>"
+          },
+          {
+            "heading": "lang: tell machines what language they are reading",
+            "body": "Every document should declare its main language on the root element: <html lang=\"en\">. Screen readers use it to load the right pronunciation engine, browsers use it for hyphenation and quotation marks, translation tools use it to decide the source language, and spellcheckers use it to pick a dictionary. A page without lang forces every one of those systems to guess.\n\nBecause lang is global, you can override it on any element that switches language mid-page. A French quotation inside an English article gets lang=\"fr\" on the blockquote; a Japanese product name gets lang=\"ja\" on its span. A screen reader hitting that boundary switches voices instead of mangling the French with English phonetics — the difference between comprehensible and unlistenable.\n\nValues are BCP 47 language tags: a lowercase language code (en, fr, ar), optionally followed by a region subtag (en-GB, pt-BR) when the regional difference matters for spelling or vocabulary. Keep the tag as short as it can be while still being accurate.",
+            "code": "<html lang=\"en\">\n  <body>\n    <p>She closed with a line from Perret:</p>\n    <blockquote lang=\"fr\">Le design, c'est l'intelligence rendue visible.</blockquote>\n  </body>\n</html>"
+          },
+          {
+            "heading": "dir: writing direction, and why auto exists",
+            "body": "dir controls the direction text flows and takes three values. ltr is the default left-to-right used by Latin, Greek and Cyrillic scripts. rtl flips the element for right-to-left scripts such as Arabic and Hebrew — not just alignment, but the placement of punctuation, the order of mixed numbers and text, and the side lists put their markers on. Like lang, set it on the smallest element that needs it; a whole-document Arabic site sets dir=\"rtl\" on html, while one Arabic line in an English page sets it on that paragraph only.\n\nThe third value, auto, makes the browser look at the first strongly directional character inside the element and choose ltr or rtl from that. This is the correct setting for content you cannot predict — user comments, chat messages, echoed search queries — because it makes each element self-adjust. Hard-coding ltr on a comment box guarantees that the first Hebrew comment renders with its punctuation scrambled.\n\nPair dir with lang rather than treating one as a substitute for the other: lang says what the language is, dir says how the text flows, and right-to-left content needs both to be handled correctly.",
+            "code": "<p lang=\"ar\" dir=\"rtl\">مرحبا بكم في فريقنا</p>\n\n<!-- user-generated content: let each message decide -->\n<p class=\"chat-msg\" dir=\"auto\">שלום, מה שלומך?</p>"
+          },
+          {
+            "heading": "hidden: the honest way to hide",
+            "body": "hidden is a boolean attribute — its presence is the value, so <div hidden> is hidden and <div> is not. A hidden element is not rendered at all and is removed from the accessibility tree, meaning screen readers skip it exactly like sighted users do. This is what makes it more honest than most CSS hiding tricks: opacity: 0 and off-screen positioning leave content visible to assistive technology and to in-page search, creating ghost content only some users encounter.\n\nUnder the hood, browsers implement hidden as display: none in the user-agent stylesheet. That has one practical consequence: a CSS rule that sets display on the same element (a utility class with display: flex, for example) will override and defeat the attribute. If your codebase uses such utilities, a defensive rule like [hidden] { display: none !important; } keeps the attribute trustworthy.\n\nUse hidden for content that is genuinely not part of the page right now — an inactive tab panel, a template area script will reveal, a dismissed banner. If content should be hidden visually but still announced to screen readers (like a text label for an icon button), that is the opposite requirement, and it is solved with a visually-hidden CSS class, not with hidden.",
+            "code": "<div id=\"promo\" hidden>Spring sale banner (dismissed)</div>\n\n<style>\n  /* keep hidden reliable against display utilities */\n  [hidden] { display: none !important; }\n</style>"
+          },
+          {
+            "heading": "tabindex: three values, one trap",
+            "body": "tabindex controls whether an element can receive keyboard focus and where it sits in the Tab order. Interactive elements — links, buttons, form fields — are focusable by default and need no tabindex at all. For everything else there are exactly two values worth using.\n\ntabindex=\"0\" inserts an element into the natural Tab order at the position its source markup dictates. It is how a custom widget built from a div (when a native element truly cannot be used) becomes reachable by keyboard. tabindex=\"-1\" does the reverse trade: the element stays out of the Tab order but becomes focusable by script, so element.focus() works on it. That is the backbone of skip-link targets, error summaries and moving focus into freshly opened panels.\n\nPositive values (tabindex=\"1\" and up) are the trap. They create a priority lane: the browser visits all positive tabindex elements in ascending numeric order before any normally focusable element, regardless of where they appear on the page. Focus jumps around the layout, every later markup change forces renumbering, and users relying on the keyboard get an order that contradicts what they see. The professional rule is blunt: if the Tab order is wrong, fix the source order — never patch it with positive numbers.",
+            "code": "<!-- custom widget: reachable via Tab -->\n<div class=\"rating\" role=\"slider\" tabindex=\"0\">…</div>\n\n<!-- script-focus target: skipped by Tab, focusable by JS -->\n<section id=\"error-summary\" tabindex=\"-1\">\n  <h2>2 fields need attention</h2>\n</section>"
+          },
+          {
+            "heading": "contenteditable and spellcheck",
+            "body": "contenteditable=\"true\" turns any element into a live editing surface: the user can click in and type, and the DOM updates as they do. It is the foundation of rich-text editors, inline CMS editing and note apps, because unlike a textarea it can contain real markup — bold text, links, lists. Set contenteditable=\"false\" on a child to lock a region inside an editable parent, such as a mention chip the user can delete but not edit character by character. The attribute is powerful and messy: browsers generate slightly different markup for the same edits, so production editors always normalize the output.\n\nspellcheck=\"true\" or \"false\" tells the browser whether to run its squiggly-underline checking on an element's editable text. It matters on form fields and contenteditable regions. Browsers check most text inputs by default, so the common real-world move is the opt-out: spellcheck=\"false\" on fields holding usernames, code, IDs or API keys, where red squiggles are pure noise. The checker uses the dictionary implied by the element's lang, which is one more reason to declare language honestly.",
+            "code": "<div contenteditable=\"true\" spellcheck=\"true\">\n  Draft your bio here…\n  <span contenteditable=\"false\" class=\"mention\">@amira</span>\n</div>\n\n<input type=\"text\" name=\"licence-key\" spellcheck=\"false\">"
+          },
+          {
+            "heading": "draggable, translate and accesskey",
+            "body": "draggable=\"true\" opts an element into the native HTML drag-and-drop system; on most elements dragging does nothing until you set it, while links and images are draggable out of the box. The attribute only makes an element pick-up-able — the actual drop behavior requires the JavaScript drag events — and note that its values are the strings \"true\" and \"false\", so it is an enumerated attribute, not a boolean one like hidden. Native drag-and-drop is also mouse-only by design, so any interface built on it needs a keyboard alternative.\n\ntranslate=\"no\" marks content that machine translators should leave alone: brand names, code samples, personal names, legal boilerplate. Google Translate and similar services honor it, and it defaults to \"yes\" everywhere else. It is a small courtesy attribute that saves your product name from becoming a dictionary word in forty languages.\n\naccesskey assigns a keyboard shortcut character to an element (accesskey=\"s\" on a search field, for instance). In practice it is nearly always avoided: the modifier keys needed to trigger it differ by browser and operating system (Alt on Windows Chrome, Control+Option on macOS), users have no way to discover the shortcuts, and the chosen letters routinely collide with screen-reader and browser shortcuts, hijacking commands from the users who depend on them most. If an app needs shortcuts, implement them in JavaScript with a visible, documented shortcut list.\n\nTwo related niche attributes deserve a mention for touch devices: inputmode hints which virtual keyboard to show (inputmode=\"numeric\" brings up digits) and enterkeyhint labels the Enter key itself (enterkeyhint=\"search\" turns it into a Search action). Neither validates anything — they only shape the on-screen keyboard — but they noticeably polish mobile forms.",
+            "code": "<li draggable=\"true\">Reorder me</li>\n<p>Try <span translate=\"no\">SkillStack</span> today.</p>\n<input type=\"text\" inputmode=\"numeric\" enterkeyhint=\"done\" name=\"otp\">"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<!-- TODO 1: declare the document language on the html element -->\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Team profile</title>\n</head>\n<body>\n  <h1>Amira Haddad</h1>\n  <!-- TODO 6: expand the abbreviation with a title attribute -->\n  <p>Senior <abbr>UX</abbr> engineer on a remote-first team.</p>\n\n  <!-- TODO 2: this quotation is French — mark its language -->\n  <blockquote id=\"quote\">Le design, c'est l'intelligence rendue visible.</blockquote>\n\n  <!-- TODO 3: this greeting is Arabic and flows right to left -->\n  <p id=\"rtl-note\" lang=\"ar\">مرحبا بكم في فريقنا</p>\n\n  <!-- TODO 4: this banner is retired — hide it from rendering and assistive tech -->\n  <div id=\"promo\">Spring hiring promo — expired</div>\n\n  <!-- TODO 5: scripts should be able to move focus here after form errors -->\n  <section id=\"error-summary\">\n    <h2>Form errors</h2>\n  </section>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Team profile</title>\n</head>\n<body>\n  <h1>Amira Haddad</h1>\n  <p>Senior <abbr title=\"User Experience\">UX</abbr> engineer on a remote-first team.</p>\n\n  <blockquote id=\"quote\" lang=\"fr\">Le design, c'est l'intelligence rendue visible.</blockquote>\n\n  <p id=\"rtl-note\" lang=\"ar\" dir=\"rtl\">مرحبا بكم في فريقنا</p>\n\n  <div id=\"promo\" hidden>Spring hiring promo — expired</div>\n\n  <section id=\"error-summary\" tabindex=\"-1\">\n    <h2>Form errors</h2>\n  </section>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Declare English as the document language: add lang=\"en\" to the <html> element.",
+            "hint": "The opening tag becomes <html lang=\"en\">.",
+            "errorMessage": "The <html> element has no lang=\"en\". Screen readers and translators need the document language declared at the root.",
+            "check": {
+              "type": "attr",
+              "selector": "html",
+              "attr": "lang",
+              "value": "en"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Mark the quotation as French: add lang=\"fr\" to the blockquote with id \"quote\".",
+            "hint": "Inline language switches go on the smallest containing element: <blockquote id=\"quote\" lang=\"fr\">.",
+            "errorMessage": "The French quotation is not marked with lang=\"fr\", so screen readers would read it with English pronunciation.",
+            "check": {
+              "type": "attr",
+              "selector": "#quote",
+              "attr": "lang",
+              "value": "fr"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Give the Arabic greeting its correct direction: add dir=\"rtl\" to the paragraph with id \"rtl-note\".",
+            "hint": "It already has lang=\"ar\"; direction is separate — add dir=\"rtl\" beside it.",
+            "errorMessage": "The Arabic line has no dir=\"rtl\", so it still renders left-to-right with scrambled punctuation.",
+            "check": {
+              "type": "attr",
+              "selector": "#rtl-note",
+              "attr": "dir",
+              "value": "rtl"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Hide the expired promo banner completely using the hidden attribute.",
+            "hint": "hidden is boolean — just add the bare word: <div id=\"promo\" hidden>.",
+            "errorMessage": "The #promo banner is still visible. Add the hidden attribute so it is removed from rendering and the accessibility tree.",
+            "check": {
+              "type": "attr",
+              "selector": "#promo",
+              "attr": "hidden"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Make the error-summary section focusable by script (but not by Tab) with tabindex=\"-1\".",
+            "hint": "tabindex=\"-1\" allows element.focus() without adding the element to the Tab order.",
+            "errorMessage": "#error-summary needs tabindex=\"-1\" so JavaScript can move focus to it when validation fails.",
+            "check": {
+              "type": "attr",
+              "selector": "#error-summary",
+              "attr": "tabindex",
+              "value": "-1"
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Expand the UX abbreviation: add a title attribute to the <abbr> element with its full form.",
+            "hint": "<abbr title=\"User Experience\">UX</abbr> — the one conventional home of the title attribute.",
+            "errorMessage": "The <abbr> element has no title attribute expanding what UX stands for.",
+            "check": {
+              "type": "attr",
+              "selector": "abbr",
+              "attr": "title",
+              "pattern": "\\w+"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-a02-data-attributes",
+      "title": "Store custom state on elements with data-* attributes",
+      "summary": "Use data-* attributes to attach your own machine-readable data to markup, read it back through dataset, and style against it with CSS attribute selectors.",
+      "difficulty": "advanced",
+      "minutes": 12,
+      "isFree": true,
+      "goal": "Model product metadata and widget state with well-named data-* attributes that both CSS and JavaScript can consume.",
+      "whyItMatters": "Every non-trivial front end needs to hang extra information on elements: which category a card belongs to, whether a panel is open, what configuration a widget should boot with. data-* attributes are the standards-blessed way to do that without inventing invalid attributes or abusing class names as data stores. They power filtering UIs, JS component configuration and CSS state styling in virtually every production codebase, so knowing their naming rules, the dataset camelCase mapping and their limits is table stakes for a working developer.",
+      "steps": [
+        "Read the naming rules and the dataset mapping sections on the left first.",
+        "Open the starter code: a product list with no machine-readable metadata.",
+        "Give every product li a data-category (task 1) and a data-price (task 2).",
+        "Add a multi-word data-stock-level attribute to the low-stock product (task 3).",
+        "Record the filter panel's state with data-state=\"closed\" (task 4).",
+        "Surface each product's category in CSS using content: attr(data-category) (task 5).",
+        "Press Run and confirm all five checks pass."
+      ],
+      "prompt": "<li data-category=\"packs\" data-price=\"89\" data-stock-level=\"low\">Trail backpack</li>\n\n<script>\n  const li = document.querySelector('li');\n  li.dataset.stockLevel;   // \"low\" — data-stock-level, camelCased\n</script>\n\n<style>\n  li[data-stock-level=\"low\"] { color: #b45309; }\n</style>",
+      "promptLabel": "Key code example",
+      "explanation": "Each data-* attribute is a key-value pair that travels with the element itself, so the data survives reordering, cloning and server rendering without a separate lookup table. JavaScript reads the same values through element.dataset, where the hyphenated name data-stock-level becomes the camelCase property stockLevel. CSS can select on the attribute directly — [data-stock-level=\"low\"] — which means state styling needs no extra classes. The three consumers (markup, script, style) all share one source of truth.",
+      "example": "A store page filters products with JavaScript that parses category names out of class strings like class=\"card cat-packs price-89\" — brittle, and the classes fight with styling.\n\nRewritten with data-category=\"packs\" and data-price=\"89\", the filter code becomes a one-line dataset comparison, CSS keeps classes purely for appearance, and adding a new field never risks colliding with a style rule.",
+      "exercise": "In the editor on the right, annotate the three products with data-category and data-price, mark the low-stock item with data-stock-level=\"low\", record the filter panel's closed state with data-state, and add a CSS rule that displays each product's category using content: attr(data-category).",
+      "expectedResult": "The preview shows each product with its category rendered after its name by CSS, the low-stock item tinted amber, and all five checks green.",
+      "commonMistakes": [
+        "Using uppercase or camelCase in the attribute itself (data-stockLevel). Attribute names are lowercased by the parser, so write data-stock-level in HTML and read dataset.stockLevel in JS.",
+        "Storing data that HTML already has semantics for — a publication date belongs in <time datetime=\"…\">, a machine-readable value on an option belongs in value, not in data-*.",
+        "Forgetting that dataset values are always strings: dataset.price returns \"89\", so compare with Number(li.dataset.price) before doing math.",
+        "Treating data-* as private storage. Anything in the DOM is user-visible and user-editable via DevTools, so never put secrets or trust-sensitive values there."
+      ],
+      "proTip": "In DevTools you can live-edit a data attribute and watch your [data-state] CSS respond instantly — a fast way to preview every visual state of a widget without triggering the JavaScript that drives it.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "software-developer"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will turn a plain product list into a data-rich one that a filter script and a stylesheet could both drive, using only data-* attributes.",
+        "sections": [
+          {
+            "heading": "Why custom attributes need the data- prefix",
+            "body": "HTML validates its attributes: writing category=\"packs\" on an li is invalid markup, and worse, it gambles that no future HTML version will define a real category attribute with different behavior. The data-* family solves this by reserving an entire namespace for authors. Any attribute that starts with data- is guaranteed valid on any element, guaranteed meaningless to the browser's rendering and behavior, and guaranteed never to be claimed by a future specification.\n\nThat neutrality is the point. A data-* attribute does nothing on its own — no styling, no behavior, no semantics for assistive technology. It is inert storage that rides along with the element, waiting for your CSS or JavaScript to give it meaning. This makes it the correct home for information that belongs to your application rather than to the document: internal ids, states, configuration, sort keys.\n\nThe value is always a string. Numbers, booleans and even JSON can be stored, but they arrive back as text and your code owns the parsing. For one or two scalar values per element this is fine; if you find yourself stuffing large JSON blobs into attributes, the data usually belongs in a JavaScript module or a fetch response instead, with the element carrying only an id to look it up.",
+            "code": "<!-- invalid: made-up attribute -->\n<li category=\"packs\">Trail backpack</li>\n\n<!-- valid: reserved author namespace -->\n<li data-category=\"packs\" data-price=\"89\">Trail backpack</li>"
+          },
+          {
+            "heading": "Naming rules that actually bite",
+            "body": "The rules for the part after data- are strict enough to matter. Use lowercase letters, digits and hyphens: data-category, data-stock-level, data-sort-order-2. The name must not contain uppercase letters — the HTML parser lowercases attribute names anyway, so data-stockLevel silently becomes data-stocklevel and your camelCase intent is destroyed. It also must not start the custom part with a hyphen or contain characters like semicolons or spaces.\n\nMulti-word names are written kebab-case with hyphens, exactly like CSS properties. This is not a style preference; it is the contract that makes the JavaScript mapping work, as the next section shows. Pick names that describe meaning rather than presentation: data-stock-level=\"low\" survives a redesign, while data-color=\"orange\" is a styling decision that has leaked into your data.\n\nOne more discipline point: keep names consistent across a codebase. If cards use data-category, do not let the search results page invent data-cat. Attribute names are an API between your markup, your scripts and your stylesheets — treat renames with the same care as renaming a function.",
+            "code": "<!-- good names: lowercase, hyphenated, meaning-based -->\n<li data-category=\"stoves\" data-stock-level=\"low\" data-sku=\"CS-1041\">Camp stove</li>\n\n<!-- broken: parser lowercases this to data-stocklevel -->\n<li data-stockLevel=\"low\">…</li>"
+          },
+          {
+            "heading": "Reading and writing with dataset",
+            "body": "Every element exposes its data-* attributes through the dataset property, a live map of the custom data. The naming bridge is mechanical: strip the data- prefix, then convert the remaining kebab-case to camelCase. data-category becomes dataset.category, data-stock-level becomes dataset.stockLevel, data-sort-order-2 becomes dataset.sortOrder-2's edge case aside — in practice, each hyphen-letter pair becomes an uppercase letter.\n\ndataset is read-write. Assigning dataset.state = \"open\" creates or updates the data-state attribute in the DOM immediately, which means any CSS attribute selector watching that attribute restyles the element in the same frame. Deleting is delete el.dataset.state. Because these are real attributes, the values also show up in DevTools and in element.outerHTML, which makes debugging state trivial compared to state held only in JavaScript variables.\n\nTwo habits keep dataset code robust. First, remember everything is a string: dataset.price === 89 is always false; convert with Number() first. Second, for reading a single attribute you can also use getAttribute('data-price') — equivalent for reads, and sometimes clearer inside generic code that receives the attribute name as a string.",
+            "code": "<button id=\"buy\" data-sku=\"CS-1041\" data-stock-level=\"low\">Buy</button>\n<script>\n  const btn = document.getElementById('buy');\n  btn.dataset.sku;               // \"CS-1041\"\n  btn.dataset.stockLevel;        // \"low\"  (data-stock-level)\n  btn.dataset.state = 'adding';  // writes data-state=\"adding\"\n  Number(btn.dataset.price);     // NaN-safe numeric read pattern\n</script>"
+          },
+          {
+            "heading": "Styling against data with attribute selectors",
+            "body": "CSS treats data-* like any other attribute, which unlocks state-driven styling without class churn. [data-state=\"open\"] matches the exact value; [data-category] matches mere presence; and the operator variants cover partial matches — [data-sku^=\"CS-\"] for prefix, [data-tags~=\"sale\"] for a word in a space-separated list, [data-sku*=\"104\"] for substring. Combined with element selectors, li[data-stock-level=\"low\"] reads almost like a sentence.\n\nThe content property can even display attribute values directly: content: attr(data-category) inside an ::after rule prints the attribute's text into the page. This is genuinely useful for badges, counters and debug overlays, with two caveats — generated content is not selectable, and screen-reader support for it is uneven, so anything essential should be real text in the markup instead.\n\nThe payoff of this pattern is a clean division of labor: JavaScript flips one attribute (dataset.state = 'open'), and CSS owns everything visual about each state. No .is-open class-toggling scattered across the stylesheet, and the current state of any widget is readable at a glance in the Elements panel.",
+            "code": "li[data-stock-level=\"low\"] { color: #b45309; }\n\nli::after {\n  content: \" · \" attr(data-category);\n  color: #6b7280;\n}\n\n#filter-panel[data-state=\"closed\"] .options { display: none; }"
+          },
+          {
+            "heading": "Three production patterns",
+            "body": "State flags. A widget stores its current mode on its root element: data-state=\"closed\", then \"open\", then perhaps \"loading\". Scripts switch the value, CSS styles each state, and tests can assert on it. Because the state lives in the DOM, server-side rendering can emit the correct initial state and the client picks it up seamlessly.\n\nWidget configuration. A reusable script reads its options from the element it enhances: <div class=\"carousel\" data-autoplay=\"true\" data-interval=\"5000\">. One script file serves every carousel on the site, each configured in markup by whoever writes the page — no per-instance JavaScript, and CMS editors can tune behavior without touching code.\n\nFiltering and sorting lists. Each item carries its own facts — data-category, data-price — and the filter code simply hides items whose dataset does not match the active filters. The list can be re-rendered, paginated or reordered by the server and the filter logic never changes, because the data travels inside each element rather than in a parallel array that can drift out of sync.",
+            "code": "<div class=\"carousel\" data-autoplay=\"true\" data-interval=\"5000\">…</div>\n\n<script>\n  document.querySelectorAll('#product-list li').forEach(li => {\n    const visible = li.dataset.category === activeCategory;\n    li.hidden = !visible;\n  });\n</script>"
+          },
+          {
+            "heading": "When not to use data-*",
+            "body": "The first question before reaching for data-* is whether HTML already has an attribute or element with the meaning you need. A machine-readable date belongs in <time datetime=\"2026-08-10\">, not data-date. The value submitted by a form control belongs in value. A link's destination belongs in href. An image description belongs in alt. Custom attributes carry zero semantics, so every time you shadow a real feature with data-*, you lose the accessibility, SEO and browser behavior the native feature would have provided free.\n\nThe same logic covers state that assistive technology needs to know about. Whether a disclosure is expanded is not private app data — screen-reader users need it announced, so it belongs in aria-expanded, possibly mirrored by data-* for styling convenience but never replaced by it. Visibility belongs to hidden. Disabled state belongs to disabled. The rule of thumb: if a user or a machine outside your own scripts could benefit from the information, there is probably a standard home for it.\n\nFinally, data-* is not storage for anything sensitive or large. It ships in the HTML payload, is visible to every user, and bloats the DOM if abused. Keep values short, public and element-scoped; put everything else behind your API.",
+            "code": "<!-- wrong: shadowing real semantics -->\n<span data-date=\"2026-08-10\">yesterday</span>\n<div data-expanded=\"true\">…</div>\n\n<!-- right: native features first -->\n<time datetime=\"2026-08-10\">yesterday</time>\n<button aria-expanded=\"true\">…</button>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Store filter</title>\n  <style>\n    li[data-stock-level=\"low\"] { color: #b45309; }\n    /* TODO 5: add a rule that prints each product's category\n       after its name using content: attr(data-category) */\n  </style>\n</head>\n<body>\n  <h1>Products</h1>\n\n  <!-- TODO 4: the filter panel starts closed — record it with data-state -->\n  <div id=\"filter-panel\">Filters</div>\n\n  <ul id=\"product-list\">\n    <!-- TODO 1: give every product a data-category -->\n    <!-- TODO 2: give every product a data-price -->\n    <!-- TODO 3: the backpack is nearly sold out — add data-stock-level=\"low\" -->\n    <li>Trail backpack</li>\n    <li>Steel bottle</li>\n    <li>Camp stove</li>\n  </ul>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Store filter</title>\n  <style>\n    li[data-stock-level=\"low\"] { color: #b45309; }\n    li::after {\n      content: \" · \" attr(data-category);\n      color: #6b7280;\n    }\n  </style>\n</head>\n<body>\n  <h1>Products</h1>\n\n  <div id=\"filter-panel\" data-state=\"closed\">Filters</div>\n\n  <ul id=\"product-list\">\n    <li data-category=\"packs\" data-price=\"89\" data-stock-level=\"low\">Trail backpack</li>\n    <li data-category=\"bottles\" data-price=\"24\">Steel bottle</li>\n    <li data-category=\"stoves\" data-price=\"56\">Camp stove</li>\n  </ul>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Give each of the three product <li> elements a data-category attribute (e.g. packs, bottles, stoves).",
+            "hint": "Add data-category=\"…\" to every li: <li data-category=\"packs\">Trail backpack</li>.",
+            "errorMessage": "Fewer than 3 products carry data-category. Every li in the list needs one so a filter script can group them.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "#product-list li[data-category]",
+              "min": 3
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Give each product a data-price attribute holding its numeric price.",
+            "hint": "Prices stay strings in the DOM: data-price=\"89\". Add one to all three items.",
+            "errorMessage": "Fewer than 3 products carry data-price. Add a data-price to every li.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "#product-list li[data-price]",
+              "min": 3
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Mark the backpack as nearly sold out with the multi-word attribute data-stock-level=\"low\".",
+            "hint": "Multi-word data attributes are kebab-case in HTML (data-stock-level) and camelCase in JS (dataset.stockLevel).",
+            "errorMessage": "No element with data-stock-level=\"low\" found. The backpack li needs it — note the hyphenated, all-lowercase name.",
+            "check": {
+              "type": "selector",
+              "selector": "li[data-stock-level=\"low\"]"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Record the filter panel's initial state: add data-state=\"closed\" to #filter-panel.",
+            "hint": "State flags live on the widget root: <div id=\"filter-panel\" data-state=\"closed\">.",
+            "errorMessage": "#filter-panel has no data-state=\"closed\". Scripts and CSS both key off this state flag.",
+            "check": {
+              "type": "attr",
+              "selector": "#filter-panel",
+              "attr": "data-state",
+              "value": "closed"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "In the <style> block, add a rule that prints each product's category using content with attr(data-category) (an ::after pseudo-element works well).",
+            "hint": "li::after { content: \" · \" attr(data-category); } — CSS reads the attribute straight from the markup.",
+            "errorMessage": "The stylesheet never uses attr(data-category). Add a content rule that outputs the attribute's value.",
+            "check": {
+              "type": "source",
+              "pattern": "attr\\(\\s*data-category"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-a03-responsive-images",
+      "title": "Serve the right image to every screen with srcset, sizes and picture",
+      "summary": "Solve the device-pixel-ratio and bandwidth problems with srcset x and w descriptors, use picture for art direction and format fallback, and stop layout shift with width, height and lazy loading.",
+      "difficulty": "advanced",
+      "minutes": 15,
+      "isFree": false,
+      "goal": "Upgrade a photo page so every image ships at the right resolution, in the best supported format, without shifting the layout.",
+      "whyItMatters": "Images are the heaviest part of almost every page, and a single hard-coded src punishes someone: retina screens get blur, phones on mobile data get a desktop-sized download, and everyone gets layout jumps while images arrive. The responsive image toolkit — srcset, sizes, picture, loading and decoding — lets the browser pick the optimal file per device, which routinely cuts image bytes by half or more and directly improves Core Web Vitals. This is one of the highest-leverage performance skills a front-end developer owns.",
+      "steps": [
+        "Read the device-pixel-ratio section to understand why one image file cannot fit all screens.",
+        "Fix the blurry logo with an x-descriptor srcset (task 1).",
+        "Give the hero image a w-descriptor srcset and a sizes attribute, and read how the browser chooses between candidates (tasks 2-3).",
+        "Add width, height, loading=\"lazy\" and decoding=\"async\" to the hero (task 4).",
+        "Wrap the sunset photo in a picture element offering AVIF and WebP before the JPEG fallback (tasks 5-6).",
+        "Press Run and confirm all six checks pass."
+      ],
+      "prompt": "<img id=\"hero\" src=\"hero-800.jpg\"\n     srcset=\"hero-400.jpg 400w, hero-800.jpg 800w, hero-1600.jpg 1600w\"\n     sizes=\"(max-width: 600px) 100vw, 800px\"\n     width=\"800\" height=\"533\"\n     loading=\"lazy\" decoding=\"async\"\n     alt=\"Cliff path above a turquoise bay\">",
+      "promptLabel": "Key code example",
+      "explanation": "srcset lists the same photo at three real widths, each labeled with a w descriptor stating its pixel width. sizes tells the browser how wide the slot will render — full viewport width on small screens, 800 CSS pixels otherwise — so it can multiply slot width by device pixel ratio and download the smallest candidate that is still sharp. width and height give the browser the aspect ratio before any bytes arrive, reserving the exact space and preventing layout shift. loading=\"lazy\" defers the download until the image nears the viewport, and decoding=\"async\" keeps image decode work off the critical rendering path.",
+      "example": "A blog ships one 1600px hero JPEG to everyone. A phone on 4G downloads 380 KB to fill a 360px-wide slot, while the text below jumps down once the image finally arrives.\n\nAfter the upgrade, the same phone downloads the 400w file at roughly 40 KB (or 800w if it has a 2x screen), the reserved aspect-ratio box means nothing moves when it loads, and browsers that support AVIF get an even smaller file through the picture element.",
+      "exercise": "In the editor on the right, add a 2x srcset to the logo, give the hero a w-descriptor srcset with a sizes attribute plus dimension and loading attributes, and wrap the sunset image in a picture element that offers AVIF and WebP sources before the JPEG fallback.",
+      "expectedResult": "The preview looks unchanged — that is the point — but the markup now lets each browser pick the smallest sharp file, and all six checks pass.",
+      "commonMistakes": [
+        "Writing srcset with w descriptors but omitting sizes. The browser then assumes the image is 100vw wide and often downloads a far larger file than the layout needs.",
+        "Confusing descriptors with units: it is 800w (image's real pixel width) and 2x (density), never 800px inside srcset.",
+        "Lazy-loading the hero image at the top of the page. Above-the-fold images should load eagerly — lazy-loading them delays Largest Contentful Paint instead of improving it.",
+        "Dropping width and height because CSS sets the size anyway. Without the intrinsic ratio the browser reserves zero height and the page reflows when the image decodes."
+      ],
+      "proTip": "In Chrome DevTools, the img element's 'currentSrc' property (visible in the console via document.querySelector('img').currentSrc) shows exactly which srcset candidate the browser chose — resize the window and reload with DPR emulation to watch the choice change.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "software-developer"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will upgrade three images — a logo, a hero and a sunset photo — so each device downloads the smallest file that still looks sharp, with no layout shift.",
+        "sections": [
+          {
+            "heading": "The problem: one file cannot fit every screen",
+            "body": "A CSS pixel is not a device pixel. A phone advertising a 360px-wide viewport may physically pack 1080 columns of hardware pixels into that width — a device pixel ratio (DPR) of 3. If you serve a 360px-wide image to that screen, the browser must stretch each image pixel across three hardware pixels and the result looks soft. To be sharp, the file needs roughly slot width times DPR real pixels.\n\nThe naive fix — ship everyone the biggest file — solves blur by creating a bandwidth disaster. A 1600px JPEG for a 360px slot on a 1x budget phone wastes around 90 percent of its bytes, slows the page, and costs users on metered connections real money. Neither a small file nor a big file is correct for everyone, because correctness depends on the visitor's screen and layout, which the server does not know when it writes the HTML.\n\nThe responsive images system inverts control: the HTML describes what files exist and how the image will be laid out, and the browser — the only party that knows the viewport, DPR, and even user preferences like data-saver mode — makes the final choice. Everything in this lesson is a way of feeding the browser that description.",
+            "code": "<!-- one file for everyone: blurry on 3x phones,\n     or wasteful on 1x laptops — pick your failure -->\n<img src=\"hero-800.jpg\" alt=\"Cliff path above a turquoise bay\">"
+          },
+          {
+            "heading": "Fixed-size images: srcset with x descriptors",
+            "body": "When an image renders at a known, fixed CSS size — a 120px logo, a 48px avatar — the only variable is DPR, and x descriptors handle it directly. srcset lists alternative files, each tagged with the density it serves: logo.png 1x, logo@2x.png 2x, logo@3x.png 3x. A 2x screen picks the 2x file; a 1x screen downloads a quarter of the bytes for the same visual result.\n\nThe src attribute stays and acts as the 1x default plus the fallback for very old browsers, so you can safely omit an explicit 1x entry when src already points at the 1x file. The descriptors describe density only — the image still renders at whatever CSS size the layout gives it; the browser simply maps more file pixels onto each CSS pixel.\n\nx descriptors are deliberately simple and deliberately limited: they assume the rendered size never changes. The moment an image's rendered width depends on the viewport — a hero, a card image in a fluid grid — density alone is not enough information, and you graduate to w descriptors.",
+            "code": "<img id=\"logo\" src=\"logo.png\"\n     srcset=\"logo.png 1x, logo@2x.png 2x\"\n     width=\"120\" height=\"40\"\n     alt=\"Trailfinder logo\">"
+          },
+          {
+            "heading": "Fluid images: srcset with w descriptors plus sizes",
+            "body": "For images whose rendered width varies, srcset switches to w descriptors: each candidate is labeled with its true pixel width — hero-400.jpg 400w, hero-800.jpg 800w, hero-1600.jpg 1600w. The w number is a fact about the file, measured in real image pixels, and you should generate candidates at sensible intervals (commonly doubling, or steps of 300-400px) rather than one file per possible screen.\n\nw descriptors alone are not enough, because the browser must choose a file before layout runs — before it knows how wide the image will render. The sizes attribute closes that gap by declaring the rendered width in advance as a list of media-condition and length pairs: sizes=\"(max-width: 600px) 100vw, 800px\" means 'below 600px viewports this image spans the full viewport; otherwise it renders 800 CSS pixels wide'. The browser takes the first condition that matches; the final entry is the default and carries no condition.\n\nThe selection algorithm is then simple arithmetic: resolve sizes to a CSS width, multiply by DPR to get the needed pixel width, and download the smallest candidate at or above that number. A 360px viewport at DPR 3 needs about 1080 pixels, so it takes the 1600w file; the same viewport at DPR 1 takes the 400w file. Note that sizes is a promise, not a measurement — if it lies about the layout, the browser will faithfully fetch the wrong file, so update it when the CSS changes.",
+            "code": "<img id=\"hero\" src=\"hero-800.jpg\"\n     srcset=\"hero-400.jpg 400w, hero-800.jpg 800w, hero-1600.jpg 1600w\"\n     sizes=\"(max-width: 600px) 100vw, 800px\"\n     alt=\"Cliff path above a turquoise bay\">"
+          },
+          {
+            "heading": "picture: art direction and format fallback",
+            "body": "srcset always serves the same picture at different scales. The picture element handles the two cases where you need genuinely different files. It wraps one or more source elements followed by a required img: the browser walks the sources top to bottom, uses the first one whose media or type it accepts, and feeds its srcset into the img, which remains the element that actually renders (and carries alt, width, height and loading).\n\nArt direction uses media attributes: on a wide screen you show the full landscape crop, but on a phone that crop shrinks the subject to a speck, so you swap in a tight square crop instead — <source media=\"(max-width: 600px)\" srcset=\"hero-square.jpg\">. Unlike sizes, which is advisory, a matching media on source is a command the browser must obey, because changing the crop is an editorial decision, not an optimization.\n\nFormat fallback uses type attributes with MIME types: list a modern, smaller format first and older fallbacks after — AVIF, then WebP, then the JPEG in the img src. A browser that cannot decode AVIF skips that source without downloading anything and tries the next. This is how you ship formats years before universal support: supporting browsers save 30-50 percent of bytes, everyone else silently gets the JPEG. The two mechanisms combine freely, and each source can carry its own w-descriptor srcset and sizes.",
+            "code": "<picture>\n  <source type=\"image/avif\" srcset=\"sunset.avif\">\n  <source type=\"image/webp\" srcset=\"sunset.webp\">\n  <img id=\"sunset\" src=\"sunset.jpg\" width=\"800\" height=\"533\"\n       alt=\"Sunset over the headland\">\n</picture>"
+          },
+          {
+            "heading": "loading=lazy and decoding=async",
+            "body": "loading=\"lazy\" tells the browser not to fetch an image until the user scrolls near it. For a long page with twenty photos, that turns the initial load from twenty downloads into two or three, saving bandwidth for images many visitors never reach. The browser manages the distance threshold itself, typically starting the fetch a couple of viewport-heights early so the image is usually ready when it scrolls into view.\n\nThe critical exception is anything visible on first paint. Lazy-loading an above-the-fold hero actively hurts: the browser's preload scanner would normally start that download in the first milliseconds, but lazy loading forces it to wait for layout to confirm the position, delaying your Largest Contentful Paint. The rule is mechanical — first-screen images load eagerly (the default), everything below gets loading=\"lazy\".\n\ndecoding=\"async\" addresses a different cost: turning compressed bytes into pixels takes CPU time, and by default that decode can block the main thread alongside rendering. async gives the browser permission to decode off the critical path and paint the surrounding content first. It is a small, safe win for content images; the perceptible cases are large photos on modest devices.",
+            "code": "<!-- above the fold: eager (default) -->\n<img src=\"hero-800.jpg\" alt=\"…\">\n\n<!-- below the fold: fetch only when needed -->\n<img src=\"gallery-12.jpg\" loading=\"lazy\" decoding=\"async\" alt=\"…\">"
+          },
+          {
+            "heading": "width and height: the end of layout shift",
+            "body": "Before an image downloads, the browser knows nothing about its shape and reserves zero height, so when the file arrives the whole page below it jumps — the classic layout shift that makes users tap the wrong link and tanks the Cumulative Layout Shift metric. The fix is the oldest pair of attributes in HTML: width and height, set to the image's intrinsic pixel dimensions.\n\nModern browsers use these two numbers to compute the aspect ratio immediately, and CSS like width: 100%; height: auto then scales the reserved box fluidly while keeping that ratio. The attribute values do not lock the rendered size — CSS still wins — they simply describe the image's shape so space can be reserved during the very first layout pass.\n\nWrite them as plain integers with no units, matching the real file (an 800×533 photo gets width=\"800\" height=\"533\"), and treat them as mandatory on every content image, including those inside picture. Combined with srcset for resolution, picture for format, and lazy loading for scheduling, dimensions complete the checklist for a professionally shipped image.",
+            "code": "<img src=\"sunset.jpg\" width=\"800\" height=\"533\"\n     style=\"width: 100%; height: auto\"\n     alt=\"Sunset over the headland\">"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Coastal hike — photo story</title>\n</head>\n<body>\n  <h1>Coastal hike</h1>\n\n  <!-- TODO 1: logo is blurry on retina screens — add a srcset with a 2x candidate -->\n  <img id=\"logo\" src=\"logo.png\" width=\"120\" height=\"40\" alt=\"Trailfinder logo\">\n\n  <!-- TODO 2: add a srcset with w descriptors (400w, 800w, 1600w) -->\n  <!-- TODO 3: add a sizes attribute: full width under 600px, else 800px -->\n  <!-- TODO 4: add width=\"800\" height=\"533\", loading=\"lazy\", decoding=\"async\" -->\n  <img id=\"hero\" src=\"hero-800.jpg\" alt=\"Cliff path above a turquoise bay\">\n\n  <!-- TODO 5-6: wrap in <picture> with AVIF and WebP sources before this JPEG -->\n  <img id=\"sunset\" src=\"sunset.jpg\" width=\"800\" height=\"533\" alt=\"Sunset over the headland\">\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Coastal hike — photo story</title>\n</head>\n<body>\n  <h1>Coastal hike</h1>\n\n  <img id=\"logo\" src=\"logo.png\" srcset=\"logo.png 1x, logo@2x.png 2x\"\n       width=\"120\" height=\"40\" alt=\"Trailfinder logo\">\n\n  <img id=\"hero\" src=\"hero-800.jpg\"\n       srcset=\"hero-400.jpg 400w, hero-800.jpg 800w, hero-1600.jpg 1600w\"\n       sizes=\"(max-width: 600px) 100vw, 800px\"\n       width=\"800\" height=\"533\"\n       loading=\"lazy\" decoding=\"async\"\n       alt=\"Cliff path above a turquoise bay\">\n\n  <picture>\n    <source type=\"image/avif\" srcset=\"sunset.avif\">\n    <source type=\"image/webp\" srcset=\"sunset.webp\">\n    <img id=\"sunset\" src=\"sunset.jpg\" width=\"800\" height=\"533\" alt=\"Sunset over the headland\">\n  </picture>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Fix the blurry logo: add a srcset to #logo that includes a 2x density candidate (e.g. logo@2x.png 2x).",
+            "hint": "Fixed-size images use x descriptors: srcset=\"logo.png 1x, logo@2x.png 2x\".",
+            "errorMessage": "#logo has no srcset with a 2x candidate — retina screens are still upscaling the 1x file.",
+            "check": {
+              "type": "attr",
+              "selector": "#logo",
+              "attr": "srcset",
+              "pattern": "2x"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Give #hero a srcset listing hero-400.jpg, hero-800.jpg and hero-1600.jpg with w descriptors.",
+            "hint": "Fluid images use w descriptors stating each file's real pixel width: srcset=\"hero-400.jpg 400w, hero-800.jpg 800w, hero-1600.jpg 1600w\".",
+            "errorMessage": "#hero has no srcset with w descriptors (like 800w). The browser cannot pick a size without candidates.",
+            "check": {
+              "type": "attr",
+              "selector": "#hero",
+              "attr": "srcset",
+              "pattern": "\\d+w"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Add a sizes attribute to #hero: 100vw under 600px viewports, otherwise 800px.",
+            "hint": "sizes=\"(max-width: 600px) 100vw, 800px\" — first matching condition wins, the last entry is the default.",
+            "errorMessage": "#hero has no sizes attribute, so the browser must assume 100vw and will over-download on large screens.",
+            "check": {
+              "type": "attr",
+              "selector": "#hero",
+              "attr": "sizes",
+              "pattern": "\\d"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "On #hero, reserve layout space and schedule the load: add width=\"800\", height=\"533\", loading=\"lazy\" and decoding=\"async\".",
+            "hint": "All four are plain attributes on the img: width=\"800\" height=\"533\" loading=\"lazy\" decoding=\"async\".",
+            "errorMessage": "#hero still lacks some of width/height/loading=\"lazy\"/decoding=\"async\" — without them the page shifts and the image loads eagerly.",
+            "check": {
+              "type": "attr",
+              "selector": "#hero[width][height][loading=\"lazy\"]",
+              "attr": "decoding",
+              "value": "async"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Wrap the sunset img in a <picture> element and add a <source> with type=\"image/avif\" pointing at sunset.avif.",
+            "hint": "<picture><source type=\"image/avif\" srcset=\"sunset.avif\">…the existing img stays last…</picture>.",
+            "errorMessage": "No <source type=\"image/avif\"> found inside a <picture>. Modern browsers cannot opt into the smaller format.",
+            "check": {
+              "type": "selector",
+              "selector": "picture > source[type=\"image/avif\"]"
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Add a second <source> with type=\"image/webp\" (sunset.webp) so the picture offers two modern formats before the JPEG fallback.",
+            "hint": "Order matters: AVIF source, then WebP source, then the img with the JPEG src.",
+            "errorMessage": "The <picture> needs two <source> elements (AVIF and WebP) above the img fallback.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "picture > source[type]",
+              "min": 2
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-a04-seo-social-meta",
+      "title": "Make any page rank and preview correctly with head metadata",
+      "summary": "Write the title, description, canonical, robots, Open Graph, Twitter card, JSON-LD and icon markup that search engines and social platforms actually read.",
+      "difficulty": "advanced",
+      "minutes": 15,
+      "isFree": false,
+      "goal": "Build a complete, production-grade head for an article page: search snippet, canonical URL, social link previews, structured data and icons.",
+      "whyItMatters": "The head of a page is invisible to visitors but decides how the page appears everywhere else: the title and description shape its search listing, the canonical tag protects it from duplicate-content penalties, Open Graph and Twitter tags control the card people see when the link is shared in Slack, WhatsApp or X, and JSON-LD can earn rich results like star ratings and article cards. Teams routinely lose traffic to nothing more than a missing description or a broken og:image — this is cheap, high-impact markup every developer should be able to write from memory.",
+      "steps": [
+        "Read the title and description section, then check the starter's title against the length guidance.",
+        "Add a meta description worth clicking (task 1).",
+        "Declare the canonical URL for the page (task 2).",
+        "Add the five core Open Graph tags that power link previews (task 3).",
+        "Add the Twitter card tag (task 4).",
+        "Add a JSON-LD script describing the article (task 5) and the icon links (task 6).",
+        "Press Run and confirm all six checks pass."
+      ],
+      "prompt": "<title>Roast coffee at home | BrewLab</title>\n<meta name=\"description\" content=\"A weekend guide to small-batch home roasting: gear, first crack, and the mistakes to skip.\">\n<link rel=\"canonical\" href=\"https://brewlab.example/guides/home-roasting\">\n<meta property=\"og:title\" content=\"Roast coffee at home\">\n<meta property=\"og:image\" content=\"https://brewlab.example/img/roast-og.jpg\">\n<meta name=\"twitter:card\" content=\"summary_large_image\">",
+      "promptLabel": "Key code example",
+      "explanation": "The title is written page-topic-first with the brand after the separator, because search results truncate from the right. The meta description does not affect ranking directly but is the ad copy of the search listing, so it is a genuine sentence, not a keyword pile. The canonical link names the one official URL for this content, collapsing tracking-parameter and www/non-www duplicates into a single ranking target. The og:* tags feed link-preview scrapers, which never run JavaScript — they read exactly this markup and nothing else — and twitter:card selects the large-image layout on X.",
+      "example": "A marketing team shares their new guide in a customer Slack and the preview shows the bare domain, no image, and 'Untitled'. The scraper found no Open Graph tags and gave up.\n\nAfter adding og:title, og:description, og:image (an absolute URL to a 1200×630 image), og:url and og:type, the same link unfurls into a full card with headline, blurb and photo — and click-through on shared links roughly doubles, with zero changes to the visible page.",
+      "exercise": "In the editor on the right, complete the head of the article page: meta description, canonical link, the five core og: properties, the twitter:card meta, a JSON-LD Article script, and the two icon links.",
+      "expectedResult": "The visible preview shows only the article itself — every addition lives in the head — and all six checks pass in the console.",
+      "commonMistakes": [
+        "Using a relative URL in og:image or canonical. Scrapers resolve nothing for you — both must be absolute URLs including the scheme and host.",
+        "Stuffing the title with keywords ('Coffee, roast coffee, home roasting, best roasting'). Search engines demote it and users distrust it; write one clear phrase plus the brand.",
+        "Adding noindex to a page and forgetting it after launch. A single leftover robots meta can silently remove a production page from search for months.",
+        "Duplicating the same title and description across every page of a site. Each page competes for different queries and needs its own pair."
+      ],
+      "proTip": "Every major platform has a debugger that shows you exactly what its scraper sees — search for 'Facebook Sharing Debugger', 'LinkedIn Post Inspector' or 'Twitter Card Validator'. They also force a re-scrape, which is how you fix a stale preview after correcting your tags.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "software-developer"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will finish the head of an article page so that search engines index it correctly and chat apps unfurl it into a rich preview card.",
+        "sections": [
+          {
+            "heading": "title and meta description: your search listing",
+            "body": "The title element does double duty: it labels the browser tab and becomes the blue headline of your search result. Aim for roughly 50-60 characters — longer titles get cut off with an ellipsis — and put the page's specific topic first, the site brand last, separated by a pipe or dash: 'Roast coffee at home | BrewLab'. Front-loading matters because truncation eats the end, and because scanners read the first words only. Every page needs a unique title; templates that produce the same title sitewide throw away the strongest on-page signal search engines have.\n\nThe meta description — <meta name=\"description\" content=\"…\"> — supplies the grey snippet under that headline. It is not a ranking factor, but it is the difference between being seen and being clicked: write one or two real sentences, around 150-160 characters, that tell the searcher what they will get and why this page answers their query. Think of it as ad copy that must be honest.\n\nSearch engines treat the description as a suggestion, not a contract: if it is missing, spammy, or does not match the query, they will synthesize a snippet from page text instead. That fallback is usually worse than what you would write, which is the practical argument for authoring one on every indexable page.",
+            "code": "<title>Roast coffee at home | BrewLab</title>\n<meta name=\"description\" content=\"A weekend guide to small-batch home roasting: the gear that matters, hearing first crack, and the three mistakes every beginner makes.\">"
+          },
+          {
+            "heading": "rel=canonical: one official URL per page",
+            "body": "The same content is usually reachable at many URLs: with and without www, with tracking parameters (?utm_source=newsletter), with trailing-slash variants, sometimes on both http and https. To a search engine each variant is a separate page, so your ranking signals get split across duplicates and the engine must guess which one to show. The canonical link ends the guessing: <link rel=\"canonical\" href=\"…\"> declares the one URL you consider official for this content.\n\nEvery indexable page should carry a canonical, even when no duplicates exist yet — a self-referencing canonical is standard practice because duplicates tend to appear later through campaign links and syndication. The href must be absolute (scheme and host included) and should point at the clean, parameter-free form of the URL. When another site republishes your article, their copy can canonical back to yours, passing the credit home.\n\nCanonical is advisory but strongly respected; the related robots meta is a directive. <meta name=\"robots\" content=\"noindex\"> orders engines to keep the page out of results entirely — right for staging sites, thin search-results pages and thank-you pages. nofollow additionally tells them not to pass credit through the page's links. The operational hazard runs in both directions: forgetting noindex leaks staging into Google, and shipping a leftover noindex to production silently deletes a live page from search, so many teams add an automated check for exactly this tag.",
+            "code": "<link rel=\"canonical\" href=\"https://brewlab.example/guides/home-roasting\">\n\n<!-- keep this page out of search results entirely -->\n<meta name=\"robots\" content=\"noindex, nofollow\">"
+          },
+          {
+            "heading": "Open Graph: how link previews are built",
+            "body": "When someone pastes your URL into Slack, WhatsApp, LinkedIn or iMessage, the platform's scraper fetches the page once and builds the preview card entirely from meta tags in the head. The vocabulary those scrapers share is Open Graph — meta elements using property (not name) attributes with the og: prefix. No tags, no card: the platform falls back to a bare domain or guesses badly.\n\nFive properties cover almost every case. og:title is the card headline — often shorter and punchier than the SEO title, with no brand suffix. og:description is the one-to-two line teaser. og:image is the picture, and it is the tag that breaks most often: it must be an absolute URL, and the near-universal sweet spot is a 1200×630 image (a 1.91:1 ratio) so it fills the large-card crop on every platform. og:url states the canonical URL of the content, keeping share counts consolidated. og:type describes what the thing is — website for most pages, article for posts and guides, plus niche types like video.other.\n\nOne operational fact explains most preview bugs: scrapers do not execute JavaScript, and most platforms cache the first scrape aggressively. Tags injected client-side by a SPA framework are invisible to them — Open Graph markup must be present in the server-rendered HTML — and after you fix a tag you must force a re-scrape with the platform's debugger tool to evict the cached card.",
+            "code": "<meta property=\"og:title\" content=\"Roast coffee at home\">\n<meta property=\"og:description\" content=\"Gear, first crack, and the mistakes to skip — a weekend guide.\">\n<meta property=\"og:image\" content=\"https://brewlab.example/img/roast-og.jpg\">\n<meta property=\"og:url\" content=\"https://brewlab.example/guides/home-roasting\">\n<meta property=\"og:type\" content=\"article\">"
+          },
+          {
+            "heading": "Twitter cards: the one extra tag that matters",
+            "body": "X (Twitter) reads Open Graph tags as its fallback, so you do not duplicate everything — but it has its own switch for the card layout. <meta name=\"twitter:card\" content=\"summary_large_image\"> selects the full-width image card that dominates timelines; the alternative value summary produces a small square thumbnail beside the text. Note the attribute difference: Twitter's vocabulary uses name, while Open Graph uses property — mixing them up is the classic silent failure, because the scraper simply ignores tags with the wrong attribute.\n\nThe optional twitter:site tag credits the site's account (content=\"@brewlab\") and twitter:creator credits the individual author, which attaches attribution to the card. If you provide twitter:title, twitter:description or twitter:image they override the og: equivalents on X only — useful when you want platform-specific copy, ignorable otherwise.\n\nThe pragmatic recipe for a content site is therefore: full og: set, plus twitter:card, plus twitter:site if the brand has an account. That combination renders correctly on effectively every platform that unfurls links today.",
+            "code": "<meta name=\"twitter:card\" content=\"summary_large_image\">\n<meta name=\"twitter:site\" content=\"@brewlab\">"
+          },
+          {
+            "heading": "Structured data: JSON-LD in one section",
+            "body": "Beyond previews, search engines want machine-readable facts about a page — who wrote the article and when, what a recipe's rating is, what a product costs. The format they recommend is JSON-LD: a script element with type=\"application/ld+json\" containing a JSON object that uses the schema.org vocabulary. Because the type is not JavaScript, browsers never execute it; it is pure data riding inside the HTML.\n\nThe object declares @context (always https://schema.org), an @type such as Article, Product, Recipe, FAQPage or LocalBusiness, and the properties that type defines. Accurate structured data is what makes pages eligible for rich results — the star ratings, prices, FAQ dropdowns and article carousels that occupy the best real estate on a results page. Eligibility is the honest word: engines choose when to show rich results, and they penalize markup that claims things the visible page does not contain.\n\nFor a working developer the awareness level is: know the format, keep the JSON valid (one syntax error invalidates the whole block), mirror only facts that are visibly on the page, and validate with Google's Rich Results Test. Deep schema modeling is a specialty of its own; the entry ticket is this one script element done correctly.",
+            "code": "<script type=\"application/ld+json\">\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Article\",\n  \"headline\": \"Roast coffee at home\",\n  \"author\": { \"@type\": \"Person\", \"name\": \"Dana Petrou\" },\n  \"datePublished\": \"2026-08-01\"\n}\n</script>"
+          },
+          {
+            "heading": "Icons: favicon and apple-touch-icon",
+            "body": "Icons are metadata too, and browser tabs, bookmark lists, phone home screens and search results all draw from the link elements in your head. The modern minimal set is two lines. First, a standard icon: <link rel=\"icon\" href=\"/icon.svg\" type=\"image/svg+xml\"> — SVG scales to every size from a 16px tab to a large bookmark tile, and browsers that predate SVG favicons still fall back to requesting /favicon.ico from the site root, so keeping that legacy file in place costs nothing and covers ancient clients.\n\nSecond, the Apple touch icon: <link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\">. iOS uses it when someone adds the page to their home screen, and expects a 180×180 PNG with no transparency — iOS composites its own rounded corners. Several Android browsers and various chat apps also read this tag as a high-resolution icon source, which is why it belongs on every site, Apple-focused or not.\n\nSites that behave as installable apps add a web app manifest (<link rel=\"manifest\" href=\"/site.webmanifest\">) which lists further icon sizes for install surfaces. For an ordinary content site, the SVG icon, the legacy favicon.ico and the apple-touch-icon are the complete, modern answer — the sprawling twenty-line icon blocks old generators produced are obsolete.",
+            "code": "<link rel=\"icon\" href=\"/icon.svg\" type=\"image/svg+xml\">\n<link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\">\n<!-- /favicon.ico kept at the site root as the silent fallback -->"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Roast coffee at home | BrewLab</title>\n  <!-- TODO 1: meta description (one or two real sentences, ~150 chars) -->\n  <!-- TODO 2: canonical link to https://brewlab.example/guides/home-roasting -->\n  <!-- TODO 3: Open Graph: og:title, og:description, og:image, og:url, og:type -->\n  <!-- TODO 4: twitter:card = summary_large_image -->\n  <!-- TODO 5: JSON-LD script describing this Article -->\n  <!-- TODO 6: icon + apple-touch-icon links -->\n</head>\n<body>\n  <article>\n    <h1>Roast coffee at home</h1>\n    <p>A weekend guide to small-batch roasting on ordinary kitchen gear.</p>\n  </article>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Roast coffee at home | BrewLab</title>\n  <meta name=\"description\" content=\"A weekend guide to small-batch home roasting: the gear that matters, hearing first crack, and the three mistakes every beginner makes.\">\n  <link rel=\"canonical\" href=\"https://brewlab.example/guides/home-roasting\">\n  <meta property=\"og:title\" content=\"Roast coffee at home\">\n  <meta property=\"og:description\" content=\"Gear, first crack, and the mistakes to skip — a weekend guide.\">\n  <meta property=\"og:image\" content=\"https://brewlab.example/img/roast-og.jpg\">\n  <meta property=\"og:url\" content=\"https://brewlab.example/guides/home-roasting\">\n  <meta property=\"og:type\" content=\"article\">\n  <meta name=\"twitter:card\" content=\"summary_large_image\">\n  <script type=\"application/ld+json\">\n  {\n    \"@context\": \"https://schema.org\",\n    \"@type\": \"Article\",\n    \"headline\": \"Roast coffee at home\",\n    \"author\": { \"@type\": \"Person\", \"name\": \"Dana Petrou\" },\n    \"datePublished\": \"2026-08-01\"\n  }\n  </script>\n  <link rel=\"icon\" href=\"/icon.svg\" type=\"image/svg+xml\">\n  <link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\">\n</head>\n<body>\n  <article>\n    <h1>Roast coffee at home</h1>\n    <p>A weekend guide to small-batch roasting on ordinary kitchen gear.</p>\n  </article>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Add a meta description of at least ~40 characters that describes this guide in real sentences.",
+            "hint": "<meta name=\"description\" content=\"…\"> in the head — write ad copy, not keywords.",
+            "errorMessage": "No substantial <meta name=\"description\"> found. Search engines will synthesize a worse snippet without it.",
+            "check": {
+              "type": "attr",
+              "selector": "meta[name=\"description\"]",
+              "attr": "content",
+              "pattern": ".{40,}"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Declare the canonical URL with a link element pointing at the absolute https URL of this guide.",
+            "hint": "<link rel=\"canonical\" href=\"https://brewlab.example/guides/home-roasting\"> — absolute URL, scheme included.",
+            "errorMessage": "No canonical link with an absolute http(s) URL found. Duplicate URLs will split this page's ranking signals.",
+            "check": {
+              "type": "attr",
+              "selector": "link[rel=\"canonical\"]",
+              "attr": "href",
+              "pattern": "^https?://"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Add the five core Open Graph tags: og:title, og:description, og:image, og:url and og:type (meta elements with property attributes).",
+            "hint": "Open Graph uses property=\"og:…\", not name. og:image must be an absolute URL.",
+            "errorMessage": "Fewer than 5 og: meta tags found. Link previews need og:title, og:description, og:image, og:url and og:type.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "meta[property^=\"og:\"]",
+              "min": 5
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Select the large-image card layout on X: add the twitter:card meta set to summary_large_image.",
+            "hint": "Twitter's vocabulary uses name: <meta name=\"twitter:card\" content=\"summary_large_image\">.",
+            "errorMessage": "No <meta name=\"twitter:card\" content=\"summary_large_image\"> found — X will fall back to a small summary card.",
+            "check": {
+              "type": "attr",
+              "selector": "meta[name=\"twitter:card\"]",
+              "attr": "content",
+              "value": "summary_large_image"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Add a JSON-LD structured-data script (type=\"application/ld+json\") describing this Article.",
+            "hint": "A <script type=\"application/ld+json\"> containing @context, @type: \"Article\", headline, author and datePublished.",
+            "errorMessage": "No <script type=\"application/ld+json\"> found. Structured data is what makes rich results possible.",
+            "check": {
+              "type": "selector",
+              "selector": "script[type=\"application/ld+json\"]"
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Add the icon pair: a rel=\"icon\" link and a rel=\"apple-touch-icon\" link.",
+            "hint": "<link rel=\"icon\" href=\"/icon.svg\" type=\"image/svg+xml\"> and <link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\">.",
+            "errorMessage": "No <link rel=\"apple-touch-icon\"> found — iOS home screens and several chat apps read this icon.",
+            "check": {
+              "type": "selector",
+              "selector": "link[rel=\"apple-touch-icon\"]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-a05-accessibility-alt-headings",
+      "title": "Ship pages every user can read: alt text, outlines and skip links",
+      "summary": "Treat accessibility as a requirement: master the four kinds of alt text, audit heading outlines and landmarks, add a skip link, and own contrast and language correctness.",
+      "difficulty": "advanced",
+      "minutes": 14,
+      "isFree": false,
+      "goal": "Repair an article page so screen-reader users get real image descriptions, a working outline, a skip link and correct language information.",
+      "whyItMatters": "Roughly one in six people has a disability that affects how they use the web, and in a growing number of jurisdictions inaccessible sites are a legal liability, not just a quality gap. Most accessibility failures are not exotic — audits keep finding the same basics: missing alt text, broken heading outlines, no way to skip repeated navigation, illegible contrast. These are HTML-level decisions made by whoever writes the markup, which means the developer either builds accessibility in or builds the barrier in. This lesson makes the basics automatic.",
+      "steps": [
+        "Read the framing section: accessibility is an engineering requirement with a standard (WCAG), not a polish step.",
+        "Write an informative alt for the photo (task 1) and an empty alt for the decorative divider (task 2).",
+        "Add the skip link at the top of the body (task 3) and give main the matching id (task 4).",
+        "Repair the heading outline: the section titles were chosen for size, not level (task 5).",
+        "Declare the document language (task 6).",
+        "Press Run, confirm all checks pass, then Tab through the preview to feel the skip link work."
+      ],
+      "prompt": "<a class=\"skip\" href=\"#main\">Skip to content</a>\n…\n<main id=\"main\">\n  <h1>Watching the spring migration</h1>\n  <h2>Where to stand</h2>\n  <img src=\"flock.jpg\" alt=\"Hundreds of storks circling a thermal above the ridge\">\n  <img src=\"divider.png\" alt=\"\">\n</main>",
+      "promptLabel": "Key code example",
+      "explanation": "The skip link is the first focusable element on the page, so a keyboard user's very first Tab press offers a shortcut past the navigation; it targets the id on main. The photo's alt conveys what the image contributes — the scale and behavior of the flock — rather than restating 'photo of birds'. The divider image is decoration, so alt=\"\" tells screen readers to skip it silently instead of announcing a meaningless filename. Together with a sequential heading outline, these give a non-visual reader the same structure a sighted reader gets by glancing.",
+      "example": "A screen-reader user opens the article and hears: 'graphic flock underscore final underscore v2 dot jpg' — the filename, because alt is missing — then must arrow through forty navigation links to reach the text, and the section list is meaningless because every heading is an h4.\n\nAfter the repair, the same user hears a real description of the photo, jumps straight to the content with the skip link, and pulls up a headings list that reads like a table of contents.",
+      "exercise": "In the editor on the right, fix the article: informative alt on the photo, empty alt on the decorative divider, a skip link wired to main, section headings promoted to their correct level, and lang on the html element.",
+      "expectedResult": "The preview looks nearly identical — one hidden link appears on first Tab — but the underlying page now works for keyboard and screen-reader users, and all six checks pass.",
+      "commonMistakes": [
+        "Starting alt text with 'Image of' or 'Photo of'. Screen readers already announce the element as a graphic, so the phrase is pure noise — describe the content directly.",
+        "Omitting alt entirely instead of writing alt=\"\". Missing alt makes screen readers fall back to the filename; the empty string is an explicit, meaningful signal to skip.",
+        "Choosing heading levels for their default font size. Levels are structure; if h2 looks too big, restyle it with CSS.",
+        "Hiding the skip link with display: none. That removes it from the Tab order entirely — hide it off-screen and reveal it on :focus instead."
+      ],
+      "proTip": "The fastest audit you can run: press Tab from the address bar and watch where focus goes, then open the accessibility tree in DevTools (or a headings list in a screen reader) and read your outline. Five minutes, and it catches the majority of the failures in this lesson.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "software-developer"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will repair a bird-watching article that fails four basic accessibility checks: image descriptions, document outline, skip navigation and language.",
+        "sections": [
+          {
+            "heading": "A requirement, not a feature",
+            "body": "Accessibility is the property of a page being usable by people regardless of how they perceive and operate it: through a screen reader, by keyboard alone, with magnification, with limited color perception, with a tremor that makes small targets hard to hit. It is not an optional enhancement layer — it is part of the definition of 'working', the same way security is. A checkout that blind users cannot complete is broken, whether or not anyone on the team noticed.\n\nThe standard that defines 'accessible' in practice is WCAG (Web Content Accessibility Guidelines), whose success criteria are organized in levels; level AA is the common legal and contractual target, referenced by regulations like the European Accessibility Act and by most procurement requirements. You do not need to memorize the document — you need the habits it encodes, and the ones in this lesson cover a remarkable share of real-world failures.\n\nThe economic framing matters too: the fixes below are nearly free at authoring time and expensive to retrofit at audit time. Alt text, correct heading levels, a skip link and a lang attribute add minutes to a page's construction. The same items found in a compliance audit two years later mean re-opening hundreds of templates. Accessibility done as a requirement is cheap; done as a remediation project it never is.",
+            "code": "<!-- the deliverable is not 'a page that looks right' —\n     it is 'a page that works through eyes, ears or keyboard' -->"
+          },
+          {
+            "heading": "Informative images: alt that carries the meaning",
+            "body": "The alt attribute is the text that replaces an image when the image cannot be seen — read aloud by screen readers, shown when the file fails to load, indexed by search engines. Writing it well starts with one question: what does this image contribute here? The answer, phrased as if you were reading the page to someone over the phone, is the alt text.\n\nFor an informative image, describe the relevant content, not the medium. alt=\"Hundreds of storks circling a thermal above the ridge\" carries the article's point; alt=\"image\" or the filename carries nothing, and prefixes like 'Photo of' are redundant because the screen reader already announces it as a graphic. Keep it roughly a sentence — alt is a replacement, not a caption, and it should be as long as necessary and no longer.\n\nContext changes the correct answer for the identical file. A portrait on a team page might be alt=\"Dana Petrou\", while the same portrait illustrating an article about studio lighting might be alt=\"Portrait lit by a single soft key light from the left\". There is no universally right alt for an image, only a right alt for an image in a context — which is why it cannot be autogenerated well and belongs to whoever writes the page.",
+            "code": "<!-- weak: restates the medium, wastes the reader's time -->\n<img src=\"flock.jpg\" alt=\"photo\">\n\n<!-- strong: carries what the image contributes -->\n<img src=\"flock.jpg\" alt=\"Hundreds of storks circling a thermal above the ridge\">"
+          },
+          {
+            "heading": "Functional, decorative and complex images",
+            "body": "When an image is interactive — a logo that links home, an icon that submits a search — its alt must state the function, not the appearance: alt=\"BrewLab home\", alt=\"Search\". The screen-reader user is deciding whether to activate it, and 'magnifying glass icon' answers the wrong question.\n\nPurely decorative images — dividers, background flourishes, stock art that adds mood but no information — get the explicit empty string: alt=\"\". This is a deliberate signal meaning 'nothing to say here; skip silently', and it is completely different from omitting the attribute, which forces screen readers to guess and usually ends with the filename being read aloud. Every img needs an alt attribute; the empty value is one of its legitimate values. (Decoration is often better delivered as CSS background-image, which needs no alt at all.)\n\nComplex images — charts, diagrams, maps — cannot be compressed into one alt sentence. The pattern is a short alt naming the image plus its conclusion ('Bar chart: signups doubled after the March launch') with the full data available to everyone nearby: a table below the chart, a details element with the description, or a link to it. figure with figcaption pairs the image with a visible caption, but note the caption and the alt have different jobs — the caption comments, the alt replaces — so a figcaption does not excuse an empty alt on an informative image.",
+            "code": "<a href=\"/\"><img src=\"logo.svg\" alt=\"BrewLab home\"></a>\n\n<img src=\"divider.png\" alt=\"\">\n\n<img src=\"chart.png\" alt=\"Bar chart: signups doubled after the March launch\">\n<!-- full data follows in a real table -->"
+          },
+          {
+            "heading": "Landmarks and the heading outline",
+            "body": "Screen readers navigate structurally: users pull up a list of landmarks or headings and jump, rather than reading linearly. Landmarks come from the sectioning elements you already know — header, nav, main, aside, footer — and the two rules that matter are: exactly one main per page, and a label (aria-label) on any landmark that appears twice, so 'navigation' and 'navigation' become 'primary' and 'breadcrumb'.\n\nThe heading outline is the finer-grained map. Audit it by reading only the headings top to bottom: one h1 stating what the page is, h2 for each major section, h3 nested inside an h2's territory, never skipping levels going down. The audit fails in predictable ways — multiple h1s from a template collision, an h4 chosen because its default size looked right, bold paragraphs acting as fake headings that appear in nobody's headings list.\n\nThe fix is always the same: assign the level the structure demands and move appearance to CSS. This is the single highest-value habit in the lesson, because the headings list is to a screen-reader user what the visual layout is to everyone else — the primary way of understanding what the page contains and getting to the wanted part.",
+            "code": "<main>\n  <h1>Watching the spring migration</h1>\n  <h2>Where to stand</h2>\n  <h2>What you will see</h2>\n  <h3>Early morning</h3>\n</main>"
+          },
+          {
+            "heading": "The skip link",
+            "body": "Sighted mouse users ignore repeated page furniture and click straight into content. A keyboard user has no such shortcut: every page of your site makes them Tab through the same logo, navigation and search box before reaching the article — potentially dozens of presses, on every single page. The skip link is the standard remedy: the first focusable element in the body is a link reading 'Skip to content' whose href targets the main element's id.\n\nActivating it moves focus past the repeated header, and because main is not natively focusable, robust implementations add tabindex=\"-1\" to it so every browser reliably moves both focus and reading position. The link itself is usually hidden until needed: positioned off-screen by default and brought into view by a :focus rule. Never hide it with display: none or the hidden attribute — both remove it from the Tab order, which deletes the feature while leaving the markup.\n\nA skip link costs three lines and is one of the most-used accessibility features in existence — it also helps sighted keyboard users, switch users, and anyone on a screen magnifier. WCAG requires a mechanism to bypass repeated blocks; this is the canonical one.",
+            "code": "<body>\n  <a class=\"skip\" href=\"#main\">Skip to content</a>\n  <header>…logo, nav, search…</header>\n  <main id=\"main\" tabindex=\"-1\">…</main>\n</body>\n\n<style>\n  .skip { position: absolute; left: -999px; }\n  .skip:focus { left: 8px; top: 8px; }\n</style>"
+          },
+          {
+            "heading": "Contrast and language: two responsibilities you own",
+            "body": "Color contrast is decided wherever colors are chosen, and WCAG AA sets the floor: a contrast ratio of at least 4.5:1 between text and its background for normal text, relaxed to 3:1 for large text (roughly 24px, or 19px bold). The fashionable light-grey-on-white caption at 2.4:1 fails — not just for low-vision users, but for anyone reading a phone in sunlight. Every browser's DevTools shows the ratio when you inspect a color, and design tools flag it too; checking costs seconds. The related rule: color can never be the only carrier of information — an error state shown purely by a red border disappears for a colorblind user, so pair it with text or an icon.\n\nLanguage correctness is the other quiet responsibility. lang=\"en\" on the html element selects the screen reader's pronunciation engine, the browser's hyphenation rules and the spellchecker's dictionary; without it, software guesses, and an English voice reading French produces gibberish. Mark inline language switches on the smallest containing element — a quoted sentence, a foreign title — and keep the tag truthful: a template hardcoding lang=\"en\" on a German site is an accessibility bug that affects every sentence of every page.\n\nNeither of these appears in a visual review. Both are caught in seconds by the habits this lesson builds — which is the general shape of accessibility work: not harder, just deliberate.",
+            "code": "<!-- 4.5:1 minimum for body text (WCAG AA) -->\n<p style=\"color: #595959; background: #ffffff\">passes</p>\n<p style=\"color: #aaaaaa; background: #ffffff\">fails</p>\n\n<html lang=\"en\">\n  <blockquote lang=\"fr\">…</blockquote>\n</html>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<!-- TODO 6: declare the document language -->\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Field notes: spring migration</title>\n  <style>\n    .skip { position: absolute; left: -999px; }\n    .skip:focus { left: 8px; top: 8px; }\n  </style>\n</head>\n<body>\n  <!-- TODO 3: add the skip link (first focusable element, href=\"#main\") -->\n  <header>\n    <nav aria-label=\"Primary\">Home · Notes · About</nav>\n  </header>\n  <!-- TODO 4: give main the id the skip link targets -->\n  <main>\n    <h1>Watching the spring migration</h1>\n    <!-- TODO 5: these were chosen for size — promote them to the correct level -->\n    <h4>Where to stand</h4>\n    <p>The ridge above the reservoir funnels the thermals.</p>\n    <h4>What you will see</h4>\n    <!-- TODO 1: write an informative alt for this photo -->\n    <img id=\"photo\" src=\"flock.jpg\" width=\"800\" height=\"533\">\n    <!-- TODO 2: this divider is decoration — give it an explicit empty alt -->\n    <img id=\"divider\" src=\"divider.png\" width=\"800\" height=\"12\">\n  </main>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Field notes: spring migration</title>\n  <style>\n    .skip { position: absolute; left: -999px; }\n    .skip:focus { left: 8px; top: 8px; }\n  </style>\n</head>\n<body>\n  <a class=\"skip\" href=\"#main\">Skip to content</a>\n  <header>\n    <nav aria-label=\"Primary\">Home · Notes · About</nav>\n  </header>\n  <main id=\"main\" tabindex=\"-1\">\n    <h1>Watching the spring migration</h1>\n    <h2>Where to stand</h2>\n    <p>The ridge above the reservoir funnels the thermals.</p>\n    <h2>What you will see</h2>\n    <img id=\"photo\" src=\"flock.jpg\" width=\"800\" height=\"533\"\n         alt=\"Hundreds of storks circling a thermal above the ridge\">\n    <img id=\"divider\" src=\"divider.png\" width=\"800\" height=\"12\" alt=\"\">\n  </main>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Write an informative alt for the flock photo (#photo) that describes what the image contributes to the article.",
+            "hint": "Describe content, not medium: alt=\"Hundreds of storks circling a thermal above the ridge\" — no 'photo of' prefix.",
+            "errorMessage": "#photo has no meaningful alt text. Screen readers would fall back to announcing the filename.",
+            "check": {
+              "type": "attr",
+              "selector": "#photo",
+              "attr": "alt",
+              "pattern": "\\w+\\s+\\w+"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Mark the divider image (#divider) as decorative with an explicit empty alt: alt=\"\".",
+            "hint": "Empty alt (alt=\"\") means 'skip silently'. Omitting the attribute entirely means 'guess', which is worse.",
+            "errorMessage": "#divider needs alt=\"\" — the explicit empty string that tells assistive tech to skip pure decoration.",
+            "check": {
+              "type": "attr",
+              "selector": "#divider",
+              "attr": "alt",
+              "pattern": "^$"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Add a skip link as the first element in body: an anchor with class \"skip\" and href=\"#main\" reading 'Skip to content'.",
+            "hint": "<a class=\"skip\" href=\"#main\">Skip to content</a> right after <body> — the CSS to hide/reveal it already exists.",
+            "errorMessage": "No link with href=\"#main\" found. Keyboard users have no way to bypass the repeated header.",
+            "check": {
+              "type": "selector",
+              "selector": "a[href=\"#main\"]"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Give the main element the id=\"main\" that the skip link targets (adding tabindex=\"-1\" is good practice).",
+            "hint": "<main id=\"main\" tabindex=\"-1\"> — the id makes the fragment link land; tabindex=\"-1\" makes focus move reliably.",
+            "errorMessage": "The skip link points at #main but no <main id=\"main\"> exists — the link would go nowhere.",
+            "check": {
+              "type": "selector",
+              "selector": "main#main"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Repair the outline: promote the two h4 section titles to h2 — the level below the page's h1.",
+            "hint": "'Where to stand' and 'What you will see' are major sections under the h1, so both become <h2>.",
+            "errorMessage": "Expected two <h2> section headings. Levels are structure — restyle size with CSS, never with h4.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "h2",
+              "min": 2
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Declare the document language on the html element.",
+            "hint": "<html lang=\"en\"> — it selects the screen reader's voice, hyphenation and spellcheck dictionary.",
+            "errorMessage": "The <html> element has no lang attribute, so assistive software must guess the page's language.",
+            "check": {
+              "type": "attr",
+              "selector": "html",
+              "attr": "lang",
+              "pattern": "^[a-z]{2}"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-a06-aria",
+      "title": "Use ARIA to describe interfaces — and know when not to",
+      "summary": "Apply the first rule of ARIA, choose between aria-label, aria-labelledby and aria-describedby, wire up disclosure widgets with aria-expanded and aria-controls, and announce updates with live regions.",
+      "difficulty": "advanced",
+      "minutes": 15,
+      "isFree": false,
+      "goal": "Annotate a dashboard's navigation, disclosure menu, decorative icons and status output so screen readers announce each part correctly.",
+      "whyItMatters": "ARIA is the vocabulary that fills the gap between what HTML can express natively and what modern interfaces actually do — menus that expand, regions that update, icons that decorate. It is also the easiest accessibility tool to make things worse with: studies of top sites consistently find pages using ARIA have more accessibility errors than pages without it, because wrong ARIA overrides correct native semantics. A developer who knows both the attributes and the restraint to prefer native HTML is exactly what teams need.",
+      "steps": [
+        "Read the first rule of ARIA — it decides most cases before any attribute is written.",
+        "Label the primary navigation so it is distinguishable from other nav landmarks (task 1).",
+        "Wire the menu button as a disclosure: aria-expanded=\"false\" and aria-controls (tasks 2-3).",
+        "Hide the decorative icon from assistive technology with aria-hidden (task 4).",
+        "Turn the status paragraph into a polite live region (task 5).",
+        "Press Run and confirm all five checks pass."
+      ],
+      "prompt": "<nav aria-label=\"Primary\">…</nav>\n\n<button id=\"menu-toggle\" aria-expanded=\"false\" aria-controls=\"menu-panel\">\n  <span class=\"icon\" aria-hidden=\"true\">▾</span>\n  Menu\n</button>\n<ul id=\"menu-panel\" hidden>…</ul>\n\n<p id=\"status\" aria-live=\"polite\"></p>",
+      "promptLabel": "Key code example",
+      "explanation": "The nav gets an aria-label because pages often contain several navigation landmarks and screen-reader users need to tell them apart. The button is native — so it is already focusable and keyboard-operable — and ARIA adds only what HTML cannot say: aria-expanded announces the open/closed state, and aria-controls names the element it drives. The decorative arrow is marked aria-hidden=\"true\" so it is not read as a stray character. The status paragraph is a polite live region: when script writes text into it, screen readers announce the change without moving the user's focus.",
+      "example": "A div-based dropdown announces itself to a screen reader as, literally, nothing: unfocusable, unlabeled, state unknown. The developer 'fixes' it by sprinkling role=\"menu\" everywhere, which makes screen readers promise keyboard behavior the widget does not implement — now it is worse.\n\nThe honest version starts from <button>, adds aria-expanded flipped by the same click handler that opens the panel, and aria-controls pointing at it. Focusability, key handling and the click event all come free from the native element; ARIA contributes only the state and the relationship.",
+      "exercise": "In the editor on the right, annotate the dashboard: label the primary nav, give the menu toggle its expanded state and controls relationship, hide the decorative icon, and make the status line a polite live region.",
+      "expectedResult": "The preview looks unchanged — every addition is semantic — and all five checks pass in the console.",
+      "commonMistakes": [
+        "Adding ARIA to elements that already say it natively: role=\"button\" on a <button> or aria-hidden on an element with hidden is pure noise, and redundant ARIA drifts out of sync over time.",
+        "Setting aria-expanded once in the HTML and never updating it from JavaScript. A state attribute that always says false is worse than none — it actively lies.",
+        "Using aria-label on a plain <div> or <span>. Naming only works on elements with a role; on a generic element most screen readers ignore it.",
+        "Putting aria-hidden=\"true\" on a container that includes focusable elements — keyboard users can still Tab into content that screen readers are told does not exist."
+      ],
+      "proTip": "Open the Accessibility panel in Chrome or Firefox DevTools and click your widget: it shows the computed role, name and state exactly as a screen reader receives them. If the panel shows the right role, an accurate name and a current state, your ARIA is almost certainly correct.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "software-developer"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will annotate a small dashboard — navigation, a disclosure menu, an icon and a status line — with exactly the ARIA it needs and nothing more.",
+        "sections": [
+          {
+            "heading": "What ARIA is, and its first rule",
+            "body": "ARIA (Accessible Rich Internet Applications) is a set of attributes that change how elements are described to assistive technology. It edits the accessibility tree — the parallel structure screen readers consume — and only that. This is the most important mechanical fact about ARIA: it changes announcements, never behavior. role=\"button\" makes a div claim to be a button; it does not make Enter or Space activate it, does not make it focusable, does not give it a disabled state. Every promise ARIA makes, your JavaScript must keep.\n\nThat is why the specification's own first rule of ARIA is: do not use ARIA if a native HTML element or attribute already provides the semantics and behavior. <button> beats role=\"button\" because it brings focus, key handling, form participation and disabled state for free. <nav> beats role=\"navigation\". checked beats aria-checked on a real checkbox. Native elements are tested implementations; ARIA on generic elements is a claim you must back with code.\n\nThe corollary rules matter too: do not change native semantics (no role=\"tab\" on an h2 — put the role on a wrapper), all interactive ARIA widgets must be keyboard-operable, and never put role=\"presentation\" or aria-hidden=\"true\" on a focusable element. ARIA earns its keep in the gaps — states like expanded, relationships between elements, live announcements — which the rest of this lesson covers.",
+            "code": "<!-- a claim you must implement yourself -->\n<div role=\"button\" tabindex=\"0\">Save</div>\n\n<!-- the same semantics plus tested behavior, free -->\n<button>Save</button>"
+          },
+          {
+            "heading": "role: what an element claims to be",
+            "body": "The role attribute assigns an element a slot in the accessibility taxonomy. Most elements have an implicit role already — button is button, a[href] is link, nav is navigation, input type=\"checkbox\" is checkbox — and DevTools' accessibility panel shows the computed role for anything you select. Explicit role exists for elements that have no useful implicit role (usually div and span pressed into service as widgets) and for the rare cases where you must repurpose an element.\n\nThe roles you will actually reach for fall into groups. Landmark roles (banner, navigation, main, complementary, contentinfo) mirror header, nav, main, aside and footer — use the elements, not the roles, in new code. Widget roles describe interactive patterns: tab, tablist and tabpanel for tab interfaces, dialog for overlays, switch for on/off toggles, menu strictly for application-style menus (not site navigation — a common and harmful mix-up, since role=\"menu\" makes screen readers expect arrow-key behavior). Structural roles like list, listitem, img and presentation describe non-interactive content; role=\"presentation\" strips semantics from an element whose markup is purely layout.\n\nTwo standing warnings. First, a role is a contract: role=\"tab\" obliges you to implement arrow-key movement, aria-selected state and focus management, because users will drive it with the keys that pattern promises. Second, never write a role that contradicts behavior — an element that claims to be a checkbox but only responds to hover is a trap for exactly the users the attribute was meant to help.",
+            "code": "<!-- implicit roles: no ARIA needed -->\n<nav>…</nav>            <!-- navigation -->\n<button>…</button>      <!-- button -->\n\n<!-- explicit role on a repurposed element: now implement the pattern -->\n<div role=\"switch\" tabindex=\"0\" aria-checked=\"false\">Dark mode</div>"
+          },
+          {
+            "heading": "Naming: aria-label vs aria-labelledby vs aria-describedby",
+            "body": "Every interactive element needs an accessible name — the word or phrase a screen reader says to identify it. Native mechanisms come first: a button's text content, an img's alt, a form field's label element. ARIA offers three attributes for when those are not enough, and they are not interchangeable.\n\naria-label supplies the name directly as a string. It is the tool for elements whose visible content does not name them: an icon-only close button (aria-label=\"Close\"), or one nav among several (aria-label=\"Primary\" — the label is announced together with the role, as 'Primary navigation'). Its weaknesses: it is invisible, so it silently drifts out of date, and it is not translated by most machine-translation tools. It also overrides the element's content entirely — an aria-label on a button replaces the button's text in announcements, a frequent source of mislabeled controls.\n\naria-labelledby points at the id of one or more elements whose visible text already names the thing — a section labeled by its own heading is the canonical case. Because the name is on-screen text, it cannot drift and it does get translated; when both are present, labelledby beats label. aria-describedby is different in kind: it attaches supplementary description, announced after the name, typically for hint text or error messages tied to an input. Name answers 'what is this?'; description answers 'what else should I know?' — keep the name short and push detail into the description.",
+            "code": "<button aria-label=\"Close\">×</button>\n\n<section aria-labelledby=\"billing-h\">\n  <h2 id=\"billing-h\">Billing address</h2>\n</section>\n\n<input id=\"pw\" type=\"password\" aria-describedby=\"pw-hint\">\n<p id=\"pw-hint\">At least 12 characters, no spaces.</p>"
+          },
+          {
+            "heading": "aria-hidden: removing noise",
+            "body": "aria-hidden=\"true\" removes an element and its entire subtree from the accessibility tree while leaving it visually present — the mirror image of a visually-hidden CSS class, which hides from sight but keeps the announcement. Its everyday job is decorative noise: an icon sitting next to its own text label would otherwise be announced twice or read as a cryptic character, so the icon gets aria-hidden=\"true\" and the text carries the meaning.\n\nThe safety rule is absolute: never aria-hide anything focusable, or any container holding something focusable. The element stays in the Tab order, so a keyboard-using screen-reader user lands on a control that, per the accessibility tree, does not exist — focus announces nothing, and the user is stranded. If content must be hidden from everyone, use the hidden attribute or display: none, both of which also remove focusability; aria-hidden is only for the narrow case of 'visible, but silent'.\n\nNote the inverse does not exist: aria-hidden=\"false\" does not force-reveal content inside a hidden subtree, and sprinkling it around is a no-op that signals confusion. Also resist aria-hiding real content like images with meaning — that is what empty alt is for on images, and content that informs sighted users almost always informs everyone.",
+            "code": "<button>\n  <span class=\"icon\" aria-hidden=\"true\">▾</span>\n  Menu\n</button>\n\n<!-- never this: focusable but announced as nothing -->\n<div aria-hidden=\"true\"><a href=\"/settings\">Settings</a></div>"
+          },
+          {
+            "heading": "Disclosure widgets: aria-expanded and aria-controls",
+            "body": "The disclosure — a button that shows and hides a panel — is the most common interactive pattern on the web: dropdown menus, mobile burgers, accordions, 'show more' toggles. Its accessible form is compact: a native button carrying aria-expanded, plus the panel it toggles. aria-expanded=\"false\" makes the screen reader announce 'Menu, button, collapsed'; when script opens the panel it must also set aria-expanded=\"true\", and the announcement becomes 'expanded'. The attribute lives on the button (the thing the user is on), never on the panel, and its value must be updated by the same code path that toggles visibility — a static aria-expanded is a lie in markup form.\n\naria-controls=\"panel-id\" records which element the button drives. Its practical value is modest — some screen readers offer a jump-to-controlled-element command, and it serves as machine-readable documentation — but it costs one attribute and completes the pattern. The panel itself needs no ARIA: its visibility is handled by hidden, which removes it from both sight and the accessibility tree in one move.\n\nBefore building this by hand, remember the native option: details/summary implements a disclosure with zero JavaScript and correct announcements built in. The manual pattern earns its place when design or behavior requirements outgrow details — which is the first rule of ARIA applied at the widget level.",
+            "code": "<button id=\"menu-toggle\" aria-expanded=\"false\" aria-controls=\"menu-panel\">Menu</button>\n<ul id=\"menu-panel\" hidden>…</ul>\n\n<script>\n  menuToggle.addEventListener('click', () => {\n    const open = menuPanel.hidden;\n    menuPanel.hidden = !open;\n    menuToggle.setAttribute('aria-expanded', String(open));\n  });\n</script>"
+          },
+          {
+            "heading": "Live regions: announcing what changed",
+            "body": "Screen readers narrate where the user's focus is. When JavaScript changes content elsewhere — 'Saved', '3 results found', 'Connection lost' — nothing is announced, because the user never visited that spot. Live regions fix this: an element marked aria-live tells assistive technology to watch it and announce whatever text appears inside.\n\naria-live=\"polite\" queues the announcement until the user pauses — right for nearly everything: status updates, result counts, autosave confirmations. aria-live=\"assertive\" interrupts the user mid-word and is reserved for genuinely urgent information such as session-expiry warnings; overusing it trains users to resent your product. Two shorthand roles bundle these semantics: role=\"status\" implies polite, role=\"alert\" implies assertive, and both are widely supported.\n\nThe implementation detail that catches everyone: the live region must exist in the DOM, empty, from page load. Screen readers register regions when they first build the tree, so creating the element and its message in the same script tick frequently goes unannounced. The robust pattern is a permanent empty container — <p id=\"status\" aria-live=\"polite\"></p> — whose textContent your script updates. Keep messages short and self-contained ('Draft saved at 14:02'), because the user hears them without any surrounding context.",
+            "code": "<!-- present and empty from page load -->\n<p id=\"status\" aria-live=\"polite\"></p>\n\n<script>\n  // later, after a save completes:\n  document.getElementById('status').textContent = 'Draft saved';\n</script>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Project dashboard</title>\n</head>\n<body>\n  <!-- TODO 1: two navs on this page — label this one \"Primary\" -->\n  <nav id=\"main-nav\">Home · Projects · Reports</nav>\n\n  <!-- TODO 2: announce the closed state with aria-expanded=\"false\" -->\n  <!-- TODO 3: record what this button controls with aria-controls -->\n  <button id=\"menu-toggle\">\n    <!-- TODO 4: the arrow is decorative — hide it from assistive tech -->\n    <span class=\"icon\">▾</span>\n    Menu\n  </button>\n  <ul id=\"menu-panel\" hidden>\n    <li>Settings</li>\n    <li>Sign out</li>\n  </ul>\n\n  <nav id=\"crumbs\" aria-label=\"Breadcrumb\">Dashboard / Projects</nav>\n\n  <!-- TODO 5: scripts write save confirmations here — make it a polite live region -->\n  <p id=\"status\"></p>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Project dashboard</title>\n</head>\n<body>\n  <nav id=\"main-nav\" aria-label=\"Primary\">Home · Projects · Reports</nav>\n\n  <button id=\"menu-toggle\" aria-expanded=\"false\" aria-controls=\"menu-panel\">\n    <span class=\"icon\" aria-hidden=\"true\">▾</span>\n    Menu\n  </button>\n  <ul id=\"menu-panel\" hidden>\n    <li>Settings</li>\n    <li>Sign out</li>\n  </ul>\n\n  <nav id=\"crumbs\" aria-label=\"Breadcrumb\">Dashboard / Projects</nav>\n\n  <p id=\"status\" aria-live=\"polite\"></p>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Label the primary navigation: add aria-label=\"Primary\" to #main-nav so it is distinguishable from the breadcrumb nav.",
+            "hint": "When a landmark appears more than once, each instance needs a label: <nav id=\"main-nav\" aria-label=\"Primary\">.",
+            "errorMessage": "#main-nav has no aria-label. With two nav landmarks on the page, screen-reader users cannot tell them apart.",
+            "check": {
+              "type": "attr",
+              "selector": "#main-nav",
+              "attr": "aria-label",
+              "pattern": "\\w+"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Announce the menu's closed state: add aria-expanded=\"false\" to the #menu-toggle button.",
+            "hint": "The state lives on the button, not the panel: <button id=\"menu-toggle\" aria-expanded=\"false\">.",
+            "errorMessage": "#menu-toggle has no aria-expanded=\"false\" — screen readers cannot tell the menu is collapsed.",
+            "check": {
+              "type": "attr",
+              "selector": "#menu-toggle",
+              "attr": "aria-expanded",
+              "value": "false"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Record the relationship: add aria-controls=\"menu-panel\" to the #menu-toggle button.",
+            "hint": "aria-controls takes the id of the element the button drives: aria-controls=\"menu-panel\".",
+            "errorMessage": "#menu-toggle has no aria-controls=\"menu-panel\" linking it to the panel it toggles.",
+            "check": {
+              "type": "attr",
+              "selector": "#menu-toggle",
+              "attr": "aria-controls",
+              "value": "menu-panel"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Silence the decorative arrow: add aria-hidden=\"true\" to the span with class \"icon\".",
+            "hint": "The text 'Menu' carries the meaning; the icon is noise: <span class=\"icon\" aria-hidden=\"true\">▾</span>.",
+            "errorMessage": "The decorative .icon span is not aria-hidden — screen readers would read it as a stray character.",
+            "check": {
+              "type": "attr",
+              "selector": ".icon",
+              "attr": "aria-hidden",
+              "value": "true"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Make #status a polite live region so save confirmations written into it are announced.",
+            "hint": "aria-live=\"polite\" on the permanently present, initially empty element: <p id=\"status\" aria-live=\"polite\"></p>.",
+            "errorMessage": "#status has no aria-live=\"polite\" — content scripts write into it would change silently.",
+            "check": {
+              "type": "attr",
+              "selector": "#status",
+              "attr": "aria-live",
+              "value": "polite"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-a07-keyboard-focus",
+      "title": "Make every interface fully usable by keyboard",
+      "summary": "Understand the tab order, use tabindex 0 and -1 correctly, style focus with :focus-visible instead of deleting outlines, and give icon-only controls names with the sr-only pattern.",
+      "difficulty": "advanced",
+      "minutes": 14,
+      "isFree": false,
+      "goal": "Repair an editor toolbar so every control is reachable, operable and visibly focused from the keyboard alone.",
+      "whyItMatters": "Keyboard access is the load-bearing wall of accessibility: screen-reader users, switch users, people with motor impairments and plenty of power users all drive the web without a mouse. It is also where the most common self-inflicted wounds live — clickable divs that Tab skips entirely, outline: none shipped because a designer disliked the focus ring, positive tabindex values that scramble the order. Every one of these makes parts of an interface literally unreachable for some users, and every one has a small, standard fix.",
+      "steps": [
+        "Read the keyboard model section: Tab moves between controls, Enter and Space activate them.",
+        "Replace the fake div button with a real button (task 1).",
+        "Make the skip-link target programmatically focusable with tabindex=\"-1\" (task 2).",
+        "Make the custom star widget keyboard-reachable with role and tabindex=\"0\" (task 3).",
+        "Give the icon-only bold button an sr-only text label (task 4).",
+        "Add a :focus-visible style instead of the deleted outline (task 5), then Run and Tab through the preview."
+      ],
+      "prompt": "<button id=\"save\">Save</button>\n\n<div id=\"star\" role=\"button\" tabindex=\"0\">☆ Favorite</div>\n\n<button id=\"bold-btn\">\n  <span aria-hidden=\"true\">B</span>\n  <span class=\"sr-only\">Bold</span>\n</button>\n\n<style>\n  :focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }\n</style>",
+      "promptLabel": "Key code example",
+      "explanation": "The real button is focusable and activatable with Enter and Space out of the box — no attributes, no key handlers. The star widget stays a div only because the exercise demands it, so it needs the full manual kit: role=\"button\" to announce correctly and tabindex=\"0\" to join the Tab order (plus JS key handling in real life). The bold button pairs a visible icon, hidden from screen readers, with an sr-only span that is invisible on screen but read aloud. The :focus-visible rule paints a clear ring for keyboard focus while leaving mouse clicks ring-free — the compromise that ends the outline-deletion war.",
+      "example": "QA reports: 'Cannot save a document without the mouse.' The Save control is a styled div — Tab skips it, Enter does nothing, and a screen reader never announces it as interactive at all.\n\nSwapping the div for a button with the same classes fixes reachability, operability and announcement in one edit, and deletes the onKeyDown handler someone would otherwise have to write, test and maintain forever.",
+      "exercise": "In the editor on the right, repair the toolbar: real button for Save, tabindex=\"-1\" on the skip target, role and tabindex on the star widget, an sr-only label inside the bold button, and a :focus-visible outline in the stylesheet.",
+      "expectedResult": "The preview looks the same, but pressing Tab now visits Save, the star and Bold in order with a visible blue ring, and all five checks pass.",
+      "commonMistakes": [
+        "Writing outline: none with no replacement because the ring 'looks ugly'. Keyboard users lose their only position indicator — restyle the ring with :focus-visible, never delete it.",
+        "Adding tabindex=\"0\" to non-interactive content like headings or paragraphs. Extra stops make keyboard navigation slower; only things users operate belong in the Tab order.",
+        "Building keyboard support with positive tabindex numbers instead of fixing source order — the numbers create a parallel order that breaks on the next layout change.",
+        "Hiding button labels with display: none instead of the sr-only class. display: none removes the text from screen readers too, leaving the control nameless."
+      ],
+      "proTip": "Adopt the ten-second smoke test: click the address bar, then Tab through your page. If you can see where you are at every step and reach every control — and Escape/Enter/Space do what they promise — you are ahead of most of the web.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "software-developer"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will fix an editor toolbar that currently fails every keyboard test: an unreachable fake button, a mouse-only widget, a nameless icon button and deleted focus styles.",
+        "sections": [
+          {
+            "heading": "The keyboard model",
+            "body": "Keyboard navigation runs on a handful of conventions every user relies on. Tab moves focus forward through the page's interactive elements; Shift+Tab moves backward. Enter activates links and buttons; Space also activates buttons (and scrolls the page otherwise); arrow keys move within composite widgets like radio groups, select menus and tab bars; Escape dismisses overlays. Focus is the keyboard's cursor — exactly one element holds it at a time, and everything the user does happens there.\n\nThe set of elements Tab visits is the tab order, and by default it contains only interactive elements: links with href, buttons, form fields, summary, and a few others. Plain divs, spans, paragraphs and images are not focusable — which is correct, because a Tab stop that does nothing wastes the user's time. This default is well-calibrated: most pages need no tabindex anywhere, because using native interactive elements produces the right tab order automatically.\n\nWho depends on this? Blind users, whose screen readers are driven from the keyboard. People with tremors or limited fine motor control, for whom precise pointing is exhausting. Switch-access users, whose entire input may be one or two buttons. Power users filling forms. Anyone whose trackpad died on a deadline. Keyboard support is not an edge case — it is a parallel, fully load-bearing input channel.\n\nA side note on HTML's built-in shortcut attribute: accesskey assigns a single-character shortcut to an element, and in practice it is avoided. The activating modifier differs per browser and OS, the shortcuts are undiscoverable, and the chosen letters collide with browser and screen-reader commands — hijacking keys from the very users who live on the keyboard. Application shortcuts belong in JavaScript with a visible cheat sheet, not in accesskey.",
+            "code": "<!-- native interactive elements: already in the tab order -->\n<a href=\"/docs\">Docs</a>\n<button>Save</button>\n<input type=\"text\">\n<select>…</select>"
+          },
+          {
+            "heading": "Tab order comes from source order",
+            "body": "The natural tab order is simply document order: the browser walks the DOM top to bottom and visits each focusable element as it appears in the markup. This has a powerful consequence — if your HTML is written in reading order, keyboard navigation is correct by construction, with zero attributes.\n\nIt also has a trap. CSS can reorder things visually — flexbox order, grid placement, absolute positioning — without changing the DOM, so a layout that shows the primary action on the left may still Tab to it last because it comes last in the source. The user watches focus jump diagonally across the screen. The fix is never to patch with tabindex numbers; it is to reorder the source so DOM order and visual order agree, and to treat large divergences between them as a design smell.\n\nWhen auditing, remember disabled controls leave the tab order entirely, and elements hidden with display: none, the hidden attribute, or inert subtrees are unfocusable. Off-screen-positioned content, however, remains focusable — the cause of the classic bug where Tab visits an invisible closed menu. Anything visually hidden but still in the DOM must either be truly hidden or be intended to take focus (like a skip link that reveals itself on focus).",
+            "code": "<!-- visual order flipped by CSS, tab order still source order -->\n<div style=\"display: flex; flex-direction: row-reverse\">\n  <button>Cancel</button>  <!-- appears right, focused first -->\n  <button>Save</button>    <!-- appears left, focused second -->\n</div>\n<!-- fix the source, not the tabindex -->"
+          },
+          {
+            "heading": "tabindex: the two useful values",
+            "body": "tabindex=\"0\" adds an element to the natural tab order at its source position. Its legitimate use is narrow: custom interactive widgets that cannot be built from native elements — a canvas-based editor, a div acting as a slider — where you are hand-implementing interactivity. Adding it to non-interactive content is an anti-pattern: a focusable paragraph is a stop that does nothing, and screen-reader users can already read text without it being focusable.\n\ntabindex=\"-1\" makes an element focusable only programmatically: Tab skips it, but element.focus() works. This is the workhorse of focus management — the technique of moving focus deliberately when the interface changes context. Route focus to an error summary after failed validation, to the heading of a newly revealed panel, to the first field of a dialog, back to the triggering button when the dialog closes. Every single-page-app navigation should move focus to the new content's container, and tabindex=\"-1\" is what makes those targets focusable.\n\nPositive values (tabindex=\"1\" and above) build a priority queue the browser visits before every normally focusable element, in ascending numeric order, wherever those elements sit on the page. The result is an order maintained by hand, invisible in the markup's flow, broken by the next refactor. There is no modern use case; every problem positive tabindex appears to solve is solved better by reordering source. Treat any positive value in review as a bug.",
+            "code": "<!-- custom widget: earns tabindex=\"0\" (plus JS key handling) -->\n<div id=\"star\" role=\"button\" tabindex=\"0\">☆ Favorite</div>\n\n<!-- focus-management target: script-only focus -->\n<main id=\"main\" tabindex=\"-1\">…</main>\n<script>document.getElementById('main').focus();</script>"
+          },
+          {
+            "heading": "Focus must be visible: :focus-visible",
+            "body": "A keyboard user's focus ring is their mouse cursor: without it they are navigating blind, counting Tab presses and guessing. That is why WCAG requires visible focus indication, and why the once-ubiquitous outline: none with no replacement is among the most harmful lines of CSS ever popularized. The motivation was real — clicking a button also focuses it, and designers hated the ring flashing on every mouse click — but the cure disabled navigation for keyboard users to tidy up aesthetics for mouse users.\n\n:focus-visible resolves the conflict. The plain :focus pseudo-class matches whenever the element has focus, regardless of input; :focus-visible matches only when the browser judges the indicator should be shown — in practice, keyboard and other non-pointer interaction. Style :focus-visible with a strong ring and mouse clicks stay clean while Tab navigation lights up exactly as it should. A good default ring is a 2px solid outline in a high-contrast color with outline-offset for breathing room; outline is the right property because, unlike border, it occupies no layout space.\n\nIf a legacy stylesheet already nukes outlines, the repair is to add the :focus-visible rule rather than hunting every reset — and going forward, the rule of review is simple: no outline: none without a :focus-visible replacement in the same change.",
+            "code": "/* clean for mouse, visible for keyboard */\n:focus-visible {\n  outline: 2px solid #2563eb;\n  outline-offset: 2px;\n}"
+          },
+          {
+            "heading": "The sr-only pattern: visible to ears, not eyes",
+            "body": "Icon-only controls are everywhere — a B for bold, a trash can, a gear — and each one needs a text name for users who cannot see the icon. One approach is aria-label on the button. The other is the sr-only (screen-reader-only) CSS class: a span of real text hidden visually but left in the accessibility tree, paired with the icon marked aria-hidden=\"true\".\n\nThe class works by shrinking the element to a 1px clipped box and removing it from flow: position absolute, 1px width and height, clip-path or clip to hide the pixel, overflow hidden, white-space nowrap to stop reflow tricks. What it deliberately avoids is display: none and visibility: hidden — both of those remove content from screen readers too, which is the opposite of the goal. The standard rule has been battle-tested for a decade; copy it, do not improvise it.\n\nsr-only text has advantages over aria-label worth knowing: it is real content, so it is picked up by translation tools, by find-in-page in some contexts, and by any code reading textContent; and it works on elements where aria-label support is shaky. It is also the mechanism behind skip links (sr-only until focused, then revealed) and behind extra context for screen readers like a 'Read more' link followed by an sr-only 'about the spring migration'. Keep it for short functional text — hiding entire paragraphs of alternate content quickly drifts out of sync with the visible page.",
+            "code": ".sr-only {\n  position: absolute;\n  width: 1px; height: 1px;\n  padding: 0; margin: -1px;\n  overflow: hidden;\n  clip: rect(0 0 0 0);\n  white-space: nowrap;\n  border: 0;\n}\n\n<button id=\"bold-btn\">\n  <span aria-hidden=\"true\">B</span>\n  <span class=\"sr-only\">Bold</span>\n</button>"
+          },
+          {
+            "heading": "The clickable div, done right — and why button still wins",
+            "body": "A div with a click handler looks identical to a button and fails every non-mouse test: Tab skips it, Enter and Space do nothing, screen readers announce it as plain text, and it has no disabled semantics. Making it genuinely equivalent takes four additions: role=\"button\" so it announces correctly; tabindex=\"0\" so Tab reaches it; a keydown handler that activates on both Enter and Space (and prevents Space's default page scroll); and focus styling via the :focus-visible rule. Miss any one and some users get a broken control.\n\nWrite that list out and the conclusion writes itself: <button> ships all four, plus form participation, plus a real disabled state, plus correct behavior in edge cases you have not thought of, in tested browser code. The div version is four requirements you must implement, review and maintain forever. 'We can make the div accessible' is true and beside the point — the button is the same work already done.\n\nThe honest reasons a div survives are styling habits (fixed by a two-line CSS reset for buttons) and framework inertia. The honest exceptions are components that genuinely are not buttons — complex composite widgets with their own interaction grammar. For anything that is pressed to make one thing happen, the professional default is the native element; reach for the ARIA-and-tabindex kit only when you can say precisely why button cannot work.",
+            "code": "<!-- the div, fully repaired — four obligations, forever -->\n<div role=\"button\" tabindex=\"0\" id=\"star\">☆ Favorite</div>\n<script>\n  star.addEventListener('keydown', e => {\n    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); star.click(); }\n  });\n</script>\n\n<!-- the same result, zero obligations -->\n<button class=\"star\">☆ Favorite</button>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Note editor</title>\n  <style>\n    * { outline: none; } /* a past 'design fix' */\n    /* TODO 5: add a :focus-visible rule that restores a visible ring */\n    .sr-only {\n      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;\n      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;\n    }\n  </style>\n</head>\n<body>\n  <!-- TODO 2: make the skip target focusable by script: tabindex=\"-1\" -->\n  <main id=\"main\">\n    <h1>Note editor</h1>\n    <!-- TODO 1: this fake button is invisible to the keyboard — make it a real <button id=\"save\"> -->\n    <div class=\"btn\" onclick=\"save()\">Save</div>\n\n    <!-- TODO 3: this widget must stay a div — give it role=\"button\" and tabindex=\"0\" -->\n    <div id=\"star\" onclick=\"toggleFavorite()\">☆ Favorite</div>\n\n    <!-- TODO 4: icon-only button — add <span class=\"sr-only\">Bold</span> as its name -->\n    <button id=\"bold-btn\">\n      <span aria-hidden=\"true\">B</span>\n    </button>\n  </main>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Note editor</title>\n  <style>\n    * { outline: none; } /* a past 'design fix' */\n    :focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }\n    .sr-only {\n      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;\n      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;\n    }\n  </style>\n</head>\n<body>\n  <main id=\"main\" tabindex=\"-1\">\n    <h1>Note editor</h1>\n    <button id=\"save\" class=\"btn\" onclick=\"save()\">Save</button>\n\n    <div id=\"star\" role=\"button\" tabindex=\"0\" onclick=\"toggleFavorite()\">☆ Favorite</div>\n\n    <button id=\"bold-btn\">\n      <span aria-hidden=\"true\">B</span>\n      <span class=\"sr-only\">Bold</span>\n    </button>\n  </main>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Replace the fake Save div with a real <button id=\"save\"> (keep the class and onclick).",
+            "hint": "<button id=\"save\" class=\"btn\" onclick=\"save()\">Save</button> — focus and key handling come free.",
+            "errorMessage": "No <button id=\"save\"> found. A div with onclick is unreachable and inoperable from the keyboard.",
+            "check": {
+              "type": "selector",
+              "selector": "button#save"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Make #main a programmatic focus target: add tabindex=\"-1\".",
+            "hint": "tabindex=\"-1\" keeps main out of the Tab order but lets skip links and scripts focus it.",
+            "errorMessage": "#main has no tabindex=\"-1\" — focus management (skip links, SPA navigation) cannot land here.",
+            "check": {
+              "type": "attr",
+              "selector": "#main",
+              "attr": "tabindex",
+              "value": "-1"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "The star widget must stay a div: give it role=\"button\" and tabindex=\"0\" so it announces and Tab reaches it.",
+            "hint": "<div id=\"star\" role=\"button\" tabindex=\"0\" …> — in production you would also add an Enter/Space keydown handler.",
+            "errorMessage": "#star is still an unfocusable, unannounced div. It needs role=\"button\" and tabindex=\"0\".",
+            "check": {
+              "type": "attr",
+              "selector": "#star[role=\"button\"]",
+              "attr": "tabindex",
+              "value": "0"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Name the icon-only bold button: add <span class=\"sr-only\">Bold</span> inside #bold-btn.",
+            "hint": "The aria-hidden icon stays; the sr-only span provides the spoken name: <span class=\"sr-only\">Bold</span>.",
+            "errorMessage": "#bold-btn has no sr-only text label — screen readers would announce an unnamed button.",
+            "check": {
+              "type": "text",
+              "selector": "#bold-btn .sr-only",
+              "pattern": "bold"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Restore keyboard focus indication: add a :focus-visible rule with a visible outline to the stylesheet.",
+            "hint": ":focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; } — keyboard gets a ring, mouse clicks stay clean.",
+            "errorMessage": "The stylesheet still has no :focus-visible rule — the outline reset leaves keyboard users navigating blind.",
+            "check": {
+              "type": "source",
+              "pattern": ":focus-visible\\s*\\{[^}]*outline"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-a08-details-dialog",
+      "title": "Build accordions, modals and popovers with native HTML",
+      "summary": "Use details/summary for disclosures and exclusive accordions, the dialog element for modals with method=\"dialog\" forms, and the popover attribute for lightweight overlays — no JavaScript frameworks required.",
+      "difficulty": "advanced",
+      "minutes": 15,
+      "isFree": false,
+      "goal": "Build a help center with a native FAQ accordion, a confirmation dialog and a keyboard-shortcuts popover.",
+      "whyItMatters": "Accordions, modals and tooltips used to mean pulling in a component library and hand-wiring focus traps, Escape handling and ARIA state. HTML now ships all three patterns natively: details/summary has been solid for years, dialog gives you real modality with a browser-managed backdrop, and the popover attribute covers light-dismiss overlays with zero script for the open/close plumbing. Knowing these primitives means shipping less JavaScript, fewer accessibility bugs, and interfaces that keep working when scripts fail — and knowing which primitive fits which job is the actual senior skill.",
+      "steps": [
+        "Read the details/summary section, then build the two FAQ items sharing name=\"faq\" (tasks 1-2).",
+        "Open the first FAQ item by default with the open attribute (task 3).",
+        "Read the dialog section, then add the confirmation dialog with its method=\"dialog\" form (task 4).",
+        "Read the popover section, then add the shortcuts popover (task 5) and wire the button to it with popovertarget (task 6).",
+        "Press Run; click the summaries and the shortcuts button in the preview to feel the native behavior."
+      ],
+      "prompt": "<details name=\"faq\" open>\n  <summary>How long does shipping take?</summary>\n  <p>Two to four working days.</p>\n</details>\n\n<dialog id=\"confirm\">\n  <form method=\"dialog\">\n    <p>Delete this note?</p>\n    <button value=\"cancel\" autofocus>Cancel</button>\n    <button value=\"delete\">Delete</button>\n  </form>\n</dialog>\n\n<button popovertarget=\"tips\">Keyboard shortcuts</button>\n<div id=\"tips\" popover>Press ? to open this list anywhere.</div>",
+      "promptLabel": "Key code example",
+      "explanation": "Each details element is a self-contained disclosure: the summary is the always-visible toggle, everything after it shows only while open, and the shared name=\"faq\" makes the group exclusive — opening one closes the others, a full accordion with no script. The dialog holds a form with method=\"dialog\", so either button closes the dialog and delivers its value to script without any submit handler; autofocus decides where focus lands when it opens. The popover div stays hidden until the button — linked purely by popovertarget — toggles it, with light-dismiss and Escape handled by the browser.",
+      "example": "A team builds an FAQ with divs, a chevron icon, a click handler, height animations and aria-expanded bookkeeping — 80 lines, and Tab support arrives in a bug fix two sprints later.\n\nThe native version is one details element per question. Keyboard toggling, screen-reader announcements and state management are browser code, find-in-page can even auto-expand matching items in Chromium, and the JavaScript budget for the feature is zero.",
+      "exercise": "In the editor on the right, build the help center: two FAQ items as details sharing name=\"faq\" with the first open, a confirmation dialog containing a method=\"dialog\" form, and a shortcuts popover opened by a popovertarget button.",
+      "expectedResult": "The preview shows the FAQ with the first answer expanded — clicking questions swaps which is open — plus a working shortcuts popover; all six checks pass.",
+      "commonMistakes": [
+        "Putting the whole answer inside summary. Only the toggle line belongs there; the collapsible content comes after it, still inside details.",
+        "Showing a modal by adding the open attribute instead of calling showModal(). The attribute route gives a non-modal box: no backdrop, no focus trap, no Escape handling.",
+        "Nesting interactive controls inside summary — a link inside the toggle makes every click a gamble between following the link and toggling the disclosure.",
+        "Reaching for dialog when a popover fits (or vice versa): if the user must respond before continuing, it is a modal dialog; if clicking elsewhere should simply dismiss it, it is a popover."
+      ],
+      "proTip": "You can style the disclosure triangle: the summary's default marker is a ::marker pseudo-element, so summary::marker { content: '' } removes it (or list-style: none on summary), letting you supply your own chevron that rotates via the details[open] selector.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "software-developer"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will build a help center from three native disclosure primitives: a details-based FAQ accordion, a dialog for confirmation, and a popover for keyboard shortcuts.",
+        "sections": [
+          {
+            "heading": "details and summary: disclosure without JavaScript",
+            "body": "The details element is a built-in disclosure widget. Its first summary child is the permanently visible header; every other child is hidden until the widget opens. Clicking the summary — or focusing it and pressing Enter or Space — toggles the state, and the browser handles focusability, announcements ('button, collapsed'), and state management with no attributes and no script.\n\nThe open attribute reflects and controls the state. Author it in the markup to render a details expanded from the start — the right call for the most-asked question in an FAQ or the currently relevant section of documentation. It is also a live attribute: the browser adds and removes it as the user toggles, scripts can set el.open = true, and CSS can target the expanded state with details[open], which is how a custom chevron gets its rotation.\n\nStyling notes worth knowing: the summary displays a disclosure triangle via its ::marker pseudo-element, removable with summary::marker { content: '' } (WebKit historically needed summary::-webkit-details-marker { display: none }). The hidden content is genuinely absent from rendering and the accessibility tree while closed — though Chromium's find-in-page can search closed details and auto-expand the match, a free feature hand-rolled accordions rarely replicate. Keep summary content simple text: interactive elements inside it fight the toggle for clicks.",
+            "code": "<details>\n  <summary>How long does shipping take?</summary>\n  <p>Two to four working days for mainland addresses.</p>\n</details>\n\n<details open>\n  <summary>Expanded on page load</summary>\n  <p>Because the open attribute is present.</p>\n</details>\n\n<style>\n  details[open] summary { font-weight: bold; }\n</style>"
+          },
+          {
+            "heading": "Exclusive accordions with the name attribute",
+            "body": "A classic accordion allows only one panel open at a time — historically the point where developers gave up on details and wrote JavaScript to close the siblings. The name attribute removed that last excuse: give several details elements the same name, exactly like radio buttons sharing a group, and the browser enforces exclusivity. Opening any member automatically closes whichever other member was open.\n\nThe group is defined purely by the shared name value; the elements do not need to be siblings or share a parent, though an accordion almost always renders them as a stacked list. At most one member of a named group can carry the open attribute in markup — authoring two as open is invalid, and the browser resolves the conflict by keeping only the first open.\n\nOne design caution before making every FAQ exclusive: exclusivity is sometimes hostile. A user comparing two answers cannot see both at once, and opening a lower item collapses an upper one, jolting the scroll position. Reserve name-grouping for genuinely either/or content — steps of a wizard-like flow, settings categories — and let independent details stand alone when users may want several open. The feature also degrades gracefully: browsers that predate name simply treat the group as independent disclosures, losing only the exclusivity.",
+            "code": "<details name=\"faq\" open>\n  <summary>How long does shipping take?</summary>\n  <p>Two to four working days.</p>\n</details>\n<details name=\"faq\">\n  <summary>What is the return window?</summary>\n  <p>Thirty days from delivery, unworn, original packaging.</p>\n</details>\n<!-- opening one closes the other — no script -->"
+          },
+          {
+            "heading": "dialog: open vs showModal()",
+            "body": "The dialog element is a box for conversations that interrupt the page — confirmations, forms, pickers. It renders nothing by default, and the way you show it decides what kind of thing it is. Calling dialog.show() (or authoring the open attribute) presents it non-modally: visible, but the rest of the page stays interactive behind it, like a chat panel or a toast with actions.\n\nCalling dialog.showModal() presents it modally, and the browser takes over the hard parts that made hand-rolled modals infamous: the page behind becomes inert — unclickable, unfocusable, unreachable by Tab, hidden from screen readers; focus moves into the dialog and is trapped there; Escape closes it; and it renders in the top layer, above every z-index in the document, with a companion ::backdrop pseudo-element you can style into the classic dimmed overlay. Every one of those bullet points was previously a category of accessibility bug.\n\nThe practical rules: never author the open attribute for a modal — attribute-opened dialogs are always non-modal, so the markup ships the element closed and script calls showModal(). When the dialog opens, focus goes to the first focusable element inside, overridable by putting autofocus on whichever control should receive it — usually the safe action in a destructive confirmation. And when the dialog closes, browsers return focus to the element that opened it, completing the loop keyboard users depend on.",
+            "code": "<dialog id=\"confirm\">\n  <p>Delete this note?</p>\n  <button autofocus>Cancel</button>\n</dialog>\n\n<script>\n  // modal: backdrop, focus trap, Escape — all browser-managed\n  document.getElementById('confirm').showModal();\n</script>\n\n<style>\n  #confirm::backdrop { background: rgb(0 0 0 / 0.5); }\n</style>"
+          },
+          {
+            "heading": "method=\"dialog\": forms that close the dialog",
+            "body": "A form inside a dialog can set method=\"dialog\", a special method that submits nowhere. Instead, submitting closes the dialog and sets the dialog's returnValue property to the value attribute of the button that submitted. Two buttons — Cancel with value=\"cancel\", Delete with value=\"delete\" — thus close the dialog through the same native path, and the script that opened it reads which choice was made in the dialog's close event.\n\nThis inverts the usual wiring. Without method=\"dialog\" you attach click handlers to every button, call close() manually, and track the outcome in your own variables. With it, the buttons need no JavaScript at all: the form is the state machine, Escape still works and reports an empty returnValue, and the dialog behaves identically whether the user clicks, presses Enter on a focused button, or dismisses. Pairing autofocus onto the non-destructive button completes a confirmation pattern that is safe by default.\n\nTwo footnotes for completeness: a plain button inside a form defaults to type=\"submit\", which is why both buttons close the dialog — a button that must not close it needs type=\"button\". And the newer closedby attribute (closedby=\"any\") opts a dialog into light-dismiss so clicking the backdrop closes it, aligning dialog with popover behavior in current browsers.",
+            "code": "<dialog id=\"confirm\">\n  <form method=\"dialog\">\n    <p>Delete this note?</p>\n    <button value=\"cancel\" autofocus>Cancel</button>\n    <button value=\"delete\">Delete</button>\n  </form>\n</dialog>\n\n<script>\n  confirm.addEventListener('close', () => {\n    if (confirm.returnValue === 'delete') actuallyDelete();\n  });\n</script>"
+          },
+          {
+            "heading": "popover: the lightest overlay",
+            "body": "The popover attribute turns any element into a hidden overlay that renders in the top layer when shown — the primitive beneath menus, hint bubbles, emoji pickers and toasts. Unlike dialog, a popover is never modal: the page behind stays fully interactive, and by default it light-dismisses — clicking anywhere outside or pressing Escape closes it. That default is popover=\"auto\", which also closes any other open auto-popover, so only one menu is ever open. The variant popover=\"manual\" opts out of light-dismiss for things like persistent toasts that only close explicitly, and popover=\"hint\" (newest) serves hover-style hints that can coexist with an open auto-popover.\n\nThe invoker wiring is pure HTML: a button with popovertarget=\"some-id\" toggles the popover with that id. popovertargetaction refines the verb to \"show\" or \"hide\" when toggle is wrong — a notification's dismiss button, for instance, is popovertargetaction=\"hide\". The browser maintains the accessibility relationship between invoker and popover, manages the top layer, and fires beforetoggle/toggle events for script that wants to react; showPopover(), hidePopover() and togglePopover() exist for programmatic control.\n\nStyling hooks match dialog's: the open state is selectable with :popover-open, and auto popovers get a ::backdrop pseudo-element (transparent by default, since popovers do not dim the page). Anchoring the popover next to its button is the job of CSS anchor positioning as it matures; until then, popovers center by default like dialogs and are positioned with ordinary CSS.",
+            "code": "<button popovertarget=\"tips\">Keyboard shortcuts</button>\n\n<div id=\"tips\" popover>\n  <h2>Shortcuts</h2>\n  <p><kbd>?</kbd> opens this list anywhere.</p>\n</div>\n\n<style>\n  #tips:popover-open { border: 1px solid #ccc; }\n</style>"
+          },
+          {
+            "heading": "Choosing the right primitive",
+            "body": "Three overlapping tools resolve cleanly once you ask two questions: does the content interrupt, and does it float?\n\ndetails/summary is for content that neither interrupts nor floats — it expands in place, pushing the page down, and the rest of the page remains fully usable. FAQs, advanced-options sections, long changelogs, collapsible sidebars. If the collapsed content is part of the document's flow, this is the tool, and the name attribute covers the accordion case.\n\ndialog with showModal() is for interruptions: the user must deal with this box before touching anything else. Destructive confirmations, required re-authentication, focused creation flows. Modality is expensive attention-wise, so it should be rare — if you are reaching for a modal to show optional information, you probably want the third tool. popover is for floating, dismissible extras: menus, pickers, hints, toasts — content that overlays without blocking, vanishes on an outside click, and never traps focus. The rough hierarchy of user cost is details (free) < popover (cheap) < modal dialog (expensive); default to the cheapest primitive that satisfies the requirement, and let the browser do the widget engineering it now does better than our libraries did.",
+            "code": "<!-- in-flow, non-blocking: details -->\n<details><summary>Advanced options</summary>…</details>\n\n<!-- floating, dismissible: popover -->\n<button popovertarget=\"menu\">⋯</button>\n<div id=\"menu\" popover>…</div>\n\n<!-- blocking, must-answer: dialog + showModal() -->\n<dialog id=\"confirm\"><form method=\"dialog\">…</form></dialog>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Help center</title>\n</head>\n<body>\n  <h1>Help center</h1>\n\n  <section id=\"faq\">\n    <h2>FAQ</h2>\n    <!-- TODO 1: turn each Q&A into a <details> with a <summary> question -->\n    <!-- TODO 2: give both details name=\"faq\" so opening one closes the other -->\n    <!-- TODO 3: the shipping item should start expanded (open attribute) -->\n    <p>How long does shipping take? — Two to four working days.</p>\n    <p>What is the return window? — Thirty days from delivery.</p>\n  </section>\n\n  <!-- TODO 4: add <dialog id=\"confirm\"> containing a form with method=\"dialog\"\n       and two buttons: Cancel (value=\"cancel\", autofocus) and Delete (value=\"delete\") -->\n\n  <!-- TODO 5: add a div with id=\"tips\" and the popover attribute holding the shortcut list -->\n  <!-- TODO 6: wire this button to it with popovertarget=\"tips\" -->\n  <button>Keyboard shortcuts</button>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Help center</title>\n</head>\n<body>\n  <h1>Help center</h1>\n\n  <section id=\"faq\">\n    <h2>FAQ</h2>\n    <details name=\"faq\" open>\n      <summary>How long does shipping take?</summary>\n      <p>Two to four working days.</p>\n    </details>\n    <details name=\"faq\">\n      <summary>What is the return window?</summary>\n      <p>Thirty days from delivery.</p>\n    </details>\n  </section>\n\n  <dialog id=\"confirm\">\n    <form method=\"dialog\">\n      <p>Delete this note?</p>\n      <button value=\"cancel\" autofocus>Cancel</button>\n      <button value=\"delete\">Delete</button>\n    </form>\n  </dialog>\n\n  <div id=\"tips\" popover>\n    <h2>Shortcuts</h2>\n    <p>Press ? to open this list anywhere.</p>\n  </div>\n  <button popovertarget=\"tips\">Keyboard shortcuts</button>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Convert the two FAQ paragraphs into <details> elements, each with the question in a <summary> and the answer in a <p> after it.",
+            "hint": "<details><summary>How long does shipping take?</summary><p>Two to four working days.</p></details> — only the toggle line goes in summary.",
+            "errorMessage": "No <details> with a <summary> child found. Each FAQ item is a details whose summary holds the question.",
+            "check": {
+              "type": "selector",
+              "selector": "details > summary"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Make the FAQ exclusive: give both details elements name=\"faq\" so opening one closes the other.",
+            "hint": "Like radio buttons, a shared name forms the group: <details name=\"faq\">…</details> twice.",
+            "errorMessage": "Fewer than two <details name=\"faq\"> found — without the shared name the items toggle independently.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "details[name=\"faq\"]",
+              "min": 2
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Start with the shipping question expanded: add the open attribute to the first details (only that one — the group allows a single open member).",
+            "hint": "<details name=\"faq\" open> — the boolean attribute renders it expanded on load.",
+            "errorMessage": "No <details open> found. The most-asked question should be expanded when the page loads.",
+            "check": {
+              "type": "selector",
+              "selector": "details[open]"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Add a <dialog id=\"confirm\"> containing a <form method=\"dialog\"> with a Cancel button (value=\"cancel\", autofocus) and a Delete button (value=\"delete\").",
+            "hint": "method=\"dialog\" submits nowhere — each button closes the dialog and becomes its returnValue.",
+            "errorMessage": "No dialog containing a form with method=\"dialog\" found. The confirmation needs the native close-on-submit form.",
+            "check": {
+              "type": "selector",
+              "selector": "dialog#confirm form[method=\"dialog\"]"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Add the shortcuts overlay: a <div id=\"tips\"> carrying the popover attribute, holding the shortcut list.",
+            "hint": "The bare attribute defaults to popover=\"auto\": <div id=\"tips\" popover>…</div> — hidden until toggled, light-dismissed by the browser.",
+            "errorMessage": "#tips is missing or lacks the popover attribute — the overlay would render as ordinary in-flow content.",
+            "check": {
+              "type": "attr",
+              "selector": "#tips",
+              "attr": "popover"
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Wire the button to the popover: add popovertarget=\"tips\" to the Keyboard shortcuts button.",
+            "hint": "No JavaScript needed: <button popovertarget=\"tips\">Keyboard shortcuts</button> toggles the popover with that id.",
+            "errorMessage": "No button with popovertarget=\"tips\" found — nothing can open the shortcuts popover.",
+            "check": {
+              "type": "attr",
+              "selector": "button[popovertarget]",
+              "attr": "popovertarget",
+              "value": "tips"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

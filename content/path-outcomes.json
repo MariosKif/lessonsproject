@@ -1,0 +1,331 @@
+{
+  "ai-for-accountants": [
+    "Summarize long financial and policy documents without leaking confidential details",
+    "Turn rough notes into client-ready explanations in plain language",
+    "Draft reminders and information requests that clients actually respond to",
+    "Write variance narratives that explain the numbers, not just restate them",
+    "Build reusable prompt templates for recurring client communications",
+    "Structure data-cleaning instructions and staff training material for consistent execution"
+  ],
+  "ai-image-academy": [
+    "Write image prompts that get professional results from GPT Image 2 and Gemini",
+    "Iterate an image conversationally: refine, vary and fix without starting over",
+    "Produce product shots, mockups and brand-consistent marketing visuals",
+    "Design graphics with reliable text rendering inside ChatGPT",
+    "Build a repeatable creative pipeline with licensing-safe practices"
+  ],
+  "ai-video-academy": [
+    "Generate short clips with Veo 3.1 in the Gemini app",
+    "Write motion-first video prompts that control subject, camera and sound",
+    "Plan a shoot as a storyboard of prompts before spending generations",
+    "Iterate, extend and fix AI clips into publishable social videos"
+  ],
+  "automation-academy": [
+    "Map a business process and pick the right first automation",
+    "Connect Claude to your tools with MCP connectors safely",
+    "Automate recurring work with ChatGPT scheduled tasks and agent mode",
+    "Design safe agent instructions with human checkpoints and error handling",
+    "Evaluate and maintain your automations as tools change"
+  ],
+  "chatgpt-academy": [
+    "Write prompts that produce a usable professional result on the first pass",
+    "Improve drafts for tone, clarity, and structure quickly",
+    "Analyze uploaded files and documents to extract what you need",
+    "Organize ongoing work with Projects and build custom GPTs for repeat tasks",
+    "Run Deep Research reports and analyze spreadsheets with Code Interpreter",
+    "Automate multi-step tasks with Agent mode and manage memory settings"
+  ],
+  "claude-advanced": [
+    "Architect an AI-assisted workflow for an entire business process",
+    "Connect Claude to real tools safely using MCP connectors",
+    "Run supervised browser automation with Claude in Chrome",
+    "Build a verified research pipeline and author your own Claude Skills",
+    "Manage model choice and usage limits like a working budget",
+    "Assemble Projects, Skills, MCP, and automation into a personal AI operating system"
+  ],
+  "claude-beginner": [
+    "Write prompts that get professional-quality results on the first try",
+    "Rewrite drafts for tone while keeping every fact accurate",
+    "Summarize long documents and extract structured data you can trust",
+    "Turn a list of bullet points into complete, well-organized emails",
+    "Set up Claude Projects to hold standing context across conversations",
+    "Research with web search and verify results before relying on them"
+  ],
+  "claude-code-academy": [
+    "Install Claude Code and delegate a real coding task on day one",
+    "Map an unfamiliar codebase and encode project knowledge in CLAUDE.md",
+    "Implement a feature from a written spec and debug failing tests",
+    "Use plan mode to refactor code safely before changing it",
+    "Package team workflows as slash commands, skills, and MCP connections",
+    "Ship a whole change end to end from branch to reviewed pull request"
+  ],
+  "claude-intermediate": [
+    "Build an on-brand Claude Project and reconcile evidence across multiple documents",
+    "Ship interactive Artifacts and package repeatable workflows as Skills",
+    "Run structured Deep Research briefs with defined output contracts",
+    "Turn meeting notes into decisions and long CSVs into executive summaries",
+    "Verify AI output with a repeatable quality-control pass",
+    "Run one workflow across web, desktop, mobile, and Claude in Chrome"
+  ],
+  "codex-academy": [
+    "Read an unfamiliar repository well enough to work in it confidently",
+    "Write specifications that a coding agent can implement correctly",
+    "Implement a feature and debug a failing build or test with Codex",
+    "Run code review on changes before they merge",
+    "Build a working landing page directly from a written spec",
+    "Choose between cloud tasks and local sessions and ship a merged PR"
+  ],
+  "ai-for-consultants": [
+    "Synthesize a stack of client documents into a sourced briefing",
+    "Structure engagement findings into a clear, defensible deliverable storyline",
+    "Research a client's industry before writing a proposal",
+    "Write conclusion-driven slide narratives and tight executive summaries for clients",
+    "Prepare sharper questions for stakeholder interviews and client workshops",
+    "Build a documented, repeatable AI-assisted workflow for client engagements"
+  ],
+  "ai-for-project-managers": [
+    "Turn meeting notes into decisions, actions, and named owners",
+    "Write status reports that stakeholders actually read and act on",
+    "Draft project plans and work breakdowns from a stated goal",
+    "Build risk registers that pair each risk with a real mitigation",
+    "Draft stakeholder communications for difficult moments on a project",
+    "Assemble a personal PM operating system of templates and recurring workflows"
+  ],
+  "ai-for-creators": [
+    "Generate content ideas grounded in your niche and real audience questions",
+    "Write scripts and outlines that sound like your own voice",
+    "Repurpose one long-form piece into ten platform-native posts",
+    "Design thumbnails and visuals with AI image tools",
+    "Storyboard short-form video concepts with AI video tools",
+    "Run a content operating system for calendar, batching, and consistency"
+  ],
+  "ai-for-social-media": [
+    "Turn a strategy document into a full month of pillar-tagged posts",
+    "Write platform-native captions and hooks for each channel",
+    "Draft engagement replies in brand voice with clear escalation rules",
+    "Turn raw analytics into a narrative report that separates fact from guess",
+    "Generate consistent on-brand campaign visuals with AI image tools",
+    "Run multi-client workflows with separate voice profiles and approval flows"
+  ],
+  "cursor-academy": [
+    "Set up Cursor and get accurate Tab autocomplete suggestions",
+    "Chat with an unfamiliar codebase to understand it quickly",
+    "Make precise inline edits and coordinated multi-file changes",
+    "Delegate whole tasks to Agent mode with review checkpoints",
+    "Write .cursor/rules files that keep the agent on your conventions",
+    "Run parallel background and cloud agents for bigger delivery work"
+  ],
+  "ai-for-designers": [
+    "Generate mood boards and concept directions with AI image tools",
+    "Turn a vague client ask into a clear, workable brief",
+    "Draft UX copy and microcopy for interface work",
+    "Write design rationale documents and presentation notes clients understand",
+    "Iterate on an approved visual direction without losing consistency",
+    "Set a deliberate policy for where AI helps and stays hands-off"
+  ],
+  "ai-for-photographers": [
+    "Turn client inquiries into warm, prompt booking replies that convert",
+    "Build shot lists and mood boards before a session",
+    "Write clear pricing and package descriptions clients can compare easily",
+    "Draft website copy and social captions that market your work",
+    "Deliver client galleries with honest print and album upsells",
+    "Run a season-proof marketing routine that keeps leads coming in"
+  ],
+  "ai-for-ecommerce": [
+    "Write product descriptions that sell without inventing features or claims",
+    "Generate genuinely distinct ad copy variants for A/B testing",
+    "Create on-brand product and lifestyle photos with AI image tools",
+    "Handle refund, delay, and complaint replies accurately and empathetically",
+    "Build welcome, abandoned-cart, and post-purchase email flows that convert",
+    "Automate recurring store content with a human approval checkpoint"
+  ],
+  "ai-for-support": [
+    "Rewrite a difficult reply to be firm, kind, and accurate",
+    "Build a macro library from your own best replies",
+    "Turn resolved support tickets into clear knowledge-base articles",
+    "Write escalation summaries engineers and managers can act on fast",
+    "Keep tone consistent across a growing support team",
+    "Design an AI-assisted triage workflow that keeps judgment calls human"
+  ],
+  "ai-for-teachers": [
+    "Build a full lesson plan from a curriculum objective",
+    "Differentiate one text or worksheet into three ability tiers",
+    "Generate quizzes and assessments with verified, accurate answer keys",
+    "Write specific and constructive feedback comments students can act on",
+    "Draft parent communication templates for recurring classroom scenarios",
+    "Build a NotebookLM knowledge base and redesign assignments to be AI-resilient"
+  ],
+  "ai-for-students": [
+    "Use AI as a Socratic tutor instead of an answer key",
+    "Summarize and question course readings using NotebookLM as a study aid",
+    "Build practice questions and a spaced-review plan for an exam",
+    "Get feedback on your own writing without letting AI ghostwrite it",
+    "Find and verify sources for a research paper",
+    "Run a practice loop to build a technical skill faster"
+  ],
+  "ai-for-engineers": [
+    "Turn field notes into structured technical report drafts",
+    "Explain technical concepts clearly to non-technical clients and stakeholders",
+    "Build reusable review checklists for documents and drawings",
+    "Research codes, standards, and precedents with verifiable citations attached",
+    "Draft meeting minutes and RFI or change-order communications",
+    "Build reusable documentation templates tailored to your engineering discipline"
+  ],
+  "ai-for-architects": [
+    "Turn meeting notes into project proposals and fee letters",
+    "Write concept narratives that sell a design direction",
+    "Explore visual design concepts quickly with AI image tools",
+    "Draft client-facing project documentation and regular status updates",
+    "Draft planning and consent documents with compliance guardrails",
+    "Write portfolio and case-study copy for practice marketing"
+  ],
+  "ai-for-financial-analysts": [
+    "Turn a budget variance table into a clear narrative",
+    "Summarize filings and reports for a briefing without dropping a number",
+    "Build reusable analysis frameworks and checklists for recurring reviews",
+    "Run cited sector research in Perplexity before a client meeting",
+    "Draft investment memos with built-in checkpoints for verifying every figure",
+    "Design a repeatable, auditable workflow for monthly financial reporting"
+  ],
+  "ai-for-insurance": [
+    "Explain a policy in plain language a client actually understands",
+    "Write client follow-ups and renewal reminders that get responses",
+    "Compare two policy documents accurately to spot real differences",
+    "Write clear and empathetic communication throughout the claims process",
+    "Prepare for objection handling and needs-analysis conversations with clients",
+    "Build a complete, maintained library of client-communication templates"
+  ],
+  "ai-for-founders": [
+    "Choose the right first task to delegate and check the work",
+    "Handle customer communication across announcements and difficult messages",
+    "Run cited market and competitor research before a real decision",
+    "Turn your actual process into an SOP your team will follow",
+    "Explain your financial numbers in plain language for your team",
+    "Design an AI-assisted operations layer with clear human checkpoints"
+  ],
+  "ai-for-freelancers": [
+    "Tailor a proposal to a specific brief quickly",
+    "Build onboarding documents and kickoff messages for new clients",
+    "Draft scope, quotes, and contract language with review guardrails",
+    "Market yourself with honest portfolio copy and targeted outreach",
+    "Write client updates and difficult messages that protect the relationship",
+    "Productize a repeated deliverable into a reusable AI-assisted workflow"
+  ],
+  "gemini-academy": [
+    "Write prompts that get a usable result on the first try",
+    "Use multimodal prompting with text, images, and files together",
+    "Draft in Gmail and Docs as part of daily communication",
+    "Analyze documents and images together in one request",
+    "Run Deep Research to produce grounded, properly sourced reports",
+    "Chain Gemini and NotebookLM into one Google-ecosystem workflow"
+  ],
+  "copilot-academy": [
+    "Choose the right coding surface — Cursor, Codex or Claude Code — per task",
+    "Steer inline completions with comments, context and rules files",
+    "Delegate an issue to a coding agent and review the resulting pull request",
+    "Run AI code review on every PR with Codex or Claude Code",
+    "Roll out shared AGENTS.md and rules across a team repository"
+  ],
+  "ai-for-restaurants": [
+    "Write menu descriptions from real ingredients and prep methods",
+    "Respond to praise, fair complaints, and unfair reviews with the right tone",
+    "Plan a season's worth of social posts paired with AI visuals",
+    "Build staff training documents and checklists from your own know-how",
+    "Draft event and catering proposals that read as tailored, not templated",
+    "Run a realistic weekly marketing routine sized to a small team"
+  ],
+  "ai-for-hospitality": [
+    "Write guest messages for every stage from booking to post-stay",
+    "Adapt listing descriptions for OTAs and your own site",
+    "Write review responses aimed at the future guests reading them",
+    "Build local guides and recommendations from real firsthand knowledge",
+    "Write upsell and package copy that increases booking value",
+    "Run a documented multilingual communication workflow with an accuracy check"
+  ],
+  "ai-for-legal": [
+    "Summarize and extract facts from legal documents with strict grounding",
+    "Extract parties, dates, and obligations accurately from a contract",
+    "Build internal matter summaries and non-final client communications",
+    "Build document-review checklists and compare two document versions",
+    "Prepare meeting questions from case material and organize research in NotebookLM",
+    "Build team-wide prompt frameworks and verification protocols for high-stakes work"
+  ],
+  "ai-for-marketers": [
+    "Turn a product description into a structured campaign brief",
+    "Generate and shortlist twenty ad angles from one brief",
+    "Test and improve ad variants systematically instead of guessing",
+    "Write landing-page copy and build a working page with Codex",
+    "Build a five-email sequence that carries one offer through",
+    "Plan a month of social content and repurpose one asset into ten formats"
+  ],
+  "ai-for-copywriters": [
+    "Generate three genuinely distinct first-draft directions from a brief",
+    "Edit and tighten text without flattening the writer's voice",
+    "Build and score headline systems instead of picking one at random",
+    "Gather verifiable facts with Perplexity before writing claims",
+    "Apply client revision rounds fast without losing consistency",
+    "Turn your own writing into a reusable personal style guide"
+  ],
+  "notebooklm-academy": [
+    "Build a Claude Project that answers questions grounded only in your documents",
+    "Synthesize and reconcile multiple documents without invented facts",
+    "Turn source packs into briefings, summaries and study systems",
+    "Maintain a client or project knowledge base your team can query",
+    "Choose between Claude Projects and Gemini for document-grounded work"
+  ],
+  "ai-for-operations": [
+    "Turn tribal knowledge into SOPs people actually follow",
+    "Map and improve a process through describe, question, improve",
+    "Write operational report narratives that leadership will actually read",
+    "Draft vendor and internal communications that get action",
+    "Identify which recurring tasks are genuinely worth automating",
+    "Roll out an AI-assisted process with guardrails and a rollback plan"
+  ],
+  "ai-for-seo": [
+    "Turn keyword and intent data into content briefs writers can use",
+    "Write title tags and meta descriptions at scale without spam patterns",
+    "Research competitor content gaps using cited, verifiable sources",
+    "Build outlines and drafts that satisfy real search intent",
+    "Turn technical audit findings into client-ready, actionable reports",
+    "Design a content production pipeline with named quality gates"
+  ],
+  "perplexity-academy": [
+    "Run cited research with Gemini and ChatGPT Deep Research and verify every source",
+    "Turn a business question into a focused research brief that gets useful answers",
+    "Produce competitor and market analyses grounded in checkable sources",
+    "Convert research findings into client-ready reports and decks",
+    "Set up a recurring research routine for your industry"
+  ],
+  "ai-for-real-estate": [
+    "Turn rough property notes into a publish-ready listing description",
+    "Write buyer follow-up emails and seller update messages",
+    "Summarize disclosures and inspection reports without inventing facts",
+    "Draft neighborhood guides and social posts for a new listing",
+    "Practice objection-handling scripts and research the local market with Perplexity",
+    "Build a listing landing page with Codex and a weekly activity report"
+  ],
+  "ai-for-sales": [
+    "Turn real prospect research into personalized cold outreach",
+    "Build follow-up sequences that don't repeat the same ask",
+    "Convert your own logged objections into practiced response scripts",
+    "Draft proposals and quotes from discovery notes without inventing scope",
+    "Research a prospect with cited sources before a call",
+    "Build a standing Claude Project as a reusable sales messaging library"
+  ],
+  "ai-for-hr": [
+    "Write job descriptions that attract the right candidates and avoid bias",
+    "Build competency-based interview questions free of legally risky content",
+    "Personalize candidate outreach messages from real profile details",
+    "Screen CVs against stated criteria with explicit bias guardrails",
+    "Draft HR policy documentation that flags claims needing legal review",
+    "Map a hiring workflow that decides exactly where AI safely assists"
+  ],
+  "ai-for-developers": [
+    "Choose the right coding agent among Claude Code, Codex, Cursor, and Copilot for a task",
+    "Understand an unfamiliar repository and write specs agents implement correctly",
+    "Implement features and debug failing tests with review checkpoints",
+    "Refactor code safely and generate tests that actually catch bugs",
+    "Review pull requests with AI assistance before approving a merge",
+    "Plan a migration and set up repo guardrails for team-wide agent use"
+  ]
+}

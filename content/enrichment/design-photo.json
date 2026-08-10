@@ -1,0 +1,852 @@
+{
+  "enrichment": {
+    "des-b1-moodboards-concept-exploration": {
+      "placeholders": [
+        {
+          "name": "PROJECT, AUDIENCE, DESIRED FEELING, CONSTRAINTS — e.g., existing brand colors, a competitor to differentiate from, format requirements",
+          "what": "This is your one-paragraph creative brief in a single line. Pull it from your kickoff call notes, the client's intake form, or a project brief document if one exists. A good value names the actual project, who it's for, the feeling you're chasing, and any hard rule ChatGPT or Gemini cannot ignore (a brand color, a size, a rival brand to avoid resembling). A weak value is just a project name with no constraints, which produces directions that all get rejected for breaking a rule nobody mentioned.",
+          "examples": [
+            "Project: rebrand for a boutique neighborhood bakery. Audience: young professionals who value quality over convenience. Desired feeling: craft, not corporate. Constraints: must keep the existing deep terracotta as an accent color, cannot resemble the industrial-chic look of the bakery two blocks away.",
+            "Project: packaging refresh for a small-batch hot sauce brand. Audience: adventurous home cooks aged 25-40. Desired feeling: bold and a little irreverent, not aggressive. Constraints: label must remain readable at 2 inches tall, keep the existing skull-and-pepper mascot recognizable.",
+            "Project: landing page hero imagery for a therapy practice's new website. Audience: adults seeking their first therapist, often anxious about the process. Desired feeling: calm and human, not clinical or stock-photo sterile. Constraints: no imagery implying a specific diagnosis, must work in a 16:9 crop."
+          ]
+        },
+        {
+          "name": "1/2/3/4",
+          "what": "The number of the direction you are currently generating, matching the order you listed them in during your planning step. This just keeps your files and labels organized when you're running the prompt multiple times in one session.",
+          "examples": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "name": "DIRECTION NAME AND ONE-LINE DESCRIPTION, e.g., \"Minimal & Editorial — restrained, high-contrast, lots of white space\"",
+          "what": "A short name for this specific creative direction plus one line describing its visual character. Good names are concrete and distinct from your other directions so a client can tell them apart at a glance; avoid vague names like \"Direction A\" that carry no information on their own.",
+          "examples": [
+            "Warm & Tactile — natural textures, soft window light, handmade feel",
+            "Bold & Graphic — thick linework, high-contrast color fields, poster-like energy",
+            "Quiet Confidence — muted palette, generous negative space, understated typography cues"
+          ]
+        },
+        {
+          "name": "SUBJECT/SCENE reflecting this direction",
+          "what": "What is actually depicted in the image — a product, a scene, a setting — described concretely enough that ChatGPT or Gemini can render it. Match this to the project type: a bakery rebrand might show a pastry case or a hand holding a loaf; a hero image for a website might show a person in a specific setting.",
+          "examples": [
+            "a close-up of a hand pulling a fresh loaf of sourdough from a wooden shelf",
+            "a small glass bottle of hot sauce sitting on a wooden cutting board next to fresh chilies",
+            "a person sitting alone on a park bench, looking at their phone, soft afternoon light"
+          ]
+        },
+        {
+          "name": "COMPOSITION",
+          "what": "How the subject is framed and arranged in the image — close-up vs. wide, centered vs. off-axis, how much negative space surrounds it. This controls whether the image feels intimate, editorial, dynamic, or calm.",
+          "examples": [
+            "tight close-up crop, subject slightly off-center, generous negative space to the right",
+            "wide shot with the subject small in frame, emphasizing the surrounding environment",
+            "centered, symmetrical composition, shot straight-on"
+          ]
+        },
+        {
+          "name": "COLOR PALETTE for this direction",
+          "what": "The specific colors this direction uses, named plainly enough that ChatGPT or Gemini applies them consistently. Reuse your brand's required colors here if you have them, and add 2-3 supporting colors that reinforce the direction's mood.",
+          "examples": [
+            "deep terracotta as a single accent against cream and charcoal",
+            "dusty blue, warm cream, and a single pop of mustard yellow",
+            "muted sage green, soft beige, and matte black"
+          ]
+        },
+        {
+          "name": "TEXTURE/MATERIAL CUES",
+          "what": "The physical textures or materials that should read in the image — wood grain, fabric, glass, matte paper, brushed metal. This is what separates directions that just differ in color from directions that feel genuinely different to touch and look at.",
+          "examples": [
+            "visible flour dust, raw wood grain, linen cloth",
+            "brushed matte glass, rough-cut wood, dried chili skins",
+            "soft matte fabric, frosted glass, no glossy or reflective surfaces"
+          ]
+        },
+        {
+          "name": "LIGHTING",
+          "what": "The light quality and direction — soft window light, harsh studio light, golden hour, flat even light. Lighting does more to set mood than almost any other single variable, so be specific rather than defaulting to \"nice lighting.\"",
+          "examples": [
+            "soft, diffused natural window light from one side",
+            "warm golden-hour light with long shadows",
+            "flat, even studio lighting with no harsh shadows"
+          ]
+        },
+        {
+          "name": "MOOD",
+          "what": "The emotional tone the image should carry, in 2-4 words. This should echo the desired feeling from your brief but can be more specific to this particular direction.",
+          "examples": [
+            "warm, unhurried, handmade",
+            "bold, playful, a little irreverent",
+            "calm, reassuring, unpretentious"
+          ]
+        },
+        {
+          "name": "ASPECT RATIO/FORMAT",
+          "what": "The image dimensions or format you actually need for how this will be used — square for social, widescreen for a website hero, portrait for a printed flyer. Match this to the real deliverable so you're not cropping awkwardly later.",
+          "examples": [
+            "1:1 square",
+            "16:9 widescreen",
+            "4:5 portrait"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Fast internal exploration (no client-facing polish needed)",
+          "whenToUse": "Use this when you just want to see if a direction has legs before investing in a full structured prompt — an early gut check for yourself or your team, not something you'll show a client yet.",
+          "prompt": "Quick concept sketch, direction: [DIRECTION NAME, e.g., \"warm and tactile\"] for [PROJECT TYPE]. Palette: [2-3 COLORS]. Mood: [2-3 WORDS]. Rough exploration, doesn't need to be polished — generate 4 fast variations so I can see if this direction is worth developing further."
+        },
+        {
+          "label": "Single hero image for one already-chosen direction",
+          "whenToUse": "Use this once a direction has been approved and you need one strong, final-quality image for a specific placement, rather than a spread of options.",
+          "prompt": "Generate one polished hero image for the approved direction: [DIRECTION NAME AND FULL STYLE BLOCK — palette, texture, lighting, mood, from the approved board].\n\nSubject/scene: [SPECIFIC SUBJECT FOR THIS PLACEMENT]\nFormat: [EXACT DIMENSIONS/ASPECT RATIO NEEDED]\n\nThis needs to be final-quality and consistent with the approved direction exactly as described — do not introduce a new palette, texture, or mood. Do not include any literal text, logo, or brand mark in the image."
+        },
+        {
+          "label": "Directions built from a competitor to differentiate from",
+          "whenToUse": "Use this when the brief's main constraint is standing apart from a specific named competitor's look, and you need the directions to actively test that distance, not just avoid mentioning the competitor.",
+          "prompt": "Brief: [PROJECT, AUDIENCE, DESIRED FEELING]\n\nCompetitor to differentiate from: [DESCRIBE THE COMPETITOR'S VISUAL LOOK — palette, style, mood — without naming their brand directly in the image prompt itself]\n\nGenerate concept imagery for DIRECTION [1/2/3]: [DIRECTION NAME], deliberately using a different palette, composition style, and mood than the competitor described above while still fitting the brief's audience and desired feeling.\n\n[SUBJECT/SCENE], [COMPOSITION], [COLOR PALETTE], [TEXTURE/MATERIAL CUES], [LIGHTING], [MOOD], [ASPECT RATIO/FORMAT]\n\nDo not include any literal text, logo, or brand mark in the image."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Two directions look too similar — push them apart",
+          "prompt": "Directions [X] and [Y] are reading as too similar once generated. Keep direction [X] as-is. For direction [Y], change the palette, texture, and lighting more aggressively so the two are clearly distinguishable side by side — while still fitting the original brief's constraints. Show me the revised prompt for direction [Y] before generating."
+        },
+        {
+          "label": "A direction ignored a brand constraint — fix it",
+          "prompt": "Direction [NAME] doesn't actually use [THE SPECIFIC CONSTRAINT, e.g., \"the required terracotta accent color\"]. Regenerate this direction's images with that constraint clearly present and dominant enough that it would pass approval, without changing the rest of the direction's mood or composition."
+        },
+        {
+          "label": "Need more range within one strong direction",
+          "prompt": "Direction [NAME] is the strongest one so far. Generate 3 more images within this same direction — same palette, texture, lighting, and mood — but varying the subject/scene so I have a fuller board to present, not just repeats of the same shot."
+        },
+        {
+          "label": "Write the one-line rationale for each board",
+          "prompt": "For each of the [NUMBER] directions we generated, write one plain-language sentence explaining why this direction fits the brief — reference the specific audience or desired feeling from the brief, not generic design language like \"modern and clean.\""
+        }
+      ],
+      "walkthrough": "Priya runs a small design studio and just landed a rebrand project for a neighborhood bakery. The client said they want to feel \"craft, not corporate\" and must keep their existing terracotta brand color. Instead of spending an afternoon on Pinterest, Priya opens ChatGPT and pastes in the lesson's prompt template, since GPT Image 2's instruction-following makes it her default for a multi-direction set like this.\n\nFirst she fills in the brief line: project is the bakery rebrand, audience is young professionals who value quality over convenience, desired feeling is craft not corporate, constraint is the existing terracotta accent color. She decides on three directions ahead of time: Minimal & Editorial, Warm & Tactile, and Bold & Graphic.\n\nFor direction 1, she writes the subject as a close-up of a hand pulling sourdough from a wooden shelf, composition as a tight off-center crop, palette as terracotta accent against cream and charcoal, texture as raw wood grain and linen, lighting as soft window light, mood as warm and unhurried, format 1:1 square. She generates four images, then repeats for the other two directions, changing only the direction-specific lines and keeping the brief paragraph identical, exactly as the lesson's pro tip advises.\n\nThe Minimal & Editorial and Bold & Graphic boards read as clearly distinct, but two Warm & Tactile images have drifted into a rustic-farmhouse look. She sends a follow-up asking ChatGPT to regenerate two more images keeping the same palette and lighting but pulling back on the rustic elements. The new set holds together better.\n\nFinally she asks for one-line rationales tied to the brief, pastes them under each board, and puts all three side by side in a single slide. The whole process, from opening the brief to a client-ready comparison slide, takes about 45 minutes — instead of one \"best guess\" board, she walks into the kickoff meeting with three genuinely different, defensible options."
+    },
+    "des-b2-client-brief-intake": {
+      "placeholders": [
+        {
+          "name": "PASTE CLIENT MESSAGE OR CALL NOTES",
+          "what": "The client's original request, copied exactly as they sent it or as you noted it during a call — texting shorthand, vague adjectives, and missing details are all fine and expected here. Do not clean it up or rewrite it into your own words first; the point of this prompt is to work from the raw, ambiguous version so nothing gets silently assumed before Claude even sees it.",
+          "examples": [
+            "Hey can you refresh our logo, make it feel more modern? Need it soon-ish.",
+            "Call notes 3/14: wants a new website, mentioned \"something like Away's site but for our brand,\" said budget is flexible but not unlimited, launch tied to a trade show in the fall, no specific date given.",
+            "hi! loved your portfolio. we need packaging for a new snack line, 3 flavors to start, want it to pop on shelf next to the bigger brands. no timeline pressure yet."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "When the request came from a phone call, not a written message",
+          "whenToUse": "Use this when you're working from your own notes taken during or right after a call rather than a client's own written words, since your notes may already have gaps the client never actually filled.",
+          "prompt": "I'm turning my own call notes into a design brief. These are my notes, not the client's exact words, so some details may be my interpretation rather than something they explicitly said:\n[PASTE YOUR CALL NOTES]\n\nDo the following:\n1. List only what I noted as explicitly stated by the client (project type, audience, deadline, budget, format, any concrete preference).\n2. List everything missing or ambiguous under \"Assumptions to confirm,\" phrased as specific questions I can send the client — including anything in my notes that might be my own interpretation rather than their actual words, flagged separately.\n3. Flag any vague stylistic language and suggest 2-3 concrete reference directions to pin down what they mean.\n\nDo not invent a project scope, timeline, or requirement that wasn't stated or implied."
+        },
+        {
+          "label": "Fast version for a very short, simple request",
+          "whenToUse": "Use this for quick, low-stakes requests (a single social graphic, a minor tweak) where a full brief would be overkill but you still want to avoid a wrong-guess first draft.",
+          "prompt": "Here's a short client request: [PASTE CLIENT MESSAGE]\n\nIn 3-5 bullet points, list only what's missing that I'd need to know before starting (format, size, deadline, any stated preference). Don't build a full brief — just the shortest list of questions that would prevent a wasted first draft. Do not guess at any answer."
+        },
+        {
+          "label": "Turning the final brief into a client-facing confirmation email",
+          "whenToUse": "Use this after the client has answered your clarifying questions and you're ready to turn the confirmed brief into something you actually send back to the client for sign-off.",
+          "prompt": "Here is the confirmed brief after the client answered my questions:\n[PASTE FACTS + CLIENT'S ANSWERS]\n\nWrite this as a short, friendly confirmation email to the client, summarizing the agreed scope, style direction, and timeline in plain language, and asking them to reply confirming it's accurate before I start design work. Do not add anything beyond what's in the confirmed brief above."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Questions feel too generic — make them sharper",
+          "prompt": "Some of these clarifying questions are still too broad to get a useful answer (e.g. anything like \"what's your vision?\"). Rewrite every question so it's specific enough that the client could answer it in one sentence — reference a concrete detail from their original message wherever possible."
+        },
+        {
+          "label": "Client answered — fold it into a final brief",
+          "prompt": "The client answered these questions: [PASTE CLIENT'S ANSWERS]\n\nFold these answers into a final one-page brief combining the original confirmed facts and these new answers. Flag anything the client's answer still leaves unclear rather than assuming a resolution."
+        },
+        {
+          "label": "Too many questions — cut to the essentials",
+          "prompt": "This list has too many questions to send at once without overwhelming the client. Cut it down to the 3-4 questions that would most change the design direction if answered differently, and combine or drop the rest."
+        },
+        {
+          "label": "Check nothing was invented",
+          "prompt": "Go back through the brief and the assumptions list and confirm every item traces directly to something in the client's original message. Flag anything that might have been inferred rather than explicitly stated, so I can double check it."
+        }
+      ],
+      "walkthrough": "Marcus is a freelance designer who just got a text from a longtime client: \"Hey can you refresh our logo, make it feel more modern? Need it soon-ish.\" In the past he would have started sketching based on his own guess at what \"modern\" meant, then found out three drafts later that the client actually wanted something completely different.\n\nInstead, he opens Claude and pastes the lesson's brief-intake prompt, filling in the client's exact text into the placeholder. Claude responds with two lists. Under confirmed facts, it lists only one item: a refresh of an existing logo has been requested. Under \"Assumptions to confirm,\" it lists specific questions: whether \"soon-ish\" ties to a real deadline like an upcoming event, whether there's an agreed budget range, and whether the client wants the mark to stay recognizable as an evolution or is open to a full departure. It also flags \"modern\" as vague and suggests three reference directions — a clean geometric sans-serif treatment, a slightly playful hand-drawn mark, and a minimal monogram — to show the client.\n\nMarcus reads the questions, removes one he already knows the answer to from a past conversation, and sends the remaining three questions plus the three reference directions to the client before touching Illustrator. The client replies two days later: there's no hard deadline, budget is roughly $2,000, and they like the clean geometric direction best but want to keep their current color, not go full departure.\n\nMarcus pastes those answers back into Claude and asks it to fold them into a final one-page brief. He saves that brief in his project folder as the record of what was agreed. The whole intake process took about 15 minutes of his own time spread across two days of waiting on the client, and he started actual design work with a real target instead of a guess — no wasted first draft, no awkward \"that's not really what we meant\" conversation."
+    },
+    "des-i1-ux-copy-microcopy": {
+      "placeholders": [
+        {
+          "name": "3-5 ADJECTIVES, e.g., \"direct, warm, no jargon\"",
+          "what": "The personality traits your product's writing should consistently have. Pull these from an existing brand or voice guide if your company has one; if not, describe how you'd want a helpful, in-character employee of the product to sound if they were explaining the screen out loud.",
+          "examples": [
+            "direct, reassuring, no jargon",
+            "playful, encouraging, a little irreverent",
+            "precise, calm, professional without being stiff"
+          ]
+        },
+        {
+          "name": "PASTE ONE EXAMPLE SENTENCE FROM EXISTING PRODUCT COPY",
+          "what": "One real sentence already used somewhere in your product — an onboarding line, a button label, a tooltip — that you feel captures the voice well. This gives the AI a concrete anchor instead of an abstract adjective list, which is what keeps the new copy from defaulting to generic SaaS tone.",
+          "examples": [
+            "We'll only ever show you your own numbers.",
+            "Nice! That's one step closer to your first campaign.",
+            "You're in control — nothing sends until you hit confirm."
+          ]
+        },
+        {
+          "name": "DESCRIBE: what the user is trying to do, what triggered this screen, what happens on each possible action",
+          "what": "A precise account of the interaction — not just the screen's name, but the user's goal, how they got here, and what each button or action actually does next. This is what stops the AI from writing plausible-sounding but disconnected copy.",
+          "examples": [
+            "User is connecting their bank account during onboarding in a budgeting app. This screen appears after they choose their bank from a list. If they enter correct credentials, they're taken to an account-selection screen. If the connection fails, they land back here with an error and can retry or contact support.",
+            "User is trying to cancel a subscription from account settings. This screen appears when they click 'Cancel plan.' If they confirm, their plan downgrades at the end of the billing period and they see a confirmation screen. If they back out, they return to account settings unchanged.",
+            "User is uploading a resume during job application. This screen appears after clicking 'Apply.' A successful upload moves them to a review screen. A failed upload (wrong file type or too large) keeps them here with an error explaining what to fix."
+          ]
+        },
+        {
+          "name": "X",
+          "what": "The actual character limit your UI component allows for that piece of text — check your design file or ask engineering if you don't know it. Using a real number, not a guess, is what keeps the copy usable without a second editing pass.",
+          "examples": [
+            "40",
+            "60",
+            "24"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Just the error and empty states (skip full screen copy)",
+          "whenToUse": "Use this when the rest of a screen's copy already exists and you only need to fill the gaps designers most often forget — error and empty states — rather than regenerating everything.",
+          "prompt": "I need just the error and empty state copy for one screen. Voice: [3-5 ADJECTIVES], example: \"[EXAMPLE SENTENCE]\".\n\nScreen/flow description: [DESCRIBE THE SCREEN AND WHAT CAN GO WRONG OR BE EMPTY]\n\nWrite:\n1. Empty state copy (if this screen can have nothing to show) — reassuring, explains why it's empty and what to do next.\n2. Error state copy for the most likely failure — specific about what went wrong and what to do next, never \"Something went wrong.\"\n\nMatch the voice exactly. Do not invent a feature or behavior the screen doesn't actually have."
+        },
+        {
+          "label": "Copy for an entire multi-step flow at once",
+          "whenToUse": "Use this when you're writing copy for a multi-screen flow (like a 3-step onboarding) and want consistent voice and terminology across every screen in one pass, rather than screen by screen.",
+          "prompt": "I need UX copy for a multi-step flow in a product. Voice: [3-5 ADJECTIVES], example: \"[EXAMPLE SENTENCE]\".\n\nFlow overview: [DESCRIBE EACH STEP IN ORDER: what the user does, what triggers moving to the next step, what happens if they go back or cancel]\n\nFor EACH step, write: headline, supporting body (1-2 sentences), button labels (verb-first, under [X] characters), and error state if that step can fail.\n\nKeep terminology for the same concept identical across every step (e.g., don't call it \"your plan\" in step 1 and \"your subscription\" in step 3). Match the voice exactly. Do not invent a feature or behavior not described."
+        },
+        {
+          "label": "Rewriting existing copy that's already live but underperforming",
+          "whenToUse": "Use this when you have existing copy that's shipped but causing confusion (support tickets, drop-off) and need a revision grounded in what's actually going wrong, not a fresh rewrite from scratch.",
+          "prompt": "I need to revise existing UX copy that's causing user confusion. Voice: [3-5 ADJECTIVES], example: \"[EXAMPLE SENTENCE]\".\n\nCurrent copy: [PASTE EXISTING HEADLINE/BODY/BUTTONS/ERROR TEXT]\nWhat's going wrong: [DESCRIBE THE CONFUSION — e.g., \"users click this button expecting X but it does Y,\" or specific support ticket themes]\n\nRewrite the copy to directly address the confusion described, keeping anything that isn't part of the problem unchanged. Match the voice exactly. Do not invent a feature or behavior the screen doesn't actually have."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Sounds generic — make it sound like the example sentence",
+          "prompt": "This still reads like generic SaaS copy, not like the example sentence I gave you. Rewrite it so it sounds like it was written by the same person who wrote: \"[PASTE EXAMPLE SENTENCE AGAIN]\" — same rhythm, same level of formality, same word choices where it makes sense."
+        },
+        {
+          "label": "Error message is still vague — make it specific",
+          "prompt": "The error state copy is too generic. Rewrite it to name the actual likely cause of this specific failure and the specific next action the user should take — no \"Something went wrong\" or \"Please try again\" without more detail."
+        },
+        {
+          "label": "Over the character limit — trim it",
+          "prompt": "The [HEADLINE/BUTTON LABEL/BODY TEXT] is over my character limit of [X]. Rewrite it to fit within that limit without losing the core meaning or dropping to a vaguer verb."
+        },
+        {
+          "label": "Check for invented features or behavior",
+          "prompt": "Review everything you just wrote and flag any line that references a feature, limit, or behavior I didn't actually describe in the screen/flow description. I want to catch anything invented before this goes to review."
+        }
+      ],
+      "walkthrough": "Devon is a product designer at a small budgeting app, working on the bank-connection screen for onboarding. He's been asked to draft the copy himself since the team doesn't have a dedicated copywriter, and past AI-generated attempts came back sounding like every other fintech app.\n\nHe opens Claude and fills in the lesson's prompt. For voice, he writes \"direct, reassuring, no jargon\" and pastes an existing line from the app's welcome screen: \"We'll only ever show you your own numbers.\" For the screen description, he explains that the user is connecting their bank during onboarding, this screen appears after choosing their bank from a list, a successful connection moves them to account selection, and a failed connection returns them here with an error and a retry option. He sets character limits: 50 for the headline, 30 for button labels.\n\nClaude returns a full set: a headline reading \"Connect your bank to see where your money goes,\" a supporting line about bank-level encryption, a primary button labeled \"Connect my bank\" instead of a generic \"Continue,\" a secondary \"I'll do this later\" link, an empty state for before any account is connected, and an error state that says the connection didn't go through and suggests checking the login details or trying a different bank, rather than \"Something went wrong.\"\n\nDevon reads the button label out loud and it holds up. But the error message reads a little clinical to him, not matching the reassuring tone of the reference sentence. He sends a follow-up: \"This error message doesn't sound like the reference sentence I gave you — make it warmer and more reassuring while staying specific about what to do next.\" The revised version softens the phrasing while keeping the specific retry instruction.\n\nHe trims the headline by three characters to fit the actual UI component, then hands the full set to his product manager for review. Total time: about 12 minutes, versus the half day it used to take to draft, second-guess, and rewrite this kind of copy from a blank page."
+    },
+    "des-i2-design-rationale-presentation-notes": {
+      "placeholders": [
+        {
+          "name": "PROJECT/SCREEN NAME",
+          "what": "The name of the project, screen, or feature the decisions belong to — used just to keep the document properly labeled and easy to find later.",
+          "examples": [
+            "Checkout flow redesign",
+            "Mobile nav restructure",
+            "Onboarding v3"
+          ]
+        },
+        {
+          "name": "LIST: decision 1 + reason, decision 2 + reason, decision 3 + reason, ...",
+          "what": "Your actual design decisions paired with the real reason behind each one — a brief requirement, a usability test finding, an accessibility rule, a technical constraint, or a brand guideline. Only include a decision you can genuinely back up; if you can't state a real reason, that decision doesn't belong in this list yet.",
+          "examples": [
+            "Simplified checkout from 4 steps to 2 — reason: brief specified reducing cart abandonment, and moderated usability sessions showed users confused by the third step.",
+            "Moved price display above the fold — reason: heat-map data showed users scrolling away before finding the price.",
+            "Increased button tap target to 44x44px minimum — reason: accessibility requirement (WCAG target size guidance) and internal QA flagged mis-taps on the previous size during mobile testing."
+          ]
+        },
+        {
+          "name": "NUMBER",
+          "what": "How many of your riskiest decisions you want pushback-and-response written for — usually your two or three most likely to be challenged, not every decision on the list.",
+          "examples": [
+            "2",
+            "3",
+            "1"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Short version for an async written update, not a live meeting",
+          "whenToUse": "Use this when you're sharing the rationale in a Slack message or written doc for stakeholders to read on their own time, rather than presenting live, so you don't need spoken talking points.",
+          "prompt": "Help me write a short design rationale summary for [PROJECT/SCREEN NAME] to share asynchronously in writing (Slack or a doc, not a live presentation).\n\nMy decisions and the real reason behind each (use only what I give you): [LIST]\n\nWrite one tight paragraph per decision (problem → decision → outcome), in plain professional language, short enough to skim in under two minutes total. End with one line inviting questions or pushback in writing rather than asking me to guess what might come up live."
+        },
+        {
+          "label": "When the whole project needs defending, not just individual decisions",
+          "whenToUse": "Use this for a bigger review where the project's overall direction is being questioned, not just a specific button or layout choice — you need to connect the decisions into one coherent narrative rather than list them separately.",
+          "prompt": "Help me write a design rationale that connects a set of decisions into one coherent narrative for [PROJECT NAME], for a review where the overall direction (not just individual choices) may be challenged.\n\nMy decisions and the real reason behind each (use only what I give you — do not invent data or justifications): [LIST]\nThe overarching goal these decisions were all in service of: [STATE THE GOAL, e.g., \"reduce onboarding drop-off\"]\n\nWrite a short narrative connecting all the decisions back to that one goal, showing how they work together rather than listing them as isolated choices. Then write likely pushback on the overall direction (not individual decisions) and a grounded response."
+        },
+        {
+          "label": "Rationale for a decision you're still not fully sure about",
+          "whenToUse": "Use this when you need to present a decision honestly while acknowledging real uncertainty or trade-offs, rather than presenting false confidence.",
+          "prompt": "Help me write a rationale for one decision I'm genuinely still uncertain about, for [PROJECT/SCREEN NAME].\n\nThe decision: [DECISION]\nWhat I'm confident about: [STATE]\nWhat I'm still unsure about or would reconsider with more data: [STATE HONESTLY]\n\nWrite a rationale paragraph that presents the decision as reasoned but appropriately provisional — acknowledge the open trade-off honestly rather than overstating confidence, and suggest one way to validate it further (e.g., a follow-up test) if relevant. Do not invent data or certainty I don't have."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Sounds like it's overstating confidence — pull it back",
+          "prompt": "Re-read the rationale for [DECISION] — it sounds more certain than what I actually gave you as the reason. Rewrite it so the confidence level matches the actual evidence I stated, without hedging so much it sounds weak."
+        },
+        {
+          "label": "Pushback questions are too easy — sharpen them",
+          "prompt": "The pushback questions for [DECISION] are ones nobody would actually ask. Rewrite them as the hardest, most specific version of the question a skeptical stakeholder with real budget or timeline concerns would actually raise."
+        },
+        {
+          "label": "Talking points still sound like slide text",
+          "prompt": "These talking points still sound like something being read off a slide rather than spoken naturally. Rewrite them as short phrases and cues I could glance at while speaking conversationally — not full sentences I'd read verbatim."
+        },
+        {
+          "label": "Check for invented data or justification",
+          "prompt": "Go through the rationale document and pushback responses and flag any sentence that states a data point, user research finding, or justification I didn't actually give you in my original list. I want to remove anything invented before this goes into a real meeting."
+        }
+      ],
+      "walkthrough": "Sofia is a product designer preparing for a design review where she expects pushback on her checkout redesign. In past reviews, a stakeholder has asked a pointed question and she's improvised an answer on the spot that didn't land well.\n\nThis time she opens ChatGPT before the meeting and works through the lesson's prompt. For the project name she writes \"Checkout flow redesign.\" For decisions and reasons, she lists two: simplifying checkout from four steps to two, because the brief called for reducing cart abandonment and moderated usability sessions showed users confused by the third step; and moving the price display above the fold, because heat-map data showed users scrolling away before finding the price. She sets the number of riskiest decisions to write pushback for at 2, since both of her decisions carry real risk of being questioned.\n\nChatGPT returns a rationale document with one paragraph per decision following problem, decision, outcome. For the checkout simplification, it also writes a likely pushback question — \"won't fewer steps mean less opportunity to upsell?\" — with a response grounded only in her stated reasons: the usability sessions showed the third step causing confusion and drop-off, and reducing friction there was prioritized in the brief.\n\nSofia reads the draft and one thing bothers her: the pushback response sounds more certain than her actual data supports — it implies the upsell impact was tested, which it wasn't. She sends the follow-up asking it to pull back the confidence to match what she actually knows.\n\nAfter that fix, she asks for the condensed spoken version. She gets back short phrases she can glance at rather than full sentences to read, and rehearses them out loud once at her desk before the meeting. When a stakeholder does ask about the upsell trade-off in the actual review, she has a real, honest, already-considered answer instead of improvising. The whole prep — writing, revising, and rehearsing — took about 25 minutes the evening before."
+    },
+    "des-i3-iterate-visual-directions-systematically": {
+      "placeholders": [
+        {
+          "name": "PASTE THE APPROVED STYLE BLOCK — palette, composition style, texture/material cues, lighting, mood",
+          "what": "The exact wording used in the original prompt for the direction that got approved — copied character for character, not re-described from memory. This is the single most important input in this lesson: paraphrasing it, even slightly, is what causes GPT Image 2 to introduce visual drift.",
+          "examples": [
+            "flat illustration, muted pastel palette (dusty blue, terracotta, cream), soft rounded shapes, minimal shadows, warm and approachable mood",
+            "documentary-style photography, natural available light only, desaturated warm tones, candid unposed framing, quiet and intimate mood",
+            "bold flat color fields (deep navy, mustard, off-white), thick uniform linework, no gradients or shadows, confident and graphic mood"
+          ]
+        },
+        {
+          "name": "SPECIFIC NEW SUBJECT/SCENE NEEDED",
+          "what": "The one new thing you need generated in this style — a specific icon, a specific product shot, a specific scene. Keep this narrowly defined so only the subject changes and the style stays locked.",
+          "examples": [
+            "a settings-menu icon set: gear, bell, user profile, and lock icons",
+            "a product shot of the same hot sauce bottle from a three-quarter angle",
+            "an illustration of a person reviewing a budget on a laptop"
+          ]
+        },
+        {
+          "name": "ASPECT RATIO/FORMAT",
+          "what": "The dimensions or format this specific new asset needs, which may differ from the original approved images depending on where it will be used.",
+          "examples": [
+            "1:1 square, icon on transparent background",
+            "4:5 portrait for a product page",
+            "16:9 for a website banner"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Batch-generating a full set of related assets at once",
+          "whenToUse": "Use this when you need several related new assets (a full icon set, several product angles) in the same locked style in one pass, rather than one at a time.",
+          "prompt": "Locked style reference for this project (do not vary this wording): [PASTE THE APPROVED STYLE BLOCK]\n\nGenerate new assets for each of the following, keeping the style identical across all of them: [LIST EACH SUBJECT/SCENE NEEDED, e.g., \"1. gear icon, 2. bell icon, 3. user profile icon, 4. lock icon\"]\n\nUse the locked style reference exactly as written above for every asset. Do not introduce a new palette, texture, or mood, and do not let the style shift between items in the set. Format: [ASPECT RATIO/FORMAT]\n\nAfter generating, list which elements of the locked reference are present in each asset, and flag anything that may have drifted, comparing every asset against the original reference and against each other for internal consistency."
+        },
+        {
+          "label": "Uploading a reference image directly in ChatGPT",
+          "whenToUse": "Use this when you're starting a new chat (or want a stronger anchor than the text description alone) and can upload an approved reference image for ChatGPT to match.",
+          "prompt": "I'm uploading an approved reference image from our locked style. Use it as a strict visual anchor — match its palette, texture, lighting, and mood exactly.\n\nLocked style reference (text description, for anything the image doesn't fully convey): [PASTE THE APPROVED STYLE BLOCK]\n\nGenerate a new asset for: [SPECIFIC NEW SUBJECT/SCENE NEEDED]\n\nDo not introduce a new palette, texture, or mood not present in the uploaded reference. Format: [ASPECT RATIO/FORMAT]\n\nAfter generating, list which elements of the reference image are present in this new image, and flag anything that may have drifted."
+        },
+        {
+          "label": "Recovering a style block that was never written down",
+          "whenToUse": "Use this when you don't have the original locked style block saved and need to reconstruct one from an approved image before you can safely iterate further.",
+          "prompt": "I have an approved image but never saved the exact style-block wording that produced it. Here's my best description of what I can see in the image: [DESCRIBE PALETTE, COMPOSITION, TEXTURE, LIGHTING, MOOD AS PRECISELY AS YOU CAN OBSERVE THEM]\n\nWrite this as a precise, reusable locked style-block description I can save and paste into future ChatGPT prompts word for word, structured as: palette, composition style, texture/material cues, lighting, mood. Be as specific and concrete as possible so this description alone could reproduce the same visual style consistently."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Self-report flagged drift — fix it",
+          "prompt": "The self-report flagged that [SPECIFIC ELEMENT, e.g., \"the shadow rendering\"] drifted from the locked reference. Regenerate this asset in this same chat, keeping everything else the same, but correct specifically that element to match the locked reference exactly."
+        },
+        {
+          "label": "Looks fine alone but doesn't match the board — compare directly",
+          "prompt": "Compare this new asset directly against the original locked reference, element by element (palette, composition, texture, lighting, mood) rather than judging it on its own. Tell me specifically which elements match and which don't, even subtly."
+        },
+        {
+          "label": "Need the same asset in a different format without losing consistency",
+          "prompt": "I need this same asset resized/reformatted to [NEW ASPECT RATIO/FORMAT] without changing anything about the palette, texture, lighting, or mood. Regenerate it in the new format only, keeping every style element locked."
+        },
+        {
+          "label": "Save the finalized style block for reuse",
+          "prompt": "Based on everything approved in this session, write out the final, confirmed locked style-block wording exactly as it should be saved and reused for every future request on this project — this is the version I'll paste going forward."
+        }
+      ],
+      "walkthrough": "Elena is a designer whose flat-illustration direction for a fintech app's onboarding was just approved by the client. Now she needs a settings-menu icon set: gear, bell, profile, and lock icons, all matching the approved look.\n\nShe goes back to the exact ChatGPT thread where the onboarding illustrations were approved — not a fresh chat — and pulls the exact style-block wording she originally used, word for word: \"flat illustration, muted pastel palette (dusty blue, terracotta, cream), soft rounded shapes, minimal shadows, warm and approachable mood.\" She doesn't try to redescribe it from memory, following the lesson's core warning.\n\nIn that same conversation, she pastes the lesson's prompt, putting the locked style block in the first section and \"a settings-menu icon set: gear, bell, user profile, and lock icons\" as the new subject, format set to 1:1 square icons on a transparent background. She adds the instruction to self-report which locked elements are present after generating.\n\nBecause she's still in the thread with the approved illustrations, GPT Image 2 has more to anchor to than the text description alone. The output comes back with four icons and a self-report: palette and shape language match, but the shadow on the lock icon came out heavier and more three-dimensional than the minimal-shadow rule allows. Elena sends a follow-up asking ChatGPT to regenerate just that one icon, correcting the shadow to match the locked rule. The next version comes back flatter, matching the other three.\n\nShe holds all four icons up against the originally approved onboarding illustrations on her second monitor — not against each other — and confirms they genuinely belong to the same visual system. She saves the exact style-block wording in her project's shared style-reference doc so the next designer on the team, or she herself in three weeks, starts from the same anchor. Total time for four consistent, on-brand icons: about 20 minutes, including one correction round."
+    },
+    "des-a1-integrate-ai-without-losing-craft": {
+      "placeholders": [
+        {
+          "name": "LIST",
+          "what": "Your honest, task-by-task list sorted into AI-assisted and manual-always categories — the actual recurring tasks in your design process, not an aspirational or generic list. This appears twice in the prompt (once for AI-assisted tasks, once for manual tasks).",
+          "examples": [
+            "AI-assisted: mood board generation (ChatGPT), icon set variations (ChatGPT), first-draft microcopy (Claude), meeting note summaries (Claude)",
+            "Manual, always: final layout and typography decisions, client rationale conversations, brand mark design, color palette finalization",
+            "AI-assisted: competitor research summaries (Claude), first-pass wireframe layouts, draft presentation talking points (Claude)"
+          ]
+        },
+        {
+          "name": "WHY — e.g., \"this is where client trust in my judgment actually lives\" / \"this is where I develop taste, not just output\"",
+          "what": "Your honest reasoning for why each manual task stays manual — the actual value or risk at stake, not a generic statement like \"it's important.\" Good reasons name something specific: where your taste develops, where trust is built, where a client is specifically paying for your judgment.",
+          "examples": [
+            "this is where clients are paying for my specific judgment, and where I develop taste rather than just approve output",
+            "this is the step where I catch problems a generic process would miss, because I've internalized this client's specific brand history",
+            "this is where my reputation is actually on the line if it's wrong"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Team policy instead of a personal one",
+          "whenToUse": "Use this when you're drafting a shared policy for a design team rather than your own individual practice, and need it to hold up across people with different skill levels and risk tolerances.",
+          "prompt": "I'm helping define where our design team uses AI and where we keep things fully manual. Here's our team's task list and first-pass sorting:\n\nAI-assisted tasks: [LIST]\nManual, always tasks: [LIST]\nReason for each manual task: [WHY]\n\nBased only on this list (do not add tasks or reasons not given):\n1. For each AI-assisted task, name the specific risk of over-relying on AI there, and note if the risk differs for a junior vs. senior team member.\n2. For each risk, suggest one concrete check someone should do before accepting AI output for that task, specific enough that it could go into an onboarding doc.\n3. Flag any task in \"AI-assisted\" that, based on our own stated manual-task reasoning, actually looks like it belongs in \"manual, always\" instead.\n4. Suggest how we'd handle disagreement between team members about which category a task belongs in."
+        },
+        {
+          "label": "Revisiting the policy after months of real use",
+          "whenToUse": "Use this a few months after adopting a first-pass policy, when you have real experience of where quality held up or slipped, rather than starting from a blank first-pass sort.",
+          "prompt": "I set an AI-use policy a few months ago and want to revisit it based on real experience since then. Original policy: [PASTE ORIGINAL AI-ASSISTED / MANUAL LISTS]\n\nWhat I've observed since: [DESCRIBE — e.g., \"AI-assisted mood boards started looking interchangeable across two different client projects,\" \"manual microcopy took too long and the AI-assisted draft was actually fine with light editing\"]\n\nBased only on what I've described:\n1. Suggest which tasks should move categories, and why, tied specifically to what I observed.\n2. Flag any task where my observation suggests I need a better check rather than a category change.\n3. Write the updated policy as a clean, current version I can save and refer back to."
+        },
+        {
+          "label": "A quick daily gut-check version",
+          "whenToUse": "Use this as a fast, in-the-moment version when you're about to start a specific task and want a quick sanity check against your policy, rather than reworking the whole policy document.",
+          "prompt": "Based on this policy I've already set: [PASTE YOUR AI-ASSISTED / MANUAL LISTS AND REASONS]\n\nI'm about to start this task: [DESCRIBE THE SPECIFIC TASK]. Based only on my existing policy, should this be AI-assisted or manual, and what's the one check I committed to for this category? Don't reopen the whole policy — just apply it to this one task."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Risk feels too generic — make it specific to this task",
+          "prompt": "The risk you named for [TASK] is too generic to actually act on. Name the specific, observable failure mode for this exact task — something I could actually notice happening, not an abstract concern."
+        },
+        {
+          "label": "The suggested check is too vague to actually do",
+          "prompt": "The check you suggested for [TASK] is too vague to actually follow under deadline pressure. Rewrite it as a specific, concrete action I could do in under 5 minutes — something with a clear yes/no outcome, not \"review carefully.\""
+        },
+        {
+          "label": "Push harder on the cross-check",
+          "prompt": "Look again at my \"AI-assisted\" list against my stated reasons for keeping things manual. Be more skeptical this time — is there a task I'm keeping AI-assisted mainly because it's convenient, not because the reasoning actually supports it?"
+        },
+        {
+          "label": "Turn this into something I'll actually revisit",
+          "prompt": "Add a short section to this policy: a specific date or trigger (e.g., \"after 3 months\" or \"if two clients' AI-assisted boards start looking similar\") for when I should revisit each category, so this doesn't just sit unused after today."
+        }
+      ],
+      "walkthrough": "Tom has been running his solo design practice for eight years and has noticed something uncomfortable lately: two recent clients' ChatGPT-generated mood boards ended up looking oddly similar to each other despite being completely different brands. He wants to get deliberate about where AI helps and where it's quietly eroding something that matters.\n\nHe opens Claude and works through the lesson's prompt. For AI-assisted tasks, he lists mood board generation (ChatGPT), icon set variations (ChatGPT), and first-draft microcopy (Claude). For manual-always tasks, he lists final layout and typography decisions, client rationale conversations, and brand mark design — and for the reason, he writes: \"this is where clients are paying for my specific judgment, and where I develop taste rather than just approve output.\"\n\nClaude's response, working only from his list, flags mood board generation as carrying a specific risk of visual sameness across projects — exactly the problem he's already noticed in ChatGPT's output — and suggests a concrete check: compare this month's boards against last month's before sending anything to a client. For microcopy, it flags a different risk: losing the specific voice a client hired him for, with a check to read every draft aloud against a real brand-voice example before sending.\n\nThe most useful part comes last. Claude flags that Tom listed \"icon set variations\" as AI-assisted, but based on his own stated reason for keeping brand mark design manual — that it's where taste and judgment live — icon sets for a client's core visual system arguably belong in the same category, not lumped in with lower-stakes assets.\n\nHe moves primary-brand icon work into manual-always, keeps ChatGPT for internal low-stakes variations, commits to the visual-sameness check for mood boards, and sets a reminder to revisit the whole policy in three months. Writing the policy took about 20 minutes, but the sameness problem it caught is one he'd been unconsciously sliding into for weeks."
+    },
+    "ph-b1-inquiry-replies-booking-flows": {
+      "placeholders": [
+        {
+          "name": "PASTE INQUIRY EXACTLY AS RECEIVED",
+          "what": "The client's inquiry message copied word for word from your email or inquiry form — not summarized or cleaned up. Keeping it exact matters because the prompt needs to pull a real, specific detail from it (their date, venue, or stated concern), and a summary can lose the detail worth referencing.",
+          "examples": [
+            "Hi, are you available for a wedding on June 14th at Riverside Gardens? What packages do you offer?",
+            "Hello! We're looking for a family photographer for a fall mini session, our kids are 3 and 6, we saw your work on Instagram and loved the outdoor light in your photos. Do you have anything available in October?",
+            "hey do u still do newborn shoots? baby is due in 3 weeks and we haven't booked anyone yet, kind of last minute sorry"
+          ]
+        },
+        {
+          "name": "AVAILABILITY FOR THEIR DATE / RELEVANT PACKAGE NAME AND WHAT IT INCLUDES / ANYTHING SPECIFIC ABOUT THEIR EVENT OR REQUEST I ALREADY KNOW",
+          "what": "Your real, current answers to what they asked — whether you're actually free that day, the real name and contents of the package that fits their request, and anything you personally know about their event. Never let the AI guess at these; if you don't know something yet, say so.",
+          "examples": [
+            "Available June 14th. Full Day Wedding Package ($3,200): 8 hours coverage, 2 shooters, 500+ edited images, online gallery. I've shot at Riverside Gardens twice before.",
+            "Have two mini session slots left in October, third and fourth Saturday. Fall Mini package: 30 minutes, one location, 20 edited digital images, $275.",
+            "Newborn availability is tight with 3 weeks notice but I have one opening the week after the due date. Newborn Package: in-home session, 2 hours, 25 edited images, $450."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Short version for a quick availability-only question",
+          "whenToUse": "Use this when the inquiry is a simple yes/no availability question with no pricing or style discussion needed, so the reply can be shorter and faster to send.",
+          "prompt": "Write a short reply to this client inquiry, which is just asking about availability.\n\nClient's message:\n[PASTE INQUIRY EXACTLY AS RECEIVED]\n\nMy real availability for their date: [CONFIRM AVAILABLE / NOT AVAILABLE / NEED TO CHECK]\n\nRules:\n- Reference their specific date and any other detail they mentioned.\n- If available, confirm warmly and ask one clarifying question needed to move forward (e.g., session length, location preference).\n- If not available, say so clearly and warmly, and offer one alternative if I have one, without over-apologizing.\n- Under 80 words. No invented pricing or package details."
+        },
+        {
+          "label": "When you're not available and need to decline gracefully",
+          "whenToUse": "Use this when you have to turn down an inquiry (fully booked, wrong fit, out of budget range) but still want to leave the door open for a referral or future booking.",
+          "prompt": "Write a reply declining this inquiry gracefully.\n\nClient's message:\n[PASTE INQUIRY EXACTLY AS RECEIVED]\n\nReason I can't take this booking: [e.g., \"fully booked that date,\" \"outside my typical service area,\" \"budget doesn't match my current pricing\"]\nWhat I can offer instead (if anything): [e.g., \"a referral to another photographer,\" \"a spot on my waitlist,\" \"nothing right now\"]\n\nRules:\n- Reference at least one specific detail from their message.\n- Be warm and direct about not being available — don't bury the decline in vague language.\n- If I have something to offer instead, include it as the one next step. If not, close warmly without inventing an alternative.\n- Do not invent availability, pricing, or a referral I haven't actually given you."
+        },
+        {
+          "label": "Inquiry through a booking form with structured fields, not free text",
+          "whenToUse": "Use this when inquiries come in through a structured contact form with separate fields (date, event type, budget) rather than one free-text message.",
+          "prompt": "Write a reply to this client inquiry, submitted through my booking form.\n\nForm responses:\n[PASTE EACH FIELD AND ANSWER, e.g., \"Event type: Wedding. Date: June 14. Venue: Riverside Gardens. Estimated budget: $2,500-3,500. How did you hear about us: Instagram.\"]\n\nMy real details to include: [AVAILABILITY / RELEVANT PACKAGE / ANYTHING SPECIFIC I KNOW]\n\nRules:\n- Reference at least two specific details from the form (date, venue, or budget range).\n- Directly answer their event type and date first.\n- Warm, professional tone, no pressure language.\n- End with exactly one clear next step.\n- Do not invent pricing, availability, or package details I haven't given you."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Still sounds generic — make it more personal",
+          "prompt": "This still reads a bit generic. Rewrite it referencing the specific detail from their message more directly — work it into the opening line instead of just mentioning it in passing, so it's clear I actually read what they wrote."
+        },
+        {
+          "label": "Too many next steps — cut to one",
+          "prompt": "This reply has more than one next step or ask in it. Rewrite it so there's exactly one clear, low-friction next step at the end, and move any other information into the body as context only, not as a separate ask."
+        },
+        {
+          "label": "Check for invented pricing or availability",
+          "prompt": "Review this reply and flag anything that states a price, availability, or package detail I didn't explicitly give you in my notes. I want to catch anything invented before I send this."
+        },
+        {
+          "label": "Tone feels too salesy — warm it up",
+          "prompt": "This reply reads a little too sales-focused. Rewrite it to feel warmer and more like a real person responding to an inquiry they're genuinely excited about, while keeping the same information and single next step."
+        }
+      ],
+      "walkthrough": "Ana is a wedding photographer who just got an inquiry through her website: \"Hi, are you available for a wedding on June 14th at Riverside Gardens? What packages do you offer?\" She knows from experience that replying within the hour dramatically improves her booking rate, but she also doesn't want to send something that reads like a form letter.\n\nShe opens Claude on her phone and pastes the lesson's prompt, dropping the client's message exactly as received into the inquiry placeholder. For her real details, she types: \"Available June 14th. Full Day Wedding Package ($3,200): 8 hours coverage, 2 shooters, 500+ edited images, online gallery. I've shot at Riverside Gardens twice before.\"\n\nClaude drafts a reply that opens by confirming she's available June 14th, mentions Riverside Gardens by name and notes she's shot there before, briefly describes the Full Day package with the real numbers she gave it, and closes with one next step: offering a 15-minute call to talk through their day and coverage needs.\n\nAna reads it and likes most of it, but the closing line feels a little stiff — it reads \"Please let me know if a call would be convenient for you,\" which isn't how she actually talks to clients. She sends the follow-up: \"This reply still sounds a bit generic in the closing — rewrite it to feel warmer and more like a real person, while keeping the same information and single next step.\" The revised close reads more like her own voice: \"Would love to hop on a quick 15-minute call to hear more about your day — just let me know what works!\"\n\nShe double-checks that no pricing or availability details were invented beyond what she gave it, then copies the reply into her actual email and sends it. From opening the inquiry to hitting send: about six minutes, and the client replied within the hour to book a call."
+    },
+    "ph-b2-shoot-prep-shot-lists-moodboards": {
+      "placeholders": [
+        {
+          "name": "EVENT/SESSION TYPE",
+          "what": "The type of shoot you're building this list for, which determines what standard time blocks and shot types apply.",
+          "examples": [
+            "wedding",
+            "fall family mini session",
+            "corporate headshot day"
+          ]
+        },
+        {
+          "name": "DATE",
+          "what": "The actual date of the shoot, used just to label the list clearly for your own reference and for anyone else (assistant, second shooter) using it.",
+          "examples": [
+            "June 14, 2026",
+            "October 18, 2026",
+            "next Tuesday"
+          ]
+        },
+        {
+          "name": "PASTE TIMELINE, e.g., \"getting ready 1pm, ceremony 3pm, reception 6pm\"",
+          "what": "The actual schedule for the day, as specific as you have it. Even a rough timeline is better than none — the prompt is designed to flag missing time slots for confirmation rather than silently guessing at them.",
+          "examples": [
+            "getting ready 1pm, first look 2:30pm, ceremony 3pm, cocktail hour 4pm, reception 6pm-11pm",
+            "session starts 4:30pm, golden hour target 5:15-5:45pm, ends by 6pm",
+            "arrive 9am, headshots run continuously until 3pm, one 30-minute lunch break at noon"
+          ]
+        },
+        {
+          "name": "LIST",
+          "what": "The specific shots the client explicitly asked for, listed plainly — not shots you assume they want, only ones actually mentioned.",
+          "examples": [
+            "detail shot of the rings, first look, bride with each grandparent, family portrait with the dog",
+            "sibling photo where both kids are looking at the camera and smiling, one shot with the family dog, candid shot of the kids running",
+            "individual headshot plus one team group shot in front of the office sign"
+          ]
+        },
+        {
+          "name": "LIST, e.g., \"bride with each grandparent individually, full wedding party, immediate family only\"",
+          "what": "The specific groupings of people who need to be photographed together, named clearly enough to avoid confusion on the day — who's included, who's not.",
+          "examples": [
+            "immediate family only (parents, siblings), full wedding party, bride with each grandparent individually",
+            "both parents with both kids, each parent solo with kids, kids alone",
+            "each department team separately, then full company group shot"
+          ]
+        },
+        {
+          "name": "ANY KNOWN DETAILS",
+          "what": "What you already know about the location — whether you've shot there before, indoor/outdoor mix, lighting concerns, anything logistically relevant. If you don't know something (like whether you've done a site visit), say so honestly so it gets flagged rather than assumed.",
+          "examples": [
+            "unfamiliar venue, no site visit done, client mentioned a garden area for portraits",
+            "shooting at the family's home, mostly outdoor backyard, one indoor fallback spot if it rains",
+            "office building, headshots will be in a conference room with north-facing windows"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Fast version for a simple mini session",
+          "whenToUse": "Use this for short, low-complexity sessions (minis, single-person headshots) where a full time-blocked list would be overkill and you just need the must-have shots checked off.",
+          "prompt": "Build a simple shot checklist for a [SESSION TYPE] on [DATE], session length [LENGTH]. Must-have shots: [LIST]. Groupings needed: [LIST]. Flag anything unclear instead of guessing. Keep it to one flat checklist, no time blocks needed since this is a short session."
+        },
+        {
+          "label": "Building the shot list from a client's Pinterest board or reference links instead of their own words",
+          "whenToUse": "Use this when the client sent reference images or a Pinterest board instead of, or in addition to, a written list of must-have shots, and you need to translate visual references into an actual shot list.",
+          "prompt": "Build a time-sequenced shot list for a [EVENT/SESSION TYPE] on [DATE]. The client shared reference images/a Pinterest board instead of a written list. Here's what I observed in their references: [DESCRIBE THE SPECIFIC SHOT TYPES, POSES, OR MOMENTS YOU SAW IN THEIR REFERENCES]\n\nSchedule/timeline: [PASTE TIMELINE]\nKey people/groupings needed: [LIST]\nLocation notes: [ANY KNOWN DETAILS]\n\nOrganize by time block, as a checkable list. Flag anything ambiguous under a separate \"Confirm with client\" list rather than guessing — especially since these shots come from my interpretation of references, not their explicit words, note where I should double check my interpretation with the client directly."
+        },
+        {
+          "label": "Second-shooter briefing version",
+          "whenToUse": "Use this when you need a version of the list specifically formatted to brief a second shooter or assistant who wasn't part of the original client conversation.",
+          "prompt": "Build a time-sequenced shot list for a [EVENT/SESSION TYPE] on [DATE], formatted as a briefing for my second shooter who wasn't part of the original client conversation.\n\nSchedule/timeline: [PASTE TIMELINE]\nMust-have shots the client mentioned: [LIST]\nKey people/groupings needed: [LIST]\nWhat I'll personally cover vs. what the second shooter should focus on: [SPLIT, e.g., \"I'll cover main portraits and formals, second shooter covers candids and detail shots\"]\n\nOrganize by time block, with a clear note next to each item on who's responsible (me or second shooter). Flag anything unclear under \"Confirm with client\" or \"Confirm with second shooter\" as appropriate."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Too many items flagged as ambiguous — help me resolve them",
+          "prompt": "There are several items on the \"Confirm with client\" list. For each one, write a short, specific question I could text or email the client to resolve it quickly, rather than a vague open-ended question."
+        },
+        {
+          "label": "Add buffer time between blocks",
+          "prompt": "Review the time blocks and flag any that look too tight given the number of shots listed under them, especially at the unfamiliar venue. Suggest where I should add buffer time, and note it as a recommendation rather than rewriting my timeline without asking."
+        },
+        {
+          "label": "Reorganize by priority instead of just time",
+          "prompt": "Within each time block, reorder the shot list so the client's explicitly stated must-have shots are listed first, before any standard shots for this session type, so I never run out of time before getting the must-haves."
+        },
+        {
+          "label": "Turn this into a printable checklist format",
+          "prompt": "Reformat this shot list into a clean, printable checklist with checkboxes I can literally check off on paper during the shoot — short line items, no long descriptions, grouped clearly by time block."
+        }
+      ],
+      "walkthrough": "Jordan is a wedding photographer prepping for a Saturday wedding at a venue she's never shot at before. The couple sent a somewhat scattered email with must-have shots mixed in with logistics, and she wants a clean, usable list before the day arrives.\n\nShe opens Claude and fills in the lesson's shot-list prompt. Event type: wedding. Date: the actual wedding date. Timeline: getting ready 1pm, first look 2:30pm, ceremony 3pm, reception 6pm. Must-have shots: detail shot of the rings, first look, bride with each grandparent. Groupings: immediate family only, full wedding party. Location notes: unfamiliar venue, no site visit done, client mentioned a garden area for portraits.\n\nClaude organizes everything under headers — Getting Ready, Ceremony, Formals, Reception — and creates a separate \"Confirm with client\" list flagging that \"bride with each grandparent\" needs a headcount, and that formals timing at the unfamiliar venue may need extra buffer since there's no site visit to base timing on.\n\nJordan sends a follow-up asking for a short, specific question for each flagged item. She gets back two ready-to-send texts: one asking exactly how many grandparents will attend, one asking if a 15-minute buffer before formals is workable given they haven't seen the garden area yet.\n\nShe texts both questions to the couple, who reply within a day: three grandparents total, and yes to the buffer. She updates the list herself with that information.\n\nSeparately, she takes the couple's two vibe words — \"romantic\" and \"candid\" — into ChatGPT and generates a quick four-image mood board with GPT Image 2, since she's learned the hard way that \"candid\" means different things to different clients. She shares both the shot list and mood board in one email, and the couple replies with a quick thumbs up. Total time from opening her notes to a client-approved shot list and mood board: about 25 minutes across two days of waiting on replies."
+    },
+    "ph-i1-pricing-package-descriptions": {
+      "placeholders": [
+        {
+          "name": "FOR EACH PACKAGE: name, price, hours of coverage, number of edited images delivered, delivery timeframe, prints/albums included if any, what's explicitly NOT included",
+          "what": "Your actual, current package details, listed completely and honestly for every package you want written up. This is the core input the whole prompt depends on — anything you leave out here is something the AI is explicitly banned from guessing at, so incomplete input means an incomplete (safely so) draft.",
+          "examples": [
+            "Essential — $1,200, 4 hours coverage, 100 edited images, delivered in 4 weeks, no prints, does NOT include a second shooter or album.",
+            "Signature — $2,400, 8 hours coverage, 300 edited images, delivered in 3 weeks, one 10x10 album included, does NOT include a second shooter (available as $400 add-on).",
+            "Elite — $3,800, full day (10 hours) coverage, 500+ edited images, delivered in 2 weeks, one 12x12 album and one 8x10 print included, second shooter included, does NOT include drone footage."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick one-package update after a price change",
+          "whenToUse": "Use this when only one package's price or inclusions changed and you just need that single description regenerated, not a full rewrite of your whole pricing page.",
+          "prompt": "I need to update the description for one package after a price/inclusion change. Existing description style to match: [PASTE ONE OF YOUR OTHER CURRENT PACKAGE DESCRIPTIONS AS A STYLE REFERENCE]\n\nUpdated package details: [NAME, PRICE, HOURS, IMAGES, DELIVERY TIME, PRINTS/ALBUMS, WHAT'S NOT INCLUDED]\n\nWrite a new description in the exact same structure and tone as the reference description, using only the updated details given — do not add any inclusion not listed."
+        },
+        {
+          "label": "A la carte add-ons list instead of fixed packages",
+          "whenToUse": "Use this when you sell hourly coverage plus separate add-ons rather than fixed all-inclusive packages, and need clear, comparable add-on descriptions instead.",
+          "prompt": "Write clear pricing copy for my photography business, which sells hourly coverage plus optional add-ons rather than fixed packages. Use only the details below — do not add any inclusion, feature, or benefit I haven't listed.\n\nBase hourly rate: [PRICE PER HOUR, MINIMUM HOURS IF ANY, WHAT'S INCLUDED AT THE BASE RATE]\nAdd-ons: [FOR EACH: name, price, exactly what it includes]\n\nWrite:\n1. A short explanation of how the base rate works.\n2. A comparison-friendly list of add-ons (consistent structure: name, price, one-line description of exactly what's included).\n\nTone: confident and clear, no pressure language, no vague value claims unless I've told you which one actually sells best."
+        },
+        {
+          "label": "Package comparison for a printed PDF guide, not a website",
+          "whenToUse": "Use this when the output needs to work as a printed or PDF client guide rather than a scrollable web page, which typically wants a more condensed, table-like structure.",
+          "prompt": "Write pricing package descriptions formatted for a printed PDF guide (not a website), using only the details below. Do not add any inclusion I haven't listed.\n\nPackages: [FOR EACH PACKAGE: name, price, hours, images, delivery time, prints/albums, what's NOT included]\n\nWrite a condensed, table-friendly version: for each package, a short headline, then inclusions as a tight bulleted list (fewer, punchier lines than a website version would use, since this needs to fit on a printed page), and one line on who it fits. Add a one-paragraph 'Which package is right for you' summary at the end based only on the actual differences listed. No vague value claims unless I've told you which one actually sells best."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check for implied inclusions that aren't real",
+          "prompt": "Go through each package description and flag any line that implies an inclusion, feature, or benefit I didn't explicitly list in my original details — I want to catch anything oversold before this goes on my website."
+        },
+        {
+          "label": "Structure isn't consistent across packages — fix it",
+          "prompt": "The structure isn't identical across all the packages — some have different section orders or different levels of detail. Rewrite all of them using the exact same structure and section order so they're easy to compare side by side."
+        },
+        {
+          "label": "Add a comparison table version",
+          "prompt": "In addition to the written descriptions, create a simple side-by-side comparison table with packages as columns and key details (price, hours, images, delivery time, prints/album) as rows, using only the details I originally gave you."
+        },
+        {
+          "label": "Tone feels too salesy for my brand",
+          "prompt": "This reads a bit too sales-heavy for how I want to sound. Rewrite it in a more understated, confident tone — plain and clear rather than persuasive language — while keeping every factual detail exactly the same."
+        }
+      ],
+      "walkthrough": "Rachel runs a portrait photography business and knows her current pricing page is a problem — it's vague enough that half her inquiries start with \"what's actually included in the Signature package?\" instead of a booking. She decides to rewrite it properly using Claude.\n\nShe lists her three real packages with complete details: Essential at $1,200 for 4 hours and 100 edited images delivered in 4 weeks with no prints; Signature at $2,400 for 8 hours and 300 images delivered in 3 weeks with one 10x10 album included; and Elite at $3,800 for a full 10-hour day, 500+ images delivered in 2 weeks, with a 12x12 album, one print, and a second shooter included. She's careful to also note what's explicitly not included in each, since she knows from past confusion that clients assumed the Essential package included a second shooter when it never did.\n\nShe pastes all three into the lesson's prompt. Claude returns three descriptions in identical structure — headline, price, bulleted inclusions, one-line fit statement — and a short \"which package is right for you\" guide based purely on coverage length and deliverables, not invented lifestyle framing like \"perfect for large weddings,\" since she never said that.\n\nReading it over, Rachel notices the Signature description implies unlimited digital access to the gallery, which isn't actually true — her galleries expire after a year. She sends the follow-up asking Claude to check for any implied inclusion she didn't explicitly list, and it flags that exact line along with one other borderline phrase about \"premium editing,\" which she also hadn't specified. She corrects both.\n\nShe then asks for a simple comparison table version to add above the written descriptions, since she thinks some visitors will want to scan numbers before reading prose. She checks every number in the final table against her actual contract terms one more time before publishing. Total time: about 30 minutes, and her website finally says exactly what she delivers — no more, no less."
+    },
+    "ph-i2-marketing-site-copy-social-captions": {
+      "placeholders": [
+        {
+          "name": "YEARS SHOOTING, SPECIALTY (e.g., wedding, family, product), WHAT CLIENTS ACTUALLY SAY ABOUT WORKING WITH ME, ONE OR TWO REAL MOMENTS/OUTCOMES I'M PROUD OF, MY ACTUAL SHOOTING STYLE IN MY OWN WORDS",
+          "what": "Your real, specific professional details and a couple of genuine stories or client comments — not aspirational marketing language, but things that are actually true and specific to you. This is what keeps the copy from sounding like every other photographer's site.",
+          "examples": [
+            "6 years shooting, specialty in documentary-style family sessions, clients often say they forgot the camera was even there, proud moment: a grandmother seeing her whole family together in one frame for the first time in a decade, my style is unposed and quiet, I follow the moment rather than direct it.",
+            "3 years shooting, specialty in small-business product photography, clients say I ask better questions about their product than their own marketing team does, proud moment: a client's Etsy sales doubled the month after using my new product shots, my style is clean, bright, and consistent so every listing looks like part of one collection.",
+            "10 years shooting, specialty in wedding photojournalism, clients say I'm invisible until the moment they need me, proud moment: capturing a reunion between a bride and her grandfather who flew in as a surprise, my style is fast, reactive, minimal posing."
+          ]
+        },
+        {
+          "name": "FOR EACH: what/where/who, only shareable facts",
+          "what": "A short factual note per recent session — what happened, where, and who was involved — including only details you actually have permission to share publicly. Leave out anything private or identifying you haven't cleared.",
+          "examples": [
+            "Fall mini session, Cedar Park, a family of four with two young kids, golden hour, leaves everywhere.",
+            "Product shoot for a local candle shop's new fall collection, studio setup, 12 products photographed in one afternoon.",
+            "Engagement session downtown at sunrise, couple requested a quiet, low-key vibe, no crowds yet at that hour."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Just the caption batch, skip the homepage copy",
+          "whenToUse": "Use this when your website copy is already solid and you just need a fresh batch of captions for recent sessions, run on its own without regenerating homepage content.",
+          "prompt": "Using these recent session notes: [FOR EACH: what/where/who, only shareable facts], write 4-6 social captions (Instagram-length, in my voice: [DESCRIBE YOUR VOICE IN A FEW WORDS]) with one specific detail from each session's notes, one soft call to action per caption, and varied structure — not the same opening or format repeated across the batch. Do not invent client quotes, testimonials, or session details I haven't given you."
+        },
+        {
+          "label": "A specific service page instead of the general homepage",
+          "whenToUse": "Use this when you need copy for one specific service page (like a dedicated wedding or newborn page) rather than the general homepage/about section.",
+          "prompt": "Write copy for a [SPECIFIC SERVICE, e.g., \"newborn photography\"] service page on my website, using only the specifics below. Avoid generic photography marketing phrases like \"capture your story\" or \"timeless images\" — write something specific to me instead.\n\nMy specifics for this service: [YEARS DOING THIS SPECIFIC SERVICE, WHAT MAKES MY APPROACH DIFFERENT, WHAT CLIENTS ACTUALLY SAY, ONE REAL DETAIL ABOUT HOW I RUN THIS TYPE OF SESSION]\n\nWrite: a page headline + 2-3 sentence intro, a short section on what to expect during the session (from my real process, not invented), and one closing call to action. Do not invent a process detail, guarantee, or outcome I haven't stated."
+        },
+        {
+          "label": "Repurposing one session into captions for multiple platforms",
+          "whenToUse": "Use this when you need the same session turned into platform-appropriate captions for more than one social platform, since Instagram, Facebook, and a blog post all want different lengths and tones.",
+          "prompt": "Using this session's notes: [WHAT/WHERE/WHO, ONLY SHAREABLE FACTS], write three versions of a caption/post about it, each suited to a different platform:\n1. Instagram caption (short, one specific detail, one soft call to action)\n2. Facebook post (slightly longer, more conversational, can include a bit more context)\n3. A 2-3 sentence blog post intro (if I were writing a longer post about this session)\n\nMy voice: [DESCRIBE]. Do not invent client details, quotes, or facts not in the notes."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "A generic phrase slipped through — cut it",
+          "prompt": "This still uses [THE SPECIFIC GENERIC PHRASE, e.g., \"capture your story\"] which I specifically wanted to avoid. Rewrite that section without it, replacing it with something grounded in the real specifics I gave you instead."
+        },
+        {
+          "label": "Captions all sound too similar",
+          "prompt": "These captions are using the same opening structure repeatedly. Rewrite the batch so each one opens differently — vary between starting with a detail, a question, and a short observation — so the batch doesn't feel repetitive."
+        },
+        {
+          "label": "Double-check nothing private slipped in",
+          "prompt": "Review the captions and flag anything that includes a full name, exact address, or private detail I didn't explicitly clear for public sharing in my session notes, so I can remove it before posting."
+        },
+        {
+          "label": "About section doesn't sound like me",
+          "prompt": "The About section doesn't sound like my actual voice. Here's an example of how I really talk about my work: \"[PASTE A REAL EXAMPLE OF HOW YOU TALK ABOUT YOUR WORK]\" — rewrite the About section to match that tone and rhythm more closely, keeping the same facts."
+        }
+      ],
+      "walkthrough": "Miguel has been a family photographer for six years and knows his website copy is generic — he wrote it in a rush when he first launched and it sounds like every other family photographer's site. He also hasn't posted consistently on Instagram in weeks because he never knows what to caption.\n\nHe opens ChatGPT and works through the lesson's prompt. For his specifics, he writes: 6 years shooting, specialty in documentary-style family sessions, clients often say they forgot the camera was even there, his proudest moment was a grandmother seeing her whole family together in one frame for the first time in a decade, and his style is unposed and quiet — he follows the moment rather than directing it. He also gathers four recent session notes with only shareable facts: a fall mini in a specific park, a newborn session at a client's home, a sibling session at the beach, and a birthday party shoot.\n\nChatGPT returns a homepage hero headline built around the unposed, documentary style and that specific grandmother moment rather than a generic \"capturing your story\" line, a first-person About section referencing the real six-year specialty, and six varied captions pulling one true detail from each session note.\n\nReading through, Miguel notices the About section still opens with a line close to \"I capture your family's story\" — one of the exact clichés he wanted to avoid. He sends the follow-up flagging that specific phrase and asking for a rewrite grounded in his real specifics instead. The revised opening leads with the grandmother anecdote directly, which reads far more distinctive.\n\nHe also reviews the captions for privacy and catches that one references a child's full name from his session notes — he asked for that check specifically since one of his notes had it written in. He removes it. He schedules the six captions across the coming two weeks instead of posting them all at once. Total time: about 35 minutes, and for the first time his homepage says something no other local photographer's site says."
+    },
+    "ph-i3-client-gallery-delivery-upsells": {
+      "placeholders": [
+        {
+          "name": "CLIENT NAME, SESSION TYPE, ONE SPECIFIC MEMORABLE MOMENT FROM THE SESSION, GALLERY LINK, ANY DELIVERY-TIMEFRAME PROMISE I MADE",
+          "what": "The real specifics of this particular session — who it was for, what kind of session, one genuine memorable moment worth referencing, the actual gallery link, and any delivery timeline you promised the client. The memorable moment is what makes the email feel personal rather than templated.",
+          "examples": [
+            "The Alvarez family, fall mini session, memorable moment was the youngest child laughing uncontrollably during a leaf-throwing shot, gallery link: [actual link], promised 2-week delivery.",
+            "Priya and Dev, engagement session, memorable moment was them dancing together spontaneously when a busker started playing nearby, gallery link: [actual link], promised 10-business-day delivery.",
+            "Thompson wedding, memorable moment was the flower girl falling asleep during the reception toast, gallery link: [actual link], promised 4-week delivery, delivered on time."
+          ]
+        },
+        {
+          "name": "LIST YOUR ACTUAL PRINTS/ALBUMS AND PRICES",
+          "what": "Your real, current print and album products with real prices — nothing aspirational or planned, only what you can actually sell and fulfill right now.",
+          "examples": [
+            "8x10 matte print ($45), 20-page linen album ($350)",
+            "Set of 5 5x7 prints in a keepsake box ($120), 30-page coffee-table album with linen cover ($480)",
+            "Framed 11x14 canvas print ($180), digital gallery extension (1 extra year of hosting, $60)"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Delivery email only, no upsell (client already declined prints before)",
+          "whenToUse": "Use this for a client who's already told you they're not interested in prints, so you skip the upsell message entirely and just send a clean delivery email.",
+          "prompt": "Write one client message: a gallery delivery email only, no sales content.\n\nSession details: [CLIENT NAME, SESSION TYPE, ONE SPECIFIC MEMORABLE MOMENT, GALLERY LINK, ANY DELIVERY-TIMEFRAME PROMISE]\n\nWarm, personal, references the specific memorable moment, includes the gallery link, states how long the gallery stays live if applicable, under 150 words. Do not include any print or album mention."
+        },
+        {
+          "label": "Delayed delivery — need to apologize honestly, not oversell it",
+          "whenToUse": "Use this when the gallery is late against your promised timeframe and the delivery email needs to acknowledge that honestly rather than pretend it's on schedule.",
+          "prompt": "Write a gallery delivery email for a session that's running late against my promised timeframe.\n\nSession details: [CLIENT NAME, SESSION TYPE, ONE SPECIFIC MEMORABLE MOMENT, GALLERY LINK]\nPromised delivery: [ORIGINAL PROMISE, e.g., \"2 weeks\"]\nActual delivery: [ACTUAL TIME, e.g., \"3.5 weeks\"]\nReal reason for the delay (if I want to share one): [STATE OR WRITE 'PREFER NOT TO GIVE A SPECIFIC REASON']\n\nWrite a warm, honest delivery email that briefly and simply acknowledges the delay without over-apologizing or making excuses, then moves into the same warm, personal delivery content referencing the memorable moment. No sales content in this message. Do not invent a reason for the delay I haven't given you."
+        },
+        {
+          "label": "Upsell only, gallery was already delivered separately",
+          "whenToUse": "Use this when the delivery email already went out (maybe from your gallery platform automatically) and you just need the separate follow-up upsell message on its own.",
+          "prompt": "Write one client message: a print/album upsell follow-up, to send now since the gallery was already delivered separately.\n\nClient/session context: [CLIENT NAME, SESSION TYPE, ONE DETAIL WORTH REFERENCING]\nReal products and prices: [LIST YOUR ACTUAL PRINTS/ALBUMS AND PRICES]\n\nWrite a short, low-pressure message offering these as an option, framed around preserving/displaying the images rather than urgency or scarcity language. One clear next step, no countdown or \"limited time\" framing unless I've told you there's a real deadline. Do not invent products, prices, or a deadline I haven't given you."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Delivery email accidentally mentions prints — remove it",
+          "prompt": "Message 1 (the delivery email) mentions prints or pricing, which it shouldn't. Rewrite it to remove all sales content entirely, keeping it purely about the gallery delivery and the memorable moment."
+        },
+        {
+          "label": "Upsell reads too pushy — soften it",
+          "prompt": "Message 2 (the upsell) reads more pushy or urgent than I want. Rewrite it to feel like a genuinely low-pressure, helpful option rather than a sales pitch — remove any language that implies they need to decide quickly."
+        },
+        {
+          "label": "Make the memorable moment feel more specific",
+          "prompt": "The reference to the memorable moment feels generic. Make it more vivid and specific using exactly the detail I gave you — don't add anything I didn't tell you, just bring out the detail I gave more fully."
+        },
+        {
+          "label": "Check for invented products or urgency language",
+          "prompt": "Review message 2 and flag anything that states a product, price, or deadline I didn't explicitly give you, or any urgency/scarcity language I didn't ask for. I want to catch this before scheduling it to send."
+        }
+      ],
+      "walkthrough": "Priya, a photographer, just finished editing a fall mini session for the Alvarez family and is ready to deliver the gallery. She's historically bad about the print upsell — she either forgets it entirely or sends something that feels like a hard sell right after the delivery, which she knows undercuts the moment.\n\nShe opens Claude and fills in the lesson's two-message prompt. Session details: the Alvarez family, fall mini session, memorable moment was the youngest child laughing uncontrollably during a leaf-throwing shot, the actual gallery link, and her promised 2-week delivery timeframe, which she hit. For real products, she lists her actual offerings: an 8x10 matte print at $45 and a 20-page linen album at $350.\n\nClaude drafts message 1, the delivery email: warm, under 150 words, opening with something like \"I'm so glad I get to share these with you — that leaf-throwing shot mid-laugh is one of my favorites from the whole fall season,\" including the gallery link and noting how long it stays live, with zero mention of pricing or products. Message 2, the separate upsell meant to send a few days later, offers the print and album at their real prices, framed around having something to actually hang or hold rather than urgency.\n\nPriya reads message 1 and it's exactly right. Message 2 feels almost right, but one line implies a vague sense of urgency — \"don't wait too long to decide\" — that she never asked for and doesn't match her actual policy of no deadline. She sends the follow-up asking Claude to review the upsell for invented urgency language and remove it. The corrected version drops that line entirely and reads as a calm, optional offer.\n\nShe sends the delivery email that afternoon, and schedules the upsell to go out four days later, once the family has had time to actually look through their gallery. The whole process took about 10 minutes, and for the first time she has both messages doing their separate jobs properly instead of one rushed, mixed-purpose email."
+    },
+    "ph-a1-season-proof-marketing-routine": {
+      "placeholders": [
+        {
+          "name": "e.g., wedding / family / newborn / product photography",
+          "what": "Your actual photography specialty or niche, which determines what a realistic seasonal pattern and marketing routine even looks like for your business.",
+          "examples": [
+            "wedding photography",
+            "newborn and family photography",
+            "commercial product photography"
+          ]
+        },
+        {
+          "name": "LIST",
+          "what": "Used twice in this prompt: your actual peak booking months and your actual slow months, based on your real calendar, not an aspirational version.",
+          "examples": [
+            "Peak months: May, June, July, September, October",
+            "Slow months: January, February, March"
+          ]
+        },
+        {
+          "name": "LIST, e.g., \"fall mini sessions,\" \"holiday card sessions\"",
+          "what": "Any recurring seasonal offer you actually run, named specifically. If you don't run one, say so honestly rather than let the routine assume an offer that doesn't exist.",
+          "examples": [
+            "fall mini sessions, holiday card sessions",
+            "spring senior portrait special",
+            "none currently - considering adding one"
+          ]
+        },
+        {
+          "name": "LIST, e.g., Instagram, a mailing list, referral partners",
+          "what": "The marketing platforms you genuinely and regularly use - not ones you've considered or abandoned. Restricting the routine to real platforms is what keeps it usable.",
+          "examples": [
+            "Instagram and an email list of past clients",
+            "Instagram, a local venue referral partner, and a mailing list",
+            "Facebook and word-of-mouth referrals only"
+          ]
+        },
+        {
+          "name": "NUMBER OR \"not tracked\"",
+          "what": "A rough count of your past-client list size, or an honest admission you don't track this yet. Both are useful inputs — the routine adapts differently depending on whether you have a list to re-engage or need to build one first.",
+          "examples": [
+            "about 150 people",
+            "not tracked",
+            "roughly 40 past clients across 3 years"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "First year in business, no booking history yet",
+          "whenToUse": "Use this when you don't have a full year of real booking data yet to identify true peak and slow months, and need a routine based on industry-typical patterns plus your own guess, clearly flagged as unverified.",
+          "prompt": "Help me build a starter marketing routine for my first year in photography business, using only the details below — I don't have a full year of booking data yet, so treat my guessed peak/slow months as unverified, not confirmed.\n\nMy niche: [NICHE]\nMy best guess at peak months (based on general knowledge of this niche, not my own data): [LIST]\nMy best guess at slow months: [LIST]\nRecurring seasonal offers I plan to run (if any): [LIST OR 'NONE YET']\nPlatforms I actually use: [LIST]\nPast-client list size: [NUMBER OR 'none yet, first year']\n\nBuild a month-by-month routine as usual, but add a note after month 6 and month 12 suggesting I revisit and correct the peak/slow month assumptions based on my actual first-year booking data by then."
+        },
+        {
+          "label": "Focused only on one slow season, not the full year",
+          "whenToUse": "Use this when you only need a plan for one specific upcoming slow stretch, not a full annual routine, because the rest of your year is already planned or it's simply not the right time to plan 12 months out.",
+          "prompt": "Help me build a marketing plan for just one upcoming slow stretch, not a full-year routine, using only the details below - do not invent a niche, offer, or platform I haven't mentioned.\n\nMy niche: [NICHE]\nThe slow stretch I'm planning for: [MONTHS]\nWhy it's slow (if known): [e.g., \"post-holiday, people aren't booking sessions\"]\nRecurring offer I could run during this stretch (if any): [LIST OR 'NONE']\nPlatforms I actually use: [LIST]\nPast-client list size: [NUMBER OR 'not tracked']\n\nGive me one clear marketing goal for this stretch and 2-3 recurring weekly/monthly actions to support it, realistic for a solo business, no more than a few hours per week."
+        },
+        {
+          "label": "Routine built around one big recurring seasonal offer",
+          "whenToUse": "Use this when your marketing routine really centers on one major recurring offer (like a big annual mini-session event) and you want the routine built specifically around ramping up to and following that offer.",
+          "prompt": "Help me build a marketing routine centered around my main recurring seasonal offer, using only the details below.\n\nMy niche: [NICHE]\nThe offer: [DESCRIBE, e.g., \"annual fall mini sessions, one Saturday in October, 20 slots\"]\nHow far in advance I need to start promoting it: [YOUR ESTIMATE OR 'UNKNOWN - SUGGEST A TIMELINE']\nPlatforms I actually use: [LIST]\nPast-client list size: [NUMBER OR 'not tracked']\n\nBuild a week-by-week countdown routine leading up to the offer (announcement, reminder, last-chance actions) and a short follow-up routine for the weeks after (gallery delivery, re-engagement, planning next year's offer), using only the platforms I listed."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Too much effort per week — scale it down",
+          "prompt": "This routine is more than I can realistically do each week on top of actual shooting and editing work. Cut it down so the total time commitment is under [NUMBER] hours per week, prioritizing the highest-impact actions and dropping or combining the rest."
+        },
+        {
+          "label": "One slow month needs a different goal than the others",
+          "prompt": "[SPECIFIC MONTH] actually has a different situation than the others: [EXPLAIN, e.g., \"I have a personal event that month and will have less time\" or \"I'm launching a new offer specifically then\"]. Adjust just that month's goal and actions to reflect this, keeping the rest of the routine as is."
+        },
+        {
+          "label": "Turn the recurring actions into calendar reminders",
+          "prompt": "Turn the recurring weekly/monthly actions in this routine into a simple list formatted as calendar reminders — one line each, stating the action and how often it repeats, so I can quickly set these up in my calendar app."
+        },
+        {
+          "label": "Add what to reuse from earlier lessons in this path",
+          "prompt": "For each month in this routine, note which specific actions could reuse the inquiry-reply, package-copy, social-caption, or gallery-upsell prompts I already use, so I'm not creating new material from scratch every month where I don't need to."
+        }
+      ],
+      "walkthrough": "Denise has run a wedding photography business for four years and knows her pattern by heart even though she's never written it down: booked solid May through October, nearly silent January through March. Every winter she tells herself she'll market harder in the off-season, and every winter she doesn't, because she has no actual plan, just a vague intention.\n\nShe opens Claude and works through the lesson's prompt. Niche: wedding photography. Peak months: May through October. Slow months: January through March. Recurring offers: none currently. Platforms she actually uses: Instagram and an email list of about 150 past clients. Past-client list size: about 150 people.\n\nClaude returns a month-by-month routine. For January through March, the goal is re-engaging past clients, with actions like a monthly email featuring one wedding story plus a referral prompt, and a weekly Instagram post pulled from a backlog of unpublished peak-season images. For May through October, it notes she should prewrite caption templates and gallery-delivery copy in April, before the season's pace makes that impossible. It separates the email and referral prompt as recurring habits from the April prep, a one-time task.\n\nReading it over, Denise realizes the plan is more than she can manage some weeks, especially in March when she has a family trip planned. She sends two follow-ups: cap the weekly time commitment at three hours, and adjust March's goal down slightly for the trip while keeping January and February as originally planned.\n\nShe then asks Claude to turn the recurring actions into a simple list formatted for calendar reminders, and sets them up in her phone before closing the laptop. The whole process took about 40 minutes, and for the first time she's heading into her slow season with an actual plan instead of good intentions she already knows she won't follow through on."
+    }
+  }
+}

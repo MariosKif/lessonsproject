@@ -1,0 +1,281 @@
+{
+  "enrichment": {
+    "vid-b1-what-ai-video-can-do-first-clip": {
+      "variations": [
+        {
+          "label": "Image-to-video first clip instead of text-to-video",
+          "whenToUse": "Use this when you already have a still photo (a product shot, a portrait, a landscape) and want to animate it in Veo instead of generating a scene from scratch — it's often more reliable for a calibration first try.",
+          "prompt": "Animate this still image with one simple, continuous motion: a gentle camera push-in, nothing else moving in the frame. Ambient sound: soft, natural room tone only. 5 seconds."
+        },
+        {
+          "label": "Fast, lower-cost calibration clip on Veo's Lite tier",
+          "whenToUse": "Use this when you're testing Veo's faster, lower-cost Lite tier inside the Gemini app and want to spend the fewest credits possible on your first calibration attempt.",
+          "prompt": "A single leaf falls slowly past a plain out-of-focus green background. Camera static. Soft natural light, simple and realistic. Ambient sound: quiet outdoor stillness. 3 seconds."
+        },
+        {
+          "label": "Style-transfer test instead of photorealism",
+          "whenToUse": "Use this as a second calibration clip once you've tried photorealism, to see how Veo handles an illustrated or animated look instead, including how it treats sound in a non-realistic style.",
+          "prompt": "A paper airplane glides slowly across a pastel-colored sky. Camera tracks alongside at a steady pace. Flat 2D animated style, soft pastel colors, gentle and whimsical mood. Ambient sound: light, playful, minimal music cue. 5 seconds."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Clip ignored part of the prompt",
+          "prompt": "Compare what I asked for against what you generated. Which specific part of my prompt — the subject, the camera move, the lighting, the sound, or the style — didn't come through in the result?"
+        },
+        {
+          "label": "Motion was too fast or too chaotic",
+          "prompt": "Regenerate the same clip, but slow the motion down significantly and keep it to one simple, gentle movement instead of several things happening at once."
+        },
+        {
+          "label": "Audio didn't match the mood",
+          "prompt": "The sound in this clip doesn't match what I wanted. Regenerate the same clip with a more specific sound description: [DESCRIBE THE EXACT AMBIENCE, MUSIC, OR SILENCE YOU WANT]."
+        },
+        {
+          "label": "Ready to try your own subject",
+          "prompt": "Based on what worked and didn't work in that clip, help me write a new 5-second, single-shot prompt for [YOUR OWN SUBJECT] using the same structure: subject, one action, setting, one camera move, one sound cue, one style."
+        }
+      ],
+      "walkthrough": "Ben runs social media for a small independent bookstore and has heard Veo could help him make quick promotional clips, but he has never generated one and doesn't know what to actually expect from the Gemini app.\n\nHe checks his plan first and confirms his Google AI Pro subscription includes Veo generation, then opens the Gemini app on his laptop. He pastes the lesson's exact starter prompt: \"A steaming cup of coffee sits on a wooden table by a rain-streaked window. Camera slowly pushes in. Soft morning light, shallow depth of field, gentle steam rising. Ambient sound: quiet rain against the glass, faint kitchen ambience. Cinematic, photorealistic. 5 seconds.\"\n\nThe clip comes back close to what he pictured: a slow push-in on the cup with visible steam and a soft rain-and-kitchen audio track, though the rain on the window is barely noticeable and the steam moves faster than he expected.\n\nHe sends the follow-up asking which part of the prompt didn't come through clearly, and Gemini points out that \"rain-streaked window\" was a background detail competing with the main subject, so it rendered subtly rather than prominently, both visually and in the mix.\n\nBen writes down that lesson in a notes file: background details need to be secondary to the main subject in wording, not just placement, and that applies to sound too, not only image.\n\nTotal time: about nine minutes for one generation and one follow-up, enough to walk away with a calibrated sense of what Veo actually does well on his plan."
+    },
+    "vid-b2-motion-first-prompts": {
+      "variations": [
+        {
+          "label": "Pacing-only variant (same everything, just speed)",
+          "whenToUse": "Use this once you've already isolated camera and style, and want to see specifically what pacing language changes within an otherwise identical shot.",
+          "prompt": "PACING VARIANT: A cyclist rides down a coastal road at sunset. Camera tracks alongside at the cyclist's speed, staying level. Golden hour light, warm tones, cinematic, realistic. Ambient sound: wind, distant waves, tires humming faster on pavement. Motion is quick and energetic, with the cyclist visibly speeding up. 5 seconds."
+        },
+        {
+          "label": "Simple single-variable test for your own subject",
+          "whenToUse": "Use this as a template once you understand the six-part anatomy and want to test just one variable — camera, style, sound, or pacing — on a subject from your own work.",
+          "prompt": "[SUBJECT] [ACTION]. Camera: [ONE CAMERA MOVE]. Setting/lighting: [WHERE AND WHAT LIGHT]. Sound: [ONE SOUND CUE]. Style: [TWO OR THREE STYLE WORDS]. [DURATION] seconds."
+        },
+        {
+          "label": "Sound-only variant to isolate the audio lever",
+          "whenToUse": "Use this to isolate what changing only the sound description does, holding subject, action, camera and style completely fixed against the baseline.",
+          "prompt": "SOUND VARIANT: same subject, action, camera, and style as the baseline, but the sound changes to a soft acoustic guitar music cue instead of wind and waves. Golden hour light, warm tones, cinematic, realistic. 5 seconds."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Camera move wasn't followed",
+          "prompt": "The camera movement I asked for didn't come through clearly. Regenerate with only the camera line changed: describe it even more explicitly, naming the exact direction and speed (for example, 'camera pans left to right at a slow, constant speed, staying level with the subject')."
+        },
+        {
+          "label": "Style got muddy or blended",
+          "prompt": "The style looks muddled instead of clean. Regenerate with the style description cut down to just two specific words, removing anything that could be pulling it in two different directions."
+        },
+        {
+          "label": "Action read as multiple beats instead of one motion",
+          "prompt": "This looks like it's trying to show more than one action. Rewrite the action line as a single continuous motion only — no sequence of separate events — and regenerate."
+        },
+        {
+          "label": "Compare all clips side by side",
+          "prompt": "I've generated the baseline, the camera variant, and the style variant. Help me write down, in one line each, exactly what changed visually and audibly between the baseline and each variant, so I know which knob controls what in Veo."
+        }
+      ],
+      "walkthrough": "Nadia creates short travel content and has been frustrated that her Veo clips look random from one generation to the next, without her understanding why.\n\nShe opens the Gemini app and works through the lesson's three-prompt set. First the baseline: a cyclist on a coastal road at sunset, camera tracking alongside at a level height, golden hour light, cinematic and realistic, with wind and waves in the sound line, five seconds. She generates it and gets a clean tracking shot that matches the brief closely, audio included.\n\nNext she generates Variant A, changing only the camera line to a slow aerial pull-back revealing the coastline, keeping the subject, action, and sound wording identical. The clip clearly reveals more landscape, confirming that the camera line alone controlled that shift, while the wind-and-wave ambience carries over unchanged.\n\nThen Variant B, keeping the baseline's camera and sound but swapping the style line to gritty 16mm film grain and a desaturated documentary look. The motion, framing, and audio stay the same as the baseline, but the color and texture shift dramatically.\n\nLaying all three side by side, Nadia sends the follow-up asking to summarize what changed between each pair. The comparison confirms camera controlled framing and reveal, while style controlled color and texture — two separate, independent levers, with sound staying exactly as described across both.\n\nShe writes both takeaways into her running notes file, since she now knows exactly which line to touch next time she wants a specific kind of change.\n\nTotal time: about fifteen minutes for three short generations and one comparison follow-up, building an intuition she can reuse on every future Veo prompt."
+    },
+    "vid-i1-storyboard-prompts": {
+      "placeholders": [
+        {
+          "name": "CONTINUITY BLOCK",
+          "what": "A fixed, reusable description of your subject's exact appearance, the environment, and the visual style, pasted identically into every single shot's Veo prompt. This is the single technique that keeps a multi-shot sequence looking like one coherent piece instead of several disconnected clips, so write it once, carefully, and never reword it between shots.",
+          "examples": [
+            "A woman with short black hair wearing a cream linen shirt, in a sunlit minimalist kitchen with white walls and wooden countertops. Style: clean, photorealistic, soft natural light, warm neutral tones.",
+            "A red vintage bicycle leaning against a brick wall covered in ivy, on a quiet cobblestone street. Style: warm cinematic color grade, soft afternoon light.",
+            "A man in his 60s with silver hair wearing round glasses and a navy cardigan, seated at a cluttered wooden writing desk in a book-lined study. Style: moody, photorealistic, warm lamplight."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Shorter 3-shot sequence for a quick test",
+          "whenToUse": "Use this when you want to practice the continuity technique on a smaller scale before committing to a full 4-6 shot piece.",
+          "prompt": "CONTINUITY BLOCK (paste into every shot prompt): [YOUR CONTINUITY BLOCK]\n\nSHOT 1 (establishing): [CONTINUITY BLOCK] Wide shot, static camera, [OPENING ACTION]. Ambient sound: [SOUND CUE]. 4 seconds.\n\nSHOT 2 (detail): [CONTINUITY BLOCK] Close-up, slow push in, [DETAIL ACTION]. Ambient sound: [SOUND CUE]. 4 seconds.\n\nSHOT 3 (closing): [CONTINUITY BLOCK] Medium shot, gentle pull back, [CLOSING ACTION]. Ambient sound: [SOUND CUE]. 4 seconds."
+        },
+        {
+          "label": "Using a locked reference image instead of text continuity",
+          "whenToUse": "Use this when you want to animate from a fixed reference image as the first frame in Veo, which reduces drift more reliably than text description alone.",
+          "prompt": "Using the attached reference image to lock the subject's exact appearance and the environment for every shot, generate this beat: [SHOT-SPECIFIC ACTION AND CAMERA MOVE]. Ambient sound: [SOUND CUE]. Style: [MATCH THE STYLE OF THE REFERENCE IMAGE EXACTLY]. [DURATION] seconds. Do not alter the subject's appearance or the environment from the reference."
+        },
+        {
+          "label": "Product-focused storyboard instead of a person-led one",
+          "whenToUse": "Use this when the recurring subject across shots is a product rather than a person — the same continuity discipline applies, just anchored to the product's exact appearance.",
+          "prompt": "CONTINUITY BLOCK (paste into every shot prompt): [EXACT PRODUCT DESCRIPTION — material, color, shape — plus the fixed environment and style]\n\nSHOT 1 (establishing): [CONTINUITY BLOCK] Wide shot of the product on [SURFACE/CONTEXT]. Camera static. Ambient sound: quiet room tone. 4 seconds.\n\nSHOT 2 (detail): [CONTINUITY BLOCK] Close-up on [SPECIFIC PRODUCT DETAIL]. Camera slow push in. Ambient sound: quiet room tone. 4 seconds."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Continuity drifted between shots",
+          "prompt": "Comparing shot [SHOT NUMBER] to the earlier shots, [DESCRIBE WHAT CHANGED — e.g., \"the shirt color looks different\" or \"the kitchen background changed\"]. Regenerate shot [SHOT NUMBER] using the exact same continuity block wording as the earlier shots, with no other changes."
+        },
+        {
+          "label": "Same element described with different wording",
+          "prompt": "I think I described the same element differently across shots. Read back the continuity block I gave you for each shot and tell me if the wording is identical every time, or if it drifted anywhere."
+        },
+        {
+          "label": "ChatGPT's shot list feels uneven",
+          "prompt": "Looking at the shot list you gave me, does the pacing across these [NUMBER] shots feel balanced for a [TARGET LENGTH]-second piece, or is one shot too long or too short relative to the others? Suggest a duration adjustment if needed."
+        },
+        {
+          "label": "Ready to check Veo's dedicated continuity features",
+          "prompt": "Does Veo, inside the Gemini app, offer a reference-image first-frame option or a scene-extension feature I could use to reduce continuity drift more reliably than my text continuity block alone? Remind me how each one works."
+        }
+      ],
+      "walkthrough": "Jade is planning a 20-second brand mood piece for a client's new coffee subscription and needs four shots that clearly look like the same morning, the same kitchen, and the same person.\n\nShe writes the concept in one sentence first and pastes it into ChatGPT, asking for a 4-shot breakdown: establishing, detail, reveal, closing, each with a one-line description and a rough duration. She then writes one continuity block herself: \"A woman with short black hair wearing a cream linen shirt, in a sunlit minimalist kitchen with white walls and wooden countertops. Style: clean, photorealistic, soft natural light, warm neutral tones.\"\n\nShe pastes that identical block into all four Veo prompts, changing only the action, camera, and sound line for each: Shot 1 a wide static shot of her pouring coffee with quiet kitchen sound, Shot 2 a close-up push-in on her hands around the mug, Shot 3 a medium shot with a slow pan as she looks up to birdsong outside, Shot 4 a wide closing shot of her walking toward the window.\n\nAfter generating the first three in the Gemini app, Jade notices Shot 3's lighting looks slightly cooler than the others — a continuity drift. She sends the follow-up describing exactly what changed and asks for a regeneration using the identical continuity block wording. The corrected version matches the warm tone of the other shots.\n\nShe does a rough mental run-through of all four before calling the sequence final.\n\nTotal time: about twenty-two minutes for planning, four generations, and one continuity fix — considerably faster than discovering the mismatch after editing was already underway."
+    },
+    "vid-i2-product-promo-clips-social": {
+      "variations": [
+        {
+          "label": "Horizontal cutdown for a website or YouTube instead of vertical social",
+          "whenToUse": "Use this when the same product animation also needs to run somewhere horizontal, like a website banner or a YouTube pre-roll, not just vertical social.",
+          "prompt": "Animate this product photo: [YOUR PRODUCT'S MOTION, e.g., \"the bottle rotates slowly a quarter turn, catching soft studio light across the glass\"]. Camera holds static, with a slight slow zoom in over the full clip. Background stays clean and unchanged. Ambient sound: quiet studio room tone only, no music. 6 seconds, no added text, no logo changes. Format: 16:9 horizontal."
+        },
+        {
+          "label": "Multi-product sequence with matching motion",
+          "whenToUse": "Use this when you're promoting a small collection (2-3 products) and want each clip to share the same camera and sound treatment so they feel like one campaign when posted in sequence.",
+          "prompt": "Animate this product photo: [PRODUCT], same camera and sound treatment as the rest of this set — a slow static hold with a gentle zoom in, quiet studio room tone only, no added text, no logo changes, clean unchanged background. 6 seconds, 9:16 vertical. Keep this exact treatment identical across every product in the collection."
+        },
+        {
+          "label": "Adding a short music cue for a livelier launch clip",
+          "whenToUse": "Use this when the product and mood call for something more energetic than quiet room tone, such as a launch-day post rather than a calm product study.",
+          "prompt": "Animate this product photo: [PRODUCT MOTION]. Camera: [STATIC OR SPECIFIC MOVE]. Ambient sound: a short upbeat instrumental music cue, no lyrics, building slightly toward the end of the clip. 6 seconds, no added text, no logo changes."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Logo or label got distorted",
+          "prompt": "The logo or label text on the product looks warped or changed in this clip. Regenerate from the same source photo with a stricter instruction: absolutely no changes to the label, logo, or text — motion only on [WHICHEVER PART SHOULD MOVE, e.g., \"the bottle's rotation\"]."
+        },
+        {
+          "label": "Opening isn't a strong enough hook",
+          "prompt": "The first 1-2 seconds are too static to hook attention on a fast-scrolling feed. Regenerate with visible motion starting from the very first frame instead of holding on a still image before it starts moving."
+        },
+        {
+          "label": "Wrong aspect ratio for the platform",
+          "prompt": "This generated in the wrong aspect ratio for my platform. Regenerate the exact same animation at 9:16 vertical, keeping the product motion, camera move, and sound identical."
+        },
+        {
+          "label": "Want to compare a few camera-move options",
+          "prompt": "Generate two more short variants of this same product photo animation — one with a different camera move (for example, a slow pan instead of a static hold with zoom) — so I can pick the strongest of the three for this post."
+        }
+      ],
+      "walkthrough": "Carlos runs a small skincare brand and wants a 9:16 Reel showing his new serum bottle for an Instagram launch post, but he doesn't have video equipment or a videographer on short notice.\n\nHe takes a clean, well-lit photo of the actual serum bottle on his phone and uploads it to Veo's image-to-video feature in the Gemini app, choosing 9:16 vertical and a 6-second target length.\n\nHe writes a motion-and-sound-only prompt describing what should move and what it should sound like, not what the product looks like, since the photo already shows that: \"the serum bottle rotates slowly a quarter turn, catching soft studio light across the glass. Camera holds static, with a slight slow zoom in over the full clip. Background stays clean and unchanged. Ambient sound: quiet studio room tone only, no music. 6 seconds, no added text, no logo changes.\"\n\nThe first result looks close, but the label text on the bottle warps slightly during the rotation — a common product-fidelity glitch. Carlos sends the follow-up asking for a stricter no-label-change instruction, keeping the motion limited to the bottle's rotation only.\n\nThe second version keeps the label crisp and legible throughout the rotation, with the same clean lighting, background, and quiet audio as before.\n\nHe exports the clip in the platform's native 9:16 resolution, planning to add the product name and a \"Shop Now\" caption afterward in a simple phone editor rather than expecting Veo to render that text.\n\nTotal time: about fourteen minutes across two generations, versus days of scheduling and cost for a traditional product video shoot."
+    },
+    "vid-i3-iterate-extend-retime-fix": {
+      "variations": [
+        {
+          "label": "Extending a static product or portrait shot",
+          "whenToUse": "Use this when the clip you're extending has minimal motion to begin with, like a slow product rotation, and you need a few more seconds without introducing new, unrelated movement or a sound jump.",
+          "prompt": "EXTEND (continuing directly from the last frame, same subject, setting, style and sound — do not restart or redescribe the scene): the same slow rotation continues for a few more degrees, camera holds the same static framing and zoom, same quiet room tone continuing. 3 more seconds."
+        },
+        {
+          "label": "Targeted fix for a background or environment glitch",
+          "whenToUse": "Use this when the flaw isn't the subject but something in the background — a warped object, an odd texture, a glitching light source — that needs a narrow, specific correction.",
+          "prompt": "TARGETED FIX (regenerate the previous shot with one added constraint, everything else unchanged): same prompt as before, but keep the background completely static and free of any additional objects or texture distortion — no other changes to subject, camera, sound, or lighting."
+        },
+        {
+          "label": "Full regenerate with a revised prompt",
+          "whenToUse": "Use this when the take is fundamentally wrong — bad composition, wrong mood, subject in the wrong place — and patching it would cost more attempts than starting over.",
+          "prompt": "This take isn't salvageable — [BRIEFLY DESCRIBE WHAT'S FUNDAMENTALLY WRONG]. Here's a revised prompt for a fresh generation: [FULL NEW PROMPT — subject, action, camera, setting/lighting, sound, style, duration]."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Extension looks like a disconnected new shot",
+          "prompt": "This extension doesn't look continuous with the original clip — [DESCRIBE THE MISMATCH, e.g., \"the lighting jumped\" or \"the sound reset\"]. Regenerate the extension again, describing only what happens next and explicitly continuing from the last frame, without redescribing the scene."
+        },
+        {
+          "label": "Targeted fix changed something it shouldn't have",
+          "prompt": "The fix worked on the specific problem, but it also changed [WHAT ELSE CHANGED THAT SHOULDN'T HAVE]. Redo it with the same single added constraint as before, but confirm everything else stays identical to the original working prompt."
+        },
+        {
+          "label": "Not sure which iteration technique to use",
+          "prompt": "Here's the problem with my clip: [DESCRIBE THE ISSUE — too short, a local glitch, wrong pacing, a mismatched sound, or fundamentally wrong]. Which technique should I use — scene extension, a targeted fix, or a full regenerate — and why does that one match this specific problem?"
+        },
+        {
+          "label": "Log this fix for future reference",
+          "prompt": "Summarize in one line what was wrong with the original clip and what specific fix resolved it, so I can save it as a quick-reference note for Veo's quirks."
+        }
+      ],
+      "walkthrough": "Owen generated a promising 5-second clip of a cyclist on a coastal road last week, but two problems remain: it's too short for the 10-second slot he needs, and there's a glitchy hand on the handlebars around the 3-second mark.\n\nHe opens the Gemini app and first tackles the length. He uses Veo's scene-extension feature and writes an extension prompt that continues from the last frame rather than redescribing the whole scene: \"the cyclist continues along the coastal road as it curves right, camera keeps tracking alongside at the same speed and height, sunset light now slightly lower and warmer, same wind-and-waves ambience continuing. 4 more seconds.\" The extension comes back seamlessly continuous with the original clip, audio included.\n\nNext he addresses the glitchy hand. Instead of rewriting the whole prompt, he uses a targeted fix: the same original prompt, plus one added constraint — \"keep both of the cyclist's hands gripping the handlebars throughout, no additional camera movement beyond the original lateral track.\" The regenerated shot keeps everything else identical and fixes just the hand.\n\nHe watches the combined, extended, and fixed sequence at real speed to confirm nothing new broke. It hasn't — the hand is clean and the extension flows naturally into the original, with no jump in the soundtrack.\n\nHe sends the follow-up asking to summarize what fixed the problem, and saves the note: \"targeted constraint, not full rewrite, fixed the hand in one try.\"\n\nTotal time: about thirteen minutes for both fixes, compared to the cost of regenerating the entire clip from scratch multiple times hoping for a clean take."
+    },
+    "vid-a1-production-workflow": {
+      "placeholders": [
+        {
+          "name": "NUMBER",
+          "what": "How many separate Veo-generated clips you combined into the final edit — a plain count. This tells Claude how complex the cut is, since a 3-clip edit and an 8-clip edit have different pacing risks.",
+          "examples": [
+            "4",
+            "3",
+            "6"
+          ]
+        },
+        {
+          "name": "LENGTH",
+          "what": "The total runtime of your finished video in seconds, after editing — not the length of any individual clip. This is what Claude checks your pacing description against for the target platform.",
+          "examples": [
+            "25",
+            "18",
+            "40"
+          ]
+        },
+        {
+          "name": "PLATFORM",
+          "what": "The exact platform and format this video is built for, since attention-span norms and aspect ratio differ by platform — a name like \"Instagram Reels\" or \"YouTube Shorts\" is more useful than just \"social media.\"",
+          "examples": [
+            "Instagram Reels (9:16 vertical)",
+            "YouTube Shorts",
+            "LinkedIn feed video (1:1 or 4:5)"
+          ]
+        },
+        {
+          "name": "DESCRIBE YOUR CUT ORDER, MUSIC CHOICE, TEXT OVERLAYS, AND ANY COLOR MATCHING YOU DID",
+          "what": "A plain-language summary of your actual edit — the order the clips play in, what audio you kept or added and how it's used, what text or captions you added and where, and whether you did anything to make mismatched clips look visually consistent. This is the raw material Claude works from, so vague answers get vague feedback back.",
+          "examples": [
+            "Opens on a close-up of the product rotating, cuts to a wide lifestyle shot at 3 seconds, then a detail shot at 8 seconds, closing on a text card with the price. Kept Veo's native ambient audio from each clip, no added music, no captions yet. No color matching done — the two source clips look slightly different in warmth.",
+            "Four clips in shot-list order: establishing, detail, reveal, closing. Kept the soft acoustic sound Veo generated for the detail clip, ducked it slightly under a short voiceover in the middle two clips. Captions burned in for the voiceover section only. Matched exposure and warmth manually across all four clips using the editor's color wheels.",
+            "Two clips only: a 6-second product shot followed by a 5-second customer-testimonial-style clip. Quiet room tone from Veo on both, no music added. Text overlay reads 'New Arrival' over the first clip, no other text."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Pre-production review, before any clips are generated",
+          "whenToUse": "Use this earlier in the process, once you have a shot list and concept but before generating anything in Veo, to sanity-check the plan itself.",
+          "prompt": "I'm about to generate clips in Veo for a [LENGTH]-second video for [PLATFORM]. Here's my plan: [DESCRIBE YOUR SHOT LIST, CONCEPT, AND INTENDED HOOK/CTA]. Before I start generating, does this plan sound right for [PLATFORM]'s typical attention span, and is anything obviously missing from a hook-and-CTA structure?"
+        },
+        {
+          "label": "Comparing two edit versions before choosing one",
+          "whenToUse": "Use this when you've cut two different versions of the same footage and want a structured comparison instead of relying on your own gut feel.",
+          "prompt": "I've cut two versions of the same [LENGTH]-second video for [PLATFORM] from the same [NUMBER] clips. Version A: [DESCRIBE CUT ORDER, AUDIO, TEXT]. Version B: [DESCRIBE CUT ORDER, AUDIO, TEXT]. Based only on what I've described, which version sounds like it opens stronger and holds attention better for this platform, and why?"
+        },
+        {
+          "label": "Longer-form piece with a more detailed structure",
+          "whenToUse": "Use this for a longer piece, such as a 60-90 second brand story, where pacing needs to be checked at multiple points, not just the opening hook.",
+          "prompt": "I've combined [NUMBER] Veo-generated clips into a [LENGTH]-second video for [PLATFORM]. Here's my rough edit broken into sections: Opening (0-10s): [DESCRIBE]. Middle (10s-[X]s): [DESCRIBE]. Closing ([X]s-[LENGTH]s): [DESCRIBE]. Audio and text: [DESCRIBE YOUR CUT ORDER, MUSIC CHOICE, TEXT OVERLAYS, AND ANY COLOR MATCHING YOU DID]. Tell me if any one section sounds like it drags relative to the others, based only on what I've described."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Want the specific fix, not just the flag",
+          "prompt": "You flagged an issue with [WHAT WAS FLAGGED]. Give me one concrete, specific fix I could apply in my editor right now — not general advice, an exact change to the cut, text, or audio."
+        },
+        {
+          "label": "Double-check the hook specifically",
+          "prompt": "Focus only on the first 2 seconds of my description. Based only on what I've told you happens there, would a viewer scrolling fast on [PLATFORM] actually stop, or would they keep scrolling? Be blunt."
+        },
+        {
+          "label": "Reviewed and passed — capture the final checklist",
+          "prompt": "Based on everything we've discussed, give me a short final checklist of the 3-4 things to double check on the actual exported file before I publish this to [PLATFORM]."
+        },
+        {
+          "label": "Apply the feedback and re-review",
+          "prompt": "I made this change based on your feedback: [DESCRIBE WHAT YOU CHANGED]. Here's my updated edit description: [DESCRIBE YOUR UPDATED CUT ORDER, MUSIC CHOICE, TEXT OVERLAYS, AND ANY COLOR MATCHING YOU DID]. Does this resolve the issue you flagged?"
+        }
+      ],
+      "walkthrough": "Priya has generated four separate Veo clips over the past week for a 25-second brand intro video for a local yoga studio, using the ChatGPT-assisted storyboard and continuity techniques from earlier lessons, and now needs to turn them into one finished, publishable piece.\n\nShe imports all four clips into CapCut, a phone-based video editor, in shot order: an establishing wide shot, a detail shot of hands, a reveal of the instructor's face, and a closing shot of the studio. She does a rough cut first, trimming each clip down to its strongest 3-4 seconds rather than using the full length of each generation.\n\nListening back, she finds Veo's native ambient audio from three of the clips works well together, so she keeps it and only adds a light music bed under the closing shot. She types in a closing text card reading \"Join your first class free\" over the final shot, deciding to add this text in the editor rather than trust Veo to render it reliably.\n\nBefore publishing, she writes a description of her edit and pastes it into the lesson's review prompt in Claude: 4 clips, 25 seconds, Instagram Reels, with her cut order, audio choices, and text overlay described. Claude flags that her opening clip holds on a fairly static wide shot for nearly 2 seconds before anything moves, which risks losing scroll-happy viewers before the hook lands.\n\nPriya trims the opening clip's static portion down to under a second and re-sends her updated description; the second review confirms the pacing now reads well for the platform.\n\nTotal time: about thirty-five minutes from rough cut to final export, most of it in CapCut rather than the AI review itself."
+    }
+  }
+}

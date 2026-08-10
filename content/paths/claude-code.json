@@ -1,0 +1,29 @@
+{
+  "paths": [
+    {
+      "slug": "claude-code-academy",
+      "title": "Claude Code Academy",
+      "tagline": "From first install to shipping whole changes with an agentic coding partner.",
+      "description": "A twelve-lesson ladder through Claude Code, Anthropic's agentic coding tool. Start by installing the CLI and delegating your first real task, learn to map unfamiliar codebases and encode project knowledge in CLAUDE.md, then build professional habits: spec-driven features, disciplined debugging loops, plan-mode refactoring, and behavior-first testing. The advanced tier covers the power layer — packaging team workflows as slash commands and skills, connecting MCP servers to databases and browsers, engineering guardrails with hooks and permissions, fanning work out across subagents and worktrees, and finally running the full delivery pipeline from branch to reviewed pull request.",
+      "kind": "tool-course",
+      "level": "mixed",
+      "toolSlug": "claude-code",
+      "professionSlug": null,
+      "sortOrder": 4,
+      "lessons": [
+        "cc-b1-install-and-first-task",
+        "cc-b2-understand-unfamiliar-repo",
+        "cc-b3-write-claude-md",
+        "cc-b4-feature-from-spec",
+        "cc-i1-debug-failing-test",
+        "cc-i2-refactor-plan-mode",
+        "cc-i3-generate-meaningful-tests",
+        "cc-i4-slash-commands-and-skills",
+        "cc-a1-mcp-servers",
+        "cc-a2-hooks-and-permissions",
+        "cc-a3-subagents-parallel-work",
+        "cc-a4-ship-a-whole-change"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "paths": [
+    {
+      "slug": "copilot-academy",
+      "title": "AI Coding Workflows Academy",
+      "tagline": "Team-level coding workflows across Claude Code, Codex, and Cursor — from steering completions to running the whole delivery pipeline.",
+      "description": "An eight-lesson path through the coding workflows a team actually needs across three tools, not the basics each tool's own academy already covers: steering Cursor Tab's completions with comments, open files, and Rules; choosing between Cursor Chat and Claude Code to get unblocked fast without re-deriving what a teammate already knows; picking the right agent surface — interactive or unattended — for a scoped multi-file change; turning a GitHub issue into a reviewed pull request with Codex cloud tasks or Claude Code; running AI code review as a disciplined first pass with Codex or Claude Code's /code-review; replacing three drifting instruction files with one canonical AGENTS.md shared across CLAUDE.md and .cursor/rules; and rolling out a consistent tool-selection, access, and usage policy across a whole team.",
+      "kind": "tool-course",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": null,
+      "sortOrder": 9,
+      "lessons": [
+        "cop-b1-setup-and-quality-completions",
+        "cop-b2-steer-completions-with-comments-and-context",
+        "cop-i1-copilot-chat-explanation-and-exploration",
+        "cop-i2-edit-across-files-with-copilot",
+        "cop-a1-coding-agent-issue-to-pull-request",
+        "cop-a2-ai-code-review-on-github",
+        "cop-a3-custom-instructions-for-your-repository",
+        "cop-a4-integrating-copilot-into-a-team-workflow"
+      ]
+    }
+  ]
+}

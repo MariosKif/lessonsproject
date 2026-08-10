@@ -1,0 +1,25 @@
+{
+  "paths": [
+    {
+      "slug": "perplexity-academy",
+      "title": "AI Research Academy",
+      "tagline": "From a single cited answer to a recurring, sourced research operation.",
+      "description": "A ladder of 8 hands-on lessons covering everything a working professional needs to research well with AI: asking ChatGPT web-search questions that return citation-backed answers, verifying sources like a professional, running focused market research with Gemini Deep Research, building a repeatable competitor analysis workflow in a ChatGPT Project, generating long-form reports with Gemini Deep Research, organizing an ongoing research project in ChatGPT Projects, turning verified research into client-ready decks and spreadsheets, and building a recurring research routine with Gemini's Scheduled Actions.",
+      "kind": "tool-course",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": null,
+      "sortOrder": 10,
+      "lessons": [
+        "pplx-b1-cited-research-questions",
+        "pplx-b2-evaluate-and-verify-sources",
+        "pplx-i1-focused-market-research",
+        "pplx-i2-competitive-analysis-workflow",
+        "pplx-i3-deep-research-long-form-reports",
+        "pplx-i4-spaces-for-ongoing-research",
+        "pplx-a1-research-to-deliverable",
+        "pplx-a2-recurring-research-routine"
+      ]
+    }
+  ]
+}

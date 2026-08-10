@@ -1,0 +1,424 @@
+{
+  "quizzes": {
+    "cre-b1-idea-generation-system": [
+      {
+        "q": "You're using the weekly ideation prompt to generate content ideas. Which input is essential to include for the ideas to avoid being generic?",
+        "options": [
+          "Real audience questions/comments and 3-5 past top-performing posts, alongside your niche",
+          "Only your niche in one sentence",
+          "A list of trending hashtags",
+          "Your posting schedule for the month"
+        ],
+        "answer": 0,
+        "why": "Requiring every idea to trace back to a real question, a proven topic, or a named gap is what keeps the list from matching the same generic ideas any creator in the niche could get."
+      },
+      {
+        "q": "The prompt asks Claude to group the 20 ideas under headers like 'Answers a question my audience already asked' instead of by topic. Why does this matter?",
+        "options": [
+          "It makes the output look longer",
+          "It gives a built-in priority order, since ideas tied to real audience signals tend to convert best",
+          "It hides weak ideas from view entirely",
+          "It matches AI's default formatting"
+        ],
+        "answer": 1,
+        "why": "Grouping by why an idea earns its place lets you start with the ideas most likely to perform, since ideas answering real questions tend to convert best."
+      },
+      {
+        "q": "A creator runs this prompt, gets 20 ideas, and starts filming them in the order they appear, without marking any as priority. What mistake are they making?",
+        "options": [
+          "They should have generated more than 20 ideas",
+          "They should not have grouped by content pillar",
+          "Treating all 20 ideas as equally worth making instead of prioritizing the ones grounded in real signals",
+          "They forgot to include their audience description"
+        ],
+        "answer": 2,
+        "why": "The lesson explicitly warns against treating every idea as equally valuable rather than starring the ones grounded in real audience signals or past hits."
+      }
+    ],
+    "cre-b2-scripts-outlines-own-voice": [
+      {
+        "q": "Why does the drafting prompt require pasting a real 100-200 word sample of your own writing or speech instead of describing your tone as 'casual'?",
+        "options": [
+          "It's required by ChatGPT's content policy",
+          "It makes the output longer",
+          "It guarantees the script hits the exact word count",
+          "A concrete voice sample gives the model a specific target, instead of an abstract adjective that still produces generic phrasing"
+        ],
+        "answer": 3,
+        "why": "Pasting a real sample gives the model something concrete to match, which is what actually prevents generic AI phrasing that an adjective like 'casual' can't."
+      },
+      {
+        "q": "For a video script, the prompt asks for output written as 'spoken sentences, not written prose.' What problem does this specifically prevent?",
+        "options": [
+          "Text that reads well on the page but sounds stiff or unnatural when read aloud",
+          "The script being too short",
+          "The hook being too vague",
+          "Losing the content's core idea"
+        ],
+        "answer": 0,
+        "why": "Prose that reads fine on paper often sounds stiff spoken aloud, so asking for spoken sentences directly avoids a rewrite pass just to make the script speakable."
+      },
+      {
+        "q": "A creator gets a script back and one line feels off. What does the lesson recommend instead of asking for a full regeneration?",
+        "options": [
+          "Discard the whole draft and write from scratch",
+          "Ask for one targeted, line-level revision",
+          "Switch to a different AI tool",
+          "Accept it as-is since a full rewrite would remove the voice match"
+        ],
+        "answer": 1,
+        "why": "The lesson specifically lists requesting a full regeneration for a small fix as a common mistake — a targeted, one-line edit is the better approach."
+      }
+    ],
+    "cre-i1-repurpose-one-piece-ten-posts": [
+      {
+        "q": "You paste a full video transcript and ask Claude to repurpose it into 10 posts. The prompt explicitly bans which behavior?",
+        "options": [
+          "Producing carousel outlines",
+          "Using more than 3 hooks",
+          "Just shortening or copy-pasting sections instead of genuinely reformatting for each platform",
+          "Citing which part of the source each post is drawn from"
+        ],
+        "answer": 2,
+        "why": "Without banning shortening/copy-pasting, models default to trimming the source rather than rebuilding it for how each platform is actually consumed."
+      },
+      {
+        "q": "Why does the prompt require each of the 10 posts to cite which specific part of the source it's drawn from?",
+        "options": [
+          "It's a formatting requirement for Instagram",
+          "To make the post captions longer",
+          "To determine posting order",
+          "It lets you audit that nothing was invented while the core idea is spread across formats"
+        ],
+        "answer": 3,
+        "why": "A source citation per post lets you verify nothing was fabricated while one piece of content is spread across ten different formats."
+      },
+      {
+        "q": "All ten repurposed posts open with the same line, and you post all ten the same day. What two mistakes does this reflect?",
+        "options": [
+          "Identical opening hooks across posts, and publishing all ten the same day instead of spacing them out",
+          "Using too many hashtags and too-short captions",
+          "Not using enough emojis and posting too infrequently",
+          "Missing a call to action and wrong image size"
+        ],
+        "answer": 0,
+        "why": "Identical hooks train the audience to skip your content, and posting everything the same day forfeits the extended reach spacing the posts across the week would give."
+      }
+    ],
+    "cre-i2-thumbnails-visuals-ai-image": [
+      {
+        "q": "Your thumbnail brief specifies a composition rule: subject in the left third, negative space in the right third. What is this meant to enable?",
+        "options": [
+          "A cheaper generation cost",
+          "Room to add a legible, exact-brand-font text overlay afterward, keeping full typography control even though GPT Image 2 can render text reasonably well",
+          "Faster generation speed",
+          "Compliance with platform terms of service"
+        ],
+        "answer": 1,
+        "why": "Naming a specific compositional layout with real negative space is what produces an image with somewhere to put your title text, keeping full control over font and brand consistency even though GPT Image 2's text rendering has improved."
+      },
+      {
+        "q": "Why does the lesson recommend judging generated thumbnail concepts shrunk to actual feed/thumbnail size rather than at full generated size?",
+        "options": [
+          "Full-size images take too long to load",
+          "Shrinking is required by ChatGPT",
+          "A thumbnail's real test is whether it reads clearly at the small size it's actually seen at",
+          "It reduces file size for upload"
+        ],
+        "answer": 2,
+        "why": "Judging thumbnails at full size instead of actual display size is called out as a common mistake — the real test is legibility at small size."
+      },
+      {
+        "q": "Which is a mistake this lesson specifically warns against?",
+        "options": [
+          "Generating 3-5 variations to compare",
+          "Noting your channel's usual color palette before generating",
+          "Comparing thumbnails against a real feed instead of in isolation",
+          "Trusting GPT Image 2's rendered title text without checking it against your exact brand font and wording"
+        ],
+        "answer": 3,
+        "why": "GPT Image 2 renders text far more reliably than older tools, but the lesson still recommends verifying it against your exact brand font and wording — or adding it separately in a design tool — rather than trusting it blindly."
+      }
+    ],
+    "cre-i3-short-form-video-concepts-ai-video": [
+      {
+        "q": "A script beat says 'I moved $340 into taxes last month.' According to the lesson's guardrail, how should this beat be shot?",
+        "options": [
+          "Use a text-graphic overlay or real footage instead of Veo generation, since Veo could visually imply an inaccurate specific number",
+          "Generate it with Veo 3.1 since it's a simple financial visual",
+          "Skip the beat entirely",
+          "Generate it with Veo 3.1 but add a disclaimer caption"
+        ],
+        "answer": 0,
+        "why": "Veo generation is reserved for generic visual concepts; anything implying a specific real fact, like a dollar figure, risks misrepresenting real information and should be a graphic or real footage instead."
+      },
+      {
+        "q": "Why does the lesson recommend generating one Veo 3.1 clip at a time instead of the whole video in one pass?",
+        "options": [
+          "It's cheaper per clip",
+          "It lets you review and approve each clip before moving on, catching problems early instead of after generating everything",
+          "Gemini requires sequential generation",
+          "It produces higher resolution output"
+        ],
+        "answer": 1,
+        "why": "Generating and reviewing shot by shot, rather than the whole video at once, is what the lesson recommends to catch problems early."
+      },
+      {
+        "q": "Why does the lesson recommend adding an ambient-sound note to every Veo 3.1 generation prompt?",
+        "options": [
+          "Veo 3.1 generates synchronized audio by default, so you need to decide upfront whether to keep it or mute it under your own voiceover",
+          "It's required to unlock longer clip lengths",
+          "Ambient sound notes make the video render faster",
+          "Gemini charges less for silent clips"
+        ],
+        "answer": 0,
+        "why": "Veo 3.1 generates audio alongside the visual, so specifying the ambient sound (or lack of it) in the prompt avoids a messy final mix once you layer your own voiceover."
+      }
+    ],
+    "cre-a1-content-operating-system": [
+      {
+        "q": "You ask ChatGPT to design your content operating system, listing 6 hours/week but wanting 1 YouTube video plus 5 Instagram posts weekly. What should the prompt instruct the AI to do if that's not realistic?",
+        "options": [
+          "Silently reduce the Instagram frequency without telling you",
+          "Ignore your stated hours and force the schedule to fit your target anyway",
+          "Refuse to generate any schedule",
+          "Say honestly that the target isn't achievable in your stated hours and propose what actually fits"
+        ],
+        "answer": 3,
+        "why": "The key guardrail is instructing the AI to say when your target isn't achievable, rather than mapping an unrealistic frequency onto too few hours and setting you up to fail."
+      },
+      {
+        "q": "After running the new content system for 3 days, you want to change several steps that feel awkward. What does the lesson recommend?",
+        "options": [
+          "Run the system unchanged for two full weeks before changing anything, since consistency beats early optimization",
+          "Immediately overhaul the whole system based on the first impression",
+          "Abandon the system and go back to ad hoc posting",
+          "Only run it for one day before deciding"
+        ],
+        "answer": 0,
+        "why": "The lesson explicitly recommends running the system unchanged for two full weeks before changing anything, since consistency beats optimization early on."
+      },
+      {
+        "q": "After two weeks of running the system, what does the lesson say to do next?",
+        "options": [
+          "Redesign the entire system from scratch",
+          "Diagnose which single stage is the actual bottleneck and adjust only that stage",
+          "Add more platforms to increase reach",
+          "Increase weekly posting frequency across all platforms"
+        ],
+        "answer": 1,
+        "why": "Systems break at one weak link at a time, so the lesson recommends identifying and fixing only the real bottleneck stage, not the whole system."
+      }
+    ],
+    "smm-b1-month-of-posts-from-strategy-doc": [
+      {
+        "q": "You paste your content strategy doc and ask Claude for a month of posts. The prompt explicitly forbids what?",
+        "options": [
+          "Grouping posts by week",
+          "Mapping posts to platforms",
+          "Introducing a new content pillar or campaign angle that isn't in the document",
+          "Naming which goal each post supports"
+        ],
+        "answer": 2,
+        "why": "Locking output to pillars and goals already in the strategy doc, and forbidding new ones, keeps the plan from drifting into generic advice disconnected from the approved brief."
+      },
+      {
+        "q": "The prompt asks Claude to flag any week where one pillar is overrepresented. What common failure does this catch?",
+        "options": [
+          "Posting too infrequently on all pillars",
+          "Using the wrong brand colors",
+          "Missing a hashtag strategy",
+          "An easy-to-write pillar quietly dominating the calendar while a harder pillar gets skipped"
+        ],
+        "answer": 3,
+        "why": "This check catches the common failure where an easy pillar like 'behind the scenes' dominates the month while a harder pillar like 'product education' gets skipped."
+      },
+      {
+        "q": "Your strategy document doesn't specify enough detail for TikTok. What should the AI do, according to the prompt's instructions?",
+        "options": [
+          "Say explicitly that the document lacks enough detail rather than inventing direction",
+          "Invent a plausible TikTok strategy to fill the gap",
+          "Skip TikTok posts silently without mentioning why",
+          "Copy the Instagram plan for TikTok"
+        ],
+        "answer": 0,
+        "why": "The prompt requires the AI to say when the strategy doc lacks enough detail, keeping the gap visible so you can get real input instead of publishing unapproved content."
+      }
+    ],
+    "smm-b2-platform-native-captions-hooks": [
+      {
+        "q": "A manager under deadline pressure writes one caption and trims it to fit each platform's character limit. What does this lesson say is wrong with that approach?",
+        "options": [
+          "It takes too long",
+          "It ignores that each platform has a different attention pattern and hook convention, so a trimmed caption underperforms a genuinely platform-native one",
+          "It violates platform terms of service",
+          "It uses too many hashtags"
+        ],
+        "answer": 1,
+        "why": "Trimming one caption for every platform is the default under deadline pressure, but each platform has a different attention pattern and hook convention that a trimmed caption ignores."
+      },
+      {
+        "q": "Why does the prompt ask for 3 hook/opening line options before writing the full caption?",
+        "options": [
+          "To make the response longer",
+          "Platforms require multiple hook variants",
+          "The first line is the highest-leverage sentence in the post, worth testing before writing the rest around it",
+          "To give the client more choices to reject"
+        ],
+        "answer": 2,
+        "why": "Requiring three hook options mirrors how a real caption gets chosen — the opening line is the highest-leverage sentence, worth testing before committing to it."
+      },
+      {
+        "q": "Which of these is a mistake this lesson specifically calls out?",
+        "options": [
+          "Naming the exact platform in the prompt",
+          "Asking for the caption's tone to match brand voice",
+          "Checking hashtag conventions per platform",
+          "Accepting the first hook option without comparing it to the alternatives"
+        ],
+        "answer": 3,
+        "why": "The lesson lists accepting the first hook option without comparison as a common mistake, since testing alternatives is the point of generating three."
+      }
+    ],
+    "smm-i1-engagement-replies-brand-voice": [
+      {
+        "q": "A batch of 10 comments includes one angry complaint about a late shipment. According to the prompt's rules, what should happen to that comment?",
+        "options": [
+          "It should be marked 'ESCALATE' and routed to a human instead of getting an auto-drafted reply",
+          "It gets the same generic drafted reply as the others",
+          "It should be deleted",
+          "It should be answered with a template apology automatically"
+        ],
+        "answer": 0,
+        "why": "Complaints and sensitive comments are exactly where a wrong-toned automated-sounding reply does real brand damage, so the prompt routes them to a human via an ESCALATE flag."
+      },
+      {
+        "q": "Why does the prompt require every reply to respond to what that specific person said, rather than a generic acknowledgment?",
+        "options": [
+          "Generic replies use fewer tokens",
+          "A generic-sounding reply reads as an obvious form response, which erodes trust faster than replying slowly",
+          "It's required by the platform's API",
+          "Specific replies are always shorter"
+        ],
+        "answer": 1,
+        "why": "Requiring specificity is what keeps a batch of replies from reading like an obvious form response, which damages trust faster than a slower, genuine reply would."
+      },
+      {
+        "q": "After drafting replies for a batch of comments, what should the social media manager do before sending?",
+        "options": [
+          "Bulk-approve all drafts at once to save time",
+          "Only check the escalated items",
+          "Read every drafted reply against its original comment before sending, and never bulk-approve without reading",
+          "Only check replies longer than 20 words"
+        ],
+        "answer": 2,
+        "why": "The lesson explicitly warns against bulk-sending drafted replies without reading each one against its actual comment first."
+      }
+    ],
+    "smm-i2-analytics-narratives": [
+      {
+        "q": "The analytics report includes a line stating engagement dropped, and the AI adds: 'this is likely due to a recent algorithm change.' You never mentioned an algorithm change. What should happen?",
+        "options": [
+          "Keep it in, since algorithm changes are a common cause",
+          "Move it to the 'what happened' factual section",
+          "Ask Claude to make the language more confident",
+          "Remove it, since hypotheses are restricted to context actually supplied or patterns visible in the numbers, not an unverifiable generic guess"
+        ],
+        "answer": 3,
+        "why": "The prompt only permits hypotheses connected to context you actually gave it or patterns visible in the numbers — a generic, unverifiable 'algorithm change' excuse should be removed."
+      },
+      {
+        "q": "Why does the report separate 'what happened' from 'possible explanations' into two clearly labeled sections?",
+        "options": [
+          "It stops a guessed cause from being stated with the same confidence as an observed fact, protecting credibility when a client pushes back",
+          "To make the report longer for the client",
+          "Clients prefer longer reports",
+          "It's required by analytics platforms"
+        ],
+        "answer": 0,
+        "why": "Splitting facts from hypotheses is the core guardrail — it prevents a guessed cause from carrying the same confidence as a verified number."
+      },
+      {
+        "q": "A metric moved significantly but you have no context to explain why. What does the prompt instruct the AI to do in that case?",
+        "options": [
+          "Invent the most statistically likely explanation",
+          "Say directly that it doesn't have enough context to explain the change, rather than guessing",
+          "Omit the metric from the report entirely",
+          "Attribute it to seasonality by default"
+        ],
+        "answer": 1,
+        "why": "The prompt explicitly permits 'I don't have enough context to explain this' as a valid answer, which is what keeps the report credible."
+      }
+    ],
+    "smm-i3-campaign-visuals-ai-image": [
+      {
+        "q": "You're generating a square post, a story, and a banner for the same campaign. What's the key technique for making all three look like one connected campaign?",
+        "options": [
+          "Use a different AI tool for each format",
+          "Generate all three in a single combined prompt",
+          "Reuse the exact same style description wording across every format generation",
+          "Use a different color palette for each format to add variety"
+        ],
+        "answer": 2,
+        "why": "Small wording variations between separate prompts are what cause a set of campaign visuals to look disconnected, so reusing the identical style description — whether in ChatGPT or Gemini — is the core consistency technique."
+      },
+      {
+        "q": "Why does the brief specify exact brand colors/hex codes rather than a vague mood word like 'energetic'?",
+        "options": [
+          "Hex codes generate faster",
+          "It's required for print materials",
+          "Vague mood words are banned by ChatGPT and Gemini",
+          "It keeps every generated image inside the actual brand palette instead of the tool's default color choices"
+        ],
+        "answer": 3,
+        "why": "Naming exact brand colors, rather than a vague mood word, is what keeps every generated image inside your actual brand palette."
+      },
+      {
+        "q": "Why does the lesson caution against switching between ChatGPT and Gemini mid-campaign without re-anchoring the style description?",
+        "options": [
+          "Gemini cannot generate images at all",
+          "The two models interpret the same style wording slightly differently, risking visible drift if you mix outputs between them",
+          "ChatGPT charges extra for campaign work",
+          "Gemini requires completely different image formats"
+        ],
+        "answer": 1,
+        "why": "Different image models don't interpret identical style wording identically, so mixing ChatGPT and Gemini outputs in one campaign set without re-checking consistency risks drift, even with the same locked description."
+      }
+    ],
+    "smm-a1-multi-client-workflows": [
+      {
+        "q": "A social media manager runs 5 client accounts. What is the single highest-risk failure mode this lesson's system is designed to prevent?",
+        "options": [
+          "Posting too infrequently for one client",
+          "Producing correct, well-written content but for the wrong client's brand voice",
+          "Missing a hashtag on one platform",
+          "Using too many templates"
+        ],
+        "answer": 1,
+        "why": "The system targets the actual highest-risk failure in multi-client work: producing correct, well-written content for the wrong client."
+      },
+      {
+        "q": "Why does the pre-send checklist put 'confirm which client this content is for' as literally the first item, before checking tone or facts?",
+        "options": [
+          "It's alphabetically first",
+          "Clients require it contractually",
+          "It targets the highest-risk failure directly — catching a wrong-client mix-up before anything else is checked",
+          "It saves time on the checklist"
+        ],
+        "answer": 2,
+        "why": "Placing client confirmation first catches the actual highest-risk mistake in multi-client work before tone or fact-checking even begins."
+      },
+      {
+        "q": "The prompt asks for a system 'simple enough that I'll actually use it daily.' What risk is this guarding against?",
+        "options": [
+          "The system being too cheap to build",
+          "Clients rejecting a simple system",
+          "The AI refusing complex requests",
+          "Over-engineering an elaborate system that looks impressive but gets abandoned within a week"
+        ],
+        "answer": 3,
+        "why": "This is a deliberate guardrail against over-engineering a system with too many steps to realistically follow every day, which is the realistic risk with any new process."
+      }
+    ]
+  }
+}

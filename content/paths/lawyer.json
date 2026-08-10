@@ -1,0 +1,27 @@
+{
+  "paths": [
+    {
+      "slug": "ai-for-legal",
+      "title": "AI for Legal Professionals",
+      "tagline": "Faster first passes on documents and research - with grounding, confidentiality, and human review built into every workflow.",
+      "description": "A ladder of 10 hands-on lessons for lawyers and legal professionals using Claude, ChatGPT, and NotebookLM: summarizing and extracting facts from documents with strict grounding, building internal matter summaries, drafting non-final client communications, building document-review checklists, comparing document versions, preparing meeting questions, organizing research in NotebookLM, and building team-wide prompt frameworks and verification protocols for high-stakes work. Every lesson treats AI output as non-final work product requiring attorney review, never legal advice.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "lawyer",
+      "sortOrder": 3,
+      "lessons": [
+        "law-b1-summarize-legal-documents-with-grounding",
+        "law-b2-extract-parties-dates-and-obligations",
+        "law-b3-internal-matter-summaries",
+        "law-b4-draft-client-communications",
+        "law-i1-document-review-checklists",
+        "law-i2-compare-two-document-versions",
+        "law-i3-meeting-prep-questions-from-case-material",
+        "law-i4-organize-research-notes-with-notebooklm",
+        "law-a1-reusable-prompt-frameworks-for-document-analysis",
+        "law-a2-verification-protocols-for-high-stakes-work"
+      ]
+    }
+  ]
+}

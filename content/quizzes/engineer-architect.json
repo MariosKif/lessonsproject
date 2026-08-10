@@ -1,0 +1,424 @@
+{
+  "quizzes": {
+    "eng-b1-field-notes-to-technical-report-draft": [
+      {
+        "q": "A draft report generated from field notes describes a crack as a 'moderate severity concern,' but the original notes only recorded the crack's length and width with no severity assessment. What went wrong?",
+        "options": [
+          "The model inserted a severity judgment that should have been left as an [ENGINEER TO ASSESS] placeholder for the engineer's own professional judgment",
+          "The model correctly summarized the observation for the client",
+          "The model should have omitted the crack entirely since it's minor",
+          "The measurement units were wrong"
+        ],
+        "answer": 0,
+        "why": "The prompt explicitly bans the model from offering opinions on severity, code compliance, or safety - those calls belong to the engineer, flagged with a placeholder instead of stated as fact."
+      },
+      {
+        "q": "Why does the prompt instruct the AI to preserve numbers and measurements exactly as given rather than 'cleaning them up' into rounder figures?",
+        "options": [
+          "Because rounding saves space in the report",
+          "Because a model that rounds or generalizes a measurement (e.g., 3/8in) can silently introduce an error that matters structurally",
+          "Because AI cannot process fractions",
+          "Because clients prefer decimal numbers"
+        ],
+        "answer": 1,
+        "why": "A silently 'cleaned up' measurement can quietly shift a figure that matters to structural judgment, so exact preservation is a core safeguard of the lesson."
+      },
+      {
+        "q": "An engineer rewrites their rough field notes into polished prose before pasting them into the prompt, instead of pasting the raw notes as-is. What's the practical risk compared to the recommended workflow?",
+        "options": [
+          "None, prose is easier for the AI to work with",
+          "Pre-editing into prose risks losing detail or precision before the AI even sees it, defeating the purpose of grounding the draft in the actual raw observations",
+          "The AI will refuse to work with prose",
+          "It will make the report shorter"
+        ],
+        "answer": 2,
+        "why": "The lesson specifically instructs pasting raw notes, not pre-written prose, because the AI works best from - and can only stay grounded in - what you actually recorded."
+      }
+    ],
+    "eng-b2-explain-technical-concepts-to-stakeholders": [
+      {
+        "q": "An engineer is preparing a plain-language explanation of a foundation redesign for a homeowner. The AI's draft uses a vivid analogy, but the analogy implies the issue is purely cosmetic, understating the actual settlement risk. What should the engineer do?",
+        "options": [
+          "Use it since analogies always simplify some accuracy",
+          "Just use the analogy as-is since it's persuasive",
+          "Ask the AI to remove the technical description entirely",
+          "Reject or revise the analogy because it misrepresents how the engineering actually works, even though it's simpler"
+        ],
+        "answer": 3,
+        "why": "The prompt requires that any analogy used not misrepresent how the underlying engineering actually works - a simpler story that distorts the real risk is a common and serious failure mode this lesson guards against."
+      },
+      {
+        "q": "Why does the prompt require the engineer to supply their own accurate technical description first, rather than asking the AI to explain the concept from scratch?",
+        "options": [
+          "Starting from your own description bounds the simplification to reframing what you gave it, rather than letting the AI fill gaps with generic engineering knowledge that may not apply to the specific project",
+          "It's faster to type a short concept",
+          "The AI cannot access technical knowledge otherwise",
+          "It reduces word count"
+        ],
+        "answer": 0,
+        "why": "Anchoring to your own accurate description keeps the AI's job limited to rewording and reframing, not inventing project-specific technical claims it can't actually verify."
+      },
+      {
+        "q": "A project engineer needs to explain to a city council why a design change increases cost. Per the lesson's guardrail, what must never be dropped from the simplified explanation?",
+        "options": [
+          "The engineering jargon terms",
+          "Any safety, cost, or schedule implication from the original technical description",
+          "The name of the software used for calculations",
+          "The engineer's job title"
+        ],
+        "answer": 1,
+        "why": "The prompt explicitly instructs the model not to soften or omit any safety, cost, or schedule implication just to make the explanation shorter or easier to follow."
+      }
+    ],
+    "eng-i1-review-checklists-for-documents-and-drawings": [
+      {
+        "q": "While reviewing a generated checklist for a steel connection submittal, an engineer notices an item states a specific edge-distance requirement as settled fact instead of flagging it. What's the concern?",
+        "options": [
+          "None, the AI is a reliable code reference",
+          "The number is definitely wrong",
+          "Specific code values should be tagged [VERIFY CURRENT CODE/STANDARD] rather than stated as fact, since editions vary by jurisdiction and the AI can't know which is currently adopted",
+          "Checklists shouldn't reference code sections at all"
+        ],
+        "answer": 2,
+        "why": "Code editions and load values vary by jurisdiction and change over time, so the checklist should flag any code-sensitive item for independent verification rather than assert it as fact."
+      },
+      {
+        "q": "Why does the prompt require checklist items to be phrased as questions ('Are gravity loads shown consistent with the design criteria?') instead of as assertions?",
+        "options": [
+          "Questions are quicker to read",
+          "It keeps the checklist from silently injecting a code requirement or design conclusion - the reviewer still has to check the actual answer against the drawings",
+          "Assertions are grammatically incorrect",
+          "Clients prefer question format"
+        ],
+        "answer": 1,
+        "why": "Phrasing items as questions keeps the checklist a neutral review aid rather than something that quietly hands the reviewer a pre-baked conclusion."
+      },
+      {
+        "q": "A firm already has an existing QA/QC checklist for MEP submittals. What does the lesson recommend when generating a new AI-assisted checklist?",
+        "options": [
+          "Ignore the existing checklist and generate an entirely new generic one",
+          "Only use the AI's checklist and discard the firm's document",
+          "Paste the existing checklist and ask the AI to build on and refine it, keeping it aligned with the firm's actual standards",
+          "Merge them manually without any AI involvement"
+        ],
+        "answer": 2,
+        "why": "The prompt is designed to build on and refine an existing firm checklist when one is supplied, keeping the output aligned with the firm's actual standard of care instead of generic content."
+      }
+    ],
+    "eng-i2-research-standards-and-precedents-with-citations": [
+      {
+        "q": "Gemini Deep Research cites the newest edition of a standard for a wind-exposure question, but the engineer's jurisdiction has actually adopted an older edition via its building code. What should the engineer do?",
+        "options": [
+          "Use the newest edition since it's more current",
+          "Confirm the actual adopted edition against the jurisdiction's official adopted-code page before using it, since a citation to the newest edition can still be the wrong one for the project",
+          "Ignore code editions altogether",
+          "Ask Gemini to guess which edition is correct"
+        ],
+        "answer": 1,
+        "why": "Jurisdictions adopt standards on their own schedule and often lag the latest publication by years, so the adopted edition must be confirmed against the official source, not assumed from the citation."
+      },
+      {
+        "q": "According to the lesson, what is Gemini Deep Research's primary value in this research workflow?",
+        "options": [
+          "It replaces the need to read the actual code text",
+          "The citation trail - it's a map telling you which official sources to go open and read yourself, not a substitute for verification",
+          "It provides legally binding answers",
+          "It always uses the newest code edition automatically"
+        ],
+        "answer": 1,
+        "why": "The summary is only useful as a pointer to official sources; the engineer still has to open and personally verify each cited source before relying on it."
+      },
+      {
+        "q": "An engineer's research question surfaces an answer treating a vendor's marketing blog as if it carries the same weight as the actual code text. What mistake does this represent?",
+        "options": [
+          "A correct use of the tool",
+          "Treating a forum thread or vendor guide that Deep Research surfaced as equivalent authority to the actual code or standard text",
+          "The engineer should have used a broader research question",
+          "Vendor content is always accurate for code questions"
+        ],
+        "answer": 1,
+        "why": "The lesson explicitly warns that commentary and vendor guidance can sound authoritative without being the actual code requirement, and this must be separated from genuine standards-body text."
+      }
+    ],
+    "eng-i3-meeting-minutes-rfi-change-order-communications": [
+      {
+        "q": "Notes for an RFI describe a mismatch between a structural detail and an architectural plan. The AI's draft states that the architect's plan is 'incorrect.' What's wrong with this?",
+        "options": [
+          "Nothing, it's an accurate read of the situation",
+          "The model assigned fault when it should have only stated the discrepancy as a neutral fact and open question, since these documents can end up in a contractual dispute record",
+          "It should have blamed the structural engineer instead",
+          "RFIs shouldn't mention discrepancies at all"
+        ],
+        "answer": 1,
+        "why": "The prompt explicitly bans characterizing fault, cause, or contractual responsibility, because an AI-generated phrase about a party's error could later be read as the engineer's own conclusion in a dispute."
+      },
+      {
+        "q": "Why does the prompt use a placeholder like [COST/SCHEDULE IMPACT TO BE DETERMINED] instead of letting the AI estimate a cost figure for a change order?",
+        "options": [
+          "AI cannot perform arithmetic",
+          "Cost and schedule figures require the engineer's own estimating judgment and contract knowledge, not a plausible-sounding AI guess",
+          "Clients don't want to see cost figures in change orders",
+          "It makes the change order shorter"
+        ],
+        "answer": 1,
+        "why": "Cost and schedule impacts require real estimating judgment tied to the actual contract - never a guessed figure the model supplied, per the lesson's explicit rule."
+      },
+      {
+        "q": "What is the correct source material to paste into this prompt when drafting meeting minutes?",
+        "options": [
+          "A polished narrative the engineer already wrote summarizing the meeting",
+          "Raw meeting notes and facts, letting the AI do the structuring",
+          "A previous, unrelated set of minutes used only as a style reference",
+          "Nothing - the AI should infer the meeting content from the project number alone"
+        ],
+        "answer": 1,
+        "why": "The workflow is built to take raw, unedited notes and structure them - pre-writing a narrative first undermines the traceability the lesson relies on."
+      }
+    ],
+    "eng-a1-reusable-documentation-templates-for-your-discipline": [
+      {
+        "q": "A firm rolls out a new team-wide documentation template but skips testing it against messy, real field data before distribution. What risk does this create?",
+        "options": [
+          "None, templates behave identically on any input",
+          "Guardrails like professional-judgment placeholders might not hold up on messier real-world inputs than the first clean example, so testing on multiple real cases is required before rollout",
+          "Testing only matters for beginner engineers",
+          "The template would automatically self-correct over time"
+        ],
+        "answer": 1,
+        "why": "The lesson requires testing the template on 2-3 real or realistic inputs specifically to catch cases where a guardrail gets ignored on messier data than the first clean example."
+      },
+      {
+        "q": "Why does the lesson recommend keeping fixed guardrails separate from the variable, bracketed placeholders in a team template?",
+        "options": [
+          "It looks more organized on the page",
+          "It ensures the safety language - judgment placeholders, code-verification flags, numeric preservation - never gets accidentally dropped when someone fills in project details in a hurry",
+          "Variable content needs to live in its own separate file",
+          "Guardrails should be rewritten by hand every single time"
+        ],
+        "answer": 1,
+        "why": "Separating guardrails from placeholders is what makes a template auditable across a team: anyone fills in the brackets, but the safety language stays fixed regardless of who's using it."
+      },
+      {
+        "q": "A team wants to build one template covering 'any engineering document we might ever write.' What does the lesson say about this approach?",
+        "options": [
+          "This is the ideal approach for maximizing reusability",
+          "A template that broad makes the variable parts overwhelm the fixed guardrails, producing inconsistent quality again - templates should target one well-defined recurring task",
+          "Broad templates are always cheaper to maintain",
+          "It eliminates the need for versioning"
+        ],
+        "answer": 1,
+        "why": "The lesson lists overly broad templates as a common mistake because the variable content overwhelms the fixed guardrails, undoing the consistency the template was meant to provide."
+      }
+    ],
+    "arc-b1-project-proposals-and-fee-letters-from-meeting-notes": [
+      {
+        "q": "An architect notices the AI-drafted proposal includes a specific fee percentage, even though no fee was discussed with the client. What should happen?",
+        "options": [
+          "Send it, the fee is probably close enough",
+          "This shouldn't happen - the prompt requires a [FEE TO BE DETERMINED BY FIRM] placeholder instead of an invented figure, since fees reflect the firm's own cost structure and risk tolerance",
+          "Reduce the fee by 10% before sending, just to be safe",
+          "Ask the client to confirm whether the AI's fee guess seems reasonable"
+        ],
+        "answer": 1,
+        "why": "The prompt explicitly bans generating a specific fee amount, percentage, or phase breakdown - that number only comes from the firm's own judgment, never a plausible-sounding AI guess."
+      },
+      {
+        "q": "Why does the lesson allow the AI to draft a 'starting point' scope-of-services section but never a fee amount or contract terms?",
+        "options": [
+          "Scope is legally required, fee terms are optional",
+          "A typical-phases scope is the least risky part to generate and easiest to edit, while fee and contract terms depend on firm-specific cost structure and risk tolerance the AI can't know",
+          "Fees take longer to calculate than scope does",
+          "Clients only ever read the scope section"
+        ],
+        "answer": 1,
+        "why": "Scope-of-services for a familiar project type is low-risk and easy to correct, while fee and legal terms require firm-specific judgment no model can responsibly supply."
+      },
+      {
+        "q": "Meeting notes mention a construction budget range but say nothing about a pool. The draft's 'Project Understanding' section mentions a pool area anyway. What's the issue?",
+        "options": [
+          "Pools are commonly included in additions, so this is a safe assumption",
+          "The project-understanding section embellished or assumed a client goal not actually discussed, which the lesson explicitly warns against",
+          "The AI should always add amenities to make proposals more appealing",
+          "This is fine since it could increase the eventual fee"
+        ],
+        "answer": 1,
+        "why": "The prompt requires the project-understanding section to reflect only what's in the notes - embellishing client goals risks sending a proposal that misstates what the client actually asked for."
+      }
+    ],
+    "arc-b2-concept-narratives-that-sell-a-design": [
+      {
+        "q": "An AI-written concept narrative describes a glass curtain wall feature that never appears in the actual drawings or design notes. What happened?",
+        "options": [
+          "This is acceptable creative license for marketing copy",
+          "The model invented a design feature not in the notes - a common failure mode that becomes embarrassing when drawings are shown alongside a mismatched narrative",
+          "The AI is proposing an alternate design for consideration",
+          "This is normal and expected for competition entries"
+        ],
+        "answer": 1,
+        "why": "The prompt requires every described design move to trace back to the architect's own notes; inventing a feature the drawings don't show is the most common failure mode the lesson warns against."
+      },
+      {
+        "q": "Why does the prompt require every design move to be tied back to a stated reason (site, program, client goal) instead of relying on generic descriptive adjectives?",
+        "options": [
+          "It makes the narrative longer",
+          "Juries and clients respond to design logic, not vocabulary - adjectives like 'elegant' or 'timeless' without grounding read as filler",
+          "Adjectives are harder for the AI to generate reliably",
+          "It satisfies a word-count requirement"
+        ],
+        "answer": 1,
+        "why": "A concept narrative persuades by showing design logic tied to real reasons, not by stacking abstract adjectives that could describe any project."
+      },
+      {
+        "q": "The same design is being presented in a client pitch and, separately, at a planning board hearing. What does the lesson recommend?",
+        "options": [
+          "Use the identical narrative for both - the design itself hasn't changed",
+          "Adjust tone and framing per audience, since a planning board narrative and a client-facing narrative need to read differently",
+          "Only write a narrative for the planning board submission",
+          "Skip the client-facing narrative since it's optional"
+        ],
+        "answer": 1,
+        "why": "The lesson explicitly calls out matching tone to audience as essential - the same real design deserves a different narrative voice for a client deck versus a formal submission."
+      }
+    ],
+    "arc-i1-visual-concept-exploration-with-ai-image-tools": [
+      {
+        "q": "An architect shows a client a striking AI-generated massing image in a presentation with no label. The client later expects the built design to match the image exactly. What was skipped?",
+        "options": [
+          "Nothing - images are meant purely for inspiration",
+          "The image should have been labeled as an 'illustrative concept study, not a final design or rendering,' since these images aren't dimensionally accurate and can set inaccurate expectations",
+          "The architect should have used a different image-generation tool",
+          "The client should have known better without being told"
+        ],
+        "answer": 1,
+        "why": "The lesson's key safeguard is labeling every AI concept image as illustrative, since it has no dimensional accuracy or structural logic and can otherwise set an expectation the real design can't meet."
+      },
+      {
+        "q": "Why does the lesson recommend picking one focus - massing, material, or mood - per exploration round rather than mixing all three into a single prompt?",
+        "options": [
+          "AI image tools can technically only handle one concept at a time",
+          "A single focus keeps each batch of images useful for a specific design conversation, instead of producing an unfocused mix that's hard to react to productively",
+          "It reduces the cost per image generated",
+          "Mixed-focus prompts always fail to generate"
+        ],
+        "answer": 1,
+        "why": "Fixing one focus per round is what makes the resulting images something a team can actually react to and discuss productively, rather than a muddled mix."
+      },
+      {
+        "q": "After selecting a promising AI-generated massing direction, what should the architect do next per the lesson's workflow?",
+        "options": [
+          "Send the image directly to the client as the final concept",
+          "Develop the selected direction through their own scaled drawings and design process - the AI image is a starting spark, not a design deliverable",
+          "Submit the AI image as part of the construction documents",
+          "Keep regenerating images until one happens to be dimensionally correct"
+        ],
+        "answer": 1,
+        "why": "The lesson is explicit that the selected direction must be developed through the architect's own drawings and design process - the image only sparks the idea."
+      }
+    ],
+    "arc-i2-client-facing-project-documentation-and-updates": [
+      {
+        "q": "An update draft about a permit delay includes the line 'this won't affect your overall schedule,' though the architect hasn't actually confirmed that. What's the correct action?",
+        "options": [
+          "Send it as-is - reassurance builds client confidence",
+          "Ask the client whether the schedule impact seems acceptable to them",
+          "Remove or replace it - the model shouldn't add reassurance not stated in the architect's notes; that judgment belongs in the [ARCHITECT TO ADD FRAMING] placeholder",
+          "Delete the entire update rather than send anything"
+        ],
+        "answer": 2,
+        "why": "The prompt bans adding reassurance not stated in the notes and instead inserts a placeholder for the architect's own judgment on sensitive framing before anything is sent."
+      },
+      {
+        "q": "Why does the prompt fix the update's structure into 'completed / in progress / decision needed / next steps' sections?",
+        "options": [
+          "It matches a legal formatting requirement",
+          "Clients prefer bullet points in every situation",
+          "It shortens the word count automatically",
+          "It makes the update actionable instead of a wall of narrative text the client has to parse - especially so a needed decision isn't buried"
+        ],
+        "answer": 3,
+        "why": "Fixed sections keep a client update scannable and ensure a decision the client needs to make can't get lost inside loose prose."
+      },
+      {
+        "q": "A firm principal receives an AI-drafted delay notice labeled 'DRAFT - review before sending.' What should happen before it goes out?",
+        "options": [
+          "Nothing - the label means it's already approved for sending",
+          "The architect reviews for tone and accuracy and personally adds judgment-based framing for sensitive parts before sending - an unedited AI draft covering a delay should never go out",
+          "Forward it directly to the client with the DRAFT label still visible",
+          "Have the client edit the draft themselves"
+        ],
+        "answer": 1,
+        "why": "The DRAFT label is deliberate friction to force review, and the lesson explicitly warns against sending an AI draft covering a delay or cost change unedited."
+      }
+    ],
+    "arc-i3-planning-and-consent-document-drafts-with-compliance-guardrails": [
+      {
+        "q": "The AI drafts a variance narrative stating that an 18ft rear setback 'complies with Section 4.2.3 of the ordinance,' as settled fact. What's the problem?",
+        "options": [
+          "None - this shows useful AI knowledge of ordinances",
+          "The setback figure is definitely incorrect",
+          "The model asserted a specific compliance and code citation as settled fact instead of flagging it [VERIFY AGAINST CURRENT ORDINANCE], since zoning codes are hyperlocal and change over time",
+          "Variance narratives shouldn't cite ordinance sections at all"
+        ],
+        "answer": 2,
+        "why": "Zoning ordinances vary by jurisdiction and are frequently amended, so every regulatory assertion has to be flagged for the architect's own verification rather than stated as fact by the model."
+      },
+      {
+        "q": "Why does the prompt instruct the model not to predict whether an approval will be granted?",
+        "options": [
+          "Predictions take extra processing time to generate",
+          "Approval predictions are illegal to include in submission documents",
+          "It would make the narrative too long to read",
+          "That's the planning board's call, not the model's - the document should describe the project accurately rather than editorialize about outcomes"
+        ],
+        "answer": 3,
+        "why": "The lesson keeps the document focused on describing the project accurately, since predicting or characterizing the strength of an application oversteps into a judgment only the planning authority makes."
+      },
+      {
+        "q": "An architect already has the current ordinance section text and dimensional requirements confirmed before drafting. What does the lesson's pro tip suggest?",
+        "options": [
+          "Still let the AI guess at compliance details for speed",
+          "Paste the confirmed figures in as known facts rather than carrying unnecessary placeholder verification flags for values already confirmed, narrowing what still needs research",
+          "Never share confirmed ordinance data with the AI",
+          "Skip verification entirely since the data is already known"
+        ],
+        "answer": 1,
+        "why": "Feeding already-verified figures in as known facts avoids redundant verification flags and speeds up the review, since it narrows what genuinely still needs to be checked."
+      }
+    ],
+    "arc-a1-portfolio-and-case-study-copy-for-your-practice": [
+      {
+        "q": "A case study describes a renovation as if the firm was the sole designer, even though a structural engineering firm collaborated closely on a seismic retrofit central to the project. What's wrong?",
+        "options": [
+          "Nothing - marketing copy is allowed to simplify collaboration",
+          "The copy overstates the firm's role on a collaborative project, which the lesson flags as a real reputational risk if a collaborator or client notices the omission",
+          "Case studies should never mention collaborators at all",
+          "This is standard, expected industry practice"
+        ],
+        "answer": 1,
+        "why": "The prompt requires accurately reflecting the firm's actual scope and role - erasing a collaborator's contribution is a listed common mistake that carries real relationship cost."
+      },
+      {
+        "q": "Why does the lesson require a colleague who worked on the project to review the case study before it's published?",
+        "options": [
+          "It's a legal requirement for marketing copy",
+          "It catches factual inaccuracies, like an unconfirmed metric or misattributed role, that the original notes-taker might misremember months or years after project completion",
+          "Colleagues always write better marketing copy than the original author",
+          "It speeds up the overall writing process"
+        ],
+        "answer": 1,
+        "why": "A second set of eyes from someone who actually worked on the project catches the kind of factual drift that memory alone can introduce long after the project wrapped."
+      },
+      {
+        "q": "An architect wants to include an energy-performance metric in a case study but never actually confirmed it was measured. What should they do?",
+        "options": [
+          "Include it anyway since it sounds impressive",
+          "Write 'NONE TO CLAIM' for that field or omit it, since the prompt explicitly forbids adding outcomes or metrics that weren't actually stated as facts",
+          "Estimate a plausible-sounding number",
+          "Ask the AI to research typical metrics for similar buildings and use those instead"
+        ],
+        "answer": 1,
+        "why": "The prompt only allows outcomes and metrics that are actually confirmed - an unmeasured claim is exactly the kind of credibility risk the lesson warns against."
+      }
+    ]
+  }
+}

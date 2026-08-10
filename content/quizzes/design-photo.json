@@ -1,0 +1,424 @@
+{
+  "quizzes": {
+    "des-b1-moodboards-concept-exploration": [
+      {
+        "q": "You generate 4 \"directions\" in ChatGPT or Gemini from a brief, but all four are just variations of the same minimalist idea. What's the problem?",
+        "options": [
+          "Nothing — consistency is good for a client review",
+          "A client can't meaningfully choose between near-duplicates; directions need to be genuinely distinct takes",
+          "It saves time writing prompts",
+          "It matches the brief's constraints more closely"
+        ],
+        "answer": 1,
+        "why": "Writing a separate, structured prompt per direction — in either ChatGPT or Gemini — is what produces boards that actually read as distinct instead of near-duplicates of the same aesthetic."
+      },
+      {
+        "q": "Why keep the brief's constraints paragraph (like an existing brand color) identical, word for word, across every direction's prompt?",
+        "options": [
+          "It's simply faster to copy and paste",
+          "It keeps every direction eligible for approval — a direction that ignores a required constraint is a distraction, not a real option",
+          "ChatGPT and Gemini ignore constraints unless repeated verbatim",
+          "It reduces the number of images generated per board"
+        ],
+        "answer": 1,
+        "why": "Reusing the brief's constraints in every direction ensures all boards are actually viable options rather than one being disqualified on sight."
+      },
+      {
+        "q": "How should the finished mood boards be presented to the client?",
+        "options": [
+          "One at a time in sequence, building up to the designer's favorite",
+          "All together, side by side, since showing one at a time anchors reactions to whichever is shown first",
+          "Only the single strongest direction",
+          "Without labels, so the client reacts to pure visuals"
+        ],
+        "answer": 1,
+        "why": "Side-by-side comparison is what lets a client or team react usefully; sequential presentation biases reactions toward the first board shown."
+      }
+    ],
+    "des-b2-client-brief-intake": [
+      {
+        "q": "A client's message says \"make it pop\" and \"something modern.\" How should the brief-intake process handle this?",
+        "options": [
+          "Guess at what the client means and start designing",
+          "Flag the vague language and suggest 2-3 concrete reference directions to pin down what the client actually means",
+          "Ignore the vague language entirely and proceed with facts only",
+          "Ask the client to submit a formal written brief before any conversation"
+        ],
+        "answer": 1,
+        "why": "Showing concrete visual options gets a real answer in one message instead of a rejected first draft weeks later, since 'modern' means something different to every client."
+      },
+      {
+        "q": "Why does the prompt separate \"stated facts\" from \"assumptions to confirm\" rather than blending them into one list?",
+        "options": [
+          "It's required documentation for client contracts",
+          "It stops a brief from quietly hardening a guess into a requirement — every unclear point becomes a question you actually send",
+          "It makes the brief shorter overall",
+          "Clients prefer bulleted lists over paragraphs"
+        ],
+        "answer": 1,
+        "why": "The two-list structure forces every ambiguous point into an actual question sent to the client, rather than a silent decision made on their behalf."
+      },
+      {
+        "q": "What should happen before any visual design work begins?",
+        "options": [
+          "Start drafting concepts immediately to keep momentum",
+          "Send the clarifying questions to the client first, not alongside a first draft",
+          "Assume budget and timeline based on a similar past project",
+          "Skip clarification if the brief seems reasonably clear"
+        ],
+        "answer": 1,
+        "why": "Starting work before sending clarifying questions just relocates the guesswork into the design itself instead of removing it."
+      }
+    ],
+    "des-i1-ux-copy-microcopy": [
+      {
+        "q": "A designer asks the AI only for a headline and body copy, planning to write error messages later during QA. What's the issue?",
+        "options": [
+          "This is the correct order — error states come last",
+          "Error and empty states are the pieces designers most often forget; they should be requested in the same pass as everything else",
+          "Error messages should be written by engineering, not design",
+          "QA teams generally prefer writing their own error copy"
+        ],
+        "answer": 1,
+        "why": "Asking for every piece of text a screen needs in one pass is what surfaces error and empty states before a bug report exposes the gap."
+      },
+      {
+        "q": "Why require button labels to be verb-first and describe the actual action, rather than generic labels like \"Continue\" everywhere?",
+        "options": [
+          "It's mandated by accessibility law",
+          "It makes a flow scannable instead of ambiguous under time pressure",
+          "It shortens the button label's character count",
+          "It matches what every competing app already does"
+        ],
+        "answer": 1,
+        "why": "Verb-first labels tied to the actual action, like 'Connect my bank' instead of 'Continue,' make a flow clear when a user is scanning quickly."
+      },
+      {
+        "q": "What happens if you skip defining the product's voice with a real example sentence before generating copy?",
+        "options": [
+          "The copy becomes more creative and varied",
+          "The copy defaults to generic SaaS tone that sounds like every other product",
+          "Character limits become irrelevant to the output",
+          "Error states automatically get more detailed"
+        ],
+        "answer": 1,
+        "why": "Providing a voice definition with one real example sentence keeps the draft from defaulting to generic copy, since the model has an actual reference to match."
+      }
+    ],
+    "des-i2-design-rationale-presentation-notes": [
+      {
+        "q": "The AI's rationale draft cites a user-research finding that was never actually conducted. What went wrong?",
+        "options": [
+          "Nothing — it strengthens the argument for the stakeholder meeting",
+          "The rationale should be restricted to reasons you actually supplied; asked for justification, the model will otherwise invent plausible-sounding data",
+          "User research findings are always fabricated by AI tools",
+          "This is expected and should be kept in the document"
+        ],
+        "answer": 1,
+        "why": "A claim like this falls apart the moment a stakeholder asks a follow-up question, which is exactly the kind of risk the prompt's guardrail is meant to prevent."
+      },
+      {
+        "q": "Why ask for likely pushback on only the two or three riskiest decisions instead of a generic FAQ covering everything?",
+        "options": [
+          "It's simply shorter to write",
+          "It targets rehearsal time where it actually matters instead of padding it with easy questions nobody will ask",
+          "Riskier decisions don't require any justification",
+          "Generic FAQs are considered unprofessional"
+        ],
+        "answer": 1,
+        "why": "Focusing pushback prep on the riskiest decisions concentrates limited rehearsal time on the questions most likely to actually come up."
+      },
+      {
+        "q": "How should a designer actually present at the review meeting?",
+        "options": [
+          "Read the slide-text version aloud verbatim",
+          "Use the condensed spoken talking points rather than reading text, so it sounds spoken rather than scripted",
+          "Skip rehearsing since the rationale document is already written",
+          "Present only the riskiest decisions and omit the rest"
+        ],
+        "answer": 1,
+        "why": "Talking points, rehearsed once, keep the presentation sounding confident and natural instead of read verbatim from slide text."
+      }
+    ],
+    "des-i3-iterate-visual-directions-systematically": [
+      {
+        "q": "A designer re-describes an approved style \"from memory\" for each new asset instead of pasting the exact original wording. What's the risk?",
+        "options": [
+          "None — memory is reliable enough for this purpose",
+          "Small paraphrasing changes how GPT Image 2 interprets tone and palette, introducing drift immediately",
+          "It saves time with no real downside",
+          "It only affects the image's aspect ratio"
+        ],
+        "answer": 1,
+        "why": "Locking the style-block wording character for character is what stops the slow drift that happens when a direction gets re-described slightly differently each time."
+      },
+      {
+        "q": "Why compare each new generation against the original locked reference rather than against the other newly generated images?",
+        "options": [
+          "Comparing to other new images is simply faster",
+          "Drift that looks fine among the new images might not survive being placed next to the originally approved board",
+          "The locked reference is legally required to be checked",
+          "It reduces the number of images that need to be generated"
+        ],
+        "answer": 1,
+        "why": "Checking against the original approved reference catches drift that would otherwise look fine in isolation but wouldn't hold up next to the approved board."
+      },
+      {
+        "q": "What's an advantage of requesting new assets in the same ChatGPT conversation as the originally approved images, rather than a fresh chat?",
+        "options": [
+          "It's required by ChatGPT's terms of service",
+          "It gives GPT Image 2 a stronger anchor to the actual approved images, not just a text description of them",
+          "It uses fewer characters in the prompt",
+          "It automatically saves the images to a shared folder"
+        ],
+        "answer": 1,
+        "why": "ChatGPT's iterative in-chat editing lets GPT Image 2 reference the actual approved images already in the conversation, which is a stronger anchor against drift than reconstructing the style from a text description alone in a new chat."
+      }
+    ],
+    "des-a1-integrate-ai-without-losing-craft": [
+      {
+        "q": "A designer sorts \"final layout and typography decisions\" as AI-assisted purely for speed. What should be checked before accepting that?",
+        "options": [
+          "Nothing — speed should always be the priority",
+          "The specific risk of over-relying on AI there, such as losing the ability to defend a decision or missing craft details clients notice",
+          "Typography has no meaningful risk associated with it",
+          "This decision must always stay AI-assisted regardless of outcome"
+        ],
+        "answer": 1,
+        "why": "The reflection prompt, run in Claude or ChatGPT, asks for the specific risk of each AI-assisted category, since a generic caution doesn't reveal what's actually being traded away."
+      },
+      {
+        "q": "What's the clearest warning sign that a task has drifted from \"AI-assisted\" to effectively \"outsourced\"?",
+        "options": [
+          "The designer using AI tools every day",
+          "Two different clients' ChatGPT-generated concept boards starting to look interchangeable",
+          "A task taking noticeably less time than before",
+          "A client approving a direction quickly"
+        ],
+        "answer": 1,
+        "why": "Visual sameness across different clients' work is the clearest signal that a task has drifted from assisted to outsourced and should move back toward manual."
+      },
+      {
+        "q": "How should this AI-use policy be treated once written?",
+        "options": [
+          "Written once and treated as permanently settled",
+          "Revisited after a few months of real use, since some tasks will move categories once quality proves out",
+          "Kept private even if working on a team",
+          "Framed as a moral stance rather than a practical craft decision"
+        ],
+        "answer": 1,
+        "why": "The policy is meant to evolve as you see where quality actually holds up or slips, not to be fixed permanently on the first pass."
+      }
+    ],
+    "ph-b1-inquiry-replies-booking-flows": [
+      {
+        "q": "A photographer sends a fully generic inquiry reply that doesn't reference anything from the client's actual message. What's the effect?",
+        "options": [
+          "It's fine, since it saves time replying",
+          "It doesn't feel personally read, which lowers the chance of a response compared to referencing a specific detail",
+          "Clients generally prefer generic, templated replies",
+          "It appropriately shortens the email"
+        ],
+        "answer": 1,
+        "why": "Requiring a specific reference from the client's own message is the single biggest lever for a reply that feels personally read and gets a response back."
+      },
+      {
+        "q": "Why cap the inquiry reply to exactly one clear next step?",
+        "options": [
+          "Email clients truncate longer messages automatically",
+          "Too many asks at once stalls out a hesitant inquiry; one clear step keeps momentum toward booking",
+          "It's a spam-filter requirement",
+          "It matches a common industry email-length standard"
+        ],
+        "answer": 1,
+        "why": "A single, clear next step keeps a hesitant inquiry moving forward instead of stalling on multiple choices at once."
+      },
+      {
+        "q": "What's a common mistake this lesson warns against?",
+        "options": [
+          "Answering the client's actual question before anything else",
+          "Letting the draft quote pricing or availability that hasn't actually been confirmed",
+          "Using a warm, professional tone",
+          "Referencing a specific detail from the client's message"
+        ],
+        "answer": 1,
+        "why": "Quoting unconfirmed pricing or availability risks committing to something that later has to be walked back."
+      }
+    ],
+    "ph-b2-shoot-prep-shot-lists-moodboards": [
+      {
+        "q": "The client's notes mention \"bride with each grandparent\" but no headcount is given. How should the shot list handle this?",
+        "options": [
+          "Assume a reasonable headcount and move on",
+          "Flag it in a separate \"Confirm with client\" list instead of guessing",
+          "Omit that shot from the list entirely",
+          "Ask a random family member on the day of the shoot"
+        ],
+        "answer": 1,
+        "why": "Routing anything ambiguous into a separate confirmation list, instead of letting Claude guess, prevents a missed must-have shot from being discovered only after the event is over."
+      },
+      {
+        "q": "Why organize the shot list by time block (Getting Ready, Ceremony, Formals, Reception) instead of one flat list?",
+        "options": [
+          "It's a required wedding-industry standard",
+          "It makes the list usable on location — glance at the current block instead of scanning fifty lines under time pressure",
+          "It reduces the total number of shots needed",
+          "It matches the mood board's format automatically"
+        ],
+        "answer": 1,
+        "why": "Time-blocked organization is what makes a shot list actually scannable in the moment, rather than one long list to search through."
+      },
+      {
+        "q": "What does pairing the Claude shot list with a quick ChatGPT-generated mood board help prevent?",
+        "options": [
+          "Forgetting to charge camera batteries",
+          "Discovering on shoot day that a vibe word like \"candid\" meant something different to the client than intended",
+          "Missing a payment from the client",
+          "Arriving at the wrong venue"
+        ],
+        "answer": 1,
+        "why": "The Claude-built must-have list tells you what to shoot, but the ChatGPT mood board confirms how it should feel, since words like 'candid' or 'romantic' mean different things to different clients."
+      }
+    ],
+    "ph-i1-pricing-package-descriptions": [
+      {
+        "q": "The AI drafts \"unlimited edits included\" for a package that doesn't actually offer that. What's the real risk?",
+        "options": [
+          "It boosts sales with no meaningful downside",
+          "It creates a real dispute the first time a client checks the website against their actual contract",
+          "It's a minor wording issue that doesn't matter",
+          "Clients expect some exaggeration in pricing pages"
+        ],
+        "answer": 1,
+        "why": "Banning added inclusions is the core guardrail here, since a model asked for persuasive copy will otherwise round up in ways that create real disputes."
+      },
+      {
+        "q": "Why require a consistent structure across every package description?",
+        "options": [
+          "It's mandated by e-commerce hosting platforms",
+          "It makes packages scannable and comparable, so confused shoppers can decide without messaging a basic clarifying question",
+          "It shortens the total copy needed",
+          "It automatically raises perceived value"
+        ],
+        "answer": 1,
+        "why": "Consistent structure across packages is exactly the decision-making aid that reduces basic clarifying-question messages before someone books."
+      },
+      {
+        "q": "When is it acceptable for the copy to describe a package as \"most popular\"?",
+        "options": [
+          "Always, as standard marketing language",
+          "Only if you've actually told the AI which package really sells best",
+          "Never, under any circumstance",
+          "Only for the highest-priced package"
+        ],
+        "answer": 1,
+        "why": "Vague value claims are restricted to only what you've actually confirmed, keeping the copy honest instead of using generic, untrustworthy-sounding sales language."
+      }
+    ],
+    "ph-i2-marketing-site-copy-social-captions": [
+      {
+        "q": "The homepage draft uses phrases like \"capture your story\" and \"timeless images.\" What's wrong with this?",
+        "options": [
+          "These are effective, proven phrases worth keeping",
+          "These are exactly the clichés every competitor's site already uses, so none of them say anything memorable",
+          "They're too short to be useful for SEO",
+          "They violate a photography-industry regulation"
+        ],
+        "answer": 1,
+        "why": "Every studio's homepage uses these same phrases, meaning none of them actually say anything a potential client remembers."
+      },
+      {
+        "q": "Why does the prompt explicitly name the clichés to avoid, rather than just instructing \"be specific\"?",
+        "options": [
+          "Naming exact phrases is more effective, since those are precisely what a model defaults to without other constraints",
+          "It's a purely stylistic preference with no real effect on output",
+          "Those exact phrases are technically blocked by ChatGPT",
+          "It reduces the number of tokens used in the prompt"
+        ],
+        "answer": 0,
+        "why": "Naming the exact clichés is more effective than a vague instruction because those are precisely the default phrases a model reaches for without other constraints."
+      },
+      {
+        "q": "What's a common mistake to avoid when generating social captions from real session notes?",
+        "options": [
+          "Using real specifics like actual client feedback",
+          "Posting a client-identifying detail (full name, address, private event) without permission",
+          "Generating captions from real session notes",
+          "Varying the caption structure across posts"
+        ],
+        "answer": 1,
+        "why": "Reviewing every caption for client privacy is required, since identifying details shouldn't be shared publicly without permission."
+      }
+    ],
+    "ph-i3-client-gallery-delivery-upsells": [
+      {
+        "q": "A photographer combines the gallery delivery message and the print/album upsell into a single email. What's the problem?",
+        "options": [
+          "It's efficient and saves sending a second email",
+          "It undercuts the emotional moment of first seeing the gallery with a sales pitch",
+          "Clients generally prefer combined messages",
+          "It reduces the overall number of emails sent unnecessarily"
+        ],
+        "answer": 1,
+        "why": "Mixing an upsell into the moment a client first sees their images undercuts the emotional response that's actually driving the eventual sale."
+      },
+      {
+        "q": "Why frame the upsell around \"preserving/displaying the images\" rather than urgency or scarcity language?",
+        "options": [
+          "Urgency language is prohibited in marketing emails",
+          "It matches how people actually decide to buy prints — as a considered choice about a memory they already value, not a reaction to a countdown",
+          "It's simply shorter to write this way",
+          "It avoids mentioning price at all"
+        ],
+        "answer": 1,
+        "why": "Framing around preservation matches how buying decisions for prints actually get made, rather than manufacturing false urgency."
+      },
+      {
+        "q": "What's a common mistake this lesson warns against in the upsell message?",
+        "options": [
+          "Waiting a few days after delivery to send the upsell",
+          "Using urgency or countdown language for an upsell with no real deadline behind it",
+          "Listing only real products and real prices",
+          "Referencing a specific memorable moment in the delivery email"
+        ],
+        "answer": 1,
+        "why": "An invented 'limited time' claim with no real deadline is the fastest way to damage trust right after a client's best moment with the photographer."
+      }
+    ],
+    "ph-a1-season-proof-marketing-routine": [
+      {
+        "q": "A photographer builds a generic 12-month content calendar without mapping their actual booking pattern. What's the flaw?",
+        "options": [
+          "Generic calendars work identically well for every business",
+          "It ignores that slow-season marketing goals (fill the calendar) are fundamentally different from peak-season needs (prepare content in advance)",
+          "It's more thorough than a seasonally-specific plan",
+          "It requires less time to build overall"
+        ],
+        "answer": 1,
+        "why": "A routine mapped to actual peak and slow months is what makes the plan usable, since the goal in a slow month differs fundamentally from the goal in a peak month."
+      },
+      {
+        "q": "Why restrict the marketing routine to platforms the photographer actually uses?",
+        "options": [
+          "Every other platform is inherently worse for marketing",
+          "It prevents a plan that quietly assumes a strategy, like a platform you have no intention of running, that will just be abandoned",
+          "It's a technical requirement of the AI tool",
+          "It reduces marketing costs to zero"
+        ],
+        "answer": 1,
+        "why": "Restricting the routine to platforms actually in use prevents a plan built around a channel that will quietly get abandoned."
+      },
+      {
+        "q": "Why does the routine distinguish recurring habits from one-time setup tasks?",
+        "options": [
+          "It doesn't matter — all tasks should be treated the same",
+          "Otherwise the whole routine gets treated as a to-do list that's \"done\" once completed, rather than sustained over time",
+          "Recurring tasks are always less important than setup tasks",
+          "One-time tasks require more calendar reminders than recurring ones"
+        ],
+        "answer": 1,
+        "why": "Habits need a standing reminder to persist, while setup tasks just need to be done once, so conflating the two undermines the routine's sustainability."
+      }
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "paths": [
+    {
+      "slug": "claude-intermediate",
+      "title": "Claude Intermediate",
+      "tagline": "Turn Claude from a chat window into a professional system: Projects, Artifacts, Skills, research and quality control.",
+      "description": "Go beyond single conversations. In twelve hands-on lessons you'll build on-brand Projects, reconcile multi-document evidence, ship interactive Artifacts, package workflows as Skills, run structured deep research, and master advanced prompting with output contracts. Then you'll apply it all to real work — meetings, long-form content, CSV analysis — and finish with the disciplines that make AI output trustworthy: memory and conversation strategy, verification passes, and a cross-surface workflow spanning web, desktop, mobile and Claude in Chrome.",
+      "kind": "tool-course",
+      "level": "intermediate",
+      "toolSlug": "claude",
+      "professionSlug": null,
+      "sortOrder": 2,
+      "lessons": [
+        "claude-i1-on-brand-project",
+        "claude-i2-multi-document-analysis",
+        "claude-i3-build-artifacts",
+        "claude-i4-claude-skills",
+        "claude-i5-deep-research-briefs",
+        "claude-i6-advanced-prompting-contracts",
+        "claude-i7-meetings-to-decisions",
+        "claude-i8-outline-first-longform",
+        "claude-i9-csv-to-executive-summary",
+        "claude-i10-memory-conversation-strategy",
+        "claude-i11-quality-control-verification",
+        "claude-i12-cross-platform-workflow"
+      ]
+    }
+  ]
+}

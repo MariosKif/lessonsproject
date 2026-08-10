@@ -1,0 +1,27 @@
+{
+  "paths": [
+    {
+      "slug": "codex-academy",
+      "title": "Codex Academy",
+      "tagline": "Turn specifications into working software with OpenAI's coding agent",
+      "description": "A ten-lesson path from your first signed-in Codex task to a full spec-to-merged-PR delivery workflow. Covers reading an unfamiliar repository, writing specs a coding agent can implement correctly, implementing features, debugging failing builds and tests, code review with Codex, building a real landing page from a spec, choosing cloud tasks versus local sessions, verification habits, and end-to-end delivery — with AGENTS.md guidance woven throughout.",
+      "kind": "tool-course",
+      "level": "mixed",
+      "toolSlug": "codex",
+      "professionSlug": null,
+      "sortOrder": 6,
+      "lessons": [
+        "cx-b1-sign-in-first-task",
+        "cx-b2-understand-a-repository",
+        "cx-b3-writing-specs-for-agents",
+        "cx-i1-implement-a-feature",
+        "cx-i2-debug-a-failing-build",
+        "cx-i3-code-review-with-codex",
+        "cx-i4-landing-page-from-spec",
+        "cx-a1-cloud-tasks-vs-local",
+        "cx-a2-tests-and-verification-habits",
+        "cx-a3-delivery-workflow-end-to-end"
+      ]
+    }
+  ]
+}

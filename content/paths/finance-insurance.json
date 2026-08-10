@@ -1,0 +1,42 @@
+{
+  "paths": [
+    {
+      "slug": "ai-for-financial-analysts",
+      "title": "AI for Financial Analysts",
+      "tagline": "From variance narratives to a repeatable monthly reporting workflow — built with confidentiality and number-verification baked in.",
+      "description": "A six-lesson ladder for financial analysts covering the AI workflows that save real time without risking confidentiality or accuracy: turning a budget variance table into a clear narrative, summarizing filings and reports for a briefing without dropping a number, building reusable analysis frameworks and checklists, running cited sector research in Perplexity, drafting investment memos with built-in verification checkpoints, and designing a repeatable, auditable monthly reporting workflow.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "financial-analyst",
+      "sortOrder": 13,
+      "lessons": [
+        "fin-b1-explain-variance-narrative",
+        "fin-b2-summarize-filings-for-briefing",
+        "fin-i1-analysis-framework-checklist",
+        "fin-i2-sector-research-cited-sources",
+        "fin-i3-investment-memo-drafting",
+        "fin-a1-monthly-reporting-workflow"
+      ]
+    },
+    {
+      "slug": "ai-for-insurance",
+      "title": "AI for Insurance Agents",
+      "tagline": "From plain-language policy explanations to a full client-communication template library — accurate, empathetic, and confidential by default.",
+      "description": "A six-lesson ladder for insurance agents covering the AI workflows that save real time without risking confidentiality or accuracy: explaining a policy in plain language a client actually understands, writing client follow-ups and renewal reminders that get responses, comparing two policy documents accurately, writing clear and empathetic claims communication, preparing for objection handling and needs-analysis conversations, and building a complete, maintained client-communication template library.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "insurance-agent",
+      "sortOrder": 24,
+      "lessons": [
+        "ins-b1-explain-policy-plain-language",
+        "ins-b2-client-followups-renewal-reminders",
+        "ins-i1-compare-two-policy-documents",
+        "ins-i2-claims-communication",
+        "ins-i3-objection-handling-needs-analysis",
+        "ins-a1-client-communication-template-library"
+      ]
+    }
+  ]
+}

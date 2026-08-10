@@ -1,0 +1,354 @@
+{
+  "quizzes": {
+    "law-b1-summarize-legal-documents-with-grounding": [
+      {
+        "q": "Why does the prompt explicitly forbid the AI from characterizing a clause as \"enforceable,\" \"standard,\" or \"favorable\"?",
+        "options": [
+          "That is a legal judgment only the attorney can make, and the tool should describe the text, not practice law",
+          "Those words are too complex for the AI to use accurately",
+          "It makes the summary too long",
+          "Clients dislike seeing evaluative language in summaries"
+        ],
+        "answer": 0,
+        "why": "Banning characterizations like enforceability or favorability keeps the tool in the lane of describing the text, leaving legal judgment entirely to the attorney."
+      },
+      {
+        "q": "The AI's summary states \"Not stated\" for a renewal notice period. What should the attorney do with that flag?",
+        "options": [
+          "Accept it at face value without checking, since the AI already reviewed the text",
+          "Go back and confirm the document genuinely doesn't address that point before relying on the flag",
+          "Delete that section from the summary since it adds no value",
+          "Ask the AI to guess a typical renewal notice period instead"
+        ],
+        "answer": 1,
+        "why": "Accepting a 'Not stated' answer without going back to confirm the document genuinely doesn't address that point is a listed common mistake; the flag should prompt verification, not blind trust."
+      },
+      {
+        "q": "A paralegal wants to paste an unredacted client contract into a personal-tier consumer AI account that isn't approved by the firm for confidential data. What's the concern?",
+        "options": [
+          "It's only a minor style issue since the summary will be reviewed anyway",
+          "There's no concern as long as the summary itself doesn't mention the client's name",
+          "It's a confidentiality and ethics risk, not just a style issue, and requires firm approval or redaction first",
+          "It's fine because the AI provider promises not to retain data"
+        ],
+        "answer": 2,
+        "why": "Pasting an unredacted document with client-identifying details into a non-approved consumer AI account is explicitly flagged as a confidentiality and ethics risk, not merely a stylistic concern."
+      }
+    ],
+    "law-b2-extract-parties-dates-and-obligations": [
+      {
+        "q": "Why does the extraction prompt require a source clause citation for every row of the table?",
+        "options": [
+          "It's required by court formatting rules",
+          "It makes the table print correctly",
+          "It allows the AI to skip verifying dates",
+          "It turns the extraction into something auditable in seconds, rather than requiring a full re-read of the document"
+        ],
+        "answer": 3,
+        "why": "Requiring a source clause for every row lets the extraction be audited quickly against the original document instead of needing a full re-read."
+      },
+      {
+        "q": "An extracted deadline needs to go into the firm's docketing calendar. What must happen first?",
+        "options": [
+          "It must be checked against the original clause before being entered into the calendar",
+          "It can be entered directly since the AI was instructed not to infer dates",
+          "It should be rounded to the nearest business day automatically",
+          "A second AI tool should independently generate the same deadline for confirmation"
+        ],
+        "answer": 0,
+        "why": "Letting an extracted deadline go straight into a calendar or docket without checking it against the original clause first is a listed common mistake, given how consequential a missed or wrong deadline is."
+      },
+      {
+        "q": "The document doesn't specify a governing law clause. What should appear in that field of the extraction table?",
+        "options": [
+          "The AI's best guess based on where the parties are likely located",
+          "\"Not stated,\" since the rule requires flagging unstated facts rather than assuming a typical value",
+          "The governing law from a similar contract type",
+          "The field should be left blank with no explanation"
+        ],
+        "answer": 1,
+        "why": "The prompt requires writing 'Not stated' when a fact isn't in the document, rather than estimating or assuming a typical value like a default governing law."
+      }
+    ],
+    "law-b3-internal-matter-summaries": [
+      {
+        "q": "Why does this lesson feed the AI your own already-verified notes rather than the raw source documents directly?",
+        "options": [
+          "Raw documents are too large for the AI to process",
+          "It saves money on AI usage costs",
+          "A summary-of-a-summary compounds risk if the model is also asked to interpret primary material at the same time",
+          "Raw documents must always be reviewed by a paralegal first"
+        ],
+        "answer": 2,
+        "why": "Using your own verified notes instead of raw documents avoids compounding risk, since the model would otherwise be interpreting primary material and organizing it in the same pass."
+      },
+      {
+        "q": "Your notes don't mention any next steps for the matter. What should the memo's \"Next Steps\" section say?",
+        "options": [
+          "The AI should infer likely next steps based on similar matters",
+          "The section should be deleted from the memo entirely",
+          "The AI should ask the attorney a follow-up question before finishing",
+          "\"Not specified in notes,\" rather than the AI inventing plausible next steps"
+        ],
+        "answer": 3,
+        "why": "The prompt requires writing 'Not specified in notes' when the source notes don't state next steps, preventing the memo from looking more complete than the attorney's actual knowledge."
+      },
+      {
+        "q": "Before circulating an AI-assisted internal matter summary to colleagues, what label should it carry?",
+        "options": [
+          "\"Internal use - AI-assisted draft, attorney reviewed\"",
+          "No label is needed since it was generated from verified notes",
+          "\"Confidential - do not distribute\" only",
+          "\"Final - approved for court filing\""
+        ],
+        "answer": 0,
+        "why": "Circulating the memo without an 'AI-assisted draft, attorney reviewed' label risks a colleague treating it as an authoritative final record rather than a reviewed working document."
+      }
+    ],
+    "law-b4-draft-client-communications": [
+      {
+        "q": "In the draft client status update, a sentence would require the attorney's legal judgment about the strength of the matter. What should the AI do at that point?",
+        "options": [
+          "Write the most likely conclusion based on the facts given",
+          "Insert a bracketed placeholder like [ATTORNEY TO ADD ADVICE HERE] rather than writing something plausible-sounding",
+          "Omit that part of the update silently",
+          "Add a general disclaimer instead of addressing the point"
+        ],
+        "answer": 1,
+        "why": "The bracketed-placeholder instruction is the key safeguard: it visibly marks exactly where the attorney's judgment must go instead of letting the model guess at advice-adjacent language."
+      },
+      {
+        "q": "An associate reviews an AI-drafted client email, decides it looks fine, and sends it directly from the AI tool's export feature. What went wrong?",
+        "options": [
+          "Nothing, since the draft was labeled \"DRAFT - NOT FOR SENDING\"",
+          "The associate should have used a different AI tool for sending",
+          "An AI-generated client email should never be sent without the attorney personally reviewing, editing, and sending it themselves",
+          "The email should have been shorter before sending"
+        ],
+        "answer": 2,
+        "why": "The workflow requires the attorney to personally review, edit, and send the communication themselves; sending an AI draft unedited is a listed common mistake."
+      },
+      {
+        "q": "Why does the prompt instruct the AI not to explain a delay or predict next steps unless the attorney actually supplied that information?",
+        "options": [
+          "Because clients don't want to know about delays",
+          "Because it would make the email too long",
+          "Because delays are always confidential",
+          "Because inventing a reason for delay or a next step not actually given creates a risk of misleading the client"
+        ],
+        "answer": 3,
+        "why": "Asking the model to explain a delay or predict next steps without being given that information is a listed common mistake, since it risks the draft stating something the attorney never actually determined."
+      }
+    ],
+    "law-i1-document-review-checklists": [
+      {
+        "q": "Why does the prompt require checklist items to be phrased as questions (\"Does the assignment clause require consent?\") rather than assertions (\"The assignment clause must require consent\")?",
+        "options": [
+          "Phrasing as questions keeps the tool from quietly injecting legal conclusions into what should be a neutral review aid",
+          "Questions are shorter to read",
+          "Assertions are not supported by most AI models",
+          "It's required by bar association formatting rules"
+        ],
+        "answer": 0,
+        "why": "Framing checklist items as questions rather than conclusions prevents the AI from injecting legal conclusions into what is meant to be a neutral review aid, not authoritative guidance."
+      },
+      {
+        "q": "A checklist item is tagged [VERIFY CURRENT LAW]. What does this tag signal to the reviewing attorney?",
+        "options": [
+          "That item can be safely skipped since the AI already checked it",
+          "That the checklist's usefulness ends there and the attorney's own current-law research must begin",
+          "That the clause is definitely non-compliant",
+          "That the item only applies to federal jurisdictions"
+        ],
+        "answer": 1,
+        "why": "The [VERIFY CURRENT LAW] tag flags exactly where the checklist stops being useful on its own, since the model cannot confirm what current statutes or local rules actually require."
+      },
+      {
+        "q": "A firm already has an existing playbook checklist for lease reviews. What should happen when generating a new AI-assisted checklist?",
+        "options": [
+          "The existing playbook should be discarded in favor of the AI's generic version",
+          "Both versions should be used interchangeably at random",
+          "The AI should build on and refine the existing playbook rather than replace it with generic content",
+          "The playbook should only be referenced for very short leases"
+        ],
+        "answer": 2,
+        "why": "Letting the checklist replace the firm's actual playbook instead of building on and refining it is a listed common mistake; the AI output should extend real firm standards, not override them."
+      }
+    ],
+    "law-i2-compare-two-document-versions": [
+      {
+        "q": "Why is the AI-generated clause-by-clause comparison described as a \"screening tool\" rather than the authoritative record of what changed?",
+        "options": [
+          "Because it only works on short documents",
+          "Because it cannot compare more than two clauses at a time",
+          "Because it requires a paid subscription to be accurate",
+          "Because word-processor track-changes or a manual line-by-line pass remains the authoritative check before anything gets signed off"
+        ],
+        "answer": 3,
+        "why": "The AI comparison is useful for surfacing likely areas of change quickly, but track-changes or a manual pass remains the authoritative check before signing off on anything."
+      },
+      {
+        "q": "The AI flags a possible change as \"Uncertain - verify manually.\" What is the appropriate response?",
+        "options": [
+          "Treat it as a signal to check that section manually rather than asserting a difference confidently either way",
+          "Ignore the flag since uncertain items are rarely real changes",
+          "Automatically treat it as a substantive change",
+          "Ask the AI to just guess with higher confidence"
+        ],
+        "answer": 0,
+        "why": "The 'Uncertain - verify manually' fallback exists because text comparison over long pasted documents can misalign paragraphs or miss changes, and this exact type of error must never reach a signature page unverified."
+      },
+      {
+        "q": "Why does the prompt ban the AI from stating which version is more favorable to either party?",
+        "options": [
+          "It would make the output too long",
+          "Favorability assessment is a negotiation judgment call for the attorney, not something the model should assert",
+          "Favorability can never be determined from contract text",
+          "It violates the AI tool's usage policy"
+        ],
+        "answer": 1,
+        "why": "The prompt instructs the model to describe changes only, not state favorability, because that is a judgment call for the attorney informed by the broader negotiation context."
+      }
+    ],
+    "law-i3-meeting-prep-questions-from-case-material": [
+      {
+        "q": "Why must the model generate open, neutral questions rather than leading ones when prepping for a witness interview?",
+        "options": [
+          "Leading questions take longer for the AI to generate",
+          "Neutral questions are always shorter",
+          "Leading questions can affect the value of the answer in an interview or witness context",
+          "It has no real effect on interview quality"
+        ],
+        "answer": 2,
+        "why": "Letting a leading question slip through unedited into a witness interview is a listed common mistake because leading phrasing can affect the value of the answer received."
+      },
+      {
+        "q": "A paralegal wants to paste deposition excerpts into a personal, non-firm-approved AI tool to generate interview questions faster. What's the concern?",
+        "options": [
+          "No concern, since interview prep isn't legal advice",
+          "The concern only applies to signed contracts, not deposition material",
+          "It's fine as long as client names are removed from the file name",
+          "Deposition excerpts and case notes are often privileged or work product, and pasting them into a non-approved tool can raise real confidentiality and privilege concerns"
+        ],
+        "answer": 3,
+        "why": "Case material like deposition excerpts is often privileged or attorney work product, and pasting it into a non-approved consumer AI tool risks a waiver issue, not just a style problem."
+      },
+      {
+        "q": "The AI generates 15 questions grouped by purpose for an upcoming client meeting. What should the attorney do before the meeting?",
+        "options": [
+          "Select and prioritize the questions themselves, since the AI list is a starting menu, not a final agenda",
+          "Use the list verbatim as the meeting agenda, in the order generated",
+          "Send the full list to the client in advance for approval",
+          "Discard the list and start over, since AI-generated questions can't be trusted"
+        ],
+        "answer": 0,
+        "why": "Using the generated list as the meeting agenda verbatim instead of selecting and reordering based on what matters is a listed common mistake; the attorney must prioritize using their own judgment."
+      }
+    ],
+    "law-i4-organize-research-notes-with-notebooklm": [
+      {
+        "q": "Claude answers a research question inside a matter's Project and cites a specific uploaded case excerpt. What does this citation actually guarantee?",
+        "options": [
+          "That the cited case is correctly quoted and still good law",
+          "Only that the answer is drawn from what was uploaded, not that the underlying citation is accurate or current",
+          "That the case has been Shepardized automatically",
+          "That the case is binding in the relevant jurisdiction"
+        ],
+        "answer": 1,
+        "why": "Grounding in uploaded sources only guarantees Claude drew from what was given to it, not that the citation is accurate, current, or the right version of a statute — that must be verified independently."
+      },
+      {
+        "q": "Why is it important to independently verify every case citation against the actual reporter or statute before it appears in a filing?",
+        "options": [
+          "Because Claude is slower than other tools",
+          "Because it is only a formatting requirement",
+          "Because courts have sanctioned attorneys for filing briefs with AI-generated citations that were fabricated or misstated",
+          "Because uploaded PDFs sometimes fail to render"
+        ],
+        "answer": 2,
+        "why": "Courts have sanctioned lawyers for filing briefs with fabricated or misstated AI-generated citations, which is why independent verification against the primary source is described as not optional."
+      },
+      {
+        "q": "What is the recommended way to use a Claude Project for legal research, according to the pro tip?",
+        "options": [
+          "Upload broad, unverified sources to discover new authority you haven't checked yet",
+          "Avoid labeling sources so answers stay general",
+          "Use it as a replacement for pulling the actual case reporter",
+          "Upload only case excerpts and statute sections you've already pulled and confirmed are current, and use it to organize verified research"
+        ],
+        "answer": 3,
+        "why": "The pro tip recommends uploading only already-verified, current sources and using the Claude Project to organize that research, not to discover new, unchecked authority."
+      }
+    ],
+    "law-a1-reusable-prompt-frameworks-for-document-analysis": [
+      {
+        "q": "Why does the framework separate fixed guardrails (grounding rules, non-final labeling, no-advice language) from variable placeholders (document type, jurisdiction)?",
+        "options": [
+          "It ensures the safety language never gets accidentally dropped because someone filling in the brackets was in a hurry",
+          "It makes the template shorter overall",
+          "Placeholders and guardrails cannot technically coexist in one prompt",
+          "It's required for the template to be searchable"
+        ],
+        "answer": 0,
+        "why": "Separating fixed guardrails from variable placeholders means anyone on the team fills in the brackets while the safety language stays intact regardless of how quickly they're working."
+      },
+      {
+        "q": "A firm builds a framework so broad it says \"analyze any legal document.\" What problem does this create?",
+        "options": [
+          "It becomes too fast to be useful",
+          "The variable parts swamp the fixed guardrails and output quality becomes inconsistent again, defeating the purpose of standardization",
+          "It requires more storage space",
+          "It can no longer be versioned"
+        ],
+        "answer": 1,
+        "why": "Building a framework too broad is a listed common mistake: it lets the variable parts overwhelm the fixed guardrails, reintroducing the inconsistent quality the framework was meant to solve."
+      },
+      {
+        "q": "Why does the lesson recommend testing the framework on 2-3 real or realistic documents before rolling it out to the team?",
+        "options": [
+          "Testing is only needed for compliance record-keeping",
+          "It reduces the number of placeholders required",
+          "It catches cases where a guardrail phrase gets ignored on messier or more ambiguous input",
+          "It automatically updates the version number"
+        ],
+        "answer": 2,
+        "why": "Testing across multiple real documents before rollout catches cases where a guardrail might not hold consistently on messier or more ambiguous input than the one it was designed against."
+      }
+    ],
+    "law-a2-verification-protocols-for-high-stakes-work": [
+      {
+        "q": "Why does the protocol treat fabricated or misstated citations as their own explicit risk category, separate from general factual accuracy?",
+        "options": [
+          "Citations take longer to check than other facts",
+          "Citations are the only thing AI tools get wrong",
+          "It simplifies the sign-off log format",
+          "It is the failure mode with the most severe real-world consequences on record and the easiest to miss, since a citation can look correctly formatted while referring to a case that doesn't exist"
+        ],
+        "answer": 3,
+        "why": "Fabricated citations are named as their own category because they carry the most severe documented real-world consequences and can look completely correctly formatted while being entirely wrong."
+      },
+      {
+        "q": "A junior associate verifies a citation against the primary source but doesn't record the check anywhere. What problem does this create?",
+        "options": [
+          "There's no record the check ever happened if the work product is later questioned",
+          "None, as long as the check was actually performed",
+          "It only matters for citations used in oral argument",
+          "The AI tool will automatically log the check instead"
+        ],
+        "answer": 0,
+        "why": "Performing a verification check but not logging it is a listed common mistake, since it leaves no record that protects the matter or the lawyer if the work product is later questioned."
+      },
+      {
+        "q": "A citation is found to be \"mostly accurate\" but not fully confirmed against the primary source. How should the verification protocol treat it?",
+        "options": [
+          "As passing, since \"mostly accurate\" is close enough for internal drafts",
+          "As blocking — it must be corrected or removed, not flagged and left in",
+          "As acceptable only if it will not be used externally",
+          "As passing if a second AI tool agrees with it"
+        ],
+        "answer": 1,
+        "why": "The protocol requires treating any citation, quote, or claim that fails full verification as blocking; it must be corrected or removed rather than left in with a mere flag."
+      }
+    ]
+  }
+}

@@ -1,0 +1,408 @@
+{
+  "tools": [
+    {
+      "slug": "claude",
+      "name": "Claude",
+      "tagline": "Anthropic's AI assistant for writing, analysis, research and projects",
+      "description": "Learn to use Claude for everyday professional work: drafting and editing documents, analyzing files, running research, organizing knowledge with Projects, building Artifacts and automating repeatable work with Skills.",
+      "category": "assistant",
+      "color": "#D97757",
+      "connectMode": "own-allowance",
+      "launchUrl": "https://claude.ai",
+      "docsUrl": "https://support.claude.com",
+      "sortOrder": 1,
+      "featured": true,
+      "type": "ai-tool"
+    },
+    {
+      "slug": "claude-code",
+      "name": "Claude Code",
+      "tagline": "Anthropic's coding agent in your terminal, IDE and browser",
+      "description": "Master Claude Code from installation to advanced agentic workflows: CLAUDE.md, slash commands, skills, hooks, MCP servers, subagents, plan mode and safe refactoring on real repositories.",
+      "category": "coding",
+      "color": "#CC785C",
+      "connectMode": "own-allowance",
+      "launchUrl": "https://claude.com/claude-code",
+      "docsUrl": "https://docs.claude.com/en/docs/claude-code",
+      "sortOrder": 2,
+      "featured": true,
+      "type": "ai-tool"
+    },
+    {
+      "slug": "chatgpt",
+      "name": "ChatGPT",
+      "tagline": "OpenAI's assistant for productivity, writing, research and analysis",
+      "description": "Use ChatGPT effectively at work: structured prompting, file analysis, Projects, custom GPTs, Deep Research and repeatable professional workflows.",
+      "category": "assistant",
+      "color": "#10A37F",
+      "connectMode": "external-launch",
+      "launchUrl": "https://chatgpt.com",
+      "docsUrl": "https://help.openai.com",
+      "sortOrder": 3,
+      "featured": true,
+      "type": "ai-tool"
+    },
+    {
+      "slug": "codex",
+      "name": "Codex",
+      "tagline": "OpenAI's coding agent that works with your ChatGPT plan",
+      "description": "Turn written specifications into working software with Codex: repository context, implementation tasks, debugging, code review and delivery workflows using your own ChatGPT account.",
+      "category": "coding",
+      "color": "#000000",
+      "connectMode": "own-allowance",
+      "launchUrl": "https://chatgpt.com/codex",
+      "docsUrl": "https://help.openai.com",
+      "sortOrder": 4,
+      "featured": true,
+      "type": "ai-tool"
+    },
+    {
+      "slug": "gemini",
+      "name": "Gemini",
+      "tagline": "Google's multimodal AI across the Google ecosystem",
+      "description": "Learn Gemini for research, multimodal work and productivity, including Google Workspace workflows in Docs, Sheets, Gmail and Drive.",
+      "category": "assistant",
+      "color": "#4285F4",
+      "connectMode": "external-launch",
+      "launchUrl": "https://gemini.google.com",
+      "docsUrl": "https://support.google.com/gemini",
+      "sortOrder": 5,
+      "featured": true,
+      "type": "ai-tool"
+    },
+    {
+      "slug": "cursor",
+      "name": "Cursor",
+      "tagline": "The AI code editor for serious development work",
+      "description": "Work faster inside Cursor: Tab completions, Agent mode, codebase understanding, rules files, multi-file changes and debugging real projects.",
+      "category": "coding",
+      "color": "#7C3AED",
+      "connectMode": "external-launch",
+      "launchUrl": "https://cursor.com",
+      "docsUrl": "https://docs.cursor.com",
+      "sortOrder": 6,
+      "featured": true,
+      "type": "ai-tool"
+    },
+    {
+      "slug": "github-copilot",
+      "name": "GitHub Copilot",
+      "tagline": "AI pair programming inside your IDE and GitHub",
+      "description": "Use Copilot completions, Copilot Chat, the coding agent and AI code review across your development workflow on GitHub.",
+      "category": "coding",
+      "color": "#24292F",
+      "connectMode": "external-launch",
+      "launchUrl": "https://github.com/features/copilot",
+      "docsUrl": "https://docs.github.com/copilot",
+      "sortOrder": 7,
+      "featured": false,
+      "type": "ai-tool"
+    },
+    {
+      "slug": "perplexity",
+      "name": "Perplexity",
+      "tagline": "AI-powered research with cited sources",
+      "description": "Run source-grounded research: market research, competitive analysis, fact-finding and structured research reports with citations you can verify.",
+      "category": "research",
+      "color": "#20808D",
+      "connectMode": "external-launch",
+      "launchUrl": "https://perplexity.ai",
+      "docsUrl": "https://www.perplexity.ai/help-center",
+      "sortOrder": 8,
+      "featured": false,
+      "type": "ai-tool"
+    },
+    {
+      "slug": "notebooklm",
+      "name": "NotebookLM",
+      "tagline": "Google's source-grounded research and study assistant",
+      "description": "Ground AI in your own documents: upload sources, ask grounded questions, synthesize across documents and build reliable knowledge workflows.",
+      "category": "research",
+      "color": "#1A73E8",
+      "connectMode": "external-launch",
+      "launchUrl": "https://notebooklm.google.com",
+      "docsUrl": "https://support.google.com/notebooklm",
+      "sortOrder": 9,
+      "featured": false,
+      "type": "ai-tool"
+    },
+    {
+      "slug": "ai-image",
+      "name": "AI Image Tools",
+      "tagline": "Midjourney, GPT image, Ideogram, Flux and Firefly",
+      "description": "Prompt, iterate and produce professional images: product shots, marketing visuals, brand assets and creative workflows across the major image models.",
+      "category": "image",
+      "color": "#EC4899",
+      "connectMode": "external-launch",
+      "launchUrl": "https://www.midjourney.com",
+      "docsUrl": "https://docs.midjourney.com",
+      "sortOrder": 10,
+      "featured": false,
+      "type": "ai-tool"
+    },
+    {
+      "slug": "ai-video",
+      "name": "AI Video Tools",
+      "tagline": "Sora, Veo, Runway and the text-to-video landscape",
+      "description": "Learn practical text-to-video production: prompting for motion, shot planning, iteration and where AI video genuinely helps professional work.",
+      "category": "video",
+      "color": "#F59E0B",
+      "connectMode": "external-launch",
+      "launchUrl": "https://sora.com",
+      "docsUrl": "https://help.openai.com",
+      "sortOrder": 11,
+      "featured": false,
+      "type": "ai-tool"
+    },
+    {
+      "slug": "automation-agents",
+      "name": "Automation & Agents",
+      "tagline": "MCP, agent workflows, Zapier, Make and n8n",
+      "description": "Connect AI to your real systems: Model Context Protocol, agentic workflows, cross-tool automation and safe deployment of AI agents in business processes.",
+      "category": "automation",
+      "color": "#14B8A6",
+      "connectMode": "external-launch",
+      "launchUrl": "https://zapier.com",
+      "docsUrl": "https://modelcontextprotocol.io",
+      "sortOrder": 12,
+      "featured": false,
+      "type": "ai-tool"
+    },
+    {
+      "slug": "html",
+      "name": "HTML",
+      "tagline": "The structure language of every web page — learn it from zero to expert",
+      "description": "A complete, no-shortcuts HTML curriculum: document structure, every element family, links, images, tables, forms, media, semantic markup, accessibility, SEO metadata, graphics and browser APIs. Every lesson pairs full theory with a built-in code editor and live preview so you practice as you read.",
+      "category": "web-fundamentals",
+      "color": "#E34F26",
+      "connectMode": "built-in",
+      "launchUrl": null,
+      "docsUrl": "https://developer.mozilla.org/en-US/docs/Web/HTML",
+      "sortOrder": 13,
+      "featured": true,
+      "type": "technology"
+    }
+  ],
+  "professions": [
+    {
+      "slug": "real-estate-agent",
+      "name": "Real Estate Agent",
+      "tagline": "Listings, client communication, marketing and local research",
+      "sortOrder": 1
+    },
+    {
+      "slug": "accountant",
+      "name": "Accountant / Bookkeeper",
+      "tagline": "Client communication, documentation, checklists and analysis",
+      "sortOrder": 2
+    },
+    {
+      "slug": "lawyer",
+      "name": "Lawyer / Legal Professional",
+      "tagline": "Document review, summaries, matter organization and drafting",
+      "sortOrder": 3
+    },
+    {
+      "slug": "software-developer",
+      "name": "Software Developer",
+      "tagline": "Coding agents, debugging, refactoring, tests and reviews",
+      "sortOrder": 4
+    },
+    {
+      "slug": "marketer",
+      "name": "Marketer",
+      "tagline": "Campaigns, ads, landing pages, email and content calendars",
+      "sortOrder": 5
+    },
+    {
+      "slug": "sales-professional",
+      "name": "Sales Professional",
+      "tagline": "Outreach, follow-ups, objection handling and proposals",
+      "sortOrder": 6
+    },
+    {
+      "slug": "recruiter-hr",
+      "name": "Recruiter / HR",
+      "tagline": "Job descriptions, screening, interviews and HR documentation",
+      "sortOrder": 7
+    },
+    {
+      "slug": "teacher",
+      "name": "Teacher",
+      "tagline": "Lesson planning, materials, differentiation and assessment",
+      "sortOrder": 8
+    },
+    {
+      "slug": "content-creator",
+      "name": "Content Creator",
+      "tagline": "Ideation, scripts, repurposing and audience growth",
+      "sortOrder": 9
+    },
+    {
+      "slug": "business-owner",
+      "name": "Business Owner / Founder",
+      "tagline": "Strategy, operations, marketing and customer communication",
+      "sortOrder": 10
+    },
+    {
+      "slug": "consultant",
+      "name": "Consultant",
+      "tagline": "Document synthesis, deliverables, research and presentations",
+      "sortOrder": 11
+    },
+    {
+      "slug": "project-manager",
+      "name": "Project Manager",
+      "tagline": "Plans, status reports, meeting notes and stakeholder updates",
+      "sortOrder": 12
+    },
+    {
+      "slug": "financial-analyst",
+      "name": "Financial Analyst",
+      "tagline": "Analysis narratives, reports, research and modeling support",
+      "sortOrder": 13
+    },
+    {
+      "slug": "ecommerce-owner",
+      "name": "E-commerce Owner",
+      "tagline": "Product listings, ads, customer service and store operations",
+      "sortOrder": 14
+    },
+    {
+      "slug": "designer",
+      "name": "Designer",
+      "tagline": "Concepting, copy, image tools and client communication",
+      "sortOrder": 15
+    },
+    {
+      "slug": "engineer",
+      "name": "Engineer",
+      "tagline": "Technical documentation, calculations review and reporting",
+      "sortOrder": 16
+    },
+    {
+      "slug": "architect",
+      "name": "Architect",
+      "tagline": "Proposals, project documentation and visual concepting",
+      "sortOrder": 17
+    },
+    {
+      "slug": "freelancer",
+      "name": "Freelancer",
+      "tagline": "Proposals, client management, marketing and delivery",
+      "sortOrder": 18
+    },
+    {
+      "slug": "restaurant-owner",
+      "name": "Restaurant Owner / Manager",
+      "tagline": "Menus, marketing, reviews, staffing and operations",
+      "sortOrder": 19
+    },
+    {
+      "slug": "hotel-tourism",
+      "name": "Hotel / Tourism Professional",
+      "tagline": "Guest communication, listings, reviews and local guides",
+      "sortOrder": 20
+    },
+    {
+      "slug": "student",
+      "name": "Student",
+      "tagline": "Study workflows, research, writing and exam preparation",
+      "sortOrder": 21
+    },
+    {
+      "slug": "customer-support",
+      "name": "Customer Support Professional",
+      "tagline": "Responses, macros, knowledge bases and escalations",
+      "sortOrder": 22
+    },
+    {
+      "slug": "operations-manager",
+      "name": "Operations Manager",
+      "tagline": "Process documentation, SOPs, reporting and automation",
+      "sortOrder": 23
+    },
+    {
+      "slug": "insurance-agent",
+      "name": "Insurance Agent",
+      "tagline": "Client explanations, follow-ups, comparisons and admin",
+      "sortOrder": 24
+    },
+    {
+      "slug": "photographer",
+      "name": "Photographer",
+      "tagline": "Client communication, marketing, editing workflows and pricing",
+      "sortOrder": 25
+    },
+    {
+      "slug": "copywriter",
+      "name": "Copywriter",
+      "tagline": "Drafting, editing, research and client deliverables",
+      "sortOrder": 26
+    },
+    {
+      "slug": "seo-specialist",
+      "name": "SEO Specialist",
+      "tagline": "Content briefs, keyword workflows, audits and reporting",
+      "sortOrder": 27
+    },
+    {
+      "slug": "social-media-manager",
+      "name": "Social Media Manager",
+      "tagline": "Calendars, posts, repurposing, analytics and engagement",
+      "sortOrder": 28
+    }
+  ],
+  "skills": [
+    {
+      "slug": "writing",
+      "name": "Writing",
+      "description": "Drafting, editing and improving professional text"
+    },
+    {
+      "slug": "coding",
+      "name": "Coding",
+      "description": "Building, debugging and shipping software with AI"
+    },
+    {
+      "slug": "research",
+      "name": "Research",
+      "description": "Finding, verifying and synthesizing information"
+    },
+    {
+      "slug": "analysis",
+      "name": "Analysis",
+      "description": "Extracting insight from documents and data"
+    },
+    {
+      "slug": "communication",
+      "name": "Communication",
+      "description": "Emails, messages, client updates and meetings"
+    },
+    {
+      "slug": "marketing",
+      "name": "Marketing",
+      "description": "Campaigns, ads, content and growth"
+    },
+    {
+      "slug": "sales",
+      "name": "Sales",
+      "description": "Outreach, follow-up, objections and closing"
+    },
+    {
+      "slug": "automation",
+      "name": "Automation",
+      "description": "Agents, workflows and connected systems"
+    },
+    {
+      "slug": "productivity",
+      "name": "Productivity",
+      "description": "Organizing work, notes, plans and documentation"
+    },
+    {
+      "slug": "creative",
+      "name": "Creative",
+      "description": "Images, video and visual content production"
+    }
+  ]
+}

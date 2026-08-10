@@ -1,0 +1,1089 @@
+{
+  "lessons": [
+    {
+      "slug": "html-a09-svg",
+      "title": "Draw resolution-independent graphics with inline SVG",
+      "summary": "Embed vector graphics directly in HTML with the svg element: master the viewBox coordinate system, the basic shapes, fill and stroke, text, and accessible titles.",
+      "difficulty": "advanced",
+      "minutes": 13,
+      "isFree": false,
+      "goal": "Build an accessible status badge as inline SVG using viewBox, rect, circle, text and a title element.",
+      "whyItMatters": "Icons, logos, charts and badges make up a huge share of the graphics on modern sites, and almost all of them ship as SVG because a vector stays razor-sharp at any zoom level and any screen density. Inline SVG goes further: because the shapes become real DOM nodes, you can style them with CSS, script them with JavaScript, and describe them to screen readers. Knowing when to inline SVG and when to load it as an image is a decision professional front-end developers make weekly.",
+      "steps": [
+        "Read the first two sections to understand what vectors are and how the viewBox coordinate system works.",
+        "Study the basic shapes section — rect, circle, ellipse, line, polyline, polygon — and the short path overview.",
+        "In the editor, add the svg element with a viewBox of 0 0 200 100 (task 1).",
+        "Give the badge an accessible title element as the first child (task 2).",
+        "Draw the background rect with a fill and the status circle (tasks 3 and 4).",
+        "Add the text label and press Run until every check in the console passes."
+      ],
+      "prompt": "<svg viewBox=\"0 0 200 100\" width=\"200\" height=\"100\" role=\"img\">\n  <title>Build passing badge</title>\n  <rect x=\"0\" y=\"0\" width=\"200\" height=\"100\" rx=\"12\" fill=\"#e8f5e9\"></rect>\n  <circle cx=\"40\" cy=\"50\" r=\"18\" fill=\"#2e7d32\"></circle>\n  <text x=\"75\" y=\"58\" font-size=\"20\">Passing</text>\n</svg>",
+      "promptLabel": "Key code example",
+      "explanation": "The viewBox declares an internal coordinate space of 200 by 100 units, and the width and height map that space onto the page; scale the element to any size and everything inside stays proportionally crisp. The rect paints the rounded background, the circle draws the status dot, and the text element places a real, selectable label at the coordinates you give it. The title element is invisible but is read aloud by screen readers, which — together with role=\"img\" — turns a silent drawing into an accessible one.",
+      "example": "A team dashboard shows a build-status badge. As a 40-pixel PNG it turns to mush on a retina display and needs a second asset for dark mode.\n\nRebuilt as inline SVG, the same badge is one block of markup: it renders pixel-perfect at every zoom level, its fill colors can be swapped by a CSS class when the theme changes, and a screen reader announces 'Build passing badge' instead of skipping an unlabeled image.",
+      "exercise": "In the editor on the right, complete the status badge: add an svg element with the correct viewBox, give it a title for assistive technology, draw a filled background rect and a status circle, and finish with a text label.",
+      "expectedResult": "The preview shows a rounded light-green badge with a dark-green dot and the word 'Passing' next to it, and all five checks pass.",
+      "commonMistakes": [
+        "Confusing viewBox with width/height. The viewBox defines the internal drawing coordinates; width and height define the rendered size on the page. They are independent.",
+        "Writing viewbox in lowercase inside an .svg file. In an SVG document the attribute is case-sensitive and must be viewBox; the HTML parser forgives you inline, standalone SVG files do not.",
+        "Forgetting that circle uses cx, cy and r while rect uses x, y, width and height — mixing the two attribute sets silently draws nothing.",
+        "Shipping an svg with no title or aria-label. Screen readers either skip it or read out raw geometry; decorative graphics should instead get aria-hidden=\"true\"."
+      ],
+      "proTip": "Keep viewBox numbers small and round (0 0 24 24 is the de-facto icon standard). You scale with CSS or width/height anyway, and tidy internal coordinates make hand-editing coordinates painless.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "software-developer"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will build an accessible build-status badge entirely in inline SVG: a rounded background, a status dot, a text label and a screen-reader title.",
+        "sections": [
+          {
+            "heading": "Vectors vs pixels: what SVG is",
+            "body": "A raster image (PNG, JPEG, WebP) is a fixed grid of colored pixels. Scale it up and the browser has to invent pixels, so edges blur. SVG — Scalable Vector Graphics — stores instructions instead: 'a circle of radius 18 centered here, filled green'. The browser re-executes those instructions at whatever size is needed, so an SVG is perfectly sharp at 16 pixels, at 1600 pixels, and on a high-density phone screen, all from one file.\n\nSVG is an XML vocabulary, but modern HTML lets you drop an <svg> element straight into the page. Everything between <svg> and </svg> becomes part of the DOM, which is what makes inline SVG so powerful: the shapes can be targeted with CSS selectors, animated, and wired to click handlers exactly like divs and spans.\n\nSVG beats raster whenever the graphic is made of shapes, lines or text: icons, logos, charts, diagrams, badges, illustrations. Raster wins for photographs and anything with continuous, camera-like detail — describing a photo as thousands of vector shapes would be far larger than a JPEG.",
+            "code": "<svg viewBox=\"0 0 100 100\" width=\"120\" height=\"120\">\n  <circle cx=\"50\" cy=\"50\" r=\"40\" fill=\"tomato\"></circle>\n</svg>"
+          },
+          {
+            "heading": "The viewBox coordinate system",
+            "body": "Every svg element carries its own private coordinate space, declared by the viewBox attribute: four numbers meaning min-x, min-y, width and height. viewBox=\"0 0 200 100\" says 'inside this element, x runs from 0 to 200 and y from 0 to 100'. The origin sits in the top-left corner and y grows downward — the same convention as the rest of CSS layout.\n\nThe element's width and height attributes (or CSS sizing) then decide how big that internal space appears on the page. If the rendered box is 400 by 200 pixels, every internal unit maps to two pixels; shrink the box and the drawing shrinks with it. This separation is the whole trick behind 'scalable': you design once in convenient units and let the browser do the mapping.\n\nTwo details matter in practice. First, capitalization: viewBox has a capital B. The forgiving HTML parser fixes the casing for you when the svg is inline, but in a standalone .svg file the lowercase form is simply ignored and your graphic may render at a wrong size or not at all. Second, if the aspect ratio of the viewBox and the rendered box differ, the preserveAspectRatio attribute controls the fit — the default letterboxes the drawing rather than stretching it.",
+            "code": "<!-- same drawing, three sizes, one set of coordinates -->\n<svg viewBox=\"0 0 200 100\" width=\"100\" height=\"50\">...</svg>\n<svg viewBox=\"0 0 200 100\" width=\"200\" height=\"100\">...</svg>\n<svg viewBox=\"0 0 200 100\" width=\"600\" height=\"300\">...</svg>"
+          },
+          {
+            "heading": "The basic shapes",
+            "body": "Six shape elements cover most everyday drawing. rect takes x, y, width and height, plus optional rx/ry for rounded corners. circle takes a center (cx, cy) and a radius r. ellipse is a circle with two radii, rx and ry. line draws a straight segment from (x1, y1) to (x2, y2) — note that a line has no interior, so it is invisible until you give it a stroke.\n\npolyline and polygon both take a points attribute: a list of x,y pairs. polyline connects them and stops; polygon automatically closes the shape by joining the last point back to the first, which also gives it a fillable interior. Use polyline for open traces like a sparkline, polygon for closed figures like a triangle or a star.\n\nAll shapes are drawn in document order: whatever comes later in the markup paints on top of what came earlier. There is no z-index inside SVG — stacking is purely source order, so put backgrounds first and labels last.",
+            "code": "<svg viewBox=\"0 0 300 120\">\n  <rect x=\"10\" y=\"10\" width=\"60\" height=\"40\" rx=\"8\" fill=\"steelblue\"></rect>\n  <circle cx=\"120\" cy=\"30\" r=\"20\" fill=\"seagreen\"></circle>\n  <ellipse cx=\"200\" cy=\"30\" rx=\"30\" ry=\"15\" fill=\"goldenrod\"></ellipse>\n  <line x1=\"10\" y1=\"80\" x2=\"90\" y2=\"110\" stroke=\"black\"></line>\n  <polyline points=\"110,110 130,80 150,100 170,70\" fill=\"none\" stroke=\"black\"></polyline>\n  <polygon points=\"220,110 245,70 270,110\" fill=\"indianred\"></polygon>\n</svg>"
+          },
+          {
+            "heading": "path, briefly",
+            "body": "The path element is the general-purpose shape: its d attribute is a compact command language. M x y moves the pen, L x y draws a line, C draws a cubic curve, A an elliptical arc, and Z closes the shape. Every other shape element could be rewritten as a path — icon sets and vector editors export almost everything as paths.\n\nYou rarely write long d strings by hand; tools like Figma, Illustrator or Inkscape generate them. What you should be able to do is read one well enough to spot the moves and lines, and to recognize that a path with fill but no Z may still auto-close for filling purposes while its stroke stays open.",
+            "code": "<svg viewBox=\"0 0 100 100\">\n  <!-- a simple check mark -->\n  <path d=\"M 20 55 L 42 75 L 80 30\" fill=\"none\" stroke=\"green\" stroke-width=\"8\"></path>\n</svg>"
+          },
+          {
+            "heading": "fill, stroke, and text",
+            "body": "Two presentation attributes do most of the styling. fill paints a shape's interior and defaults to black — which is why an unstyled circle appears as a solid black disc. stroke paints the outline and defaults to none, so outlines are invisible until you ask for them; stroke-width sets their thickness. fill=\"none\" is essential for open traces like polylines, otherwise the browser fills the area between the points with black.\n\nBoth accept any CSS color, and because inline SVG shapes are DOM elements, you can move these declarations into a stylesheet (circle { fill: teal; }) or swap them with classes — the standard technique for theme-aware icons. CSS rules override presentation attributes, which makes the attributes good defaults and CSS the customization layer.\n\nThe text element places real text at an x,y position — and the y coordinate is the baseline, not the top, which surprises everyone once. Unlike text baked into a PNG, SVG text is selectable, searchable, translatable and readable by assistive technology. Attributes like font-size, font-family and text-anchor (start, middle, end) control its appearance and alignment.",
+            "code": "<svg viewBox=\"0 0 200 60\">\n  <rect x=\"0\" y=\"0\" width=\"200\" height=\"60\" fill=\"#eef\" stroke=\"#446\" stroke-width=\"2\"></rect>\n  <text x=\"100\" y=\"38\" font-size=\"20\" text-anchor=\"middle\" fill=\"#224\">Label</text>\n</svg>"
+          },
+          {
+            "heading": "Accessibility and the inline vs img decision",
+            "body": "An SVG that conveys information needs a text alternative. Inline, the tool for that is the title element placed as the first child of the svg: it is never rendered visually, but screen readers announce it and browsers show it as a tooltip. Pair it with role=\"img\" on the svg so assistive technology treats the whole drawing as a single image instead of diving into its shapes. Purely decorative graphics should get aria-hidden=\"true\" instead, so they are skipped entirely.\n\nYou can also load an SVG file the classic way: <img src=\"logo.svg\" alt=\"Company logo\">. That keeps markup clean, lets the browser cache the file across pages, and the alt attribute handles accessibility. The cost: from HTML you cannot reach inside — no CSS theming of individual shapes, no scripting, and any <title> inside the file replaces nothing about the required alt.\n\nThe working rule: inline the SVG when you need to style or script its internals (theme-aware icons, interactive charts) or when it is tiny and saving a network request matters; reference it as an image when it is static, reused on many pages, or authored by a design tool and treated as an opaque asset. Either way, sanitize SVG from untrusted sources before inlining — an svg element can legally contain a script element.",
+            "code": "<svg viewBox=\"0 0 24 24\" role=\"img\">\n  <title>Warning: build failing</title>\n  <polygon points=\"12,2 22,22 2,22\" fill=\"orange\"></polygon>\n</svg>\n\n<!-- versus the opaque-asset route -->\n<img src=\"warning.svg\" alt=\"Warning: build failing\" width=\"24\" height=\"24\">"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>SVG status badge</title>\n</head>\n<body>\n  <h1>Build status</h1>\n\n  <!-- TODO 1: add an <svg> element with viewBox=\"0 0 200 100\",\n       width=\"200\", height=\"100\" and role=\"img\" -->\n\n  <!-- TODO 2: inside the svg, make its FIRST child a <title>\n       reading: Build passing badge -->\n\n  <!-- TODO 3: draw the background: a <rect> covering 0,0 to 200,100\n       with rx=\"12\" and a fill color -->\n\n  <!-- TODO 4: draw the status dot: a <circle> at cx=\"40\" cy=\"50\"\n       with r=\"18\" and a green fill -->\n\n  <!-- TODO 5: add a <text> element at x=\"75\" y=\"58\" reading: Passing -->\n\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>SVG status badge</title>\n</head>\n<body>\n  <h1>Build status</h1>\n\n  <svg viewBox=\"0 0 200 100\" width=\"200\" height=\"100\" role=\"img\">\n    <title>Build passing badge</title>\n    <rect x=\"0\" y=\"0\" width=\"200\" height=\"100\" rx=\"12\" fill=\"#e8f5e9\" stroke=\"#2e7d32\"></rect>\n    <circle cx=\"40\" cy=\"50\" r=\"18\" fill=\"#2e7d32\"></circle>\n    <text x=\"75\" y=\"58\" font-size=\"20\" fill=\"#1b5e20\">Passing</text>\n  </svg>\n\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Add an <svg> element with viewBox=\"0 0 200 100\", width=\"200\" and height=\"100\".",
+            "hint": "The four viewBox numbers are min-x, min-y, width, height: <svg viewBox=\"0 0 200 100\" width=\"200\" height=\"100\" role=\"img\">...</svg>.",
+            "errorMessage": "No <svg> with viewBox=\"0 0 200 100\" found. The badge needs its own 200x100 coordinate space.",
+            "check": {
+              "type": "attr",
+              "selector": "svg",
+              "attr": "viewBox",
+              "value": "0 0 200 100"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Give the svg an accessible name: a <title> element as its first child reading 'Build passing badge'.",
+            "hint": "Directly after the opening <svg> tag add <title>Build passing badge</title>. It never renders, but screen readers announce it.",
+            "errorMessage": "The svg has no <title> mentioning 'badge'. Without it, assistive technology has nothing to announce.",
+            "check": {
+              "type": "text",
+              "selector": "svg > title",
+              "pattern": "badge"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Draw the badge background: a <rect> from 0,0 sized 200 by 100 with rounded corners (rx=\"12\") and a fill color.",
+            "hint": "<rect x=\"0\" y=\"0\" width=\"200\" height=\"100\" rx=\"12\" fill=\"#e8f5e9\"></rect> — remember rect uses x/y/width/height.",
+            "errorMessage": "No filled <rect> found inside the svg. The background rectangle needs a fill attribute.",
+            "check": {
+              "type": "attr",
+              "selector": "svg rect",
+              "attr": "fill"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Draw the status dot: a <circle> at cx=\"40\" cy=\"50\" with r=\"18\" and a green fill.",
+            "hint": "Circles use a center and a radius: <circle cx=\"40\" cy=\"50\" r=\"18\" fill=\"#2e7d32\"></circle>.",
+            "errorMessage": "No <circle> with r=\"18\" found. The dot needs cx, cy and r attributes.",
+            "check": {
+              "type": "attr",
+              "selector": "svg circle",
+              "attr": "r",
+              "value": "18"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Label the badge with a <text> element at x=\"75\" y=\"58\" reading 'Passing'.",
+            "hint": "<text x=\"75\" y=\"58\" font-size=\"20\">Passing</text> — y positions the baseline, not the top of the letters.",
+            "errorMessage": "No <text> element reading 'Passing' found inside the svg.",
+            "check": {
+              "type": "text",
+              "selector": "svg text",
+              "pattern": "passing"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-a10-canvas",
+      "title": "Paint pixel graphics from JavaScript with the canvas element",
+      "summary": "Use the canvas element and its 2D context to draw rectangles, paths, arcs and text from script — and learn why canvas sizing, fallbacks and accessibility work differently from everything else in HTML.",
+      "difficulty": "advanced",
+      "minutes": 13,
+      "isFree": false,
+      "goal": "Set up a correctly sized canvas with fallback content and a script that draws rectangles, a path with an arc, and text.",
+      "whyItMatters": "Canvas is the escape hatch HTML provides when declarative markup is not enough: games, real-time data visualizations, image editors and signature pads all run on it. It behaves unlike any other element — it is a raw bitmap with no DOM inside — so the sizing rules, the accessibility story and the choice between canvas and SVG trip up even experienced developers. Understanding those trade-offs is what separates using canvas from misusing it.",
+      "steps": [
+        "Read the first section to understand what a canvas actually is: a bitmap, not a document.",
+        "Study the sizing section carefully — the width/height attribute vs CSS distinction causes most real-world canvas bugs.",
+        "In the editor, add the canvas element with proper attributes and fallback text (tasks 1 and 2).",
+        "Get the 2d context in the script (task 3).",
+        "Draw the filled rectangle, then the path with an arc (tasks 4 and 5).",
+        "Add the fillText label, press Run, and confirm every check passes."
+      ],
+      "prompt": "<canvas id=\"scene\" width=\"300\" height=\"150\">\n  Fallback: a chart of monthly signups would appear here.\n</canvas>\n<script>\n  const ctx = document.getElementById(\"scene\").getContext(\"2d\");\n  ctx.fillStyle = \"#1565c0\";\n  ctx.fillRect(10, 10, 120, 60);\n  ctx.beginPath();\n  ctx.arc(220, 75, 40, 0, Math.PI * 2);\n  ctx.stroke();\n  ctx.fillText(\"Signups 2026\", 10, 130);\n</script>",
+      "promptLabel": "Key code example",
+      "explanation": "The width and height attributes give the bitmap 300 by 150 real pixels — sizing with CSS alone would stretch the default bitmap and blur everything. The text between the tags renders only in browsers without canvas support and doubles as a hint for assistive technology. The script asks the element for its 2D drawing context, the object that owns every drawing method: fillRect paints immediately, while arc only defines geometry that the later stroke call inks in. Nothing drawn here exists in the DOM — the result is pure pixels.",
+      "example": "A dashboard needs a live line chart updated 30 times a second with thousands of points. Rendered as SVG, thirty thousand DOM nodes choke the browser.\n\nThe same chart on a canvas is one element and one bitmap: each frame the script clears and redraws, and performance stays flat no matter how many points are drawn — the trade being that the chart's contents are invisible to CSS, to right-click-inspect, and to screen readers unless you provide alternatives.",
+      "exercise": "In the editor on the right, create a 300 by 150 canvas with meaningful fallback text, then complete the script: get the 2d context, draw a filled and an outlined rectangle, build a path with an arc, and label the drawing with fillText.",
+      "expectedResult": "The preview shows a blue filled rectangle, an orange outlined rectangle, a stroked circle, and the label 'Signups 2026' — all painted by script onto one canvas.",
+      "commonMistakes": [
+        "Sizing the canvas with CSS instead of the width/height attributes. CSS scales the default 300x150 bitmap like a stretched image, so drawings come out blurry or distorted.",
+        "Forgetting beginPath() before a new shape, so every stroke() re-inks all previously defined path segments and stray lines appear.",
+        "Expecting arc() or lineTo() to draw something by themselves — path commands only define geometry; nothing appears until fill() or stroke().",
+        "Leaving the fallback area empty. Users of assistive technology get a silent, opaque rectangle; always provide fallback text or an accessible alternative near the canvas."
+      ],
+      "proTip": "arc() measures angles in radians, not degrees: a full circle is 0 to Math.PI * 2. Keep the conversion factor Math.PI / 180 handy when a design spec gives you degrees.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "software-developer"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will wire up a canvas the professional way — attribute sizing, fallback content — and script a small scene with rectangles, an arc and text.",
+        "sections": [
+          {
+            "heading": "A bitmap, not a document",
+            "body": "The canvas element gives you a rectangular grid of pixels and a JavaScript API to paint them. That is the whole contract. Unlike SVG, where every circle is a DOM node you can select and restyle, a canvas remembers nothing about what you drew — the moment fillRect returns, the browser only knows pixel colors, not 'there is a rectangle here'.\n\nThis has direct consequences. You cannot attach a click handler to a shape (only to the whole canvas, doing your own hit-testing math). You cannot restyle a drawn shape with CSS. To change anything you redraw, typically clearing the bitmap and painting the whole frame again. That model is exactly what makes canvas fast: no DOM bookkeeping, just pixels.\n\nIn the markup, canvas is deliberately boring: an element with optional width, height and id attributes. All the interesting work happens in script, which is why this lesson's checks look at both your markup and your script source.",
+            "code": "<canvas id=\"scene\" width=\"300\" height=\"150\"></canvas>"
+          },
+          {
+            "heading": "The sizing trap: attributes vs CSS",
+            "body": "A canvas has two sizes, and confusing them is the most common canvas bug in production code. The width and height attributes set the bitmap's resolution — how many actual pixels the drawing surface contains. CSS width and height set the display size — how much page area the element occupies. If you set only CSS, the bitmap stays at its default 300 by 150 pixels and the browser stretches it to fit, exactly like scaling up a small photo: everything you draw looks blurry, and coordinates no longer match what the user sees.\n\nThe rule: always declare width and height as attributes (or set canvas.width / canvas.height from script, which is the same thing). Use CSS only when you deliberately want scaling, or match the two sizes. On high-density screens, professional code goes one step further: it multiplies the attribute size by window.devicePixelRatio and scales the context, so one CSS pixel maps to several bitmap pixels and lines stay sharp.\n\nOne more quirk: assigning to canvas.width or canvas.height at any time wipes the bitmap to transparent black and resets every context setting. It is occasionally used on purpose as a fast clear, and frequently hit by accident in resize handlers.",
+            "code": "<!-- Blurry: bitmap is still 300x150, stretched to 600x300 -->\n<canvas style=\"width: 600px; height: 300px\"></canvas>\n\n<!-- Sharp: the bitmap really is 600x300 -->\n<canvas width=\"600\" height=\"300\"></canvas>"
+          },
+          {
+            "heading": "Fallback content and accessibility",
+            "body": "Anything you write between <canvas> and </canvas> is fallback content: browsers that support canvas hide it, browsers that do not render it instead. Today every mainstream browser supports canvas, so the fallback's real audience is assistive technology and situations where scripts fail to run.\n\nBecause the drawn pixels carry no semantics, a canvas is an accessibility black hole by default: a screen reader finds an element with nothing inside. Mitigations, in increasing order of effort: put a genuine text description in the fallback area; add role=\"img\" with an aria-label summarizing the drawing; render the underlying data as a visually-hidden table or list next to the canvas; or, for interactive canvases, maintain a parallel set of real focusable elements. Never ship the empty tag pair.\n\nTreat the fallback like alt text for a chart: state what the drawing shows and, where possible, the takeaway ('Signups grew from 1,200 to 4,800 during 2026'), not the fact that it is a chart.",
+            "code": "<canvas id=\"chart\" width=\"400\" height=\"200\" role=\"img\"\n        aria-label=\"Line chart: signups grew from 1,200 to 4,800 in 2026\">\n  Signups grew steadily during 2026, from 1,200 in January to 4,800 in December.\n</canvas>"
+          },
+          {
+            "heading": "Getting a context; rectangles and styles",
+            "body": "You never draw on the element directly; you ask it for a drawing context. canvas.getContext(\"2d\") returns a CanvasRenderingContext2D — the object holding every 2D drawing method and all current state. (Other context types exist, like \"webgl\" for 3D; a canvas can only ever hand out one type.) If you call getContext before the element exists in the DOM, you get null and every later call explodes, so keep the script after the markup or wait for DOMContentLoaded.\n\nThe context is a state machine: fillStyle sets the current fill color (any CSS color string, or a gradient/pattern object) and strokeStyle the outline color; lineWidth sets stroke thickness. Those settings stay in force until changed — set fillStyle once and every subsequent fill uses it.\n\nRectangles are the only shape with dedicated one-call methods: fillRect(x, y, w, h) paints a solid rectangle immediately, strokeRect draws just the outline, and clearRect erases a region to transparency — the standard way to wipe a frame before redrawing.",
+            "code": "const canvas = document.getElementById(\"scene\");\nconst ctx = canvas.getContext(\"2d\");\n\nctx.fillStyle = \"#1565c0\";\nctx.fillRect(10, 10, 120, 60);\n\nctx.strokeStyle = \"#e65100\";\nctx.lineWidth = 3;\nctx.strokeRect(10, 90, 120, 40);"
+          },
+          {
+            "heading": "Paths, arcs and text",
+            "body": "Every non-rectangle shape is built as a path: a list of geometry commands that draw nothing by themselves. beginPath() starts a fresh list — skip it and new segments pile onto the old ones, a classic source of mystery lines. moveTo(x, y) lifts the pen to a start point; lineTo(x, y) adds a straight segment; arc(cx, cy, radius, startAngle, endAngle) adds a circular arc around a center point, with angles in radians measured clockwise from the positive x-axis. A full circle is arc(cx, cy, r, 0, Math.PI * 2). closePath() optionally joins the last point back to the first.\n\nOnce the geometry is defined, fill() paints its interior with the current fillStyle and stroke() inks its outline with the current strokeStyle. You can call both on the same path for a filled, outlined shape.\n\nText works without paths: fillText(\"label\", x, y) paints text at a baseline position using the context's font property (same syntax as CSS font, e.g. \"16px sans-serif\"); strokeText draws outlined letters and measureText reports how wide a string will render — essential for centering. Canvas text is pixels like everything else: not selectable, not translatable, not read by screen readers, so any essential wording must also exist as real HTML.",
+            "code": "ctx.beginPath();\nctx.moveTo(160, 20);\nctx.lineTo(280, 20);\nctx.arc(220, 80, 30, 0, Math.PI * 2);\nctx.stroke();\n\nctx.font = \"16px sans-serif\";\nctx.fillStyle = \"#212121\";\nctx.fillText(\"Signups 2026\", 160, 130);"
+          },
+          {
+            "heading": "Canvas or SVG? The decision rule",
+            "body": "Both technologies draw graphics; they occupy opposite ends of one trade-off. SVG is retained-mode: the browser keeps every shape as a DOM node, so you get CSS styling, per-shape events, easy accessibility and crisp scaling for free — but each node costs memory and layout work, and tens of thousands of them become slow. Canvas is immediate-mode: you get one dumb bitmap that renders anything at high speed, and you personally take over everything the DOM would have done — hit-testing, redrawing, accessibility, resolution handling.\n\nThe working rule: choose SVG when the graphic has a modest number of meaningful shapes (icons, logos, diagrams, ordinary charts) and canvas when you have very many objects or high-frequency redraws (games, particle effects, 60fps streaming visualizations, pixel-level image manipulation). If you find yourself writing hit-testing math for a static diagram, you picked canvas too early; if your SVG chart stutters while animating thousands of points, it is time to switch.\n\nOn this platform the checks parse your code without executing it, so the canvas tasks verify two things: the markup (element, sizing attributes, fallback) via the document, and the drawing calls via patterns in your script source.",
+            "code": "// Rule of thumb\n// few shapes, needs CSS/a11y/events  -> SVG\n// many shapes or 60fps redraws       -> canvas"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Canvas scene</title>\n</head>\n<body>\n  <h1>Signups dashboard</h1>\n\n  <!-- TODO 1: add <canvas id=\"scene\" width=\"300\" height=\"150\"> ... </canvas> -->\n  <!-- TODO 2: between the canvas tags, write fallback text describing\n       the chart (mention the word: chart) -->\n\n  <script>\n    // TODO 3: get the element by id and ask it for its \"2d\" context (ctx)\n\n    // TODO 4: set ctx.fillStyle to \"#1565c0\" and fillRect(10, 10, 120, 60)\n    //         then strokeRect(10, 90, 120, 40)\n\n    // TODO 5: beginPath(), moveTo(160, 20), lineTo(280, 20),\n    //         arc(220, 80, 30, 0, Math.PI * 2), then stroke()\n\n    // TODO 6: fillText(\"Signups 2026\", 160, 130)\n  </script>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Canvas scene</title>\n</head>\n<body>\n  <h1>Signups dashboard</h1>\n\n  <canvas id=\"scene\" width=\"300\" height=\"150\">\n    A chart of monthly signups during 2026 would appear here.\n  </canvas>\n\n  <script>\n    const canvas = document.getElementById(\"scene\");\n    const ctx = canvas.getContext(\"2d\");\n\n    ctx.fillStyle = \"#1565c0\";\n    ctx.fillRect(10, 10, 120, 60);\n    ctx.strokeStyle = \"#e65100\";\n    ctx.strokeRect(10, 90, 120, 40);\n\n    ctx.beginPath();\n    ctx.moveTo(160, 20);\n    ctx.lineTo(280, 20);\n    ctx.arc(220, 80, 30, 0, Math.PI * 2);\n    ctx.stroke();\n\n    ctx.fillStyle = \"#212121\";\n    ctx.fillText(\"Signups 2026\", 160, 130);\n  </script>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Add a canvas with id=\"scene\" sized by ATTRIBUTES: width=\"300\" and height=\"150\".",
+            "hint": "The attributes set the real bitmap resolution — CSS sizing alone would stretch and blur the drawing: <canvas id=\"scene\" width=\"300\" height=\"150\">...</canvas>.",
+            "errorMessage": "No canvas with width=\"300\" found. Size the bitmap with width/height attributes, not CSS.",
+            "check": {
+              "type": "attr",
+              "selector": "canvas",
+              "attr": "width",
+              "value": "300"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Write fallback text between the canvas tags describing the chart.",
+            "hint": "Content inside <canvas>...</canvas> shows when canvas is unsupported and helps assistive technology. Mention the word 'chart'.",
+            "errorMessage": "The canvas has no fallback text mentioning the chart. Never ship an empty canvas tag pair.",
+            "check": {
+              "type": "text",
+              "selector": "canvas",
+              "pattern": "chart"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "In the script, get the canvas element and request its \"2d\" context.",
+            "hint": "const ctx = document.getElementById(\"scene\").getContext(\"2d\"); — every drawing method lives on this context object.",
+            "errorMessage": "No getContext(\"2d\") call found in your script. You cannot draw without a 2D context.",
+            "check": {
+              "type": "source",
+              "pattern": "getContext\\s*\\(\\s*['\\\"]2d['\\\"]\\s*\\)"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Set fillStyle, then draw a filled rectangle with fillRect(10, 10, 120, 60) and an outlined one with strokeRect(10, 90, 120, 40).",
+            "hint": "fillStyle is sticky state: set it once, then ctx.fillRect(10, 10, 120, 60); ctx.strokeRect(10, 90, 120, 40);.",
+            "errorMessage": "Expected a fillStyle assignment followed by fillRect(...). Rectangles are the only shapes with direct one-call draw methods.",
+            "check": {
+              "type": "source",
+              "pattern": "fillStyle[\\s\\S]*fillRect\\s*\\("
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Build a path: beginPath(), moveTo(160, 20), lineTo(280, 20), arc(220, 80, 30, 0, Math.PI * 2), then stroke() to ink it.",
+            "hint": "Path commands only define geometry — nothing appears until stroke(). And beginPath() first, or old segments get re-inked.",
+            "errorMessage": "Expected beginPath() followed by an arc(...) call. Remember: angles are radians, a full circle is 0 to Math.PI * 2.",
+            "check": {
+              "type": "source",
+              "pattern": "beginPath\\s*\\(\\s*\\)[\\s\\S]*arc\\s*\\("
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Label the scene with ctx.fillText(\"Signups 2026\", 160, 130).",
+            "hint": "fillText paints text as pixels at a baseline position. It is not real text — screen readers cannot see it, which is why task 2's fallback matters.",
+            "errorMessage": "No fillText(...) call found. Add the painted label to finish the scene.",
+            "check": {
+              "type": "source",
+              "pattern": "fillText\\s*\\("
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-a11-template-slot",
+      "title": "Stamp out repeating markup with template, slot and web components",
+      "summary": "Use the template element as an inert blueprint you clone from script, understand slots and shadow DOM conceptually, and know when custom elements are worth their weight.",
+      "difficulty": "advanced",
+      "minutes": 13,
+      "isFree": false,
+      "goal": "Build a card blueprint inside a template — including a named slot — and clone it into the page from script.",
+      "whyItMatters": "Every application renders repeating structures: product cards, table rows, notifications. Duplicating that markup by string-concatenation in JavaScript is fragile and invites injection bugs; the template element keeps the blueprint as real, parser-checked HTML that scripts stamp out on demand. Templates, slots, shadow DOM and custom elements together form the web components standard — the browser-native answer to reusable UI, and the foundation of many design systems you will integrate with even if you never author one.",
+      "steps": [
+        "Read how template content is parsed but inert — the key property everything else builds on.",
+        "In the editor, create the card template with its internal structure (tasks 1 and 2).",
+        "Add the named slot placeholder inside the blueprint (task 3).",
+        "Read the cloning section, then clone the template's content in the script (task 4).",
+        "Fill the clone and append it to the cards container (task 5).",
+        "Skim the shadow DOM and custom elements sections — you need the concepts more than the code today."
+      ],
+      "prompt": "<template id=\"card-template\">\n  <article class=\"card\">\n    <h2 class=\"name\"></h2>\n    <p class=\"role\"></p>\n    <slot name=\"avatar\"></slot>\n  </article>\n</template>\n<script>\n  const tpl = document.getElementById(\"card-template\");\n  const clone = tpl.content.cloneNode(true);\n  clone.querySelector(\".name\").textContent = \"Ada Lovelace\";\n  document.getElementById(\"cards\").appendChild(clone);\n</script>",
+      "promptLabel": "Key code example",
+      "explanation": "The template holds a fully parsed card that the browser never renders, loads no resources for, and keeps out of document.querySelector's reach — an inert blueprint. tpl.content exposes that blueprint as a DocumentFragment; cloneNode(true) copies the entire subtree so the original stays pristine for the next card. The script fills the copy's fields safely via textContent and appends it, at which point — and only then — the markup goes live. The named slot marks where a component user could inject their own avatar markup once this blueprint is used inside a shadow root.",
+      "example": "A team page builds twelve member cards by gluing HTML strings together in JavaScript: quotes get mismatched, a member name containing an ampersand breaks the layout, and the markup exists nowhere the HTML validator can see.\n\nMoved into a template element, the card markup is written once as real HTML, validated with the rest of the page, and the script shrinks to: clone, fill two fields with textContent, append. Adding a thirteenth card is a data change, not a markup change.",
+      "exercise": "In the editor on the right, build the card blueprint inside a template element — heading, paragraph, and a named slot — then complete the script that clones the blueprint, fills in the member's name, and appends the card to the page.",
+      "expectedResult": "The preview shows the page heading plus one rendered card reading 'Ada Lovelace — Engineer', stamped from the template; the template itself stays invisible.",
+      "commonMistakes": [
+        "Appending tpl.content directly instead of a clone. A fragment's nodes MOVE when inserted, so the template is emptied and the second stamp produces nothing.",
+        "Calling cloneNode() without true. The default is a shallow copy — you get an empty fragment with none of the card's children.",
+        "Trying to reach template contents with document.querySelector. Template content lives in a separate inert fragment; query tpl.content instead.",
+        "Reaching for a full custom element (or a framework) when one template plus ten lines of script would do — web components earn their complexity only when reuse crosses page or team boundaries."
+      ],
+      "proTip": "Fill cloned templates with element.textContent, never innerHTML. textContent treats data as text no matter what it contains, which closes off HTML-injection bugs by construction.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "software-developer"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will write a card blueprint that the browser parses but never renders, then stamp a live copy of it into the page from script.",
+        "sections": [
+          {
+            "heading": "template: parsed but inert",
+            "body": "The template element is a holding pen for markup. Everything inside it is parsed like normal HTML — typos are corrected, the tree is built — but the result is deliberately inert: it does not render, images and videos inside it do not load, scripts inside it do not run, and form controls inside it are ignored by the surrounding form. It is markup on standby.\n\nThe inertness is the feature. Before template existed, developers hid blueprint markup in display:none divs (resources still loaded, ids collided, screen readers sometimes found it) or embedded HTML strings in JavaScript (no validation, injection-prone). A template gives you a place to keep repeating structures as genuine HTML with none of those costs.\n\nOne consequence surprises everyone: document.querySelector cannot see inside a template. The children are not document nodes — they live in a private DocumentFragment attached to the element. Even this platform's selector checks cannot look in there, which is why the tasks below verify your template's internals against the raw source instead.",
+            "code": "<template id=\"card-template\">\n  <article class=\"card\">\n    <h2 class=\"name\"></h2>\n    <p class=\"role\"></p>\n  </article>\n</template>\n<!-- renders nothing, loads nothing, runs nothing -->"
+          },
+          {
+            "heading": "content and cloneNode: stamping copies",
+            "body": "The blueprint is exposed to script as templateElement.content — a DocumentFragment holding the parsed children. A fragment is a lightweight container: when you insert it into the document, the fragment itself vanishes and its children move in its place.\n\nThat moving behavior is why you clone. If you append tpl.content directly, the children relocate into the page and the template is left empty — the second card you try to stamp comes out blank. The correct pattern is tpl.content.cloneNode(true): a deep copy (true means 'include all descendants'; the default false copies only the empty fragment) that you fill in and insert while the original stays untouched.\n\nFill the clone before or after inserting — before is tidier — using clone.querySelector to find the fields and textContent to set them. querySelector works fine on the fragment; it is only the document-level lookup that cannot see template internals. Finally, appendChild (or append) on some container element makes the copy live: this is the moment the markup starts rendering and behaving like normal DOM.",
+            "code": "const tpl = document.getElementById(\"card-template\");\n\nconst clone = tpl.content.cloneNode(true);\nclone.querySelector(\".name\").textContent = \"Ada Lovelace\";\nclone.querySelector(\".role\").textContent = \"Engineer\";\n\ndocument.getElementById(\"cards\").appendChild(clone);"
+          },
+          {
+            "heading": "slot: leaving holes on purpose",
+            "body": "A template with fixed fields covers repetition, but reusable components need flexibility: 'here is a card — put whatever you like in the avatar corner'. The slot element exists for exactly that. Inside a component's internal markup, <slot> marks an insertion point; when the component is used, the user's own child elements are projected into that hole at render time.\n\nA bare <slot></slot> is the default slot: it receives all of the user's children that are not claimed elsewhere. A named slot — <slot name=\"avatar\"></slot> — receives only elements that opt in with a matching slot attribute, like <img slot=\"avatar\" ...>. One component can offer several named holes plus a default one, and anything you write between the slot's own tags serves as fallback content shown when the user supplies nothing.\n\nSlots only actually project content when the internal markup lives in a shadow root (next section); written in a plain template they are simply part of the blueprint, waiting. The mental model to keep: template answers 'what does the component look like inside?', slot answers 'where does the user's content go?'.",
+            "code": "<!-- inside the component's internal markup -->\n<article class=\"card\">\n  <slot name=\"avatar\">\n    <img src=\"default-avatar.png\" alt=\"\">\n  </slot>\n  <slot></slot> <!-- default slot: everything unclaimed -->\n</article>\n\n<!-- how a user of the component fills the holes -->\n<team-card>\n  <img slot=\"avatar\" src=\"ada.jpg\" alt=\"Ada Lovelace\">\n  <p>Loves analytical engines.</p>\n</team-card>"
+          },
+          {
+            "heading": "Shadow DOM in one section",
+            "body": "Shadow DOM gives an element a private, encapsulated subtree. element.attachShadow({ mode: \"open\" }) creates a shadow root; whatever you place inside it renders in the element's place, but the outside page's CSS selectors do not reach in, the component's internal styles do not leak out, and document.querySelector does not see the internals. It is a boundary — the reason a third-party date-picker cannot be shattered by your site's aggressive * { margin: 0 } rule, and vice versa.\n\nThe three technologies interlock: a component clones a template, appends the clone into its shadow root, and the slots inside that shadow tree pull the user's light-DOM children into position. Browsers themselves use shadow DOM internally — the play controls of a video element are a shadow tree you can reveal in DevTools by enabling 'show user agent shadow DOM'.\n\nEncapsulation cuts both ways: global theming, form participation and some accessibility relationships get harder across the boundary. Treat shadow DOM as a tool for hard isolation, not a default for every widget.",
+            "code": "const host = document.querySelector(\"#widget\");\nconst root = host.attachShadow({ mode: \"open\" });\nroot.appendChild(tpl.content.cloneNode(true));\n// page CSS cannot restyle root's contents"
+          },
+          {
+            "heading": "Custom elements: awareness level",
+            "body": "The last piece of the standard lets you register your own tags. customElements.define(\"team-card\", TeamCard) associates a tag name with a class extending HTMLElement; from then on every <team-card> in markup upgrades into an instance of that class. Custom tag names must contain a hyphen — that is how the parser distinguishes them from possible future built-ins.\n\nThe class receives lifecycle callbacks: connectedCallback runs when the element enters the document (the usual place to attach a shadow root and stamp the template), disconnectedCallback when it leaves, and attributeChangedCallback when one of the attributes listed in a static observedAttributes array changes. Together with template, slot and shadow DOM, this is a complete component model with zero dependencies.\n\nYou do not need to author custom elements to work professionally, but you must recognize the pattern: design systems (used across Google, Adobe, and many enterprises) ship as custom elements precisely because they work identically in React, Vue and plain HTML.",
+            "code": "class TeamCard extends HTMLElement {\n  connectedCallback() {\n    const root = this.attachShadow({ mode: \"open\" });\n    const tpl = document.getElementById(\"card-template\");\n    root.appendChild(tpl.content.cloneNode(true));\n  }\n}\ncustomElements.define(\"team-card\", TeamCard);"
+          },
+          {
+            "heading": "Where components shine — and where they are overkill",
+            "body": "Web components earn their keep when UI must be reused across page, project or framework boundaries: a design system consumed by three teams on three stacks, an embeddable widget dropped into arbitrary customer sites, or a leaf component (icon button, tag chip, rating stars) whose styling must survive any host page. The browser-native contract — just HTML tags — is the most durable interface the platform offers.\n\nThey are overkill for markup repeated within a single page or app: a template plus a few lines of cloning script (exactly what you build in this lesson) solves that with a fraction of the concepts. They also duplicate machinery you already have if your project runs on a component framework — React or Vue components fill the same role internally, and mixing the two models adds friction around events, forms and server-side rendering.\n\nA pragmatic ladder: start with a template and a loop; reach for a custom element when the same UI must cross a boundary; add shadow DOM only when you need real style isolation, not just tidiness.",
+            "code": "<!-- the 80% case: template + loop, no components needed -->\n<template id=\"row\">...</template>\n<script>\n  for (const member of team) {\n    const c = tpl.content.cloneNode(true);\n    // fill fields, append\n  }\n</script>"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Team cards</title>\n</head>\n<body>\n  <h1>Team</h1>\n\n  <!-- TODO 1: add a <template> with id=\"card-template\" -->\n  <!-- TODO 2: inside it, an <article class=\"card\"> holding\n       <h2 class=\"name\"></h2> and <p class=\"role\"></p> -->\n  <!-- TODO 3: also inside the article, add a named slot:\n       <slot name=\"avatar\"></slot> -->\n\n  <div id=\"cards\"></div>\n\n  <script>\n    const tpl = document.getElementById(\"card-template\");\n\n    // TODO 4: deep-clone the template's content into a variable named clone\n\n    // TODO 5: set the .name text to \"Ada Lovelace\" and .role to \"Engineer\",\n    //         then append the clone to the #cards container\n  </script>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Team cards</title>\n</head>\n<body>\n  <h1>Team</h1>\n\n  <template id=\"card-template\">\n    <article class=\"card\">\n      <h2 class=\"name\"></h2>\n      <p class=\"role\"></p>\n      <slot name=\"avatar\"></slot>\n    </article>\n  </template>\n\n  <div id=\"cards\"></div>\n\n  <script>\n    const tpl = document.getElementById(\"card-template\");\n\n    const clone = tpl.content.cloneNode(true);\n\n    clone.querySelector(\".name\").textContent = \"Ada Lovelace\";\n    clone.querySelector(\".role\").textContent = \"Engineer\";\n    document.getElementById(\"cards\").appendChild(clone);\n  </script>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Create a <template> element with id=\"card-template\".",
+            "hint": "<template id=\"card-template\"> ... </template> — the element itself is visible to selectors even though its contents are not.",
+            "errorMessage": "No template#card-template found. The blueprint needs a template element with that exact id.",
+            "check": {
+              "type": "selector",
+              "selector": "template#card-template"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Inside the template, build the card: an <article class=\"card\"> containing an <h2 class=\"name\"> and a <p class=\"role\">.",
+            "hint": "Template internals are invisible to querySelector, so this check reads your raw source: the article and h2 must sit between the template tags.",
+            "errorMessage": "The template does not contain an <article> with an <h2> inside it. Remember: the card structure goes BETWEEN the template tags.",
+            "check": {
+              "type": "source",
+              "pattern": "<template[\\s\\S]*<article[\\s\\S]*<h2[\\s\\S]*</template>"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Add a named slot inside the article: <slot name=\"avatar\"></slot>.",
+            "hint": "A named slot is a labeled hole: content marked slot=\"avatar\" would be projected here once this blueprint lives in a shadow root.",
+            "errorMessage": "No <slot name=\"avatar\"> found in the template. Add the named insertion point.",
+            "check": {
+              "type": "source",
+              "pattern": "<slot\\s+name=[\\\"']avatar[\\\"']"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "In the script, deep-clone the blueprint: const clone = tpl.content.cloneNode(true);",
+            "hint": "content is the inert fragment; cloneNode(true) copies it WITH all descendants. Without true you clone an empty shell.",
+            "errorMessage": "No content.cloneNode(true) call found. Clone deeply, or the template empties itself on first use.",
+            "check": {
+              "type": "source",
+              "pattern": "\\.content\\.cloneNode\\s*\\(\\s*true\\s*\\)"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Fill the clone (name: Ada Lovelace, role: Engineer) and append it to the #cards container.",
+            "hint": "clone.querySelector(\".name\").textContent = \"Ada Lovelace\"; then document.getElementById(\"cards\").appendChild(clone);",
+            "errorMessage": "The clone is never appended — no appendChild(clone) (or append(clone)) call found after filling the fields.",
+            "check": {
+              "type": "source",
+              "pattern": "append(Child)?\\s*\\(\\s*clone\\s*\\)"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-a12-drag-drop-geolocation",
+      "title": "Wire up native drag-and-drop and read the user's location",
+      "summary": "Implement the HTML drag-and-drop event chain — draggable, dragstart, dragover, drop, dataTransfer — and use the Geolocation API with its callbacks, permissions and HTTPS rules.",
+      "difficulty": "advanced",
+      "minutes": 14,
+      "isFree": false,
+      "goal": "Build a tiny task board where an item can be dragged into a done-zone, plus a geolocation call that reports coordinates or a friendly error.",
+      "whyItMatters": "Drag-and-drop powers file uploaders, kanban boards and sortable lists, and the native API means zero dependencies — if you know its two famous quirks (opt-in draggable, and preventDefault on dragover). Geolocation drives store finders, delivery apps and local search. Both APIs also teach a bigger professional lesson: modern browser features are permission-gated and asynchronous, so your code must be written around user consent and failure, not just the happy path.",
+      "steps": [
+        "Read the drag-and-drop overview and mark the list item draggable (task 1).",
+        "Add the drop zone markup (task 2).",
+        "Wire dragstart to store the dragged item's id in dataTransfer (task 3).",
+        "Wire dragover — with the crucial preventDefault — and drop on the zone (task 4).",
+        "Read the Geolocation sections, then call getCurrentPosition with success and error callbacks (task 5).",
+        "Display coords.latitude and coords.longitude in the status paragraph (task 6) and run the checks."
+      ],
+      "prompt": "<li draggable=\"true\" id=\"task-1\">Write report</li>\n<div id=\"done-zone\">Drop finished tasks here</div>\n<script>\n  item.addEventListener(\"dragstart\", (e) => {\n    e.dataTransfer.setData(\"text/plain\", e.target.id);\n  });\n  zone.addEventListener(\"dragover\", (e) => e.preventDefault());\n  zone.addEventListener(\"drop\", (e) => {\n    e.preventDefault();\n    const id = e.dataTransfer.getData(\"text/plain\");\n    zone.appendChild(document.getElementById(id));\n  });\n</script>",
+      "promptLabel": "Key code example",
+      "explanation": "draggable=\"true\" opts the list item into dragging — nothing is draggable by default except links, images and selected text. During dragstart the item writes its id into the dataTransfer object, the only channel that survives from drag source to drop target. The zone must call preventDefault() inside dragover because the browser's default is to FORBID dropping; skipping that one line is the number-one reason drop handlers never fire. On drop, the zone reads the id back, finds the element, and appendChild moves it — the DOM does the actual 'moving' for free.",
+      "example": "A project board first ships with clunky 'Move to Done' buttons on every card. Users keep trying to drag the cards anyway, because every tool they know works that way.\n\nAdding native drag-and-drop takes three event handlers and one attribute: cards become draggable, the Done column accepts drops, and the same dataTransfer pattern later scales to dragging files in from the desktop. Meanwhile the delivery-address form gains a 'Use my location' button: one getCurrentPosition call fills the coordinates, and the error callback quietly falls back to manual entry when the user declines the permission prompt.",
+      "exercise": "In the editor on the right, complete the mini task board: make the task draggable, add the drop zone, implement dragstart/dragover/drop with dataTransfer, then finish the geolocation call that writes latitude and longitude — or the error message — into the status paragraph.",
+      "expectedResult": "The preview shows a task list, a drop zone that accepts the dragged task, and a location line that either shows coordinates or reports why it cannot (the editor preview may block the permission prompt itself — the checks verify your code, not the browser's decision).",
+      "commonMistakes": [
+        "Forgetting preventDefault() in the dragover handler. Browsers disallow dropping by default, so the drop event silently never fires — the most common DnD bug in existence.",
+        "Expecting arbitrary elements to be draggable. Only links, images and selections drag natively; everything else needs draggable=\"true\".",
+        "Storing a DOM element in dataTransfer. It only carries strings — store an id or JSON and look the element up again on drop.",
+        "Treating geolocation as instant and guaranteed. It is asynchronous, permission-gated, HTTPS-only, and fails routinely — code without an error callback breaks for real users."
+      ],
+      "proTip": "In the drop handler, call e.preventDefault() there too: some browsers otherwise navigate to dropped content (dropping a URL loads it), throwing the user off your page.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "software-developer"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will build a two-column mini task board with native drag-and-drop, then add a location readout driven by the Geolocation API.",
+        "sections": [
+          {
+            "heading": "Dragging is opt-in: the draggable attribute",
+            "body": "HTML ships a complete drag-and-drop system, but almost nothing participates by default: only links, images and text selections are natively draggable. Any other element joins by declaring draggable=\"true\". The value is an enumerated string, not a boolean attribute — draggable alone or draggable=\"\" does not work reliably, so always write the explicit =\"true\".\n\nOnce an element is draggable, the browser handles the physics: the ghost image following the cursor, the forbidden-cursor over invalid targets, the cross-window and even cross-application drag (dragging text into another program). Your JavaScript's job is only to answer two questions: what data does this drag carry, and which targets accept it.\n\nAccessibility note: drag-and-drop is mouse-and-touch-centric. Professional implementations keep a keyboard path to the same outcome — a 'move to' button or menu — because the native API offers no built-in keyboard interaction.",
+            "code": "<ul id=\"tasks\">\n  <li draggable=\"true\" id=\"task-1\">Write report</li>\n  <li draggable=\"true\" id=\"task-2\">Review pull request</li>\n</ul>"
+          },
+          {
+            "heading": "The event chain and dataTransfer",
+            "body": "A drag fires a fixed sequence of events. On the dragged element: dragstart when the drag begins, drag repeatedly while moving, dragend when it finishes. On whatever the cursor passes over: dragenter, dragover (fired continuously, many times per second), dragleave, and finally drop on the target that accepts.\n\nThe two sides of a drag never share variables directly — the drop target might be in another window entirely. The bridge is the event's dataTransfer object: in dragstart you call e.dataTransfer.setData(type, value), and in drop you read it back with getData(type). The type is a MIME-style label; \"text/plain\" is the workhorse. Values are strings only — the standard pattern for moving DOM elements is to store the element's id and re-find it on drop.\n\nFor security, the data is readable only in the drop handler — during dragover you can see the types on offer but not the values, so a page you merely drag across cannot steal the payload.",
+            "code": "item.addEventListener(\"dragstart\", (e) => {\n  e.dataTransfer.setData(\"text/plain\", e.target.id);\n});"
+          },
+          {
+            "heading": "The one line everyone forgets: preventDefault on dragover",
+            "body": "Here is the design decision that generates a thousand bug reports: by default, every element REJECTS drops. The browser's default action for dragover is 'this is not a valid drop target'. To accept drops, a target must cancel that default by calling e.preventDefault() inside its dragover (and ideally dragenter) handler. Do nothing, and your drop handler simply never fires — no error, no warning, nothing.\n\nOnce dragover is cancelled, the drop event can fire. In the drop handler you call preventDefault() again (otherwise some browsers perform their own default, like navigating to a dropped link), read the payload with getData, and act — here, appendChild moves the dragged element into the zone. appendChild on an element already in the document relocates it; no cloning or deleting needed.\n\nThe dataTransfer.dropEffect property (\"move\", \"copy\", \"link\") set during dragover controls which cursor the OS shows, a small touch that makes the interaction feel native.",
+            "code": "const zone = document.getElementById(\"done-zone\");\n\nzone.addEventListener(\"dragover\", (e) => {\n  e.preventDefault(); // WITHOUT this, drop never fires\n});\n\nzone.addEventListener(\"drop\", (e) => {\n  e.preventDefault();\n  const id = e.dataTransfer.getData(\"text/plain\");\n  zone.appendChild(document.getElementById(id));\n});"
+          },
+          {
+            "heading": "Geolocation: asking where the user is",
+            "body": "The Geolocation API lives at navigator.geolocation and answers one question: where is this device? Its main method, getCurrentPosition(successCallback, errorCallback, options), is fully asynchronous — the browser may consult GPS, Wi-Fi networks or IP databases, and above all it must first ask the user. A permission prompt appears on first use, and your code has no say in the answer.\n\nOn success, your first callback receives a position object. position.coords carries the useful fields: latitude and longitude in decimal degrees, accuracy as a radius in meters, and — when the hardware provides them — altitude, heading and speed, which are null otherwise. position.timestamp records when the fix was taken.\n\nAn optional third argument tunes the request: { enableHighAccuracy: true } requests GPS-grade fixes (slower, battery-hungry), timeout caps the wait in milliseconds, and maximumAge allows a cached fix. For live tracking there is watchPosition, which invokes your callback on every movement and returns an id for clearWatch — always clear it, or you drain the battery of every user who leaves the map open.",
+            "code": "navigator.geolocation.getCurrentPosition(\n  (pos) => {\n    console.log(pos.coords.latitude, pos.coords.longitude);\n    console.log(\"within\", pos.coords.accuracy, \"meters\");\n  },\n  (err) => {\n    console.log(\"No fix:\", err.message);\n  },\n  { enableHighAccuracy: false, timeout: 10000 }\n);"
+          },
+          {
+            "heading": "Failure is normal: errors, permissions, HTTPS",
+            "body": "Treat the error callback as a first-class code path, not an afterthought. Its error argument has a code with three values: 1 PERMISSION_DENIED (the user said no, or policy blocks it), 2 POSITION_UNAVAILABLE (no signal — underground, hardware off), 3 TIMEOUT (your timeout elapsed first). Each deserves a different reaction: denial should switch to manual input without nagging, unavailability might suggest retrying, timeout might retry with lower accuracy.\n\nGeolocation is restricted to secure contexts: pages served over HTTPS (localhost counts as secure for development). On plain HTTP the API is simply absent or rejects immediately — a classic 'works on my machine, dies in production' trap when production forgets a redirect to HTTPS.\n\nDesign etiquette: request location on a user gesture (a 'Use my location' button), never on page load — an unexplained permission prompt is the fastest way to a permanent denial, and browsers remember the answer. And since users can revoke permission at any time, every release must keep the no-location path working.",
+            "code": "(err) => {\n  if (err.code === 1) showManualAddressForm();\n  else if (err.code === 3) retryWithLowAccuracy();\n  else showMessage(\"Location unavailable right now.\");\n}"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Task board</title>\n</head>\n<body>\n  <h1>Today</h1>\n  <ul id=\"tasks\">\n    <!-- TODO 1: make this item draggable -->\n    <li id=\"task-1\">Write report</li>\n  </ul>\n\n  <!-- TODO 2: add the drop zone: <div id=\"done-zone\">Drop finished tasks here</div> -->\n\n  <p id=\"location\">Location: unknown</p>\n\n  <script>\n    const item = document.getElementById(\"task-1\");\n    // TODO 3: on \"dragstart\", store the item's id with\n    //         e.dataTransfer.setData(\"text/plain\", e.target.id)\n\n    // TODO 4: on the zone, cancel the default in \"dragover\" with\n    //         e.preventDefault(), then handle \"drop\": preventDefault(),\n    //         getData(\"text/plain\"), and appendChild the element\n\n    // TODO 5: call navigator.geolocation.getCurrentPosition with a\n    //         success AND an error callback\n    // TODO 6: in the success callback, write coords.latitude and\n    //         coords.longitude into the #location paragraph\n  </script>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Task board</title>\n</head>\n<body>\n  <h1>Today</h1>\n  <ul id=\"tasks\">\n    <li draggable=\"true\" id=\"task-1\">Write report</li>\n  </ul>\n\n  <div id=\"done-zone\">Drop finished tasks here</div>\n\n  <p id=\"location\">Location: unknown</p>\n\n  <script>\n    const item = document.getElementById(\"task-1\");\n    item.addEventListener(\"dragstart\", (e) => {\n      e.dataTransfer.setData(\"text/plain\", e.target.id);\n    });\n\n    const zone = document.getElementById(\"done-zone\");\n    zone.addEventListener(\"dragover\", (e) => {\n      e.preventDefault();\n    });\n    zone.addEventListener(\"drop\", (e) => {\n      e.preventDefault();\n      const id = e.dataTransfer.getData(\"text/plain\");\n      zone.appendChild(document.getElementById(id));\n    });\n\n    navigator.geolocation.getCurrentPosition(\n      (pos) => {\n        document.getElementById(\"location\").textContent =\n          \"Location: \" + pos.coords.latitude + \", \" + pos.coords.longitude;\n      },\n      (err) => {\n        document.getElementById(\"location\").textContent =\n          \"Location: \" + err.message;\n      }\n    );\n  </script>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Make the task item draggable with draggable=\"true\".",
+            "hint": "Ordinary elements never drag by default. Add the explicit attribute: <li draggable=\"true\" id=\"task-1\">.",
+            "errorMessage": "The <li> is not draggable. Add draggable=\"true\" — the explicit value is required.",
+            "check": {
+              "type": "attr",
+              "selector": "li",
+              "attr": "draggable",
+              "value": "true"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Add the drop zone: a <div id=\"done-zone\"> with the text 'Drop finished tasks here'.",
+            "hint": "The zone is a plain div; the ability to accept drops comes from its event handlers, not from any special element.",
+            "errorMessage": "No #done-zone element found. The board needs a drop target.",
+            "check": {
+              "type": "selector",
+              "selector": "#done-zone"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "In the dragstart handler, store the dragged item's id: e.dataTransfer.setData(\"text/plain\", e.target.id).",
+            "hint": "dataTransfer only carries strings — the id is the standard way to say 'this element' across the drag.",
+            "errorMessage": "No dataTransfer.setData(...) call found in your script. The drag carries no payload without it.",
+            "check": {
+              "type": "source",
+              "pattern": "dataTransfer\\.setData\\s*\\("
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "On the drop zone, handle \"dragover\" and call e.preventDefault() inside it, then handle \"drop\" (preventDefault, getData, appendChild).",
+            "hint": "Browsers forbid dropping by default; cancelling dragover is what turns the div into a legal target.",
+            "errorMessage": "No preventDefault() found in a dragover handler. Without it the drop event will never fire.",
+            "check": {
+              "type": "source",
+              "pattern": "dragover[\\s\\S]*preventDefault\\s*\\(\\s*\\)"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Call navigator.geolocation.getCurrentPosition with a success callback AND an error callback.",
+            "hint": "getCurrentPosition(successFn, errorFn) — the second argument is not optional in professional code; permission denial is a normal outcome.",
+            "errorMessage": "No geolocation.getCurrentPosition(...) call found. Request the position with both callbacks.",
+            "check": {
+              "type": "source",
+              "pattern": "geolocation\\.getCurrentPosition\\s*\\("
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "In the success callback, write coords.latitude and coords.longitude into the #location paragraph.",
+            "hint": "The position object nests the numbers under coords: pos.coords.latitude and pos.coords.longitude, in decimal degrees.",
+            "errorMessage": "Your success callback never reads coords.latitude. Display both coordinates in the status paragraph.",
+            "check": {
+              "type": "source",
+              "pattern": "coords\\.latitude"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-a13-storage-workers-sse",
+      "title": "Persist data, offload work and stream updates: storage, workers, SSE",
+      "summary": "Master localStorage and sessionStorage with the JSON round-trip pattern, move heavy computation into Web Workers, and receive live server pushes with Server-Sent Events.",
+      "difficulty": "advanced",
+      "minutes": 14,
+      "isFree": false,
+      "goal": "Save and restore structured preferences with web storage, and sketch a working worker and an EventSource connection with correct messaging code.",
+      "whyItMatters": "These three APIs answer questions every real application eventually asks. Where do I keep the user's settings between visits without a server round-trip? Web storage. Why does the page freeze while I crunch this dataset? Move it to a worker. How do users see new data without hammering refresh? Server-Sent Events. Knowing the boundaries — strings only, no DOM in workers, one-way SSE — is what lets you pick the right tool instead of fighting the wrong one.",
+      "steps": [
+        "Read the storage sections: the localStorage/sessionStorage split and the strings-only rule.",
+        "In the editor, save the preferences object with setItem + JSON.stringify (task 1) and read it back with JSON.parse + getItem (task 2).",
+        "Store the per-tab state in sessionStorage (task 3).",
+        "Read the Web Workers section, then complete the startWorker function: create the worker, post it a message, listen for results (task 4).",
+        "Read the SSE section and complete connectFeed with an EventSource and an onmessage handler (task 5).",
+        "Run the checks — they verify your source patterns, since workers and server streams cannot run inside this editor."
+      ],
+      "prompt": "const prefs = { theme: \"dark\", fontSize: 16 };\nlocalStorage.setItem(\"prefs\", JSON.stringify(prefs));\nconst saved = JSON.parse(localStorage.getItem(\"prefs\"));\n\nconst worker = new Worker(\"stats-worker.js\");\nworker.postMessage({ rows: 100000 });\nworker.onmessage = (e) => showResult(e.data);\n\nconst feed = new EventSource(\"/api/updates\");\nfeed.onmessage = (e) => addNotification(e.data);",
+      "promptLabel": "Key code example",
+      "explanation": "Storage holds only strings, so the object is serialized on the way in with JSON.stringify and revived on the way out with JSON.parse — the single most important storage idiom. The worker runs stats-worker.js on a separate thread; postMessage and onmessage are the only bridge across, which is why the page never freezes and the worker can never touch the DOM. The EventSource opens a long-lived HTTP connection that the server pushes messages down; the browser parses each one into an onmessage event and reconnects by itself if the line drops.",
+      "example": "A reporting dashboard loses the user's chosen theme on every visit, freezes for four seconds when aggregating a big CSV, and shows stale numbers until someone refreshes.\n\nThree targeted fixes: preferences go into localStorage as JSON and are restored on load; the CSV aggregation moves into a Web Worker so the page stays responsive while a status line ticks; and an EventSource subscribed to /api/updates pushes fresh totals the moment the server has them — no polling loop, and the browser even re-establishes the stream after a network blip.",
+      "exercise": "In the editor on the right, complete the dashboard script: persist the preferences object through the JSON round-trip, stash the active tab in sessionStorage, then finish the two sketched functions — one starting a stats worker with two-way messaging, one connecting an EventSource feed.",
+      "expectedResult": "The preview shows the dashboard heading and a status line reading the restored theme from localStorage; the worker and feed functions are defined and pass the source checks (they are not invoked, since the editor has no worker file or SSE server).",
+      "commonMistakes": [
+        "Storing an object directly: localStorage.setItem(\"prefs\", prefs) saves the useless string \"[object Object]\". Always JSON.stringify in, JSON.parse out.",
+        "Forgetting that getItem returns null for missing keys — JSON.parse(null) yields null, and reading a property of it throws. Guard the read.",
+        "Trying to touch document or window inside a worker. Workers have no DOM access by design; send results back with postMessage instead.",
+        "Choosing WebSocket for a feature that only pushes server-to-client. SSE is simpler, plain HTTP, and reconnects automatically — save WebSocket for genuinely two-way traffic."
+      ],
+      "proTip": "Storage fires a 'storage' event in OTHER open tabs of the same origin when a value changes — a free cross-tab sync channel: listen for it to update every tab when the user flips the theme in one.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "software-developer"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will give a small dashboard three superpowers: settings that survive reloads, a background thread for heavy math, and a live update feed.",
+        "sections": [
+          {
+            "heading": "Two storages, one API",
+            "body": "The browser gives every origin two key-value stores with an identical API and one crucial difference: lifetime. localStorage persists until explicitly deleted — close the tab, reboot the machine, the data is still there. sessionStorage lives and dies with the tab: each tab gets its own copy, and closing the tab wipes it. Same site open in two tabs means one shared localStorage but two independent sessionStorages.\n\nThe API is four methods and a property: setItem(key, value) writes, getItem(key) reads (returning null — not undefined, not an error — when the key is absent), removeItem(key) deletes one entry, clear() deletes everything for the origin, and length reports the entry count. All operations are synchronous, which keeps the code simple but means giant values can briefly stall the page.\n\nScope and limits: storage is partitioned by origin — scheme plus host plus port — so https://app.example.com cannot read another origin's data, and nothing you store is ever sent to any server automatically. Budget is roughly 5 MB per origin per store; exceeding it throws a QuotaExceededError, so wrap large writes in try/catch. Users can wipe storage at any time, and private-browsing modes may discard it aggressively: treat it as a convenience cache, never as the only copy of anything important.",
+            "code": "localStorage.setItem(\"theme\", \"dark\");\nlocalStorage.getItem(\"theme\");      // \"dark\"\nlocalStorage.getItem(\"missing\");    // null\nlocalStorage.removeItem(\"theme\");\nlocalStorage.clear();               // everything for this origin\n\nsessionStorage.setItem(\"activeTab\", \"reports\"); // this tab only"
+          },
+          {
+            "heading": "Strings only: the JSON round-trip",
+            "body": "Both stores hold strings and nothing else. Store a number and you get a string back; store an object and JavaScript helpfully converts it to \"[object Object]\", destroying the data. The universal idiom is the JSON round-trip: JSON.stringify(value) on the way in, JSON.parse(text) on the way out. It handles objects, arrays, numbers, booleans and nesting — everything JSON can express (functions and Dates need special handling; Dates come back as strings).\n\nRead defensively: the key may not exist yet (first visit), and getItem then returns null. The compact guard is JSON.parse(localStorage.getItem(\"prefs\")) followed by a null check, or a default via || / ?? on the parsed result. A corrupted value makes JSON.parse throw, so production code often wraps the read in try/catch and falls back to defaults.\n\nWhere do cookies fit? Cookies are the older mechanism with one defining behavior storage lacks: they are attached to every HTTP request to the server, which makes them the right home for session identifiers the server must see — and the wrong home for anything bulky, since they are capped near 4 KB and inflate every request. The modern division of labor: cookies for server-facing session state, web storage for client-only data like preferences, drafts and caches.",
+            "code": "const prefs = { theme: \"dark\", fontSize: 16 };\nlocalStorage.setItem(\"prefs\", JSON.stringify(prefs));\n\nconst saved = JSON.parse(localStorage.getItem(\"prefs\"));\nconst theme = saved ? saved.theme : \"light\"; // first-visit guard"
+          },
+          {
+            "heading": "Web Workers: a second thread",
+            "body": "JavaScript in a page runs on one thread — the same thread that paints pixels and reacts to clicks. Run a heavy computation there and the whole interface freezes: no scrolling, no typing, eventually a 'page unresponsive' warning. A dedicated Web Worker escapes this by running a separate script file on a separate thread: new Worker(\"stats-worker.js\") starts it, and it computes in parallel while the page stays fluid.\n\nThe isolation is strict. A worker has no DOM: no document, no window, no access to the page's variables — attempts throw immediately. It gets its own global scope (self) with the essentials: fetch, timers, and importScripts for loading libraries. This is by design: two threads mutating one DOM would need locks and all the bugs that come with them, so the platform simply forbids sharing.\n\nAll communication is message passing. Either side calls postMessage(data) and the other receives it in an onmessage handler as e.data; the data is structured-cloned — copied, not shared, so there is no aliasing to reason about. When the worker is done for good, terminate() from the page (or self.close() inside) frees the thread. Reach for a worker whenever a computation would block the page noticeably — parsing large files, crunching numbers, image processing; skip it for quick work, since spawning threads and copying messages has its own cost.",
+            "code": "// page.js\nconst worker = new Worker(\"stats-worker.js\");\nworker.postMessage({ rows: 100000 });\nworker.onmessage = (e) => {\n  document.getElementById(\"status\").textContent = e.data;\n};\n\n// stats-worker.js — separate file, separate thread, no DOM\nself.onmessage = (e) => {\n  const result = heavyAggregation(e.data.rows);\n  self.postMessage(result);\n};"
+          },
+          {
+            "heading": "Server-Sent Events: the server pushes",
+            "body": "Ordinary HTTP is client-initiated: nothing arrives unless the page asks. When the server has news — a fresh notification, a price change, a build finishing — the crude answer is polling on a timer, which is both laggy and wasteful. Server-Sent Events invert the flow: the page opens one long-lived HTTP connection with new EventSource(url), and the server keeps it open, writing a message down the pipe whenever it likes.\n\nThe browser side is almost no code. Each server message fires the EventSource's onmessage handler with the payload in e.data (always text; send JSON and parse it). Servers can label messages with custom event names, which you receive via addEventListener(\"price\", ...) instead of onmessage. The killer feature is built-in resilience: if the connection drops, the browser reconnects automatically, and a Last-Event-ID header lets the server resume where the stream broke — logic you would have to hand-write with anything else.\n\nOn the wire it is disarmingly simple: a text/event-stream response where each message is a line like data: hello followed by a blank line. Any web framework can produce it; no special server or protocol upgrade needed.",
+            "code": "const feed = new EventSource(\"/api/updates\");\n\nfeed.onmessage = (e) => {\n  const update = JSON.parse(e.data);\n  addNotification(update.text);\n};\n\nfeed.addEventListener(\"price\", (e) => updateTicker(e.data));\nfeed.onerror = () => showStatus(\"reconnecting...\"); // automatic retry\n// feed.close() when the page no longer needs the stream"
+          },
+          {
+            "heading": "SSE or WebSocket? And what runs where",
+            "body": "SSE is one-way: server to client, over plain HTTP. WebSocket is two-way: after an HTTP handshake it upgrades to its own protocol, and both sides can send at any time. That single difference decides the choice. Notifications, live scores, progress feeds, dashboards — the client only listens, so SSE wins on simplicity: normal HTTP infrastructure, automatic reconnection, a ten-line client. Chat, multiplayer games, collaborative editing — the client talks constantly, so WebSocket is the right tool despite its heavier operational footprint. (The client can still 'talk' in an SSE architecture — it just uses ordinary fetch requests alongside the stream.)\n\nA note about this lesson's editor: checks parse your code without executing it, and the sandbox has no worker file to load and no SSE endpoint to stream from. That is why the worker and feed code live inside named functions the page defines but does not call — the pattern is real and portable, and the checks verify it in your source.",
+            "code": "// decision rule\n// server -> client only   : SSE (EventSource)\n// both directions, chatty : WebSocket\n// client -> server only   : plain fetch/forms — no stream needed"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Dashboard</title>\n</head>\n<body>\n  <h1>Reporting dashboard</h1>\n  <p id=\"status\">Loading preferences...</p>\n\n  <script>\n    const prefs = { theme: \"dark\", fontSize: 16 };\n    // TODO 1: save prefs into localStorage under the key \"prefs\"\n    //         (remember: storage holds strings only)\n\n    // TODO 2: read it back into a variable `saved` with JSON.parse + getItem\n    //         then show it: status.textContent = \"Theme: \" + saved.theme\n\n    // TODO 3: remember the active tab FOR THIS TAB ONLY:\n    //         sessionStorage, key \"activeTab\", value \"reports\"\n\n    function startWorker() {\n      // TODO 4: create a Worker from \"stats-worker.js\",\n      //         postMessage({ rows: 100000 }) to it,\n      //         and set worker.onmessage to display e.data in #status\n    }\n\n    function connectFeed() {\n      // TODO 5: create an EventSource for \"/api/updates\" and set its\n      //         onmessage handler to log e.data\n    }\n  </script>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Dashboard</title>\n</head>\n<body>\n  <h1>Reporting dashboard</h1>\n  <p id=\"status\">Loading preferences...</p>\n\n  <script>\n    const prefs = { theme: \"dark\", fontSize: 16 };\n    localStorage.setItem(\"prefs\", JSON.stringify(prefs));\n\n    const saved = JSON.parse(localStorage.getItem(\"prefs\"));\n    const status = document.getElementById(\"status\");\n    status.textContent = \"Theme: \" + (saved ? saved.theme : \"light\");\n\n    sessionStorage.setItem(\"activeTab\", \"reports\");\n\n    function startWorker() {\n      const worker = new Worker(\"stats-worker.js\");\n      worker.postMessage({ rows: 100000 });\n      worker.onmessage = (e) => {\n        status.textContent = e.data;\n      };\n    }\n\n    function connectFeed() {\n      const feed = new EventSource(\"/api/updates\");\n      feed.onmessage = (e) => {\n        console.log(\"update:\", e.data);\n      };\n    }\n  </script>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Persist the prefs object: localStorage.setItem(\"prefs\", JSON.stringify(prefs)).",
+            "hint": "Storage holds strings only — without JSON.stringify you would save the literal text \"[object Object]\".",
+            "errorMessage": "No localStorage.setItem with JSON.stringify found. Serialize the object before storing it.",
+            "check": {
+              "type": "source",
+              "pattern": "localStorage\\.setItem\\s*\\([\\s\\S]*JSON\\.stringify"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Read the preferences back: const saved = JSON.parse(localStorage.getItem(\"prefs\")); then display saved.theme in #status.",
+            "hint": "The round-trip mirrors itself: stringify in, parse out. getItem returns null for a missing key, so guard before reading properties.",
+            "errorMessage": "No JSON.parse(localStorage.getItem(...)) found. Deserialize the stored string back into an object.",
+            "check": {
+              "type": "source",
+              "pattern": "JSON\\.parse\\s*\\(\\s*localStorage\\.getItem"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Store the active tab for THIS tab only: sessionStorage.setItem(\"activeTab\", \"reports\").",
+            "hint": "sessionStorage has the same API as localStorage but dies with the tab — perfect for per-tab UI state.",
+            "errorMessage": "No sessionStorage.setItem call found. Per-tab state belongs in sessionStorage, not localStorage.",
+            "check": {
+              "type": "source",
+              "pattern": "sessionStorage\\.setItem\\s*\\("
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "In startWorker, create the worker (new Worker(\"stats-worker.js\")), send it work with postMessage, and receive results in onmessage.",
+            "hint": "Three lines: const worker = new Worker(\"stats-worker.js\"); worker.postMessage({ rows: 100000 }); worker.onmessage = (e) => { ... };",
+            "errorMessage": "Expected new Worker(...) followed by a postMessage call. The worker needs both a script file and a message to work on.",
+            "check": {
+              "type": "source",
+              "pattern": "new\\s+Worker\\s*\\([\\s\\S]*\\.postMessage\\s*\\("
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "In connectFeed, open the stream (new EventSource(\"/api/updates\")) and handle incoming messages with onmessage.",
+            "hint": "const feed = new EventSource(\"/api/updates\"); feed.onmessage = (e) => console.log(e.data); — the browser handles reconnection for you.",
+            "errorMessage": "Expected new EventSource(...) with an onmessage handler. The feed needs both the connection and a listener.",
+            "check": {
+              "type": "source",
+              "pattern": "new\\s+EventSource\\s*\\([\\s\\S]*onmessage"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-a14-style-guide",
+      "title": "Write HTML your whole team can maintain: the professional style guide",
+      "summary": "Adopt the conventions professional teams enforce — lowercase quoted markup, the non-negotiable head essentials, disciplined structure — and purge deprecated elements with their modern replacements.",
+      "difficulty": "advanced",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Refactor a sloppy legacy page into clean, convention-compliant HTML with every required head element and no deprecated tags.",
+      "whyItMatters": "Browsers forgive almost anything, so bad HTML 'works' — right up until a teammate has to edit it, a validator has to check it, or a parser edge case bites in production. Style conventions exist because code is read far more than written: consistent, lowercase, quoted, fully-closed markup diffs cleanly in code review, survives copy-paste between projects, and never depends on parser guesswork. Recognizing deprecated elements matters too: you will inherit old codebases, and knowing the modern replacement for each relic is routine maintenance work.",
+      "steps": [
+        "Skim the starter code — it is a deliberately sloppy legacy page.",
+        "Add the missing doctype (task 1) and the lang attribute (task 2).",
+        "Complete the head: charset first, then viewport (tasks 3 and 4).",
+        "Read the deprecated-elements section, then replace the <center><font> construct with a real heading and delete every deprecated tag (task 5).",
+        "Give the image its alt text (task 6).",
+        "While editing, apply the cosmetic rules by hand: lowercase tags, quoted attributes, consistent two-space indentation."
+      ],
+      "prompt": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>My portfolio</title>\n</head>\n<body>\n  <h1 class=\"page-title\">My Portfolio</h1>\n  <img src=\"me.jpg\" alt=\"Portrait of the site author\">\n</body>\n</html>",
+      "promptLabel": "Key code example",
+      "explanation": "This is the minimal professional skeleton: the doctype pins the browser to standards mode, lang tells screen readers and translators the page language, charset (declared first in head) prevents text corruption, viewport makes the page usable on phones, and title names the tab and the search result. Every tag is lowercase, every attribute value quoted, every opened element closed — not because the parser demands it, but because the next human to edit the file does.",
+      "example": "A freelancer inherits a 2009-era portfolio page: uppercase tags, unquoted attributes, a <center><font size=5> heading, no doctype, no charset. It renders — browsers heroically guess — but the client's new CMS mangles the unquoted attributes, accented characters display as garbage on one host, and the validator emits a wall of errors.\n\nAfter the cleanup pass, the page is boring in the best way: standard skeleton, one h1, styling hooks via classes for CSS, alt text on the image. The validator is silent and any developer can extend the page without archaeology.",
+      "exercise": "In the editor on the right, modernize the legacy page: add the doctype and lang, complete the head with charset and viewport, replace the deprecated <center> and <font> markup with a real h1, and give the image alt text — applying lowercase tags and quoted attributes as you touch each line.",
+      "expectedResult": "The preview looks almost unchanged — a heading, an image, a paragraph — but the underlying document now passes every convention check and would sail through the W3C validator.",
+      "commonMistakes": [
+        "Trusting the rendered page as proof of correct code. Browsers repair broken markup silently; the mess resurfaces when other tools (CMS, email clients, parsers) read the same HTML.",
+        "Leaving attribute values unquoted because 'it works'. The first value containing a space or a > breaks the tag, and the failure appears far from the cause.",
+        "Modernizing tags but keeping presentational thinking — replacing <font> with inline style attributes. The fix is a class and a stylesheet, not a different flavor of inline styling.",
+        "Relying on optional closing tags (</li>, </p>) being optional. Parsers handle it, but nested lists and mixed content produce surprising trees; close everything you open."
+      ],
+      "proTip": "Automate the argument away: add Prettier (formatting) and html-validate or a linter (correctness) to the project. Style debates end when a tool enforces the answer on every commit.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "software-developer"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will take a page written like it is 2005 — and make it pass a modern code review.",
+        "sections": [
+          {
+            "heading": "Why conventions exist when browsers do not care",
+            "body": "HTML is unusual among languages: almost nothing is enforced. Uppercase tags parse, unquoted attributes parse, unclosed elements parse. So style rules are not about pleasing the browser — they are about the humans and tools downstream. A teammate scanning a diff, a validator checking correctness, a templating engine embedding your markup, a designer copying a snippet: all of them benefit when the code has one predictable shape.\n\nThe professional baseline, in one paragraph: lowercase element and attribute names; every attribute value in double quotes; every element you open, you close — including the ones where closing is technically optional; consistent indentation (two spaces is the common default) with nesting always reflected; and lines kept to a sane length so side-by-side diffs stay readable.\n\nLowercase won for concrete reasons: it is easier to type, visually calmer next to mixed-case content, and mandatory anyway in XML-based contexts, so the habit travels. Quoting won because unquoted values are a time bomb — class=my box silently becomes class=\"my\" plus a stray attribute box, and the layout bug appears in a different file from the typo.",
+            "code": "<!-- fragile: parses today, breaks tomorrow -->\n<DIV CLASS=hero-box><P>Welcome\n\n<!-- professional: same output, zero ambiguity -->\n<div class=\"hero-box\">\n  <p>Welcome</p>\n</div>"
+          },
+          {
+            "heading": "The non-negotiables of every document",
+            "body": "Five things appear in every page a professional ships, without discussion. <!DOCTYPE html> on line one — omit it and browsers drop into quirks mode, emulating 1990s bugs, which changes how CSS box sizing behaves. lang on the html element (lang=\"en\") — screen readers pick pronunciation rules from it, translation tools use it, and search engines read it. <meta charset=\"UTF-8\"> as the first thing in head — declared late or never, and any non-ASCII character can render as mojibake on servers that do not send the encoding header.\n\nCompleting the set: <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">, without which phones render a zoomed-out desktop layout; and a unique, descriptive <title>, which becomes the tab label, the bookmark name and the search-result headline. To these, accessibility adds a sixth that is just as non-negotiable: every img carries alt — descriptive text for informative images, alt=\"\" for purely decorative ones so screen readers skip them.\n\nNone of these five produce visible errors when missing. That is exactly why they belong to a checklist: the failure modes (quirks mode, garbled text, unpinchable mobile pages, untitled tabs) surface later, elsewhere, to someone else.",
+            "code": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Order history — Acme Store</title>\n</head>"
+          },
+          {
+            "heading": "Structure discipline: closing, nesting, indenting",
+            "body": "HTML lets you skip some closing tags: </li>, </p>, </td> and a few others are optional per the spec, and <html>, <head>, <body> can even be omitted entirely. Professional style ignores those permissions. Explicit closing makes nesting visible, prevents the parser's auto-closing rules from producing a tree you did not intend (a <p> containing a list silently closes before the list — the parser decides, not you), and keeps markup portable into stricter contexts like XML feeds and some templating systems.\n\nIndentation mirrors the tree: children one level deeper than parents, siblings aligned. Two spaces per level is the widespread convention — deep enough to see structure, shallow enough that realistic nesting fits on screen. Do not indent with tabs and spaces mixed; pick one (the project's formatter decides) and let it be boring.\n\nVoid elements — img, br, meta, input, hr, link — have no content and take no closing tag. Writing them with a trailing slash (<br />) is harmless in HTML and required in XHTML; modern HTML style omits the slash. Just be consistent with whatever the codebase already does.",
+            "code": "<ul>\n  <li>\n    <a href=\"/orders\">Orders</a>\n  </li>\n  <li>\n    <a href=\"/settings\">Settings</a>\n  </li>\n</ul>\n<!-- every li closed, nesting readable at a glance -->"
+          },
+          {
+            "heading": "Names, classes, and keeping style out of markup",
+            "body": "Class names are the vocabulary your HTML shares with CSS and JavaScript, so name them by role, not appearance: price-total, nav-primary, card-featured — not red-text, big-box, left-div. Appearance changes (the 'red' text becomes orange in the rebrand) should never force an HTML edit. Pick one casing convention — kebab-case is the CSS-world default — and never mix camelCase, snake_case and kebab-case in one project.\n\nInline styles (style=\"color: red\") are the corresponding anti-pattern: they scatter presentation across the markup, win specificity fights against your stylesheet in confusing ways, and cannot be reused, cached or themed. Legitimate exceptions are narrow: values computed at runtime by scripts, and HTML email, where stylesheets are poorly supported. Everything else belongs in a stylesheet reached via class.\n\nTwo small hygiene rules complete the picture: keep attribute order roughly consistent (a common order is class, id, name, data-*, src/href, everything else, aria-*) so eyes can scan tags quickly, and avoid redundant attributes the spec defaults anyway (type=\"text/css\" on link, type=\"text/javascript\" on script).",
+            "code": "<!-- appearance-named, inline-styled: brittle -->\n<p class=\"redText\" style=\"font-size: 20px\">Total: 40€</p>\n\n<!-- role-named, styled in CSS: durable -->\n<p class=\"price-total\">Total: 40€</p>"
+          },
+          {
+            "heading": "HTML vs XHTML: why the strict dialect matters historically",
+            "body": "XHTML was the early-2000s attempt to rebuild HTML on XML rules: every tag lowercase, every attribute quoted, every element closed (void elements as <br />), one single root element, and — crucially — draconian error handling. Serve real XHTML and one unescaped ampersand replaces your page with a parser error screen. The web chose forgiveness instead: HTML5 defined precisely how browsers recover from every possible malformation, and XHTML's strictness survives mainly in XML-based systems (RSS/Atom feeds, EPUB, some CMS pipelines) and in inline SVG, which follows XML rules for things like attribute casing.\n\nThe useful takeaway is not the history but the habit: professional HTML style is essentially 'write as strictly as XHTML demanded, inside a parser that forgives you'. Code written that way is simultaneously valid HTML5 and trivially convertible to any XML context — you get the robustness without the error screens.\n\nYou will still meet the XHTML doctype and xmlns attributes in older codebases. Recognize them, do not imitate them: new documents get <!DOCTYPE html> and nothing more.",
+            "code": "<!-- XHTML relic you may inherit -->\n<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" ...>\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\n<!-- what you write today -->\n<!DOCTYPE html>\n<html lang=\"en\">"
+          },
+          {
+            "heading": "The deprecated blacklist and its replacements",
+            "body": "HTML's early years produced presentational elements that later versions removed; browsers still render most of them for backward compatibility, which is exactly why you must recognize them on sight — they will not error, they will just quietly mark a codebase as unmaintained. The blacklist: <font> (use CSS font properties via a class), <center> (CSS text-align or margin auto), <big> and <small>-as-styling (CSS font-size), <strike> and <s>-as-styling (CSS text-decoration, or <del> when the meaning is 'removed content'), <u>-as-styling (CSS again), <marquee> and <blink> (CSS animations, used with restraint), <tt> (CSS monospace font or <code> when it really is code).\n\nGone with more force: the frame family — <frameset>, <frame>, <noframes> — which HTML5 removed outright; layouts that once used frames are built with CSS, and embedding another page is <iframe>'s job. Also retired: <acronym> (use <abbr>), <basefont>, <applet>, and the presentational attributes that infested markup — align, bgcolor, border on non-tables, valign — all replaced by CSS properties.\n\nThe pattern behind every replacement is the same separation of concerns you have practiced all course: HTML says what content is, CSS says how it looks. When you meet a deprecated element in the wild, the refactor is mechanical: find the visual intent, express it in a class, delete the relic.",
+            "code": "<!-- legacy -->\n<center><font size=\"5\" color=\"red\">Sale!</font></center>\n\n<!-- modern -->\n<h2 class=\"sale-banner\">Sale!</h2>\n<!-- .sale-banner { text-align: center; color: red; font-size: 2rem } -->"
+          }
+        ],
+        "starterCode": "<html>\n<head>\n<TITLE>portfolio</TITLE>\n<!-- TODO 1: add the doctype on line one -->\n<!-- TODO 2: add lang=\"en\" to the html element -->\n<!-- TODO 3: add <meta charset=\"UTF-8\"> as the FIRST element in head -->\n<!-- TODO 4: add the viewport meta tag -->\n</head>\n<BODY>\n<!-- TODO 5: replace this deprecated construct with\n     <h1 class=\"page-title\">My Portfolio</h1> -->\n<CENTER><FONT size=\"5\">My Portfolio</FONT></CENTER>\n<!-- TODO 6: give the image descriptive alt text -->\n<IMG SRC=\"me.jpg\">\n<P>I build small, fast websites.\n</BODY>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>My portfolio</title>\n</head>\n<body>\n  <h1 class=\"page-title\">My Portfolio</h1>\n  <img src=\"me.jpg\" alt=\"Portrait of the site author\">\n  <p>I build small, fast websites.</p>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Add <!DOCTYPE html> as the very first line.",
+            "hint": "Without a doctype, browsers render in quirks mode — a museum of 1990s layout bugs. It must precede everything, even whitespace comments.",
+            "errorMessage": "The document has no doctype. Start the file with <!DOCTYPE html>.",
+            "check": {
+              "type": "doctype"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Declare the page language: lang=\"en\" on the <html> element.",
+            "hint": "Screen readers choose pronunciation from this attribute; translators and search engines read it too: <html lang=\"en\">.",
+            "errorMessage": "The html element has no lang=\"en\". Assistive technology cannot pick the right voice without it.",
+            "check": {
+              "type": "attr",
+              "selector": "html",
+              "attr": "lang",
+              "value": "en"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Add <meta charset=\"UTF-8\"> as the first element inside <head>.",
+            "hint": "The encoding must be declared before any text needs decoding — convention puts it on the first line of head.",
+            "errorMessage": "No meta charset declaration found. Without it, non-ASCII characters can render as garbage.",
+            "check": {
+              "type": "selector",
+              "selector": "meta[charset]"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Add the viewport meta tag: <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">.",
+            "hint": "Without it, phones pretend to be 980px-wide desktops and render your page zoomed out.",
+            "errorMessage": "No viewport meta with width=device-width found. Mobile browsers need it to render at device width.",
+            "check": {
+              "type": "attr",
+              "selector": "meta[name=\"viewport\"]",
+              "attr": "content",
+              "pattern": "width=device-width"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Delete the deprecated <center> and <font> tags and replace the construct with <h1 class=\"page-title\">My Portfolio</h1>.",
+            "hint": "The visual intent (big, centered) belongs to CSS via the class; the structural truth (this is the page heading) belongs to h1.",
+            "errorMessage": "Deprecated presentational tags (center/font/marquee/big/strike) are still present. Remove them and use a real heading with a class.",
+            "check": {
+              "type": "source",
+              "pattern": "^(?![\\s\\S]*<(center|font|marquee|big|strike)\\b)[\\s\\S]*$"
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Give the image descriptive alt text.",
+            "hint": "Describe what the image shows, e.g. alt=\"Portrait of the site author\" — and while you are on that line, lowercase the tag and attributes.",
+            "errorMessage": "The <img> has no alt attribute. Every image needs one — descriptive text, or alt=\"\" if purely decorative.",
+            "check": {
+              "type": "attr",
+              "selector": "img",
+              "attr": "alt"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-a15-debugging-validation",
+      "title": "Debug HTML like a professional: parsers, DevTools and the validator",
+      "summary": "Learn why browsers repair broken markup instead of throwing errors, how to catch their silent fixes with DevTools and the W3C validator, and how to read and resolve the most common validation messages.",
+      "difficulty": "advanced",
+      "minutes": 13,
+      "isFree": false,
+      "goal": "Repair a page full of classic validator errors — missing doctype and title, orphaned list items, an unlabeled image and duplicate ids — using a validator-style workflow.",
+      "whyItMatters": "HTML never crashes, and that is precisely the danger: a broken page renders anyway, differently repaired by different parsers, and the bug surfaces as a mysterious CSS or JavaScript failure weeks later. Professionals do not debug HTML by staring at the rendered page — they compare the source against the DOM the parser actually built, and they let the validator find what eyes miss. This workflow turns hour-long mystery hunts into two-minute fixes.",
+      "steps": [
+        "Read the first section on browser error recovery — it reframes every HTML bug you will ever meet.",
+        "Run the starter code and study the feedback console: it plays the role of a mini-validator.",
+        "Fix the document-level errors first: doctype, then the missing title (tasks 1 and 2).",
+        "Repair the orphaned list items by giving them a real <ul> parent (task 3).",
+        "Add the image's alt text and de-duplicate the ids (tasks 4 and 5).",
+        "Re-run after each fix — the professional loop is one error, one fix, one re-check, top to bottom."
+      ],
+      "prompt": "<!-- what you wrote -->\n<p>Read the FAQ first.\n<li>How do I reset my password?</li>\n\n<!-- what the parser silently built -->\n<p>Read the FAQ first.</p>\n<li>How do I reset my password?</li>\n<!-- the p was auto-closed; the li has no list parent -->",
+      "promptLabel": "Key code example",
+      "explanation": "The parser met an <li> while a <p> was open; since a paragraph cannot contain a list item, it closed the paragraph on its own and adopted the orphan li into the body. Nothing errored — the page renders — but the DOM now differs from the source, so a CSS rule like ul > li silently stops matching and JavaScript that expects a list finds none. Diffing what you wrote against what the parser built (view-source versus the Elements panel) is how such repairs are caught.",
+      "example": "A support page looks fine, but its FAQ styling is dead and a script counting list items reports zero. The developer stares at the source for an hour: the <li> elements are right there.\n\nOpening DevTools tells a different story: the parser has closed an unclosed <p> early and the li elements sit outside any list. Pasting the page into the W3C validator names every problem in seconds, each with a line number: no doctype, missing title, li not allowed as child of body, img missing alt, duplicate id. Fixing them top to bottom takes five minutes, and both the CSS and the script start working without touching either.",
+      "exercise": "In the editor on the right, repair the broken support page: add the doctype and the missing title, wrap the orphaned list items in a <ul>, give the image alt text, and make the duplicated id unique. Use the feedback console exactly as you would a validator: top error first, re-run, repeat.",
+      "expectedResult": "The preview shows the support page with a real bulleted FAQ list, and every check passes — the same page would now come back clean from the W3C validator.",
+      "commonMistakes": [
+        "Debugging the rendered page instead of the parsed DOM. The Elements panel shows the parser's repaired tree — that, not view-source, is what your CSS and JavaScript actually run against.",
+        "Fixing validator errors from the bottom of the list. Early errors (an unclosed tag, a stray bracket) often cause dozens of downstream messages; always fix top-down and re-validate.",
+        "Assuming no visible breakage means no problem. Parser repairs differ between browsers and tools — the page that 'works' in Chrome may parse differently in an email client or a scraper.",
+        "Ignoring duplicate-id warnings because the page looks fine. getElementById and anchor links use only the first match, so the second element silently becomes unreachable."
+      ],
+      "proTip": "In the DevTools console, document.querySelectorAll(\"[id]\") plus a quick scan finds duplicate ids, and comparing document.body.children against your source's top-level elements exposes parser adoptions instantly — no validator round-trip needed.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "software-developer"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will repair a page the way professionals do: reading errors like a validator, fixing top-down, and verifying against the tree the parser really built.",
+        "sections": [
+          {
+            "heading": "Browsers never throw — they guess",
+            "body": "Most languages stop at the first syntax error. HTML does the opposite: the HTML5 specification defines, for every possible malformation, exactly how a browser must repair it and keep going. Unclosed tag? Close it at a spec-defined point. Element somewhere illegal? Relocate it. Impossible nesting? Rearrange it. The upside is a web where twenty-five years of imperfect pages still render. The downside lands on you: your mistakes are hidden, not reported.\n\nThe danger is that repair is a guess about your intent, and the guess becomes the real page. CSS selectors match against the repaired tree, not your source. JavaScript queries the repaired tree. So an HTML mistake almost never looks like an HTML mistake — it surfaces as 'my selector doesn't match' or 'the element is not where I put it', two files away from the typo that caused it.\n\nClassic repairs to know by sight: an open <p> auto-closes when a block element arrives (so a list 'inside' a paragraph actually ends it); a <table> written without <tbody> gets one inserted, breaking naive table > tr selectors; content placed illegally between table cells is hoisted out above the table entirely; and a stray closing tag with no open partner is simply deleted.",
+            "code": "<!-- you write -->\n<table>\n  <tr><td>Cell</td></tr>\n</table>\n\n<!-- the parser builds -->\n<table>\n  <tbody>\n    <tr><td>Cell</td></tr>\n  </tbody>\n</table>\n<!-- css 'table > tr' now matches nothing -->"
+          },
+          {
+            "heading": "Two views of the truth: view-source vs the Elements panel",
+            "body": "Every browser offers two very different ways to look at a page, and debugging HTML is largely the art of comparing them. View-source (Ctrl+U / Cmd+Option+U) shows the raw bytes the server sent — your file, untouched. The DevTools Elements panel (right-click, Inspect) shows the live DOM: the tree after parser repairs, and after any JavaScript modifications. When the two disagree, the difference IS the bug report.\n\nA practical diffing routine: pick the element that misbehaves, find it in view-source, then find it in the Elements panel and compare its parent chain. Is it inside the parent you wrote? Did it gain or lose siblings? Did an element you opened get closed earlier than you intended? Parser adoptions — an element sitting in a different parent than in your source — are the smoking gun of a markup error somewhere above it.\n\nThe Elements panel earns its place beyond diffing: hover to highlight the element on the page, see which elements exist but have zero size, and use the search (Ctrl+F inside the panel) with a CSS selector to check what your stylesheet's selector actually matches. Remember its one trap: it always looks valid, because the parser has already cleaned up — absence of red flags there is not absence of errors.",
+            "code": "<!-- routine -->\n1. Misbehaving element -> right-click -> Inspect\n2. Same element -> view-source\n3. Compare parents and siblings\n4. A difference = the parser repaired something above it"
+          },
+          {
+            "heading": "The W3C validator workflow",
+            "body": "The Nu HTML Checker at validator.w3.org is the authoritative second opinion: it parses your page with the same rules browsers use, but reports every repair instead of hiding it. It accepts a URL, an uploaded file, or pasted source — the paste mode fits an edit-validate loop best. Output is a list of messages, each with a severity, an explanation, and the line and column where the parser noticed the problem.\n\nRead messages with two rules in mind. First, the reported line is where the parser NOTICED, not necessarily where you erred — an unclosed <div> on line 12 is often reported as 'unexpected end of file' at the bottom. Second, severities differ: errors are genuine violations; warnings flag legal-but-suspect patterns (a section without a heading, an obsolete attribute). Fix errors always; read warnings and decide.\n\nThe workflow that keeps you sane: validate, fix ONLY the first error or two, re-validate. Early errors cascade — one unclosed quote can generate fifty phantom messages — so a 50-error report frequently collapses to three real problems after the first fix. Working bottom-up, by contrast, means fixing phantoms.",
+            "code": "<!-- typical validator messages, decoded -->\nError: Element 'li' not allowed as child of element 'body'.\n  -> your li has no ul/ol parent (or the parent got auto-closed)\n\nError: Duplicate ID 'intro'.\n  -> two elements share an id; anchors and getElementById use the first\n\nError: An 'img' element must have an 'alt' attribute.\n  -> add a description, or alt=\"\" if decorative"
+          },
+          {
+            "heading": "The greatest hits: common errors and their fixes",
+            "body": "A handful of messages account for most validation reports. 'Missing doctype' — add <!DOCTYPE html> as line one; without it the page renders in quirks mode with legacy box-model behavior. 'Element head is missing a required instance of child element title' — every document needs a non-empty <title>. 'An img element must have an alt attribute' — describe the image, or explicitly opt out with alt=\"\" for decoration. 'Duplicate ID' — ids must be unique per page; rename one and update whatever referenced it. 'Stray end tag' — you closed something never opened, usually the residue of a half-finished edit; delete it.\n\nNesting errors form the second family: 'Element X not allowed as child of element Y'. The frequent offenders: li outside ul/ol, block elements inside <p>, <a> wrapped around another <a>, form controls outside any form when their attributes assume one. The fix is always structural — give the element its legal parent — never cosmetic.\n\nAttribute errors round it out: unquoted values containing spaces, obsolete presentational attributes (align, bgcolor), and misspelled attribute names, which HTML silently treats as unknown-but-legal, making the validator the only tool that will ever tell you about a mistyped 'herf'.",
+            "code": "<!-- the five fixes you will type most often -->\n<!DOCTYPE html>                    <!-- missing doctype -->\n<title>Support — Acme</title>       <!-- missing title -->\n<img src=\"help.png\" alt=\"...\">      <!-- missing alt -->\n<ul><li>...</li></ul>               <!-- orphaned li -->\nid=\"contact\"                        <!-- second 'intro' renamed -->"
+          },
+          {
+            "heading": "This platform's console is a mini-validator",
+            "body": "The feedback console under the editor works on the validator's principle, scaled to each lesson: it parses your code the way a browser would (using the same DOM parsing machinery, with no JavaScript execution) and then runs the lesson's checks against the parsed result. A failing check is a validator message with a friendlier voice — it names the missing or malformed piece and, like the validator, judges the parsed tree rather than your raw text.\n\nThat detail explains behavior you may have noticed across this course: writing an element inside a template, or markup so broken the parser relocated it, can fail a selector check even though the text is 'right there' in your editor. The check queries the DOM the parser built — exactly as your CSS and JavaScript would in production. When a check fails unexpectedly, apply this lesson's routine: assume a parser repair, and look above the reported element for the unclosed or misplaced tag that triggered it.\n\nCarry the habit outward: editor and console here, DevTools plus the W3C validator everywhere else. The loop is identical — parse, read the first complaint, fix, re-run — and it is the difference between debugging by evidence and debugging by superstition.",
+            "code": "<!-- same loop, two scales -->\nplatform : edit -> Run -> first failing check -> fix -> Run\nreal life: edit -> validator/DevTools -> first error -> fix -> re-check"
+          }
+        ],
+        "starterCode": "<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <!-- TODO 1: the doctype is missing entirely (line one!) -->\n  <!-- TODO 2: the validator says head is missing a required child.\n       Add: <title>Support — Acme</title> -->\n</head>\n<body>\n  <h1>Support</h1>\n  <p>Read the FAQ first.</p>\n\n  <!-- TODO 3: these li elements have no list parent — the parser\n       adopts them into body. Wrap them in a <ul>. -->\n  <li>How do I reset my password?</li>\n  <li>How do I contact billing?</li>\n\n  <!-- TODO 4: the validator requires alt on every img -->\n  <img src=\"help.png\">\n\n  <!-- TODO 5: duplicate id! Rename the second one to \"contact\" -->\n  <p id=\"intro\">Our team replies within one business day.</p>\n  <p id=\"intro\">Email us any time at support@acme.test.</p>\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Support — Acme</title>\n</head>\n<body>\n  <h1>Support</h1>\n  <p>Read the FAQ first.</p>\n\n  <ul>\n    <li>How do I reset my password?</li>\n    <li>How do I contact billing?</li>\n  </ul>\n\n  <img src=\"help.png\" alt=\"Screenshot of the help center start page\">\n\n  <p id=\"intro\">Our team replies within one business day.</p>\n  <p id=\"contact\">Email us any time at support@acme.test.</p>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Add the missing <!DOCTYPE html> as the first line.",
+            "hint": "The validator reports a missing doctype before anything else — and browsers without one fall back to quirks mode.",
+            "errorMessage": "Validator says: missing doctype. Start the document with <!DOCTYPE html>.",
+            "check": {
+              "type": "doctype"
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Give the document its required <title> inside <head>: 'Support — Acme'.",
+            "hint": "The exact validator message is 'Element head is missing a required instance of child element title'. One line fixes it.",
+            "errorMessage": "Validator says: head is missing its required title element. Add a non-empty <title> to the head.",
+            "check": {
+              "type": "text",
+              "selector": "head title",
+              "pattern": "support"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Wrap the two orphaned <li> elements in a <ul> so they have a legal parent.",
+            "hint": "The message 'li not allowed as child of body' always means the same fix: give list items a ul or ol parent.",
+            "errorMessage": "Validator says: li not allowed as child of body. Both list items need a <ul> around them.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "ul > li",
+              "min": 2
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Add alt text to the image.",
+            "hint": "Describe what the screenshot shows; if an image were purely decorative you would write alt=\"\" instead.",
+            "errorMessage": "Validator says: an img element must have an alt attribute. Add one describing the image.",
+            "check": {
+              "type": "attr",
+              "selector": "img",
+              "attr": "alt"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Fix the duplicate id: rename the second id=\"intro\" to id=\"contact\".",
+            "hint": "ids must be unique — getElementById and #anchor links resolve only the first match, silently orphaning the second element.",
+            "errorMessage": "Validator says: duplicate ID. The second paragraph should carry id=\"contact\" instead.",
+            "check": {
+              "type": "selector",
+              "selector": "p#contact"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "html-a16-project-full-site",
+      "title": "Capstone: assemble a complete one-page product site",
+      "summary": "Combine everything from the course — semantic structure, responsive media, forms, embedded video, metadata — into one production-shaped landing page, built the way professionals actually assemble pages.",
+      "difficulty": "advanced",
+      "minutes": 15,
+      "isFree": false,
+      "goal": "Build a complete landing page for a product: semantic skeleton with skip link, responsive hero image, comparison table, video demo, validating contact form, FAQ, footer and SEO/social metadata.",
+      "whyItMatters": "Every lesson so far taught one instrument; a real page is the orchestra. Professionals are judged on exactly this ability — taking a content brief and producing a page where the structure is semantic, the media responsive, the form accessible, the metadata complete, and the whole thing validates. This capstone is the pattern you will repeat on every landing page, portfolio and product site you ever build, and the finished file doubles as your personal boilerplate.",
+      "steps": [
+        "Read the assembly-workflow section: professionals build in passes, not top-to-bottom.",
+        "Pass 1 — skeleton: complete the semantic landmark structure (task 1) and the skip link (task 2).",
+        "Pass 2 — media: give the hero a responsive picture source (task 3) and the demo video its poster and fallback (task 4).",
+        "Pass 3 — the form: finish the contact section with a labeled, validating email field (task 5).",
+        "Pass 4 — metadata: add the Open Graph tags so shared links unfurl properly (task 6).",
+        "Final pass: run the checks, then read your page top to bottom as a validator would — this file is now your boilerplate."
+      ],
+      "prompt": "<body>\n  <a class=\"skip-link\" href=\"#main\">Skip to main content</a>\n  <header>\n    <h1>Brewmate</h1>\n    <nav aria-label=\"Main\">\n      <a href=\"#features\" data-section=\"features\">Features</a>\n    </nav>\n  </header>\n  <main id=\"main\">\n    <section id=\"hero\">...</section>\n    <section id=\"features\">...</section>\n  </main>\n  <footer>\n    <address>Brewmate Labs, 12 Roaster Street</address>\n  </footer>\n</body>",
+      "promptLabel": "Key code example",
+      "explanation": "This skeleton is the load-bearing decision of the whole page: one header with the site identity and navigation, one main (the skip link's target) holding every section, one footer with contact and legal content. Each nav link carries a data-section attribute so scripts can highlight the active section without parsing hrefs. Everything else in the capstone — media, table, form, FAQ — hangs off this frame, which is why professionals build and verify it first, before a single image or form field exists.",
+      "example": "The brief: a launch page for Brewmate, a smart coffee scale. Content inventory: a hero image, three feature claims, a model-comparison table, a demo video, an email signup, four FAQ entries, a company address and launch date.\n\nAssembled in passes, that inventory becomes: skeleton (header/nav/main/sections/footer, skip link), then media (picture with a wide-screen source, video with poster and text fallback), then the table with a caption and scoped headers, then the fieldset-grouped form with required and email validation, then details/summary FAQ entries, and finally head metadata — description for search, og:title and og:description so a shared link unfurls with a card instead of a bare URL. The validator pass at the end returns zero errors, and the page is ready to hand to CSS.",
+      "exercise": "In the editor on the right, complete the Brewmate landing page in passes: finish the semantic skeleton and skip link, make the hero image responsive with a picture source, give the demo video its poster and fallback, wire the contact form's labeled email field with validation, and add the Open Graph metadata.",
+      "expectedResult": "The preview shows a full landing page — header with nav, hero, features with comparison table, video demo, FAQ that opens and closes, working form validation on the email field, and footer — and all six checks pass.",
+      "commonMistakes": [
+        "Building top-to-bottom pixel by pixel instead of in passes. Get the whole skeleton standing first; a wrong landmark structure discovered late forces every later piece to move.",
+        "Using section as a styling wrapper. Each section here earns its element by having a heading and a distinct topic; purely visual grouping is a div's job.",
+        "Marking the email field required but skipping its label, or vice versa. Validation and accessibility are separate features; the field needs both the label/for pair and the type/required pair.",
+        "Writing og: tags with name= instead of property=. Open Graph uses the property attribute; social crawlers ignore the name variant and your link preview stays blank."
+      ],
+      "proTip": "Save your finished capstone as personal boilerplate, then delete the Brewmate content. A skeleton you wrote and understand beats any generator's output — you know why every line is there.",
+      "tools": [
+        "html"
+      ],
+      "professions": [
+        "software-developer"
+      ],
+      "skills": [
+        "coding"
+      ],
+      "kind": "coding",
+      "coding": {
+        "intro": "You will assemble the full Brewmate landing page — the course's graduation piece — working in professional passes from skeleton to metadata.",
+        "sections": [
+          {
+            "heading": "How professionals assemble a page: passes, not lines",
+            "body": "Nobody experienced writes a page top-to-bottom in one go. The professional sequence starts before any tags: a content inventory — listing what the page must contain (for Brewmate: hero image, feature claims, comparison data, a demo video, an email signup, FAQ answers, company details) and what each piece IS (tabular data? a media object? a form?). The inventory decides the elements; design decides only how they will look, later, in CSS.\n\nThen the passes. Pass one builds the semantic skeleton: landmarks, headings, empty sections — and verifies it while the page is still ten lines long, because a structural mistake found now costs nothing. Pass two drops media into the standing frame. Pass three builds forms and interactive pieces. Pass four fills the head with metadata. The final pass validates and reads the whole document as an outline.\n\nThis order is not ceremony; it front-loads the decisions that are expensive to reverse. Moving a video element is trivial; discovering after four hundred lines that your 'sections' should have been articles inside one section is an afternoon of re-nesting.",
+            "code": "<!-- the capstone in passes -->\n1. skeleton   header/nav/main/sections/footer + skip link\n2. media      picture, video with poster + fallback\n3. data+forms table, fieldset, labels, validation\n4. metadata   description, og:*, title\n5. verify     validator / checks / outline read"
+          },
+          {
+            "heading": "Pass 1 — the semantic skeleton and the skip link",
+            "body": "The frame uses one of each landmark: header for the site identity and navigation, nav (with aria-label when a page has several) for the link group, main — exactly one per page — for the unique content, footer for the address and small print. Inside main, each distinct topic gets a section with its own heading and id; self-contained pieces that would make sense syndicated elsewhere (a feature story, a testimonial) get article. Screen-reader users receive this structure as a navigable map: landmark-jumping is to them what visual scanning is to everyone else.\n\nThe first focusable element on the page is the skip link: <a href=\"#main\"> pointing at main's id. Keyboard users otherwise tab through every navigation link on every page before reaching content; one link erases that toll. It is usually styled off-screen until focused — but the styling is CSS's problem; the HTML contract is just the link and its target.\n\nThe nav links each carry a data-section attribute naming their target. The data-* mechanism is HTML's sanctioned way to attach machine-readable metadata: scripts read it via element.dataset.section to highlight the active link on scroll, with no classes abused as data storage and no href parsing.",
+            "code": "<a class=\"skip-link\" href=\"#main\">Skip to main content</a>\n<header>\n  <h1>Brewmate</h1>\n  <nav aria-label=\"Main\">\n    <a href=\"#features\" data-section=\"features\">Features</a>\n    <a href=\"#faq\" data-section=\"faq\">FAQ</a>\n  </nav>\n</header>\n<main id=\"main\">...</main>"
+          },
+          {
+            "heading": "Pass 2 — responsive hero, honest video",
+            "body": "The hero image ships in two sizes because one file cannot serve both a phone and a desktop monitor efficiently. The picture element handles the art direction: source elements with media conditions are evaluated top to bottom, the first match wins, and the img child is both the fallback and the carrier of alt text — a picture without a proper img inside renders nothing. For pure resolution switching without art direction, srcset with width descriptors directly on the img would do the same job with less markup.\n\nThe demo video uses the video element with controls (never autoplay a product page with sound), width to reserve layout space, and poster — the preview frame shown before play, which otherwise defaults to a black rectangle or an arbitrary first frame. Inside, source elements offer formats and the text fallback covers ancient browsers and, more realistically, gives crawlers and copy-pasted contexts something to say.\n\nHad the brief called for an external player instead, the iframe route has its own two rules: a title attribute describing the embed (screen readers announce iframes by title, and 'iframe' alone is useless) and loading=\"lazy\" so below-the-fold embeds do not tax initial page load.",
+            "code": "<picture>\n  <source media=\"(min-width: 800px)\" srcset=\"hero-wide.jpg\">\n  <img src=\"hero-small.jpg\" alt=\"Brewmate scale weighing a pour-over\">\n</picture>\n\n<video controls width=\"320\" poster=\"demo-poster.jpg\">\n  <source src=\"demo.mp4\" type=\"video/mp4\">\n  Your browser cannot play this video. Watch it at brewmate.example.\n</video>"
+          },
+          {
+            "heading": "Pass 3 — the comparison table and the contact form",
+            "body": "The model-comparison data is genuinely tabular — two models rated against the same features — so it gets a real table, never a grid of divs. The professional minimum: a caption naming the table (announced first by screen readers, useful to everyone scanning), th cells with scope=\"col\" for the model columns and scope=\"row\" for feature rows, so a reader navigating cell by cell always hears which feature and which model a value belongs to.\n\nThe signup form is where accessibility and validation meet. Every control pairs with a label via for/id — clicking the label focuses the field, and screen readers announce the field's purpose. Related controls group inside a fieldset with a legend ('Contact details'), which is announced as context for every field within. Validation is declarative: type=\"email\" makes the browser check the format, required blocks empty submission, and the browser's built-in messages localize for free. Server-side validation still exists — client validation is user convenience, not security.\n\nThe FAQ uses details/summary: native disclosure widgets with keyboard support and no JavaScript. The footer carries address — the element is specifically for contact information of the page's owner — and the launch date in a time element with a machine-readable datetime attribute, so calendars and crawlers can parse what humans read as prose.",
+            "code": "<form action=\"/subscribe\" method=\"post\">\n  <fieldset>\n    <legend>Contact details</legend>\n    <label for=\"email\">Email</label>\n    <input id=\"email\" name=\"email\" type=\"email\" required>\n  </fieldset>\n  <button type=\"submit\">Subscribe</button>\n</form>\n\n<details>\n  <summary>Does it work with any grinder?</summary>\n  <p>Yes — Brewmate only weighs and times.</p>\n</details>"
+          },
+          {
+            "heading": "Pass 4 — metadata: what search and social actually read",
+            "body": "The head already carries the course's non-negotiables (charset, viewport, title). The capstone adds the discovery layer. <meta name=\"description\"> supplies the sentence search engines usually show under your title — around 150 characters, written like ad copy for the click, unique per page.\n\nOpen Graph tags control the card that appears when the page is shared in chat apps and social feeds: og:title, og:description, and og:image name the headline, blurb and picture of that card. Note the attribute: Open Graph uses property=\"og:...\", not name — a mixup here fails silently, the single most common metadata bug. Without these tags, sharers get a bare URL or a scraped guess; with them, every share is a designed preview.\n\nThe title itself deserves one last look: it should read distinctly in a row of pinned tabs and in a search result — 'Brewmate — smart coffee scale' beats both 'Home' and a keyword pile. Title, description and og tags routinely repeat similar text; that is normal, they serve three different consumers.",
+            "code": "<meta name=\"description\" content=\"Brewmate, the smart coffee scale for home baristas.\">\n<meta property=\"og:title\" content=\"Brewmate smart coffee scale\">\n<meta property=\"og:description\" content=\"Dial in every cup with live brew tracking.\">\n<meta property=\"og:image\" content=\"https://brewmate.example/card.jpg\">"
+          },
+          {
+            "heading": "The final pass: verification as a habit",
+            "body": "A professional page ends with a verification ritual, and the capstone is the place to make it muscle memory. Read the headings alone: do h1 'Brewmate' and the section h2s form a sensible table of contents with no skipped levels? Walk the landmarks: exactly one main, header and footer at top level, every section titled. Tab through the page: does focus land on the skip link first, then move through nav, form and button in reading order?\n\nThen the mechanical checks, exactly as the previous lesson practiced: every img has alt, every form control a label, every iframe (if any) a title, ids unique, required head elements present. Run the document through the validator — or here, the feedback console — and clear findings top-down.\n\nWhat you have at the end is more than an exercise: it is a complete, valid, semantic, accessible page skeleton with media, forms, and metadata — the 20 percent of HTML that carries 95 percent of every real project. Styling it is CSS's story; behavior is JavaScript's. The structure, from here on, is yours.",
+            "code": "<!-- final checklist -->\nheadings read as an outline?   landmarks: 1 main, titled sections?\ntab order sane, skip link first?  alt / labels / titles everywhere?\nids unique?  validator (or console) clean?"
+          }
+        ],
+        "starterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <meta name=\"description\" content=\"Brewmate, the smart coffee scale.\">\n  <!-- TODO 6: add Open Graph tags: og:title and og:description\n       (attribute: property, not name) -->\n  <title>Brewmate — smart coffee scale</title>\n</head>\n<body>\n  <!-- TODO 2: skip link: <a class=\"skip-link\" href=\"#main\">Skip to main content</a> -->\n  <!-- TODO 1: build the skeleton: header (h1 + nav), main id=\"main\"\n       with the sections below inside it, and a footer.\n       Nav links: href=\"#features\" data-section=\"features\",\n                  href=\"#faq\" data-section=\"faq\" -->\n\n  <!-- section id=\"hero\": h2 + the hero image\n       TODO 3: wrap the img in <picture> with\n       <source media=\"(min-width: 800px)\" srcset=\"hero-wide.jpg\"> -->\n  <img src=\"hero-small.jpg\" alt=\"Brewmate scale weighing a pour-over\">\n\n  <!-- section id=\"features\": h2, comparison table, and an article with\n       TODO 4: a <video controls width=\"320\"> with poster=\"demo-poster.jpg\",\n       a <source src=\"demo.mp4\" type=\"video/mp4\"> and text fallback -->\n\n  <!-- section id=\"faq\": h2 + a details/summary entry -->\n\n  <!-- section id=\"contact\":\n       TODO 5: form (action=\"/subscribe\" method=\"post\") with a fieldset,\n       legend, a labeled email input (type=\"email\", required) and a\n       submit button -->\n\n  <!-- footer: <address> + launch date in a <time datetime=\"2026-11-01\"> -->\n</body>\n</html>",
+        "solutionCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <meta name=\"description\" content=\"Brewmate, the smart coffee scale.\">\n  <meta property=\"og:title\" content=\"Brewmate smart coffee scale\">\n  <meta property=\"og:description\" content=\"Dial in every cup with live brew tracking.\">\n  <title>Brewmate — smart coffee scale</title>\n</head>\n<body>\n  <a class=\"skip-link\" href=\"#main\">Skip to main content</a>\n  <header>\n    <h1>Brewmate</h1>\n    <nav aria-label=\"Main\">\n      <a href=\"#features\" data-section=\"features\">Features</a>\n      <a href=\"#faq\" data-section=\"faq\">FAQ</a>\n    </nav>\n  </header>\n  <main id=\"main\">\n    <section id=\"hero\">\n      <h2>Every cup, dialed in</h2>\n      <picture>\n        <source media=\"(min-width: 800px)\" srcset=\"hero-wide.jpg\">\n        <img src=\"hero-small.jpg\" alt=\"Brewmate scale weighing a pour-over\">\n      </picture>\n    </section>\n    <section id=\"features\">\n      <h2>Features</h2>\n      <table>\n        <caption>Model comparison</caption>\n        <tr><th scope=\"col\">Feature</th><th scope=\"col\">Basic</th><th scope=\"col\">Pro</th></tr>\n        <tr><th scope=\"row\">Bluetooth</th><td>Yes</td><td>Yes</td></tr>\n        <tr><th scope=\"row\">Brew timer</th><td>No</td><td>Yes</td></tr>\n      </table>\n      <article>\n        <h3>See it in action</h3>\n        <video controls width=\"320\" poster=\"demo-poster.jpg\">\n          <source src=\"demo.mp4\" type=\"video/mp4\">\n          Your browser cannot play this video. Watch it at brewmate.example.\n        </video>\n      </article>\n    </section>\n    <section id=\"faq\">\n      <h2>FAQ</h2>\n      <details>\n        <summary>Does it work with any grinder?</summary>\n        <p>Yes — Brewmate only weighs and times; any grinder works.</p>\n      </details>\n    </section>\n    <section id=\"contact\">\n      <h2>Get launch updates</h2>\n      <form action=\"/subscribe\" method=\"post\">\n        <fieldset>\n          <legend>Contact details</legend>\n          <label for=\"email\">Email</label>\n          <input id=\"email\" name=\"email\" type=\"email\" required>\n        </fieldset>\n        <button type=\"submit\">Subscribe</button>\n      </form>\n    </section>\n  </main>\n  <footer>\n    <address>Brewmate Labs, 12 Roaster Street, Athens</address>\n    <p>Launching <time datetime=\"2026-11-01\">1 November 2026</time></p>\n  </footer>\n</body>\n</html>",
+        "tasks": [
+          {
+            "id": "t1",
+            "instruction": "Build the semantic skeleton: header (with h1 and nav), main id=\"main\" containing the four sections, an article around the video block, and a footer.",
+            "hint": "One of each landmark: header at top, exactly one main, footer at the bottom; each topic is a section with an id, and the demo block inside features is an article.",
+            "errorMessage": "The landmark skeleton is incomplete — expected header, nav, main, sections, an article and a footer to all be present.",
+            "check": {
+              "type": "selectorCount",
+              "selector": "header, nav, main, section, article, footer",
+              "min": 6
+            }
+          },
+          {
+            "id": "t2",
+            "instruction": "Add the skip link as the first element in body: <a class=\"skip-link\" href=\"#main\">Skip to main content</a>.",
+            "hint": "It must target main's id — keyboard users press Tab once, hit Enter, and land past the navigation.",
+            "errorMessage": "No skip link pointing at #main found. Keyboard users need it as the page's first focusable element.",
+            "check": {
+              "type": "selector",
+              "selector": "a[href=\"#main\"]"
+            }
+          },
+          {
+            "id": "t3",
+            "instruction": "Make the hero responsive: wrap the img in a <picture> with a <source media=\"(min-width: 800px)\" srcset=\"hero-wide.jpg\"> above it.",
+            "hint": "The source list is evaluated top to bottom, first match wins; the img stays inside as fallback and alt-text carrier.",
+            "errorMessage": "No <source> with a srcset found inside a <picture>. The hero needs the wide-screen variant.",
+            "check": {
+              "type": "selector",
+              "selector": "picture source[srcset]"
+            }
+          },
+          {
+            "id": "t4",
+            "instruction": "Add the demo video: <video controls width=\"320\" poster=\"demo-poster.jpg\"> with an mp4 source and a text fallback inside.",
+            "hint": "poster is the preview frame before play; the text between the tags serves browsers and crawlers that cannot play the file.",
+            "errorMessage": "No video with a poster attribute found. The demo needs controls, a poster frame, a source and fallback text.",
+            "check": {
+              "type": "attr",
+              "selector": "video",
+              "attr": "poster"
+            }
+          },
+          {
+            "id": "t5",
+            "instruction": "Complete the contact form: inside a fieldset with legend, a label tied to an email input that is both type=\"email\" and required.",
+            "hint": "The pair for=\"email\"/id=\"email\" links label and field; type plus required gives you browser-native validation for free.",
+            "errorMessage": "No required email input found inside the form. The signup field needs type=\"email\" AND required, with its label.",
+            "check": {
+              "type": "selector",
+              "selector": "form input[type=\"email\"][required]"
+            }
+          },
+          {
+            "id": "t6",
+            "instruction": "Add the Open Graph tags in head: og:title and og:description, using the property attribute.",
+            "hint": "<meta property=\"og:title\" content=\"...\"> — property, not name; social crawlers ignore the name variant entirely.",
+            "errorMessage": "No <meta property=\"og:title\"> found. Shared links will unfurl as bare URLs without the Open Graph pair.",
+            "check": {
+              "type": "selector",
+              "selector": "meta[property=\"og:title\"]"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

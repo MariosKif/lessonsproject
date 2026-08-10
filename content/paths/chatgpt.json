@@ -1,0 +1,27 @@
+{
+  "paths": [
+    {
+      "slug": "chatgpt-academy",
+      "title": "ChatGPT Academy",
+      "tagline": "From your first great prompt to a fully automated personal workflow.",
+      "description": "A ladder of 10 hands-on lessons covering everything a working professional needs from ChatGPT: writing prompts that work the first time, improving drafts and tone, analyzing files, organizing work with Projects, building custom GPTs, running Deep Research, analyzing spreadsheets, managing memory and personalization, and automating multi-step tasks with Agent mode.",
+      "kind": "tool-course",
+      "level": "mixed",
+      "toolSlug": "chatgpt",
+      "professionSlug": null,
+      "sortOrder": 5,
+      "lessons": [
+        "gpt-b1-first-professional-result",
+        "gpt-b2-prompt-structure-fundamentals",
+        "gpt-b3-improving-drafts-and-tone",
+        "gpt-i1-analyzing-files-and-documents",
+        "gpt-i2-projects-for-organized-work",
+        "gpt-i3-custom-gpts-for-repeatable-tasks",
+        "gpt-i4-deep-research-reports",
+        "gpt-a1-data-analysis-with-code-interpreter",
+        "gpt-a2-memory-and-personalization",
+        "gpt-a3-agent-mode-and-your-workflow"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,934 @@
+{
+  "enrichment": {
+    "rest-b1-menu-descriptions-that-sell": {
+      "placeholders": [
+        {
+          "name": "DISH NAME",
+          "what": "The exact name of the dish as it will appear on your menu. Use the name customers will actually see — not an internal kitchen name or ticket abbreviation. A good value is specific enough to search for later (\"Braised Short Rib\"), not vague (\"Special #3\").",
+          "examples": [
+            "Braised Short Rib",
+            "Wood-Fired Margherita Pizza",
+            "Charred Corn & Poblano Chowder"
+          ]
+        },
+        {
+          "name": "LIST",
+          "what": "Every real ingredient in the dish that a guest would care about — the protein, key vegetables, sauce components, and any garnish worth naming. Skip pantry basics like salt and oil unless they're part of the dish's identity (e.g., a specific finishing oil).",
+          "examples": [
+            "beef short rib, red wine, root vegetables, garlic, fresh thyme",
+            "fresh mozzarella, San Marzano tomatoes, basil, wood-fired dough",
+            "sweet corn, poblano peppers, cream, cotija cheese, lime"
+          ]
+        },
+        {
+          "name": "E.G., \"pan-seared,\" \"slow-braised 6 hours,\" \"wood-fired\"",
+          "what": "The actual cooking technique and, if relevant, the time involved. This is the detail that makes copy specific instead of generic — \"grilled\" and \"slow-smoked for 12 hours\" sell very differently. Write it the way a line cook would describe it, not a marketing term.",
+          "examples": [
+            "braised 6 hours, finished with pan jus",
+            "wood-fired at 900°F for 90 seconds",
+            "pan-seared, finished under the broiler"
+          ]
+        },
+        {
+          "name": "E.G., \"from Miller Family Farm\" or leave blank",
+          "what": "Only include a sourcing detail if it's actually true and you could show a receipt or supplier name for it. If you buy the ingredient wholesale or don't track its origin, leave this blank rather than guessing — an invented sourcing claim is a legal and trust risk.",
+          "examples": [
+            "from Miller Family Farm",
+            "local Gulf shrimp, delivered daily",
+            "leave blank — sourced from a standard food distributor"
+          ]
+        },
+        {
+          "name": "PRICE",
+          "what": "The exact menu price for this dish, in your local currency and format. This doesn't change the wording of the description but keeps your notes complete so you can reuse this same prompt later.",
+          "examples": [
+            "$28",
+            "$16.50",
+            "€14"
+          ]
+        },
+        {
+          "name": "LIST OR \"none stated\"",
+          "what": "Every allergen your kitchen knows is in the dish — nuts, shellfish, dairy, gluten, soy, etc. If you haven't actually confirmed allergens for this dish, write \"none stated\" rather than guessing, since a wrong allergen claim can cause real harm.",
+          "examples": [
+            "contains dairy and gluten",
+            "contains tree nuts (walnuts)",
+            "none stated"
+          ]
+        },
+        {
+          "name": "printed menu / online ordering / QR menu / social post",
+          "what": "Where this copy will actually appear. Format changes what length and style work — a printed menu has more room to breathe than a QR-code menu on a phone screen, and a social post needs to work without any other menu context.",
+          "examples": [
+            "printed menu",
+            "QR menu",
+            "online ordering"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Batch version for updating a whole section at once",
+          "whenToUse": "Use this when you're revising an entire menu section (e.g., all appetizers) in one sitting instead of one dish at a time, so you're not re-pasting the rules for every dish.",
+          "prompt": "You are helping me write menu descriptions for a batch of dishes in one restaurant section, using only the facts I give for each dish. Do not add ingredients, cooking techniques, or sourcing claims (e.g., \"organic,\" \"locally sourced,\" \"grass-fed\") that I did not state for that specific dish. If a dish has an allergen-relevant ingredient, mention it plainly in that dish's own \"Contains\" note. Do not use empty adjectives like \"delicious\" or \"amazing\" — use specific, sensory details tied to the facts given.\n\nSection: [E.G., \"Appetizers\" or \"Fall Specials\"]\nMenu format: [printed menu / online ordering / QR menu / social post]\n\nFor each dish below, write a 15-25 word menu description, a \"Contains\" note if allergens are listed, and an 8-10 word short version:\n\nDish 1 — Name: [NAME] | Ingredients: [LIST] | Prep: [METHOD] | Sourcing: [DETAIL OR BLANK] | Price: [PRICE] | Allergens: [LIST OR \"none stated\"]\nDish 2 — Name: [NAME] | Ingredients: [LIST] | Prep: [METHOD] | Sourcing: [DETAIL OR BLANK] | Price: [PRICE] | Allergens: [LIST OR \"none stated\"]\n(add more dishes in the same format as needed)"
+        },
+        {
+          "label": "Shorter version for a specials board only",
+          "whenToUse": "Use when you only need the ultra-short version for a chalkboard or table tent, not the full menu description.",
+          "prompt": "Write only a short menu description for this dish, using only the facts below. Do not add ingredients, cooking techniques, or sourcing claims I didn't state, and do not use empty adjectives like \"delicious\" or \"amazing.\"\n\nDish name: [DISH NAME]\nIngredients: [LIST]\nPrep/cooking method: [METHOD]\nPrice: [PRICE]\nKnown allergens: [LIST OR \"none stated\"]\n\nWrite one version, 6-8 words, for a small chalkboard or table tent — lead with the single most distinctive ingredient or technique."
+        },
+        {
+          "label": "Higher-stakes version for a dish with multiple allergens",
+          "whenToUse": "Use when the dish has several known allergens and you want the Contains note to be unmissable, not just accurate.",
+          "prompt": "You are helping me write a menu description for a dish with multiple known allergens, where the Contains note needs to be unmissable.\n\nDish name: [DISH NAME]\nIngredients: [LIST]\nPrep/cooking method: [METHOD]\nAll known allergens (list every one, do not summarize): [LIST]\nMenu format: [printed menu / online ordering / QR menu / social post]\n\nWrite:\n1. A 15-25 word menu description using only the facts given, no invented ingredients or sourcing claims, no empty adjectives.\n2. A \"Contains\" note listing every allergen separately and plainly, formatted so it stands out visually from the description (e.g., bolded or on its own line) rather than blended into a sentence.\n3. A one-line note I can hand to staff confirming which allergens apply, separate from the guest-facing copy."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Too generic? Push for more sensory detail",
+          "prompt": "This description still feels a little flat. Rewrite it using only the facts I gave you, but push harder on sensory language tied to the actual prep method — texture, char, aroma — without adding any ingredient or technique I didn't mention."
+        },
+        {
+          "label": "Double-check it didn't add anything",
+          "prompt": "Go back through your description line by line and list any word or claim that isn't directly traceable to the ingredients, prep method, or sourcing detail I gave you. If you find any, remove them and give me the corrected version."
+        },
+        {
+          "label": "Need it shorter for a table tent or board",
+          "prompt": "Give me one more version, 6-8 words, that could fit on a small chalkboard or table tent — keep only the single most distinctive detail."
+        },
+        {
+          "label": "Sounds like every other menu description",
+          "prompt": "This could describe a dozen different dishes. Rewrite it so the specific prep method and sourcing detail I gave you are the first thing a reader notices, not the last."
+        }
+      ],
+      "walkthrough": "Dana owns a 40-seat bistro and is updating the fall menu the night before it goes to print. She opens a new chat in Claude and starts a Project called \"Fall Menu 2026\" so she can reuse it for every dish.\n\nFor the first dish, she pastes the guardrail prompt and fills in the blanks: Dish name is \"Braised Short Rib,\" Ingredients are \"beef short rib, red wine, root vegetables, garlic, fresh thyme,\" Prep/cooking method is \"braised 6 hours, finished with pan jus,\" Sourcing detail she leaves blank because she buys the beef wholesale, Price is \"$28,\" Known allergens she writes \"none stated,\" and Menu format is \"printed menu.\"\n\nClaude responds with: \"Beef short rib, braised six hours in red wine with garlic and thyme, finished with pan jus and root vegetables\" as the full-length description, no Contains note since no allergens were listed, and a shorter version: \"6-hour braised short rib, red wine jus.\"\n\nDana reads it against her own notes and confirms nothing was invented — no mention of \"grass-fed\" or a wine pairing she never gave it. She sends the follow-up \"Need it shorter for a table tent or board,\" since she also wants a version for the specials chalkboard by the host stand, and gets back a 7-word line: \"6-hour braised short rib, red wine jus.\"\n\nShe copies the final text into her menu file and repeats the same prompt for the next four dishes, swapping in new details each time. The whole batch of five dishes, from opening Claude to a finished, print-ready file, takes her about 35 minutes — a task that used to eat most of an evening."
+    },
+    "rest-b2-review-responses-praise-complaints-unfair": {
+      "placeholders": [
+        {
+          "name": "PASTE REVIEW TEXT",
+          "what": "The review copied exactly as the guest wrote it, word for word, from the platform where it was posted (Google, Yelp, TripAdvisor, etc.). Don't paraphrase or summarize it — small wording differences change what the response needs to address.",
+          "examples": [
+            "\"Waited an hour and the food was cold, terrible service, never going back.\"",
+            "\"Best meal we've had all year. Our server Marco remembered our anniversary from a call the week before. Will be back!\"",
+            "\"Food was fine but way overpriced for the portion size. Wouldn't recommend for the price.\""
+          ]
+        },
+        {
+          "name": "praise / legitimate complaint / unfair or inaccurate",
+          "what": "Your own honest read of the review's category, based on what you actually know happened — the AI should not be the one deciding this, since only you know if a complaint is fair. If a review has both praise and a complaint, pick whichever needs more careful handling, usually the complaint.",
+          "examples": [
+            "praise",
+            "legitimate complaint",
+            "unfair or inaccurate"
+          ]
+        },
+        {
+          "name": "FACTS OR \"UNCLEAR\"",
+          "what": "What actually happened, based on real records — reservation logs, staff accounts, kitchen timing — not a guess to make the response sound better. If you genuinely don't know yet, write \"unclear, will look into it\" instead of inventing an explanation.",
+          "examples": [
+            "table records show a 22-minute wait, no other complaints that night, kitchen closed on time",
+            "unclear, will look into it",
+            "the dish in question was remade after the server confirmed it was undercooked; kitchen manager spoke with the table before they left"
+          ]
+        },
+        {
+          "name": "NAME / owner or manager",
+          "what": "Your restaurant's name and whether you're signing as the owner or the manager — this frames how the response reads, so future readers know who's speaking for the business.",
+          "examples": [
+            "The Copper Spoon / owner",
+            "Trattoria Rossi / general manager",
+            "Harbor House Grill / owner"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Shorter version for a strict character-limit reply box",
+          "whenToUse": "Use when the platform has a tight character limit and you need something under 40 words instead of the standard range.",
+          "prompt": "Help me write a short public response to this restaurant review, under 40 words total, for a platform with a strict character limit.\n\nReview: [PASTE REVIEW TEXT]\nCategory (my judgment): [praise / legitimate complaint / unfair or inaccurate]\nWhat actually happened (only if a complaint, real facts only, or \"unclear, will look into it\"): [FACTS OR \"UNCLEAR\"]\nMy restaurant's name and my role: [NAME / owner or manager]\n\nKeep the same rules as before by category (warm and specific for praise, accountable without over-apologizing for a fair complaint, calm and factual without arguing for an unfair one) but compress to under 40 words while keeping it natural, not choppy. Do not invent any detail about what happened."
+        },
+        {
+          "label": "Also draft a private thank-you note for the staff member mentioned",
+          "whenToUse": "Use when a positive review names a specific employee and you want to pass along the praise directly, not just post the public reply.",
+          "prompt": "Help me write two things from this review: a public response, and a private thank-you note to the staff member the guest mentioned by name.\n\nReview: [PASTE REVIEW TEXT]\nCategory (my judgment): [praise / legitimate complaint / unfair or inaccurate]\nStaff member mentioned: [NAME AND ROLE]\nMy restaurant's name and my role: [NAME / owner or manager]\n\n1. Write the public response following the same rules as the standard prompt (warm and specific for praise, under 60 words).\n2. Write a short, genuine private message (2-3 sentences) I can send or say directly to the staff member, referencing specifically what the guest said about them."
+        },
+        {
+          "label": "Batch triage for a week's worth of reviews at once",
+          "whenToUse": "Use at the end of the week when several reviews have piled up and you want to classify and draft responses for all of them in one pass.",
+          "prompt": "I have several restaurant reviews to respond to from this week. For each one, classify it into praise / legitimate complaint / unfair or inaccurate based on the facts I provide, then draft the response following the standard rules (praise: warm, specific, under 60 words; legitimate complaint: accountable without over-apologizing, notes any real action, under 100 words; unfair/inaccurate: calm, factual correction only, under 90 words). Do not invent facts about what happened.\n\nReview 1: [PASTE REVIEW TEXT] | Facts if complaint: [FACTS OR \"UNCLEAR\"]\nReview 2: [PASTE REVIEW TEXT] | Facts if complaint: [FACTS OR \"UNCLEAR\"]\n(add more as needed)\n\nMy restaurant's name and my role: [NAME / owner or manager]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Sounds defensive? Soften it",
+          "prompt": "Reread this response as if you were the guest who wrote the review. Point out any sentence that could read as defensive or argumentative, and rewrite the response to remove it while keeping the same facts."
+        },
+        {
+          "label": "Check it didn't admit fault we haven't confirmed",
+          "prompt": "Go through this response and flag any sentence that admits fault or promises something I haven't explicitly confirmed happened. Rewrite those sentences to stay factual without over-apologizing."
+        },
+        {
+          "label": "Too short/generic for how good this review was",
+          "prompt": "This response feels generic for how specific and positive this review was. Rewrite it referencing the specific detail the guest mentioned, so it doesn't read like a template."
+        },
+        {
+          "label": "Add a genuine offline next step",
+          "prompt": "Add one sentence inviting the guest to contact us directly, using [PHONE NUMBER OR EMAIL], without sounding scripted or like a customer-service copy-paste line."
+        }
+      ],
+      "walkthrough": "Marcus manages a 60-seat trattoria and sits down Sunday night, after a long dinner rush, to catch up on three new reviews. The middle one worries him: a guest wrote that they waited an hour and the food arrived cold, and would never come back.\n\nHe opens ChatGPT and pastes the review word for word. For category, he checks the reservation system first — the table's actual wait was 22 minutes, not an hour, and no other table complained that night. He writes that under \"what actually happened,\" marks the category as \"unfair or inaccurate,\" and fills in his restaurant's name and role as \"Trattoria Rossi / general manager.\"\n\nThe draft comes back calm and factual: it thanks the guest for taking the time to write, gently notes the table's recorded 22-minute wait without accusing them of lying, says the team takes the complaint about cold food seriously, and invites them to call the restaurant directly.\n\nMarcus reads it once more and worries the line about the wait sounds slightly like an argument, so he sends the follow-up \"Sounds defensive? Soften it.\" The revised version keeps the same facts but opens with more warmth before mentioning the wait time at all.\n\nHe posts the final response on Google that night. The whole thing — reading the review, pulling the reservation record, drafting, and revising — takes him about twelve minutes, compared to the twenty-plus minutes he used to spend rewriting a reply from scratch when he was frustrated."
+    },
+    "rest-i1-social-posts-seasonal-promotions": {
+      "placeholders": [
+        {
+          "name": "E.G., \"Fall harvest menu\" or \"Patio happy hour, weekdays 4-6pm\"",
+          "what": "A short name for the actual promotion you're running — the specific menu, event, or offer, described the way you'd say it out loud to a guest. Vague names like \"fall promo\" make it harder for the AI to write anything specific.",
+          "examples": [
+            "Fall harvest menu",
+            "Patio happy hour, weekdays 4-6pm",
+            "Holiday prix fixe, 3 courses"
+          ]
+        },
+        {
+          "name": "LIST",
+          "what": "The actual dishes or offers included in the promotion, real items from your kitchen or bar — not aspirational ones you're still deciding on. This is what keeps the captions and image prompts grounded in real food.",
+          "examples": [
+            "butternut squash risotto, spiced apple cocktail",
+            "half-price appetizers, $5 house wine by the glass",
+            "roasted turkey plate, pumpkin pie slice"
+          ]
+        },
+        {
+          "name": "DATES",
+          "what": "The actual start and end date the promotion runs, exactly as you'd want a guest to see them. This lets the AI place urgency language (like a last-chance post) accurately near the real end date.",
+          "examples": [
+            "October 1-31",
+            "weekdays, ongoing through December",
+            "November 20 - 27"
+          ]
+        },
+        {
+          "name": "PRICE OR \"not stated\"",
+          "what": "The exact price if you're advertising it publicly, or \"not stated\" if pricing isn't part of the public promotion. Never let a price get invented or estimated — a wrong price posted publicly is a real problem.",
+          "examples": [
+            "$18 per person",
+            "not stated",
+            "$5 during happy hour"
+          ]
+        },
+        {
+          "name": "Instagram / Facebook / both",
+          "what": "Which platform(s) you're posting to — this affects hashtag conventions and tone slightly, since Instagram captions tend to run a bit more casual than Facebook.",
+          "examples": [
+            "Instagram",
+            "both",
+            "Facebook"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Single-platform, single-post version",
+          "whenToUse": "Use this when you only need one post today — a same-day announcement or reminder — instead of a full week's worth of captions and image prompts.",
+          "prompt": "Write one social media caption announcing a seasonal promotion, using only the facts below. Do not invent menu items, prices, or dates.\n\nPromotion: [E.G., \"Fall harvest menu\" or \"Patio happy hour, weekdays 4-6pm\"]\nDishes/offers involved: [LIST]\nDates it runs: [DATES]\nPrice (only if public): [PRICE OR \"not stated\"]\nPlatform: [Instagram / Facebook]\nAngle for this post: [E.G., \"first announcement,\" \"spotlight one dish,\" \"last-chance reminder\"]\n\nWrite one caption under 60 words with 3-5 relevant hashtags and one clear call to action. Do not use urgency language (\"almost sold out\") unless I've told you it's actually true. Then write one matching image-generation prompt using this structure: subject, setting, composition, lighting, style, mood/color palette, aspect ratio — based only on the dishes/offers listed above."
+        },
+        {
+          "label": "Advanced: multi-week promotion with a countdown arc",
+          "whenToUse": "Use for a longer promotion (e.g., a full month) that needs distinct posts spaced across several weeks rather than one week, with the tone shifting from launch to reminder to last-chance.",
+          "prompt": "Write a set of social media captions for a seasonal promotion that runs over several weeks, using only the facts below. Do not invent menu items, prices, or dates.\n\nPromotion: [E.G., \"Fall harvest menu\"]\nDishes/offers involved: [LIST]\nFull date range: [START DATE - END DATE]\nPrice (only if public): [PRICE OR \"not stated\"]\nPlatforms: [Instagram / Facebook / both]\n\nWrite one caption for each of these moments: Week 1 launch announcement, Week 2 dish spotlight, mid-run atmosphere/behind-the-scenes post, final-week reminder, and last-day post. Each under 60 words with 3-5 hashtags and one clear call to action. Do not use urgency language unless I've confirmed it's true for that specific post (e.g., the last-day post can note it's the final day since that's factually true). For each caption, also write a matching image-generation prompt (subject, setting, composition, lighting, style, mood/color palette, aspect ratio) based only on the dishes/offers listed."
+        },
+        {
+          "label": "Different context: internal staff heads-up before the public posts go live",
+          "whenToUse": "Use this to draft a short internal message telling staff about the promotion before it's posted publicly, so they're not caught off guard by a guest asking about it.",
+          "prompt": "Write a short internal staff announcement about an upcoming promotion, using only the facts below. This is for staff, not guests, so it can be more direct and doesn't need hashtags or a guest-facing call to action.\n\nPromotion: [E.G., \"Fall harvest menu\"]\nDishes/offers involved: [LIST]\nDates it runs: [DATES]\nPrice (only if public): [PRICE OR \"not stated\"]\nWhat staff need to know: [E.G., \"how to describe it if asked, any prep changes, whether it's dine-in only\"]\n\nWrite one short message (under 100 words) telling staff what's launching, when, and what they need to know to answer guest questions about it accurately."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Feels repetitive across the week? Vary the angle more",
+          "prompt": "Look at all five captions together as a set. Point out any two that feel too similar in structure or opening line, and rewrite one of them with a genuinely different angle (atmosphere, a different dish, or the last-chance reminder) using only the facts I originally gave you."
+        },
+        {
+          "label": "Check no caption oversells the dish",
+          "prompt": "Review each caption against the dishes/offers I listed and flag any word or phrase that oversells the dish beyond what it actually is (e.g., implying a bigger portion, a fancier preparation, or an ingredient I didn't mention). Rewrite anything flagged."
+        },
+        {
+          "label": "Need the last-chance post reworded without false urgency",
+          "prompt": "Rewrite the last-chance post so it doesn't use urgency language I haven't confirmed is true (like \"almost sold out\"). It can note the real end date factually, but shouldn't imply scarcity I didn't state."
+        },
+        {
+          "label": "Adapt one caption for a different platform's tone",
+          "prompt": "Take caption [NUMBER] and rewrite it for [Facebook / Instagram] instead, adjusting tone and hashtag usage to fit that platform's conventions, without changing any of the underlying facts."
+        }
+      ],
+      "walkthrough": "Priya owns a small bistro and wants to promote her fall harvest menu — a butternut squash risotto and a spiced apple cocktail — running October 1 through 31, with no public pricing. She opens a new chat in Claude and pastes Part 1 of the prompt, filling in the promotion name, the two items, the date range, and Instagram and Facebook as her platforms.\n\nClaude returns five captions: a launch post introducing the harvest menu, a mid-run post focused on the risotto's texture, an atmosphere post about the restaurant's fall decor, a happy-hour-style post about the cocktail, and a last-week reminder — each with hashtags and a call to action, and none claiming the promotion is \"almost sold out,\" since Priya never said that was true.\n\nShe reads through the set and notices the launch post and the risotto post both open with \"Fall is here,\" so she sends the follow-up \"Feels repetitive across the week? Vary the angle more.\" Claude rewrites the risotto post to open by describing the dish's texture instead.\n\nShe then moves to Part 2, pasting each caption in turn into ChatGPT to generate five matching visuals with GPT Image 2 — warm-toned shots of the risotto and cocktail, since those are the only two items she actually listed. She swaps in a real photo for the risotto post because the AI-generated version doesn't quite match her actual plating.\n\nFrom opening Claude to a scheduled week of five posts with images, the whole process takes Priya about 50 minutes, spread across one sitting instead of five separate scrambles."
+    },
+    "rest-i2-staff-training-documents-and-checklists": {
+      "placeholders": [
+        {
+          "name": "E.G., \"Opening the bar\" or \"Closing side work for servers\"",
+          "what": "The single role or task you're documenting, named the way your team already refers to it. Keep it to one task per prompt run — trying to cover an entire role at once produces an unusably long document.",
+          "examples": [
+            "Opening the bar",
+            "Closing side work for servers",
+            "Running the host stand during dinner rush"
+          ]
+        },
+        {
+          "name": "PASTE YOUR EXPLANATION",
+          "what": "Your own explanation of how the task actually gets done, in whatever order it comes to mind — voice notes transcribed, rough bullet points, or a stream-of-consciousness paragraph all work. The messier and more complete this is, the better the AI can reorganize it; don't try to pre-organize it yourself first.",
+          "examples": [
+            "tables need to be wiped and reset, ketchups and condiments refilled and wiped down, someone rolls silverware, floor gets swept under booths, high chairs wiped, POS drawer counted by the closing manager not the server, trash from the server station taken out",
+            "unlock liquor cage, count starting cash drawer against yesterday's closing count, check date codes on garnish trays and toss anything past date, turn on draft system and check CO2 pressure, wipe down bar top and stock ice well",
+            "host checks reservation system for the night's covers, confirms any large party notes with the kitchen, sets up the waitlist tablet, does a walk-through of the dining room to confirm table counts match the floor plan"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Shorter version for a task with only a few steps",
+          "whenToUse": "Use for a short, simple task (like restocking a single station) where the full document/checklist/questions structure is overkill.",
+          "prompt": "Turn my raw explanation of a short restaurant task into a simple checklist, using only what I describe below. Do not add steps or best practices I didn't mention — list anything you think is missing separately under \"Questions to confirm,\" not inside the checklist.\n\nTask: [E.G., \"Restocking the to-go station\"]\nMy raw explanation: [PASTE YOUR EXPLANATION]\n\nProduce a single short checklist (5-8 items max) in the correct logical order, formatted as checkable items for a clipboard, plus a short \"Questions to confirm\" list if anything seems missing."
+        },
+        {
+          "label": "Advanced: safety-critical task needing extra confirmation",
+          "whenToUse": "Use for a task with real safety or compliance consequences (closing the kitchen, handling knives, cash handling) where you want the questions section to specifically probe for safety gaps.",
+          "prompt": "Turn my raw explanation of a safety-critical restaurant task into a training document and checklist, using only what I describe below. Do not add safety rules, steps, or best practices I didn't mention — if you think something important is missing, list it separately under \"Safety questions to confirm with the owner,\" don't add it into the steps.\n\nRole/task: [E.G., \"Closing the kitchen and securing equipment\"]\nMy raw explanation (any order, rough notes are fine): [PASTE YOUR EXPLANATION]\n\nProduce:\n1. A training document with a short intro on why this task matters for safety, then numbered steps in the correct logical order.\n2. A one-page checklist version for a clipboard or laminated card.\n3. A \"Safety questions to confirm with the owner\" list specifically flagging any point where a missing rule (like who verifies equipment is off, or what to do if something seems unsafe) could matter, based only on gaps in what I described — not invented rules."
+        },
+        {
+          "label": "Different context: onboarding video script instead of a written doc",
+          "whenToUse": "Use when you'd rather record a short video walkthrough for new hires than hand them a written document.",
+          "prompt": "Turn my raw explanation of a restaurant task into a short video script a manager could read while filming a walkthrough, using only what I describe below. Do not add steps or best practices I didn't mention — list anything that seems missing separately under \"Questions to confirm,\" not in the script.\n\nRole/task: [E.G., \"Opening the bar\"]\nMy raw explanation (any order, rough notes are fine): [PASTE YOUR EXPLANATION]\n\nProduce a script broken into short spoken segments matching each real step in order, written the way someone would actually talk while demonstrating it on camera (not written like a formal document), plus a \"Questions to confirm\" list for anything that seemed missing."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "A step seems off? Correct it directly",
+          "prompt": "Step [NUMBER] doesn't match how we actually do it. Here's the correct version: [CORRECTED STEP]. Update the document and checklist to reflect this and keep everything else the same."
+        },
+        {
+          "label": "Turn the questions list into things to ask your team this week",
+          "prompt": "Turn the \"Questions to confirm with the owner\" list into a short set of specific questions I can ask my team this week to fill each gap, phrased so a staff member could answer them directly."
+        },
+        {
+          "label": "Make the checklist even shorter for a laminated card",
+          "prompt": "Shorten the checklist to the absolute minimum number of items that still covers every step, using short 3-5 word phrases per item so it fits on a small laminated card."
+        },
+        {
+          "label": "Add role assignments to each step",
+          "prompt": "Go through the checklist and add who is responsible for each step (server, bartender, closing manager, etc.), based on what I tell you here: [ROLE ASSIGNMENTS]. Leave a step's owner blank if I haven't told you who does it."
+        }
+      ],
+      "walkthrough": "Owen manages a mid-size restaurant and has explained closing side work to six different new hires over the past year, a little differently each time. He decides to finally write it down.\n\nHe opens ChatGPT and pastes the training-document prompt, naming the task \"Closing side work for servers.\" For his raw explanation, he types it out roughly as it comes to him: tables get wiped and reset, condiments refilled and wiped down, silverware rolled, floor swept under booths, high chairs wiped, the POS drawer counted by the closing manager instead of the server, and trash from the server station taken out.\n\nChatGPT returns a training document that reorders these into a logical sequence — tables first, then condiments, silverware, floor, high chairs, then station trash, with the POS drawer step clearly assigned to the closing manager — plus a matching checklist, and a \"Questions to confirm\" list asking whether a specific person should sign off that closing side work is actually complete, since Owen never specified that.\n\nOwen realizes step 3 in the draft has silverware rolling happening before the floor sweep, which is backwards from how his team actually works, so he sends the follow-up correcting that step directly, giving the actual order. The updated document reflects it.\n\nHe prints the checklist for the kitchen corkboard and saves the full document for onboarding. Total time: about 15 minutes, versus the 20-minute verbal walkthrough he used to repeat for every new hire."
+    },
+    "rest-i3-event-and-catering-proposals": {
+      "placeholders": [
+        {
+          "name": "DATE, GUEST COUNT, OCCASION (e.g., corporate lunch, wedding rehearsal dinner, birthday), BUDGET RANGE IF STATED, DIETARY RESTRICTIONS MENTIONED",
+          "what": "The real facts from the client's actual inquiry — when their event is, how many guests, what kind of occasion it is, any budget they mentioned, and any dietary need they flagged. Only include a budget range if the client actually stated one; don't estimate it.",
+          "examples": [
+            "March 14, 40 guests, corporate lunch, budget not stated, one guest with a gluten allergy",
+            "June 21, 85 guests, wedding rehearsal dinner, budget around $6,000, two vegetarian guests",
+            "August 2, 15 guests, birthday dinner, no budget mentioned, no dietary restrictions mentioned"
+          ]
+        },
+        {
+          "name": "PASTE: package names, what's included, per-person or flat pricing, minimum guest count if any",
+          "what": "Your restaurant's real catering or event packages, copied from your current rate sheet — not from memory. Include exactly what's included and the exact pricing, since this is what the proposal will quote to the client.",
+          "examples": [
+            "\"Business Lunch Package,\" $28/person, includes three entree choices, salad, dessert, minimum 20 guests",
+            "\"Rehearsal Dinner Package,\" $65/person, includes plated 3-course meal, wine service, minimum 30 guests",
+            "\"Private Dining Room Buyout,\" $1,200 flat plus $35/person for food, minimum 12 guests"
+          ]
+        },
+        {
+          "name": "DEPOSIT REQUIREMENT / CANCELLATION POLICY / SETUP TIME NEEDED",
+          "what": "Only the policies that actually apply to this event and that you're sure of — a deposit percentage, a cancellation window, or how much setup time your team needs. Leave out anything you're not certain about rather than letting the AI guess a plausible-sounding policy.",
+          "examples": [
+            "50% deposit required to hold the date, non-refundable within 7 days of the event",
+            "2 hours setup time needed before guest arrival",
+            "no deposit required for parties under 15 guests"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Shorter version for a simple, low-stakes inquiry",
+          "whenToUse": "Use for a small, straightforward inquiry (like a 10-person office lunch) where a shorter, less formal proposal fits better than a full event proposal.",
+          "prompt": "Write a short, simple response to a small catering inquiry, using only the facts below. Do not invent menu items, prices, packages, or policies I haven't given you.\n\nClient event details: [DATE, GUEST COUNT, OCCASION, BUDGET RANGE IF STATED, DIETARY RESTRICTIONS MENTIONED]\nOur relevant package/option: [PASTE: package name, what's included, pricing]\n\nWrite a short, friendly response (under 120 words) confirming we can accommodate the event, stating the package and price clearly, addressing any dietary restriction only using what I've told you our kitchen can do (or \"we'll confirm with our kitchen\" if I haven't), and a simple next step to book."
+        },
+        {
+          "label": "Advanced: multi-option proposal comparing two packages",
+          "whenToUse": "Use when the client's event could reasonably fit two different packages and you want to present both so they can choose, instead of picking one for them.",
+          "prompt": "Write an event or catering proposal for a prospective client presenting two package options for them to compare, using only the facts below. Do not invent menu items, prices, packages, or policies I haven't given you.\n\nClient event details: [DATE, GUEST COUNT, OCCASION, BUDGET RANGE IF STATED, DIETARY RESTRICTIONS MENTIONED]\nOption A: [PASTE: package name, what's included, pricing]\nOption B: [PASTE: package name, what's included, pricing]\nOur standard policies to mention: [DEPOSIT REQUIREMENT / CANCELLATION POLICY / SETUP TIME NEEDED]\n\nWrite a proposal with a brief personalized opening, both options presented clearly side by side with pricing, an honest one-line note on which might suit their stated guest count or budget better (only if that's clear from what I gave you), dietary accommodation language limited to what I've confirmed, and next steps. Under 350 words."
+        },
+        {
+          "label": "Follow-up proposal after the client asks for changes",
+          "whenToUse": "Use after a client responds to your first proposal asking for a change (fewer guests, a different package, an added item) so you can send a quick revised version instead of starting over.",
+          "prompt": "Revise this proposal based on the client's requested changes, using only the facts below — do not invent anything new.\n\nOriginal proposal: [PASTE ORIGINAL PROPOSAL]\nClient's requested change: [WHAT THEY ASKED FOR]\nUpdated facts if any changed (package, pricing, guest count): [UPDATED DETAILS OR \"same as before\"]\n\nWrite a short revised proposal reflecting only the requested change, keeping everything else consistent with the original, under 250 words, with a brief line acknowledging their request."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check pricing matches our current rate sheet exactly",
+          "prompt": "Go through this proposal and list every price, per-person rate, and minimum guest count it states, so I can check each one against our current rate sheet before sending."
+        },
+        {
+          "label": "Opening feels generic — personalize it",
+          "prompt": "The opening line still feels like it could apply to any client. Rewrite it to reference something more specific about their event (the occasion, the guest count, or the date) using only what I already told you."
+        },
+        {
+          "label": "Tighten it — under 200 words this time",
+          "prompt": "Shorten this proposal to under 200 words, keeping the package recommendation, exact pricing, dietary accommodation line, and next steps, but trimming everything else."
+        },
+        {
+          "label": "Add a polite deadline to respond by",
+          "prompt": "Add one line near the end politely asking the client to confirm by [DATE], without sounding pushy, and explain briefly why (e.g., limited event dates) only if that's actually true for us."
+        }
+      ],
+      "walkthrough": "Beatriz coordinates events for a mid-size restaurant and gets an email inquiry for a corporate lunch: March 14, 40 guests, no stated budget, one guest with a gluten allergy.\n\nShe opens Claude and pastes the proposal prompt. For client event details she writes the date, guest count, occasion as \"corporate lunch,\" and the gluten allergy note. For packages, she pastes in her actual Business Lunch Package: $28 per person, three entrée choices, salad, dessert, 20-guest minimum — and confirms with her kitchen beforehand that a gluten-free entrée option exists. For policies, she adds a 20% deposit requirement.\n\nClaude drafts a proposal opening with a line referencing the March 14 lunch for 40 guests specifically, recommending the Business Lunch Package at $28 per person with its included items, stating the confirmed gluten-free entrée option, noting the 20% deposit, and closing with a next step to book.\n\nBeatriz reads it against her real rate sheet and confirms the $28 figure and inclusions are accurate. She sends the follow-up \"Opening feels generic — personalize it,\" since the first draft's opener felt like it could apply to any lunch inquiry, and gets back a version that explicitly mentions it's for a group of 40 rather than staying vague.\n\nShe copies the final text into her email template, attaches the standard contract, and sends it — about 15 minutes from reading the inquiry to hitting send, down from the 30-40 minutes a fully custom proposal used to take her."
+    },
+    "rest-a1-weekly-marketing-routine": {
+      "placeholders": [
+        {
+          "name": "LIST WHAT YOU CURRENTLY DO, EVEN INCONSISTENTLY, e.g., \"reply to reviews when I remember,\" \"post on Instagram maybe twice a week,\" \"no regular email or promotion planning\"",
+          "what": "An honest list of what you're actually doing for marketing right now, including the inconsistent or half-abandoned parts — not an idealized version. The routine only works if it's built from your real starting point.",
+          "examples": [
+            "reply to reviews when I remember, post on Instagram maybe twice a week, no regular email or promotion planning",
+            "weekly Instagram post most weeks, reviews answered same-day, no seasonal promotion planning at all",
+            "nothing consistent — reviews pile up for weeks, social media hasn't been touched in over a month"
+          ]
+        },
+        {
+          "name": "E.G., \"about 2 hours total, in short blocks\"",
+          "what": "A realistic estimate of how much time you can actually give to marketing in a normal week, not an aspirational number. Being honest here is what keeps the routine from collapsing after two weeks.",
+          "examples": [
+            "about 2 hours total, in short blocks",
+            "maybe 45 minutes on a slow weekday morning",
+            "3 hours, but only if it's split across the week"
+          ]
+        },
+        {
+          "name": "NAMES/ROLES OR \"just me\"",
+          "what": "Anyone on your team who could realistically take on part of the routine, with their role — or \"just me\" if you're truly doing this solo. Naming a real person here is what lets tasks actually get delegated instead of defaulting back to the owner.",
+          "examples": [
+            "Jamie, part-time server, good with a phone camera",
+            "just me",
+            "assistant manager Theo, available two mornings a week"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Solo-owner version with zero staff help",
+          "whenToUse": "Use when you're the only person doing marketing, with no staff to delegate to, and need every task sized for one person's time alone.",
+          "prompt": "Help me design a realistic weekly marketing routine for my restaurant that I can sustain entirely on my own, with no staff help.\n\nMy current marketing tasks and rough frequency: [LIST WHAT YOU CURRENTLY DO, EVEN INCONSISTENTLY]\nRealistic time I can commit per week: [E.G., \"about 90 minutes total\"]\n\nBuild:\n1. A fixed weekly schedule assigning one specific marketing task to each day it needs doing, sized entirely for one person and staying within my stated time.\n2. A short reusable prompt template for each recurring task.\n3. A \"15 minutes only\" fallback version that keeps the single highest-impact task from lapsing.\n\nDo not assume any staff availability."
+        },
+        {
+          "label": "Advanced: multi-location routine with a shared calendar",
+          "whenToUse": "Use when you operate more than one location and need a routine that coordinates marketing tasks across locations without duplicating effort or posting conflicting content.",
+          "prompt": "Help me design a realistic weekly marketing routine across multiple restaurant locations that share some marketing but need some local customization.\n\nLocations: [LIST, e.g. \"Downtown, Eastside\"]\nMy current marketing tasks and rough frequency: [LIST]\nRealistic time I can commit per week, total: [TIME]\nStaff at each location who could help: [NAMES/ROLES PER LOCATION]\n\nBuild:\n1. A weekly schedule distinguishing which tasks are shared across all locations (e.g., a company-wide promotion) versus which need a local version (e.g., a location-specific event), assigning an owner per location for local tasks.\n2. Reusable prompt templates for each recurring task type, noting where a location-specific detail needs to be swapped in.\n3. A fallback plan if one location's owner is unavailable for a week.\n\nKeep it realistic for the stated staff and time — do not assume marketing software beyond a phone and a chat AI account."
+        },
+        {
+          "label": "Different context: a slow-season routine with less content needed",
+          "whenToUse": "Use during a predictably slower season (e.g., a beach town in winter) when less frequent marketing is genuinely appropriate, rather than keeping a peak-season pace.",
+          "prompt": "Help me design a lighter weekly marketing routine for my restaurant's slow season, when less frequent activity is realistic and appropriate.\n\nMy peak-season marketing tasks for reference: [LIST]\nWhat changes in the slow season: [E.G., \"fewer walk-ins, focus shifts to retaining regulars\"]\nRealistic time I can commit per week during the slow season: [TIME]\n\nBuild a reduced weekly schedule appropriate for the slower season — fewer tasks, but still covering review responses and at least one regular touchpoint with past guests — plus the reusable prompt template for each task kept. Do not carry over every peak-season task by default; only include what still makes sense at lower volume."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "This still feels like too much — cut it down",
+          "prompt": "This routine still feels heavier than I can realistically keep up. Cut it down further, keeping only the single highest-impact task and removing or reducing everything else, and tell me what I'm giving up by doing that."
+        },
+        {
+          "label": "Turn the schedule into a printable weekly checklist",
+          "prompt": "Turn this weekly schedule into a simple printable checklist format — one line per task with the day and rough time needed — that I could pin up or hand to a staff member."
+        },
+        {
+          "label": "Add a specific day/time for each task, not just a day",
+          "prompt": "Go through the schedule and add a specific rough time of day for each task (e.g., before lunch service, after close), based on when a small restaurant team would realistically have a free moment."
+        },
+        {
+          "label": "What happens if I miss a whole week?",
+          "prompt": "What should I do if I miss the entire routine for one week — should I try to catch up on everything, skip it, or handle it some other way? Give me a specific rule I can follow instead of deciding in the moment."
+        }
+      ],
+      "walkthrough": "Renata owns a single-location restaurant and has tried, and abandoned, three different marketing routines over the past year. She opens ChatGPT determined to make one stick this time.\n\nShe's honest in her prompt: she currently replies to reviews \"when I remember,\" posts on Instagram maybe twice a week with no real plan, and has never done seasonal promotion planning. She has about 2 hours a week, spread across short blocks, and one part-time server, Jamie, who's offered to help with social posts.\n\nChatGPT proposes a schedule: Monday, 15 minutes, check and respond to new reviews; Wednesday, 30 minutes, write and schedule 2-3 social posts, delegated to Jamie; and one day each month, 30 minutes, plan next month's promotion. It also includes reusable prompt templates for each task and a fallback: if only 15 minutes are available in a given week, reviews get answered and everything else waits.\n\nRenata reads it and feels like even this is a stretch some weeks, so she sends the follow-up \"This still feels like too much — cut it down.\" ChatGPT trims it to just the Monday review check and a single Wednesday post, noting she's giving up the monthly promotion planning cadence by doing this, which she accepts for now.\n\nShe saves the final routine and prompt templates in a pinned note both she and Jamie can see. Building it took about 20 minutes — considerably less time than the routines she'd abandoned before, because this one was sized to what she actually had."
+    },
+    "hot-b1-guest-messages-booking-to-post-stay": {
+      "placeholders": [
+        {
+          "name": "booking confirmation / pre-arrival / in-stay / post-stay",
+          "what": "Which of the four stages you're writing for. Each stage has a different completeness bar — a pre-arrival message missing access instructions is far worse than a slightly generic confirmation — so picking the right one matters more than it seems.",
+          "examples": [
+            "booking confirmation",
+            "pre-arrival",
+            "post-stay"
+          ]
+        },
+        {
+          "name": "NAME",
+          "what": "The guest's actual name as it appears on the booking, used to personalize the greeting. Use their preferred name if you know it from prior communication, not just the name on the reservation system.",
+          "examples": [
+            "the Patel family",
+            "Jordan",
+            "Mr. and Mrs. Ferreira"
+          ]
+        },
+        {
+          "name": "CHECK-IN — CHECK-OUT",
+          "what": "The actual check-in and check-out dates for this specific booking, written the way you'd want a guest to read them. Double-check these against the reservation system rather than typing from memory.",
+          "examples": [
+            "Friday, March 6 — Sunday, March 8",
+            "June 12 — June 19",
+            "tonight — tomorrow morning"
+          ]
+        },
+        {
+          "name": "FOR CONFIRMATION: room type, what's included. FOR PRE-ARRIVAL: check-in time, access instructions, parking info. FOR IN-STAY: anything the guest mentioned or asked about. FOR POST-STAY: anything specific about their actual stay if known",
+          "what": "The real facts relevant to whichever stage you picked — only what applies to that stage. For pre-arrival in particular, never guess an access code or check-in time; leave it out and confirm it separately if you're not sure.",
+          "examples": [
+            "check-in from 3pm, door code sent by text morning of arrival, free parking in Lot B",
+            "Deluxe King Room, includes breakfast and airport shuttle",
+            "guest asked about late checkout options; guest mentioned traveling with a toddler"
+          ]
+        },
+        {
+          "name": "PASTE",
+          "what": "Anything the guest actually said or asked in their own message, if there was one — copied close to their exact words. This is optional, but including it is what makes the message feel personally read rather than automated.",
+          "examples": [
+            "\"Is there a crib available? Traveling with our 1-year-old.\"",
+            "\"Loved the location, especially being so close to the old town gate!\"",
+            "nothing specific said — first message from the guest"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Shorter version for a quick in-stay check-in text",
+          "whenToUse": "Use mid-stay when you just want a brief, low-pressure text check-in rather than running the full staged prompt.",
+          "prompt": "Write a brief in-stay check-in text message for a guest, using only the facts below. Do not invent access codes, policies, or amenities I haven't stated.\n\nGuest name: [NAME]\nAnything the guest mentioned or asked (or \"nothing specific\"): [DETAIL]\n\nWrite one short message, under 40 words, either responding directly to what they mentioned or offering help in a non-intrusive way if nothing specific was said. Keep it casual enough for a text message, not a formal email."
+        },
+        {
+          "label": "Advanced: pre-arrival message for a multi-unit property with varying access",
+          "whenToUse": "Use when your property has multiple units with different access instructions, so the message pulls the correct instructions for the specific unit booked.",
+          "prompt": "Write a pre-arrival guest message for a specific unit at a multi-unit property, using only the facts I provide. Do not invent access codes, policies, or amenities I haven't stated, and do not mix in details from a different unit.\n\nGuest name: [NAME]\nDates: [CHECK-IN — CHECK-OUT]\nUnit booked: [UNIT NAME/NUMBER]\nCheck-in time: [TIME]\nAccess instructions specific to this unit: [DETAILS]\nParking info specific to this unit: [DETAILS OR \"none\"]\n\nWrite a pre-arrival message under 120 words that is complete and practical, includes check-in time and the access instructions for this specific unit only, and one welcoming line."
+        },
+        {
+          "label": "Different context: responding to a guest's specific complaint mid-stay",
+          "whenToUse": "Use when a guest has raised an actual issue during their stay and you need a message that addresses it directly, not a generic in-stay check-in.",
+          "prompt": "Write an in-stay message responding to a specific issue a guest raised, using only the facts below. Do not invent a fix or policy I haven't confirmed.\n\nGuest name: [NAME]\nWhat the guest said or complained about: [PASTE]\nWhat we're actually doing about it (only true, confirmed actions): [ACTION OR \"still looking into it\"]\n\nWrite a message under 80 words that acknowledges the specific issue directly, states the real action being taken (or that we're looking into it, if that's the honest status), and avoids sounding scripted or defensive."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check nothing was invented (access code, policy)",
+          "prompt": "Go through this message and list anything stated as fact — an access code, a policy, an amenity, a price — that I need to double check I actually confirmed. Flag anything you're not certain came directly from what I told you."
+        },
+        {
+          "label": "Make it warmer without adding facts",
+          "prompt": "This message reads a bit flat. Make it warmer and more personal in tone without adding any new fact, policy, or detail I didn't already give you."
+        },
+        {
+          "label": "Shorten for SMS instead of email",
+          "prompt": "Shorten this message to fit a text message — under 300 characters, keeping only the most essential practical detail (the access instruction or check-in time) and dropping anything that isn't strictly necessary."
+        },
+        {
+          "label": "Personalize using what the guest actually said",
+          "prompt": "The guest also mentioned this in their message: [PASTE WHAT THEY SAID]. Add one line referencing that specifically, without inventing anything about it beyond what they actually said."
+        }
+      ],
+      "walkthrough": "Elena manages three vacation rental units and is preparing the pre-arrival message for the Patel family, arriving Friday and checking out Sunday. She opens Claude and selects \"pre-arrival\" as the stage. She fills in the guest name, the Friday-Sunday dates, and the real facts: check-in from 3pm, a door code that gets texted the morning of arrival, free parking in Lot B. She also notes, in the optional personalization field, that the family mentioned traveling with a toddler in their booking message.\n\nClaude drafts a message confirming the dates, stating check-in from 3pm, explaining the door code will follow by text that morning, mentioning Lot B parking, and adding a brief line noting that extra towels or a travel crib can be requested at the desk — but only because Elena had actually confirmed that was available before running the prompt.\n\nElena reads it and realizes she forgot to mention in her original facts that the unit has a fenced patio, which would also be reassuring for a family with a toddler. She sends the follow-up \"Personalize using what the guest actually said,\" adding the toddler detail again along with the patio fact, and the revised message includes a line about the fenced patio.\n\nShe sends the final message through her booking platform. The whole process, from opening Claude to sending, takes about 8 minutes — a message that's both complete and specific to this one family, not a generic template with their name swapped in."
+    },
+    "hot-b2-listing-descriptions-for-otas-and-your-site": {
+      "placeholders": [
+        {
+          "name": "E.G., \"boutique hotel room,\" \"2-bedroom vacation rental,\" \"guesthouse\"",
+          "what": "The type of accommodation, described the way a guest would search for it. Being specific here (room vs. entire apartment vs. shared guesthouse) sets the right expectation before they even read the rest.",
+          "examples": [
+            "boutique hotel room",
+            "2-bedroom vacation rental",
+            "guesthouse"
+          ]
+        },
+        {
+          "name": "GUESTS/BEDS",
+          "what": "The actual maximum guest count and bed configuration — how many people can sleep there and in what arrangement. This is a factual detail guests filter by, so it needs to be exact, not rounded up.",
+          "examples": [
+            "sleeps 4, 2 queen beds",
+            "sleeps 2, 1 king bed",
+            "sleeps 6, 3 bedrooms, 2 queens and 2 twins"
+          ]
+        },
+        {
+          "name": "LIST",
+          "what": "This bracket appears twice in the prompt — once for your key amenities and once for location detail. For amenities, list the real features guests care about (kitchen, parking, pool, etc). For location, list only verified real distances or landmarks you could confirm on a map, not vague claims like \"close to everything.\"",
+          "examples": [
+            "full kitchen, washer/dryer, private rooftop terrace, free parking",
+            "8-minute walk to the old town gate, 2 blocks from the train station",
+            "gym, pool, in-room coffee maker, 24-hour front desk"
+          ]
+        },
+        {
+          "name": "CHECK-IN/OUT TIMES, PETS, SMOKING, MINIMUM STAY IF ANY",
+          "what": "Your actual house policies — real times and real rules, not placeholders you plan to decide later. A guest who books based on an inaccurate policy (like pet-friendliness) is a guaranteed complaint at check-in.",
+          "examples": [
+            "check-in 3pm, checkout 11am, no pets, no smoking, 2-night minimum",
+            "check-in 4pm, checkout 10am, pets allowed with $50 fee, no smoking",
+            "flexible check-in, checkout noon, no minimum stay"
+          ]
+        },
+        {
+          "name": "E.G., \"only unit with a private rooftop terrace,\" \"walking distance to the old town gate\"",
+          "what": "The one real, specific thing that actually sets this property apart — not a generic strength every listing claims (like \"cozy\" or \"prime location\"). If nothing is truly distinct, describe the most specific real feature you have instead.",
+          "examples": [
+            "only unit with a private rooftop terrace",
+            "walking distance to the old town gate",
+            "the only room in the building with a private balcony"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Shorter version for a single-room hotel listing",
+          "whenToUse": "Use for a single hotel room rather than a whole property, where the OTA listing needs to be even tighter and doesn't need a website version.",
+          "prompt": "Write an OTA-style listing description for a single hotel room, using only the facts below. Do not invent amenities, views, distances, or policies I haven't stated.\n\nRoom type: [E.G., \"Deluxe King Room\"]\nCapacity: [GUESTS/BEDS]\nKey amenities: [LIST]\nView or location detail (only real, verified): [DETAIL]\nPolicies: [CHECK-IN/OUT TIMES]\n\nWrite a headline under 50 characters and a description under 500 characters leading with the most distinctive real feature, in a direct, scannable style. Flag anything you think is missing under \"Facts to confirm\" instead of guessing."
+        },
+        {
+          "label": "Advanced: seasonal listing update after a renovation",
+          "whenToUse": "Use when a real change (a renovation, a new amenity) needs to be reflected in the listing and you want the AI to highlight what changed.",
+          "prompt": "Update this property's listing descriptions to reflect a real recent change, using only the facts below. Do not invent amenities, views, distances, or policies I haven't stated.\n\nPrevious key facts: [WHAT WAS TRUE BEFORE]\nWhat's changed: [WHAT'S NEW, e.g. \"added a washer/dryer, renovated the bathroom\"]\nAll current facts (full updated list): [FULL LIST INCLUDING WHAT DIDN'T CHANGE]\n\nWrite an updated OTA-style listing (headline under 50 characters, description under 500 characters) and an updated website version (150-200 words), both reflecting only the current facts, with the new change worked in naturally rather than called out as \"NEW!\" everywhere."
+        },
+        {
+          "label": "Different context: a printed in-room welcome book description",
+          "whenToUse": "Use when you want a version of the property description for a printed in-room welcome book, aimed at a guest who has already booked and arrived, rather than someone still deciding.",
+          "prompt": "Write a short property description for a printed in-room welcome book, using only the facts below. This is for a guest who has already arrived, so it should feel like a warm orientation, not a sales pitch.\n\nProperty type: [E.G., \"2-bedroom vacation rental\"]\nCapacity: [GUESTS/BEDS]\nKey amenities: [LIST]\nWhat makes this property distinct (real, specific): [DETAIL]\n\nWrite 100-150 words welcoming the guest and briefly highlighting 2-3 amenities they might not notice right away, in a warm, orientation tone rather than a marketing tone."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "OTA version feels over the character limit — trim it",
+          "prompt": "Count the characters in this OTA description and confirm whether it's under 500 characters. If it's over, trim it down while keeping the most distinctive real feature first."
+        },
+        {
+          "label": "Website version too similar to the OTA one — differentiate it",
+          "prompt": "The website version still reads too close to the OTA version. Rewrite the website version with a different opening and structure, using the same facts, so it doesn't feel copy-pasted."
+        },
+        {
+          "label": "Double check no unverified distance or view claim snuck in",
+          "prompt": "List every distance, view, or location claim in both descriptions so I can verify each one is accurate before publishing."
+        },
+        {
+          "label": "Make the headline punchier without adding anything untrue",
+          "prompt": "Try 3 alternative OTA headlines, each under 50 characters, using only the facts I already gave you — no new claims, just different ways of leading with the most distinctive real feature."
+        }
+      ],
+      "walkthrough": "Tobias manages a 2-bedroom vacation rental and hasn't updated its listing since he added a washer/dryer six months ago. He opens ChatGPT and pastes the listing prompt with the property's current facts: sleeps 4, amenities include a private rooftop terrace, full kitchen, and washer/dryer, an 8-minute walk to the old town gate, check-in 3pm/checkout 11am, no pets, and the rooftop terrace as the most distinctive feature.\n\nChatGPT returns an OTA headline — \"2BR with Private Rooftop Terrace — Old Town, 8 Min Walk\" — under 500 characters and leading with the terrace, plus a longer website version describing an evening on the terrace before listing the same facts in different words.\n\nTobias checks both against his old listing and notices the OTA version is close to his platform's character limit, so he sends the follow-up \"OTA version feels over the character limit — trim it.\" ChatGPT confirms the count and trims two words without losing the terrace mention.\n\nHe publishes the OTA version through his platform's editor and updates his website's CMS with the longer version. The whole update, including catching that the washer/dryer had never actually made it into the old copy, takes him about 20 minutes — considerably faster than the hour he spent writing the original listing from scratch, and it means his listing finally matches what guests actually find when they arrive."
+    },
+    "hot-i1-review-responses-that-win-future-bookings": {
+      "placeholders": [
+        {
+          "name": "PASTE REVIEW TEXT",
+          "what": "The guest review copied word for word from the platform, exactly as posted. Don't summarize or trim it — small phrases in the original often carry the detail your response needs to acknowledge.",
+          "examples": [
+            "\"Great location and friendly staff, but the room was noisy from the street all night, barely slept.\"",
+            "\"Absolutely stunning views and the host went above and beyond arranging our airport pickup.\"",
+            "\"Listing said walking distance to the beach — it's a 25 minute walk uphill, very misleading.\""
+          ]
+        },
+        {
+          "name": "positive / fair mixed or negative / inaccurate or unreasonable",
+          "what": "Your own honest classification of the review, based on what actually happened — this stays a human judgment call, since only you know whether a complaint is fair or a claim is inaccurate.",
+          "examples": [
+            "positive",
+            "fair mixed or negative",
+            "inaccurate or unreasonable"
+          ]
+        },
+        {
+          "name": "FACTS",
+          "what": "The real, verifiable facts behind any negative point in the review — what you know is true, or \"still investigating\" if you genuinely don't know yet. Never write a plausible-sounding explanation you haven't actually confirmed.",
+          "examples": [
+            "rooms facing the street don't yet have soundproofed windows; property has since started offering interior-facing rooms by request at booking",
+            "still investigating",
+            "walk time to the beach was measured and confirmed at 22 minutes on flat ground, not uphill"
+          ]
+        },
+        {
+          "name": "ACTION OR \"none yet\"",
+          "what": "Any real, concrete step you've already taken or planned in response to this type of issue — not a vague intention. If nothing has actually been done yet, say so honestly rather than implying a fix exists.",
+          "examples": [
+            "interior-room request option now offered at booking",
+            "none yet",
+            "listing description updated to state the accurate 22-minute walk time"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Shorter version for a simple positive review",
+          "whenToUse": "Use for a short, straightforwardly positive review that doesn't need the full analysis — just a quick warm reply.",
+          "prompt": "Write a short public response to this positive guest review, under 50 words, written for future guests who might read it later.\n\nReview: [PASTE REVIEW TEXT]\nMy property's name: [NAME]\n\nThank them for something specific they mentioned, keep it warm, and avoid generic phrasing a future guest would skim past."
+        },
+        {
+          "label": "Advanced: response addressing a review affecting your OTA ranking",
+          "whenToUse": "Use when a negative review is likely to hurt your ranking or host status on the platform, and you need the response to be extra careful about demonstrating a resolved, systemic fix.",
+          "prompt": "Write a public response to this guest review for my property. This review may affect our platform ranking or host status, so the response needs to clearly demonstrate we take the issue seriously and have addressed it, written primarily for future guests deciding whether to book.\n\nReview: [PASTE REVIEW TEXT]\nReal facts relevant to the negative point: [FACTS]\nConcrete, systemic action taken (not just an apology to this one guest): [ACTION]\n\nWrite a response under 120 words that acknowledges the issue honestly, states the systemic action taken (not just a one-off gesture to this guest), and closes with a genuine invitation to return. Do not invent facts about what happened or what's being fixed."
+        },
+        {
+          "label": "Different context: a private message reply where the platform allows both",
+          "whenToUse": "Use when the platform lets you send a private message in addition to (or instead of) the public response, and you want a slightly more personal private note alongside the public one.",
+          "prompt": "Write both a public response and a short private message to this guest, using only the facts below. Do not invent facts about what happened.\n\nReview: [PASTE REVIEW TEXT]\nMy classification: [positive / fair mixed or negative / inaccurate or unreasonable]\nReal facts relevant to any negative point: [FACTS]\nAny concrete action taken or planned: [ACTION OR \"none yet\"]\n\n1. Write the public response following the standard rules by category (see below), written for a future stranger reading it.\n2. Write a separate, shorter private message (2-3 sentences) that can be a bit more personal and direct, since only the guest will see it.\n\nRules by category: positive — warm, specific, under 60 words. Fair mixed/negative — honest, states a concrete action, under 110 words. Inaccurate/unreasonable — calm factual correction only, under 90 words."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Would a stranger reading this trust us? Check that angle",
+          "prompt": "Reread this response as if you were a stranger who has never stayed here, deciding whether to book based only on this review and response. Point out anything that wouldn't reassure that stranger, and revise it."
+        },
+        {
+          "label": "Complaint response feels like an apology with nothing behind it — add the fix",
+          "prompt": "This response apologizes but doesn't clearly state what we're actually doing differently. Revise it to include the concrete action I gave you, stated plainly, without over-apologizing beyond that."
+        },
+        {
+          "label": "Too long — tighten to the word limit",
+          "prompt": "Count the words in this response and tighten it to fit under the word limit I specified, keeping the acknowledgment, the fact or action, and the invitation to return."
+        },
+        {
+          "label": "Correction sounds like we're arguing — soften without losing the fact",
+          "prompt": "The factual correction in this response still reads a bit like we're disputing the guest. Soften the tone while keeping the same factual correction, and make sure it still thanks them for staying."
+        }
+      ],
+      "walkthrough": "Adaeze owns a small guesthouse and gets a mixed review: great location and friendly staff, but the guest barely slept because of street noise. She knows the street-facing rooms don't have soundproofed windows yet, but she recently started letting guests request an interior-facing room at booking specifically because of feedback like this.\n\nShe opens Claude and pastes the review, classifies it as \"fair mixed or negative,\" and fills in the real facts — street-facing rooms lack soundproofing, and the action taken is that interior-room requests are now offered at booking.\n\nClaude's draft thanks the guest for the specific positive notes about location and staff, acknowledges the noise issue honestly without minimizing it, states that interior-facing rooms can now be requested because of feedback like theirs, and invites them back.\n\nAdaeze reads it as if she were a stranger deciding whether to book, and worries the noise acknowledgment sounds a little too brief given how bad the guest's night sounded. She sends the follow-up \"Would a stranger reading this trust us? Check that angle,\" and the revised version spends one more sentence validating how disruptive a sleepless night is before moving to the fix.\n\nShe posts the response on the OTA that afternoon. A few weeks later, a different prospective guest mentions in a message that the response is what convinced them to request an interior room instead of skipping the property entirely. The whole process took Adaeze about ten minutes."
+    },
+    "hot-i2-local-guides-and-experience-recommendations": {
+      "placeholders": [
+        {
+          "name": "LOCATION",
+          "what": "The city or neighborhood the guide covers. Keep it as specific as the area guests will actually explore on foot — a whole city is too broad if your guests mostly stay within a few blocks.",
+          "examples": [
+            "Lisbon, Alfama neighborhood",
+            "Asheville, downtown and River Arts District",
+            "Kyoto, near Gion"
+          ]
+        },
+        {
+          "name": "LIST: name, type, what I actually like about it, distance/logistics if known",
+          "what": "Places you've personally been to and would genuinely recommend, with your own real reason for liking each one — not a general reputation. Include walking distance or a transit tip if you actually know it; leave it out if you don't.",
+          "examples": [
+            "Cafe Luna, coffee shop, 5-minute walk, I go every morning, best espresso in the neighborhood, gets busy after 9am",
+            "Marco's Trattoria, restaurant, 10-minute walk, family-run, their carbonara is the best I've had locally, cash only",
+            "Riverside Park, outdoor space, 3-minute walk, quiet in the early morning, good for a run before breakfast"
+          ]
+        },
+        {
+          "name": "LIST, OR \"none\"",
+          "what": "Recommendations you've heard from a guest, colleague, or friend but haven't personally verified yourself. Keep these separate in your own notes so they end up clearly labeled in the finished guide, not blended in as equally trustworthy.",
+          "examples": [
+            "heard from a guest that the rooftop bar on Calle Mayor is great, haven't been myself",
+            "none",
+            "a colleague recommended a hiking trail north of town but I haven't hiked it"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Shorter version for a single-page printed welcome card",
+          "whenToUse": "Use when you only have room for a compact printed card instead of a full guide document, and need to cut down to the essentials.",
+          "prompt": "Organize my local recommendations into a compact single-page welcome card, using only what I list below. Do not add attractions, restaurants, or tips from general knowledge of this city.\n\nCity/area: [LOCATION]\nPlaces I personally recommend, in priority order (with why, briefly): [LIST]\n\nPick only the top 5-6 recommendations and write one short line each (under 15 words), organized by category, formatted to fit on a single printed page."
+        },
+        {
+          "label": "Advanced: seasonal guide (summer vs. winter recommendations)",
+          "whenToUse": "Use when your real recommendations genuinely differ by season (an outdoor patio bar only good in summer, a holiday market only in winter) and you want two versions.",
+          "prompt": "Organize my local recommendations into two guest-facing guides, one for summer and one for winter, using only what I list below. Do not add attractions, restaurants, or tips from general knowledge of this city.\n\nCity/area: [LOCATION]\nYear-round recommendations (with why): [LIST]\nSummer-only recommendations (with why): [LIST]\nWinter-only recommendations (with why): [LIST]\n\nBuild two guides, each including the year-round list plus the relevant seasonal list, organized into categories that fit what I gave you. Clearly note which items are seasonal so guests visiting outside that season know not to expect them."
+        },
+        {
+          "label": "Different context: a guide targeted at families with kids",
+          "whenToUse": "Use when you want a guide filtered specifically to what you know works well for guests traveling with children, rather than a general-purpose guide.",
+          "prompt": "Organize my local recommendations into a guest-facing guide specifically for families traveling with kids, using only what I list below. Do not add attractions, restaurants, or tips from general knowledge of this city.\n\nCity/area: [LOCATION]\nPlaces I personally recommend that work well for families (with why, and any kid-specific note like a play area or early closing time): [LIST]\nSecondhand recommendations I haven't personally verified: [LIST, OR \"none\"]\n\nOrganize into categories relevant to traveling with kids (e.g., \"Easy Meals,\" \"Outdoor Time,\" \"Rainy Day Options\"). For each item, write 1-2 sentences based on my actual reasons, noting the kid-specific detail where I gave one. Keep the secondhand list clearly separated under its own heading."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check nothing got generalized beyond my actual opinion",
+          "prompt": "Go through each entry and flag any place where the description sounds more general or superlative than what I actually said I liked about it. Rewrite those entries to stay closer to my original wording."
+        },
+        {
+          "label": "Add missing logistics I know but forgot to include",
+          "prompt": "For [PLACE NAME], I also know this: [DISTANCE/HOURS/OTHER DETAIL]. Add it to that entry without changing anything else."
+        },
+        {
+          "label": "Make secondhand section clearly separated and obvious",
+          "prompt": "Make the secondhand recommendations section visually and clearly separated from my personally verified list — add a short note at the top of that section explaining these haven't been personally checked."
+        },
+        {
+          "label": "Shorten each entry to one punchy sentence",
+          "prompt": "Shorten every entry in the guide to a single sentence each, keeping the specific reason I gave for liking it, so the whole guide reads faster."
+        }
+      ],
+      "walkthrough": "Marisol hosts a guesthouse and wants to put together her first real local guide instead of handing guests a generic printed map. She opens ChatGPT and lists what she actually knows: Cafe Luna, a 5-minute walk, where she personally goes every morning, with the best espresso she's had in the neighborhood, though it gets busy after 9am; a family-run bakery two blocks over that sells out of its best pastry by 10am; and a secondhand tip from a recent guest about a rooftop bar on Calle Mayor that Marisol has never actually been to herself.\n\nChatGPT organizes this into a \"Food & Drink\" section with the two verified places written up using Marisol's own reasons and timing details, and a clearly separate heading, \"Recommended by others — not yet personally verified,\" holding only the rooftop bar tip.\n\nMarisol reads it and realizes she forgot to mention that Cafe Luna only takes cash, a detail guests would actually need. She sends the follow-up \"Add missing logistics I know but forgot to include,\" naming Cafe Luna and the cash-only detail, and the entry updates to include it.\n\nShe formats the result as a single printed page for the welcome binder. Building her first structured guide, from listing her real knowledge to a guest-ready document, takes about 25 minutes — and she plans to add a few more entries the next time she tries somewhere new herself."
+    },
+    "hot-i3-upsell-and-package-copy": {
+      "placeholders": [
+        {
+          "name": "E.G., \"room upgrade to a sea-view room,\" \"late checkout until 2pm,\" \"breakfast package,\" \"guided city tour add-on\"",
+          "what": "The specific add-on or package you're offering, named the way a guest would understand it immediately. Keep it to one offer per prompt run so the copy stays focused on a single, clear pitch.",
+          "examples": [
+            "room upgrade to a sea-view room",
+            "late checkout until 2pm",
+            "guided city tour add-on"
+          ]
+        },
+        {
+          "name": "LIST",
+          "what": "Exactly what the guest gets for this offer, spelled out plainly — not a vague summary. This is what lets the copy state, specifically, what someone is paying for.",
+          "examples": [
+            "room stays available until 2pm instead of the standard 11am checkout",
+            "3-hour guided walking tour of the old town, includes a local guide and museum entry",
+            "hot breakfast buffet each morning of the stay, includes coffee and juice"
+          ]
+        },
+        {
+          "name": "PRICE",
+          "what": "The exact price or price difference for this offer, stated plainly. Vague pricing language (\"special rate\") undermines trust — guests convert faster when the math is obvious upfront.",
+          "examples": [
+            "$25 flat",
+            "$40 per person",
+            "$15/night added to the room rate"
+          ]
+        },
+        {
+          "name": "at booking / pre-arrival email / at check-in / in-room",
+          "what": "The specific point in the guest journey where this offer will actually be shown. This changes how much context the copy needs — an at-check-in offer can be shorter since staff can add context verbally, while a pre-arrival email needs to stand alone.",
+          "examples": [
+            "pre-arrival email",
+            "at check-in",
+            "in-room"
+          ]
+        },
+        {
+          "name": "E.G., \"most guests on short trips want the extra hours before a late flight\"",
+          "what": "The real, specific reason a guest in this situation would want this add-on — grounded in an actual pattern you've noticed, not a generic assumption. This is what makes the copy target someone real instead of everyone in general.",
+          "examples": [
+            "most guests on short trips want the extra hours before a late flight",
+            "guests booking for an anniversary often want the room to feel more special without planning it themselves",
+            "families with young kids frequently ask about breakfast options since kids wake up early"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Shorter version for an at-check-in verbal script",
+          "whenToUse": "Use when front desk staff need a short spoken script to offer the upsell verbally at check-in, rather than written copy for a digital message.",
+          "prompt": "Write a short verbal script for front desk staff to offer this add-on at check-in, using only the facts below. Do not invent inclusions, prices, or availability claims I haven't stated.\n\nOffer: [E.G., \"late checkout until 2pm\"]\nWhat's included: [LIST]\nPrice or price difference: [PRICE]\nGenuine reason a guest would want this: [REASON]\n\nWrite one or two spoken sentences a front desk agent could say naturally while checking a guest in, framed around the genuine benefit, with the exact price stated plainly. No false urgency. Keep it conversational, not like a script being read aloud."
+        },
+        {
+          "label": "Advanced: bundled package combining two add-ons",
+          "whenToUse": "Use when you want to offer two add-ons together as a single bundled package at a combined price, rather than pitching them separately.",
+          "prompt": "Write upsell copy for a bundled package combining two add-ons, using only the facts below. Do not invent inclusions, prices, or availability claims I haven't stated.\n\nAdd-on 1: [NAME AND WHAT'S INCLUDED]\nAdd-on 2: [NAME AND WHAT'S INCLUDED]\nBundled price (must be stated, not implied as a \"discount\" unless I confirm the individual prices too): [PRICE]\nWhen this will be shown: [at booking / pre-arrival email / at check-in / in-room]\nGenuine reason a guest would want both together: [REASON]\n\nWrite a short version (2-3 sentences) framed around the combined benefit, stating the bundled price plainly and listing what's included in the bundle specifically. Do not use false urgency."
+        },
+        {
+          "label": "Different context: an in-room card or tent instead of a digital message",
+          "whenToUse": "Use when the offer will be printed as a physical card or tent card left in the room, rather than sent digitally.",
+          "prompt": "Write upsell copy for a printed in-room card or tent card, using only the facts below. Do not invent inclusions, prices, or availability claims I haven't stated.\n\nOffer: [E.G., \"breakfast package\"]\nWhat's included: [LIST]\nPrice: [PRICE]\nHow a guest would act on this (call the desk, scan a code, etc.): [HOW TO ORDER]\n\nWrite very short copy suitable for a small printed card: a headline (under 8 words), one line on what's included, the exact price, and a single line telling the guest how to order. No pushy language."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Feels pushy — soften without losing the offer",
+          "prompt": "This still reads a bit like a hard sell. Soften the tone so it reads as a helpful, low-pressure offer instead, without removing the price or the specific benefit."
+        },
+        {
+          "label": "Double-check no false urgency crept in",
+          "prompt": "Check this copy for any word implying scarcity or urgency (like \"limited,\" \"today only,\" \"don't miss out\") that I didn't confirm is actually true, and remove or replace it."
+        },
+        {
+          "label": "Make the benefit line even more specific to who's seeing it",
+          "prompt": "This offer will be shown to [SPECIFIC GUEST TYPE, e.g. \"guests checking out on a Sunday with an evening flight\"]. Rewrite the benefit line to be even more specific to that exact situation, without inventing anything about them I haven't told you."
+        },
+        {
+          "label": "Shorten for an SMS or push notification",
+          "prompt": "Shorten this to fit a text message or push notification, under 25 words including the price, keeping the single strongest benefit and dropping everything else."
+        }
+      ],
+      "walkthrough": "Faisal handles revenue and guest communications for a 30-room hotel and wants to increase how often guests take the late-checkout add-on, which currently barely gets ordered. He opens Claude and fills in the offer: late checkout until 2pm, a flat $25, offered in the pre-arrival email, with the genuine reason that many of their guests have evening flights and don't want to store luggage or rush their last morning.\n\nClaude returns: \"Have a later flight? Keep your room until 2pm for $25 — no need to store luggage or rush your last morning,\" stated plainly with the exact price and no invented urgency.\n\nFaisal likes the line but realizes most of his guests actually check out for morning flights, not evening ones, so the reasoning doesn't quite fit his typical guest. He sends the follow-up \"Make the benefit line even more specific to who's seeing it,\" noting that most guests have flights after 3pm based on his booking data. Claude revises the line to reference having the afternoon free before a later flight instead.\n\nFaisal adds the new version to the pre-arrival email template. Over the next month, late-checkout add-on orders roughly double compared to the vague \"treat yourself\" line he'd been using before. The whole rewrite took him about ten minutes, and he now has a prompt template he reuses for every add-on he tests."
+    },
+    "hot-a1-multilingual-guest-communication-workflow": {
+      "placeholders": [
+        {
+          "name": "TARGET LANGUAGE",
+          "what": "The language you're translating into, based on your actual guest booking data — not a guess at what might be useful. Prioritize the languages your real guests most commonly speak.",
+          "examples": [
+            "Spanish",
+            "Japanese",
+            "German"
+          ]
+        },
+        {
+          "name": "high-stakes: safety/access instructions / lower-stakes: welcome or general information",
+          "what": "Whether this specific document is high-stakes (safety information, access instructions, anything with real consequences if misunderstood) or lower-stakes (a welcome note, casual message). This tells the AI — and reminds you — how much verification the result actually needs before use.",
+          "examples": [
+            "high-stakes: safety/access instructions",
+            "lower-stakes: welcome or general information",
+            "high-stakes: safety/access instructions"
+          ]
+        },
+        {
+          "name": "SOURCE LANGUAGE",
+          "what": "The language your original document is written in. This is what the back-translation will convert back into, so you can compare it against your original.",
+          "examples": [
+            "English",
+            "French",
+            "Portuguese"
+          ]
+        },
+        {
+          "name": "PASTE DOCUMENT",
+          "what": "The full original text of the document you need translated, copied exactly as it exists — not summarized or shortened first. Translating the complete real document is what makes the back-translation check meaningful.",
+          "examples": [
+            "\"Check-out is strictly by 11:00 AM. The door code is 4471#, valid only during your stay dates.\"",
+            "\"Welcome! We're so glad you're staying with us. If you need anything during your visit, just reply to this message.\"",
+            "\"In case of fire, exit via the stairwell at the end of the hall — do not use the elevator. The nearest exit is marked on the door of your room.\""
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Shorter version for a single sentence or short notice",
+          "whenToUse": "Use for translating a single short sentence or notice (like a temporary pool closure sign) rather than a full document.",
+          "prompt": "Translate this short guest notice into [TARGET LANGUAGE], preserving the exact meaning.\n\nOriginal notice ([SOURCE LANGUAGE]): [PASTE NOTICE]\n\nRules:\n- Keep any numbers, times, or dates exactly as given.\n- After the translation, provide a back-translation into [SOURCE LANGUAGE] so I can compare it to the original.\n- Flag if any word choice could be ambiguous."
+        },
+        {
+          "label": "Advanced: translating a document with legal or liability language",
+          "whenToUse": "Use for a document with legal or liability implications (a waiver, a damage policy, a safety disclaimer) where precision matters even more than for standard house rules.",
+          "prompt": "Translate the following guest document into [TARGET LANGUAGE]. This document has legal or liability implications, so precision matters more than natural phrasing — do not simplify, summarize, or soften any clause.\n\nOriginal document ([SOURCE LANGUAGE]):\n[PASTE DOCUMENT]\n\nRules:\n- Translate every clause completely; do not omit or combine clauses even if it would read more smoothly.\n- Keep all numbers, dates, monetary amounts, and proper nouns exactly as given.\n- After the translation, provide a full back-translation into [SOURCE LANGUAGE] for comparison.\n- Flag any clause where the legal meaning might not translate precisely, so I can have this specifically reviewed by a fluent speaker or translator before use — do not treat this document as safe to use without that review, regardless of how confident the translation looks."
+        },
+        {
+          "label": "Different context: translating a guest's incoming message back into your language",
+          "whenToUse": "Use when a guest messages you in a language you don't speak and you need an accurate translation into your own language before you respond.",
+          "prompt": "Translate this guest message into [YOUR LANGUAGE], preserving the exact meaning and tone (e.g., if they sound frustrated, keep that clear rather than softening it).\n\nGuest's message ([GUEST'S LANGUAGE]):\n[PASTE MESSAGE]\n\nRules:\n- Keep any numbers, dates, or specific requests exactly as stated.\n- Flag if any part of the message is ambiguous or could have more than one meaning, so I don't misread their intent before responding."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Back-translation doesn't quite match — investigate the gap",
+          "prompt": "The back-translation says [WHAT IT SAYS] but my original said [WHAT ORIGINAL SAYS]. Explain specifically where the meaning shifted in the translation and give me a corrected version."
+        },
+        {
+          "label": "A phrase was flagged as ambiguous — give me two alternative options",
+          "prompt": "For the phrase you flagged as potentially ambiguous, give me two alternative phrasings in [TARGET LANGUAGE], each with a plain-language explanation in [SOURCE LANGUAGE] of how it's slightly different in tone or precision."
+        },
+        {
+          "label": "Numbers or codes look altered — double check",
+          "prompt": "List every number, code, time, and date that appears in both the original and the translated version side by side, so I can confirm none of them changed."
+        },
+        {
+          "label": "Simplify the natural phrasing further for a lower-literacy reader",
+          "prompt": "Keeping all the same meaning and none of the specific details lost, simplify the sentence structure and word choice in the [TARGET LANGUAGE] version for a reader who may not be a fluent or highly literate speaker of that language."
+        }
+      ],
+      "walkthrough": "Yusuf manages a small apartment-style property that increasingly hosts Spanish-speaking guests, and his house rules — including the door code and checkout time — only exist in English. He decides to translate them properly instead of relying on guests using their phone's translation app on the spot.\n\nHe opens ChatGPT and pastes the translation prompt. He marks the document as high-stakes since it includes access instructions, sets target language to Spanish and source language to English, and pastes his actual house rules: \"Check-out is strictly by 11:00 AM. The door code is 4471#, valid only during your stay dates.\"\n\nChatGPT returns a Spanish translation preserving \"11:00 AM\" and \"4471#\" exactly, along with a back-translation into English that reads almost identically to Yusuf's original, plus a note that \"strictly by\" has a more natural but equally firm Spanish equivalent worth considering.\n\nYusuf compares the back-translation against his original line by line and confirms the checkout time and code weren't altered. Because this is a high-stakes document, he doesn't stop there — he sends it to a Spanish-speaking friend who stays in the same city to read over before using it with a real guest. She confirms it reads naturally and suggests one small wording tweak for the door code sentence.\n\nYusuf saves the friend-verified version as his standing Spanish template. The whole process — translating, comparing the back-translation, and getting it checked by a fluent speaker — takes about 30 minutes for this one document, and he now has a repeatable process for translating the rest of his guest documents."
+    }
+  }
+}

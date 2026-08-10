@@ -1,0 +1,424 @@
+{
+  "quizzes": {
+    "html-b13-link-targets": [
+      {
+        "q": "You are linking from your article to an external reference and want readers to keep your article open. Which markup is correct and safe?",
+        "options": [
+          "<a href=\"https://ref.example\" target=\"blank\">source</a>",
+          "<a href=\"https://ref.example\" target=\"_blank\" rel=\"noopener\">source</a>",
+          "<a href=\"https://ref.example\" new-tab>source</a>",
+          "<a href=\"https://ref.example\" rel=\"_blank\">source</a>"
+        ],
+        "answer": 1,
+        "why": "target=\"_blank\" (with the underscore) opens a new tab, and rel=\"noopener\" prevents the destination from getting a scripting handle on your page. 'blank' without the underscore creates a named window instead."
+      },
+      {
+        "q": "A 'Back to top' button at the bottom of a long page should scroll to the h1, which reads <h1 id=\"top\">Guide</h1>. What href does the button's link need?",
+        "options": [
+          "href=\"top\"",
+          "href=\"#top\"",
+          "href=\"id=top\"",
+          "href=\"_top\""
+        ],
+        "answer": 1,
+        "why": "Fragment links start with # followed by the target element's id. href=\"top\" would try to load a file called 'top', and _top is a target keyword for frames, not an href."
+      },
+      {
+        "q": "You want a 'Download brochure' link that saves brochure.pdf instead of opening it in the browser tab. Which markup does that?",
+        "options": [
+          "<a href=\"brochure.pdf\" download>Download brochure</a>",
+          "<a href=\"brochure.pdf\" target=\"_download\">Download brochure</a>",
+          "<a src=\"brochure.pdf\" download>Download brochure</a>",
+          "<a href=\"download:brochure.pdf\">Download brochure</a>"
+        ],
+        "answer": 0,
+        "why": "The download attribute on a normal href link tells the browser to save the file rather than navigate to it. Links use href (not src), and there is no _download target or download: scheme."
+      }
+    ],
+    "html-b14-images": [
+      {
+        "q": "A news article includes a photo of flooding that the text refers to. Which alt text is right?",
+        "options": [
+          "alt=\"\"",
+          "alt=\"photo\"",
+          "alt=\"Flooded main street with cars submerged to their windows\"",
+          "alt=\"image of a photo of a flood picture\""
+        ],
+        "answer": 2,
+        "why": "Meaningful images get a concise description of their content. Empty alt is only for decoration, and phrases like 'image of' are redundant because screen readers already announce it as an image."
+      },
+      {
+        "q": "Your page visibly jumps as each photo loads, pushing the text down. What is the standard HTML fix?",
+        "options": [
+          "Convert every image to PNG format",
+          "Add width and height attributes so the browser reserves space before the file arrives",
+          "Move all images to the bottom of the page",
+          "Add title attributes to each image"
+        ],
+        "answer": 1,
+        "why": "With width and height declared, the browser knows each image's proportions immediately and reserves a correctly sized box, eliminating layout shift. Format, position and tooltips do not affect it."
+      },
+      {
+        "q": "You need a company logo that must stay pin-sharp at every size, from a 16px favicon to a conference banner. Which format fits best?",
+        "options": [
+          "JPG, because it compresses best",
+          "GIF, because it is widely supported",
+          "SVG, because it describes shapes and scales without pixelation",
+          "AVIF, because it is the newest format"
+        ],
+        "answer": 2,
+        "why": "SVG stores geometry rather than pixels, so it renders sharply at any size — ideal for logos and icons. JPG, GIF and AVIF are raster formats that blur when scaled up."
+      }
+    ],
+    "html-b15-figure-favicon": [
+      {
+        "q": "A report page shows a chart with 'Figure 3: Quarterly revenue' beneath it. How should the pair be marked up so the caption is structurally attached?",
+        "options": [
+          "<img> followed by a <p class=\"caption\">",
+          "<figure> containing the <img> and a <figcaption>",
+          "<div> containing the <img> with the caption in its title attribute",
+          "<caption> directly after the <img>"
+        ],
+        "answer": 1,
+        "why": "figure groups self-contained content with its figcaption, making the relationship machine-readable. A styled paragraph only looks attached, and <caption> belongs exclusively to tables."
+      },
+      {
+        "q": "An image map's clickable areas are not working. The map is declared as <map name=\"plan\">. What must the img element carry?",
+        "options": [
+          "usemap=\"plan\"",
+          "usemap=\"#plan\"",
+          "map=\"#plan\"",
+          "href=\"#plan\""
+        ],
+        "answer": 1,
+        "why": "The img references the map through usemap with a # prefix, while the map itself declares its name without one — the mismatch convention that most often breaks image maps."
+      },
+      {
+        "q": "You add <link rel=\"icon\" href=\"favicon.png\"> to a page. Where will visitors actually see that icon?",
+        "options": [
+          "In the top-left corner of the page body",
+          "In the browser tab, bookmarks and history entries",
+          "Only in search engine results",
+          "Nowhere until CSS positions it"
+        ],
+        "answer": 1,
+        "why": "The favicon is browser chrome, not page content: it labels the tab, bookmark lists and history. It never renders inside the page and needs no CSS."
+      }
+    ],
+    "html-b16-lists": [
+      {
+        "q": "You are marking up the steps to reset a router, where doing them out of order fails. Which list is correct?",
+        "options": [
+          "<ul>, because bullets look cleaner for instructions",
+          "<ol>, because the sequence carries meaning",
+          "<dl>, because each step has details",
+          "Paragraphs starting with '1.', '2.', '3.'"
+        ],
+        "answer": 1,
+        "why": "Order matters, so the list is ordered — ol renumbers itself automatically when steps change. Hand-typed numbers in paragraphs go stale, and ul signals that order is irrelevant."
+      },
+      {
+        "q": "Steps 1-3 appear under one heading and the procedure continues under the next heading. How do you make the second list begin at step 4?",
+        "options": [
+          "<ol continue=\"true\">",
+          "<ol start=\"4\">",
+          "<ol type=\"4\">",
+          "<li value=\"4\"> on every item"
+        ],
+        "answer": 1,
+        "why": "The start attribute sets an ol's first number. type controls the numbering style (letters, Roman numerals), and there is no continue attribute in HTML."
+      },
+      {
+        "q": "A packing item 'Toiletries' needs its own sub-list of three items. Where does the inner <ul> go?",
+        "options": [
+          "Directly between the Toiletries <li> and the next <li>",
+          "Inside the Toiletries <li>, before its closing tag",
+          "After the outer </ul>, indented to look nested",
+          "Inside the outer <ul> but outside any <li>"
+        ],
+        "answer": 1,
+        "why": "A nested list belongs to an item, so it must sit inside that item's li. Lists may only contain li elements directly — a ul as a direct child of another ul is invalid."
+      }
+    ],
+    "html-b17-description-lists": [
+      {
+        "q": "You are building a product spec panel: 'Weight: 1.2 kg', 'Battery: 14 h', 'Ports: 2x USB-C'. Which structure fits this name-value content?",
+        "options": [
+          "A ul with the pairs joined by colons in each li",
+          "A dl with each label as a dt and each value as a dd",
+          "An ol so the specs stay in order",
+          "Six separate paragraphs"
+        ],
+        "answer": 1,
+        "why": "Name-value pairs are exactly what description lists express: the pairing lives in the markup itself. In a ul the colon does the pairing visually only, invisible to machines."
+      },
+      {
+        "q": "In a glossary, the term 'HTTP' needs two separate descriptions. What is the valid markup?",
+        "options": [
+          "One <dt>HTTP</dt> followed by two <dd> elements",
+          "Two <dt>HTTP</dt> entries, each with one <dd>",
+          "One <dd> containing both texts separated by <dt>",
+          "It is not possible — dl allows exactly one dd per dt"
+        ],
+        "answer": 0,
+        "why": "Any number of dd elements may follow a dt, and all of them describe it. Duplicating the term creates two entries, and dt inside dd is invalid."
+      },
+      {
+        "q": "A colleague wraps plain paragraphs of text directly inside <dl> to get indentation. What is wrong with that?",
+        "options": [
+          "Nothing — dl accepts any content",
+          "dl may directly contain only dt and dd (plus div wrappers); prose belongs inside dd, and indentation is a CSS job",
+          "dl is deprecated and should be replaced with ul",
+          "The paragraphs will not render at all"
+        ],
+        "answer": 1,
+        "why": "Loose content inside dl is invalid: its direct children are dt and dd (div is allowed as a grouping wrapper). Using dl for visual indentation misuses semantics that CSS handles properly."
+      }
+    ],
+    "html-b18-block-inline": [
+      {
+        "q": "You write <p>Closing date: <div>Friday</div></p> and the layout breaks strangely. Why?",
+        "options": [
+          "div is deprecated inside modern HTML",
+          "A p may contain only inline content, so the parser closes the paragraph early when it meets the div",
+          "The div needs a class before it can be nested",
+          "Paragraphs cannot contain any child elements"
+        ],
+        "answer": 1,
+        "why": "Block elements are invalid inside p, and the parser repairs the markup by ending the paragraph before the div — silently changing your structure. An inline span is the correct wrapper there."
+      },
+      {
+        "q": "You need to highlight two words in the middle of a sentence so CSS can color them, without breaking the text flow. Which element fits?",
+        "options": [
+          "<div>, the generic container",
+          "<span>, the generic inline container",
+          "<section>, to mark the words as a section",
+          "<p>, nested inside the sentence"
+        ],
+        "answer": 1,
+        "why": "span is the meaningless inline wrapper made exactly for styling a run of text mid-sentence. div, section and p are block-level and would break the line."
+      },
+      {
+        "q": "Three product cards each consist of an h2, a paragraph and a link, and each card needs a border around all three. What is the standard approach?",
+        "options": [
+          "Wrap each card's elements in a <div class=\"card\"> and style the class",
+          "Give the h2, p and a identical inline borders",
+          "Wrap each card in a <span class=\"card\">",
+          "Put the three elements of each card inside one <p>"
+        ],
+        "answer": 0,
+        "why": "A div groups block content into one styleable unit — one class rule then borders every card. A span may not contain blocks, and a p may not contain an h2."
+      }
+    ],
+    "html-b19-classes-ids": [
+      {
+        "q": "Twelve warning paragraphs across a site must share one style, and one specific section needs a deep link. Which labeling is right?",
+        "options": [
+          "id=\"warning\" on all twelve, class=\"section\" on the link target",
+          "class=\"warning\" on the twelve paragraphs, id on the one link-target section",
+          "class on the section, ids on the paragraphs",
+          "Both attributes on everything, to be safe"
+        ],
+        "answer": 1,
+        "why": "Classes are reusable labels for many elements; ids are unique per page and are what fragment links target. Twelve identical ids would be invalid and would break linking."
+      },
+      {
+        "q": "An element must be both a note and highlighted as important. Which markup applies both classes?",
+        "options": [
+          "<p class=\"note\" class=\"important\">",
+          "<p class=\"note important\">",
+          "<p class=\"note,important\">",
+          "<p classes=\"note important\">"
+        ],
+        "answer": 1,
+        "why": "One class attribute holds multiple names separated by spaces. Repeating the attribute is invalid (browsers keep only the first), and commas are not separators."
+      },
+      {
+        "q": "In CSS you write #signup { ... } but nothing changes. The element is <h2 class=\"signup\">. What went wrong?",
+        "options": [
+          "The selector is correct; the browser cache is stale",
+          "# selects by id, but the element only has a class — the selector should be .signup (or the element needs id=\"signup\")",
+          "h2 elements cannot take CSS",
+          "The selector needs quotes: #\"signup\""
+        ],
+        "answer": 1,
+        "why": "The hash prefix matches ids and the dot prefix matches classes — they are not interchangeable. The attribute in the HTML must match the selector type in the CSS."
+      }
+    ],
+    "html-b20-styles-css-intro": [
+      {
+        "q": "A 40-page site needs one consistent design that can be updated in a single place. Where should the CSS live?",
+        "options": [
+          "In style attributes on each element",
+          "In a <style> block copied into every page's head",
+          "In one external .css file referenced by <link rel=\"stylesheet\"> from every page",
+          "In the footer of each page"
+        ],
+        "answer": 2,
+        "why": "An external stylesheet is shared, cached and edited in one place. Inline styles and per-page style blocks duplicate the design 40 times and drift out of sync."
+      },
+      {
+        "q": "Which line correctly attaches an external stylesheet?",
+        "options": [
+          "<link rel=\"stylesheet\" href=\"styles.css\">",
+          "<style src=\"styles.css\"></style>",
+          "<link href=\"stylesheet\" rel=\"styles.css\">",
+          "<css file=\"styles.css\">"
+        ],
+        "answer": 0,
+        "why": "link is a void element in the head whose rel names the relationship and href locates the file. The style element has no src attribute, and there is no css element."
+      },
+      {
+        "q": "A linked stylesheet sets p { color: black; }, a style block later in the head sets p { color: green; }, and one paragraph has style=\"color: red;\". What color is that paragraph?",
+        "options": [
+          "Black, because the external file loads first",
+          "Green, because style blocks always win",
+          "Red, because inline style attributes sit at the top of the cascade",
+          "The browser default, because the rules conflict"
+        ],
+        "answer": 2,
+        "why": "Inline styles override both style blocks and linked stylesheets. Among the other two, the later, equally specific rule (green) would win — but the inline red outranks them both."
+      }
+    ],
+    "html-b21-colors": [
+      {
+        "q": "A designer's handoff specifies the brand color as #ff6b35. What does that notation encode?",
+        "options": [
+          "Hue, saturation and lightness percentages",
+          "Two hexadecimal digits each for the red, green and blue channels",
+          "A named color from the CSS keyword list",
+          "A transparency value followed by a color code"
+        ],
+        "answer": 1,
+        "why": "A six-digit hex code is three byte pairs — red ff, green 6b, blue 35 — each running 00 to ff. Hue and saturation belong to hsl() notation, and names contain no digits."
+      },
+      {
+        "q": "You need the brand teal as a 30%-opacity overlay on a photo, letting the photo show through. Which value does that?",
+        "options": [
+          "background-color: #2e6f6c",
+          "background-color: rgba(46, 111, 108, 0.3)",
+          "background-color: lighter-teal",
+          "background-color: rgb(30%)"
+        ],
+        "answer": 1,
+        "why": "The alpha channel in rgba() sets opacity — 0.3 lets the underlying image show through. A paler solid color would hide the photo, and the other syntaxes are invalid."
+      },
+      {
+        "q": "A hero section has background-color: #e8e8e8 with color: #f5f5f5 text, and users complain they cannot read it. What is the actual problem?",
+        "options": [
+          "hex colors cannot be used for text",
+          "The contrast ratio between two near-identical light grays is far below the 4.5:1 readability target",
+          "The background should have been rgb() instead",
+          "Text needs a named color to render"
+        ],
+        "answer": 1,
+        "why": "Readability is about the difference between text and background — two light grays give a ratio near 1:1. The notation is irrelevant; the pair needs genuine dark-on-light or light-on-dark contrast."
+      }
+    ],
+    "html-b22-head-title-meta": [
+      {
+        "q": "A client's page shows perfectly but its browser tab reads 'Untitled Document' and Google shows the bare URL as its headline. What is missing?",
+        "options": [
+          "An h1 in the body",
+          "A <title> element in the head",
+          "A meta name=\"headline\" tag",
+          "A favicon link"
+        ],
+        "answer": 1,
+        "why": "The title element feeds the tab label, bookmarks and the search-result headline. The h1 is visible page content and does not label the tab."
+      },
+      {
+        "q": "On phones your page renders zoomed out, like a shrunken desktop screenshot. Which single line fixes it?",
+        "options": [
+          "<meta charset=\"UTF-8\">",
+          "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+          "<meta name=\"mobile\" content=\"true\">",
+          "<base href=\"mobile/\">"
+        ],
+        "answer": 1,
+        "why": "Without the viewport meta, phone browsers render onto an imaginary desktop-width canvas and zoom out. width=device-width tells them to use the screen's true width."
+      },
+      {
+        "q": "You want to control the gray snippet Google shows under your search result. Which markup targets it?",
+        "options": [
+          "<meta name=\"description\" content=\"One clear sentence about the page.\">",
+          "<meta name=\"keywords\" content=\"bakery, bread, sourdough\">",
+          "<description>One clear sentence.</description>",
+          "<title>One clear sentence about the page.</title>"
+        ],
+        "answer": 0,
+        "why": "The description meta supplies the snippet text. The keywords meta is ignored by modern search engines, there is no description element, and the title becomes the headline, not the snippet."
+      }
+    ],
+    "html-b23-charsets-entities": [
+      {
+        "q": "A page saved as UTF-8 displays â‚¬ where € should appear on some visitors' machines. What is the root cause?",
+        "options": [
+          "The euro sign is not part of UTF-8",
+          "No charset was declared, so those browsers guessed the wrong decoding table",
+          "The euro sign must always be written as an image",
+          "The visitors' fonts are missing"
+        ],
+        "answer": 1,
+        "why": "Without <meta charset=\"UTF-8\">, browsers guess the encoding, and a wrong guess decodes the euro's multi-byte sequence as garbage characters. Declaring the charset pins the decoding everywhere."
+      },
+      {
+        "q": "A tutorial page must display the literal text <h1> as content. How is it written in the source?",
+        "options": [
+          "<h1>, wrapped in quotes",
+          "&lt;h1&gt;",
+          "\\<h1\\>",
+          "&lt h1 &gt"
+        ],
+        "answer": 1,
+        "why": "Angle brackets meant as text must be the entities &lt; and &gt;, each ending with a semicolon — otherwise the parser opens a real h1 element. Backslashes escape nothing in HTML."
+      },
+      {
+        "q": "Prices like '25 €' keep line-breaking between the number and the symbol. What is the correct fix?",
+        "options": [
+          "Write 25&nbsp;€ so the space cannot break",
+          "Add more spaces: 25   €",
+          "Wrap the price in <b> tags",
+          "Replace the space with a hyphen"
+        ],
+        "answer": 0,
+        "why": "The non-breaking space renders as a space but forbids wrapping at that point. Multiple normal spaces collapse into one when rendered, and bold has no effect on line breaking."
+      }
+    ],
+    "html-b24-project-profile-page": [
+      {
+        "q": "Planning your profile page, you settle on: name, then About, Skills and Contact sections. Which heading assignment is correct?",
+        "options": [
+          "h1 for the name; h2 for About, Skills and Contact",
+          "h1 for everything, styled to different sizes",
+          "h1 for the name; h3 for the sections because h2 looks too big",
+          "h2 for the name; h1 for each section"
+        ],
+        "answer": 0,
+        "why": "One h1 states what the page is about (you), and each major section sits one level below as an h2. Skipping to h3 for looks breaks the outline — size is a CSS decision."
+      },
+      {
+        "q": "Your profile's GitHub link is <a href=\"https://github.com/you\" target=\"_blank\">GitHub</a>. A code review flags it. What is the accepted fix?",
+        "options": [
+          "Remove the https:// prefix",
+          "Add rel=\"noopener\" to the anchor",
+          "Change target to \"_top\"",
+          "Move the link into the head"
+        ],
+        "answer": 1,
+        "why": "Every target=\"_blank\" link should carry rel=\"noopener\" so the opened page cannot script the opener — the standard review comment for external profile links."
+      },
+      {
+        "q": "You want '© 2026 Alex Petrou' in the footer and a private note in the source for your future self. Which pair is correct?",
+        "options": [
+          "&copy; 2026 in the text, and <!-- update projects next --> as the note",
+          "(c) 2026 in the text, and <note>update projects</note> in the body",
+          "&copyright 2026 in the text, and // update projects as the note",
+          "©right; in the text, and /* update projects */ in the body"
+        ],
+        "answer": 0,
+        "why": "&copy; is the named entity for the copyright symbol, and HTML comments use the <!-- --> syntax, invisible to visitors. Slashes and /* */ are comment styles from other languages, not HTML."
+      }
+    ]
+  }
+}

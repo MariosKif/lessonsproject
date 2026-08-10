@@ -1,0 +1,527 @@
+{
+  "lessons": [
+    {
+      "slug": "biz-b1-delegate-first-task",
+      "title": "Delegate your first real task to AI: pick the right task and check the work",
+      "summary": "Choose one real task worth handing to AI, write a brief that gets a usable draft back, and build a quick habit for checking the output before you use it.",
+      "difficulty": "beginner",
+      "minutes": 9,
+      "isFree": true,
+      "goal": "Pick one real task from your business, delegate it to AI with a written brief, and verify the output before using it.",
+      "whyItMatters": "Most owners either avoid delegating anything real to AI (so it never earns its keep) or delegate everything and paste the output straight into a client email or a financial document without checking it. Neither habit lasts. A simple process for choosing the right first task, and a short verification pass afterward, is what turns AI into a genuine second pair of hands instead of a novelty you tried once.",
+      "beforeYouStart": "Have a Claude or ChatGPT account open, and think of five tasks you personally did this past week.",
+      "steps": [
+        "List five tasks from the past week that involved words, structuring information, or repetitive drafting — not tasks that require your judgment, your relationship with a specific person, or your signature.",
+        "Score each one on three things: how clear the 'right answer' is, how fast you could check the output, and how much real time it costs you when you do it yourself.",
+        "Pick the task that scores well on all three — clear right answer, fast to check, real time cost. That's your first delegation, not the hardest or most important task you can think of.",
+        "Write a short brief: the task in one sentence, the exact source material, the format you want back, and one sentence describing what 'done well' looks like.",
+        "Run the delegation prompt below with your brief and real source material — not a hypothetical example.",
+        "Check the output against a short list: does every fact trace back to your source material, is the format right, is anything invented, does the tone fit how you'd actually say it.",
+        "Note how long the check took versus how long the task normally takes you — that gap is your real time savings, not the speed of the first draft."
+      ],
+      "prompt": "I'm delegating a real work task to you. Here is the brief:\n\nTASK: [DESCRIBE THE TASK IN ONE SENTENCE]\nSOURCE MATERIAL: [PASTE OR DESCRIBE THE INPUT — e.g., an email thread, notes, a data export]\nFORMAT I NEED BACK: [e.g., \"a 200-word email\", \"a bulleted list\", \"a short table\"]\nWHAT \"DONE WELL\" LOOKS LIKE: [e.g., \"matches our usual tone\", \"covers all three items\", \"flags anything ambiguous instead of guessing\"]\n\nRULES:\n- Use only the information in the source material above. Do not invent numbers, names, dates, prices, or commitments that aren't there.\n- If something you'd need to do this well is missing from the source material, list it under \"Questions before I finalize this\" instead of guessing or filling it in.\n- Keep the tone: [DESCRIBE — e.g., direct and friendly, formal, concise].\n\nDo the task now, then list your questions (if any) at the end.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Separating the brief from the source material forces you to actually think through what \"done well\" means before you see a draft, instead of judging the output against a standard you never wrote down. The rule to list open questions rather than guess is what keeps a task with gaps in it from turning into a confident-sounding draft with invented details — you get an honest list of what's missing instead. Naming the exact format up front also cuts the single biggest source of wasted rework: getting a technically good draft back in the wrong shape for where it needs to go.",
+      "example": "Brief: \"Turn this week's five customer support email threads into a one-paragraph summary per customer, for my Monday team huddle. Format: a bulleted list, one bullet per customer, each under 40 words. Done well means it captures the issue, the resolution status, and whether the customer seems at risk of churning.\" Expected output: five bullets, each grounded in the actual email content, with a \"Questions\" note flagging anything ambiguous — e.g., a thread where the resolution status genuinely isn't clear from the emails, rather than the AI guessing it was resolved.",
+      "exercise": "In your own Claude or ChatGPT account, pick one real task from this week, write the four-line brief, and run the prompt with your actual source material.",
+      "expectedResult": "A usable first draft in the format you asked for, plus either zero open questions or a short honest list of what was missing — and a rough sense of how many minutes you saved after checking it.",
+      "commonMistakes": [
+        "Picking a task that depends on your judgment or a specific relationship (e.g., negotiating with a difficult vendor) as your first delegation — start with something you can verify quickly.",
+        "Skipping the check step and pasting the draft straight into a client-facing document.",
+        "Writing a vague brief (\"clean this up\") instead of naming the format and what success looks like.",
+        "Judging the tool as useless after one bad result without adjusting the brief — most bad first drafts trace back to a missing instruction, not a bad tool."
+      ],
+      "proTip": "Keep a running two-column note: task delegated, and minutes saved after checking. After a month you'll have real data on which categories of work are worth handing off — instead of a gut feeling.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "business-owner"
+      ],
+      "skills": [
+        "productivity",
+        "analysis"
+      ]
+    },
+    {
+      "slug": "biz-b2-customer-communication",
+      "title": "Write customer announcements, replies and difficult messages with AI",
+      "summary": "Draft a routine announcement, a fast reply, and a difficult or apology message using one repeatable, fact-grounded process instead of freezing or overcommitting under time pressure.",
+      "difficulty": "beginner",
+      "minutes": 9,
+      "isFree": false,
+      "goal": "Draft an announcement, a routine reply, and a difficult customer message, each grounded in facts you actually control and in a tone that fits the situation.",
+      "whyItMatters": "As the owner, you're often the only voice of the business across email, reviews, and support — and the moments that matter most (a price increase, a mistake, an angry review) are exactly the ones where you have the least time to get the wording right. The real risk with AI here isn't bad grammar, it's a draft that promises something you didn't authorize or sounds defensive in a complaint reply. A process that grounds every draft in facts you supply keeps the speed without the risk.",
+      "beforeYouStart": "Have the real situation in front of you: what happened, what you're doing about it, and what you can actually commit to.",
+      "steps": [
+        "Before opening AI, write down three things in plain language: what happened, what you're doing about it, and what you can commit to (a refund, a timeline, a policy — nothing you haven't already decided).",
+        "Identify the message type: announcement (one-to-many), routine reply (one-to-one, low stakes), or difficult message (complaint, mistake, price change, delay).",
+        "Use the prompt below, filling in the facts and the message type — never let the AI decide what you're offering or committing to.",
+        "Read the draft specifically for overcommitment: does it promise anything (a discount, a timeline, an exception) you didn't put in the facts?",
+        "Read it once more for tone against the situation — an apology that sounds defensive, or a routine reply that sounds overly formal, both need a hand edit.",
+        "Personalize the opening and closing lines by hand — the specific detail that shows a person wrote it is usually worth more than anything AI adds.",
+        "Send, and note anything you had to change so your next brief for a similar situation is faster."
+      ],
+      "prompt": "Help me draft a customer message.\n\nMESSAGE TYPE: [announcement / routine reply / difficult message — describe: complaint, mistake, price change, delay, etc.]\nAUDIENCE: [e.g., all customers, one specific customer, a customer who left a negative review]\nCHANNEL: [email, SMS, review reply, social post]\n\nFACTS (use only these — do not add commitments, discounts, timelines, or explanations I haven't stated):\n[WHAT HAPPENED]\n[WHAT WE'RE DOING ABOUT IT]\n[WHAT I CAN ACTUALLY OFFER OR COMMIT TO, IF ANYTHING]\n\nTONE: [e.g., warm and direct, formal and brief, apologetic without being defensive]\n\nWrite the message at [LENGTH]. Do not use generic corporate phrases like \"we take this very seriously\" or \"your satisfaction is our priority\" unless I've used them myself. If the situation calls for something I haven't given you (like a specific compensation amount), leave a bracketed placeholder instead of inventing one.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Locking the facts and the commitment to what you've already decided is the single most important guardrail here — it stops AI from being generous with your business on your behalf, which is the actual risk in a difficult message. Naming the message type changes the shape of the draft: an announcement needs a clear headline fact up front, while a complaint reply needs to acknowledge the customer's experience before any explanation. Banning generic corporate phrases by default, unless you've used them yourself, keeps the message sounding like you instead of like a template — which matters most exactly when a customer is already frustrated.",
+      "example": "Facts: \"Shipping delay of 4 days due to a supplier issue. We're proactively emailing every affected customer. I can offer a 10% discount code on their next order.\" Message type: difficult message, one-to-one, to a customer who already emailed asking where their order is. Expected output: a reply that opens by acknowledging the delay and the inconvenience (not a generic apology), states the reason briefly without over-explaining, states the new expected timeframe, and offers the discount code as a placeholder like [DISCOUNT CODE] for you to fill in — without inventing a percentage or a reason that isn't in the facts.",
+      "exercise": "In your own Claude or ChatGPT account, draft one real message you actually need to send this week — pick the difficult-message option if you have one pending — using your real facts.",
+      "expectedResult": "A draft you can send after a light personalization pass, with no invented commitments, discounts, or explanations beyond what you supplied.",
+      "commonMistakes": [
+        "Letting the draft state a specific discount, refund amount, or timeline you hadn't actually decided on yet.",
+        "Sending a difficult-message draft without reading it once specifically for a defensive or over-apologetic tone.",
+        "Reusing the same generic phrasing across every reply so customers notice the template.",
+        "Skipping the personalized opening/closing line, which is often what makes a reply feel human."
+      ],
+      "proTip": "Keep a short list of your actual go-to phrases and how you sign off — paste it into the prompt as a style reference once, and every future draft will sound more like you with less editing.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "business-owner"
+      ],
+      "skills": [
+        "communication",
+        "writing"
+      ]
+    },
+    {
+      "slug": "biz-i1-market-competitor-research-perplexity",
+      "title": "Research your market and competitors before a decision with Gemini Deep Research",
+      "summary": "Get a cited, dated snapshot of competitors and market conditions to ground a pricing, product, or expansion decision — instead of relying on outdated impressions.",
+      "difficulty": "intermediate",
+      "minutes": 11,
+      "isFree": false,
+      "goal": "Produce a cited research summary on your market or competitors that you can use to support a specific upcoming business decision.",
+      "whyItMatters": "Owners making real decisions — raising prices, adding a service line, opening a second location — often work from a gut-level impression of competitors that's a year out of date. Gemini's Deep Research browses the live web and returns a cited report instead of a confident-sounding paragraph you can't verify, so you get a summary you can actually defend to a co-founder, a lender, or your own team by pointing at the underlying links.",
+      "beforeYouStart": "Have a Gemini account (the Gemini app, free tier, or Google AI Pro/Ultra for higher Deep Research quotas) and know the specific decision you're trying to inform.",
+      "steps": [
+        "Name the decision this research needs to support in one sentence (e.g., \"whether to raise prices 8% in Q4\") — vague research produces a vague, unusable answer.",
+        "List 2-3 named competitors or a clearly scoped market (by industry, region, and customer segment) rather than asking about \"the market\" broadly.",
+        "In the Gemini app, select Deep Research and run the research prompt below.",
+        "Review the research plan Deep Research proposes before it runs, and adjust it if it's about to search too broadly or miss a competitor you named.",
+        "Open at least two or three of the cited sources yourself and confirm they're recent and actually specific to your market, not a generic national trend piece.",
+        "Ask a scoped follow-up that narrows to your exact situation — your price band, your region, your customer size.",
+        "Ask Gemini to compile the findings into a short decision memo with the source links kept visible, and note the date you ran it."
+      ],
+      "prompt": "Research [MARKET/INDUSTRY, with region and customer segment — e.g., \"small-business bookkeeping services for companies under 20 employees in [CITY/REGION]\"] to help me decide: [YOUR DECISION IN ONE SENTENCE].\n\nSpecifically, with a cited source and publish date for each:\n1. What are [NAMED COMPETITORS, if any] currently charging or offering for a comparable service?\n2. What's the general pricing range in this market right now, and has it moved recently?\n3. Any notable recent shift specific to this market (new entrants, demand change, a competitor's recent move)?\n4. What would a customer in this segment likely compare my offer against?\n\nFocus on sources from the last 12 months where possible. Flag clearly if you had to widen the search beyond my specified region or segment to find relevant data, rather than presenting broader data as if it were specific to my situation.",
+      "promptLabel": "Copyable prompt (paste into Gemini Deep Research)",
+      "explanation": "Stating the actual decision up front, not just the topic, is what keeps the research useful — it tells Deep Research (and you, when reading the results) what counts as relevant versus interesting-but-beside-the-point, and it's also what makes the research plan Deep Research shows you before running worth reviewing. Requiring a source and date on every figure gives you a citation trail you can hand to a partner or lender directly, rather than a claim you'd have to re-research if challenged. The instruction to flag when it had to widen the search is what stops you from unknowingly treating a national trend as evidence about your specific local market.",
+      "example": "Decision: \"Whether to raise my web-design retainer from $1,800 to $2,200/month.\" Expected output: a cited summary of what 3-5 comparable local or niche competitors charge for similar retainers, whether the broader market has moved pricing recently, a note on what a prospective client would likely compare the offer to, and a clear flag if any of the figures came from a broader national dataset rather than your specific niche — each line linked to a dated source you can open yourself.",
+      "exercise": "In your own Gemini account, run this research with Deep Research for a real decision you're currently weighing, and personally open at least two citations to confirm they're recent and relevant before you use any figure.",
+      "expectedResult": "A short, cited market snapshot tied to your specific decision, with every figure traceable to a dated source and a clear note on the date you ran the research.",
+      "commonMistakes": [
+        "Trusting the summary paragraph without opening any of the underlying citations.",
+        "Researching \"the market\" broadly instead of scoping to your actual competitors, region, and segment.",
+        "Using research that's more than a few months old as if it's current when the decision is time-sensitive.",
+        "Skipping the follow-up narrowing question and acting on the first, broader answer."
+      ],
+      "proTip": "Save your standard research prompt as a pinned Gem for your industry — checking competitor pricing before any decision becomes a five-minute habit instead of a research project.",
+      "tools": [
+        "gemini"
+      ],
+      "professions": [
+        "business-owner"
+      ],
+      "skills": [
+        "research",
+        "analysis"
+      ]
+    },
+    {
+      "slug": "biz-i2-standard-operating-procedures",
+      "title": "Turn how you actually do a task into an SOP your team will actually follow",
+      "summary": "Convert a messy, in-your-head process into a clear, testable standard operating procedure by walking through the real steps first, instead of writing a wishlist document that never gets used.",
+      "difficulty": "intermediate",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Turn a task you currently do from memory into a written SOP that someone else can follow without asking you questions, and confirm it works by having someone test it.",
+      "whyItMatters": "Most SOPs fail for the same reason: they're written top-down as a wishlist of how the task should go, not a record of how it actually goes — including the exceptions and judgment calls. AI is genuinely good at structuring a messy, real walkthrough into clear steps, but only if you feed it the real process, warts and all, instead of asking it to invent a generic procedure for a task it's never seen you do.",
+      "beforeYouStart": "Pick one task you personally do (or one your team does inconsistently) that would save real time if it were documented once, well.",
+      "steps": [
+        "Talk or type through the task exactly as you actually do it, start to finish, including any exceptions, judgment calls, and things you check before moving on — don't clean it up yet.",
+        "Note any decision points where the next step depends on something ('if the customer already paid, skip step 4').",
+        "Use the SOP-drafting prompt below with your raw walkthrough as the input.",
+        "Review the draft SOP yourself first — check that every step matches what you actually do, not a tidier version of it.",
+        "Hand the SOP to someone else on your team and have them attempt the task using only the document, with you silently observing where they get stuck.",
+        "Revise the SOP based specifically on where they hesitated or asked a question — that's the real gap, not what you assumed would be unclear.",
+        "Store the final version somewhere central with an owner and a review date, so it doesn't quietly go stale."
+      ],
+      "prompt": "I'm going to describe a task exactly as I actually do it, including exceptions and judgment calls. Turn this into a clear standard operating procedure.\n\nMy raw walkthrough:\n[PASTE OR DESCRIBE THE TASK STEP BY STEP, AS MESSY AS IT ACTUALLY IS]\n\nStructure the output as:\n1. Purpose (one sentence: why this task exists)\n2. When to use this SOP (and when NOT to — any situations where a different process applies)\n3. Step-by-step instructions, numbered, each step one clear action\n4. Decision points, clearly marked (\"If X, do Y instead of continuing to step [N]\")\n5. Common mistakes people make on this task\n6. What \"done\" looks like — how the person doing it knows they finished correctly\n\nRULES: Use only the steps and exceptions I described. Do not add steps, tools, or best practices I didn't mention. If my walkthrough has a gap where a step's outcome is unclear, flag it as \"[NEEDS CLARIFICATION: ...]\" rather than filling it in with a plausible-sounding step.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Starting from a raw, unedited walkthrough rather than a tidy description is what captures the exceptions and judgment calls that actually make a task hard to hand off — those are usually the parts a generic SOP template misses entirely. The explicit \"when NOT to use this\" section stops the SOP from being applied to edge cases it was never designed for. Flagging gaps instead of inventing plausible-sounding steps is critical because a wrong invented step in an SOP is worse than a missing one — someone will follow it confidently and get it wrong.",
+      "example": "Raw walkthrough: \"When a new client signs, I check if they came from referral or the website form — referrals skip the qualification call. I send the welcome email, but if it's a rush project I call first same day. I add them to the project tracker and tag by service type. If they haven't sent a deposit within 3 days I follow up once, then loop in [PARTNER NAME] if still nothing after a week.\" Expected output: a numbered SOP with the referral-vs-form decision point marked clearly, the rush-project exception called out as a decision point rather than buried in a paragraph, and the 3-day/1-week follow-up sequence as explicit numbered steps — with nothing about the process invented beyond what was described.",
+      "exercise": "In your own Claude or ChatGPT account, walk through one real task exactly as you do it and generate the SOP, then have a teammate test it and tell you where they got stuck.",
+      "expectedResult": "A numbered SOP that a teammate can follow with minimal or no questions, revised once based on where a real test run showed gaps.",
+      "commonMistakes": [
+        "Writing a cleaned-up, idealized version of the task instead of the messy real one, which hides the exceptions that actually cause confusion.",
+        "Skipping the real-person test and assuming the document is clear because you understand it.",
+        "Letting the AI add 'best practice' steps you don't actually follow, which makes the SOP diverge from reality.",
+        "Publishing the SOP once and never assigning an owner to review it as the process changes."
+      ],
+      "proTip": "For any task with more than one decision point, ask for a short decision-tree summary at the top of the SOP in addition to the numbered steps — it's often faster for someone to scan than reading every step in order.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "business-owner"
+      ],
+      "skills": [
+        "writing",
+        "productivity"
+      ]
+    },
+    {
+      "slug": "biz-i3-financial-narratives",
+      "title": "Turn your numbers into a plain-English financial narrative you can explain",
+      "summary": "Turn a raw P&L or financial export into a plain-language narrative of what changed and why, so you can confidently explain your numbers to a partner, lender, or your own team.",
+      "difficulty": "intermediate",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Turn a month-over-month or quarter-over-quarter financial export into a plain-English narrative you can explain out loud, with AI flagging any movement it can't explain from the numbers alone.",
+      "whyItMatters": "Many owners can read their own numbers but freeze when asked to explain them — why revenue dipped in March, why margin moved two points, what actually changed. AI is genuinely useful for summarizing a spreadsheet export into a narrative pattern, but it will confidently invent a plausible-sounding explanation for a change it can't actually see the cause of unless you explicitly tell it not to.",
+      "beforeYouStart": "Export a summary (P&L, revenue-by-category, or similar) for the period you need to explain. If you use a general-purpose AI account, consider redacting customer names, exact bank details, or anything beyond aggregate figures before pasting it in, or use your tool's business-tier data settings.",
+      "steps": [
+        "Export or copy the relevant financial summary — line items and totals for the period(s) you're comparing.",
+        "Redact or generalize anything sensitive you don't need for the narrative (specific customer names, account numbers) before pasting it anywhere.",
+        "Use the narrative prompt below with the figures pasted in as a simple table.",
+        "Read the output for any explanation that sounds specific but isn't something you actually know to be true — flag and remove it.",
+        "Turn the AI's 'changes I can't explain from the numbers alone' list into 2-3 questions for your bookkeeper or accountant.",
+        "Practice explaining the narrative out loud in your own words once before you need to say it in a real meeting."
+      ],
+      "prompt": "I'm going to give you a financial summary. Write a plain-English narrative explaining what changed, in language a non-finance person could follow.\n\nFigures:\n[PASTE YOUR TABLE — e.g., line items with this period vs. last period, or vs. same period last year]\n\nRULES:\n- Only describe what the numbers show (the direction and size of each change). Do not invent a business reason for a change unless it's stated in the data or I've told you the reason separately below.\n- If a movement is notable but you don't have enough information to explain why, list it under \"Changes I can't explain from the numbers alone\" instead of guessing.\n- Known context I can give you (optional, do not invent beyond this): [E.G., \"WE RAN A PROMOTION IN MARCH\" OR LEAVE BLANK]\n\nStructure the output as:\n1. One-paragraph summary of the overall picture\n2. The 3 most significant changes, each in one sentence with the number and direction\n3. \"Changes I can't explain from the numbers alone\" — a short list\n4. Three questions I should ask my bookkeeper or accountant to fill the gaps",
+      "promptLabel": "Copyable prompt",
+      "explanation": "The rule against inventing a business reason is the whole point of this prompt — a spreadsheet can show that margin dropped two points, but it cannot know whether that's because of a pricing change, a bad month for a supplier, or a one-off expense, and a model that fills in a plausible cause anyway will hand you a narrative you can't actually defend if someone asks a follow-up question. Separating the confirmed changes from the unexplained ones is what turns this into a genuinely useful pre-meeting exercise instead of a source of confidently wrong talking points. Ending with specific questions for your bookkeeper turns the exercise into an action, not just a summary.",
+      "example": "Figures: revenue $84,200 this quarter vs. $76,500 last quarter; COGS up from 38% to 43% of revenue; marketing spend flat. Expected output: a narrative noting revenue grew about 10%, but gross margin compressed roughly 5 points, with COGS-as-percentage-of-revenue flagged as the driver of the margin change — and, since nothing in the data explains why COGS moved, a line under \"changes I can't explain\" prompting a question like \"did a supplier price increase or a product mix shift happen this quarter?\" rather than the narrative guessing at a cause.",
+      "exercise": "In your own Claude or ChatGPT account, paste a real (redacted if needed) summary from your last two reporting periods and generate the narrative, then write down the three questions it produces.",
+      "expectedResult": "A short narrative you could say out loud in a meeting, with a clear separation between what the numbers confirm and what still needs a human answer.",
+      "commonMistakes": [
+        "Pasting sensitive account-level or customer-identifying financial data into a general consumer AI account without checking your tool's data-handling settings first.",
+        "Accepting an invented-sounding explanation for a number change instead of checking it against what you actually know happened that period.",
+        "Treating the narrative as a substitute for talking to your bookkeeper instead of a prep step before that conversation.",
+        "Only looking at revenue changes and skipping the margin or expense-ratio movements, which are often the more important story."
+      ],
+      "proTip": "Run this narrative every month with the same table format — after a few months you'll have a short trend history that makes the next narrative faster to generate and easier to sanity-check.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "business-owner"
+      ],
+      "skills": [
+        "analysis",
+        "communication"
+      ]
+    },
+    {
+      "slug": "biz-a1-ai-operations-layer",
+      "title": "Design an AI operations layer for a small business with Claude and ChatGPT",
+      "summary": "Map your recurring cross-tool workflows and design an AI-assisted operations layer using Claude's MCP connectors and Cowork, or ChatGPT's Agent mode, with clear human checkpoints, before building anything.",
+      "difficulty": "advanced",
+      "minutes": 14,
+      "isFree": false,
+      "goal": "Design a spec for one AI-assisted automation workflow — trigger, AI step, human checkpoint, fallback — for your highest-value recurring operational task, ready to set up in Claude or ChatGPT.",
+      "whyItMatters": "Claude and ChatGPT now both let a small business connect an inbox, a form, a spreadsheet, and an AI drafting step without an engineer — Claude via MCP connectors and Cowork, ChatGPT via Agent mode and Scheduled tasks — which is exactly why so many owners end up with a pile of disconnected, unowned automations no one fully trusts. Designing the workflow on paper first, with an explicit human checkpoint on anything touching money or a customer, is what separates a real efficiency gain from a fragile system that quietly breaks and nobody notices.",
+      "beforeYouStart": "Have access to (or be evaluating) Claude Pro/Max with MCP connectors and Cowork, or ChatGPT Plus/Pro with Agent mode and Scheduled tasks, and know 3-4 recurring tasks that currently involve moving information between two or more systems.",
+      "steps": [
+        "List 3-4 recurring tasks that involve moving information between systems and include at least one step of AI judgment (drafting, classifying, summarizing) — not purely mechanical transfers, which a plain MCP connector or scheduled action can handle without an AI step.",
+        "For each candidate, write the trigger (what starts it), the AI step (what judgment it performs), and the intended output.",
+        "Score each candidate on frequency, time cost, and risk if it makes a mistake — a low-stakes internal workflow (e.g., summarizing inbound leads for a daily digest) is a safer first build than one that emails customers or moves money.",
+        "Pick the single highest-value, lowest-risk workflow and use the design prompt below to produce a full spec.",
+        "Add an explicit human-approval checkpoint before any step that sends something external or commits money — never let the first version run fully unattended on those.",
+        "Define the fallback: what happens, and who's notified, if the AI step fails, produces something off, or a connected app (via MCP connector or Agent mode) errors out.",
+        "Build and pilot just that one workflow with the checkpoint active for at least two weeks before considering removing or loosening it.",
+        "Assign an owner responsible for checking the workflow's output periodically — an automation with no owner is the most common way these quietly go wrong."
+      ],
+      "prompt": "I want to design (not yet build) an AI-assisted automation workflow. Here's the manual process today:\n\nMANUAL PROCESS: [DESCRIBE WHAT HAPPENS TODAY, STEP BY STEP, INCLUDING WHO DOES WHAT]\nTRIGGER: [WHAT STARTS THIS — e.g., \"a new form submission\", \"an inbound email\", \"end of day\"]\nTOOLS INVOLVED: [E.G., GMAIL, GOOGLE SHEETS, SLACK, CRM NAME]\nBUILDING THIS IN: [Claude with MCP connectors + Cowork / ChatGPT with Agent mode + Scheduled tasks]\nRISK LEVEL: [DOES THIS TOUCH MONEY, CUSTOMER-FACING COMMUNICATION, OR STAY FULLY INTERNAL?]\n\nDesign a workflow spec with:\n1. Trigger (exact event)\n2. Steps in order, marking clearly which are mechanical (no AI judgment needed) vs. which need an AI judgment step (drafting, classifying, summarizing, deciding)\n3. Which MCP connectors (if Claude) or connected apps/actions (if ChatGPT) this actually needs, based only on the tools I listed\n4. Where a human approval checkpoint is required before anything external happens (sending, spending, publishing) — be conservative here given the risk level I stated\n5. What the AI step should do if it's uncertain (e.g., low-confidence classification) — route to a human rather than guessing\n6. Fallback: what happens if a step fails or a connected tool errors out, and who should be notified\n7. A suggested owner role for monitoring this once live\n\nDo not assume a fully autonomous, no-human-checkpoint workflow unless I explicitly told you the risk level is low and internal-only. Do not suggest a connector or integration I haven't confirmed exists for the tools I listed.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Naming the risk level up front and instructing the model to be conservative about human checkpoints unless you've explicitly cleared it as low-risk is the core safeguard — it's easy to design an impressively \"autonomous\" workflow on paper and only notice the missing approval step after it's already sent something to a customer. Separating mechanical steps from AI-judgment steps in the spec matters because the mechanical parts are what a plain MCP connector or scheduled task should handle; reserving the AI step for genuine judgment keeps the system simpler and cheaper to run. Naming which tool you're building in — Claude's MCP connectors and Cowork, or ChatGPT's Agent mode and Scheduled tasks — matters because it determines what's actually available to connect to and how the human-checkpoint step gets surfaced to you (a Cowork check-in versus a scheduled task you review before approving an action). Requiring an explicit fallback and an owner is what turns a one-time build into something that stays trustworthy months later, instead of a system nobody notices has silently stopped working.",
+      "example": "Manual process: inbound leads land in a shared inbox; someone reads each one, decides which service line it's for, and manually enters it into a spreadsheet before following up. Building this in: Claude with an MCP connector to Gmail and Google Sheets. Risk level: internal-only, no customer contact yet. Expected output: a spec where the trigger is a new email to the lead inbox, the AI step classifies the service line and drafts a one-line summary, a mechanical step (via the Sheets MCP connector) logs it to the spreadsheet, and — because this is internal-only — the AI can act without a human approval checkpoint on the logging step itself, but low-confidence classifications route to a Slack message for a human to tag manually rather than guessing.",
+      "exercise": "In your own Claude or ChatGPT account, describe one real recurring workflow from your business using the prompt above and review the resulting spec for whether the human checkpoints match how much risk you're actually comfortable automating.",
+      "expectedResult": "A written workflow spec — trigger, steps, checkpoint, fallback, owner — for one real workflow, built on Claude's MCP connectors/Cowork or ChatGPT's Agent mode, ready to set up, with at least one deliberate human checkpoint on anything customer-facing or financial.",
+      "commonMistakes": [
+        "Automating a customer-facing or financial step with no human checkpoint on the first version, because the demo looked reliable.",
+        "Picking a task that changes too often or too situationally to be worth systematizing, instead of one with a genuinely repeatable shape.",
+        "Skipping the fallback design and only finding out how the workflow fails when it actually does, in production.",
+        "Leaving the workflow with no assigned owner, so a quiet failure goes unnoticed for weeks."
+      ],
+      "proTip": "Pilot every new workflow with the human checkpoint set deliberately too conservative at first — it's far easier to loosen a checkpoint once you trust the pattern than to add one back after something has already gone out wrong.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "business-owner"
+      ],
+      "skills": [
+        "automation",
+        "productivity"
+      ]
+    },
+    {
+      "slug": "fl-b1-proposals-that-win",
+      "title": "Write proposals that win: tailor to the brief fast with AI",
+      "summary": "Turn a client's brief or job post into a tailored proposal that mirrors their stated priorities, using your real past work as proof — not a recycled generic pitch.",
+      "difficulty": "beginner",
+      "minutes": 9,
+      "isFree": true,
+      "goal": "Turn a specific client brief into a tailored proposal draft that speaks directly to their stated priorities, built from your own real past work.",
+      "whyItMatters": "The fastest way to lose a bid is to send a proposal that reads like it could go to anyone — clients can tell within a paragraph. AI is genuinely good at mirroring a client's own language and stated priorities back at them quickly, but the risk is a draft that sounds tailored on the surface while quietly overpromising scope, timeline, or price you haven't actually agreed to.",
+      "beforeYouStart": "Have the client's brief or job post, and a short list of your own relevant past projects or results ready to paste in.",
+      "steps": [
+        "Read the brief yourself first and note the 2-3 things the client seems to care about most — don't skip this and let AI decide it for you.",
+        "Pull 2-4 real, specific proof points from your own past work that match those priorities (a result, a similar project, a relevant skill) — nothing you haven't actually done.",
+        "Use the tailoring prompt below with the brief pasted in verbatim and your real proof points.",
+        "Read the draft for anything that sounds like scope, a timeline, or a price you haven't actually decided — remove or bracket it.",
+        "Edit the opening and one other section by hand so it reads in your actual voice, not a generic 'confident freelancer' tone.",
+        "Set your own price and timeline separately — don't let the draft's suggested numbers become your default."
+      ],
+      "prompt": "Help me write a proposal tailored to this client brief.\n\nCLIENT BRIEF (verbatim):\n[PASTE THE JOB POST OR BRIEF]\n\nMY RELEVANT PAST WORK (use only these — do not invent projects, results, or credentials):\n[LIST 2-4 REAL PROJECTS OR RESULTS, WITH SPECIFICS]\n\nMY STATED PRIORITIES FROM READING THE BRIEF: [YOUR OWN 2-3 NOTES ON WHAT THIS CLIENT SEEMS TO CARE ABOUT MOST]\n\nWrite a proposal that:\n1. Opens by directly addressing the client's stated need, using their own language from the brief where natural\n2. References 2-3 of my proof points above, tied specifically to what this client needs — not a generic list of all my skills\n3. Ends with a clear, low-friction next step\n\nDo NOT include a specific price, timeline, or scope commitment — leave those as [PRICE], [TIMELINE], and [SCOPE] placeholders for me to fill in myself. Keep it under [WORD COUNT] words and avoid generic freelancer-proposal phrases like \"I'm the perfect fit for this project.\"",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Feeding in the brief verbatim, rather than your summary of it, is what lets the model actually mirror the client's own language back — proposals that echo a client's specific wording read as far more tailored than ones using generic industry terms for the same idea. Restricting proof points to a list you provide, instead of letting the model invent an impressive-sounding project, is what keeps the proposal honest and defensible if a client asks a follow-up question about it. Blocking price, timeline, and scope from the draft is deliberate — those are business decisions you should make deliberately, not accept because a plausible-sounding number appeared in a first draft.",
+      "example": "Brief: a startup wants \"a landing page rewrite that converts better, ideally with someone who's worked with early-stage SaaS before.\" Proof points: a similar SaaS landing page rewrite that increased signups, and a testimonial quote. Expected output: an opening line that speaks directly to \"converts better\" and \"early-stage SaaS\" using the client's own framing, a middle section citing the matching project and testimonial (not your full portfolio), and a closing line proposing a specific next step, with [PRICE], [TIMELINE], and [SCOPE] left as placeholders instead of filled-in numbers.",
+      "exercise": "In your own Claude or ChatGPT account, run this prompt against a real brief or job post you're currently considering, using your own actual past work as proof points.",
+      "expectedResult": "A tailored proposal draft, grounded in your real work and the client's actual language, with price, timeline, and scope left for you to decide and fill in.",
+      "commonMistakes": [
+        "Pasting a summary of the brief instead of the client's actual words, which loses the language-mirroring effect.",
+        "Letting the draft list every skill you have instead of the 2-3 that match this specific brief.",
+        "Accepting a suggested price or timeline from the draft instead of deciding it yourself based on your own numbers.",
+        "Sending the first draft unedited — the opening line especially benefits from a personal rewrite."
+      ],
+      "proTip": "Keep a running document of your best proof points (results, testimonials, specific numbers) so you're always pasting in fresh, accurate material instead of trying to remember your best work under deadline pressure.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "freelancer"
+      ],
+      "skills": [
+        "writing",
+        "sales"
+      ]
+    },
+    {
+      "slug": "fl-b2-client-onboarding-docs",
+      "title": "Build client onboarding documents and kickoff messages with AI",
+      "summary": "Turn your own onboarding checklist into a polished welcome packet and kickoff message you can reuse with every new client, so the first week never starts messy.",
+      "difficulty": "beginner",
+      "minutes": 8,
+      "isFree": false,
+      "goal": "Turn your real onboarding checklist into a reusable welcome packet and kickoff email template you can send to every new client.",
+      "whyItMatters": "A messy first week — missing information requests, an unclear timeline, expectations never stated — is one of the most common client complaints about freelancers, and it's entirely avoidable with a document you build once. AI speeds up producing the actual documents, but only if the content comes from your real process; a generic onboarding template misses the specific things you personally need from every client.",
+      "beforeYouStart": "Write down (roughly, doesn't need to be polished) what you actually need from a client to start work, and what you promise happens in week one.",
+      "steps": [
+        "List exactly what you need from a client before you can start: access, files, brand assets, decisions, approvals.",
+        "List what you commit to in week one: what they'll receive, by when, and how you'll communicate.",
+        "Use the drafting prompt below with both lists as input.",
+        "Review the welcome packet for anything generic that doesn't match how you actually work, and cut it.",
+        "Personalize the kickoff email template with bracketed fields for project-specific details (name, project type, start date).",
+        "Save both as reusable templates, and send the next real kickoff from the template instead of writing it fresh."
+      ],
+      "prompt": "Help me build a client onboarding welcome packet and a kickoff email, based on my real process.\n\nWHAT I NEED FROM A NEW CLIENT BEFORE STARTING:\n[LIST — e.g., logo files, brand guidelines, website access, a signed contract, a deposit]\n\nWHAT I COMMIT TO IN WEEK ONE:\n[LIST — e.g., a kickoff call within 2 business days, a project timeline by day 3, weekly Friday updates]\n\nMY COMMUNICATION STYLE: [e.g., friendly and casual, formal and structured]\n\nWrite:\n1. A welcome packet (for a new client) covering: what happens next, what I need from them and by when, how we'll communicate, and what to expect in week one — using only the items I listed above, not generic onboarding advice\n2. A short kickoff email template with bracketed placeholders for [CLIENT NAME], [PROJECT NAME], [START DATE], and [FIRST DELIVERABLE/MILESTONE]\n\nKeep both documents realistic for a solo freelancer to actually send — no corporate-sounding filler.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Feeding in your actual requirements and week-one commitments, rather than asking for a generic onboarding template, is what makes the resulting packet something clients can actually follow without emailing you back to ask what you meant. Keeping the two lists separate (what you need vs. what you commit to) mirrors the two real questions a new client has — \"what do you need from me\" and \"what should I expect\" — so the packet answers both directly instead of blending them into vague onboarding advice. Building it as a reusable template with placeholders, instead of a one-off document, is what actually saves time on the next client, not just this one.",
+      "example": "Inputs: needs brand assets, website login, and a signed contract before starting; commits to a kickoff call within 2 business days and weekly Friday email updates. Expected output: a welcome packet that lists exactly those three requirements with a note on how to send each, states the kickoff call and weekly update commitment plainly, and a short kickoff email with [CLIENT NAME] and [START DATE] placeholders ready to fill in for the next real client — with nothing about onboarding best practices added beyond what was specified.",
+      "exercise": "In your own account, list your real requirements and week-one commitments and generate both documents, then send the kickoff email template to your very next new client.",
+      "expectedResult": "A reusable welcome packet and kickoff email template, grounded in your actual process, ready to send to a real client with minimal personalization.",
+      "commonMistakes": [
+        "Accepting generic onboarding advice in the packet instead of your own specific requirements and commitments.",
+        "Making the packet too long — a new client is more likely to actually read a short, specific one.",
+        "Forgetting to add placeholders, so you end up rewriting the whole document for each new client instead of filling in blanks.",
+        "Never updating the template after you change your process, so it quietly goes stale."
+      ],
+      "proTip": "Add a one-line note to the welcome packet on how to reach you and how fast you typically respond — it's one of the most common early-project sources of client anxiety and it costs you nothing to state upfront.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "freelancer"
+      ],
+      "skills": [
+        "writing",
+        "productivity"
+      ]
+    },
+    {
+      "slug": "fl-i1-scope-quote-contract-drafts",
+      "title": "Draft scope, quote and contract language with AI — with review guardrails",
+      "summary": "Use AI to produce a fast first draft of a scope of work, an itemized quote, and standard contract clauses, with a clear guardrail that any binding language gets a professional review before it's signed.",
+      "difficulty": "intermediate",
+      "minutes": 12,
+      "isFree": false,
+      "goal": "Draft a scope of work, an itemized quote, and standard contract clauses from a project brief, with legally sensitive clauses explicitly flagged for professional review before anything is signed.",
+      "whyItMatters": "AI is fast at producing scope and contract language, and that speed is exactly the risk — a plausible-sounding clause on IP ownership, liability, or late payment can be quietly wrong for your situation, and a bad clause is how freelancers get burned months later. This is not a lesson in getting AI to replace a lawyer; it's a lesson in using it as a fast first-draft tool while treating anything binding as something that needs a human (or a template you already trust) to check before it's real.",
+      "beforeYouStart": "Have your project brief and your usual payment terms, revision policy, and any standard clauses you already use. This produces drafts only — it is not legal advice, and clauses should be reviewed by a qualified professional or a trusted, vetted template before use.",
+      "steps": [
+        "Define the scope inputs: deliverables, number of revisions included, timeline, and what's explicitly excluded.",
+        "Draft the quote as a line-item breakdown, not a single lump sum, so the client can see what they're paying for.",
+        "Use the drafting prompt below to produce the scope, quote, and standard clauses together, with legal-sensitivity flags.",
+        "Read the flagged clauses (payment terms, IP ownership, liability, termination) and get them reviewed by a lawyer or checked against a trusted template before treating them as final.",
+        "Send the scope and quote to the client for written approval separately from the contract, so there's a clear paper trail before anything binding is signed.",
+        "Only send the contract for signature after the flagged clauses have been reviewed."
+      ],
+      "prompt": "Help me draft a scope of work, an itemized quote, and standard contract clauses for this project. You are not a lawyer and this is not legal advice — clearly flag any clause that should be reviewed by a qualified professional before it's used.\n\nPROJECT BRIEF: [DESCRIBE THE PROJECT]\nDELIVERABLES: [LIST]\nREVISIONS INCLUDED: [NUMBER]\nTIMELINE: [DATES OR DURATION]\nEXCLUSIONS (explicitly out of scope): [LIST]\nMY USUAL PAYMENT TERMS: [E.G., 50% DEPOSIT, NET 15, LATE FEE POLICY]\nMY RATE/PRICING STRUCTURE: [DESCRIBE]\n\nProduce:\n1. Scope of work — deliverables, timeline, revisions, exclusions, written in plain language\n2. Itemized quote — broken into line items with individual amounts, not a single total\n3. Standard contract clauses covering payment terms, revision limits, and project timeline, using only the terms I gave you\n4. A clearly separated list titled \"Have a professional review before signing\" covering at minimum: IP/ownership transfer, liability limitation, and termination terms — draft reasonable starting language for these too, but mark them explicitly as needing review\n\nDo not invent payment terms, rates, or legal language beyond what I've specified.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Explicitly telling the model it isn't a lawyer and instructing it to flag sensitive clauses is what keeps this a genuinely useful drafting tool instead of a source of false confidence — it produces a starting point for IP, liability, and termination language while making clear that starting point isn't the finish line. Separating the scope and quote from the contract mirrors good practice regardless of AI: getting written client approval on scope and price before anything moves to binding legal language creates a paper trail that protects you either way. Using only the terms and rates you supply, rather than plausible industry defaults, is what keeps a quote from silently including payment terms you don't actually offer.",
+      "example": "Brief: a 4-week brand identity project, 2 rounds of revisions included, 50% deposit and net 15 balance. Expected output: a scope document listing deliverables and explicitly stating what's excluded (e.g., \"does not include website implementation\"), a quote broken into line items like logo design, brand guidelines, and revisions, standard payment-terms clauses matching the 50%/net-15 structure exactly as given, and a clearly separated section listing IP transfer, liability, and termination clauses with a note to have them reviewed before the contract is sent for signature.",
+      "exercise": "In your own account, draft the scope, quote, and clauses for a real upcoming project using your actual terms, and identify which flagged clauses you'll get reviewed before sending it.",
+      "expectedResult": "A usable first draft of scope, quote, and contract language, with the legally sensitive sections clearly separated and explicitly marked as needing professional review before anything is signed.",
+      "commonMistakes": [
+        "Sending an AI-drafted contract straight to a client for signature without any professional review of the IP, liability, or termination clauses.",
+        "Letting the quote come back as a single lump sum instead of itemized, which makes it harder for a client to see (and agree to) what they're paying for.",
+        "Accepting invented-sounding payment terms or rates instead of the ones you actually use.",
+        "Skipping written approval of the scope and quote before moving to contract, losing the paper trail if a scope dispute comes up later."
+      ],
+      "proTip": "Once you've had a set of clauses professionally reviewed and approved, save that exact language as your standard template and reuse it — only re-run the AI draft (and re-review) when the project type is genuinely different from your usual work.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "freelancer"
+      ],
+      "skills": [
+        "writing",
+        "analysis"
+      ]
+    },
+    {
+      "slug": "fl-i2-marketing-yourself-portfolio-outreach",
+      "title": "Market yourself: write portfolio copy and outreach messages with AI",
+      "summary": "Turn real project facts into a structured portfolio case study and a tailored cold-outreach message aimed at a specific type of client, without inventing impressive-sounding metrics.",
+      "difficulty": "intermediate",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Turn one past project's real facts into a portfolio case study and a short, tailored outreach message for a specific target client type.",
+      "whyItMatters": "Freelancers are often the worst marketers of their own work — too close to a project to know what's worth highlighting, or too busy delivering to write it up. AI is genuinely good at turning raw project facts into a structured case study and a targeted outreach angle, provided it's given real outcomes to work with rather than asked to produce something that just sounds impressive.",
+      "beforeYouStart": "Pick one real past project with a genuine, specific result — even a modest one — rather than your vaguest 'success story.'",
+      "steps": [
+        "Gather the real facts of one project: what the client needed, what you did, and the actual outcome (a number, a specific change, a client quote) — no invented metrics.",
+        "Use the case-study prompt below with those facts.",
+        "Check the draft against your facts — cut anything that sounds like a rounded-up or inferred number you didn't actually confirm.",
+        "Decide on one specific target client type you want more of (industry, project type, or budget range).",
+        "Use the outreach prompt with the case study and the target client type to generate a short, personalized cold message.",
+        "Personalize the opening line by hand with a real, specific reason you're reaching out to that particular person or company.",
+        "Track which outreach messages get replies and refine the angle that's actually working, not the one you assumed would."
+      ],
+      "prompt": "PART 1 — Case study.\nHelp me write a short portfolio case study using only the real facts below — do not invent metrics, client names, or results I haven't stated.\n\nCLIENT SITUATION: [WHAT THEY NEEDED / THE PROBLEM]\nWHAT I DID: [YOUR ACTUAL WORK]\nRESULT: [REAL OUTCOME — A NUMBER, A SPECIFIC CHANGE, A QUOTE — OR STATE IF THERE'S NO HARD METRIC]\n\nWrite a 150-200 word case study: situation, approach, result, structured for a portfolio page. If I didn't give you a hard metric, do not invent one — describe the qualitative outcome honestly instead.\n\nPART 2 — Outreach message.\nUsing the case study above, write a short (under 100 words) cold outreach message aimed at [TARGET CLIENT TYPE/INDUSTRY]. It should reference the case study's relevant result, not the whole thing, and end with a low-pressure next step (not \"let's hop on a call\"). Leave a placeholder [SPECIFIC REASON FOR REACHING OUT TO THIS PERSON] for me to fill in by hand.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Restricting the case study to facts you supply, with an explicit instruction to describe a qualitative outcome honestly rather than invent a metric, is what keeps your portfolio defensible if a prospective client asks a follow-up question about the numbers. Writing the outreach message from the case study, targeted at one specific client type, produces a sharper message than a generic pitch — it references one relevant result instead of trying to summarize your entire career in three sentences. The bracketed placeholder for your real reason for reaching out is deliberate: a generic-sounding cold message is the single biggest tell that it wasn't actually personalized, no matter how good the rest of the copy is.",
+      "example": "Facts: a small e-commerce client needed faster page load times; you optimized images and simplified the checkout flow; result: checkout completion rate went up (client reported roughly 15% more completed orders over the following month, per their own analytics). Expected output: a case study describing the situation, your specific approach, and the ~15% result attributed to the client's own reporting rather than stated as an absolute guaranteed outcome, followed by a short outreach message to a similar e-commerce business referencing that specific result rather than a generic \"I improve websites\" pitch.",
+      "exercise": "In your own Claude or ChatGPT account, write up one real project's facts and generate both the case study and a tailored outreach message for a specific type of client you want more of.",
+      "expectedResult": "A portfolio case study grounded entirely in real, checkable facts, and a short outreach message tailored to one client type with a personalized opening line added by hand.",
+      "commonMistakes": [
+        "Letting a rounded-up or estimated number get stated as a hard, confirmed metric in the case study.",
+        "Writing one generic case study and outreach message meant to work for every type of client, instead of tailoring the angle per target.",
+        "Sending the outreach message without a genuinely personalized opening line, which reads as templated even if the rest is well-written.",
+        "Skipping the tracking step, so you keep sending an angle that isn't actually getting replies."
+      ],
+      "proTip": "Build 2-3 case studies for different types of results (a growth metric, a speed/efficiency win, a qualitative client relationship win) so you can pick the one most relevant to whoever you're reaching out to, instead of using the same one for every pitch.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "freelancer"
+      ],
+      "skills": [
+        "writing",
+        "marketing"
+      ]
+    },
+    {
+      "slug": "fl-i3-client-updates-difficult-conversations",
+      "title": "Write client status updates and handle difficult conversations with AI",
+      "summary": "Draft a routine project status update and a difficult message — scope creep pushback, a missed deadline, or a rate increase — that stays professional and protects the relationship.",
+      "difficulty": "intermediate",
+      "minutes": 10,
+      "isFree": false,
+      "goal": "Draft a routine status update and one difficult client message, grounded in the real situation and your actual decided position, without over-apologizing or over-promising.",
+      "whyItMatters": "Freelancers depend on repeat work and referrals, so how you handle the hard moments — saying no to scope creep, admitting a delay, raising your rate — matters as much as the work itself. The risk with AI here isn't the writing quality, it's a draft that either apologizes so much it undermines your position or agrees to something (extra scope, a discount) you hadn't actually decided to offer.",
+      "beforeYouStart": "Before drafting, decide your actual position: what you're asking for, offering, or holding firm on. Never let the draft decide this for you.",
+      "steps": [
+        "Write down the facts of the situation in plain language: what happened, and what you're asking for or need to communicate.",
+        "Decide your actual position before drafting — the boundary, ask, or decision — since this is a business call only you should make.",
+        "Use the prompt below for either the routine update or the difficult message, filling in the facts and your decided position.",
+        "Read the draft specifically for over-apologizing (undermines your position) or over-promising (commits you to something you didn't decide).",
+        "Adjust the tone to match how direct you actually want to be — a firm scope-creep pushback and a routine update need different registers.",
+        "Personalize and send, keeping a copy for your own records if the message concerns a scope or payment disagreement."
+      ],
+      "prompt": "Help me write a client message.\n\nMESSAGE TYPE: [routine status update / scope creep pushback / missed deadline / rate increase / other difficult message]\nFACTS: [WHAT'S ACTUALLY HAPPENED — PROJECT STATUS, WHAT CHANGED, WHAT WAS ASKED]\nMY DECIDED POSITION: [WHAT I'M ASKING FOR, OFFERING, OR HOLDING FIRM ON — e.g., \"I will do this extra request but it needs a separate quote\", \"new rate is $X starting [DATE]\"]\nTONE: [e.g., warm but firm, brief and factual, appreciative]\n\nRULES:\n- Use only the facts and position I gave you — do not add an apology, discount, extended deadline, or scope concession I didn't state.\n- Do not over-apologize. State the situation plainly, once, and move to the resolution or ask.\n- End with a clear next step or a specific ask, not a vague \"let me know your thoughts.\"\n\nWrite it at [LENGTH], suitable for [EMAIL/MESSAGE PLATFORM].",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Requiring your decided position before drafting, rather than asking AI to figure out how to handle the situation, keeps the actual business decision — what you're willing to concede, what you're holding firm on — in your hands where it belongs. The explicit rule against over-apologizing addresses a specific, common failure mode: drafts that pile on apologetic language actually weaken your position in a scope or rate conversation by making it read like you're not confident in your own ask. Ending with a specific next step rather than an open-ended question is what moves the conversation forward instead of leaving the client unsure what you actually need from them.",
+      "example": "Message type: scope creep pushback. Facts: client asked for two additional landing pages beyond the agreed 3-page scope. Position: happy to build them, but as a separate quote, not folded into the current project timeline or price. Expected output: a message that briefly acknowledges the request, states plainly that it's outside the current scope, offers the separate quote as the path forward, and asks for a yes/no on whether to proceed — with no unprompted discount, extended deadline, or apology beyond one brief, professional acknowledgment.",
+      "exercise": "In your own account, draft one real message you currently need to send — ideally the harder one if you have one pending — using your real facts and your own decided position.",
+      "expectedResult": "A send-ready message that states the situation plainly, reflects your actual decided position with nothing conceded that you didn't choose to concede, and ends with a clear next step.",
+      "commonMistakes": [
+        "Letting the draft add an apology, discount, or deadline extension you hadn't actually decided to offer.",
+        "Sending a rate-increase or scope-pushback message without deciding your firm position first, resulting in a wishy-washy draft.",
+        "Ending on a vague note instead of a specific ask, which stalls the conversation instead of resolving it.",
+        "Using the same tone for a routine update and a genuinely difficult message — they call for different registers."
+      ],
+      "proTip": "For recurring difficult-conversation types (a scope pushback, a payment follow-up), save your best version as a personal template with placeholders — the goal isn't to reuse the exact wording every time, but to stop starting from a blank page when you're already frustrated or stressed.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "freelancer"
+      ],
+      "skills": [
+        "communication",
+        "writing"
+      ]
+    },
+    {
+      "slug": "fl-a1-productize-your-service",
+      "title": "Productize your service with reusable AI workflows",
+      "summary": "Turn one deliverable you repeat regularly into a semi-productized offer, built around a saved AI project with standing instructions, an input checklist, and a QA pass — instead of starting from a blank page every time.",
+      "difficulty": "advanced",
+      "minutes": 13,
+      "isFree": false,
+      "goal": "Build a reusable AI-assisted workflow — a saved Claude Project or Custom GPT plus an input checklist — for one deliverable type you repeat regularly, and use it to define a fixed-scope productized version of that offer.",
+      "whyItMatters": "Freelancers who deliver the same type of engagement repeatedly — a brand voice audit, a landing-page copy pass, an onboarding email sequence — leave real time on the table redoing the same thinking from a blank page each time. Turning the reusable parts of that deliverable into a saved system, with your standing instructions and a checklist for what's genuinely client-specific, is what makes it possible to deliver faster and more consistently, and eventually price it as a fixed-scope offer instead of open-ended hours.",
+      "beforeYouStart": "Pick one deliverable type you've done at least 3-4 times, ideally something you deliver at least monthly. Have access to Claude Projects or a Custom GPT (or your tool's equivalent saved-instructions feature).",
+      "steps": [
+        "Pick one deliverable type you repeat regularly and map the steps you currently take, from blank page to finished deliverable.",
+        "Separate the reusable structural/creative pattern (your process, your standard sections, your quality bar) from what genuinely must be custom per client (their specific facts, voice, goals).",
+        "Use the system-instructions prompt below to draft the standing instructions for a Claude Project or Custom GPT that captures the reusable pattern.",
+        "Build the Project or Custom GPT with those instructions, and create a short input checklist listing exactly what client-specific information you need to paste in each time.",
+        "Run it retroactively on a past project you already completed, and compare the output to what you actually delivered — adjust the instructions based on the gap.",
+        "Time yourself running it on 2-3 real projects and use that real time cost, not a guess, to define a fixed scope and price for a productized version of the offer.",
+        "Keep a QA step in the process — review every output against the checklist before it goes to a client, even once the workflow feels reliable."
+      ],
+      "prompt": "Help me write standing instructions for a reusable AI project, for a deliverable type I produce repeatedly.\n\nDELIVERABLE TYPE: [E.G., \"A LANDING PAGE COPY REWRITE\", \"A BRAND VOICE AUDIT\", \"AN ONBOARDING EMAIL SEQUENCE\"]\nMY REPEATABLE PROCESS/STRUCTURE: [DESCRIBE THE SECTIONS, STEPS, OR FORMAT YOU ALWAYS FOLLOW]\nMY QUALITY BAR / STYLE RULES: [E.G., TONE, LENGTH LIMITS, THINGS YOU ALWAYS AVOID]\nWHAT MUST BE CUSTOM EVERY TIME (never assume, always ask for): [E.G., CLIENT'S BRAND VOICE SAMPLE, TARGET AUDIENCE, SPECIFIC GOALS]\n\nWrite:\n1. A standing system-instructions block I can save as a Claude Project or Custom GPT, describing the role, the repeatable structure/process, and the quality bar — written so it applies to any client of this deliverable type\n2. An input checklist of exactly what client-specific information I need to gather and paste in before each run, based on what I listed as \"must be custom\"\n3. A guardrail instruction telling the assistant to ask for anything from the checklist that's missing, rather than filling it in generically\n\nDo not invent structural steps or quality standards beyond what I described — this should reflect my actual process, not a generic best-practice version of this deliverable type.",
+      "promptLabel": "Copyable prompt",
+      "explanation": "Separating the reusable pattern from what must be custom per client is the core design decision here — get that split wrong and you either end up re-explaining your process every time (nothing saved) or delivering generic-feeling work that ignores what makes each client different (nothing productized). Grounding the standing instructions in your actual described process, rather than a generic best-practice version of the deliverable, is what keeps the output feeling like your work rather than a template anyone could have built. The instruction to ask for missing checklist items instead of filling them in generically is what prevents the system from quietly producing lower-quality work when you forget to paste in a piece of client-specific context.",
+      "example": "Deliverable: a landing-page copy rewrite. Repeatable structure: hero headline + subhead, three benefit sections, one objection-handling section, one CTA block, always in a direct/conversational tone under a specific word count. Must-be-custom: the client's actual product facts, their target audience description, and any brand voice sample. Expected output: standing instructions describing that exact five-section structure and tone rule as the reusable pattern, plus a three-item input checklist (product facts, audience, voice sample) with an explicit instruction to ask rather than assume if any of the three is missing when a new project starts.",
+      "exercise": "In your own account, build the standing instructions and checklist for one deliverable type you actually repeat, save it as a Project or Custom GPT, and run it against a past completed project to compare the output to what you really delivered.",
+      "expectedResult": "A saved, reusable AI project with standing instructions reflecting your real process, an input checklist for what's genuinely client-specific, and a real measured time cost across a few runs that you can use to price a fixed-scope version of the offer.",
+      "commonMistakes": [
+        "Letting the standing instructions drift toward generic best practices instead of your own actual, tested process.",
+        "Skipping the retroactive test against a real past project, so you don't catch gaps until a live client sees them.",
+        "Pricing the productized offer off a guess instead of your real measured time across a few actual runs.",
+        "Dropping the QA review step once the workflow starts feeling reliable — that's exactly when a bad output is most likely to slip through unnoticed."
+      ],
+      "proTip": "Revisit the standing instructions every few projects and fold in anything you keep manually correcting by hand — a productized workflow that never gets updated slowly drifts out of date with how you actually work.",
+      "tools": [
+        "claude",
+        "chatgpt"
+      ],
+      "professions": [
+        "freelancer"
+      ],
+      "skills": [
+        "productivity",
+        "automation"
+      ]
+    }
+  ]
+}

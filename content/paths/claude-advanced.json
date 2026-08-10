@@ -1,0 +1,29 @@
+{
+  "paths": [
+    {
+      "slug": "claude-advanced",
+      "title": "Claude Advanced",
+      "tagline": "Turn Claude from a chat tool into your professional operating system.",
+      "description": "The expert tier of the Claude track. You will architect AI-assisted workflows for whole business processes, connect Claude to your real tools safely with MCP, run multi-step and browser-based automation under supervision, build verified research pipelines, author your own Skills, and manage models and usage like a budget. The course closes with high-stakes verification protocols, scaled content operations, and assembling everything — Projects, Skills, MCP and automation — into a personal AI operating system with a maintenance loop that keeps it compounding.",
+      "kind": "tool-course",
+      "level": "advanced",
+      "toolSlug": "claude",
+      "professionSlug": null,
+      "sortOrder": 3,
+      "lessons": [
+        "claude-a1-architect-business-workflow",
+        "claude-a2-mcp-connectors-safely",
+        "claude-a3-agentic-prompting-patterns",
+        "claude-a4-chrome-supervised-automation",
+        "claude-a5-research-pipeline",
+        "claude-a6-author-custom-skill",
+        "claude-a7-model-strategy-usage-limits",
+        "claude-a8-cowork-delegation-patterns",
+        "claude-a9-prompt-systems-team-libraries",
+        "claude-a10-high-stakes-verification",
+        "claude-a11-scale-content-operations",
+        "claude-a12-personal-ai-operating-system"
+      ]
+    }
+  ]
+}

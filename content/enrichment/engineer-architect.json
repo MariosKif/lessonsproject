@@ -1,0 +1,844 @@
+{
+  "enrichment": {
+    "eng-b1-field-notes-to-technical-report-draft": {
+      "placeholders": [
+        {
+          "name": "PASTE RAW FIELD NOTES",
+          "what": "Your actual field notes exactly as recorded on site — bullet points, abbreviations, and rough measurements are fine and expected. Do not rewrite them into full sentences first; the prompt is designed to work from raw notes and flag anything unclear rather than have you silently resolve ambiguity before the AI even sees it.",
+          "examples": [
+            "NW corner, 2nd flr slab - hairline crack ~14ft run, max width 1/16in. Rebar exposed at col C4 base, approx 6in section, corrosion visible. Roof drain #3 - ponding, standing water 1/2in noted at 2pm, dry weather.",
+            "Unit 204 - water stain ceiling, approx 3ft x 2ft, near HVAC duct penetration. Unit 206 - same wall, no stain visible. Exterior stucco crack, south elevation, vertical, approx 8ft, starts at 2nd flr window sill.",
+            "Retaining wall, east property line - visible lean, approx 3in out of plumb over 6ft height, measured w/ level at 2 points. Drainage - no weep holes visible along 40ft run. Adjacent grade slopes toward wall."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick punch-list format instead of a full narrative report",
+          "whenToUse": "Use this for a fast walkthrough (like a pre-drywall inspection or a punch list before substantial completion) where you need a checkable item list, not a narrative report structure.",
+          "prompt": "You are helping me convert raw field notes into a structured punch-list draft. This is a non-final draft for my review - not a finished punch list, and it contains no independent engineering judgment or severity ratings.\n\nRules:\n- Use ONLY the notes provided below. Do not add items, locations, or conditions not explicitly in the notes.\n- Do not rate severity or assign responsibility (trade/contractor) unless I've explicitly stated it - leave [ENGINEER TO ASSESS] where judgment is needed.\n- If a note is abbreviated or unclear, write '[CLARIFY: unclear note - confirm meaning]' rather than guessing.\n- Preserve specific numbers, measurements, and locations exactly as given.\n\nFormat as a checkable punch-list table: Location | Item/Condition | Notes. Organize by location or trade.\n\nField notes:\n[PASTE RAW FIELD NOTES]\nProject/site: [PROJECT NAME]"
+        },
+        {
+          "label": "Photo-referenced version when notes are tied to numbered photos",
+          "whenToUse": "Use this when your field notes reference specific photo numbers and you want the draft to keep that traceability visible for whoever reviews the report alongside the photo set.",
+          "prompt": "You are helping me convert raw field notes, which reference numbered photos, into a structured first-draft technical report. This is a non-final draft for my review.\n\nRules:\n- Use ONLY the notes provided below, including the photo reference numbers exactly as given. Do not add observations not explicitly in the notes.\n- Do not offer opinions on severity, code compliance, or safety - leave [ENGINEER TO ASSESS] where judgment is needed.\n- If a note is unclear, write '[CLARIFY: unclear note - confirm meaning]' rather than guessing.\n- Preserve specific numbers, measurements, locations, and photo reference numbers exactly as given - never drop a photo reference.\n\nDraft a report with: 1) Project/site information, 2) Purpose and scope, 3) Observations by location, each citing its photo reference number(s), 4) Conditions noted (factual only), 5) Recommendations - [ENGINEER TO COMPLETE].\n\nField notes (with photo references):\n[PASTE RAW FIELD NOTES INCLUDING PHOTO NUMBERS]"
+        },
+        {
+          "label": "Multi-visit report combining notes from more than one site visit",
+          "whenToUse": "Use this when you're compiling notes from two or more separate site visits into one report and need the draft to keep each visit's observations dated and distinct rather than merged into one undated block.",
+          "prompt": "You are helping me convert raw field notes from multiple site visits into a structured first-draft technical report. This is a non-final draft for my review.\n\nRules:\n- Use ONLY the notes provided below. Do not add observations, measurements, or conditions not explicitly in the notes.\n- Do not offer opinions on severity, code compliance, or safety - leave [ENGINEER TO ASSESS] where judgment is needed.\n- Keep each visit's observations clearly dated and separate - do not merge notes from different visits into a single undated observation.\n- If a note is unclear, write '[CLARIFY: unclear note - confirm meaning]' rather than guessing.\n- Preserve specific numbers, measurements, and locations exactly as given.\n\nDraft a report with: 1) Project/site information, 2) Purpose and scope, 3) Observations organized by visit date, then by location within each visit, 4) Conditions noted (factual only), 5) Recommendations - [ENGINEER TO COMPLETE].\n\nVisit 1 - [DATE]: [PASTE NOTES]\nVisit 2 - [DATE]: [PASTE NOTES]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check nothing was assumed beyond the notes",
+          "prompt": "Go through the draft line by line and flag anything - a measurement, a location, a condition, a severity implication - that isn't traceable word-for-word to my original notes. I want to catch anything paraphrased into a different meaning before I review it against my photos."
+        },
+        {
+          "label": "Too many unresolved clarify flags — help me draft the questions",
+          "prompt": "There are several [CLARIFY] flags in this draft. For each one, write a short, specific note to myself (or a question for whoever else was on site with me) that would resolve the ambiguity, referencing exactly which note it came from."
+        },
+        {
+          "label": "Reorganize by system instead of by location, or vice versa",
+          "prompt": "Reorganize the observations section by [system/discipline instead of location, or location instead of system] - keep every observation, measurement, and clarify flag exactly as worded, just regroup them under the new headers."
+        },
+        {
+          "label": "Tighten the language without changing any fact",
+          "prompt": "Tighten the wording of the observations section for a more professional, concise tone, but do not change, round, or generalize any number, measurement, or location, and do not remove or soften any [CLARIFY] or [ENGINEER TO ASSESS] placeholder."
+        }
+      ],
+      "walkthrough": "Dana is a structural EIT who just got back from a two-hour site visit inspecting a parking structure with a mix of slab cracking, an exposed rebar condition, and a drainage issue. Her notebook is full of shorthand: measurements, abbreviations, and a few things she flagged to look into further but didn't have time to fully assess on site.\n\nBack at her desk, she opens Claude and pastes the lesson's prompt, filling in the report type (structural condition assessment), project name, site visit date, and her role. She then pastes her raw notes exactly as written: \"NW corner, 2nd flr slab - hairline crack ~14ft run, max width 1/16in. Rebar exposed at col C4 base, approx 6in section, corrosion visible. Roof drain #3 - ponding, standing water 1/2in noted at 2pm, dry weather.\"\n\nClaude returns a draft organized by location: Second Floor Northwest Corner, Column C4 Base, and Roof Drain #3, with exact measurements preserved - 14 ft crack run, 1/16 in max width, 6 in exposed section. At the corrosion note, it inserts \"[CLARIFY: extent/depth of corrosion not specified in notes]\" rather than rating severity, since Dana's notes never did. Recommendations is left as \"[ENGINEER TO COMPLETE].\"\n\nDana reads the draft against her notebook and photos. She notices the draft grouped two separate slab observations that were actually at different columns - a mixup from the notes being adjacent on the page. She sends a follow-up asking Claude to double check nothing was merged beyond her notes, and it separates the two observations correctly on the second pass.\n\nShe then writes her own professional recommendations - flagging the column for further investigation given the corrosion, and noting the drain needs cleaning and monitoring - fills in the clarify flag with her own assessment after re-examining her photos, and routes the completed report through her firm's standard senior engineer review before it goes final. Total time from opening her notebook to a review-ready draft: about 20 minutes, versus the hour or more it used to take to type up a report from scratch."
+    },
+    "eng-b2-explain-technical-concepts-to-stakeholders": {
+      "placeholders": [
+        {
+          "name": "DESCRIBE THE CONCEPT/DECISION ACCURATELY",
+          "what": "Your own accurate, technical description of the concept or decision, written in your own engineering terms first - not a vague summary. This is the boundary the AI works within: it can only reword what you give it, not fill gaps with generic knowledge that might not match your actual project.",
+          "examples": [
+            "We're specifying a deeper foundation than the client expected because geotechnical testing found a soft clay layer at 6ft depth that won't support the standard footing design without excessive settlement over time.",
+            "The steel beam size increased from the schematic estimate because the actual span between columns, confirmed during design development, exceeds what the original assumed beam size could carry under code-required live loads.",
+            "We're requiring a fire-rated assembly at this wall because it separates two different occupancy classifications under the building code, and the rating is a code requirement, not a design preference."
+          ]
+        },
+        {
+          "name": "e.g. city council, homeowner client, non-technical project sponsor",
+          "what": "Who will actually receive this explanation - naming the specific audience shapes tone, level of formality, and what background knowledge you can assume.",
+          "examples": [
+            "homeowner client",
+            "city planning board",
+            "non-technical project sponsor at a corporate client"
+          ]
+        },
+        {
+          "name": "STATE THE PRACTICAL STAKES",
+          "what": "What this audience actually needs to walk away understanding or ready to decide - a cost increase to approve, a schedule impact to accept, a risk to sign off on. Being specific here is what keeps the explanation useful rather than just simpler.",
+          "examples": [
+            "why the foundation cost is higher than the original estimate, and to approve the additional cost",
+            "why the project timeline needs to extend by three weeks",
+            "to approve the fire-rated wall assembly as a code requirement, not an optional upgrade they can decline"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Short version for a live verbal explanation, not a written one",
+          "whenToUse": "Use this when you need talking points to speak from in a meeting or site walk, rather than a written explanation to send.",
+          "prompt": "You are helping me prepare a short verbal explanation of a technical concept for a non-technical audience I'll be speaking to directly. Accuracy matters more than brevity - do not omit or soften any safety, cost, or schedule implication.\n\nTechnical concept (in my own words): [DESCRIBE THE CONCEPT/DECISION ACCURATELY]\nAudience: [WHO I'M SPEAKING TO]\nWhat they need to understand or decide: [STATE THE PRACTICAL STAKES]\n\nRules:\n- Do not introduce a technical claim or number not in my description above.\n- Write this as 4-6 short spoken talking points I could glance at while speaking, not full paragraphs to read aloud.\n- Include one plain-language analogy only if it doesn't misrepresent the actual engineering, clearly noted as an analogy.\n- End with one talking point stating clearly what I'm asking them to understand or approve."
+        },
+        {
+          "label": "Written FAQ for a recurring question across multiple stakeholders",
+          "whenToUse": "Use this when the same technical concept keeps coming up with different clients or stakeholders and you want a reusable, accurate explanation rather than writing a fresh one every time.",
+          "prompt": "You are helping me write a reusable FAQ-style explanation of a technical concept I explain often, for non-technical stakeholders generally. Accuracy matters more than simplicity - do not omit or soften any safety, cost, or schedule implication.\n\nTechnical concept (in my own words): [DESCRIBE THE CONCEPT ACCURATELY]\nTypical audience: [e.g. homeowner clients generally]\nWhat they typically need to understand: [STATE THE PRACTICAL STAKES]\n\nRules:\n- Do not introduce a technical claim not in my description above.\n- Format as a question a client might actually ask, followed by a plain-language answer.\n- Include a short glossary (2-4 terms).\n- Note where the answer might need adjusting for a specific project's actual numbers, since this is meant to be reused, not project-specific.\n\nWrite in plain language, 150-250 words."
+        },
+        {
+          "label": "When the stakeholder is somewhat technical but not in your discipline",
+          "whenToUse": "Use this for an audience with real technical background in a different field (e.g., a software engineer client, a mechanical engineer on a multidisciplinary team) who doesn't need full plain-language simplification but does need your discipline's jargon translated.",
+          "prompt": "You are helping me translate a technical engineering concept for an audience with real technical background in a different field, not a fully non-technical audience. Accuracy matters more than simplicity - do not omit or soften any safety, cost, or schedule implication.\n\nTechnical concept (in my own words): [DESCRIBE THE CONCEPT ACCURATELY]\nAudience: [e.g. a mechanical engineer, a software engineer client, a contractor from a different trade]\nWhat they need to understand or decide: [STATE THE PRACTICAL STAKES]\n\nRules:\n- Do not introduce a technical claim or number not in my description above.\n- You can use precise technical language and assume general engineering literacy, but translate discipline-specific jargon from my field into terms this audience would understand.\n- End with one sentence stating clearly what decision or action they're being asked to understand or approve.\n\nWrite 150-250 words."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check nothing important got softened",
+          "prompt": "Compare this explanation against my original technical description and flag anything - a risk, a cost implication, a schedule impact - that got softened, downplayed, or dropped in the simplification. I want the plain-language version to carry the same real weight as my original description."
+        },
+        {
+          "label": "The analogy doesn't quite hold up — fix or drop it",
+          "prompt": "The analogy you used doesn't accurately represent how the actual engineering works, specifically: [EXPLAIN WHAT'S WRONG WITH IT]. Either fix the analogy so it's accurate, or drop it and explain the concept directly without one."
+        },
+        {
+          "label": "Too technical still — simplify further without losing substance",
+          "prompt": "This is still too technical for my audience. Simplify the language further - shorter sentences, fewer technical terms - but do not remove or soften any of the safety, cost, or schedule implications from the current version."
+        },
+        {
+          "label": "Make the ask at the end more direct",
+          "prompt": "The closing sentence about what they're being asked to understand or approve is too vague. Rewrite it as one direct, specific sentence stating exactly what decision or action I need from them."
+        }
+      ],
+      "walkthrough": "Marcus is a structural engineer on a residential addition project. Geotechnical testing came back showing a soft clay layer at six feet depth, which means the foundation needs to go deeper than originally planned - adding real cost the homeowner client wasn't expecting. He needs to explain this clearly without the client feeling blindsided or confused.\n\nHe opens ChatGPT and starts with his own accurate technical description, typed in his own words: \"We're specifying a deeper foundation than the client expected because geotechnical testing found a soft clay layer at 6ft depth that won't support the standard footing design without excessive settlement over time.\" Audience: homeowner client. What they need to understand: why the foundation cost is higher than the original estimate, and he needs them to approve the additional cost.\n\nChatGPT returns a 200-word explanation: it describes the soft clay layer found in testing, explains that a standard foundation resting on it would slowly sink unevenly, cracking walls and floors, and uses an analogy about a table with an uneven leg needing a shim - noting the foundation itself is being changed so it never needs one. It includes a glossary for \"settlement\" and \"geotechnical testing,\" and closes stating the client is being asked to approve the deeper foundation and its added cost.\n\nMarcus reads it against his own description and the substance holds - nothing about the risk got dropped. But he's not sure the table-leg analogy is quite right, since it might imply a small patch rather than a structural change. He flags that concern, and ChatGPT revises the analogy to make clear the foundation is being redesigned, not just shimmed.\n\nHe reads the final version once more, confirms it matches his own understanding, and uses it as the basis for both an email to the client and what he says on their next call. The whole process took about 10 minutes, and the client approved the cost increase without a drawn-out back-and-forth, because the reasoning was clear from the first message."
+    },
+    "eng-i1-review-checklists-for-documents-and-drawings": {
+      "placeholders": [
+        {
+          "name": "e.g. structural",
+          "what": "The engineering discipline this checklist is for - which determines what categories and typical review items even apply.",
+          "examples": [
+            "structural",
+            "civil/site",
+            "mechanical (HVAC)"
+          ]
+        },
+        {
+          "name": "e.g. steel connection design submittal",
+          "what": "The specific type of document or drawing set being reviewed, named precisely enough that the checklist items are actually relevant rather than generic.",
+          "examples": [
+            "steel connection design submittal",
+            "foundation and framing drawing set for a single-family residence",
+            "shop drawings for precast concrete panels"
+          ]
+        },
+        {
+          "name": "STATE EDITION",
+          "what": "The specific code or standard edition you believe governs this project - stated as your current understanding, which the checklist will still flag for independent verification since editions and local amendments vary and change.",
+          "examples": [
+            "AISC 360-22 and the locally adopted 2021 IBC",
+            "ACI 318-19",
+            "ASCE 7-22 as referenced by the 2021 IBC, pending local amendment confirmation"
+          ]
+        },
+        {
+          "name": "PASTE OR WRITE 'NONE'",
+          "what": "Your firm's existing QA/QC checklist for this document type, if one exists - pasted in so the new checklist builds on and refines your actual standard of care instead of generating generic industry boilerplate that might miss firm-specific practices.",
+          "examples": [
+            "NONE",
+            "Existing checklist covers: general notes consistency, load path continuity, connection detail cross-referencing. Missing: no dedicated section for code-edition verification.",
+            "Firm standard checklist v2.3 (attached categories): Coordination, Loads, Details, Submittal Completeness."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Short version for a fast second-pass check, not a first full review",
+          "whenToUse": "Use this when you've already done a full review and just want a quick, focused checklist to catch anything before final sign-off, rather than a comprehensive first-pass checklist.",
+          "prompt": "You are helping draft a short final-check checklist before sign-off, for a document I've already fully reviewed once. This is a review aid, NOT a substitute for code research or professional judgment.\n\nRules:\n- Phrase every item as a question to check, never as an assertion.\n- For any item involving a specific code section or current edition, add [VERIFY CURRENT CODE/STANDARD].\n\nDocument type: [DOCUMENT TYPE]\nDiscipline: [DISCIPLINE]\n\nGive me the 8-10 highest-value final-check questions - the kind that catch something easy to miss on a second pass (consistency between sheets, revision markers, sign-off blocks) rather than a full first-pass review list."
+        },
+        {
+          "label": "Checklist for reviewing a contractor/vendor submittal specifically",
+          "whenToUse": "Use this when you're reviewing a submittal from a contractor or fabricator (not another engineer's design) and need the checklist framed around what an engineer is actually approving versus what the contractor is responsible for.",
+          "prompt": "You are helping draft a review checklist for a contractor/vendor submittal. This is a review aid for a licensed engineer, NOT a substitute for code research or professional judgment.\n\nRules:\n- Organize by category, not one flat list.\n- For any item where a code section, load value, or current standard matters, add [VERIFY CURRENT CODE/STANDARD].\n- Phrase every item as a question to check, never an assertion.\n- Include a category specifically distinguishing what the engineer is confirming (conformance to the design intent) from what remains the contractor's/fabricator's responsibility (means and methods, field verification), so approval scope stays clear.\n\nBuild a checklist for:\nDiscipline: [DISCIPLINE]\nSubmittal type: [e.g. steel shop drawings, rebar shop drawings]\nGoverning code/standard and edition: [STATE EDITION]\nExisting firm checklist (if any): [PASTE OR 'NONE']\n\nFormat: category headers, 3-6 questions each, plus the engineer-vs-contractor-responsibility note."
+        },
+        {
+          "label": "Checklist tailored to a recurring project type your firm handles often",
+          "whenToUse": "Use this when your firm reviews the same type of project repeatedly (e.g., always the same building type or a recurring client's standard project) and wants a checklist tuned to the specific recurring issues you've seen, not a generic version.",
+          "prompt": "You are helping draft a review checklist tailored to a project type my firm handles repeatedly. This is a review aid for a licensed engineer, NOT a substitute for code research or professional judgment.\n\nRules:\n- Organize by category, not one flat list.\n- For any item where a code section, load value, or current standard matters, add [VERIFY CURRENT CODE/STANDARD].\n- Phrase every item as a question to check, never an assertion.\n- Build on the existing firm checklist provided, don't replace it with generic content.\n\nBuild a checklist for:\nDiscipline: [DISCIPLINE]\nDocument/drawing type: [DOCUMENT TYPE]\nGoverning code/standard and edition: [STATE EDITION]\nExisting firm checklist: [PASTE]\nRecurring issues we've caught on past projects of this type that should get their own dedicated checklist item: [LIST SPECIFIC PAST ISSUES]\n\nFormat: category headers, 3-6 questions each, with the recurring-issue items clearly included."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Too many items are stated as facts, not questions",
+          "prompt": "Go through the checklist and rewrite any item that's phrased as a statement or assertion instead of a question to check - every item needs to be something I actively verify against the drawings, not something presented as already true."
+        },
+        {
+          "label": "Missing verification flags on code-sensitive items",
+          "prompt": "Review every item in this checklist and add [VERIFY CURRENT CODE/STANDARD] to any I may have missed where a specific code section, load value, or current edition actually matters - I'd rather over-flag than under-flag."
+        },
+        {
+          "label": "Add what I caught on a real review that wasn't on the list",
+          "prompt": "I just used this checklist on a real submittal and caught this issue, which wasn't covered: [DESCRIBE THE ISSUE]. Add a new checklist item for this under the right category, phrased as a question, following the same guardrail rules as the rest of the checklist."
+        },
+        {
+          "label": "Checklist is too long for a fast first pass — prioritize",
+          "prompt": "This checklist is too long to run through quickly. Mark the 6-8 items that catch the most common or highest-consequence issues as 'priority' items I should always check first, keeping the rest as the full secondary list."
+        }
+      ],
+      "walkthrough": "Aisha is a project engineer at a mid-size structural firm who reviews steel connection submittals regularly, but has always done it from memory and a mental checklist that varies slightly depending on how busy she is. After catching a near-miss where a bolt grade mismatch almost slipped through, she decides to build a real, written checklist.\n\nShe opens Claude and fills in the lesson's prompt: discipline is structural, document type is a steel connection design submittal, governing code is AISC 360 and the locally adopted IBC edition, and her firm has no existing formal checklist for this yet, so she writes \"NONE.\"\n\nClaude returns a checklist under four categories: General/Coordination, Design Criteria, Details, and Code Compliance. Under General/Coordination, it asks whether connection loads match the framing drawings, and whether member sizes match the drawing set. Under Design Criteria, it tags the design-basis-edition item with [VERIFY CURRENT CODE/STANDARD], since it can't confirm her jurisdiction's adopted edition. Under Details, it asks whether bolt grade, size, and quantity are consistent between calc and detail - directly addressing the near-miss that prompted this exercise. Under Code Compliance, another verification flag appears on edge distance requirements.\n\nAisha reviews it and notices one item is phrased as a flat statement rather than a question - it reads \"Bolt grade matches project standard\" instead of asking her to check it. She sends a follow-up asking Claude to rewrite any item phrased as an assertion rather than a question, and the revised version fixes it to \"Does the bolt grade shown on the detail match the project's standard bolt grade?\"\n\nShe tests the checklist on a real submittal that week and it catches a genuine issue: a weld size on the detail that doesn't match the calc, likely missed on a first fast pass otherwise. She saves it as v1.0 in her firm's shared drive, dated, flagged as a review aid requiring independent code verification. Building and testing it took about 40 minutes, and it's now the team's shared starting point."
+    },
+    "eng-i2-research-standards-and-precedents-with-citations": {
+      "placeholders": [
+        {
+          "name": "STATE A SPECIFIC, NARROW QUESTION",
+          "what": "A precise, well-scoped research question - not a broad topic like \"what codes apply to my project.\" Specificity is what produces citations you can actually check quickly; a vague question produces a vague, harder-to-verify answer.",
+          "examples": [
+            "What does ASCE 7 require for wind exposure category determination for a low-rise building in open terrain?",
+            "What are the minimum rebar cover requirements for concrete exposed to weather under ACI 318?",
+            "How is a fire-rated shaft wall typically detailed at a floor penetration for a mechanical duct, per common UL assembly listings?"
+          ]
+        },
+        {
+          "name": "STATE JURISDICTION",
+          "what": "The specific city, county, or state whose adopted code governs your project - naming it precisely matters because code editions and amendments are adopted locally and vary even between neighboring jurisdictions.",
+          "examples": [
+            "a specific US county",
+            "City of Austin, Texas",
+            "State of Oregon"
+          ]
+        },
+        {
+          "name": "STATE OR WRITE 'UNKNOWN - PLEASE HELP IDENTIFY'",
+          "what": "The code or standard edition you already believe applies, if you know it - or an honest admission that you don't, so the research explicitly targets identifying it rather than assuming an edition.",
+          "examples": [
+            "ASCE 7-22 as referenced by the 2021 IBC",
+            "UNKNOWN - PLEASE HELP IDENTIFY",
+            "ACI 318-19, though I'm not certain this is the currently adopted version locally"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Comparing how two jurisdictions handle the same requirement",
+          "whenToUse": "Use this when you're working across multiple jurisdictions (a multi-site project or a firm expanding into a new area) and need to understand how a requirement differs between them.",
+          "prompt": "I need a cited research summary comparing how two jurisdictions handle the same engineering standards question. Prioritize official code text and government/regulatory sources over forums or vendor content.\n\nResearch question: [STATE A SPECIFIC, NARROW QUESTION]\nJurisdiction 1: [JURISDICTION]\nJurisdiction 2: [JURISDICTION]\nCode/standard I believe applies in each (if known): [STATE OR 'UNKNOWN - PLEASE HELP IDENTIFY']\n\nFor each jurisdiction, separately: quote or closely paraphrase the specific relevant text, note the code/standard edition and publication date, and flag clearly if uncertain whether this is the current adopted edition. Then summarize the key difference between the two jurisdictions' requirements, if any. If you cannot find an authoritative source for either jurisdiction, say so explicitly."
+        },
+        {
+          "label": "Researching precedent for an unusual design condition, not a code requirement",
+          "whenToUse": "Use this when the question is less about a specific code number and more about how an unusual condition is typically handled in practice, where precedent and industry guidance matter as much as code text.",
+          "prompt": "I need a cited research summary on how an unusual design condition is typically handled in practice, not just a code citation. Prioritize standards-body publications, technical guidance documents, and established engineering references over forums or marketing content.\n\nCondition/question: [DESCRIBE THE UNUSUAL CONDITION AND WHAT YOU NEED TO KNOW]\nRelevant code/standard context (if known): [STATE OR 'UNKNOWN']\n\nFor each source cited: quote or closely paraphrase the specific relevant guidance, note the publication and date, and distinguish clearly between an actual code/standard requirement versus common industry practice or a recommended (but not mandatory) approach. If you cannot find an authoritative source, say so explicitly rather than inferring an answer from general knowledge."
+        },
+        {
+          "label": "Quick single-fact lookup when you just need to confirm one number",
+          "whenToUse": "Use this for a fast, narrow lookup when you already know almost everything and just need one specific figure confirmed with a citation, not a full research summary.",
+          "prompt": "I need a single cited fact confirmed, not a full research summary. Prioritize official code/standard text over forums or vendor content.\n\nSpecific fact to confirm: [STATE THE EXACT VALUE OR REQUIREMENT YOU BELIEVE IS CORRECT]\nCode/standard and edition: [STATE]\nJurisdiction: [STATE]\n\nConfirm or correct this specific fact with a direct citation (section number, page, or clause), and flag clearly if you're uncertain this is the current adopted edition for my jurisdiction. If you cannot verify it from an authoritative source, say so explicitly."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Push for the actual section number, not just a paraphrase",
+          "prompt": "For the source(s) cited, give me the exact section, clause, or table number the requirement comes from, not just a paraphrase of the content - I need to be able to open the actual document and go straight to the right place to verify it myself."
+        },
+        {
+          "label": "Not confident this is the current edition — dig further",
+          "prompt": "I'm not confident this answer reflects the current adopted edition for my jurisdiction. Search specifically for the most recent adopted-code reference or amendment for [JURISDICTION] and tell me plainly if you can or can't confirm the current edition from available sources."
+        },
+        {
+          "label": "Separate what's code requirement from what's just common practice",
+          "prompt": "Go back through this answer and clearly separate what is an actual code or standard requirement from what is common industry practice, a manufacturer recommendation, or general commentary - I want to know exactly which parts I'm required to follow versus which are just typical approaches."
+        },
+        {
+          "label": "Flag any source that isn't authoritative",
+          "prompt": "Review the sources cited and flag any that are a forum, blog, vendor marketing page, or other non-authoritative source rather than official code text, a standards-body publication, or a government/regulatory source - I want to know which citations I should not rely on without further verification."
+        }
+      ],
+      "walkthrough": "Ben is a civil engineer working on a low-rise commercial building in a county he hasn't worked in before, and he needs to confirm how wind exposure category is determined for the site before finalizing his structural loading assumptions. Rather than digging through PDFs blind, he opens Gemini and starts a Deep Research session instead of a normal chat.\n\nHe writes a specific, narrow research question following the lesson's format: \"What does ASCE 7 require for wind exposure category determination for a low-rise building in open terrain?\" He states his jurisdiction as the specific county the project is in, and for the code edition, since he's not fully sure which ASCE 7 edition the county has adopted, he writes \"UNKNOWN - PLEASE HELP IDENTIFY.\" Gemini shows a short research plan before running; he confirms it and lets it proceed.\n\nAbout twelve minutes later, the report comes back citing the relevant ASCE 7 section defining Exposure Categories B, C, and D, quoting the specific criteria for each category, and noting the publication edition, ASCE 7-22. Importantly, it flags: \"This jurisdiction's adopted building code may reference an earlier edition of ASCE 7 (e.g., ASCE 7-16 via the 2021 IBC) - confirm the adopted edition with the local building department before use.\"\n\nBen sends a follow-up in the same session asking Gemini to search specifically for the most recent adopted-code reference for this county and say plainly whether it can confirm the current edition. Gemini finds a county building department page referencing the 2021 IBC, but is honest it cannot fully confirm whether a local amendment overrides the referenced ASCE 7 edition, and recommends direct confirmation.\n\nBen opens the actual ASCE 7-22 section himself and confirms the quoted exposure category language matches exactly, then calls the county building department and confirms they've adopted the 2021 IBC with no local amendment affecting this section. He logs the question, answer, sources checked, and date in his research notes. The process took about 30 minutes plus a five-minute call - faster than manual searching, but he never used the AI's answer directly without that final confirmation."
+    },
+    "eng-i3-meeting-minutes-rfi-change-order-communications": {
+      "placeholders": [
+        {
+          "name": "DOCUMENT TYPE: meeting minutes / RFI / change-order notice",
+          "what": "Which of the three document types you're drafting - this determines which structure the output follows, so pick the one that actually matches what you need.",
+          "examples": [
+            "meeting minutes",
+            "RFI",
+            "change-order notice"
+          ]
+        },
+        {
+          "name": "PASTE RAW NOTES OR ISSUE DETAILS",
+          "what": "Your actual raw notes or the specific facts of the issue - attendees and discussion points for minutes, or the specific discrepancy/scope change and its details for an RFI or change order. Paste facts, not a pre-written narrative, so the AI does the structuring work rather than you doing it twice.",
+          "examples": [
+            "Attendees: J. Smith (owner), M. Chen (GC), self. Discussed: foundation pour schedule pushed 3 days due to rain. Reviewed RFI #012 response, accepted. Action item: I send updated rebar schedule by Friday. Action item: GC confirms new pour date by Wednesday.",
+            "Detail 5/S-301 shows beam bearing on wall but wall thickness on plan A-102 doesn't match - plan shows 8in, detail assumes 12in wall. Need clarification before fabrication, steel order due in 2 weeks.",
+            "Owner requested adding a covered patio, approx 200sf, not in original scope. Affects foundation plan sheet S-101 and roof framing sheet S-201. Contractor has not yet provided pricing."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick informal internal summary, not a formal distributed document",
+          "whenToUse": "Use this when you just need a fast internal record of a call or short conversation for your own project file, not a document that will be formally distributed to the client or contractor.",
+          "prompt": "You are helping me draft a quick internal summary of a call or conversation, for my own project file - not a formal distributed document. This is a draft for my review.\n\nRules:\n- Use ONLY the notes/facts provided below. Do not add participants, decisions, or facts not stated.\n- Do not assign fault or contractual responsibility - state facts neutrally.\n- Preserve specific dates and reference numbers exactly as given.\n\nStructure as: date/participants, what was discussed, any decision or open item, follow-up needed (mine or theirs).\n\nNotes:\n[PASTE RAW NOTES]"
+        },
+        {
+          "label": "RFI response draft, not a new RFI",
+          "whenToUse": "Use this when you're responding to an RFI someone else submitted, rather than drafting a new one - the structure and guardrails are similar but framed as an answer, not a question.",
+          "prompt": "You are helping me draft a response to an RFI I received. This is a draft for my review before distribution - not a final project record until I confirm it.\n\nRules:\n- Use ONLY the facts/answer I provide below. Do not add reasoning, causes, or commitments not stated.\n- Do not assign fault or contractual responsibility - state the answer and any conditions neutrally.\n- Where a cost or schedule impact would need to be stated, leave [COST/SCHEDULE IMPACT TO BE DETERMINED] rather than estimating one.\n- Preserve reference numbers and drawing/spec citations exactly as given.\n\nStructure as: RFI number/date being responded to, response, any drawing/spec revision required, any condition on the response.\n\nOriginal RFI question: [PASTE]\nMy answer/facts: [PASTE]"
+        },
+        {
+          "label": "Change order with a cost estimate you already have",
+          "whenToUse": "Use this when you already have a real cost and schedule number from the contractor and want it included accurately, rather than left as an open placeholder.",
+          "prompt": "You are helping me draft a change-order notice from facts I provide, including a cost/schedule impact I've already confirmed. This is a draft for my review before distribution.\n\nRules:\n- Use ONLY the notes/facts provided below, including the cost/schedule figures I'm providing - do not adjust, round, or add to these figures.\n- Do not assign fault or contractual responsibility - state facts neutrally.\n- Preserve specific dates, reference numbers, and drawing/spec citations exactly as given.\n\nStructure as: reference number, description of the change, reason/trigger, affected drawings/specs, cost impact: [STATE CONFIRMED FIGURE], schedule impact: [STATE CONFIRMED FIGURE].\n\nNotes/facts:\n[PASTE RAW NOTES OR ISSUE DETAILS, INCLUDING THE CONFIRMED COST/SCHEDULE FIGURES]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check for any fault or cause language that slipped in",
+          "prompt": "Review this draft and flag any sentence that could be read as assigning fault, cause, or contractual responsibility to a specific party, even implicitly. I want everything stated as a neutral fact or open question before this goes out."
+        },
+        {
+          "label": "A date or reference number looks off — verify against my notes",
+          "prompt": "Double check every date, drawing reference, and reference number in this draft against my original notes below, and flag any that don't match exactly: [PASTE ORIGINAL NOTES AGAIN FOR COMPARISON]"
+        },
+        {
+          "label": "Action items need owners and due dates",
+          "prompt": "Review the action items list and flag any item that doesn't have both a clear owner and a due date. For any I can supply, I'll add them - for any missing from my notes, leave a bracketed placeholder rather than guessing who's responsible."
+        },
+        {
+          "label": "Too long — tighten without losing any fact or reference",
+          "prompt": "Tighten the wording throughout for conciseness, but do not remove, generalize, or reword any specific fact, date, reference number, or placeholder - every factual detail needs to survive exactly as stated."
+        }
+      ],
+      "walkthrough": "Carla is a project engineer coordinating a mid-rise building project. During a site walk, she noticed a real discrepancy: a structural detail shows a beam bearing on a 12-inch wall, but the architectural plan for the same location shows an 8-inch wall. Steel fabrication is scheduled to start in two weeks, so this needs to go out as a formal RFI fast, and it needs to be worded carefully since these documents can resurface later if there's ever a dispute.\n\nShe opens Claude and selects RFI as the document type. She pastes her notes: \"Detail 5/S-301 shows beam bearing on wall but wall thickness on plan A-102 doesn't match - plan shows 8in, detail assumes 12in wall. Need clarification before fabrication, steel order due in 2 weeks.\"\n\nClaude returns a structured RFI: a reference number placeholder and date, a question asking for clarification of the wall thickness at the beam bearing condition in Detail 5/S-301, a reference noting the detail assumes 12 in while Plan A-102 shows 8 in at the same location, a reason citing the fabrication deadline, and a requested response date reflecting the two-week timeline. It doesn't say which drawing is wrong or imply anyone made an error - it states the discrepancy as a fact requiring clarification.\n\nCarla reads it carefully, since she knows RFIs can get pulled into disputes later. She asks Claude to flag any language that could be read as assigning fault, even implicitly. Claude confirms the draft is neutral and finds nothing to flag, but Carla reads it once more herself before trusting that.\n\nShe fills in the actual RFI number from her firm's numbering log and the specific dates, then routes it through her firm's standard RFI distribution process rather than sending it straight from the draft. The whole process took about 10 minutes, and the RFI reads as precise and neutral - exactly what she needs if this discrepancy is ever referenced again months later."
+    },
+    "eng-a1-reusable-documentation-templates-for-your-discipline": {
+      "placeholders": [
+        {
+          "name": "e.g. structural steel connection review checklist",
+          "what": "The specific recurring documentation task this template is being built for - kept narrow rather than a broad catch-all, since a template that tries to cover everything ends up enforcing nothing well.",
+          "examples": [
+            "structural steel connection review checklist",
+            "geotechnical field observation report",
+            "RFI drafting for coordination discrepancies"
+          ]
+        },
+        {
+          "name": "e.g. project engineers, EITs",
+          "what": "Who on your team will actually use this template - naming the real users helps calibrate how much explanation or hand-holding the template's usage note needs.",
+          "examples": [
+            "project engineers, EITs",
+            "any licensed engineer on the structural team",
+            "field engineers doing routine site visits"
+          ]
+        },
+        {
+          "name": "e.g. categorized checklist, structured report draft",
+          "what": "The actual output format this recurring task needs to produce, matching how the result will actually be used downstream.",
+          "examples": [
+            "categorized checklist",
+            "structured report draft with placeholders for recommendations",
+            "RFI/change-order draft in fixed structure"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Lightweight template for a lower-stakes, high-frequency task",
+          "whenToUse": "Use this for a task that happens very often but carries lower individual risk (like routine internal status notes), where a shorter, lighter template is more likely to actually get used than a heavy one.",
+          "prompt": "You are helping me design a lightweight, reusable prompt template for a frequent but lower-stakes engineering documentation task. This is a meta-task: design the template itself.\n\nContext:\nTask type: [TASK TYPE]\nWho will use it: [WHO]\nOutput needed: [OUTPUT FORMAT]\nFixed guardrails that must appear (do not weaken or remove):\n1. Use only supplied notes/data; no invented facts.\n2. Insert a bracketed placeholder wherever judgment is needed rather than generating one.\n3. Preserve numeric values and dates exactly as supplied.\n\nDesign a short template (aim for brevity over completeness, since this needs to be fast to use often): a 2-3 sentence guardrails block, clear bracketed placeholders for the variable parts, and a one-line usage note on when it applies."
+        },
+        {
+          "label": "Template that needs to work across multiple disciplines on a multidisciplinary team",
+          "whenToUse": "Use this when the recurring task (like meeting minutes or client updates) is done by engineers across different disciplines, and the template needs shared guardrails while still allowing discipline-specific variable content.",
+          "prompt": "You are helping me design a reusable prompt template for a recurring documentation task used across multiple engineering disciplines on my team. This is a meta-task: design the template itself.\n\nContext:\nTask type: [TASK TYPE]\nDisciplines that will use it: [LIST, e.g. structural, civil, MEP]\nOutput needed: [OUTPUT FORMAT]\nFixed guardrails that must appear in every use (do not weaken or remove):\n1. Use only supplied notes/data; no invented observations or facts.\n2. Insert a bracketed placeholder wherever professional engineering judgment or a code-compliance opinion is needed.\n3. Flag any item where a current code edition or jurisdiction-specific requirement matters.\n4. Label output 'DRAFT - engineer review and stamp required as applicable.'\n5. Preserve all numeric values and references exactly as supplied.\n\nDesign a template with a shared guardrails block that works regardless of discipline, a [DISCIPLINE] placeholder so the template adapts its terminology per use, clear bracketed placeholders for other variable parts, and a usage note covering all disciplines it applies to."
+        },
+        {
+          "label": "Updating an existing template after finding a gap",
+          "whenToUse": "Use this when you already have a v1 template in use and a real near-miss or gap has shown you it needs a new guardrail or item, rather than building a new template from scratch.",
+          "prompt": "I have an existing template (v[VERSION]) for [TASK TYPE] that needs an update based on a real gap I found. This is a meta-task: revise the template itself.\n\nExisting template: [PASTE CURRENT TEMPLATE]\nWhat happened that revealed the gap: [DESCRIBE THE NEAR-MISS OR ISSUE]\nWhat guardrail or item needs to be added or strengthened: [DESCRIBE]\n\nRevise the template to close this specific gap without weakening any of the existing guardrails. Increment the version number, and write a one-line changelog entry describing what changed and why, referencing the real issue that prompted it."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Test against a messier real input and report what broke",
+          "prompt": "Here's a messier, real input for this template: [PASTE REAL/REALISTIC BUT MESSY NOTES OR DATA]. Run the template mentally against this input and tell me specifically where a guardrail might get bypassed, ignored, or produce an awkward result with data this imperfect."
+        },
+        {
+          "label": "Guardrail language is easy to skip — make it more prominent",
+          "prompt": "The guardrails block reads like it could be skimmed past or ignored under deadline pressure. Rewrite it to be more prominent and harder to miss - shorter, more direct sentences, without weakening what it actually requires."
+        },
+        {
+          "label": "Add the scope boundary — what this template is NOT for",
+          "prompt": "Add a clearer 'not for' section to the usage note - specific situations or document types where someone might be tempted to reuse this template but shouldn't, and why, so teammates don't stretch it beyond its intended scope."
+        },
+        {
+          "label": "Simplify the placeholders — too many to fill in quickly",
+          "prompt": "There are too many bracketed placeholders for someone to fill in quickly under normal deadline pressure. Identify which ones are truly essential every time versus which could have a sensible default or be combined, without weakening any of the five fixed guardrails."
+        }
+      ],
+      "walkthrough": "Raj leads a team of six structural engineers and has noticed an inconsistency problem: when he reviews inspection reports, some engineers carefully flag every judgment call, and others - usually rushing near a deadline - write conclusions directly into the report, skipping the placeholder discipline the firm expects. He decides to build a shared template instead of relying on everyone remembering the practice on their own.\n\nHe opens Claude and works through the lesson's meta-prompt. Task type: geotechnical field observation report. Who will use it: field engineers, including newer EITs. Output needed: structured report draft with placeholders for recommendations. He includes the five fixed guardrails from the lesson exactly as given - grounding to supplied notes only, judgment placeholders, code-verification flags, a DRAFT label, and exact numeric preservation.\n\nClaude designs a template with a guardrails preamble stating all five rules, placeholders for [PROJECT], [SITE VISIT DATE], and [SOURCE FIELD NOTES], an output structure organizing observations by test location with a recommendations placeholder, and a usage note: \"v1.0 - for routine field observation write-ups only. Not for final geotechnical reports, which require full engineer analysis.\"\n\nRaj wants to be sure this holds up on real, messy data before rolling it out, so he sends a genuinely messy set of past field notes and asks Claude to report where a guardrail might get bypassed. Claude flags that one ambiguous note about soil moisture could get interpreted as a bearing-capacity judgment call if the flagging instruction isn't emphasized enough, and suggests strengthening that line. Raj applies the fix.\n\nHe tests the revised template on two more past site visits, confirms the judgment placeholder consistently appears where expected, and saves it as v1.0 in the firm's shared template folder with a changelog note about why the guardrail was strengthened. He sets a six-month review reminder. Building and testing the template took about an hour spread across two sessions, but it now gives every engineer on his team - not just the careful ones - the same built-in safety net."
+    },
+    "arc-b1-project-proposals-and-fee-letters-from-meeting-notes": {
+      "placeholders": [
+        {
+          "name": "PASTE RAW MEETING NOTES",
+          "what": "Your actual notes from the client meeting exactly as taken - project description, client goals, site info, budget or timeline mentions, however rough. Paste them as-is rather than pre-writing a polished narrative, so the draft's project-understanding section stays traceable to what was actually said.",
+          "examples": [
+            "Client wants 800sf addition to single-family home, kitchen expansion + new sunroom, wants to start construction next spring, mentioned budget around $150-200k for construction, has an engineer they've worked with before for structural.",
+            "Tenant fit-out, approx 3,500sf office space, client wants open floor plan with 2 private offices and one conference room, lease starts in 4 months, client mentioned wanting to move fast.",
+            "Historic home renovation, kitchen and primary bath, client wants to preserve original trim and moldings, no firm budget mentioned yet, timeline flexible, client mentioned they've contacted 2 other firms."
+          ]
+        },
+        {
+          "name": "e.g. single-family residential addition, commercial tenant fit-out",
+          "what": "The general project type, used to set expectations for a typical phase-by-phase scope of services appropriate to that kind of project.",
+          "examples": [
+            "single-family residential addition",
+            "commercial tenant fit-out",
+            "historic residential renovation"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Short version for a very small, low-complexity project",
+          "whenToUse": "Use this for a small project (a minor renovation, a single-room addition) where a full multi-phase proposal structure would be overkill and a simpler letter is more appropriate.",
+          "prompt": "You are helping me draft a simple, short proposal letter from client meeting notes for a small project. This is a draft for my review - not a final proposal or contract, and it contains no invented fee amounts or contract terms.\n\nRules:\n- Use ONLY the project understanding stated in the notes below. Do not add scope items or goals not mentioned.\n- Do not generate a fee amount - leave [FEE TO BE DETERMINED BY FIRM] as a placeholder.\n- Do not generate contract terms - leave [STANDARD FIRM TERMS TO BE INSERTED] as a placeholder.\n\nDraft a short letter: 1) project understanding (from notes), 2) a brief scope-of-services summary appropriate for a small project (not a full multi-phase breakdown unless warranted), 3) fee - [PLACEHOLDER], 4) terms - [PLACEHOLDER].\n\nMeeting notes:\n[PASTE RAW MEETING NOTES]\nProject type: [PROJECT TYPE]"
+        },
+        {
+          "label": "When you already know your fee structure and want it included",
+          "whenToUse": "Use this when you've already decided on your actual fee (a flat rate or percentage) and want it accurately reflected in the draft rather than left as an open placeholder.",
+          "prompt": "You are helping me draft a first-pass project proposal and fee letter from client meeting notes, including a fee structure I've already determined. This is a draft for my review - not a final proposal or contract.\n\nRules:\n- Use ONLY the project understanding stated in the notes below. Do not add scope items, site conditions, or client goals not mentioned.\n- Use the fee structure I provide exactly as stated - do not adjust, round, or add to it.\n- Do not generate contract terms - leave [STANDARD FIRM TERMS TO BE INSERTED] as a placeholder.\n\nDraft a proposal/fee letter: 1) project understanding, 2) proposed scope of services (typical phases for this project type, marked as a starting point for my review), 3) fee structure: [STATE YOUR ACTUAL FEE - AMOUNT, PERCENTAGE, OR STRUCTURE], 4) anticipated timeline - [PLACEHOLDER, note any timeline mentioned], 5) standard terms - [PLACEHOLDER].\n\nMeeting notes:\n[PASTE RAW MEETING NOTES]\nProject type: [PROJECT TYPE]"
+        },
+        {
+          "label": "Competing-firm situation where responsiveness and differentiation matter",
+          "whenToUse": "Use this when you know the client is considering other firms and want the proposal to (honestly) emphasize what's distinct about your understanding of the project, without inventing claims about your firm.",
+          "prompt": "You are helping me draft a first-pass project proposal and fee letter from client meeting notes, for a client who is considering multiple firms. This is a draft for my review - not a final proposal or contract.\n\nRules:\n- Use ONLY the project understanding stated in the notes below. Do not add scope items or client goals not mentioned.\n- Do not generate a fee amount - leave [FEE TO BE DETERMINED BY FIRM] as a placeholder.\n- Do not generate contract terms - leave [STANDARD FIRM TERMS TO BE INSERTED] as a placeholder.\n- Do not invent claims about my firm's experience, awards, or differentiators not provided below.\n\nReal, factual points about my firm relevant to this project (if any): [LIST OR 'NONE PROVIDED']\n\nDraft a proposal/fee letter: 1) project understanding (from notes, showing genuine grasp of what the client actually said, not generic language), 2) proposed scope of services, 3) fee - [PLACEHOLDER], 4) timeline - [PLACEHOLDER], 5) standard terms - [PLACEHOLDER]. Keep the project understanding section specific enough that it couldn't be mistaken for a template sent to any client."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Project understanding section feels embellished — trim it back",
+          "prompt": "The project understanding section adds detail or framing that goes beyond what's actually in my meeting notes. Rewrite it to stay closely and only to what's stated in my original notes below, removing anything embellished: [PASTE ORIGINAL NOTES AGAIN]"
+        },
+        {
+          "label": "Scope of services doesn't match my firm's actual phases",
+          "prompt": "The proposed scope of services doesn't match how my firm actually structures phases. Here's our real phase breakdown: [LIST YOUR FIRM'S ACTUAL PHASES]. Rewrite the scope-of-services section using these exact phases instead of the generic ones."
+        },
+        {
+          "label": "Double check no fee or term was invented",
+          "prompt": "Review this draft and confirm the fee structure and standard terms sections are still showing as placeholders and haven't had a specific number, percentage, or contract term invented anywhere in the document."
+        },
+        {
+          "label": "Make the tone warmer for a residential client",
+          "prompt": "This reads a bit formal/corporate for a residential client. Warm up the tone of the project understanding and scope sections slightly while keeping every fact exactly as stated and keeping the fee and terms placeholders untouched."
+        }
+      ],
+      "walkthrough": "Elena runs a small residential architecture practice and just came from a promising first meeting with a couple planning an addition to their home. She knows speed matters - they mentioned they're also talking to another firm - but she doesn't want to send something generic just to be first.\n\nBack at her desk within the hour, she opens Claude and pastes the lesson's prompt. For meeting notes, she writes what she actually captured: \"Client wants 800sf addition to single-family home, kitchen expansion + new sunroom, wants to start construction next spring, mentioned budget around $150-200k for construction, has an engineer they've worked with before for structural.\" Project type: single-family residential addition.\n\nClaude drafts a proposal: a project understanding paragraph that accurately restates the 800 sf addition, the kitchen expansion and sunroom, the spring construction start, the stated budget range, and the existing structural engineer relationship - nothing added beyond that. The proposed scope of services lists typical phases for this project type: Schematic Design, Design Development, Construction Documents, Bidding/Negotiation Assistance, and Construction Administration, clearly noted as a starting point to confirm against her firm's standard. Fee structure and standard terms both show as the required placeholders, exactly as the prompt demands.\n\nElena reads the project understanding section and it holds up - nothing overstated. But she does want the scope-of-services section to reflect her firm's actual phase language, which differs slightly from generic industry terms. She sends a follow-up giving her firm's real phase breakdown and asking Claude to use those exact phases instead.\n\nWith the revised scope in hand, she fills in her actual fee (a percentage of construction cost, per her firm's standard) and pastes in her firm's boilerplate contract terms. She routes the letter through her own quick internal review - really just a final read against her notes - before sending it to the client that same afternoon. Total time: about 20 minutes, and the client later told her the fast, specific response was part of why they chose her firm over the competitor."
+    },
+    "arc-b2-concept-narratives-that-sell-a-design": {
+      "placeholders": [
+        {
+          "name": "AUDIENCE/PURPOSE: e.g. client presentation, planning submission, competition entry",
+          "what": "Who this narrative is for and why - which sets the appropriate tone, formality, and level of technical detail throughout the piece.",
+          "examples": [
+            "client presentation",
+            "planning board submission",
+            "design competition entry"
+          ]
+        },
+        {
+          "name": "LIST YOUR ACTUAL DESIGN MOVES AND WHY - SITE RESPONSE, PROGRAM ORGANIZATION, MATERIALS, KEY FORMAL MOVES",
+          "what": "Your real design decisions and the actual reasoning behind each - not polished prose, just notes. This is the ground truth the narrative has to stay inside; nothing described in the final piece should go beyond what's listed here.",
+          "examples": [
+            "Site slopes 8ft east to west, house is split-level to follow grade instead of requiring retaining walls, main living space oriented south for solar gain and views of existing oak trees the client wanted preserved, exterior material is standing-seam metal to reference the client's request for low maintenance and the agricultural buildings nearby.",
+            "Building footprint pulled back 15ft from the street to preserve two mature oak trees on site, entry sequence passes between the trees intentionally, brick facade matches the datum line of adjacent historic buildings on the block per the neighborhood's design guidelines.",
+            "Open-plan office layout organized around a central light well to bring daylight into the building's deep floor plate, exposed structural ceiling to maximize floor-to-ceiling height within the existing shell, glazed meeting rooms at the perimeter so natural light reaches deeper into the plan."
+          ]
+        },
+        {
+          "name": "BRIEFLY DESCRIBE",
+          "what": "A short line of context about the project itself - type, scale, or setting - just enough for the narrative to feel grounded in a real place and building.",
+          "examples": [
+            "single-family residential addition on a sloped wooded lot",
+            "downtown mixed-use infill building, ground-floor retail with residential above",
+            "small branch library adaptive reuse, 1930s building"
+          ]
+        },
+        {
+          "name": "state desired tone, e.g. 'persuasive but professional for a client' or 'precise and technical for a planning board'",
+          "what": "The specific voice this narrative needs, matched to the audience - a client pitch and a planning board submission should not read the same way even if describing the same design.",
+          "examples": [
+            "persuasive but professional for a client",
+            "precise and technical for a planning board",
+            "confident and evocative for a competition jury"
+          ]
+        },
+        {
+          "name": "LENGTH, e.g. 300-400 words",
+          "what": "The target word count, matched to how the narrative will actually be used - a page in a submission packet, a paragraph in a deck, a longer standalone document.",
+          "examples": [
+            "300-400 words",
+            "150-200 words for a single presentation slide",
+            "500-600 words for a full submission narrative"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Very short version for a single presentation slide",
+          "whenToUse": "Use this when the narrative needs to live as a short caption or intro paragraph alongside drawings on one slide, not as a standalone document.",
+          "prompt": "You are helping me write a very short concept narrative for one presentation slide, alongside drawings. This must accurately describe a real design - do not invent design features, materials, or moves not in my notes.\n\nDesign decisions and reasoning (my notes): [LIST YOUR ACTUAL DESIGN MOVES AND WHY]\nProject type/context: [BRIEFLY DESCRIBE]\n\nRules:\n- Every design move described must come from my notes - do not add anything not mentioned.\n- Tie each move to a stated reason rather than using generic design language.\n\nWrite 60-80 words, tight enough to sit as a caption alongside drawings without repeating what the drawings already show visually."
+        },
+        {
+          "label": "Narrative built to directly counter an anticipated objection",
+          "whenToUse": "Use this when you know a specific stakeholder or jury concern is likely to come up (cost, context-fit, a departure from precedent) and want the narrative to proactively address it, grounded only in real reasoning.",
+          "prompt": "You are helping me write a concept narrative for [AUDIENCE/PURPOSE] that also proactively addresses a specific concern I expect to come up. This narrative must accurately describe a real design - do not invent design features or reasoning not in my notes.\n\nDesign decisions and reasoning (my notes): [LIST YOUR ACTUAL DESIGN MOVES AND WHY]\nProject type/context: [BRIEFLY DESCRIBE]\nConcern I expect and want addressed: [STATE THE CONCERN, e.g. \"the departure from the neighborhood's typical roofline\"]\nMy actual reasoning for this specific concern (use only this, don't invent additional justification): [STATE YOUR REAL REASONING]\n\nRules:\n- Every design move and every response to the concern must come from my notes - do not add anything not mentioned.\n- Tie each move to a stated reason.\n\nWrite [LENGTH], weaving in the response to the concern naturally rather than as a defensive aside."
+        },
+        {
+          "label": "Narrative for a design that's still in progress, not finalized",
+          "whenToUse": "Use this for an early-stage internal narrative describing design intent and direction while some decisions are still being worked out, rather than a finished design being presented as complete.",
+          "prompt": "You are helping me write a concept narrative describing design intent for a project still in progress - not a finished design. This must accurately describe real decisions and real open questions, not present unfinished work as settled.\n\nDesign decisions already made and reasoning: [LIST]\nAspects still being explored or undecided: [LIST]\nProject type/context: [BRIEFLY DESCRIBE]\n\nRules:\n- Every design move described must come from my notes - do not add anything not mentioned or imply a decision is final if I've listed it as still being explored.\n- Clearly distinguish, in the writing itself, between decisions that are settled and directions still being tested.\n\nWrite [LENGTH] in a tone appropriate for an internal design review, not a finished client presentation."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check for any invented material or feature",
+          "prompt": "Go through this narrative and flag any material, form, spatial feature, or design move described that isn't explicitly in my original notes. I want to catch anything invented before I check it against the actual drawings."
+        },
+        {
+          "label": "Too much generic design language — ground it in specifics",
+          "prompt": "This uses generic design adjectives (like 'elegant' or 'timeless') without tying them to a specific stated reason. Rewrite it so every descriptive claim connects back to one of my actual listed design decisions and reasons, not abstract praise."
+        },
+        {
+          "label": "Wrong tone for the audience — adjust it",
+          "prompt": "The tone doesn't quite match my audience. This needs to read as [DESIRED TONE, e.g. \"more technical and precise for a planning board\" or \"warmer and more persuasive for a client\"] - rewrite it in that register while keeping every design fact exactly the same."
+        },
+        {
+          "label": "Shorten without losing the strongest reasoning",
+          "prompt": "This needs to be shorter, about [NEW LENGTH]. Cut it down but keep the strongest, most specific design reasoning intact - it's fine to drop a weaker or more generic point before cutting a specific, well-grounded one."
+        }
+      ],
+      "walkthrough": "Devon is an architect preparing a client presentation for a hillside residential addition. The design has real logic behind it, but his past narratives have tended to read as flat lists of features rather than a compelling story, and he wants this one to actually land with the client.\n\nHe opens Claude and lists his real design decisions: the site slopes 8 feet east to west, so the house is a split-level following the grade instead of requiring retaining walls; the main living space is oriented south for solar gain and views of the client's oak trees, which they asked to preserve; and the exterior material is standing-seam metal, chosen for low maintenance and as a quiet reference to the agricultural buildings nearby. Audience: client presentation, tone persuasive but professional.\n\nClaude returns a narrative opening with the site's grade change, explaining the split-level response as working with the slope rather than against it, tying the south orientation to daylight and the preserved oak trees, and closing on the standing-seam metal as answering two goals at once. Every claim traces to something Devon actually listed.\n\nHe reads it against his drawings and it holds up factually, but one section uses the word \"timeless\" to describe the material choice without tying it to anything specific - it reads as filler. He sends a follow-up asking Claude to remove generic design language not grounded in a specific stated reason. The revision drops \"timeless\" and instead expands slightly on the agricultural-building reference, which is a real, specific reason he gave.\n\nDevon reads the final version once more against his actual drawings to confirm nothing was invented, adjusts one sentence's phrasing to sound more like his own voice, and builds it into his presentation deck alongside the renderings. The whole process took about 15 minutes. In the client meeting, the narrative gives the design a clear logic the client can follow and repeat back, rather than just reacting to images."
+    },
+    "arc-i1-visual-concept-exploration-with-ai-image-tools": {
+      "placeholders": [
+        {
+          "name": "NUMBER, e.g. 4-6",
+          "what": "How many images you want generated in this round - enough to see a genuine range of options, not so many that the differences become hard to meaningfully compare.",
+          "examples": [
+            "4-6",
+            "3",
+            "8"
+          ]
+        },
+        {
+          "name": "FOCUS: massing/form, material palette, or mood/atmosphere",
+          "what": "Which single aspect this round of exploration is testing. Picking one focus per round, rather than mixing them, is what keeps the resulting images useful for a specific design conversation.",
+          "examples": [
+            "massing/form",
+            "material palette",
+            "mood/atmosphere"
+          ]
+        },
+        {
+          "name": "BUILDING TYPE, SCALE, SITE CHARACTER, CLIMATE/REGION",
+          "what": "The real project context that keeps the generated images relevant rather than generic - what kind of building, roughly how big, what the site is like, and the general climate or region.",
+          "examples": [
+            "two-story single-family home, wooded gently sloped lot, temperate climate",
+            "four-story mixed-use infill building, dense urban block, hot-humid climate",
+            "single-story branch library, flat suburban site, temperate climate with cold winters"
+          ]
+        },
+        {
+          "name": "e.g. 'how a pitched-roof form could relate to the sloped site and existing tree line', or 'a warm, textured material palette responding to a client who wants natural materials with low maintenance'",
+          "what": "The specific design question or constraint you're actually testing with this exploration - not a generic \"explore options\" but a real question tied to a real project decision.",
+          "examples": [
+            "how a pitched-roof form could relate to the sloped site and existing tree line",
+            "a warm, textured material palette responding to a client who wants natural materials with low maintenance",
+            "how the massing could break down a large program into a scale that feels appropriate next to smaller historic neighbors"
+          ]
+        },
+        {
+          "name": "ANY REFERENCE BUILDINGS, MATERIALS, OR PRECEDENTS TO DRAW FROM",
+          "what": "Real precedent buildings, materials, or references worth grounding the exploration in, if you have them - helps steer the images toward something buildable and relevant rather than pure abstraction.",
+          "examples": [
+            "regional vernacular barns with simple gabled forms and board-and-batten siding",
+            "recent Scandinavian residential work using char-treated wood siding",
+            "the client showed us images of a specific mid-century modern house with deep roof overhangs"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Testing one specific massing question head-to-head",
+          "whenToUse": "Use this when you have a specific either/or design question (e.g., one big volume vs. two offset volumes) and want a focused side-by-side comparison rather than an open-ended spread.",
+          "prompt": "Generate [NUMBER] concept exploration images testing one specific massing question head-to-head, for early-stage architectural design.\n\nProject context: [BUILDING TYPE, SCALE, SITE CHARACTER, CLIMATE/REGION]\nSpecific question: [STATE THE EITHER/OR QUESTION, e.g. \"one continuous volume vs. two offset volumes separated by a connector\"]\nStyle/reference notes: [ANY REFERENCES]\n\nGenerate images clearly split between the two (or more) options being tested, roughly equal numbers of each, so they can be directly compared side by side rather than blended into a single ambiguous direction."
+        },
+        {
+          "label": "Material palette exploration for an interior space",
+          "whenToUse": "Use this when the exploration is about interior material and atmosphere rather than exterior massing or form.",
+          "prompt": "Generate [NUMBER] concept exploration images for early-stage interior material and atmosphere direction.\n\nSpace type/context: [e.g. lobby, primary living space, office reception]\nDesign direction or constraint being explored: [e.g. \"warm, natural materials balancing openness with acoustic comfort for an open-plan office\"]\nStyle/reference notes: [ANY REFERENCE INTERIORS OR MATERIALS]\n\nGenerate a range of distinct material/mood directions rather than close variations of one idea. Focus only on material and atmosphere - not furniture layout or floor plan, which aren't being explored in this round."
+        },
+        {
+          "label": "Site-context study showing the building in relation to neighbors",
+          "whenToUse": "Use this when the design question is really about how the building's scale and form relate to its immediate context (adjacent buildings, street character), not the building in isolation.",
+          "prompt": "Generate [NUMBER] concept exploration images showing how a proposed building's massing could relate to its immediate site context, for early-stage architectural design.\n\nProject context: [BUILDING TYPE, SCALE, SITE CHARACTER, CLIMATE/REGION]\nImmediate context to show: [DESCRIBE ADJACENT BUILDINGS, STREET CHARACTER, SCALE OF NEIGHBORS]\nDesign direction being explored: [e.g. \"how the massing could step down toward the smaller residential scale next door\"]\n\nShow the proposed massing in relation to its neighbors in each image, not in isolation, so scale and context relationships are visible for the design conversation."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Images all look too similar — push for real variety",
+          "prompt": "These are reading as close variations of one idea, not genuinely distinct directions. Regenerate with more variety - change the underlying formal approach between images, not just small proportional or color tweaks."
+        },
+        {
+          "label": "One direction looks promising — generate more range within it",
+          "prompt": "Direction/image [NUMBER] is the most promising. Generate [NUMBER] more images exploring variations within that same general approach - same overall concept, different specific configurations - so I have more to react to before committing to it."
+        },
+        {
+          "label": "Add the illustrative-study label directly to my notes",
+          "prompt": "Write a short, one-line label I can put directly under each of these images when I show them - something clear like 'Illustrative concept study - not a rendering or final design' - phrased naturally enough to use in a client presentation without sounding like a legal disclaimer."
+        },
+        {
+          "label": "Check these against a stated site constraint",
+          "prompt": "Given this real site constraint I have: [STATE A REAL CONSTRAINT, e.g. \"maximum height limit of 35ft\" or \"required 10ft setback from the north property line\"], which of these images, if any, look like they'd obviously conflict with that constraint once actually measured? I understand this is a visual judgment only, not a substitute for checking the real drawings."
+        }
+      ],
+      "walkthrough": "Naomi is an architect starting concept design for a two-story home on a wooded, gently sloped lot. The client mentioned wanting a simple gabled form but is worried about the house feeling too bulky from the street, and Naomi wants to explore massing options quickly before committing time to a full 3D model. She picks Gemini's Nano Banana for this round, expecting to want several fast, conversational rounds of tweaking.\n\nShe opens Gemini and fills in the lesson's prompt. Number of images: 5. Focus: massing/form, kept as the only focus. Project context: two-story single-family home, wooded gently sloped lot, temperate climate. Design direction: exploring how a simple gabled form could break into two offset volumes to preserve views through the site and reduce apparent bulk from the street. Style notes: regional vernacular barns with simple gabled forms.\n\nNano Banana generates five distinct massing studies, each showing a different relationship between the two offset volumes - varying roof pitch, offset distance, and how the connector is handled. Naomi reviews them with her team; two options stand out as worth developing further, while three clearly don't solve the bulk problem.\n\nShe sends a follow-up asking for three more variations within the most promising direction, wanting more range before committing to a model. The new batch clarifies which offset distance reads best.\n\nBefore showing anything to the client, she asks for a short, natural label to put under each image - she gets back \"Illustrative concept study - not a rendering or final design\" - and adds it to every slide in her presentation deck. In the client meeting, she says the same thing out loud, making clear these are exploratory and not to scale.\n\nAfter the client reacts positively, Naomi develops the selected direction into an actual scaled massing model and checks it against the real site survey and setback requirements - something the AI images had no way to verify. The exploration itself took about 20 minutes, giving the team a fast starting point that would otherwise have required hours of manual sketching."
+    },
+    "arc-i2-client-facing-project-documentation-and-updates": {
+      "placeholders": [
+        {
+          "name": "e.g. routine milestone update, delay notice, decision request",
+          "what": "The actual purpose of this specific update - naming it precisely changes what tone and framing are appropriate, since a routine update and a delay notice need to read very differently.",
+          "examples": [
+            "routine milestone update",
+            "delay notice",
+            "decision request"
+          ]
+        },
+        {
+          "name": "LIST FROM NOTES",
+          "what": "Used twice: what's actually completed and what's actually in progress, pulled directly from your internal project notes - not summarized optimistically, just factually.",
+          "examples": [
+            "Completed: site survey, schematic design approved, permit application submitted.",
+            "In progress: revising drawings per city comments received 2 weeks late, resubmitting in 5 business days.",
+            "Completed: foundation inspection passed. In progress: framing, on schedule per original timeline."
+          ]
+        },
+        {
+          "name": "STATE OR WRITE 'NONE'",
+          "what": "Any specific decision the client needs to make right now, stated clearly - or an honest 'none' if there isn't one this update. Leaving this accurate is what keeps the fixed 'decision needed' section meaningful rather than padded.",
+          "examples": [
+            "Client needs to decide on kitchen appliance package by end of month or it delays the order.",
+            "NONE",
+            "Client needs to approve the revised fee for the added scope before we proceed with the redesign."
+          ]
+        },
+        {
+          "name": "LIST FROM NOTES",
+          "what": "The concrete next steps and their real target dates, pulled from your actual project notes.",
+          "examples": [
+            "Resubmit permit drawings by [date]; awaiting appliance decision by [date].",
+            "Schedule framing inspection for [date]; order long-lead windows by [date].",
+            "Finalize fee revision and send for signature by [date]."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Very short version for a quick status check-in",
+          "whenToUse": "Use this for a lightweight, frequent check-in (a weekly or biweekly note) where a full structured update would feel heavy, and the client just needs a fast pulse update.",
+          "prompt": "You are helping me draft a short, quick client check-in update. This is a draft for my review before sending - it must not overstate certainty or add reassurance not stated in my notes.\n\nRules:\n- Use ONLY the facts in the notes below. Do not add status or reassurances I haven't stated.\n- Where a sentence would need my own judgment about framing, insert [ARCHITECT TO ADD FRAMING] rather than writing something plausible-sounding.\n\nWhat's happened since the last update: [LIST FROM NOTES]\nAnything the client needs to know or do: [STATE OR 'NONE']\n\nWrite this as a short, friendly 3-5 sentence check-in, not a formal structured document. Label it 'DRAFT - review before sending.'"
+        },
+        {
+          "label": "Cost-change notice specifically, needing extra care",
+          "whenToUse": "Use this when the update specifically involves a cost increase or change, which typically needs more careful framing than a routine update or even a schedule delay.",
+          "prompt": "You are helping me draft a client-facing update specifically about a cost change. This is a draft for my review before sending - it must not overstate certainty, minimize the cost impact, or add reassurance not stated in my notes.\n\nRules:\n- Use ONLY the facts in the notes below. Do not add causes, reassurances, or framing about the cost change I haven't stated.\n- Insert [ARCHITECT TO ADD FRAMING] wherever the explanation or tone around the cost change requires my own judgment - do not write something plausible-sounding in its place.\n- State the actual cost figure exactly as I provide it - do not round or soften it.\n\nWhat's changed and the confirmed cost impact: [STATE FACTS AND THE CONFIRMED FIGURE]\nWhat's completed/in progress otherwise: [LIST FROM NOTES]\nDecision needed from client: [STATE]\n\nStructure with clear headers: Completed, In Progress, Cost Change (with the figure and an [ARCHITECT TO ADD FRAMING] placeholder for context), Decision Needed, Next Steps. Label 'DRAFT - review before sending' at the top."
+        },
+        {
+          "label": "Update for a multi-stakeholder client (board, committee) rather than one person",
+          "whenToUse": "Use this when the update goes to a group with mixed familiarity with the project (a board, a building committee) rather than one individual client who's been closely involved throughout.",
+          "prompt": "You are helping me draft a client-facing project update for a multi-person audience (a board or committee) with mixed familiarity with the project details. This is a draft for my review before sending.\n\nRules:\n- Use ONLY the facts in the notes below. Do not add status, causes, or reassurances not stated.\n- Insert [ARCHITECT TO ADD FRAMING] wherever a sensitive update needs my own judgment.\n- Keep tone professional; assume some readers have less project context than others, so briefly reground the project's basic status before getting into new updates.\n\nBrief project context reminder (for less-involved readers): [ONE LINE ON THE PROJECT]\nWhat's completed: [LIST FROM NOTES]\nWhat's in progress: [LIST FROM NOTES]\nDecision needed (if any): [STATE OR 'NONE']\nNext steps and dates: [LIST FROM NOTES]\n\nStructure with clear headers, label 'DRAFT - review before sending' at the top."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check for reassurance I haven't actually confirmed",
+          "prompt": "Go through this draft and flag any sentence that reassures the client about something I haven't actually confirmed as true (like implying no schedule impact, or implying a decision is low-risk) - I want to remove anything that oversteps what I actually know."
+        },
+        {
+          "label": "The decision-needed item is buried — pull it forward",
+          "prompt": "The decision the client needs to make is currently buried in the narrative text. Make sure it's clearly in its own 'Decision Needed' section near the top of the update, not just mentioned in passing within another section."
+        },
+        {
+          "label": "Help me write the sensitive framing myself",
+          "prompt": "I need to fill in the [ARCHITECT TO ADD FRAMING] placeholder for [SPECIFIC SECTION]. Here's the real context and how I want to handle it: [DESCRIBE YOUR ACTUAL REASONING/TONE FOR THIS SITUATION]. Write 2-3 sentence options I could choose from for this section, each reflecting a slightly different level of directness."
+        },
+        {
+          "label": "Tone doesn't match this specific client relationship",
+          "prompt": "This client prefers [DESCRIBE THEIR COMMUNICATION STYLE, e.g. \"headline first, details after\" or \"very direct, no cushioning language\"]. Rewrite the update to match that style specifically, keeping every fact and the DRAFT label exactly the same."
+        }
+      ],
+      "walkthrough": "Priya is an architect managing a residential project where two things are happening at once: the permit review is running two weeks behind because city comments came back late, and the client needs to make a kitchen appliance decision by the end of the month or their order gets delayed too. She needs to communicate both clearly without either burying the decision or making the delay sound worse or better than it actually is.\n\nShe opens ChatGPT and works through the lesson's prompt. Purpose: delay notice plus decision request. What's completed: site survey, with no issues found. What's in progress: revising drawings after late city comments, resubmitting in five business days. Decision needed: the appliance package selection by end of month. Next steps: resubmit permit drawings by a specific date, awaiting the appliance decision by another specific date.\n\nChatGPT returns a draft labeled \"DRAFT - review before sending,\" with clear headers: Completed notes the survey is done with no issues; In Progress explains the permit delay and resubmission plan, followed by \"[ARCHITECT TO ADD FRAMING: note on what this means for overall schedule]\"; Decision Needed states the appliance deadline; Next Steps lists both dates.\n\nPriya appreciates that the draft didn't guess how worried the client should be - that's a judgment call she needs to make herself. She knows this client responds better to a direct, no-cushioning tone, so she sends a follow-up describing that preference. The revised version drops the softer transitional language and gets to the point faster.\n\nShe personally writes the framing for the schedule implication - being honest that the overall completion date will likely shift by about two weeks, not glossing over it - and fills that into the placeholder herself. She reads the whole update once more, confirms the decision-needed section is impossible to miss, and sends it. Total time: about 12 minutes, and the client responded within a day with their appliance decision, avoiding a second delay stacking on top of the first."
+    },
+    "arc-i3-planning-and-consent-document-drafts-with-compliance-guardrails": {
+      "placeholders": [
+        {
+          "name": "SUBMISSION TYPE",
+          "what": "The specific type of planning or consent document you're drafting - a variance narrative, a design statement, a conservation area statement, a site plan narrative - since each has a different standard structure your jurisdiction expects.",
+          "examples": [
+            "variance narrative",
+            "design statement",
+            "conservation area statement"
+          ]
+        },
+        {
+          "name": "STATE JURISDICTION",
+          "what": "The specific city, county, or planning authority governing this submission - naming it precisely, since zoning ordinances and required submission formats are hyperlocal.",
+          "examples": [
+            "a specific city planning department",
+            "a specific county board of adjustment",
+            "a specific historic district commission"
+          ]
+        },
+        {
+          "name": "SITE ADDRESS, ZONING DISTRICT, PROPOSED USE, KEY DIMENSIONAL DATA",
+          "what": "The real, already-calculated project facts - the actual address, zoning district, proposed use, and dimensional figures like setbacks, height, FAR, or lot coverage as you've determined them. Feeding in your own already-calculated numbers, rather than asking the AI to determine them, keeps the highest-risk figures under your direct control.",
+          "examples": [
+            "A specific residential address, zoned R-2, proposing a rear addition reducing the rear setback from a required 25ft to 18ft due to irregular lot shape; existing structure already non-conforming on one side setback.",
+            "A specific commercial address, zoned C-1, proposed use is mixed-use retail/residential, height requested at 45ft against a district limit believed to be 40ft, requiring a height variance.",
+            "A specific address in a designated historic district, zoned R-1 with historic overlay, proposed rear addition set back from the historic front facade, no change to street-facing elevation."
+          ]
+        },
+        {
+          "name": "LIST OR WRITE 'UNKNOWN - FLAG FOR RESEARCH'",
+          "what": "The specific zoning or ordinance sections you already know apply, if any - or an honest admission you don't know yet, so those items get explicitly flagged for research rather than silently assumed.",
+          "examples": [
+            "Section 4.2.3 (rear setback requirements), Section 8.1 (variance criteria)",
+            "UNKNOWN - FLAG FOR RESEARCH",
+            "Believed to be Section 12.4 (height limits) but not yet confirmed against the current ordinance"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Short design statement for a straightforward, by-right submission",
+          "whenToUse": "Use this for a routine submission that doesn't require a variance or exception - just a design statement describing how the project complies, which needs a lighter structure than a variance justification.",
+          "prompt": "You are helping me draft a short design statement for a by-right planning submission from project facts I provide. This is a first draft for my review - not a final submission, and it must not assert code or zoning compliance on its own authority.\n\nRules:\n- Use ONLY the project facts provided below. Do not add site conditions or zoning figures not stated.\n- For every statement involving a zoning figure, dimensional requirement, or compliance claim, add [VERIFY AGAINST CURRENT ORDINANCE] - do not state compliance as settled fact.\n- Keep the tone factual and clear.\n\nDraft a design statement for:\nJurisdiction: [STATE JURISDICTION]\nProject facts: [SITE ADDRESS, ZONING DISTRICT, PROPOSED USE, KEY DIMENSIONAL DATA]\nKnown applicable zoning sections (if any): [LIST OR 'UNKNOWN - FLAG FOR RESEARCH']\n\nStructure: project description, site and zoning context, compliance summary (with verification flags)."
+        },
+        {
+          "label": "Historic/conservation area statement with preservation-specific framing",
+          "whenToUse": "Use this for a submission in a historic or conservation district, where the narrative needs to specifically address preservation criteria in addition to standard zoning compliance.",
+          "prompt": "You are helping me draft a conservation/historic area statement from project facts I provide. This is a first draft for my review - not a final submission, and it must not assert code, zoning, or preservation-guideline compliance on its own authority.\n\nRules:\n- Use ONLY the project facts provided below. Do not add site conditions, historic details, or zoning figures not stated.\n- For every statement involving a zoning figure, historic district guideline, or compliance claim, add [VERIFY AGAINST CURRENT ORDINANCE/GUIDELINES].\n- Do not predict whether an approval or certificate of appropriateness will be granted.\n\nDraft a conservation area statement for:\nJurisdiction: [STATE JURISDICTION]\nProject facts: [SITE ADDRESS, ZONING DISTRICT, PROPOSED USE, KEY DIMENSIONAL DATA, RELEVANT HISTORIC FEATURES BEING PRESERVED OR ALTERED]\nKnown applicable historic district guidelines or ordinance sections (if any): [LIST OR 'UNKNOWN - FLAG FOR RESEARCH']\n\nStructure: project description, historic context and existing conditions, proposed changes and preservation rationale (with verification flags), compliance summary."
+        },
+        {
+          "label": "Site plan narrative for a larger project with multiple zoning triggers",
+          "whenToUse": "Use this for a larger project (multi-family, commercial) that triggers several distinct zoning requirements at once (parking, height, FAR, landscaping) rather than a single variance issue.",
+          "prompt": "You are helping me draft a site plan narrative from project facts I provide, for a project with multiple distinct zoning requirements. This is a first draft for my review - not a final submission, and it must not assert code or zoning compliance on its own authority.\n\nRules:\n- Use ONLY the project facts provided below. Do not add site conditions or zoning figures not stated.\n- For every statement involving a zoning figure, ordinance section, or compliance claim (parking count, height, FAR, landscaping, etc.), add [VERIFY AGAINST CURRENT ORDINANCE] - do not state compliance as settled fact.\n- Do not predict whether an approval will be granted.\n\nDraft a site plan narrative for:\nJurisdiction: [STATE JURISDICTION]\nProject facts: [SITE ADDRESS, ZONING DISTRICT, PROPOSED USE, KEY DIMENSIONAL DATA ACROSS EACH ZONING CATEGORY - PARKING, HEIGHT, FAR, LANDSCAPING, ETC.]\nKnown applicable zoning sections (if any): [LIST OR 'UNKNOWN - FLAG FOR RESEARCH']\n\nStructure: project description, site and zoning context, a compliance summary broken out by zoning category (each with its own verification flag)."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check every regulatory claim has a verification flag",
+          "prompt": "Go through this draft line by line and confirm every zoning figure, ordinance section reference, setback, height limit, use classification, or compliance claim has a [VERIFY AGAINST CURRENT ORDINANCE] tag next to it. Flag anything regulatory that might have slipped through without one."
+        },
+        {
+          "label": "Draft sounds too confident about approval odds",
+          "prompt": "Review this draft for any language that implies or predicts how likely approval is, or characterizes the strength of the application. Rewrite any such language to stay factual and descriptive only, without editorializing about the outcome."
+        },
+        {
+          "label": "I've verified some figures — update the draft with confirmed values",
+          "prompt": "I've independently verified these figures against the current official ordinance: [LIST THE FACTS YOU'VE CONFIRMED AND THEIR SOURCE]. Update the draft to reflect these as confirmed, removing the verification flag only for these specific items - keep the flag on everything else I haven't yet confirmed."
+        },
+        {
+          "label": "Tighten the variance justification without losing the flags",
+          "prompt": "Tighten the variance justification section for clarity and persuasiveness, but do not remove or soften any [VERIFY AGAINST CURRENT ORDINANCE] flag, and do not add any new claim about compliance or approval likelihood in the process."
+        }
+      ],
+      "walkthrough": "Sam is an architect preparing a variance narrative for a client's rear addition. The lot has an irregular, pie-shaped geometry that pushes the proposed rear setback down to about 18 feet, and Sam believes the standard requirement in this R-2 district is 25 feet, though he hasn't independently confirmed that figure against the current ordinance yet.\n\nHe opens Claude and fills in the lesson's prompt. Submission type: variance narrative. Jurisdiction: the specific city. Project facts: the address, zoned R-2, proposing a rear addition reducing the rear setback from a believed 25ft requirement to 18ft due to the irregular lot shape, with the existing structure already non-conforming on one side setback. For known applicable sections, he honestly writes \"UNKNOWN - FLAG FOR RESEARCH.\"\n\nClaude returns a draft with a project description of the 400 sf addition, a zoning context section noting R-2 zoning with a [VERIFY AGAINST CURRENT ORDINANCE: confirm current rear setback, stated here as 25 ft] tag, a factual description of the resulting 18 ft setback, and a variance justification arguing the lot's non-standard shape - not a choice to maximize buildable area - is the source of the reduction, with another flag asking him to confirm the specific variance criteria required.\n\nSam does a careful pass checking that every regulatory claim has a flag - he asks Claude to confirm nothing slipped through unflagged, and it catches one unflagged line referencing \"typical setback variance criteria,\" which it then flags.\n\nHe pulls the actual zoning ordinance himself, confirms the R-2 rear setback is indeed 25 ft with no recent amendment, and finds the variance criteria section, which requires demonstrating the hardship isn't self-created. He gives Claude these confirmed facts and asks it to update the draft, leaving still-unconfirmed items flagged. He routes the final draft through his firm's standard review before submission. Total time: about 40 minutes drafting, plus 20 minutes independently verifying the ordinance - non-negotiable regardless of how confident the draft sounds."
+    },
+    "arc-a1-portfolio-and-case-study-copy-for-your-practice": {
+      "placeholders": [
+        {
+          "name": "STATE - e.g. 'design architect, collaborated with XYZ Engineering on structure'",
+          "what": "Your firm's actual, honest role on this project - especially important to state precisely if the project was collaborative, so the copy doesn't imply sole authorship on work that involved other firms or consultants.",
+          "examples": [
+            "design architect, collaborated with XYZ Engineering on structure",
+            "architect of record, sole designer",
+            "design architect on a joint venture with another firm, our firm led interior design specifically"
+          ]
+        },
+        {
+          "name": "LIST",
+          "what": "The real, specific design decisions and the actual reasoning behind them for this project - what makes the project distinctive, not generic praise.",
+          "examples": [
+            "Preserving original reading room daylighting while adding accessible entry; designed a discreet ramp integrated into the original stone facade rather than a visible addition.",
+            "Split-level section following existing site grade to avoid retaining walls and preserve mature trees the client specifically asked to keep.",
+            "Central light well organizing the office floor plate to bring daylight into a deep, otherwise dark commercial shell."
+          ]
+        },
+        {
+          "name": "e.g. energy performance, budget/schedule, awards - or write 'NONE TO CLAIM'",
+          "what": "Any real, measurable outcome you can actually back up - a confirmed metric, an on-budget or on-schedule delivery, an actual award received. If there's nothing to honestly claim, say so rather than let the copy imply an outcome that was never measured.",
+          "examples": [
+            "Won a local AIA chapter award for adaptive reuse; project came in on budget.",
+            "NONE TO CLAIM",
+            "Confirmed 30% reduction in energy use compared to the pre-renovation building, per the client's utility data."
+          ]
+        },
+        {
+          "name": "CONFIRM CLIENT NAME/IMAGES ARE CLEARED, OR STATE WHAT MUST BE ANONYMIZED",
+          "what": "Your actual publication clearance status - whether you have explicit permission to use the real client name and images, or what specifically needs to be anonymized or omitted if you don't.",
+          "examples": [
+            "Client name and images cleared for publication per signed release.",
+            "Images cleared, but client requested their business name be omitted - refer to them generically as 'a regional retail client.'",
+            "Not yet cleared - need to confirm with client before publishing anything."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Awards or competition submission entry, not marketing copy",
+          "whenToUse": "Use this when the copy is specifically for an awards submission or competition entry, which often has stricter factual and formatting requirements than general marketing copy.",
+          "prompt": "You are helping me write project copy for an awards/competition submission, not general marketing use. This copy must accurately represent the real project - do not invent outcomes, metrics, or overstate my firm's role, since awards submissions are typically fact-checked and misrepresentation can disqualify an entry.\n\nProject facts (my notes):\nFirm's actual scope/role: [STATE]\nKey design decisions and reasoning: [LIST]\nMeasurable outcomes (if any): [STATE OR 'NONE TO CLAIM']\nAward category/submission requirements (if known): [DESCRIBE ANY SPECIFIC FORMAT OR WORD COUNT REQUIREMENTS]\n\nRules:\n- Use ONLY the facts provided. Do not add outcomes or metrics not stated.\n- Do not overstate the firm's role - reflect collaboration accurately.\n- Persuasive tone is appropriate, but every specific claim must be traceable to a fact I provided.\n\nWrite a submission narrative matching the length/format requirements stated, or 300-400 words if none specified."
+        },
+        {
+          "label": "Portfolio copy for a project that isn't fully complete yet",
+          "whenToUse": "Use this for a project still under construction or in a late design phase, where the copy needs to be honest about its status rather than implying completion.",
+          "prompt": "You are helping me write portfolio copy for a project that is not yet complete. This copy must accurately represent the real, current project status - do not imply completion, invent outcomes, or overstate my firm's role.\n\nProject facts (my notes):\nFirm's actual scope/role: [STATE]\nCurrent project status: [e.g. 'under construction, expected completion date']\nKey design decisions and reasoning so far: [LIST]\nAnticipated outcomes (clearly marked as anticipated, not confirmed): [STATE OR 'NONE TO CLAIM']\nClearance to publish: [CONFIRM OR STATE WHAT MUST BE ANONYMIZED]\n\nRules:\n- Use ONLY the facts provided. Do not add outcomes not stated, and clearly distinguish anticipated outcomes from confirmed ones using language like 'expected to' rather than stating them as fact.\n- Do not overstate the firm's role.\n\nWrite: (1) a 40-60 word portfolio summary noting the project is in progress, and (2) a 250-300 word project description covering design intent and current status."
+        },
+        {
+          "label": "Anonymized case study when the client can't be named",
+          "whenToUse": "Use this when you don't have clearance to name the client or specific location but do have permission to describe the project and show images generically.",
+          "prompt": "You are helping me write anonymized portfolio and case-study copy for a project I cannot name the client or specific location for. This copy must accurately represent the real project - do not invent outcomes, metrics, or overstate my firm's role, and must not include any identifying detail.\n\nProject facts (my notes):\nFirm's actual scope/role: [STATE]\nKey design decisions and reasoning: [LIST]\nMeasurable outcomes (if any): [STATE OR 'NONE TO CLAIM']\nWhat must stay anonymous: [e.g. client name, exact address, industry if identifying]\nHow to generically refer to the project: [e.g. 'a private residential client', 'a regional healthcare provider']\n\nRules:\n- Use ONLY the facts provided. Do not add outcomes or metrics not stated.\n- Do not include the real client name, exact address, or any detail that could identify them, using the generic reference provided instead.\n\nWrite: (1) a 40-60 word anonymized portfolio summary, and (2) a 300-400 word anonymized case study."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check for overstated role on a collaborative project",
+          "prompt": "Review this copy and flag any sentence that could be read as implying sole authorship or overstating our firm's role, given that this was a collaborative project. I want language that credits collaborators accurately, not erased."
+        },
+        {
+          "label": "Verify every metric or award traces to a stated fact",
+          "prompt": "Go through this copy and flag any specific metric, award, or outcome mentioned that I did not explicitly provide in my notes. I want to confirm every specific claim traces directly back to something I actually stated before this goes to a colleague for review."
+        },
+        {
+          "label": "Anonymization isn't thorough enough",
+          "prompt": "Review this copy for any detail - even an indirect one like a very specific location description or an unusual project feature - that could still make the client identifiable despite the anonymization, and flag it so I can generalize it further."
+        },
+        {
+          "label": "Case study reads flat — bring out the real design challenge",
+          "prompt": "This case study reads a bit flat. Without adding any fact I haven't given you, rewrite the design challenge and response section to bring out the tension between the real constraints more clearly - lean harder into the actual reasoning I provided rather than restating it blandly."
+        }
+      ],
+      "walkthrough": "Tomas runs a small architecture firm that just completed a library renovation his firm is genuinely proud of, but he's behind on updating the website portfolio with it, as usual - billable work always wins out over marketing copy.\n\nHe opens ChatGPT and fills in the lesson's prompt with real project facts. Firm's actual scope and role: design architect, collaborated with a structural engineering firm on a seismic retrofit. Key design decisions: preserving the original reading room's daylighting while adding an accessible entry. Measurable outcomes: the project came in on budget and won a local AIA chapter award for adaptive reuse. Clearance: client name and images are cleared for publication per a signed release.\n\nChatGPT returns a 50-word portfolio summary describing the adaptive reuse, the preserved reading room daylighting, the added accessibility, and the award - and a 350-word case study opening with the challenge of balancing accessibility and seismic requirements against preserving the reading room, crediting the structural firm by name, and closing on the confirmed on-budget outcome and award.\n\nTomas reads it carefully, checking the collaboration is credited honestly, since his firm has worked with the structural firm on multiple projects and doesn't want this copy to read as solo-designed. He asks whether any sentence implies sole authorship; the review comes back clean, but he tightens one sentence anyway, giving the structural firm slightly more visible credit.\n\nBefore publishing, he sends the draft to the project architect who actually led the day-to-day design work, per the lesson's advice about colleague review, and she catches one detail: the copy describes the ramp as \"newly added\" when it actually replaced an existing, non-compliant ramp. Tomas corrects that one factual point. The whole process, including the colleague review, took about 30 minutes spread across two days, and the finished case study goes live accurately crediting everyone involved."
+    }
+  }
+}

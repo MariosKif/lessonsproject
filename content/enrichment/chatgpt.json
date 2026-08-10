@@ -1,0 +1,773 @@
+{
+  "enrichment": {
+    "gpt-b1-first-professional-result": {
+      "placeholders": [
+        {
+          "name": "role, e.g. senior marketing copywriter",
+          "what": "The expert job title you want ChatGPT to act as for this task. Pick the real-world professional who would naturally be good at this specific job — it sets vocabulary and judgment calls. Found by asking yourself: who would normally do this task for me?",
+          "examples": [
+            "senior real estate copywriter",
+            "experienced customer support lead",
+            "financial analyst who writes plain-English summaries for non-finance managers"
+          ]
+        },
+        {
+          "name": "deliverable",
+          "what": "The exact thing you want produced, named specifically — an email, a product description, a meeting summary — not a vague 'help me with X'. A good deliverable is something you could hand to someone else and they'd know exactly what it is.",
+          "examples": [
+            "a 3-sentence LinkedIn post announcing our new pricing",
+            "a follow-up email to a client who missed a payment deadline",
+            "a one-page project status update for my manager"
+          ]
+        },
+        {
+          "name": "audience/purpose",
+          "what": "Who will read or receive this, and why it's being written. This shapes vocabulary, tone, and what needs explaining versus what can be assumed already known.",
+          "examples": [
+            "existing customers who are already familiar with our product",
+            "a hiring manager who has never met me",
+            "my direct manager, who wants a quick status check, not a deep dive"
+          ]
+        },
+        {
+          "name": "2-3 sentences of background",
+          "what": "The specific facts about this situation that a person doing the task would need before starting — dates, names, prior context, constraints. Without this, ChatGPT guesses and produces something generic that could apply to anyone.",
+          "examples": [
+            "We're a 15-person design agency. Our client's project is now 2 weeks behind schedule due to a scope change they requested. This is the third status update I've sent them this month.",
+            "This product is a stainless steel water bottle, 750ml, launching next Tuesday. It replaces our older glass model, which customers complained was too fragile.",
+            "I'm applying for a marketing coordinator role at a startup. I have 2 years of experience running social media for a local bakery chain."
+          ]
+        },
+        {
+          "name": "requirement",
+          "what": "A specific element the final output must include — a fact, a section, an instruction. List 2-3 of these as separate numbered requirements. Each should be concrete enough that you could check a box next to it when reading the draft, not an adjective like 'good' or 'professional'.",
+          "examples": [
+            "mention that the new feature is included free for existing subscribers",
+            "include the exact refund window: 30 days from purchase",
+            "end with a direct question asking them to confirm the meeting time"
+          ]
+        },
+        {
+          "name": "length/structure, e.g. 150 words, 3 short paragraphs",
+          "what": "How long the output should be and how it should be organized: word count or paragraph count, plus structural notes like bullet points versus prose. This is the most-skipped detail, and skipping it is why people get three times more or less text than they needed.",
+          "examples": [
+            "100 words, single paragraph, no bullet points",
+            "under 200 words, 3 short paragraphs with a one-line closing",
+            "a bulleted list of exactly 5 items, no intro paragraph"
+          ]
+        },
+        {
+          "name": "things to avoid",
+          "what": "Words, phrases, or content you specifically don't want in the output — jargon, hype words, claims you can't back up, or a tone that's wrong for the audience.",
+          "examples": [
+            "the words 'stunning', 'must-see', or any exclamation points",
+            "any specific delivery date — we haven't confirmed one yet",
+            "corporate jargon like 'synergy' or 'leverage'"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick version for a low-stakes task",
+          "whenToUse": "For internal, informal, or low-risk tasks where a full four-part prompt is overkill — a quick Slack message or a rough first pass you'll edit yourself.",
+          "prompt": "Write a quick [deliverable] for [audience/purpose]. Keep it under [length/structure, e.g. 150 words, 3 short paragraphs]. Key point to include: [requirement]. Casual tone is fine."
+        },
+        {
+          "label": "When you already have a rough draft to improve",
+          "whenToUse": "You've already written something yourself and want ChatGPT to tighten it rather than write from scratch.",
+          "prompt": "You are a [role, e.g. senior marketing copywriter]. Here is my rough draft: [PASTE YOUR DRAFT]. Improve it for [audience/purpose] without changing the facts. Fix: [specific problem, e.g. it's too long, the opening is weak]. Keep it to [length/structure, e.g. 150 words, 3 short paragraphs]."
+        },
+        {
+          "label": "Client-facing / higher-stakes version",
+          "whenToUse": "When the output goes directly to a client or executive and needs an extra layer of polish and accuracy checking.",
+          "prompt": "You are a [role, e.g. senior account manager] writing on behalf of [company name]. I need [deliverable] for [audience/purpose] — this will be read by a client, so tone and accuracy matter. Context: [2-3 sentences of background]. Requirements: 1) [requirement], 2) [requirement], 3) [requirement]. Format: [length/structure, e.g. 150 words, 3 short paragraphs]. Do not include [things to avoid], and do not state anything as fact that wasn't in my context above."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Too generic? Make it specific",
+          "prompt": "This still feels generic. Rewrite it using more specific details from my context — reference the actual facts I gave you instead of general statements."
+        },
+        {
+          "label": "Too long? Cut it down",
+          "prompt": "Cut this to half the length. Keep the most important point and the call to action. Remove anything that doesn't change the reader's understanding."
+        },
+        {
+          "label": "Check it didn't invent anything",
+          "prompt": "List every specific fact, number, date, or claim in your draft. For each one, confirm whether it came directly from what I told you, or whether you added it yourself."
+        },
+        {
+          "label": "Wrong tone? Adjust it",
+          "prompt": "The tone is off — it reads as too stiff/too casual/too salesy. Rewrite it to sound more direct and natural while keeping the same facts and length."
+        }
+      ],
+      "walkthrough": "Elena manages 40 rental units for a small property company and needs to email tenants about upcoming water-shutoff maintenance. In the past she'd type something like 'write an email about the water being off' into ChatGPT and get a bland, three-paragraph message full of phrases like 'we apologize for any inconvenience this may cause,' which she'd then rewrite by hand anyway.\n\nThis time she opens a new chat and fills in the template. Role: 'senior property manager who writes clear tenant notices.' Deliverable: 'an email to tenants about a water shutoff.' Audience: 'tenants in a 40-unit building, several of whom don't speak English as a first language.' Context: 'The water will be shut off Thursday, June 12, from 9 AM to 1 PM for pipe repairs. This is routine, planned maintenance, not an emergency.' Requirements: '1) state the exact date and time twice, 2) tell them to fill containers with water beforehand, 3) give a phone number for questions.' Format: 'under 120 words, plain language, no bullet points.' Avoid: 'the words inconvenience or apologize — this isn't an emergency.'\n\nShe pastes it in and gets back a tight, four-sentence email that opens with the date and time, repeats it in the closing line, tells tenants to fill a container of water the night before, and lists the building manager's phone number, written in short, plain sentences.\n\nShe reads it and it's almost right, but wants it warmer. She sends one follow-up: 'Add one friendly opening line before the date, something like a quick heads-up tone.' ChatGPT adds 'Quick heads-up for everyone in the building' as an opener. Elena copies the final version straight into her tenant email list.\n\nTotal time: about four minutes, versus the usual fifteen minutes of writing and rewriting by hand."
+    },
+    "gpt-b2-prompt-structure-fundamentals": {
+      "placeholders": [
+        {
+          "name": "specific expert role",
+          "what": "The job title or expertise ChatGPT should adopt for this task — pick the real-world professional who'd naturally do this well.",
+          "examples": [
+            "HR manager who writes internal policy announcements",
+            "high school chemistry teacher explaining to beginners",
+            "small business bookkeeper"
+          ]
+        },
+        {
+          "name": "background facts relevant to this task — audience, prior decisions, constraints",
+          "what": "The situational facts a person in that role would need before starting: who's reading it, what's already been decided, and any limits like budget, deadline, or prior commitments.",
+          "examples": [
+            "This is for a 6-person team that just switched project management tools; two people are still confused about the new process.",
+            "The client already approved a $5,000 budget and a 3-week timeline; do not suggest anything outside that.",
+            "This report goes to a board that has already seen last quarter's numbers, so don't re-explain those."
+          ]
+        },
+        {
+          "name": "one specific, single action — not a list of unrelated tasks",
+          "what": "The one thing you want done, stated as a single sentence with one verb — not 'write this and also check that and also suggest ideas for a third thing.'",
+          "examples": [
+            "Summarize the attached meeting notes into 5 action items with owners.",
+            "Write a two-paragraph apology email for a delayed shipment.",
+            "Explain why our churn rate might have increased last month, based on the data below."
+          ]
+        },
+        {
+          "name": "length, structure, headings, or file type expected",
+          "what": "What the output should physically look like: word count, whether it needs headings or bullets, and whether it needs to be in a specific format like a table or numbered list.",
+          "examples": [
+            "under 300 words, with a bold heading before each of the 3 sections",
+            "a table with columns: Item, Cost, Owner",
+            "plain paragraph text, no bullets, ready to paste into an email"
+          ]
+        },
+        {
+          "name": "required elements",
+          "what": "Specific things that must appear in the output — facts, phrases, or sections you already know you need, so ChatGPT doesn't leave them out.",
+          "examples": [
+            "the refund policy link and the support email address",
+            "a one-line summary at the top",
+            "the exact budget figure: €4,800"
+          ]
+        },
+        {
+          "name": "things to exclude",
+          "what": "Content, phrasing, or topics that must NOT appear — off-limits claims, competitor mentions, or a tone you don't want.",
+          "examples": [
+            "any mention of our competitors by name",
+            "speculation about future pricing",
+            "the word 'unfortunately'"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Diagnostic version — when a result already went wrong",
+          "whenToUse": "Use this after a first attempt came out weak, to figure out which of the 4 parts was actually missing.",
+          "prompt": "Here is the prompt I used: [PASTE YOUR ORIGINAL PROMPT]. Here is the result I got: [PASTE THE RESULT]. Tell me which of these four elements was missing or too vague — Role, Context, Task, or Format — and rewrite my prompt with that part fixed."
+        },
+        {
+          "label": "Multi-task version, split correctly",
+          "whenToUse": "When you actually do have two related things to accomplish, so you ask for them as clearly separated deliverables instead of one muddled Task line.",
+          "prompt": "Role: You are a [specific expert role].\nContext: [background facts relevant to this task — audience, prior decisions, constraints].\nTask 1: [first specific action].\nTask 2: [second specific action].\nFormat: Answer Task 1 and Task 2 as two clearly labeled sections.\nConstraints: Include [required elements]. Avoid [things to exclude]."
+        },
+        {
+          "label": "Instant version using saved Custom Instructions",
+          "whenToUse": "Once you've set Role and Context permanently in Settings → Personalization, use this shorter prompt for everyday tasks.",
+          "prompt": "Task: [one specific, single action — not a list of unrelated tasks].\nFormat: [length, structure, headings, or file type expected]."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Rambling result? Fix the Format",
+          "prompt": "That was too unstructured. Add clear headings and cut it to a tighter word count. Don't change the content, just the structure and length."
+        },
+        {
+          "label": "Too generic? Fix the Context",
+          "prompt": "This feels generic — it could apply to any company. Rewrite it using these specific facts: [PASTE 1-2 MORE DETAILS]."
+        },
+        {
+          "label": "Solved the wrong problem? Fix the Task",
+          "prompt": "You addressed the wrong thing. The one specific action I need is: [RESTATE TASK]. Please redo it focused only on that."
+        },
+        {
+          "label": "Ask it to self-diagnose",
+          "prompt": "Before rewriting, tell me: which of Role, Context, Task, or Format do you think was underspecified in my last prompt?"
+        }
+      ],
+      "walkthrough": "Marcus manages operations at a 20-person logistics company and has never asked ChatGPT to help compare vendors before. Instead of guessing at a prompt, he opens a blank chat and fills in the four-part formula he just learned.\n\nRole: 'You are a procurement analyst who writes comparison memos for non-technical managers.' Context: 'We're choosing between two shipping software vendors, RouteWise and CargoFlow. Both quoted similar prices; RouteWise has better reviews but a longer onboarding time.' Task: 'Write a one-page memo comparing the two vendors and recommend one.' Format: 'Under 250 words, with a short table comparing price, onboarding time, and review score, followed by a one-paragraph recommendation.' Constraints: 'Include the fact that RouteWise's onboarding takes 6 weeks. Avoid recommending based on price alone.'\n\nHe sends it and gets back a memo with a clean three-row table and a recommendation paragraph that leans toward RouteWise despite the longer onboarding, citing the review-score gap as the deciding factor. Reasonable, but Marcus notices the table is missing a row he actually needs: contract length.\n\nInstead of rewriting the whole prompt, he diagnoses it using the four-part lens he just learned: the Context was incomplete, not the Task or Format. He sends a short follow-up: 'Add a fourth row to the table: contract length. RouteWise is 12 months, CargoFlow is month-to-month. Update the recommendation if this changes your thinking.'\n\nChatGPT adds the row and revises its recommendation, now flagging CargoFlow's flexibility as worth considering despite lower reviews. Marcus has a usable, board-ready memo in under five minutes, and he now knows that when a future prompt comes out wrong, he should ask which of the four parts was thin, not start over from scratch."
+    },
+    "gpt-b3-improving-drafts-and-tone": {
+      "placeholders": [
+        {
+          "name": "tone",
+          "what": "The specific emotional register you want, not just 'better' — a real descriptor a writer could actually aim for.",
+          "examples": [
+            "warm and direct — for a team that already trusts you",
+            "formal and precise — for a legal or compliance audience",
+            "casual and upbeat — for a social media caption"
+          ]
+        },
+        {
+          "name": "audience",
+          "what": "Who's reading the revised version — this changes vocabulary and how much you can assume they already know.",
+          "examples": [
+            "a client who is frustrated about a delay",
+            "new hires in their first week",
+            "a technical audience who already knows our product"
+          ]
+        },
+        {
+          "name": "specific change, e.g. 'cut the second paragraph in half'",
+          "what": "One precise edit instruction, not 'make it better' — naming the exact thing to change so ChatGPT has a fixed target to hit.",
+          "examples": [
+            "cut the second paragraph in half",
+            "move the pricing mention to the first sentence",
+            "replace the closing line with a direct question"
+          ]
+        },
+        {
+          "name": "things to avoid, e.g. 'don't add new claims or soften the deadline'",
+          "what": "A guardrail telling ChatGPT what NOT to change or add while revising — this keeps facts and intent intact through edits.",
+          "examples": [
+            "don't add new claims or soften the deadline",
+            "don't remove the phone number",
+            "don't make it sound like an apology — nothing went wrong"
+          ]
+        },
+        {
+          "name": "PASTE 2-3 SENTENCES OF YOUR OWN WRITING",
+          "what": "A real short sample of something you actually wrote — an email, a post, a message — so ChatGPT can match your natural voice instead of guessing at an abstract style.",
+          "examples": [
+            "Hey team — quick heads up, nothing dramatic. Here's what's changing and why.",
+            "Thanks so much for your patience on this — I know the back and forth hasn't been ideal, and I want to make it right.",
+            "Quick update: we shipped the fix this morning. Let me know if you still see the issue on your end."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "When you don't have a voice sample handy",
+          "whenToUse": "Early on, before you've collected writing samples — describe the voice instead.",
+          "prompt": "Rewrite the above in a [tone] tone for [audience]. Keep the same facts and structure. Change: 1) [specific change, e.g. 'cut the second paragraph in half']. Do not: [things to avoid, e.g. 'don't add new claims or soften the deadline']. Describe the voice as: [2-3 adjectives, e.g. 'direct, warm, no corporate jargon']."
+        },
+        {
+          "label": "Multiple rounds, tracking what's locked in",
+          "whenToUse": "On your second or third revision pass, when earlier fixes must not be undone.",
+          "prompt": "Revise again. Change only: [new specific change]. Keep everything else exactly as it is now, including the tone and structure from the last revision. Do not: [things to avoid, e.g. 'don't add new claims or soften the deadline']."
+        },
+        {
+          "label": "Matching someone else's voice, not your own",
+          "whenToUse": "When you're ghostwriting for a colleague or executive and need to match their voice, not yours.",
+          "prompt": "Rewrite the above in [colleague's name]'s voice for [audience]. Keep the same facts and structure. Change: 1) [specific change, e.g. 'cut the second paragraph in half']. Do not: [things to avoid, e.g. 'don't add new claims or soften the deadline']. Here's a sample of how they write: [PASTE 2-3 SENTENCES OF THEIR WRITING]."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Still sounds robotic? Push further",
+          "prompt": "Still sounds a bit stiff. Read it as if you were saying it out loud — where would a real person pause or use a shorter sentence? Rewrite with that in mind."
+        },
+        {
+          "label": "Fact drifted? Check it",
+          "prompt": "Compare this version to the original point by point — did any fact, number, or claim change or get dropped? List anything that's different."
+        },
+        {
+          "label": "Too casual now? Dial it back",
+          "prompt": "This swung too casual for the audience. Keep the same directness but make the word choice slightly more professional — no slang."
+        },
+        {
+          "label": "Lock in the final version",
+          "prompt": "This is close. Do one final pass: cut any sentence that doesn't add new information, and nothing else."
+        }
+      ],
+      "walkthrough": "Sofia's company is moving to a new ticketing system, and she needs to tell her 10-person support team. Her first ChatGPT draft reads like a corporate memo: 'We are pleased to announce a transition to a new ticketing platform effective next Monday, which will streamline our workflows going forward.' It's accurate but nothing like how she actually talks to her team.\n\nShe doesn't regenerate from scratch. Instead she pastes the draft back and adds a revision prompt: tone 'warm and direct, like talking to teammates you already know'; audience 'my 10-person support team, who already know the switch is happening, just not the exact date'; specific change 'cut the opening to one sentence and lead with the date'; things to avoid 'don't apologize — this isn't a downgrade, it's an upgrade'; and a voice sample pulled from a past Slack message: 'Hey team — quick heads up, nothing dramatic. Here's what's changing and why.'\n\nThe revised version comes back short and direct: 'Hey team — new ticketing system goes live Monday. Here's what changes and what doesn't.' Sofia reads it and it's almost there, but the middle paragraph still explains the old system's problems in a slightly defensive way. She sends one more follow-up: 'Cut the second paragraph — nobody needs the backstory on why the old system was slow, just tell them what to expect Monday morning.'\n\nThe final version is four short sentences her team will actually read start to finish, in her own voice. From opening the chat to having a message ready to send took about six minutes: two rounds of revision instead of writing it by hand or accepting the stiff first draft."
+    },
+    "gpt-i1-analyzing-files-and-documents": {
+      "placeholders": [
+        {
+          "name": "YOUR QUESTION",
+          "what": "The specific thing you want to know from the document — narrow and answerable, not 'summarize this.' Good questions ask about a fact, clause, number, or comparison that has a findable answer somewhere in the text.",
+          "examples": [
+            "What is the termination notice period, and does either party owe a penalty for early termination?",
+            "What was the total marketing spend in Q3, and which line item grew the most compared to Q2?",
+            "Does this lease allow subletting, and if so, under what conditions?"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Multiple documents at once",
+          "whenToUse": "When you need to compare or cross-reference two or more uploaded files, like a contract and its amendment.",
+          "prompt": "Using only the attached files, answer the following. If the files disagree with each other on any point, say so explicitly and cite both. If the answer isn't in either file, say so — do not guess. Question: [YOUR QUESTION]. Cite the file name and page/section for each part of your answer."
+        },
+        {
+          "label": "Full extraction instead of one question",
+          "whenToUse": "When you need every instance of a certain type of clause or figure pulled out, not just one answer.",
+          "prompt": "Using only the attached file, list every instance of [type of item, e.g. 'a dollar amount' or 'a deadline'] mentioned in the document. For each one, give the exact figure/date, a short quote of the surrounding sentence, and the page number. If none exist, say so."
+        },
+        {
+          "label": "Section-by-section for long documents",
+          "whenToUse": "For documents over roughly 30 pages, where one broad question risks missing detail — do this after first getting a section map.",
+          "prompt": "Using only the attached file, first output a section map (heading and page range for each section). Then, focusing only on the section about [topic], answer: [YOUR QUESTION]. Cite the exact page."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify a specific claim",
+          "prompt": "Quote the exact sentence from the document that supports your answer, word for word, including the page number."
+        },
+        {
+          "label": "Ask what's missing",
+          "prompt": "Is there anything relevant to this question that the document does NOT specify or leaves ambiguous? List it explicitly."
+        },
+        {
+          "label": "Push past a vague answer",
+          "prompt": "That answer is too general. Point to the exact clause number or section heading where this is stated."
+        },
+        {
+          "label": "Cross-check a number",
+          "prompt": "Recalculate that figure by walking through exactly where each number came from in the document, step by step."
+        }
+      ],
+      "walkthrough": "David runs a 6-person catering company and just received a 22-page vendor contract from a new food supplier. He doesn't have a lawyer on retainer and doesn't want to read all 22 pages to find the parts that matter.\n\nHe opens ChatGPT, uploads the PDF directly into the chat window using the attachment button, and types the prompt: 'Using only the attached file, answer the following. If the answer isn't in the file, say so explicitly — do not guess or use outside knowledge. Question: What is the minimum order commitment, and what happens if I fall below it? Cite the page or section number for each part of your answer.'\n\nChatGPT responds in two sentences: the contract requires a minimum monthly order of $2,000, and if David falls below that for two consecutive months, the supplier can raise prices by 8% or terminate the agreement with 30 days' notice, both cited to page 4, clause 3.2.\n\nDavid wants to check this himself before trusting it, since a wrong read here could cost him money. He flips to page 4 of the actual PDF and confirms clause 3.2 says exactly that. Satisfied it's accurate, he sends one follow-up question reusing the same file: 'Using only the attached file, is there a cap on how much the supplier can raise prices in a single year? Cite the page.' ChatGPT finds a separate clause on page 7 capping annual increases at 5%, which David hadn't noticed on his own first skim.\n\nTotal time: about seven minutes, versus what would likely have been thirty or more minutes reading the full document himself, and he caught a clause he'd have missed on his own."
+    },
+    "gpt-i2-projects-for-organized-work": {
+      "placeholders": [
+        {
+          "name": "client or task name",
+          "what": "The specific client or project this workspace belongs to, used to name the Project itself, so it stays scoped to one engagement rather than becoming a catch-all.",
+          "examples": [
+            "Acme Corp — Q3 Financial Audit",
+            "Personal blog — weekly newsletter",
+            "Riverside Apartments — leasing materials"
+          ]
+        },
+        {
+          "name": "standing rule 1, e.g. 'write in AP style'",
+          "what": "A rule that should apply to every single chat inside this Project, stated as a clear instruction, not a vague preference.",
+          "examples": [
+            "write in AP style, not Chicago style",
+            "always use metric units, never imperial",
+            "match the reading level of a 9th grader — no jargon"
+          ]
+        },
+        {
+          "name": "standing rule 2, e.g. 'flag any number you're not fully confident in'",
+          "what": "A second standing rule, ideally one that catches a mistake pattern you've seen before or reinforces accuracy for this specific engagement.",
+          "examples": [
+            "flag any number you're not fully confident in instead of stating it as fact",
+            "always ask before assuming which product line I mean",
+            "never suggest changes to pricing without flagging it as a suggestion, not a decision"
+          ]
+        },
+        {
+          "name": "tone",
+          "what": "The overall voice this Project's output should default to, chosen for the specific client or audience it serves.",
+          "examples": [
+            "formal and precise — for a compliance-sensitive client",
+            "warm but professional — for a repeat client we know well",
+            "direct and brief — for internal use only"
+          ]
+        },
+        {
+          "name": "thing to avoid, e.g. 'promise a delivery date'",
+          "what": "Something ChatGPT should never do inside this Project, usually because it caused a problem before or because only a human should make that call.",
+          "examples": [
+            "promise a delivery date",
+            "quote a final price without a human review",
+            "use the client's competitor's name in any draft"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Solo freelancer, lightweight version",
+          "whenToUse": "For a smaller personal Project where you don't need heavy standing rules, just a light scope reminder.",
+          "prompt": "This project is for [client or task name]. Tone: [tone]. When you don't have information from the uploaded files, ask instead of guessing."
+        },
+        {
+          "label": "Team Project with shared standards",
+          "whenToUse": "When multiple teammates will use the same Project and need consistent output regardless of who's chatting.",
+          "prompt": "This project is for [client or task name] and is shared by our team. Always: [standing rule 1, e.g. 'write in AP style'], [standing rule 2, e.g. 'flag any number you're not fully confident in']. Tone: [tone]. Never [thing to avoid, e.g. 'promise a delivery date']. If any teammate's request conflicts with these rules, follow the rules and flag the conflict rather than silently picking one."
+        },
+        {
+          "label": "Regulated or compliance-sensitive Project",
+          "whenToUse": "For legal, financial, or healthcare-adjacent work where accuracy and traceability matter more than speed.",
+          "prompt": "This project is for [client or task name]. Always: [standing rule 1, e.g. 'write in AP style'], [standing rule 2, e.g. 'flag any number you're not fully confident in']. Tone: [tone]. Every factual claim must cite the specific uploaded file and page it came from. Never [thing to avoid, e.g. 'promise a delivery date']. If uploaded files conflict, flag the conflict instead of choosing one silently."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check it's actually using your files",
+          "prompt": "Before we continue, confirm: which of the uploaded files did you actually reference for your last answer, and which parts specifically?"
+        },
+        {
+          "label": "Instructions not sticking? Restate the boundary",
+          "prompt": "You just did something I asked you not to do in this Project. Please don't do that going forward — restate my standing rules back to me so I know they're set."
+        },
+        {
+          "label": "Update after a file changes",
+          "prompt": "I've uploaded a newer version of one of the reference files. Going forward, use only that version and disregard the old one."
+        },
+        {
+          "label": "Test if new chats inherit the rules",
+          "prompt": "Without me repeating anything, tell me the standing rules and tone for this Project as you currently understand them."
+        }
+      ],
+      "walkthrough": "Priya is a freelance financial consultant currently juggling three clients. Every time she starts a new chat about her client Acme Corp, she used to retype the same background: that she's doing their Q3 audit, that their fiscal year starts in April, and that dollar figures need to be flagged if she's not fully confident in them.\n\nShe decides to set up a Project. She clicks 'New Project' and names it 'Acme Corp — Q3 Financial Audit' instead of something generic like 'Client Work.' Inside, she opens Project instructions and types: 'This project is for Acme Corp — Q3 Financial Audit. Always: their fiscal year starts in April, not January; flag any number you're not fully confident in instead of stating it as fact. Tone: formal and precise. When you don't have information from the uploaded files, ask instead of guessing. Never promise a delivery date.' She then uploads last quarter's audit report and Acme's chart of accounts as reference files.\n\nThe next morning she opens a brand-new chat inside the Project and asks: 'Summarize any accounts that changed by more than 10% since last quarter.' Without her re-explaining anything, ChatGPT correctly references April as the fiscal year start and flags two figures it says it's pulling from the uploaded chart of accounts but isn't fully certain about the categorization on one line item, exactly the kind of caution she asked for.\n\nShe checks that flagged line herself and confirms it needed a second look. Setting up the Project took about eight minutes total, and now every new chat about Acme starts already grounded. She estimates it saves her ten minutes of re-briefing per session, multiple times a week."
+    },
+    "gpt-i3-custom-gpts-for-repeatable-tasks": {
+      "placeholders": [
+        {
+          "name": "name/role",
+          "what": "The name and identity this custom GPT should have — think of it as naming a specialized tool, not a general assistant.",
+          "examples": [
+            "Brand Voice Editor",
+            "FAQ Bot for a product's support",
+            "Weekly Report Formatter"
+          ]
+        },
+        {
+          "name": "single task",
+          "what": "The one job this GPT exists to do, stated as narrowly as possible. Resist the urge to make it do several things — that's the most common way custom GPTs fail.",
+          "examples": [
+            "rewriting drafts to match our brand voice guide",
+            "answering customer questions using only our FAQ document",
+            "converting raw meeting notes into a standard weekly status report"
+          ]
+        },
+        {
+          "name": "format",
+          "what": "The exact output structure this GPT should always follow, so results are consistent no matter who uses it or what they ask.",
+          "examples": [
+            "a short paragraph followed by a 3-bullet summary",
+            "a table with columns: Question, Answer, Source",
+            "a numbered list ordered by priority"
+          ]
+        },
+        {
+          "name": "reference material",
+          "what": "The uploaded file(s) this GPT should treat as ground truth and never contradict — a brand guide, policy doc, or template library.",
+          "examples": [
+            "the uploaded brand style guide",
+            "the uploaded FAQ document and return policy PDF",
+            "the uploaded template library of past status reports"
+          ]
+        },
+        {
+          "name": "task",
+          "what": "A short label for the GPT's one job, used in the boundary-setting sentence — should match what you described as its 'single task' so the GPT recognizes what's out of scope.",
+          "examples": [
+            "brand voice editing",
+            "customer FAQ support",
+            "report formatting"
+          ]
+        },
+        {
+          "name": "boundary response",
+          "what": "The exact sentence the GPT should say when someone asks it to do something outside its one job. This keeps it from improvising into territory it wasn't built for.",
+          "examples": [
+            "That's outside what I edit — try a general chat for that.",
+            "I can only answer from our FAQ document — for anything else, please contact support directly.",
+            "I only format existing notes into reports — I can't write new content from scratch."
+          ]
+        },
+        {
+          "name": "tone",
+          "what": "The voice this GPT should use consistently in every response.",
+          "examples": [
+            "professional but warm, matching our brand guide",
+            "concise and factual, no small talk",
+            "friendly and reassuring, like a helpful teammate"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Internal tool for your team",
+          "whenToUse": "When the GPT is for your own team's repeated internal task, not customer-facing.",
+          "prompt": "You are [name/role], an internal tool for our team. Your only job is to [single task]. Always follow this structure: [format]. Use [reference material] as your source of truth; never contradict it. If asked to do something outside [task], respond: '[boundary response]'. Tone: [tone]. If a teammate's request is ambiguous, ask a clarifying question instead of guessing."
+        },
+        {
+          "label": "Customer-facing FAQ version",
+          "whenToUse": "When the GPT will be used directly by customers or the public, requiring stricter guardrails.",
+          "prompt": "You are [name/role]. Your only job is to [single task], answering only from [reference material]. Never make up an answer not found there — if it's not covered, respond: '[boundary response]'. Tone: [tone]. Never ask for or store personal information like passwords, card numbers, or account credentials."
+        },
+        {
+          "label": "Minimal version for quick testing",
+          "whenToUse": "For a fast first draft of the system instructions, before you've fully defined every rule.",
+          "prompt": "You are [name/role]. Your only job is to [single task]. Use [reference material] as your source of truth. Tone: [tone]. If unsure whether something is in scope, ask me rather than guessing."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "It drifted off-task — tighten the boundary",
+          "prompt": "Just now you did something outside your one job. Restate your boundary response and confirm you'll use it any time a request falls outside your intended task."
+        },
+        {
+          "label": "Contradicted the reference material — fix it",
+          "prompt": "That answer contradicted the uploaded reference material. Reread it and correct your answer to match exactly what's there."
+        },
+        {
+          "label": "Test an edge case",
+          "prompt": "A user asks you something completely unrelated to your task, like a random off-topic question. Show me exactly how you'd respond."
+        },
+        {
+          "label": "Tone slipped — recalibrate",
+          "prompt": "That response didn't match the tone I set. Rewrite it in the correct tone, same content."
+        }
+      ],
+      "walkthrough": "Jae leads a 4-person marketing team that constantly gets draft emails, social captions, and blog intros from teammates who don't naturally write in the company's brand voice: informal but confident, never using exclamation points, never saying 'we're excited to announce.' Jae is tired of manually editing every draft the same way.\n\nJae opens ChatGPT, goes to Explore GPTs, clicks Create, and switches to the Configure tab. In the description field: one sentence, 'Rewrites marketing drafts to match our brand voice guide.' In system instructions, Jae fills in the template: name/role 'Brand Voice Editor'; single task 'rewriting drafts to match our brand voice guide'; format 'the rewritten draft only, no explanation unless asked'; reference material 'the uploaded brand style guide'; boundary response for anything outside brand editing, 'That's outside what I edit — try a general chat for that'; tone 'confident and informal, matching our brand guide.' Jae uploads the company's 4-page brand guide PDF as a knowledge file and leaves web browsing and image generation toggled off since neither is needed.\n\nBefore sharing it with the team, Jae tests it three ways: pasting a stiff draft (it correctly loosens the tone), asking it to brainstorm a completely new campaign idea (it correctly declines with the boundary response), and pasting an already-good draft (it leaves it mostly unchanged rather than over-editing). All three work as expected.\n\nJae shares the GPT link in the team's chat. From then on, every teammate gets consistent, on-brand edits without re-explaining the brand guide each time. Building and testing it took about fifteen minutes total."
+    },
+    "gpt-i4-deep-research-reports": {
+      "placeholders": [
+        {
+          "name": "specific question",
+          "what": "The exact research question, narrow enough to have a defined answer — not a broad topic dump.",
+          "examples": [
+            "How have 3 named SaaS competitors changed their pricing in the last 12 months, and what pattern does that suggest?",
+            "What are the most common reasons small manufacturers cite for switching ERP vendors?",
+            "How has remote-work policy at large tech companies changed since 2024?"
+          ]
+        },
+        {
+          "name": "who will read this",
+          "what": "The audience for the finished report, which shapes how technical, detailed, or summarized it should be.",
+          "examples": [
+            "our pricing committee, who want a quick decision-ready summary",
+            "my manager, who wants full detail with sources they can double-check",
+            "a client who is not familiar with our industry's jargon"
+          ]
+        },
+        {
+          "name": "time range / region / industry",
+          "what": "The boundaries that keep the research from sprawling: a date range, a geography, or an industry vertical to stay inside.",
+          "examples": [
+            "last 12 months, North America only",
+            "the past 3 years, focused on the European market",
+            "2024-2026, B2B SaaS companies with under 500 employees"
+          ]
+        },
+        {
+          "name": "source types, e.g. company filings, industry analyst reports",
+          "what": "Which kinds of sources should count as credible evidence for this report.",
+          "examples": [
+            "official pricing pages, press coverage, analyst commentary",
+            "SEC filings, earnings call transcripts, and major business press",
+            "peer-reviewed studies and government data only"
+          ]
+        },
+        {
+          "name": "things to ignore, e.g. forum posts, vendor marketing pages as primary sources",
+          "what": "Source types to explicitly exclude, usually because they're unreliable or biased for this particular question.",
+          "examples": [
+            "Reddit/forum speculation as a primary source",
+            "the vendor's own marketing pages as the sole source for a competitor comparison",
+            "any article older than 2 years, since this market moves fast"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Faster, lighter-weight version",
+          "whenToUse": "For a lower-stakes question where a full Deep Research run would be overkill — use a regular chat with web search instead.",
+          "prompt": "Give me a quick summary (not a full Deep Research report) on: [specific question]. Focus on [time range / region / industry]. Cite your sources but keep the whole answer under 300 words."
+        },
+        {
+          "label": "Competitive analysis version",
+          "whenToUse": "When the question is specifically about comparing named competitors rather than a general market trend.",
+          "prompt": "Research: How do [competitor A], [competitor B], and [competitor C] currently differ on [specific dimension, e.g. pricing, onboarding, support]? Audience: [who will read this]. Scope: [time range / region / industry]. Include: [source types, e.g. company filings, industry analyst reports]. Exclude: [things to ignore, e.g. forum posts, vendor marketing pages as primary sources]. Deliverable: a comparison table plus a short written summary of the key difference that matters most for our decision."
+        },
+        {
+          "label": "Internal decision-support version",
+          "whenToUse": "When the report needs to end in an explicit recommendation, not just findings.",
+          "prompt": "Research: [specific question]. Audience: [who will read this]. Scope: [time range / region / industry]. Include: [source types, e.g. company filings, industry analyst reports]. Exclude: [things to ignore, e.g. forum posts, vendor marketing pages as primary sources]. Deliverable: executive summary, 3-5 key findings with citations, a risks/unknowns section, and end with your own recommendation plus the confidence level you'd put on it."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check the sources before trusting it",
+          "prompt": "List every source you cited, grouped by finding, with the actual URL or publication name for each one."
+        },
+        {
+          "label": "Too broad? Narrow one section",
+          "prompt": "Expand only the section on the most important finding with more detail and 2 more supporting sources. Leave the rest of the report as is."
+        },
+        {
+          "label": "Push for the 'so what'",
+          "prompt": "Add one paragraph at the end translating these findings into a specific recommendation for the intended audience, stated in plain language."
+        },
+        {
+          "label": "Sanity-check a surprising finding",
+          "prompt": "One of your findings surprised me. Walk me through exactly which source that came from and how confident you are in it."
+        }
+      ],
+      "walkthrough": "Tom sits on the pricing committee at a mid-sized SaaS company and has been asked to figure out how three named competitors have changed their pricing over the past year, before the committee's meeting next week. Manually, this would mean digging through each competitor's pricing page history, press coverage, and any public commentary, easily a half-day of work.\n\nTom first drafts his question in a normal ChatGPT chat, refining it for free before spending one of his limited monthly Deep Research runs. He settles on: 'How have Competitor A, Competitor B, and Competitor C changed their pricing in the last 12 months, and what pattern does that suggest? Audience: our pricing committee, who want a decision-ready summary. Scope: last 12 months, our region only. Include: official pricing pages, press coverage, analyst commentary. Exclude: Reddit/forum speculation as a primary source. Deliverable: executive summary, 4 key findings with citations, a risks/unknowns section.'\n\nHe switches to Deep Research mode, pastes the refined brief, and answers two clarifying questions it asks about which specific plan tiers matter most. Twelve minutes later, a structured report comes back: an executive summary noting all three competitors moved toward usage-based pricing, four findings each with a linked source, and a risks section flagging that one competitor's change was too recent to have clear market reaction data yet.\n\nBefore the meeting, Tom clicks through two of the cited sources to confirm the report's claims about pricing page changes are accurate. Satisfied, he pastes the executive summary into his meeting notes. Total time: about twenty minutes, compared to the half-day of manual digging this would have taken, and the report gives the committee something they can skim in five minutes."
+    },
+    "gpt-a1-data-analysis-with-code-interpreter": {
+      "placeholders": [
+        {
+          "name": "description of dataset",
+          "what": "A one-sentence description of what the uploaded file contains, so ChatGPT knows how to interpret the columns before analyzing anything.",
+          "examples": [
+            "monthly sales data by region for the last 12 months",
+            "a list of customer support tickets with resolution times",
+            "employee expense reports for Q2, one row per transaction"
+          ]
+        },
+        {
+          "name": "specific analysis task, e.g. 'calculate month-over-month revenue growth by region and flag any region with a drop over 15%'",
+          "what": "The exact calculation or comparison you want performed, stated with a specific metric and threshold, not 'analyze this' or 'find insights.'",
+          "examples": [
+            "calculate month-over-month revenue growth by region and flag any region with a drop over 15%",
+            "find the average ticket resolution time by support agent and flag anyone above 48 hours",
+            "sum total expenses by category and flag any category more than 20% over its Q1 total"
+          ]
+        },
+        {
+          "name": "X",
+          "what": "What the chart should visualize — name the specific metric or comparison, not just 'a chart.'",
+          "examples": [
+            "monthly revenue growth by region",
+            "average resolution time by agent",
+            "expense totals by category compared to Q1"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Quick single-number check",
+          "whenToUse": "When you just need one specific number verified fast, not a full report with a chart.",
+          "prompt": "Here is [description of dataset]. Just tell me: [specific analysis task, stated as a single question, e.g. 'what was our total revenue in March?']. Show the exact calculation, including which rows/columns you used."
+        },
+        {
+          "label": "Multi-file comparison",
+          "whenToUse": "When you're comparing two related files, like this quarter versus last quarter.",
+          "prompt": "Here are two files: [description of dataset 1] and [description of dataset 2]. First, show columns, row counts, and data quality issues for both. Then compare them: [specific analysis task]. Show the calculation logic. Create a chart of [X] with both periods shown side by side, labeled axes."
+        },
+        {
+          "label": "Ongoing tracking version",
+          "whenToUse": "For a report you'll repeat monthly, so you can reuse the same structure with a new file each time.",
+          "prompt": "Here is [description of dataset] for this month. Using the same method as last time (data quality check first, then [specific analysis task], then a chart of [X]), analyze this month's file and note anything meaningfully different from what would be a typical/expected result."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Show the code",
+          "prompt": "Show me the exact code you ran for this calculation, so I can check the logic myself."
+        },
+        {
+          "label": "Verify a specific number",
+          "prompt": "Walk me through, step by step, how you got the number for one specific row or category I'm unsure about. Show the raw rows it came from."
+        },
+        {
+          "label": "Chart looks off? Recheck the axes",
+          "prompt": "Double check the chart's axis labels and scale against the underlying data — does the scale accurately represent the size of the differences?"
+        },
+        {
+          "label": "Re-run after fixing dirty data",
+          "prompt": "You flagged data quality issues earlier. Fix only those specific issues and rerun the analysis with the cleaned data, showing what changed."
+        }
+      ],
+      "walkthrough": "Nadia runs a small online store and exports a year of order data into a CSV every quarter, but she's never trusted spreadsheet formulas enough to catch her own mistakes, and doing it by hand takes an evening.\n\nShe uploads the CSV into ChatGPT and types: 'Here is monthly sales data by region. First, show me the columns, row count, and any data quality issues (missing values, duplicates, inconsistent formats) — don't fix anything yet. Then: calculate month-over-month revenue growth by region and flag any region with a drop over 15%. Show the calculation logic, not just the result. Create a chart of monthly revenue growth by region with labeled axes.'\n\nChatGPT first reports back that it found 3 duplicate order rows and 14 rows with a missing region field, and asks whether to exclude them before continuing. Nadia confirms yes, exclude them. It then returns a table showing each region's month-over-month growth, flags the Southeast region for a 22% drop in one month, and shows the exact formula used: this month's revenue minus last month's, divided by last month's. A labeled bar chart follows, with region on the x-axis and percent growth on the y-axis.\n\nThe Southeast drop surprises Nadia, so she sends a follow-up: 'Walk me through, step by step, how you got the number for Southeast's drop. Show the raw rows it came from.' ChatGPT lists the actual order rows behind that month's total, and Nadia recognizes the cause immediately: a large custom order that didn't repeat the next month, not an actual sales decline.\n\nWith that context, she has a chart and a real explanation ready for her quarterly review in about ten minutes, instead of an evening spent in a spreadsheet second-guessing her own formulas."
+    },
+    "gpt-a2-memory-and-personalization": {
+      "placeholders": [
+        {
+          "name": "fact about your role/preference/standing context, e.g. 'I'm the sole marketer at a 12-person B2B SaaS company; when I ask for copy, default to a direct, no-jargon tone and always include a call to action'",
+          "what": "A durable fact about your job, standing preferences, or recurring context that's worth ChatGPT remembering across every future chat, not a one-off detail relevant to a single task. Good memories describe who you are and how you like things done by default; bad ones are one-time facts that will go stale, or anything confidential that shouldn't persist.",
+          "examples": [
+            "I'm the sole marketer at a 12-person B2B SaaS company; when I ask for copy, default to a direct, no-jargon tone and always include a call to action.",
+            "I'm a paralegal, not an attorney — when summarizing legal documents, always flag that I should have an attorney review anything before it's used.",
+            "My standard deliverable format is: executive summary first, findings second, recommendations last. Use this structure by default unless I say otherwise."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Correcting or updating an existing memory",
+          "whenToUse": "When something ChatGPT remembers is now outdated and needs replacing, not just adding to.",
+          "prompt": "Update what you remember about me: I previously mentioned something that's no longer accurate. Going forward, remember instead that [fact about your role/preference/standing context]."
+        },
+        {
+          "label": "Setting a standing format preference",
+          "whenToUse": "For a recurring output structure you want applied automatically to every future request of that type.",
+          "prompt": "Remember that whenever I ask for a [type of document, e.g. status report], default to this structure without me specifying it each time: [format description]."
+        },
+        {
+          "label": "Removing a memory you no longer want kept",
+          "whenToUse": "When you realize something stored is outdated, too sensitive, or simply no longer useful.",
+          "prompt": "Please forget the memory about [topic] — it's outdated or no longer relevant. Confirm once it's removed."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Confirm it actually stuck",
+          "prompt": "What do you currently remember about my role and preferences? List everything so I can check it's accurate."
+        },
+        {
+          "label": "Too broad? Narrow the memory",
+          "prompt": "That memory is too vague to be useful. Make it more specific and store the more precise version instead."
+        },
+        {
+          "label": "Check for stale or conflicting memories",
+          "prompt": "Do you have any stored memories about me that seem outdated or that conflict with what I just told you? List them."
+        },
+        {
+          "label": "Separate this from Project-specific rules",
+          "prompt": "Is this a general memory that applies everywhere, or should it instead be a Project-specific instruction for just one Project? Tell me which and why."
+        }
+      ],
+      "walkthrough": "Ben works alone as a strategy consultant and noticed he was retyping the same context in every new ChatGPT chat: that he's a solo operator, that his clients aren't finance experts, and that he always wants findings before recommendations, never the other way around.\n\nHe opens Settings → Personalization → Memory and first reviews what's already stored: a few scattered facts ChatGPT picked up from past conversations, including one outdated note about a client project that ended months ago. He deletes that one.\n\nThen, in a regular chat, he types the standing memory prompt directly: 'Remember that I'm a solo strategy consultant; my clients are not finance experts, so avoid jargon. My standard deliverable format is: executive summary first, findings second, recommendations last. Use this structure by default unless I say otherwise.' ChatGPT confirms it will remember this going forward.\n\nA week later, Ben starts a brand-new chat for an unrelated client project and simply asks for a summary of a messy set of notes. Without him restating anything, the response comes back already structured with an executive summary at the top, followed by findings, followed by recommendations, and written in plain language, no finance jargon.\n\nFor one client's sensitive compensation details that he doesn't want persisting anywhere, Ben starts a Temporary Chat instead, which he now knows never touches memory and disappears from his history once closed.\n\nSetting this up took about five minutes total: deleting one stale memory, adding one deliberate one. It now saves him a couple of minutes of re-briefing on every single new chat he starts, which adds up across a week of client work."
+    },
+    "gpt-a3-agent-mode-and-your-workflow": {
+      "placeholders": [
+        {
+          "name": "clear multi-step goal, e.g. 'Find 3 venues in [city] for a 40-person workshop under €2,000, check availability for [date range], and compile a comparison table with venue name, price, capacity, and contact email'",
+          "what": "The full multi-step task you want Agent mode to carry out on its own, described with a clear finish condition — what 'done' looks like — and the exact shape you want the final output in. A good version names the concrete goal, any hard limits like budget or date range, and exactly what deliverable you expect back.",
+          "examples": [
+            "Find 3 venues in Athens for a 40-person workshop under €2,000, check availability for the week of Oct 12-16, and compile a comparison table with venue name, price, capacity, and contact email",
+            "Compare flight and hotel options for a 3-night trip to Lisbon departing Friday, staying under €600 total per person, and give me the top 3 combinations with prices and booking links",
+            "Find 5 competitor job postings for a 'Senior Product Designer' role in our city, and compile a table of listed salary range, required years of experience, and which benefits are mentioned"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Research-only, no purchases or forms",
+          "whenToUse": "When you want Agent mode to gather and compile information but never touch a form, login, or payment — the lowest-risk use.",
+          "prompt": "Agent mode task: [clear multi-step goal, e.g. 'find and compare the top 5 project management tools for a 10-person team, focusing on price and integrations']. Do not log into anything, submit any form, or create any accounts. Just browse and compile a comparison table, then list your exact sources."
+        },
+        {
+          "label": "Task with a hard budget and approval gate",
+          "whenToUse": "When the task could involve spending money and you want explicit control at every step that touches payment.",
+          "prompt": "Agent mode task: [clear multi-step goal involving a purchase, e.g. 'find and book the cheapest direct flight from City A to City B for date X, under €200']. Stop and ask me before submitting any form, logging in, or making any payment — do not complete a booking without my explicit go-ahead each time, even if I approved a similar step earlier in this task."
+        },
+        {
+          "label": "Recurring task you'll convert into a routine",
+          "whenToUse": "For a task you expect to repeat regularly, so you capture the winning prompt as a reusable template.",
+          "prompt": "Agent mode task: [clear multi-step goal you expect to repeat, e.g. 'check these 5 competitor pricing pages and note any changes since last time']. Stop and ask me before submitting any form, logging in, or making a payment. When done, give me the results and list the exact sources you used, formatted so I can reuse this same request next month with minimal changes."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "No finish condition reached? Tighten it",
+          "prompt": "You're still browsing without a clear result. Stop here and give me your best current answer in the table format I originally asked for, even if incomplete, then tell me what's still missing."
+        },
+        {
+          "label": "Verify a source before trusting it",
+          "prompt": "Open the source for one specific finding again and confirm the exact figure or detail is still accurate as of today, then give me the direct URL."
+        },
+        {
+          "label": "Convert this into a repeatable setup",
+          "prompt": "Now that this worked, help me turn this into a short reusable prompt template I can run again next month with just the dates changed."
+        },
+        {
+          "label": "Double-check anything it paused on",
+          "prompt": "Walk me through exactly what happened at the step where you paused for my approval — what would have happened if I'd said yes without checking?"
+        }
+      ],
+      "walkthrough": "Yannis needs to book a venue for a 40-person team workshop in Athens next month, with a budget cap of €2,000. Normally this means opening five browser tabs, checking each venue's site, and building a comparison spreadsheet by hand — usually an hour or more of tab-switching.\n\nHe opens ChatGPT, selects Agent mode from the composer, and types: 'Find 3 venues in Athens for a 40-person workshop under €2,000, check availability for the week of Oct 12-16, and compile a comparison table with venue name, price, capacity, and contact email. Stop and ask me before submitting any form or logging in.'\n\nHe watches as Agent mode opens a browser, searches venue listing sites, and visits individual venue pages, narrating its steps as it goes. Partway through, it pauses: one venue's site requires filling out a contact form to see pricing, and it asks Yannis for permission before submitting it. He approves that one form since it's just a pricing inquiry, not a payment.\n\nA few minutes later, Agent mode returns a table with three venues, their prices (all under budget), capacity, and a contact email for each, plus a list of the exact pages it pulled information from. Before forwarding this to his manager, Yannis clicks through two of the listed source pages himself and confirms the prices match what's shown.\n\nHe then sends one more request: to convert this into a reusable prompt so he can run the same check again for the company's next event. Agent mode hands back a short template with the city, date, and budget as the only fields to change next time.\n\nTotal time: about twelve minutes, most of it spent reviewing rather than searching, versus the hour-plus this used to take manually."
+    }
+  }
+}

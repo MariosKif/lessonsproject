@@ -1,0 +1,42 @@
+{
+  "paths": [
+    {
+      "slug": "ai-for-consultants",
+      "title": "AI for Consultants",
+      "tagline": "From client-document briefings to a repeatable, AI-assisted engagement workflow.",
+      "description": "A ladder of 6 hands-on lessons for consultants covering the AI workflows that make engagements faster without sacrificing rigor: synthesizing a stack of client documents into a sourced briefing, structuring findings into a defensible deliverable storyline, researching a client's industry before a proposal, writing conclusion-driven slide narratives and executive summaries, preparing sharper stakeholder interviews and workshops, and building a documented, repeatable engagement workflow with AI at each stage.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "consultant",
+      "sortOrder": 11,
+      "lessons": [
+        "con-b1-synthesize-client-documents-briefing",
+        "con-b2-structure-deliverable-storyline",
+        "con-i1-industry-research-before-proposal",
+        "con-i2-slide-narratives-executive-summaries",
+        "con-i3-workshop-interview-preparation",
+        "con-a1-repeatable-engagement-workflow"
+      ]
+    },
+    {
+      "slug": "ai-for-project-managers",
+      "title": "AI for Project Managers",
+      "tagline": "From meeting notes that turn into action to a full PM operating system.",
+      "description": "A ladder of 6 hands-on lessons for project managers covering the AI workflows that save real time without sacrificing accountability: turning meeting notes into decisions, actions and owners, writing status reports stakeholders actually read, drafting project plans and work breakdowns from a goal, building risk registers with real mitigations, drafting stakeholder communications for difficult moments, and assembling your own PM operating system of templates and recurring workflows.",
+      "kind": "profession",
+      "level": "mixed",
+      "toolSlug": null,
+      "professionSlug": "project-manager",
+      "sortOrder": 12,
+      "lessons": [
+        "pm-b1-meeting-notes-to-decisions-actions-owners",
+        "pm-b2-status-reports-stakeholders-read",
+        "pm-i1-project-plans-work-breakdowns-from-goal",
+        "pm-i2-risk-registers-mitigation-drafts",
+        "pm-i3-stakeholder-communications-difficult-moments",
+        "pm-a1-pm-operating-system-templates-workflows"
+      ]
+    }
+  ]
+}

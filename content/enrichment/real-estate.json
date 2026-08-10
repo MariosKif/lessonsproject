@@ -1,0 +1,767 @@
+{
+  "enrichment": {
+    "re-b1-listing-from-notes": {
+      "placeholders": [
+        {
+          "name": "PASTE NOTES",
+          "what": "This is where you paste your raw, unpolished notes from the property walkthrough — bullet points, fragments, and abbreviations are fine, don't clean them up first. Pull them from wherever you actually jotted them: a phone notes app, a paper pad, or a voice memo you typed up afterward. A good set of notes lists concrete facts (room counts, specific upgrades with rough dates, condition issues, price); a weak set just says things like \"nice house, good condition\" that give Claude nothing specific to work with.",
+          "examples": [
+            "142 Birchwood Court. 4 bed 2.5 bath single family, built 1998. Roof replaced 2021. New furnace last winter. Hardwood floors in living/dining, carpet in bedrooms. Fenced backyard, deck needs staining. 2-car attached garage. Seller mentioned a school bus stop at the corner (not verified). Asking $610,000.",
+            "89 Redwood Terrace #12. Studio apartment, 1 bath, 3rd floor walkup, no elevator. Building built 1975. Recently repainted. Radiator heat, no AC. Monthly fee $240 covers heat and water. Close to the number 12 bus line. Listing price $189,000.",
+            "556 Maple Hollow Drive. 3 bed 2 bath ranch. Kitchen original, dated but functional, no major issues noted. New water heater installed 2023. Detached 1-car garage currently used as a workshop. Large corner lot, no fence. Seller relocating for work, open to flexible closing date. No price set yet, waiting on comps."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Starting from a voice-memo transcript",
+          "whenToUse": "Use this when your notes are a messy, run-on paragraph dictated between showings rather than clean bullets — the AI needs an extra step to pull out discrete facts before it can write from them.",
+          "prompt": "You are helping me write a real estate listing description from a voice memo I dictated during a walkthrough.\n\nStep 1: Read the transcript below and pull out a clean bullet list of individual, concrete facts (rooms, condition, upgrades, price, anything the seller said). Don't add anything not actually said.\n\nStep 2: STRICT RULE — using only that bullet list, write a 150-200 word MLS-style listing description in a warm, professional tone, plus a one-sentence headline. If a fact that would normally appear in a listing is missing, list it under \"Missing facts to confirm\" instead of guessing.\n\nTranscript:\n[PASTE VOICE MEMO TRANSCRIPT]\n\nAudience: buyers browsing listing sites. Do not mention price unless the transcript states it."
+        },
+        {
+          "label": "Luxury / high-end listing version",
+          "whenToUse": "Use for listings priced well above your market's typical range, where buyers expect more evocative, detailed copy and a longer word count is standard practice.",
+          "prompt": "You are helping me write a luxury real estate listing description.\n\nSTRICT RULE: Use only the facts in the notes below. Do not invent finishes, brands, views, acreage, or amenities not explicitly stated — no guessing at \"designer\" fixtures or square footage. If a fact that would normally appear in a luxury listing is missing, list it under \"Missing facts to confirm.\"\n\nMy raw notes:\n[PASTE NOTES]\n\nWrite:\n1. A 250-300 word listing description with a more sensory, evocative tone appropriate for a luxury buyer — still grounded entirely in stated facts, no hype adjectives without something concrete behind them.\n2. A one-sentence headline.\n3. A \"Missing facts to confirm\" list.\n\nAudience: high-net-worth buyers browsing premium listing sites."
+        },
+        {
+          "label": "Starting from a seller's disclosure sheet, not walkthrough notes",
+          "whenToUse": "Use when you're drafting an early listing description before your own showing, working only from the seller's completed property disclosure form.",
+          "prompt": "You are helping me write a real estate listing description from a seller's property disclosure form, before I've done my own walkthrough.\n\nSTRICT RULE: Use only facts explicitly stated in the disclosure text below. Do not invent condition, upgrades, or features it doesn't mention, and do not include anything the disclosure states as a problem or defect unless I ask you to phrase it neutrally for marketing — flag those separately instead.\n\nDisclosure form text:\n[PASTE DISCLOSURE FORM TEXT]\n\nWrite:\n1. A 150-200 word draft listing description, clearly marked as a DRAFT pending my own walkthrough.\n2. A \"Missing facts to confirm\" list, including anything I should verify in person before publishing.\n3. A separate \"Disclosed issues to handle carefully\" list of anything the disclosure flagged that should not appear in marketing copy."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check it didn't invent anything",
+          "prompt": "Go back through the draft you just wrote and compare it sentence by sentence against my original notes. List any word, number, or claim in the draft that isn't directly traceable to something I gave you, even if it seems minor (like changing \"updated\" to \"renovated\"). If you find none, say so explicitly."
+        },
+        {
+          "label": "Too long for my MLS field? Cut it down",
+          "prompt": "My MLS system has a 750-character limit including spaces. Shorten the description to fit while keeping every fact — cut phrasing and filler first, never a fact, and tell me the final character count."
+        },
+        {
+          "label": "Make the headline punchier",
+          "prompt": "Give me 5 alternative one-sentence headlines for this listing, each highlighting a different verified detail from my notes, none over 65 characters."
+        },
+        {
+          "label": "Fair-housing check",
+          "prompt": "Reread the description and flag any word or phrase that could be read as describing the type of buyer or resident the home would suit, rather than the property itself, even indirectly."
+        }
+      ],
+      "walkthrough": "Sofia Marlowe, an agent at Harborview Realty, had just wrapped a walkthrough of 142 Birchwood Court and needed a listing description before her next showing in forty minutes. During the walkthrough she had typed rough notes into her phone: four bedrooms, roof replaced in 2021, a new furnace, hardwood floors in the main living areas, a fenced backyard with a deck that needed staining, a two-car garage, and an asking price of $610,000. The seller had also mentioned a school bus stop at the corner, but Sofia hadn't verified that herself.\n\nShe opened Claude on her phone, pasted the guardrail prompt from this lesson, and dropped her notes in place of [PASTE NOTES]. She asked for the standard MLS-style description under 200 words, a headline, and a missing-facts list.\n\nClaude's draft opened with a headline built around the fenced backyard and hardwood floors, wrote a 180-word description covering the roof, furnace, floors, garage, and yard, and correctly left out the school bus comment since Sofia hadn't confirmed it. Under \"Missing facts to confirm,\" it flagged square footage and year built as absent from her notes — both true gaps.\n\nBefore publishing, Sofia sent the follow-up asking Claude to check the draft against her notes line by line. Claude confirmed everything traced back cleanly, but flagged that it had written \"updated furnace\" where her notes said \"new furnace\" — a small but real distinction, so she corrected it.\n\nShe pulled the square footage from the county property record in two minutes, added it herself, and had a publish-ready listing eleven minutes after she'd started — well before her next appointment."
+    },
+    "re-b2-improve-listing-description": {
+      "placeholders": [
+        {
+          "name": "PASTE CURRENT DESCRIPTION",
+          "what": "This is the existing listing text, copied exactly as it's published right now, flaws and clichés included. Find it on your MLS listing page, Zillow, or wherever you originally posted it. Paste the full text, not a summary of it — Claude needs the actual wording to know what it's allowed to keep, cut, or rephrase.",
+          "examples": [
+            "Charming home in a great location! 3 bedrooms, 2 baths. Freshly painted. Won't last long!",
+            "Spacious 1-bedroom condo close to everything. Great building. Priced to sell fast!",
+            "This lovely ranch has so much to offer. Updated kitchen. Big yard. A must-see!"
+          ]
+        },
+        {
+          "name": "TARGET WORD COUNT",
+          "what": "The word count you want the rewrite to land near — usually whatever fits your MLS description field or matches your platform's typical length. Give a specific number, not a vague range, so Claude has something concrete to hit.",
+          "examples": [
+            "150 words (fits our MLS description field with room to spare)",
+            "200 words (standard length for our brokerage's Zillow feed)",
+            "90 words (short blurb for a postcard mailer)"
+          ]
+        },
+        {
+          "name": "e.g., warm and professional / upbeat and modern",
+          "what": "Replace this entire bracket with the tone that fits your brokerage's voice and the property type — don't leave the \"e.g.\" in your actual message. Pick from the menu below or describe your own in a few words.",
+          "examples": [
+            "Warm and professional — for most resale listings",
+            "Upbeat and modern — for condos and starter homes aimed at first-time buyers",
+            "Quietly upscale and understated — for luxury listings where restraint reads as confidence"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Rewriting for a different platform than MLS",
+          "whenToUse": "Use when you need a shorter, more casual version for Zillow's \"agent remarks,\" Facebook Marketplace, or a postcard, rather than your formal MLS field.",
+          "prompt": "Here is my current listing description:\n[PASTE CURRENT DESCRIPTION]\n\nRewrite it for [PLATFORM, e.g. Zillow public remarks / Facebook Marketplace / a printed postcard] while following these rules:\n- Do not add any fact, feature, upgrade, or claim that is not already stated in the text above.\n- Match the shorter, more casual register typical of that platform.\n- Keep length to roughly [TARGET WORD COUNT] words.\n\nAfter the rewrite, add a \"Facts changed or added\" section listing anywhere your wording could be read as adding a new fact. If there are none, say \"None.\""
+        },
+        {
+          "label": "Bulk rewrite for several stale listings at once",
+          "whenToUse": "Use on a slow Friday when you want to refresh your 3-5 oldest active listings in one pass instead of one at a time.",
+          "prompt": "I'm going to give you several current listing descriptions. Rewrite each one separately using these rules for every one:\n- Do not add any fact, feature, upgrade, or claim not already stated in that listing's text.\n- Tighten sentences and replace generic phrases with more specific ones describing the SAME facts.\n- Keep each rewrite to roughly [TARGET WORD COUNT] words.\n\nAfter each rewrite, add a \"Facts changed or added\" note for that listing.\n\nListing 1:\n[PASTE CURRENT DESCRIPTION]\n\nListing 2:\n[PASTE CURRENT DESCRIPTION]\n\nListing 3:\n[PASTE CURRENT DESCRIPTION]"
+        },
+        {
+          "label": "Repositioning after a price reduction",
+          "whenToUse": "Use when the description needs to reflect renewed value after a price cut, without resorting to urgency language or changing any fact.",
+          "prompt": "Here is my current listing description:\n[PASTE CURRENT DESCRIPTION]\n\nThe price on this listing was recently reduced. Rewrite the description to reframe the property's value for a buyer re-evaluating it, following these rules:\n- Do not add any fact, feature, upgrade, or claim not already stated above.\n- Do not use urgency or scarcity language (\"won't last,\" \"act now,\" \"priced to sell\").\n- Emphasize the SAME stated facts in a way that reads as genuine value, not desperation.\n- Keep length to roughly [TARGET WORD COUNT] words. Tone: [e.g., warm and professional / upbeat and modern].\n\nAfter the rewrite, add a \"Facts changed or added\" section."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Double-check the fact-diff more strictly",
+          "prompt": "Re-read your rewrite one more time, sentence by sentence, and look specifically for words that intensify a claim beyond what the original said — like \"updated\" becoming \"fully renovated\" or \"nice\" becoming \"stunning.\" List every instance, even ones you already flagged."
+        },
+        {
+          "label": "Give me headline options within my character limit",
+          "prompt": "Give me 3 headline options for this listing, each under 60 characters so it fits my MLS headline field, each highlighting a different fact from the original description."
+        },
+        {
+          "label": "Still sounds generic — make it more specific",
+          "prompt": "This still reads a bit generic. Using only the facts already in the text, replace any remaining vague phrase (like \"great location\" or \"lots of natural light\") with more specific, sensory language that describes that exact same fact."
+        },
+        {
+          "label": "Match my brokerage's voice",
+          "prompt": "Here's a sample of how our brokerage usually writes listing copy: [PASTE SAMPLE COPY]. Rewrite the draft again to match that voice and sentence rhythm, without changing any fact."
+        }
+      ],
+      "walkthrough": "Jordan Reyes had a studio listing at 89 Redwood Terrace #12 that had been sitting active for five weeks with almost no showings. The description was the generic kind every agent writes when they're rushed: \"Spacious 1-bedroom condo close to everything. Great building. Priced to sell fast!\" It didn't mention anything a buyer could picture, and Jordan suspected that was part of why it wasn't getting traffic.\n\nJordan opened Claude, pasted the rewrite prompt, dropped the existing description in for [PASTE CURRENT DESCRIPTION], set the target word count to 150, and chose \"upbeat and modern\" as the tone since the building attracted younger first-time buyers.\n\nClaude's rewrite kept every original fact but replaced \"great building\" with a description of the recent repaint and the radiator heat included in the monthly fee, and dropped \"priced to sell fast\" entirely since it read as pressure rather than information. The \"Facts changed or added\" section came back with one flag: the draft had implied the unit was \"move-in ready,\" a phrase not in the original text.\n\nJordan sent the follow-up asking Claude to re-check for any word that intensified a claim beyond the original. Claude caught the same \"move-in ready\" phrase again and suggested removing it, since nothing in the original description supported it. Jordan cut the line.\n\nWith the fact-diff clean, Jordan asked for three headline options under 60 characters, picked one referencing the walkup building's recent repaint, and swapped it into the live MLS listing. The whole rewrite, including both review passes, took about nine minutes — faster than Jordan expected for a listing that had felt stuck for over a month."
+    },
+    "re-b3-buyer-followup-emails": {
+      "placeholders": [
+        {
+          "name": "BUYER NAME",
+          "what": "The buyer's first name, or both names if you showed the property to a couple or group. Use whatever they introduced themselves as — don't guess at a formal name if they went by a nickname during the showing.",
+          "examples": [
+            "Marcus and Priya Chen",
+            "Jordan T.",
+            "the Alvarez family"
+          ]
+        },
+        {
+          "name": "ADDRESS / SHORT DESCRIPTION",
+          "what": "The property you showed them, either as the full address or a short description they'd recognize if they saw multiple homes that day. Being specific here helps Claude write an email that clearly refers to the right property, not a generic \"the home we saw.\"",
+          "examples": [
+            "27 Aspen Grove Lane, Unit 4B",
+            "142 Birchwood Court (the 4-bed colonial on the cul-de-sac)",
+            "89 Redwood Terrace #12 (the studio walkup)"
+          ]
+        },
+        {
+          "name": "NOTES",
+          "what": "This bracket is used twice: once for what the buyer liked, once for what concerned them or what they asked about. In both spots, write 1-3 short phrases capturing their actual reactions and questions, ideally close to their own words — this is what makes the email feel personal instead of like a form letter. A weak note just says \"seemed interested\"; a good one captures a specific reaction or question.",
+          "examples": [
+            "Loved the open kitchen layout and the natural light in the living room; asked twice about the monthly fee",
+            "Thought the primary bedroom felt small for the price; liked the finished basement a lot",
+            "Really responded to the backyard and how quiet the cul-de-sac was; asked about the age of the roof"
+          ]
+        },
+        {
+          "name": "e.g., invite them to a second showing this weekend / send similar listings / find out their decision timeline",
+          "what": "Pick the single most useful next step for this specific buyer, based on how the showing went. Replace the whole bracket with your actual goal — don't leave more than one goal in, since the prompt is built to produce one clear ask, not several competing ones.",
+          "examples": [
+            "Invite them back for a second showing this Saturday afternoon",
+            "Send them 2-3 similar listings that just hit the market this week",
+            "Find out their financing timeline and whether they're pre-approved yet"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Re-engaging a buyer who went quiet",
+          "whenToUse": "Use when this is your second or third attempt to reach a buyer who hasn't responded to earlier follow-ups, and you want to re-open the door without sounding needy or repetitive.",
+          "prompt": "Write a re-engagement email to a buyer who hasn't responded to my last two follow-ups after a showing.\n\nBuyer: [BUYER NAME]\nProperty shown: [ADDRESS / SHORT DESCRIPTION]\nWhat they liked / asked about originally: [NOTES]\nWhat's changed since then, if anything (price drop, new comparable listing, etc.): [UPDATE OR \"nothing new\"]\n\nRules:\n- Acknowledge lightly that you haven't heard back, without guilt-tripping.\n- Give them a genuine reason to re-engage (the update above, or a specific question), not just \"just checking in.\"\n- Keep it under 100 words.\n- End with a low-friction next step they can ignore easily if they've moved on — a single yes/no question works well.\n\nDo not invent details about the property or buyer beyond what I've given you."
+        },
+        {
+          "label": "Short text-message version",
+          "whenToUse": "Use right after a showing when you want to send something within minutes, before you have time to write a full email.",
+          "prompt": "Write a text message to a buyer after a home showing, under 320 characters.\n\nBuyer: [BUYER NAME]\nProperty shown: [ADDRESS / SHORT DESCRIPTION]\nWhat they liked: [NOTES]\nMy goal: [e.g., invite them to a second showing this weekend / send similar listings / find out their decision timeline]\n\nRules:\n- Reference one specific detail from what they liked.\n- Casual but professional tone, no pressure language.\n- End with one simple question.\n\nDo not invent any detail I haven't given you."
+        },
+        {
+          "label": "Following up with several buyers from one open house",
+          "whenToUse": "Use after an open house where you collected notes on multiple visitors and need individualized emails without writing each one from scratch.",
+          "prompt": "I showed several buyers through an open house today. Write a separate, individually personalized follow-up email for each one below, following these rules for every email:\n- Reference at least one specific detail from what that buyer liked or asked.\n- Keep each under 150 words, warm tone, no pressure language.\n- End each with one clear next step suited to that buyer.\n- Do not invent details about the property or any buyer beyond what I've given you.\n\nProperty shown: [ADDRESS / SHORT DESCRIPTION]\n\nBuyer 1: [BUYER NAME] — liked/asked: [NOTES] — goal: [GOAL]\nBuyer 2: [BUYER NAME] — liked/asked: [NOTES] — goal: [GOAL]\nBuyer 3: [BUYER NAME] — liked/asked: [NOTES] — goal: [GOAL]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Subject line feels generic",
+          "prompt": "Give me 3 alternative subject lines under 8 words, each referencing a specific detail from what the buyer liked, not a generic phrase like \"Following up.\""
+        },
+        {
+          "label": "Too salesy — dial it back",
+          "prompt": "This reads a bit too eager. Rewrite it so it feels more like a helpful note from someone who was genuinely glad to show them the home, with less emphasis on pushing toward a decision."
+        },
+        {
+          "label": "Shorten it for a text message",
+          "prompt": "Condense this into a text message under 320 characters, keeping the one specific detail and the single call to action, but dropping the greeting and sign-off formality."
+        },
+        {
+          "label": "Double-check no invented details",
+          "prompt": "Reread the email and confirm every detail about the property or the buyer's reaction came directly from what I gave you. Flag anything you added or guessed at, even something small."
+        }
+      ],
+      "walkthrough": "Sofia Marlowe showed 27 Aspen Grove Lane, Unit 4B to Marcus and Priya Chen on a Tuesday evening. Walking back to her car afterward, she typed three lines into her phone: they loved the balcony and the afternoon light in the living room, they asked twice whether the monthly HOA fee included water, and Priya mentioned being a little concerned there was no dedicated storage unit in the building.\n\nBack at her desk twenty minutes later, Sofia opened Claude and pasted the follow-up email prompt. She filled in \"Marcus and Priya Chen\" for the buyer name, the unit address, her three lines of notes split across the \"liked\" and \"concerned\" fields, and set her goal as inviting them back for a second showing that Saturday.\n\nClaude's draft opened by naming the balcony and the afternoon light specifically, noted that Sofia would confirm the exact HOA fee breakdown for them, acknowledged the storage question honestly rather than glossing over it, and closed with a single question asking if Saturday afternoon worked for a second look. The subject line it suggested was \"Still thinking about that balcony?\" — a little generic for Sofia's taste.\n\nShe sent the follow-up asking for three sharper subject line options, each referencing something specific from the showing. Claude returned three, and Sofia picked one that mentioned the afternoon light directly.\n\nBefore sending, she skimmed the email once more against her original three lines and confirmed nothing had been added that she hadn't actually told Claude. The whole process, from typing her notes in the parking lot to sending the email, took under fifteen minutes — and Priya replied within the hour confirming Saturday."
+    },
+    "re-b4-seller-update-messages": {
+      "placeholders": [
+        {
+          "name": "ADDRESS",
+          "what": "The property address for the listing this update covers. Use the same address format your seller would recognize from your other communications with them.",
+          "examples": [
+            "27 Aspen Grove Lane, Unit 4B",
+            "142 Birchwood Court",
+            "556 Maple Hollow Drive"
+          ]
+        },
+        {
+          "name": "NUMBER",
+          "what": "The actual count of showings held this week, pulled from your showing-service app or your own calendar — not an estimate. If there were zero, write 0 rather than skipping the field.",
+          "examples": ["3", "5", "0"]
+        },
+        {
+          "name": "NUMBER OR \"not tracked\"",
+          "what": "The number of online views from Zillow, your MLS portal, or wherever you track them this week. If your brokerage doesn't give you this data, write \"not tracked\" honestly rather than guessing at a number.",
+          "examples": [
+            "142 views on Zillow this week, up from 98 last week",
+            "not tracked",
+            "58 portal views"
+          ]
+        },
+        {
+          "name": "PASTE RAW FEEDBACK NOTES, e.g. \"liked the kitchen, thought price was high, one buyer said yard was small\"",
+          "what": "Whatever feedback you actually collected from showing agents or buyers this week, in your own shorthand — don't smooth it over before pasting it in. Include both positive and negative comments exactly as given; the prompt is built to preserve negative feedback honestly, so holding it back here defeats the point.",
+          "examples": [
+            "Two buyers liked the open layout; one said the price felt high given there's no dedicated parking spot; one buyer's agent said their client is deciding between this unit and a listing two blocks over",
+            "Only one showing this week, agent said client loved the kitchen but was put off by the building's exterior needing paint",
+            "Three showings, consistent comment that the primary bathroom feels dated; one buyer asked if the seller would consider a credit toward updating it"
+          ]
+        },
+        {
+          "name": "NONE / DETAILS",
+          "what": "Whether there's any offer or serious buyer interest to report this week. If there's genuinely nothing, write \"None\" plainly rather than implying vague interest exists — this is the field where sellers most need honesty over optimism.",
+          "examples": [
+            "None",
+            "One buyer emailed asking about seller flexibility on closing date — no formal offer yet",
+            "Verbal offer at $395,000, contingent on inspection; buyer's agent says they'll submit in writing Monday"
+          ]
+        },
+        {
+          "name": "OPTIONAL",
+          "what": "Use this only if you want the update to also open a strategy conversation, like a price adjustment or staging change, based on a pattern you're seeing in the feedback. Leave it out or write \"none this week\" if you're not ready to raise anything yet.",
+          "examples": [
+            "I want to gently raise whether we should consider a $10,000 price adjustment given the repeated price comments",
+            "None this week",
+            "I want to suggest professional staging photos given repeated comments about the rooms feeling dark"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Text-only quick update",
+          "whenToUse": "Use for sellers who've told you they prefer texting over email, or when you only have a couple of minutes between showings.",
+          "prompt": "Write a text-message-only seller update summarizing this week's activity, under 400 characters.\n\nProperty: [ADDRESS]\nShowings this week: [NUMBER]\nBuyer feedback: [PASTE RAW FEEDBACK NOTES]\nOffers or serious interest: [NONE / DETAILS]\n\nRules:\n- Report the facts honestly, including negative feedback — do not soften or omit it.\n- Do not speculate about buyer intentions beyond what's stated.\n- Calm, professional tone, reassuring without being falsely upbeat.\n- If there's a pattern across multiple pieces of feedback, mention it plainly."
+        },
+        {
+          "label": "Multi-week trend update",
+          "whenToUse": "Use once a listing has been active for a month or more and the seller needs to see the trend across weeks, not just this week in isolation.",
+          "prompt": "Write a seller update that compares this week's activity to the prior weeks on this listing.\n\nProperty: [ADDRESS]\nThis week — showings: [NUMBER], views: [NUMBER OR \"not tracked\"], feedback: [PASTE RAW FEEDBACK NOTES], offers: [NONE / DETAILS]\nPrior weeks' totals for comparison: [PASTE PRIOR WEEKS' NUMBERS, e.g. \"Week 1: 6 showings, Week 2: 4 showings, Week 3: 2 showings\"]\n\nRules:\n- Report all figures exactly as given, including if the trend is declining — do not soften a downward trend.\n- Point out the trend plainly (increasing, flat, or declining interest) using only the numbers provided.\n- Tone: calm, honest, professional.\n- Produce one email version, 150-200 words, with a simple week-by-week comparison."
+        },
+        {
+          "label": "A quiet week with no showings",
+          "whenToUse": "Use for the hardest version of this update — a week with zero activity — where honesty and reassurance both matter most.",
+          "prompt": "Write a seller update for a week with no showings on their listing.\n\nProperty: [ADDRESS]\nShowings this week: 0\nOnline views: [NUMBER OR \"not tracked\"]\nAny inquiries that didn't convert to a showing: [DETAILS OR \"none\"]\nWhat I plan to do about it: [e.g., \"reduce price by $8,000\" / \"refresh photos\" / \"nothing yet, monitoring\"]\n\nRules:\n- State plainly that there were no showings — do not disguise this with vague positive language.\n- If I've given you a planned action, present it clearly as a proactive next step, not an apology.\n- If I haven't given you a planned action, do not invent one — instead suggest I discuss options with the seller.\n- Tone: calm and professional, not falsely upbeat.\n- Produce a short text version and a 100-150 word email version."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Make sure nothing was softened",
+          "prompt": "Reread the update you just wrote and compare it against my raw feedback notes. Point out any place where negative feedback might read as more neutral or positive than what I actually gave you."
+        },
+        {
+          "label": "Draft the price conversation as a separate message",
+          "prompt": "Based on the repeated feedback pattern, draft a separate, standalone message opening a conversation with the seller about a possible price adjustment or staging change. Keep it separate from the weekly update, honest about why I'm raising it now, and don't recommend a specific new price — that's my call to make with them."
+        },
+        {
+          "label": "Shorten the email version",
+          "prompt": "Cut the email version down to under 120 words without losing any of the reported facts or the honest tone — trim explanation, not content."
+        },
+        {
+          "label": "Add a comparison to last week",
+          "prompt": "Here are last week's numbers: [PASTE LAST WEEK'S SHOWINGS/VIEWS/FEEDBACK]. Add a short comparison to this week's update so the seller can see whether interest is picking up or slowing down."
+        }
+      ],
+      "walkthrough": "The Ortega family had their condo at 27 Aspen Grove Lane, Unit 4B on the market for three weeks, and Sofia Marlowe made it a habit to send them a Friday update no matter how the week had gone. This week: three showings, feedback that two buyers liked the open layout, one buyer's agent mentioned their client felt the price was high given the lack of a dedicated parking spot, and no offers.\n\nSofia opened Claude and pasted the seller update prompt, filling in the address, three showings, her rough feedback notes exactly as she'd written them, \"None\" for offers, and left the optional price-conversation field blank since she wasn't ready to raise that yet.\n\nClaude's draft reported the three showings and the layout compliments honestly, then stated plainly that the price-versus-parking comment had come up, without softening it into something vaguer like \"buyers had some thoughts on pricing.\" It produced both a short text version and a slightly longer email, and it noted that this was the second week in a row a similar parking comment had surfaced — a pattern Sofia hadn't consciously tracked herself.\n\nThat pattern note made Sofia decide to raise the topic with the Ortegas. She sent the follow-up asking Claude to draft a separate message opening a price or staging conversation, based on the repeated feedback, without suggesting a specific new number.\n\nSofia sent the honest weekly update by text that afternoon, then scheduled a call with the Ortegas for Monday using the separate conversation-starter draft as her outline. The whole task took about seven minutes, and the honesty paid off — the Ortegas thanked her for flagging the pattern instead of letting it drag on."
+    },
+    "re-b5-summarize-property-documents-safely": {
+      "placeholders": [
+        {
+          "name": "inspection report / seller disclosure / HOA document",
+          "what": "Name which type of document you're summarizing so Claude knows what structure and vocabulary to expect. Pick the one that actually matches what you're uploading — an inspection report and an HOA covenant document need very different handling.",
+          "examples": [
+            "inspection report",
+            "seller disclosure",
+            "HOA covenant document"
+          ]
+        },
+        {
+          "name": "PASTE OR UPLOAD DOCUMENT",
+          "what": "The actual document text (or the uploaded file itself). If pasting text, include the full document, not just the parts that seem important — a partial paste produces a summary that looks complete but is missing whatever you left out. If uploading, say so in your message and skip the paste.",
+          "examples": [
+            "Roof: architectural shingles, installed approx. 2014, no active leaks observed, minor granule loss noted in northeast corner. Electrical: panel is a Federal Pacific Electric (FPE) panel, flagged for evaluation by a licensed electrician due to known safety recall history on this panel brand. Plumbing: galvanized supply lines in upstairs bathroom showing surface corrosion; recommend evaluation by a licensed plumber. HVAC: furnace original to 1998 construction, functional at time of inspection, nearing typical end of service life.",
+            "Seller discloses: water intrusion in basement occurred in 2019 following heavy rain, repaired by contractor with new sump pump installed same year, no recurrence reported since. Seller is not aware of any pending special assessments. Seller discloses one bathroom renovation completed without a permit in 2016.",
+            "HOA document excerpt: Monthly assessment is $310, covering water, trash, and exterior building maintenance. Rentals are permitted with a minimum 6-month lease term and require board approval. Two pets per unit permitted, combined weight limit 80 lbs. Reserve fund currently funded at approximately 60% of the reserve study's recommended level."
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "When you only have a scanned or photographed document",
+          "whenToUse": "Use when the document came through as a phone photo or a scanned PDF rather than clean text, where some words or numbers may be unclear or cut off.",
+          "prompt": "I'm uploading a [inspection report / seller disclosure / HOA document] for a property. This came from a scan/photo, so some text may be unclear or partially cut off. Summarize it for my client using only what's in the document.\n\nRules:\n- Use only information you can clearly read in the document. Do not add general knowledge or predict repair costs unless a cost is stated.\n- If any section is illegible, cut off, or ambiguous, list it explicitly under a new category: \"Could not read clearly — needs the original document.\"\n- Organize the rest into: (1) Major issues / safety items, (2) Moderate issues / maintenance items, (3) Minor / cosmetic notes, (4) Anything unclear that needs a professional to clarify.\n- End with this exact disclaimer: \"This is a plain-language summary for convenience only. It is not a substitute for reading the full document or for advice from a licensed inspector, attorney, or other qualified professional.\"\n\nDocument:\n[PASTE OR UPLOAD DOCUMENT]"
+        },
+        {
+          "label": "Internal prep summary, not for the client",
+          "whenToUse": "Use when you want a denser summary for your own negotiation prep before a client conversation, rather than the client-facing version.",
+          "prompt": "I'm uploading/pasting a [inspection report / seller disclosure / HOA document] for a property. This summary is for MY internal prep before I talk to my client, not to send to them directly.\n\nRules:\n- Use only information contained in the document. Do not add general knowledge, predict repair costs, or estimate negotiation value unless a figure is stated in the document.\n- Organize into: (1) Major issues / safety items, (2) Moderate issues / maintenance items, (3) Minor / cosmetic notes, (4) Items that could reasonably become negotiation points, listing only what the document itself supports.\n- Quote or closely paraphrase the document's own language for category 1 and 4 items.\n- End with: \"Internal prep notes only — verify against the full document and consult the client's own reading before any negotiation position is taken.\"\n\nDocument:\n[PASTE OR UPLOAD DOCUMENT]"
+        },
+        {
+          "label": "Targeted question on one topic only",
+          "whenToUse": "Use for a long HOA or covenant document when you only need an answer to one specific question, rather than a full summary.",
+          "prompt": "I'm uploading/pasting an HOA or covenant document. I do not need a full summary — I only need to know: does this document mention [SPECIFIC TOPIC, e.g. \"rental restrictions or short-term rental rules\" / \"pet policies\" / \"special assessments\"]?\n\nRules:\n- Answer using only what's explicitly stated in the document. Quote the relevant section directly.\n- If the document doesn't address this topic at all, say so plainly rather than inferring an answer from general HOA norms.\n- End with: \"This is a plain-language summary for convenience only. It is not a substitute for reading the full document or for advice from a licensed inspector, attorney, or other qualified professional.\"\n\nDocument:\n[PASTE OR UPLOAD DOCUMENT]"
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check every item traces to the document",
+          "prompt": "Go through your summary point by point and confirm each item is directly supported by specific language in the document. If any point relies on general knowledge rather than the document's own text, flag it so I can remove it."
+        },
+        {
+          "label": "Give me just the safety and major items",
+          "prompt": "Condense this to only category 1 (Major issues / safety items). I don't need the moderate or cosmetic sections right now — just the highest-priority items, still quoting the document's own language."
+        },
+        {
+          "label": "Does it mention a specific topic?",
+          "prompt": "Does this document say anything about [rental restrictions / special assessments / pet policies / whatever topic you need]? Quote the exact relevant section if it does, and say plainly if it doesn't address this at all."
+        },
+        {
+          "label": "Explain one item in plain language for my client",
+          "prompt": "Take the item about [SPECIFIC ISSUE, e.g. \"the Federal Pacific Electric panel\"] and explain in 2-3 plain-English sentences what it means and why it's flagged, using only what the document says — do not add general information about that issue beyond the document's text."
+        }
+      ],
+      "walkthrough": "Jordan Reyes was representing a buyer on 556 Maple Hollow Drive and had just received a 14-page inspection report the night before the option period was set to expire. Reading the whole thing carefully would take an hour Jordan didn't have before the morning call with the client.\n\nJordan opened Claude on a laptop, uploaded the inspection PDF directly, and used the document-summary prompt from this lesson, typing \"inspection report\" into the bracket and noting in the message that the file was attached rather than pasted.\n\nClaude returned a summary organized into four categories. Under \"Major issues / safety items,\" it quoted the report's own language flagging an outdated electrical panel with a known recall history. Under \"Moderate issues,\" it listed aging galvanized plumbing showing corrosion and a furnace nearing the end of its typical service life, both quoted closely from the report. The \"Minor / cosmetic\" section covered a few paint and caulking notes, and the summary ended with the required disclaimer about not substituting for the full document or a licensed professional.\n\nBefore the client call, Jordan sent the follow-up asking Claude to check every point traced back to specific document language rather than general knowledge about those issues. Claude confirmed each one and flagged that its note on the furnace's \"typical service life\" was general context, not something the report stated directly — so Jordan removed that line from what got read aloud.\n\nJordan then spot-checked three of the summarized items against the actual PDF pages, found them accurate, and forwarded both the summary and the original report to the client before the call. Total time: about twelve minutes, versus the hour Jordan had budgeted."
+    },
+    "re-b6-property-faq-from-listing": {
+      "placeholders": [
+        {
+          "name": "PASTE FACTS: address, price, beds/baths, sqft, year built, HOA fee and what it covers, parking, utilities included, showing instructions, any known restrictions",
+          "what": "Your listing's core fact sheet, filled in as completely as you currently know it. Leave out anything you genuinely don't have yet rather than guessing — the prompt is designed to flag gaps honestly instead of filling them in, but only if you don't paste in a guess yourself.",
+          "examples": [
+            "27 Aspen Grove Lane #4B, $415,000, 2 bed/2 bath, HOA $310/month covers water, trash, and exterior maintenance, one assigned parking spot, pet policy allows 2 pets under 40 lbs each, showings by appointment only through ShowingTime",
+            "142 Birchwood Court, $610,000, 4 bed/2.5 bath, no HOA, 2-car attached garage, all utilities paid by owner, showings any day 9am-6pm with 2 hours notice, no known restrictions",
+            "89 Redwood Terrace #12, $189,000, studio/1 bath, monthly fee $240 covers heat and water, no assigned parking (street parking only), no pets allowed per building rules, showings Tuesday/Thursday evenings and weekends only"
+          ]
+        },
+        {
+          "name": "PASTE ANY RECURRING QUESTIONS",
+          "what": "Any questions that have actually come up more than once at past showings or open houses for this listing, or ones you know from experience buyers tend to ask about similar properties. This is optional — leave it blank if this is a brand-new listing with no history yet.",
+          "examples": [
+            "Is the parking spot deeded or assigned by the HOA? Can I rent out the unit short-term? Is the building elevator working reliably?",
+            "Are the school district boundaries fixed by this exact address? Is the basement finished square footage included in the listed sqft?",
+            "None yet — this is a brand-new listing"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Print-ready open house handout",
+          "whenToUse": "Use when you need a physical one-page handout for buyers to take home from an open house, with larger, scannable formatting rather than a digital document.",
+          "prompt": "Create a print-ready buyer FAQ handout for this listing using only the facts below. Do not answer any question with information not provided — write \"Ask your agent for current details\" instead of guessing.\n\nListing facts:\n[PASTE FACTS: address, price, beds/baths, sqft, year built, HOA fee and what it covers, parking, utilities included, showing instructions, any known restrictions]\n\nFormat for printing on a single page: short questions, 1-2 sentence answers, large clear section headers (\"About the Property,\" \"Costs & Fees,\" \"Logistics & Next Steps\"), and my contact information at the bottom. Keep the whole thing scannable in under a minute — cut anything not essential rather than shrinking the font."
+        },
+        {
+          "label": "Condo/HOA-focused FAQ",
+          "whenToUse": "Use for listings where HOA rules are a major buyer concern — rentals, pets, renovations — and you want the FAQ to go deeper on those specifically.",
+          "prompt": "Create a buyer FAQ sheet for this condo/HOA listing, with extra depth on association rules, using only the facts below. Write \"Ask your agent for current details\" for anything not provided — never guess at a rule.\n\nListing facts:\n[PASTE FACTS: address, price, beds/baths, sqft, year built, HOA fee and what it covers, parking, utilities included, showing instructions, any known restrictions]\nKnown HOA rules: [PASTE: rental policy, pet policy, renovation approval process, reserve fund status, anything else you know]\n\nWrite 10-14 Q&As grouped under: \"About the Property,\" \"Costs & Fees,\" \"HOA Rules,\" and \"Logistics & Next Steps.\" Keep answers to 1-3 sentences each."
+        },
+        {
+          "label": "Investor-buyer FAQ",
+          "whenToUse": "Use when marketing a property likely to attract investor buyers who care about rental yield and tenant rules rather than living there themselves.",
+          "prompt": "Create a buyer FAQ sheet for this listing aimed at investor buyers, using only the facts below. Write \"Ask your agent for current details\" for anything not provided — never estimate a rental yield, cap rate, or rent figure that isn't stated.\n\nListing facts:\n[PASTE FACTS: address, price, beds/baths, sqft, year built, HOA fee and what it covers, parking, utilities included, showing instructions, any known restrictions]\nInvestor-relevant facts I know: [PASTE: current rent if tenant-occupied, HOA rental policy, any known comparable rental rates I've verified]\n\nWrite 10-12 Q&As grouped under: \"Property & Condition,\" \"Costs, Fees & Rental Rules,\" and \"Logistics & Next Steps.\""
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Don't let it guess at unknowns",
+          "prompt": "Go through the FAQ again and confirm every answer is directly supported by the facts I gave you. If any answer implies a number or rule I didn't actually state, flag it and replace it with \"Ask your agent for current details.\""
+        },
+        {
+          "label": "Make it fit one page",
+          "prompt": "This is running long. Cut it down so it fits comfortably on a single printed page — trim to the 8-10 most important questions and shorten any answer over 2 sentences."
+        },
+        {
+          "label": "Add a new recurring question",
+          "prompt": "A new question has come up at recent showings: [NEW QUESTION]. My answer, if I have one, is: [ANSWER OR \"not sure yet\"]. Add this to the FAQ in the right category, or flag it as \"Ask your agent\" if I don't have an answer yet."
+        },
+        {
+          "label": "Make the tone more upbeat for an open house",
+          "prompt": "Keep every fact exactly as is, but make the tone a little warmer and more welcoming — this is going home with buyers from an open house, not just sitting in a listing file."
+        }
+      ],
+      "walkthrough": "Sofia Marlowe was prepping for a Sunday open house at 27 Aspen Grove Lane #4B and wanted a handout ready for buyers to take with them, since the same questions came up every time she held this unit open. She pulled together her facts sheet: $415,000, 2 bed/2 bath, HOA $310 a month covering water, trash, and exterior maintenance, one assigned parking spot, pets allowed up to 40 lbs each, showings by appointment.\n\nShe opened Claude, pasted the FAQ prompt, filled in her facts, and added a note that buyers had repeatedly asked whether the parking spot was deeded or just assigned by the HOA — something she genuinely didn't know the answer to.\n\nClaude generated twelve Q&As grouped into three sections. Under \"Costs & Fees,\" it correctly answered the HOA question with the exact $310 figure and what it covered. For the parking question Sofia had flagged, it wrote \"Ask your agent for current details\" rather than guessing whether the spot was deeded, exactly as instructed. It also correctly left out any answer about property taxes, since that figure wasn't in Sofia's facts sheet.\n\nSofia sent the follow-up asking Claude to double-check that no answer implied a number or rule she hadn't actually provided. Claude reviewed and confirmed everything was clean, though it suggested rewording one answer that had implied guests could park in the assigned spot — a detail Sofia hadn't actually confirmed, so she had it changed to \"Ask your agent for current details\" as well.\n\nShe printed the one-page result before Sunday. Buyers took copies home, and Sofia fielded two fewer repeat phone calls that week than she normally would have after an open house."
+    },
+    "re-i1-neighborhood-guide-copy": {
+      "placeholders": [
+        {
+          "name": "NEIGHBORHOOD NAME",
+          "what": "The specific neighborhood, district, or area name buyers would recognize — not just the city. Use the name locals and other agents actually use, since that's what buyers will search for.",
+          "examples": [
+            "Willow Creek",
+            "Downtown Riverside District",
+            "Maple Hollow"
+          ]
+        },
+        {
+          "name": "PASTE: named nearby amenities, measured drive/walk times, transit access, parks, notable nearby businesses, general character notes",
+          "what": "Facts you have personally verified — walked, driven, or confirmed a source for — not things you vaguely recall about the area. A good entry names specific places and measured times; a bad one says something like \"close to shops\" with nothing concrete behind it.",
+          "examples": [
+            "6-minute walk to Willow Creek Park, which hosts a weekend farmers market April through October; 12-minute drive to downtown (measured at midday on a weekday); a grocery store and two coffee shops within a half-mile; a dedicated bike lane along Aspen Grove Lane",
+            "Located directly across from Riverside Public Library; two blocks from a light rail stop on the Blue Line; a weekly Saturday morning farmers market runs May through September in the plaza out front; several independent restaurants within walking distance along Main Street",
+            "5-minute walk to Maple Hollow Elementary (verify current enrollment boundary with the school district); quiet residential streets with mature trees; a community pool open to residents June through August; nearest grocery store is a 7-minute drive"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Short caption for a single social post",
+          "whenToUse": "Use when you only need one tight caption referencing the neighborhood for an Instagram or Facebook post, not a full listing blurb and website guide.",
+          "prompt": "Write a single social media caption (under 60 words) about [NEIGHBORHOOD NAME], using only the facts I provide below.\n\nStrict rules:\n- Use only the facts listed. Do not add school ratings, crime/safety claims, demographic statements, walk scores, or specific distances/times I haven't given you.\n- Avoid any language that could be read as describing who lives there rather than what's there.\n- Tone: warm, specific, sensory where the facts allow.\n\nVerified facts:\n[PASTE: named nearby amenities, measured drive/walk times, transit access, parks, notable nearby businesses, general character notes]"
+        },
+        {
+          "label": "Comparing two neighborhoods for an undecided buyer",
+          "whenToUse": "Use when a buyer is choosing between listings in two different areas and wants an honest, side-by-side comparison rather than sales copy for either.",
+          "prompt": "Write a side-by-side comparison of two neighborhoods for a buyer deciding between them, using only the facts I provide for each — do not add school ratings, crime/safety claims, demographic statements, walk scores, or distances I haven't given you for either one.\n\nNeighborhood A: [NEIGHBORHOOD NAME]\nVerified facts A: [PASTE FACTS]\n\nNeighborhood B: [NEIGHBORHOOD NAME]\nVerified facts B: [PASTE FACTS]\n\nWrite a neutral, factual comparison (250-300 words) organized by category (amenities, commute, general character) rather than declaring one \"better\" — the buyer should be able to weigh the facts themselves. If a category has facts for one neighborhood but not the other, say so rather than inventing a comparison point."
+        },
+        {
+          "label": "Longer evergreen website page",
+          "whenToUse": "Use when building a standalone neighborhood guide page for your website that isn't tied to a single listing and will stay up for months.",
+          "prompt": "Write a longer, evergreen neighborhood guide for a website page about [NEIGHBORHOOD NAME], using only the facts I provide below.\n\nStrict rules:\n- Use only the facts listed. Do not add school ratings, crime/safety claims, demographic statements, walk scores, or specific distances/times I haven't given you.\n- If you think a detail would strengthen the page but I haven't provided it, list it under \"Facts I'd need to add this\" — don't write it in.\n- Avoid any language describing who lives there rather than what's there.\n- Note at the top of your response: \"Facts current as of [DATE] — recheck before reusing after a few months,\" since amenities and businesses change.\n\nVerified facts:\n[PASTE: named nearby amenities, measured drive/walk times, transit access, parks, notable nearby businesses, general character notes]\n\nWrite a 400-500 word standalone guide with subheadings."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Fair-housing language check",
+          "prompt": "Reread this copy and flag any word or phrase, even indirect, that could be read as describing the type of resident or buyer the area suits rather than the physical places and amenities themselves."
+        },
+        {
+          "label": "Cut anything that wasn't in my facts",
+          "prompt": "Go through this again and list every specific number, ranking, or claim in the copy. For each one, confirm it's exactly something I gave you — flag anything that isn't, even if it sounds plausible for this kind of neighborhood."
+        },
+        {
+          "label": "Shorten to a specific length",
+          "prompt": "Cut this down to exactly [WORD COUNT] words, keeping only the strongest, most specific facts — remove weaker or more generic sentences first."
+        },
+        {
+          "label": "Add more sensory detail from the same facts",
+          "prompt": "Using only the facts I already gave you, make the writing more sensory and specific — describe what someone would actually see or do at these places, without adding any new fact I haven't stated."
+        }
+      ],
+      "walkthrough": "Sofia Marlowe was writing neighborhood copy for a new listing in Willow Creek and wanted something better than the boilerplate paragraph she'd been reusing for two years. Before opening Claude, she spent fifteen minutes verifying her facts: she walked the six minutes from the listing to Willow Creek Park herself and timed it, confirmed the farmers market ran April through October by checking the market's own website, and drove the route downtown at midday to time it at twelve minutes.\n\nShe opened Claude, pasted the neighborhood guide prompt, typed \"Willow Creek\" as the neighborhood name, and listed her four verified facts: the park and market, the drive time downtown, the grocery store and two coffee shops within a half-mile, and the bike lane along the main road.\n\nClaude produced a 70-word listing blurb built entirely around the park, the market, and the walkable amenities, and a longer 280-word guide expanding on the same facts with more sensory detail — describing the Saturday market rather than inventing a walk score. Nothing about schools, safety, or who typically lived there appeared anywhere in either version.\n\nBefore publishing, Sofia sent the fair-housing follow-up asking Claude to flag any language that could read as describing who the area suits rather than what's there. Claude reviewed and found nothing to flag, but suggested one phrase — \"family-friendly streets\" — could be read that way even though it hadn't actually written it; she confirmed it wasn't in the draft and moved on.\n\nThe whole task, verification included, took about twenty-five minutes and gave her a guide she could reuse for every future listing in Willow Creek."
+    },
+    "re-i2-social-posts-new-listing": {
+      "placeholders": [
+        {
+          "name": "PASTE: address or neighborhood, beds/baths, standout features, price if public, open house date/time if any, your contact info",
+          "what": "A single short brief covering the listing's core facts — this feeds all four social posts at once, so completeness here matters more than polish. Only include price if you're allowed to publish it; leave it out entirely if your seller wants it private rather than writing something vague.",
+          "examples": [
+            "27 Aspen Grove Lane #4B, 2BR/2BA condo, $415,000, open house Saturday 1-3pm, standout features are a private balcony, in-unit washer/dryer, and reserved parking. Contact: Sofia Marlowe, Harborview Realty, (555) 012-3344",
+            "New listing in Willow Creek, 142 Birchwood Court, 4BR/2.5BA, $610,000, standout features are a newly replaced roof, hardwood floors throughout the main level, and a large fenced backyard, no open house scheduled yet. Contact: Sofia Marlowe, (555) 012-3344, sofia@harborviewrealty.com",
+            "89 Redwood Terrace #12, studio/1BA walkup, $189,000, standout features are the recently repainted interior and a monthly fee that covers heat and water, open house this Thursday 5-7pm. Contact: Jordan Reyes, Harborview Realty, (555) 019-8822"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Open house announcement only",
+          "whenToUse": "Use in the few days before an open house when you need one focused, urgent-but-honest announcement rather than the full four-platform set.",
+          "prompt": "Write a single open house announcement post for [PLATFORM, e.g. Instagram / Facebook], using only the facts below. Do not invent features, price, or availability details not listed.\n\nListing facts:\n[PASTE: address, beds/baths, standout features, price if public, open house date/time]\n\nRequirements:\n- Lead with the open house date and time.\n- Under 100 words, warm and inviting tone.\n- 4-6 relevant hashtags if for Instagram, none if for Facebook.\n- One clear call to action (come by, RSVP, or contact you).\n- Fair-housing-safe language: describe the property and location, never the type of buyer or resident it would suit."
+        },
+        {
+          "label": "Price reduction announcement",
+          "whenToUse": "Use when a listing's price has been reduced and you want to announce it without sounding desperate or using pressure language.",
+          "prompt": "Write social posts announcing a price reduction on an existing listing, using only the facts below. Do not invent features or a reason for the reduction I haven't given you.\n\nListing facts:\n[PASTE: address, beds/baths, standout features, old price, new price, any reason for the reduction if I want to share one]\n\nWrite:\n1. Instagram caption (under 120 words, frames the new price as an opportunity, not a sign of desperation, no urgency language like \"won't last\")\n2. Facebook post (similar framing, slightly more detail)\n\nFair-housing-safe language throughout: describe the property and price, never the type of buyer it would suit."
+        },
+        {
+          "label": "\"Just sold\" celebration post",
+          "whenToUse": "Use after closing to announce a successful sale — a different tone than a new listing, and one that must stay clear of any client financial or personal details.",
+          "prompt": "Write a \"just sold\" celebration post for [PLATFORM], using only the facts below. Do not include the sale price, buyer or seller names, or any other client-identifying or financial detail unless I've explicitly said it's approved to share.\n\nListing facts:\n[PASTE: address or neighborhood, general property type, standout feature, whether I have approval to mention sale price]\n\nRequirements:\n- Celebratory but professional tone.\n- Do not speculate about or imply a sale price if I haven't given you one and said it's approved.\n- Thank the client generically without using their name unless I've said it's okay to.\n- End with a call to action inviting others thinking of selling to reach out.\n- Under 100 words."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Fair-housing / steering language check",
+          "prompt": "Reread all four posts and flag any word or phrase, even indirect, that could be read as describing the type of buyer or resident the property suits rather than the property and location themselves."
+        },
+        {
+          "label": "Shorten the Instagram caption",
+          "prompt": "Cut the Instagram caption down to under 100 words, keeping the strongest feature and the call to action, and trim the hashtag list to the 5 most relevant."
+        },
+        {
+          "label": "LinkedIn post feels too salesy",
+          "prompt": "Rewrite the LinkedIn post to lean more on market context and the property's practical value, and less on promotional language — LinkedIn readers respond better to a professional, informative tone than a sales pitch."
+        },
+        {
+          "label": "Verify nothing was invented",
+          "prompt": "Go through all four posts and list every specific fact mentioned (price, features, dates). Confirm each one came directly from my brief, and flag anything that didn't."
+        }
+      ],
+      "walkthrough": "Sofia Marlowe had a new listing hit the market that morning at 142 Birchwood Court and wanted posts live on Instagram, Facebook, and LinkedIn before the end of the day, plus a short video script for a walkthrough reel she planned to film that afternoon.\n\nShe wrote one brief: the address, 4BR/2.5BA, $610,000, standout features of the newly replaced roof, hardwood floors on the main level, and the fenced backyard, no open house scheduled yet, and her contact info. She pasted this into the multi-platform prompt in Claude.\n\nClaude returned an Instagram caption leading with the backyard and hardwood floors with six hashtags and a \"link in bio\" call to action, a more conversational Facebook post inviting the local community to reach out, a LinkedIn post framing the roof replacement and hardwood floors as concrete value rather than hype, and a 30-second video script with visual cues like \"[VISUAL: wide shot of backyard, afternoon light]\" for Sofia to film against.\n\nReading the LinkedIn post again, Sofia felt it leaned a little too much on adjectives rather than substance, so she sent the follow-up asking Claude to lean more on market context and practical value. The revised version referenced the property's move-in-ready condition as a factual point tied to the recent roof replacement, which read better to her professional network.\n\nBefore posting anywhere, she ran the fair-housing check follow-up and got a clean result. She filmed the video that afternoon using the script's cues, and had all four platforms live by 3pm — about twenty minutes of writing time total for what used to take her most of an afternoon."
+    },
+    "re-i3-objection-handling-scripts": {
+      "placeholders": [
+        {
+          "name": "DESCRIBE: e.g., buyer says the list price is too high; seller is refusing to negotiate on inspection repairs; competing offer has a shorter closing timeline",
+          "what": "The specific objection or negotiation moment you're preparing for, described concretely — not \"buyer has concerns,\" but exactly what was said or is likely to be said. The more specific this is, the more useful the talking points will be.",
+          "examples": [
+            "Buyer says $415,000 feels high compared to a similar unit two floors down that sold for $395,000 last month",
+            "Seller is refusing to make any of the requested inspection repairs and wants to proceed to closing as-is",
+            "My buyer's offer is competing against another offer with a 21-day closing versus our 45-day closing, and the listing agent hinted timeline matters to the seller"
+          ]
+        },
+        {
+          "name": "buyer's agent / seller's agent",
+          "what": "Which side of the deal you're representing in this specific negotiation — this changes which approaches and pushback the response should anticipate.",
+          "examples": [
+            "buyer's agent",
+            "seller's agent"
+          ]
+        },
+        {
+          "name": "PASTE: comps, inspection findings, market conditions, client's actual constraints/priorities — only real ones",
+          "what": "Real facts you can actually back up in the room — verified comparable sales, actual inspection findings, genuine client constraints. Never include a number you haven't confirmed; the prompt is designed to leave a placeholder for anything you don't give it rather than inventing a plausible-sounding figure.",
+          "examples": [
+            "Comp: unit 2B in the same building sold for $395,000 last month, but had no balcony and an original 1990s kitchen. This unit has a renovated kitchen (2023) and a private balcony. Seller's bottom line is $405,000, motivated but not desperate.",
+            "Inspection found a Federal Pacific electrical panel flagged for safety evaluation and aging galvanized plumbing. Seller has already gotten one electrician quote of $2,400 to replace the panel. Seller's priority is closing by month-end for tax reasons.",
+            "Buyer is well-qualified, pre-approved, offering full asking price, but needs a 45-day close due to their current lease ending. Competing offer is reportedly at asking price with a 21-day close. Buyer's priority is certainty over speed — they've already lost one house to a faster closer."
+          ]
+        },
+        {
+          "name": "GOAL",
+          "what": "What you actually want to walk away with from this specific conversation — a number, a concession, or simply keeping the deal alive. Being concrete here helps Claude tailor the approaches to something achievable, not just generically persuasive.",
+          "examples": [
+            "Get the buyer comfortable enough with the price gap to submit an offer at or near asking, without dropping the price myself",
+            "Get the seller to agree to at least the electrical panel repair, even if they won't do the plumbing",
+            "Convince the listing agent's seller that our longer closing timeline is worth accepting despite the competing faster offer"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Preparing for a listing presentation objection",
+          "whenToUse": "Use before you even have the listing, when you're anticipating pushback during a listing presentation — commission questions, pricing disagreements, or \"why you over another agent.\"",
+          "prompt": "Help me prepare for likely objections during an upcoming listing presentation.\n\nLikely objection: [DESCRIBE: e.g., seller thinks my suggested list price is too low; seller is comparing my commission to a discount brokerage; seller wants to interview other agents first]\nRelevant facts I can reference: [PASTE: my actual comps/pricing rationale, my actual service differentiators, only real ones]\nWhat I want to achieve: [GOAL]\n\nGive me:\n1. Two or three different response approaches (e.g., data-led, value-led, question-led), each 3-5 sentences of talking points.\n2. A one-line explanation of when each approach fits best.\n3. One likely pushback for each and how I could respond.\n\nDo not invent comps, commission figures, or facts about my services beyond what I've given you — use a placeholder like [YOUR DATA] instead of a made-up figure.\n\nThen roleplay the seller pushing back on my strongest approach so I can practice responding."
+        },
+        {
+          "label": "Written negotiation via email instead of live conversation",
+          "whenToUse": "Use when the pushback is happening over email with the other agent rather than live, and you need a written response rather than talking points to say out loud.",
+          "prompt": "Help me draft a written email response to a negotiation objection in a real estate deal.\n\nSituation: [DESCRIBE the objection or pushback I received by email]\nMy role: [buyer's agent / seller's agent]\nRelevant facts I can reference: [PASTE: comps, inspection findings, market conditions, client's actual constraints/priorities — only real ones]\nWhat I want to achieve: [GOAL]\n\nGive me:\n1. Two email response options — one data-led and firm, one warmer and relationship-preserving — each under 150 words.\n2. A one-line note on which situations favor each tone.\n\nDo not invent comps, numbers, or facts about the deal beyond what I've given you — use a placeholder like [YOUR DATA] instead of a made-up figure."
+        },
+        {
+          "label": "Multiple competing offers on a listing",
+          "whenToUse": "Use when representing a seller who has more than one offer and needs help thinking through how to communicate with competing buyers' agents without misrepresenting either offer.",
+          "prompt": "Help me prepare for conversations with buyers' agents in a multiple-offer situation.\n\nSituation: [DESCRIBE: e.g., two offers received, one higher price but contingent financing, one lower price but cash and fast close]\nMy role: seller's agent\nRelevant facts I can reference: [PASTE: actual offer terms, seller's actual priorities — only real ones]\nWhat I want to achieve: [GOAL, e.g. \"get the higher offer to also improve their closing timeline\" or \"communicate honestly with both agents without disclosing the other offer's exact terms\"]\n\nGive me:\n1. Two or three response approaches for handling agent questions about \"where do we stand,\" each respecting confidentiality — do not have me disclose one offer's exact terms to the other agent unless my client has authorized that.\n2. A one-line note on when each approach fits.\n3. One likely follow-up question from an agent and how to handle it.\n\nDo not invent offer terms or figures beyond what I've given you."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Roleplay tougher pushback",
+          "prompt": "Roleplay the other party pushing back harder than you did last time — assume they're skeptical and push on my weakest point directly. I want to practice handling the worst-case version of this conversation, not the easy one."
+        },
+        {
+          "label": "Make it sound like my own voice",
+          "prompt": "Here's a sample of how I actually talk in client conversations: [PASTE A SAMPLE OF YOUR OWN PHRASING]. Adjust the talking points to sound more like me and less like a script."
+        },
+        {
+          "label": "Check no invented comps or figures snuck in",
+          "prompt": "Go through the talking points again and list every number or comp mentioned. Confirm each one is exactly what I gave you, and flag anything that isn't — including anything that sounds like a plausible but unverified figure."
+        },
+        {
+          "label": "Give me the one-sentence version for texting",
+          "prompt": "Condense my strongest approach into a single text-message-length response, under 300 characters, that I could send if this comes up over text instead of a live conversation."
+        }
+      ],
+      "walkthrough": "Sofia Marlowe was representing the Ortega family, sellers of 27 Aspen Grove Lane #4B, when a buyer's agent called saying their client felt $415,000 was too high compared to unit 2B two floors down, which had sold for $395,000 the month before. Sofia knew the comparison wasn't quite fair — 2B had no balcony and an original kitchen, while the Ortegas' unit had a 2023 kitchen renovation and a private balcony — but she wanted to prepare before calling back.\n\nShe opened Claude and used the objection-handling prompt, describing the situation, marking her role as seller's agent, listing the real comp details and the Ortegas' bottom line of $405,000, and setting her goal as getting the buyer comfortable with the price gap without the sellers dropping the price themselves.\n\nClaude returned three approaches: a data-led one built entirely around the kitchen and balcony differences, an empathy-led one acknowledging the buyer's price sensitivity while reframing the value, and an options-led one suggesting flexibility on closing date instead of price. Each came with a likely pushback — for the data-led approach, Claude predicted the buyer's agent might argue the kitchen renovation wasn't worth $20,000, and suggested Sofia have a rough sense of renovation cost ready, without inventing a number itself.\n\nSofia sent the follow-up asking Claude to roleplay the buyer's agent pushing back hard on the data-led approach. She practiced her response twice out loud, adjusting her phrasing until it felt natural rather than rehearsed.\n\nThe prep took about ten minutes. On the actual call that afternoon, the buyer's agent raised almost exactly the objection Claude had predicted, and Sofia's practiced, specific answer kept the conversation moving toward an offer instead of a stall."
+    },
+    "re-i4-local-market-research-perplexity": {
+      "placeholders": [
+        {
+          "name": "NEIGHBORHOOD/CITY/ZIP",
+          "what": "The exact area you want data on — a neighborhood name, city, or ZIP code, as specific as possible. A named neighborhood or ZIP gets you locally relevant data; a whole city or region often returns numbers too broad to be useful in a client conversation.",
+          "examples": [
+            "Willow Creek neighborhood",
+            "94609",
+            "Riverside, downtown district only"
+          ]
+        },
+        {
+          "name": "TIMEFRAME, e.g. \"quarter\" or \"3 months\"",
+          "what": "The time window you want the data to cover. Shorter windows (a month or quarter) show current momentum; longer ones (a year) show broader trend but can hide a recent shift.",
+          "examples": [
+            "the last quarter",
+            "the last 3 months",
+            "the last 12 months, with a note on the most recent month specifically"
+          ]
+        },
+        {
+          "name": "PROPERTY TYPE, e.g., condos / single-family homes",
+          "what": "The property type you actually need data on, since condo and single-family markets can move very differently even in the same neighborhood. Leave this broad only if you genuinely need a general read across all types.",
+          "examples": [
+            "condos",
+            "single-family homes",
+            "townhouses and condos combined"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Comparing two neighborhoods for a relocating buyer",
+          "whenToUse": "Use when a buyer is choosing between two specific areas and needs a side-by-side, cited comparison rather than a single-area snapshot.",
+          "prompt": "Research and compare current housing market conditions for [NEIGHBORHOOD/CITY/ZIP A] and [NEIGHBORHOOD/CITY/ZIP B], focusing on the last [TIMEFRAME].\n\nFor each area, with sources for each figure:\n1. Median sale price and recent change\n2. Average days on market\n3. Current inventory levels\n4. Whether it currently favors buyers or sellers\n\nFocus on [PROPERTY TYPE] specifically if the data allows. Present the two areas side by side for easy comparison. Cite each figure with its source and publish date. Flag if you had to widen the search for either area."
+        },
+        {
+          "label": "Quick single-stat check",
+          "whenToUse": "Use when you just need one specific, current, cited figure fast — like confirming median days on market before a listing presentation — rather than a full market snapshot.",
+          "prompt": "What is the current [SPECIFIC STAT, e.g. \"median days on market\" / \"median sale price\"] for [PROPERTY TYPE] in [NEIGHBORHOOD/CITY/ZIP], for [TIMEFRAME]? Cite the source and its publish date. If you can't find data specific to this exact area, tell me clearly and give me the closest available area instead of estimating."
+        },
+        {
+          "label": "Full competitive market analysis prep for a listing presentation",
+          "whenToUse": "Use when preparing for a listing presentation and you need a fuller, more persuasive market picture to support your suggested list price.",
+          "prompt": "Research current housing market conditions for [NEIGHBORHOOD/CITY/ZIP], focusing on [PROPERTY TYPE], over [TIMEFRAME], to support a listing presentation.\n\nI need, with sources for each:\n1. Median and average sale price, and how each has changed\n2. Average days on market, and how it compares to 6-12 months ago\n3. Current active inventory and months of supply if calculable\n4. Whether it favors buyers or sellers, and why\n5. Any recent comparable sales you can find for this specific property type in this area, with address-level or near-address-level detail if available\n6. Any notable trend specific to this area\n\nCite each figure with source and publish date. Flag anything you couldn't verify locally and had to widen the search for."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Verify the sources are recent",
+          "prompt": "List the publish date of every source you cited, sorted oldest to newest, and flag any that are more than 60 days old so I know which figures might already be stale."
+        },
+        {
+          "label": "Narrow to a specific price band",
+          "prompt": "Narrow this research to only properties priced between [LOW] and [HIGH]. Re-run the days-on-market and inventory figures for just that price band, with sources, and flag if the data can't be split that finely."
+        },
+        {
+          "label": "Give me a client-ready summary",
+          "prompt": "Turn this into a short, client-ready paragraph (100-150 words) I could paste directly into an email, keeping the source links visible so the client can click through if they want to verify anything themselves."
+        },
+        {
+          "label": "Check if it had to widen the search area",
+          "prompt": "Tell me plainly, for each figure you gave me, whether it came from data specific to the exact area I asked about, or whether you had to widen the search to a larger region to find it."
+        }
+      ],
+      "walkthrough": "Sofia Marlowe had a listing presentation coming up for a condo owner in Willow Creek and wanted current, cited market data rather than repeating last quarter's numbers from memory.\n\nShe opened the Gemini app and started a Deep Research session instead of a normal chat, then pasted the market-research prompt, filling in \"Willow Creek neighborhood\" for the area, \"the last quarter\" for the timeframe, and \"condos\" for the property type. Gemini showed her a short research plan first — she confirmed it covered price, days on market, and inventory, and let it run.\n\nAbout ten minutes later, the report came back: median condo sale price in Willow Creek was up 4% over the quarter according to a regional MLS data aggregator dated three weeks earlier, average days on market had dropped from 38 to 26 days per a local real estate board report, and active inventory was down about 15% compared to the prior quarter, citing the same board report. It characterized the segment as leaning toward a seller's market given the combination of falling days-on-market and shrinking inventory, and noted it had to widen slightly to zip-code-level data for the inventory figure since neighborhood-specific numbers weren't published separately.\n\nSofia clicked through two of the citations herself, confirmed both were legitimate, recently published sources, and sent the follow-up asking Gemini to turn the findings into a client-ready paragraph with the source links kept visible.\n\nShe pasted that paragraph directly into her listing presentation deck, noting the date she'd run the research so she'd know to refresh it if the appointment got pushed back more than a couple of weeks. The whole research task took about fifteen minutes, most of it waiting on the report, and having cited figures rather than a verbal claim made the pricing conversation with her client noticeably smoother than past presentations."
+    },
+    "re-i5-lead-notes-weekly-activity-report": {
+      "placeholders": [
+        {
+          "name": "PASTE: names, how they contacted you, what they said, any info on budget/timeline/property interest",
+          "what": "Your raw, unorganized notes on every lead from the week, exactly as you captured them — texts, call notes, open-house sign-in sheets, portal inquiries. Include only what each lead actually told you; don't round up a vague comment into a firm budget or timeline.",
+          "examples": [
+            "Jordan T. — called Tuesday, said looking for 3BR under $450k, no timeline given. The Alvarez family — open-house sign-in Saturday, said moving from out of state by end of year. Priya Kumar — Zillow inquiry Wednesday about 89 Redwood Terrace, asked about the monthly fee, no other info given.",
+            "Marcus Chen — referral from past client, called Thursday, pre-approved up to $500k, wants to be in a new house by summer. Devon Ellis — texted after seeing a yard sign, asked for a private showing, hasn't said budget or timeline yet.",
+            "The Whitfields — open house Sunday, said they're just starting to look, no urgency. Ana Torres — portal inquiry, asked three questions about HOA rules at Aspen Grove, seems very engaged but hasn't mentioned financing status."
+          ]
+        },
+        {
+          "name": "PASTE: calls made, showings held, new leads, offers written, closings",
+          "what": "Your actual activity totals for the week, pulled from your CRM, calendar, or your own tally — not rounded estimates. Include zero values honestly rather than omitting a category.",
+          "examples": [
+            "22 calls made, 6 showings held, 3 new leads, 1 offer written, 0 closings",
+            "15 calls made, 2 showings held, 1 new lead, 0 offers written, 1 closing",
+            "30 calls made, 9 showings held, 5 new leads, 2 offers written, 1 closing"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Daily quick triage instead of weekly",
+          "whenToUse": "Use at the end of each day to quickly sort that day's new contacts, rather than waiting for a full week to build up.",
+          "prompt": "I have messy notes on leads from today. Organize them into a table using only the information I provide — do not guess at a lead's likely budget, timeline, or interest level unless I've stated it.\n\nToday's raw lead notes:\n[PASTE: names, how they contacted you, what they said, any info on budget/timeline/property interest]\n\nCreate a table with columns: Name, Source, What they're looking for, Stated timeline (or \"not stated\"), Suggested next action for tomorrow.\nFor \"Suggested next action,\" base it only on what's stated — if no timeline was given, suggest an action that finds out the timeline rather than assuming urgency."
+        },
+        {
+          "label": "Rolled-up monthly report for a broker",
+          "whenToUse": "Use at month-end when your broker or team lead wants a higher-level summary across the whole month rather than a single week.",
+          "prompt": "Using these four weekly activity totals, write a monthly activity summary in a professional tone suitable for a broker or team lead, reporting the numbers as given without embellishment.\n\nWeek 1: [CALLS/SHOWINGS/LEADS/OFFERS/CLOSINGS]\nWeek 2: [CALLS/SHOWINGS/LEADS/OFFERS/CLOSINGS]\nWeek 3: [CALLS/SHOWINGS/LEADS/OFFERS/CLOSINGS]\nWeek 4: [CALLS/SHOWINGS/LEADS/OFFERS/CLOSINGS]\n\nWrite a 150-200 word summary that totals the month and notes any clear trend across the weeks (increasing, flat, or declining activity), using only the numbers given — do not speculate about causes unless I provide them."
+        },
+        {
+          "label": "Lead table only, no activity report",
+          "whenToUse": "Use when you just need your contacts organized for your own follow-up planning and don't need a report to send anyone.",
+          "prompt": "I have messy notes on leads from this week. Organize them into a table using only the information I provide — do not guess at a lead's likely budget, timeline, or interest level unless I've stated it.\n\nRaw lead notes:\n[PASTE: names, how they contacted you, what they said, any info on budget/timeline/property interest]\n\nCreate a table with columns: Name, Source, What they're looking for, Stated timeline (or \"not stated\"), Last contact, Suggested next action.\nSort the table with the leads most likely to be ready to act soon (based only on what they actually stated) at the top."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check no invented urgency",
+          "prompt": "Go through the table again and confirm every \"Suggested next action\" is based only on what the lead actually stated. Flag any row where the suggestion implies urgency or interest level the lead didn't express."
+        },
+        {
+          "label": "Shorten the weekly report",
+          "prompt": "Cut the weekly activity summary down to under 100 words, keeping all the numbers accurate but trimming the surrounding narrative."
+        },
+        {
+          "label": "Sort by highest priority first",
+          "prompt": "Reorder the lead table so the leads with the clearest stated timeline or strongest expressed interest are at the top, and leads with no timeline stated are at the bottom. Don't change any of the underlying facts, just the order."
+        },
+        {
+          "label": "Cross-check totals against my notes",
+          "prompt": "List the five activity numbers you used in the report and confirm they match exactly what I gave you, with no rounding or adjustment."
+        }
+      ],
+      "walkthrough": "Every Friday afternoon, Sofia Marlowe faced the same pile of scattered notes: texts from new leads, a stack of open-house sign-in sheets, and a couple of portal inquiry emails she'd flagged but not organized. This particular Friday she had five leads worth logging and a week of activity numbers to report to her broker.\n\nShe typed out her raw notes in one block: Jordan T. who'd called about a 3-bedroom under $450k with no timeline given, the Alvarez family who'd signed in at Saturday's open house saying they were relocating from out of state by year's end, and three more leads with similarly mixed levels of detail. She also gathered her week's totals — 22 calls, 6 showings, 3 new leads, 1 offer written, 0 closings.\n\nShe opened Claude, pasted the organizing prompt, and dropped in both her lead notes and her activity numbers. Claude returned a six-column table where Jordan T.'s row correctly showed \"not stated\" for timeline and suggested a next action of calling to ask about financing and timeline, rather than assuming urgency. The Alvarez family's row reflected their stated year-end timeline with a next action suited to that slower pace. The 150-word activity summary underneath reported her exact numbers without any added flourish.\n\nSofia sent the follow-up asking Claude to confirm no row implied urgency a lead hadn't actually expressed. It came back clean. She forwarded the activity summary to her broker and used the lead table to plan Monday's calls — a task that used to take her most of an hour, finished in under ten minutes."
+    },
+    "re-a1-property-landing-page-codex": {
+      "placeholders": [
+        {
+          "name": "PASTE: address, price, beds/baths, sqft, 3-5 standout features, open house date if any",
+          "what": "The core facts for the listing this page is built around. Only include the standout features you'd actually want a buyer to see first — three to five specific ones works better than a long generic list.",
+          "examples": [
+            "27 Aspen Grove Lane, Unit 4B, $415,000, 2BR/2BA, 1,050 sqft, private balcony with afternoon light, in-unit washer/dryer, reserved parking spot, elevator building, open house Saturday 1-3pm",
+            "142 Birchwood Court, $610,000, 4BR/2.5BA, 2,400 sqft, roof replaced 2021, hardwood floors on main level, large fenced backyard, 2-car attached garage, no open house scheduled yet",
+            "89 Redwood Terrace #12, $189,000, studio/1BA, 480 sqft, recently repainted, monthly fee covers heat and water, close to the #12 bus line, open house Thursday 5-7pm"
+          ]
+        },
+        {
+          "name": "NAME, PHONE, EMAIL, BROKERAGE",
+          "what": "Your real contact details as you want them to appear on the page — this is what leads will use to reach you, so make sure it's the number and email you actually check.",
+          "examples": [
+            "Sofia Marlowe, (555) 012-3344, sofia@harborviewrealty.com, Harborview Realty",
+            "Jordan Reyes, (555) 019-8822, jordan.reyes@harborviewrealty.com, Harborview Realty",
+            "Dana Whitfield, (555) 044-7710, dana@whitfieldhomes.com, Whitfield Home Group"
+          ]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Open house RSVP page instead of general contact form",
+          "whenToUse": "Use in the days before a scheduled open house when you want visitors to RSVP for a specific time rather than fill out a general inquiry form.",
+          "prompt": "Build a simple, single-page open house RSVP site as static HTML/CSS/JS (no framework needed). Use only the facts below — do not invent property details, and use clearly labeled placeholder text like [PHOTO 1] for images I'll add myself.\n\nProperty facts:\n[PASTE: address, price, beds/baths, sqft, 3-5 standout features, open house date and time]\nAgent contact info: [NAME, PHONE, EMAIL, BROKERAGE]\n\nRequirements:\n1. Hero section with property headline, price, and the open house date/time prominently displayed\n2. Photo gallery section with 4-6 placeholder image slots\n3. An RSVP form (name, email, phone, number of guests) that validates required fields client-side, with a clear code comment showing where to plug in a real backend or email endpoint\n4. Details section listing specs and standout features\n5. Mobile-responsive layout (test at 375px and 1440px widths)\n\nAfter building it, tell me which files you created and how to preview it locally."
+        },
+        {
+          "label": "Agent portfolio page for multiple listings",
+          "whenToUse": "Use when you want one page showcasing several current listings rather than a dedicated page per property.",
+          "prompt": "Build a simple multi-listing portfolio page as static HTML/CSS/JS (no framework needed), showcasing several active listings. Use only the facts below for each listing — do not invent property details, and use clearly labeled placeholder text like [PHOTO 1] for images I'll add myself.\n\nAgent contact info: [NAME, PHONE, EMAIL, BROKERAGE]\n\nListing 1: [PASTE: address, price, beds/baths, sqft, 2-3 standout features]\nListing 2: [PASTE: address, price, beds/baths, sqft, 2-3 standout features]\nListing 3: [PASTE: address, price, beds/baths, sqft, 2-3 standout features]\n\nRequirements:\n1. A grid or card layout, one card per listing, each with a photo placeholder, price, and key facts\n2. A contact form at the bottom of the page (name, email, phone, message) with client-side validation and a commented spot for a real backend endpoint\n3. Mobile-responsive layout (test at 375px and 1440px)\n4. Fast-loading, semantic HTML, basic on-page SEO\n\nAfter building it, tell me which files you created and how to preview it locally."
+        },
+        {
+          "label": "Minimal fast version — facts and contact only",
+          "whenToUse": "Use when you need something live within minutes rather than a fuller page with a gallery — just the essentials to put on a yard sign QR code today.",
+          "prompt": "Build a minimal single-page property site as static HTML/CSS/JS (no framework needed) — just the essentials, no photo gallery. Use only the facts below — do not invent property details.\n\nProperty facts:\n[PASTE: address, price, beds/baths, sqft, 3-5 standout features, open house date if any]\nAgent contact info: [NAME, PHONE, EMAIL, BROKERAGE]\n\nRequirements:\n1. One hero section with headline, price, and a single primary photo placeholder\n2. A short bulleted list of the stated specs and features\n3. A simple contact form (name, email, phone) with client-side validation and a commented spot for a real backend endpoint\n4. Mobile-responsive, fast-loading, minimal CSS\n\nAfter building it, tell me which files you created and how to preview it locally."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Review the contact form code before I trust it",
+          "prompt": "Walk me through exactly what the contact form does with submitted data right now, line by line in plain language. I want to understand whether anything is being sent anywhere before I connect it to a real backend."
+        },
+        {
+          "label": "Fix the mobile layout",
+          "prompt": "At a 375px width, the [SPECIFIC ELEMENT, e.g. \"gallery grid\" or \"contact form\"] is overlapping/cut off. Fix just that specific issue without changing anything else on the page."
+        },
+        {
+          "label": "Swap in my real photos and contact form endpoint",
+          "prompt": "Here is my real contact form endpoint: [ENDPOINT DETAILS OR SERVICE NAME]. Wire the form up to submit there, and replace photo placeholders 1-6 with these filenames: [LIST FILENAMES]. Don't change anything else about the layout or copy."
+        },
+        {
+          "label": "Explain how to deploy this in plain terms",
+          "prompt": "Explain, step by step and in plain language for someone who has never deployed a website before, how I would put these files on a free or low-cost static host so the page has a real, shareable URL."
+        }
+      ],
+      "walkthrough": "Sofia Marlowe had a new listing at 142 Birchwood Court and wanted a dedicated landing page for the yard sign QR code and a small ad campaign, rather than sending traffic to the crowded MLS portal page. She'd never built a website before, but she'd heard Codex could generate one from a plain-language description.\n\nShe installed the Codex CLI, signed in with her ChatGPT account, and started a session in an empty project folder. She pasted the landing-page brief, filling in the property facts — $610,000, 4BR/2.5BA, 2,400 sqft, the new roof, hardwood floors, and the fenced backyard — along with her name, phone, email, and brokerage.\n\nCodex created three files: index.html, styles.css, and script.js. The hero section read \"142 Birchwood Court — $610,000,\" followed by a gallery of six labeled photo placeholders, a details list matching her stated features exactly, and a contact form with client-side validation and a clearly commented line marking where a real form endpoint should be plugged in.\n\nSofia read through the HTML and the contact-form JavaScript herself rather than just trusting the preview, then opened the page in her browser and narrowed the window to check the layout at phone width. The gallery grid overlapped awkwardly at 375px, so she sent the follow-up describing exactly that problem. Codex fixed just that section without touching anything else.\n\nShe swapped in her real photos, connected the form to her email service using the commented instructions, and deployed the files to a free static host that afternoon — about forty minutes total, including two full read-throughs of the code before she trusted it enough to publish."
+    }
+  }
+}

@@ -1,0 +1,354 @@
+{
+  "quizzes": {
+    "dev-b1-choose-the-right-tool": [
+      {
+        "q": "A developer has a well-scoped bug fix they want delegated end-to-end and returned as a reviewable PR, without staying in an interactive session. Which tool does the lesson say best fits this task shape?",
+        "options": [
+          "Codex's cloud tasks, which are built for hand-off work that returns a PR to review",
+          "Cursor's Tab autocomplete, since it's the fastest in-editor option",
+          "Whichever tool the developer already has open",
+          "Whichever tool is cheapest per month"
+        ],
+        "answer": 0,
+        "why": "The lesson matches task shape to tool: a well-scoped bug fix or feature you want delegated end-to-end as a PR favors Codex's cloud tasks, while fast in-editor iteration favors Cursor and deep multi-step reasoning favors Claude Code or Cursor Agent mode."
+      },
+      {
+        "q": "Two tools seem equally well-suited for a task after running the tool-fit checklist. What does the lesson say to do?",
+        "options": [
+          "Always default to the most expensive tool since it's likely more capable",
+          "Ask what would break the tie — often the honest answer is to pick whichever tool is already open",
+          "Run the task in both tools simultaneously every time",
+          "Avoid starting the task until one tool is clearly better"
+        ],
+        "answer": 1,
+        "why": "The checklist explicitly asks what would break a tie, since many real tasks fit two tools reasonably well and the honest answer is often to use whichever is already open."
+      },
+      {
+        "q": "A developer runs deep multi-file exploration in Claude Code and also runs heavy implementation in Cursor for the same single task, without noticing both are drawing from separate paid usage limits. What mistake is this?",
+        "options": [
+          "Using too many keyboard shortcuts",
+          "Failing to write a CLAUDE.md file first",
+          "Ignoring billing overlap between tools consuming separate paid allowances for one task",
+          "Using Plan Mode unnecessarily"
+        ],
+        "answer": 2,
+        "why": "Ignoring billing overlap — running heavy exploration in one tool and heavy implementation in another without noticing both consume separate paid allowances — is a listed common mistake."
+      }
+    ],
+    "dev-b2-understand-a-repo": [
+      {
+        "q": "Why does the repo-tour prompt require the agent to trace one specific, real flow (like a checkout submission) file by file with citations, instead of just giving a general architecture summary?",
+        "options": [
+          "It's the only way an AI agent can read multiple files",
+          "General summaries take longer to generate",
+          "It reduces the number of tokens used",
+          "A concrete, cited trace is directly checkable, since you can open the cited files yourself, unlike an abstract summary"
+        ],
+        "answer": 3,
+        "why": "Tracing one concrete flow end to end is more useful than an abstract summary because it's directly checkable — you can open the cited files yourself and confirm accuracy."
+      },
+      {
+        "q": "After Claude Code provides a guided tour of an unfamiliar repo with cited file paths, what should the developer do before trusting it?",
+        "options": [
+          "Open at least two of the cited file paths themselves and confirm they say what was claimed",
+          "Immediately start making changes based on the tour",
+          "Ask a different AI tool to regenerate the same tour",
+          "Nothing further, since citations are inherently reliable"
+        ],
+        "answer": 0,
+        "why": "Trusting the summary without opening any cited files to check accuracy is a listed common mistake; verifying at least two cited paths yourself is part of the required workflow."
+      },
+      {
+        "q": "Why should exploration mode (read-only, no edits) be kept separate from making changes when first understanding a repo?",
+        "options": [
+          "Read-only mode is required by all coding agents",
+          "Mixing exploration with changes before the mental model is verified risks acting on a wrong understanding of the codebase",
+          "It's faster to explore and edit in the same request",
+          "It prevents the agent from running tests"
+        ],
+        "answer": 1,
+        "why": "Asking the agent to explain and make edits in the same request, mixing exploration with changes before the mental model is verified, is a listed common mistake."
+      }
+    ],
+    "dev-b3-write-specs-for-agents": [
+      {
+        "q": "A ticket says \"add search to the app, make it better UX.\" What is wrong with this as a spec for a coding agent?",
+        "options": [
+          "It's too short to be a valid spec",
+          "It doesn't mention which programming language to use",
+          "\"Better UX\" is an adjective, not a checkable acceptance criterion, forcing the agent to guess scope and behavior",
+          "It should have been written as a user story instead"
+        ],
+        "answer": 2,
+        "why": "Writing acceptance criteria as adjectives like 'better UX' instead of checkable statements is a listed common mistake; vague requests force the agent to guess scope, which is expensive to unwind."
+      },
+      {
+        "q": "Why does the spec template include a \"constraints and non-goals\" section (e.g. \"do not add a new backend endpoint\")?",
+        "options": [
+          "It's optional boilerplate that doesn't affect the outcome",
+          "It's only needed for security-sensitive features",
+          "It makes the spec look more professional",
+          "It prevents the agent from 'helpfully' touching unrelated code or adding infrastructure that wasn't wanted"
+        ],
+        "answer": 3,
+        "why": "Omitting constraints and non-goals lets the agent 'helpfully' touch unrelated code or add infrastructure you didn't want; this is a listed common mistake the constraints section prevents."
+      },
+      {
+        "q": "Why does the workflow ask the agent to show a plan before implementing, using Claude Code's Plan Mode or an explicit 'show me your plan first' request?",
+        "options": [
+          "It lets you catch a wrong approach while it's still cheap to redirect, before any code is written",
+          "Plans are required for the agent's output to be saved",
+          "It reduces the total time the task takes",
+          "It's the only way to see which files will be touched"
+        ],
+        "answer": 0,
+        "why": "Asking for a plan before code lets you catch a wrong approach while it's still cheap to redirect — reviewing a plan costs a sentence, while reviewing a wrong implementation costs a rewrite."
+      }
+    ],
+    "dev-i1-implement-from-spec": [
+      {
+        "q": "The agent reports \"all tests passed\" after implementing a feature. What should you do before merging?",
+        "options": [
+          "Merge immediately, since the agent already ran the tests",
+          "Run the test suite yourself independently before merging, even after the agent reports it passed",
+          "Ask the agent to run the tests a second time in the same session",
+          "Skip testing and just review the diff summary"
+        ],
+        "answer": 1,
+        "why": "Trusting a reported 'tests pass' without running the suite yourself before merging is a listed common mistake; independent verification closes the gap between 'looks done' and 'is done.'"
+      },
+      {
+        "q": "Why is reviewing the actual file-by-file diff more important than reading the agent's prose summary of the changes?",
+        "options": [
+          "Prose summaries are always inaccurate",
+          "The diff is always shorter to read",
+          "Reviewing only the summary can miss out-of-scope edits that a file-by-file diff review would catch",
+          "It's required by most CI systems"
+        ],
+        "answer": 2,
+        "why": "Reviewing only the agent's prose summary of changes instead of the actual diff is a listed common mistake, since it can miss scope creep the summary glosses over."
+      },
+      {
+        "q": "Why does the workflow require approving the implementation plan before letting the agent write any code, rather than approving after implementation?",
+        "options": [
+          "Because plans take longer to write than code",
+          "Because agents cannot write code without a pre-approved plan",
+          "Because it satisfies a legal requirement",
+          "Because a wrong plan is caught before any code exists, while a wrong implementation requires a costly rewrite"
+        ],
+        "answer": 3,
+        "why": "Splitting the request into plan-first, implementation-after-approval creates a cheap checkpoint: redirecting a wrong plan costs a sentence, while redirecting a wrong implementation costs a rewrite."
+      }
+    ],
+    "dev-i2-debug-failing-test": [
+      {
+        "q": "A test asserting a discount equals $18.00 is failing with a value like $17.995999999999995. The agent proposes rounding the value inside the test assertion to make it pass. What's the concern?",
+        "options": [
+          "This may weaken or mask the actual bug (a floating-point currency issue) instead of fixing the real root cause",
+          "None, since the test now passes",
+          "Rounding assertions is always the correct fix for numeric tests",
+          "The test should be deleted instead"
+        ],
+        "answer": 0,
+        "why": "Coding agents can make a red test turn green by weakening the assertion instead of fixing the actual bug; the root cause here may be that currency math should use integer cents, not floats."
+      },
+      {
+        "q": "Why does the debugging prompt require the agent to explain the root cause, citing file and line, before proposing any fix?",
+        "options": [
+          "It's a formatting requirement for the output",
+          "Separating 'explain the cause' from 'write the fix' stops the agent from jumping straight to whatever change makes the test green, which is often the wrong fix",
+          "It reduces the number of tokens used",
+          "Citations are required for legal compliance"
+        ],
+        "answer": 1,
+        "why": "Separating root-cause explanation from the fix into two checkpoints prevents the agent from taking a shortcut that makes the test pass without addressing the real bug."
+      },
+      {
+        "q": "After a fix is applied for a failing test, why should the full test suite be run, not just the one test that was originally failing?",
+        "options": [
+          "Running the full suite is always faster",
+          "It's required to close the pull request",
+          "It catches the case where the fix resolves the original failure by breaking an assumption something else depended on",
+          "It automatically updates the CLAUDE.md file"
+        ],
+        "answer": 2,
+        "why": "Only re-running the one failing test afterward risks missing a regression the fix caused elsewhere; running the full suite catches unintended side effects."
+      }
+    ],
+    "dev-i3-refactor-safely": [
+      {
+        "q": "A module you want refactored has no existing test coverage. What should happen before the refactor begins?",
+        "options": [
+          "Proceed with the refactor and trust the agent's claim that behavior is unchanged",
+          "Skip testing entirely since refactors don't change behavior by definition",
+          "Ask the agent to write new tests for the desired behavior instead",
+          "Stop and add characterization tests first that describe current behavior"
+        ],
+        "answer": 3,
+        "why": "Refactoring a module with no test coverage and treating 'the agent says it's equivalent' as sufficient proof is a listed common mistake; characterization tests describing current behavior must be added first."
+      },
+      {
+        "q": "During a refactor, a step causes a test to fail. The agent offers to adjust the test's assertion so it passes. What should you do?",
+        "options": [
+          "Treat this as a red flag requiring your explicit review, since it may indicate a real behavior change was introduced",
+          "Let the agent adjust the assertion so the refactor can continue smoothly",
+          "Ignore the failure and proceed to the next step anyway",
+          "Revert the entire refactor immediately without investigating"
+        ],
+        "answer": 0,
+        "why": "Allowing test assertions to be adjusted mid-refactor without treating that as a red flag is a listed common mistake; a failing test after a refactor step should stop the process for review, not be silently patched."
+      },
+      {
+        "q": "Why does the safe-refactor workflow apply and verify one step at a time instead of implementing the entire proposed sequence at once?",
+        "options": [
+          "Small steps are always faster to write",
+          "A regression is caught at the specific step that introduced it, rather than buried in a large diff at the end",
+          "It reduces the number of git commits needed",
+          "AI agents cannot handle multi-step refactors in one request"
+        ],
+        "answer": 1,
+        "why": "Breaking the refactor into small, independently verifiable steps means a regression is caught at the step that introduced it, not buried in a large diff after the whole refactor is 'done.'"
+      }
+    ],
+    "dev-i4-generate-tests-that-catch-bugs": [
+      {
+        "q": "An AI-generated test suite reports 95% coverage, but none of the tests fail when a real bug is deliberately introduced. What does this indicate?",
+        "options": [
+          "The coverage percentage proves the tests are high quality",
+          "The bug was too subtle for any test to catch",
+          "The tests likely restate what the code does rather than what it should do, giving false confidence",
+          "Coverage tools are generally unreliable"
+        ],
+        "answer": 2,
+        "why": "AI-generated tests have a well-known failure mode of restating what the code does rather than what it should, so they pass even when the code is wrong — coverage percentage alone doesn't prove quality."
+      },
+      {
+        "q": "Why does the workflow ask the agent to list behaviors and edge cases before writing any test code?",
+        "options": [
+          "It's a required step for all test frameworks",
+          "It reduces the total number of tests needed",
+          "It allows tests to run faster",
+          "It separates 'what should be tested' from 'how to test it,' giving a checkpoint to add domain knowledge the agent can't infer from the code alone"
+        ],
+        "answer": 3,
+        "why": "Listing behaviors and edge cases first creates a cheap checkpoint to add domain-specific rules (like 'discounts never go below zero') that the agent couldn't infer from the code alone."
+      },
+      {
+        "q": "What is the purpose of manually breaking the implementation and confirming a generated test fails, then restoring it?",
+        "options": [
+          "It's the real proof that the test suite is meaningful — if a broken implementation still passes, the whole batch needs re-examination",
+          "It's an optional nice-to-have for extra confidence",
+          "It verifies the code compiles correctly",
+          "It measures how long the test takes to run"
+        ],
+        "answer": 0,
+        "why": "The manual red-green check on at least one test is the real proof of test quality; if breaking the code doesn't cause the test to fail, the whole batch of tests needs re-examination, not just that one."
+      }
+    ],
+    "dev-i5-review-a-pull-request": [
+      {
+        "q": "Codex's automated review approves a PR with no comments. A human reviewer merges it without reading the diff themselves. What is the risk?",
+        "options": [
+          "There is no risk, since automated review is equivalent to human review",
+          "Treating an AI-approved PR as equivalent to a human-approved one risks missing subtle logic or intent problems the agent isn't positioned to catch",
+          "Automated review is always more thorough than human review",
+          "The risk only applies to security-related PRs"
+        ],
+        "answer": 1,
+        "why": "Treating an AI-approved PR as equivalent to a human-approved one and merging without independent verification is the central risk this lesson warns against."
+      },
+      {
+        "q": "Why does the PR-review prompt ask the AI to state whether the diff actually accomplishes what the PR description claims, separately from listing code issues?",
+        "options": [
+          "It's a formatting requirement for GitHub",
+          "It shortens the list of comments needed",
+          "This targets exactly what automated review tends to miss: intent and scope, as opposed to code mechanics",
+          "It's only relevant for open-source repositories"
+        ],
+        "answer": 2,
+        "why": "The explicit 'does the diff match the description' question targets intent and scope mismatches, which automated review — strong on mechanical issues — tends to miss."
+      },
+      {
+        "q": "A PR review returns ten comments: two high-confidence security findings and eight low-confidence style nitpicks. How should a reviewer prioritize their attention?",
+        "options": [
+          "Address all ten comments in the order they were listed",
+          "Ignore all AI comments and review the diff manually instead",
+          "Only address the style nitpicks since they're easier to fix",
+          "Focus on the high-confidence findings first rather than letting low-confidence nitpicks consume equal attention"
+        ],
+        "answer": 3,
+        "why": "Letting low-confidence style nitpicks consume the same attention as high-confidence security findings instead of triaging by severity is a listed common mistake; confidence ratings exist to enable fast triage."
+      }
+    ],
+    "dev-a1-plan-a-migration": [
+      {
+        "q": "Why does this lesson insist on staying in Plan Mode for the entire migration-planning exercise, including the inventory pass?",
+        "options": [
+          "It keeps the cost of a wrong approach at 'edit a document' rather than 'unwind changed code,' removing the temptation to start implementing too early",
+          "Plan Mode is required to search the codebase",
+          "It makes the agent respond faster",
+          "It's only needed for database migrations, not framework upgrades"
+        ],
+        "answer": 0,
+        "why": "Staying in Plan Mode for the entire exercise removes the temptation to start implementing once a plan looks reasonable, keeping the cost of a wrong approach low."
+      },
+      {
+        "q": "Why does the workflow require an inventory pass (searching for usages, dependencies, and integration points) before proposing migration phases?",
+        "options": [
+          "It's a formality that doesn't affect the plan quality",
+          "It grounds the plan in what's actually in the repo instead of a generic textbook migration checklist",
+          "It reduces the number of phases needed",
+          "It replaces the need for a rollback strategy"
+        ],
+        "answer": 1,
+        "why": "The inventory pass grounds the phased plan in an actual inventory of the specific repo, rather than accepting a generic, textbook migration checklist as a listed common mistake warns against."
+      },
+      {
+        "q": "The agent proposes a migration plan with phases, risks, and rollback paths, but has no way to know about an upcoming team reorganization that affects timing. What should the developer do?",
+        "options": [
+          "Trust the plan as complete since the agent covered risk and rollback",
+          "Ask the agent to guess at team capacity based on the codebase",
+          "Add the business and team context only they would know, since the agent's plan can't account for information it wasn't given",
+          "Discard the plan and start the migration without one"
+        ],
+        "answer": 2,
+        "why": "Treating the agent's plan as complete without adding business/team context only the developer knows — like timing or capacity — is a listed common mistake."
+      }
+    ],
+    "dev-a2-repo-guardrails": [
+      {
+        "q": "A team writes \"please don't touch /infra\" as a prompted instruction repeated in individual chat sessions, instead of a CI check or permission setting. What's the risk?",
+        "options": [
+          "No risk, since the instruction is clear enough",
+          "It only matters for open-source repositories",
+          "It slows down the agent's response time",
+          "A prompted instruction can be missed or overridden by a later request in the same session, unlike an enforced check"
+        ],
+        "answer": 3,
+        "why": "Treating a prompted instruction as equivalent to an enforced one (a CI check or permission setting) is a listed common mistake, since prompted instructions can be missed or overridden later in the same session."
+      },
+      {
+        "q": "Why should something that must NEVER happen regardless of what an agent decides — like a push to a protected branch — be enforced with a CI check or permission setting rather than just a note in CLAUDE.md?",
+        "options": [
+          "Enforcement layers run independent of the agent's judgment, while context files are guidance the agent could still override in a later request",
+          "CLAUDE.md files are not read reliably by any tool",
+          "CI checks are always faster than context files",
+          "It's a requirement for every open-source project"
+        ],
+        "answer": 0,
+        "why": "Enforcement (CI/hook checks or permission settings) is for anything that must never happen regardless of agent judgment, while CLAUDE.md/AGENTS.md content is guidance that a later request in the same session could still override."
+      },
+      {
+        "q": "Why does the lesson recommend drafting CLAUDE.md/AGENTS.md content based on what the agent actually finds in the repo, rather than from a generic template?",
+        "options": [
+          "Generic templates are always longer to write",
+          "It produces guardrails specific to this codebase's real risks, like which directories are actually dangerous or which conventions are actually followed",
+          "Templates cannot include off-limits directory lists",
+          "It's required for the file to be read by Codex"
+        ],
+        "answer": 1,
+        "why": "Writing a generic context file from a template instead of one grounded in what's actually true of the specific repo is a listed common mistake; grounding it in real findings produces guardrails tailored to actual risks."
+      }
+    ]
+  }
+}

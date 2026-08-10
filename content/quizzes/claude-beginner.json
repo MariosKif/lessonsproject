@@ -1,0 +1,424 @@
+{
+  "quizzes": {
+    "claude-b1-first-conversation": [
+      {
+        "q": "After getting a first draft agenda from the meeting-prep prompt, a user wants to fix one weak talking point. Should they send the fix in the same chat or open a new one?",
+        "options": [
+          "Stay in the same chat so context carries over",
+          "Starting a new chat is better for a fresh perspective",
+          "A new chat is needed for privacy reasons",
+          "It doesn't matter, context carries either way"
+        ],
+        "answer": 0,
+        "why": "Continuing in the same chat keeps everything already established — the meeting details, goal, and worries — in play, so the follow-up doesn't need to repeat that context; a new chat starts from zero."
+      },
+      {
+        "q": "A user leaves the \"who will be there\" field blank when using the meeting-prep prompt. Given the prompt's explicit instruction, what should Claude most likely do?",
+        "options": [
+          "Silently skip that section of the output",
+          "Ask the user for that information rather than guessing",
+          "Invent plausible attendees based on typical meetings",
+          "Refuse to answer the whole prompt"
+        ],
+        "answer": 1,
+        "why": "The prompt explicitly tells Claude to ask instead of guess when information is missing, so a blank field like 'who will be there' should trigger a clarifying question rather than an invented answer."
+      },
+      {
+        "q": "The first draft agenda is decent, but talking point 2 is too generic. What does the lesson say is the best next move?",
+        "options": [
+          "Start a new chat with more details",
+          "Accept it since first drafts are final",
+          "Rewrite the whole prompt from scratch",
+          "Send a follow-up in the same chat naming exactly what's weak"
+        ],
+        "answer": 3,
+        "why": "The lesson's core rhythm is to treat the first response as a draft, not a verdict — a short follow-up naming exactly what's weak sharpens the result, while restarting or rewriting the whole prompt throws away context for no benefit."
+      }
+    ],
+    "claude-b2-professional-prompts": [
+      {
+        "q": "A colleague writes only \"Act as the world's best marketing consultant\" with no situational context and expects a sharp, specific answer. What's the issue?",
+        "options": [
+          "The role should be placed first, not last, in the prompt",
+          "Nothing is wrong; a strong role alone guarantees a great answer",
+          "Role amplifies context but doesn't replace it — without context the answer will still be generic",
+          "Claude cannot process custom roles at all"
+        ],
+        "answer": 2,
+        "why": "The lesson states role amplifies context, it doesn't replace it — a role without concrete situational context still produces a generic answer."
+      },
+      {
+        "q": "A user adds the constraint \"be accurate and helpful\" to their prompt, hoping it will improve the output. What's wrong with this?",
+        "options": [
+          "It will make Claude refuse to answer",
+          "It's a vague instruction about the model itself, not the work — concrete limits like word counts or citation rules actually shape output",
+          "It should be listed under ROLE instead of CONSTRAINTS",
+          "It will make the response shorter than intended"
+        ],
+        "answer": 1,
+        "why": "Vague meta-instructions like 'be accurate and helpful' don't change what the model does; concrete, checkable limits (word counts, citation rules, things to avoid) are what actually shape output."
+      },
+      {
+        "q": "A user writes one giant prompt asking for a marketing plan, a budget breakdown, a competitor analysis, and a launch email all at once. What does the lesson recommend instead?",
+        "options": [
+          "Combine them but skip the constraints section since there's already a lot going on",
+          "Only the role should be split across prompts; the rest can stay combined",
+          "This is fine as long as the format section lists all four outputs",
+          "Split into one prompt per deliverable and chain follow-ups for the rest"
+        ],
+        "answer": 3,
+        "why": "The lesson recommends one prompt, one deliverable, with follow-ups chaining the rest — cramming several tasks into a single prompt tends to produce a shallower result on all of them."
+      }
+    ],
+    "claude-b3-rewrite-and-tone": [
+      {
+        "q": "A colleague asks Claude to make a client email \"warmer\" without specifying what must stay the same. The rewrite turns \"we cannot refund this\" into \"we'll see what we can do.\" What went wrong?",
+        "options": [
+          "Claude randomly hallucinated content unrelated to the request",
+          "The colleague skipped the fact-preservation guardrail, so the tone change silently altered the actual commitment or legal position",
+          "This is expected and not actually a problem since the tone is nicer",
+          "The draft was too short for an accurate rewrite"
+        ],
+        "answer": 1,
+        "why": "Without the 'must not change' guardrail, a tone-focused rewrite can quietly soften or alter the actual substance — turning a firm refusal into an ambiguous one changes your legal or business position, not just your tone."
+      },
+      {
+        "q": "What is the main purpose of asking Claude to include a change log alongside a rewrite?",
+        "options": [
+          "To make the response look more thorough",
+          "It's required before Claude can process any rewrite",
+          "To let you scan a short diff instead of re-reading both full texts, catching any meaning shift quickly",
+          "To confirm Claude used its analysis tool"
+        ],
+        "answer": 2,
+        "why": "The change log turns review into scanning a short diff instead of re-reading two full texts, and asking Claude to flag possible meaning shifts recruits it into catching its own drift."
+      },
+      {
+        "q": "A user is on rewrite version 5 of an email, and version 3 wasn't clearly better than version 2. What does the lesson recommend?",
+        "options": [
+          "Keep iterating until version 10 to be thorough",
+          "Switch tone targets entirely and start over",
+          "Ask Claude to merge all 5 versions into one",
+          "Take the best earlier version and finish it by hand rather than continuing to iterate"
+        ],
+        "answer": 3,
+        "why": "The lesson warns against iterating past the peak — if a new version isn't clearly better than the last one, take the better version and finish it by hand rather than continuing to churn."
+      }
+    ],
+    "claude-b4-summarize-long-document": [
+      {
+        "q": "Two people upload the same lease contract. One says \"summarize this for a buyer deciding whether to sign,\" the other just says \"summarize this.\" Why will their outputs differ meaningfully?",
+        "options": [
+          "They won't differ; summaries are always neutral regardless of stated purpose",
+          "Stating the role and decision lets Claude weigh clauses, like penalties, according to what matters for that situation, producing a targeted brief instead of a generic abstract",
+          "Only the second prompt will work, since adding a role confuses Claude",
+          "Document length, not the prompt, is what determines the difference"
+        ],
+        "answer": 1,
+        "why": "Stating the reader's role and the decision at stake lets Claude weight clauses according to what matters for that situation — the same clause reads as a risk for one party and a non-issue for the other, so a generic prompt produces a generic, less useful abstract."
+      },
+      {
+        "q": "A user gets a summary with a page citation for a termination-penalty claim, considers that proof enough, and signs the lease without opening the document. What mistake did they make?",
+        "options": [
+          "None — a citation is a substitute for verification once the page number is given",
+          "They should have asked for a longer summary instead",
+          "Citations make verification fast, but they don't replace actually checking the passage before decisions with real money or legal weight",
+          "They should have uploaded the document as an image instead of a PDF"
+        ],
+        "answer": 2,
+        "why": "Citations make a claim checkable in seconds, but checking is still the user's job — especially before decisions involving money or legal weight, which is exactly why the lesson calls out skipping the spot-check as a common mistake."
+      },
+      {
+        "q": "After reading the four-section brief, what does the lesson say is the most valuable next move?",
+        "options": [
+          "Immediately request a completely different type of summary",
+          "Close the chat since the brief is the final deliverable",
+          "Re-upload the same document a second time for a different perspective",
+          "Ask Claude to drill into the specific section that matters most, e.g. exact notice periods in a termination clause"
+        ],
+        "answer": 3,
+        "why": "The lesson stresses that the brief tells you where to dig, and the real decision-making value is in the follow-up drill-down questions, not in stopping at the initial summary."
+      }
+    ],
+    "claude-b5-extract-structured-data": [
+      {
+        "q": "A colleague extracts data without the \"Not stated\" rule and ends up with a table where every cell is filled in, looking complete. What's the likely problem?",
+        "options": [
+          "The table is more useful because it has no blanks",
+          "Nothing — Claude only ever writes text explicitly present in the source",
+          "Without the rule, missing values may have been filled with plausible-looking guesses; a complete-looking table is not the same as a correct one",
+          "The table will contain error messages instead of data"
+        ],
+        "answer": 2,
+        "why": "Language models are completion machines, so an empty field invites a plausible-looking guess; a table that looks fully complete can still have a chunk of invented values unless the 'Not stated' rule was used."
+      },
+      {
+        "q": "Which column definition is most likely to produce inconsistent results across rows?",
+        "options": [
+          "\"Deadline (YYYY-MM-DD, or Not stated)\"",
+          "\"Status\" with no further definition",
+          "\"Budget mentioned (number only, or Not stated)\"",
+          "\"Urgency: high / medium / low — based only on explicit wording\""
+        ],
+        "answer": 1,
+        "why": "'Status' with no further definition leaves Claude to guess what counts as which status, producing inconsistent judgment calls row to row — precise definitions like 'based only on explicit wording' remove that ambiguity."
+      },
+      {
+        "q": "Claude keeps extracting the email date instead of the client-mentioned deadline across many rows. What's the right fix per the lesson?",
+        "options": [
+          "Refine the field definition itself (e.g., clarify what \"deadline\" means) so the fix applies to every future run",
+          "Manually correct each wrong cell in the output table",
+          "Abandon extraction and do it manually going forward",
+          "Reduce the number of columns to avoid confusion"
+        ],
+        "answer": 0,
+        "why": "Correcting the field definition fixes the systematic cause of the error so it doesn't recur on the next run, whereas fixing cells by hand only patches this one output and leaves the same mistake waiting for next time."
+      }
+    ],
+    "claude-b6-emails-from-bullets": [
+      {
+        "q": "Instead of listing bullets, a user just types \"write an email declining a project\" and lets Claude decide the reasons and details. What's the risk?",
+        "options": [
+          "There is no risk; this is the intended way to use the prompt",
+          "Claude will refuse since no bullets were given",
+          "Claude ends up deciding your reasons and concessions, which is backwards from how the technique is meant to work",
+          "The email will come out too short to be usable"
+        ],
+        "answer": 2,
+        "why": "Bullets keep authorship with the user — when you hand Claude only a topic, it has to invent the actual reasons and concessions, which is exactly the reversal the lesson warns against."
+      },
+      {
+        "q": "Why does the prompt explicitly instruct Claude to add nothing substantive beyond the listed bullets?",
+        "options": [
+          "To keep the email under the word limit only",
+          "Because otherwise Claude might append new commitments or concessions, like offering a call, that change what you're actually offering",
+          "Because Claude cannot generate more than four bullet points at once",
+          "It's mainly stylistic and has no real consequence"
+        ],
+        "answer": 1,
+        "why": "Helpful-sounding additions like a new offer or extra concession can quietly change what you're actually committing to; the 'add nothing substantive' rule keeps every commitment traceable back to something you decided."
+      },
+      {
+        "q": "What is the last step the lesson recommends before actually sending the email?",
+        "options": [
+          "Ask Claude for a third version in a different tone",
+          "Translate the email into another language to check for errors",
+          "Forward it to a colleague for pre-approval automatically",
+          "Give it one final human read to confirm you'd stand behind every word, since you're responsible for it"
+        ],
+        "answer": 3,
+        "why": "You're responsible for every word that goes out under your name, so the lesson's last step before sending is always a final human read, even after picking the best AI-drafted version."
+      }
+    ],
+    "claude-b7-iterate-with-followups": [
+      {
+        "q": "Why does a short follow-up like \"half the length, keep the table\" work well in an ongoing chat?",
+        "options": [
+          "Because Claude re-reads the entire internet each time to fill gaps",
+          "The conversation retains everything already established — context, constraints, rejected directions — so the short instruction carries all of that forward",
+          "Because short instructions are processed in a different, faster mode",
+          "It doesn't actually work well; longer follow-ups are always required"
+        ],
+        "answer": 1,
+        "why": "A conversation retains everything already established, so referring back to it briefly ('half the length, keep the table') is enough — the model doesn't need the context restated because it's already state in the chat."
+      },
+      {
+        "q": "A user asks Claude to make a draft \"shorter, funnier, more formal, and restructured\" all in one follow-up. What problem does this create?",
+        "options": [
+          "Claude will only apply the first instruction and ignore the rest",
+          "This is the recommended approach and produces the fastest improvement",
+          "Changing several dimensions at once makes it impossible to tell which change actually helped, unlike adjusting one dial at a time",
+          "It causes Claude to lose the original context of the conversation"
+        ],
+        "answer": 2,
+        "why": "Changing several dimensions in one follow-up makes it impossible to tell which change actually improved things, which is why the lesson recommends adjusting one dial at a time."
+      },
+      {
+        "q": "After many rounds of contradicting follow-ups, Claude keeps resurrecting ideas the user already rejected. What does the lesson recommend?",
+        "options": [
+          "Keep pushing through in the same chat since restarting always loses context",
+          "Switch to asking for a self-critique instead",
+          "Ask Claude to ignore its previous messages in the same chat",
+          "Open a fresh chat, pasting in only the good final pieces plus the original context"
+        ],
+        "answer": 3,
+        "why": "When a long chat is littered with rejected, resurfacing ideas, the lesson's advice is to start a clean chat seeded only with the surviving good material and original context, rather than fighting the accumulated contradictions."
+      }
+    ],
+    "claude-b8-projects-standing-context": [
+      {
+        "q": "Why does the project instructions template say to use knowledge files as the source of truth and ask instead of inventing when they don't cover something?",
+        "options": [
+          "It's boilerplate with no real functional effect",
+          "It tells Claude your uploaded files outrank its general knowledge, so gaps produce a question instead of a plausible-sounding invented price or fact",
+          "It's only relevant for legal documents, not day-to-day writing",
+          "It prevents Claude from using any of the uploaded knowledge files"
+        ],
+        "answer": 1,
+        "why": "That line makes the uploaded files outrank Claude's general knowledge and turns a gap into a question rather than a confident, invented detail about your prices or services."
+      },
+      {
+        "q": "A user creates a single project called \"Everything\" and uploads files for three different clients into it. What's the likely consequence?",
+        "options": [
+          "Faster responses since Claude has more context available",
+          "No consequence, since Claude cleanly separates different clients automatically",
+          "Mixed contexts producing mixed-up outputs, since Claude can't tell which client's tone or prices apply",
+          "Claude will refuse to respond until the project is split"
+        ],
+        "answer": 2,
+        "why": "A single project spanning unrelated streams of work mixes contexts, so Claude can't reliably tell which client's tone, prices, or facts apply — the lesson recommends one project per stream of work instead."
+      },
+      {
+        "q": "A chat reveals that a project is missing an important pricing detail. What's the recommended fix?",
+        "options": [
+          "Mention the detail again in every future chat as needed",
+          "Create a brand-new project just for that one fact",
+          "Ignore it since one missing detail rarely matters",
+          "Add the detail to the project instructions or files so every future chat in that project benefits"
+        ],
+        "answer": 3,
+        "why": "Fixing a gap in the project instructions or files means every future chat in that project benefits, which is the maintenance habit the lesson says is what makes projects improve over time."
+      }
+    ],
+    "claude-b9-analyze-spreadsheet": [
+      {
+        "q": "Why does the prompt insist on an orientation-only pass, covering columns, shape, and data-quality issues, before asking any real questions?",
+        "options": [
+          "It's a formality that slows the analysis down unnecessarily",
+          "Because most bad analyses fail at the reading stage — a mislabeled column or misunderstood units can invalidate everything computed afterward, so confirming column meaning first is a checkpoint",
+          "Claude cannot run calculations until it has asked at least two questions",
+          "It's needed only for Excel files, not CSVs"
+        ],
+        "answer": 1,
+        "why": "Most bad analyses fail at the reading stage — a misread or mislabeled column invalidates everything computed afterward — so confirming Claude's understanding of the columns before any conclusions is the safety checkpoint."
+      },
+      {
+        "q": "A user is told \"revenue grew 23%\" and takes the figure straight into a report without asking anything further. What's the risk?",
+        "options": [
+          "None, since Claude always shows its work by default",
+          "The risk only applies to CSV files, not Excel files",
+          "23% could mean different things depending on the base, the time period, and how it was computed, so without asking for the method the number could easily be misapplied",
+          "Percentages from Claude's analysis tool are always independently verified already"
+        ],
+        "answer": 2,
+        "why": "A percentage like '23%' is meaningless without knowing the base, period, and calculation method; asking for the method behind it is what makes the number auditable rather than just plausible-sounding."
+      },
+      {
+        "q": "What does the lesson recommend as a final step before trusting a key figure from the analysis?",
+        "options": [
+          "Cross-check at least one key figure against a source outside Claude that you already know independently, like last month's revenue from accounting software",
+          "Ask Claude to recompute the same figure a second time in the same chat",
+          "Convert the file to a different format and re-upload it",
+          "Request the figure be rounded to reduce apparent precision"
+        ],
+        "answer": 0,
+        "why": "One figure checked against a source you trust independently (like accounting software) validates the whole analysis pipeline — the lesson calls this a non-negotiable step, not an optional extra."
+      }
+    ],
+    "claude-b10-research-with-web-search": [
+      {
+        "q": "A user gets a cited web-search summary about current freelance rates and immediately uses the top figure to set prices, without opening any source. What's the mistake?",
+        "options": [
+          "There is no mistake — citations mean the claim has already been verified",
+          "They should have asked for more citations instead of just one per claim",
+          "Citations make checking possible, but don't make it done — load-bearing claims should be opened and confirmed, including checking the date",
+          "They should have disabled web search and relied on Claude's own knowledge instead"
+        ],
+        "answer": 2,
+        "why": "Citations make verification possible, not automatic — the lesson's habit is to click through and confirm load-bearing claims (and their dates) before acting on them, since a fluent summary can still repeat one source's error."
+      },
+      {
+        "q": "Two sources give different current rates, and the user asks Claude to just give \"the one right number.\" What does the lesson say about this approach?",
+        "options": [
+          "It's the correct approach — a single number is always more actionable than a range",
+          "Forcing a single number produces false precision; the honest answer is often a range showing where sources disagree, not an average",
+          "Claude will automatically pick whichever source is most recent, so this is fine",
+          "This only matters for legal research, not pricing research"
+        ],
+        "answer": 1,
+        "why": "Forcing a single number produces false precision; the lesson recommends showing the range where sources disagree instead of averaging it away, since that's more honest about how real-world data looks."
+      },
+      {
+        "q": "A user wants general advice on \"how to structure a business proposal,\" something that doesn't change day to day, and turns web search on for it anyway. What does the lesson suggest?",
+        "options": [
+          "This is the ideal use case for web search",
+          "Web search is required by default for any professional-quality answer",
+          "Web search should always be on for every question just in case",
+          "Search is best reserved for facts that change; for timeless how-to questions it can produce slower answers built from mediocre articles instead of Claude's own stronger synthesis"
+        ],
+        "answer": 3,
+        "why": "Web search is for facts that change; for timeless how-to questions it can slow things down by assembling an answer from mediocre articles instead of drawing on Claude's own stronger synthesis."
+      }
+    ],
+    "claude-b11-reusable-prompt-templates": [
+      {
+        "q": "Why does the template-builder prompt ask you to paste your best past prompt including your follow-up corrections, rather than starting from a blank idea of the task?",
+        "options": [
+          "Corrections are irrelevant; only the original prompt matters",
+          "The follow-up corrections are compressed knowledge — each one marks where the naive prompt failed, so baking them into the template avoids repeating known mistakes",
+          "It's only necessary when the task involves numbers or data",
+          "Claude requires at least two prior messages before it can generate anything"
+        ],
+        "answer": 1,
+        "why": "Follow-up corrections mark exactly where the original prompt failed, so baking them into the template's permanent instructions means those mistakes are fixed once instead of repeating every time the task recurs."
+      },
+      {
+        "q": "Which placeholder is most likely to get filled in lazily and produce a weak result?",
+        "options": [
+          "[WHAT SHIPPED THIS WEEK - 2-5 bullets, specific]",
+          "[CLIENT NAME]",
+          "[DETAILS]",
+          "[DEADLINE - YYYY-MM-DD, or \"none\"]"
+        ],
+        "answer": 2,
+        "why": "A bare placeholder like [DETAILS] gives no guidance on what to include, so it invites a lazy, thin answer — placeholders with a short hint about content and specificity extract better input."
+      },
+      {
+        "q": "A user has done a particular type of task exactly once and immediately wants to turn it into a template. What does the lesson recommend?",
+        "options": [
+          "Templates encode learning from repetition; with only one data point there's nothing yet to encode, so prompt freely first and template once the task recurs",
+          "Build the template right away since earlier is always better",
+          "Wait until the task has been done at least five times before considering a template",
+          "Templates should only be built by asking a colleague, not Claude"
+        ],
+        "answer": 0,
+        "why": "Templates encode learning from repetition; on a task done only once, there are no corrections or patterns yet to bake in, so the lesson says to prompt freely first and template once the task actually recurs."
+      }
+    ],
+    "claude-b12-personal-workflow": [
+      {
+        "q": "Why does the workflow-audit prompt explicitly ask Claude to name 1-2 tasks where it is a POOR fit, instead of only asking for time-saving opportunities?",
+        "options": [
+          "It's just there for balance and has no real effect on the answer",
+          "Forcing an honest accounting of poor fits prevents the trap of routing everything through Claude, where forced use cases fail and erode trust in the tasks that genuinely work",
+          "Poor-fit tasks are the ones Claude should be used for the most",
+          "This part of the prompt is only relevant for technical roles"
+        ],
+        "answer": 1,
+        "why": "Naming poor fits directly prevents the trap of forcing Claude onto every task — forced use cases fail and erode trust in the default tasks that genuinely work well."
+      },
+      {
+        "q": "A user finishes the course, feels excited, and immediately upgrades to the most expensive plan without checking their actual usage. What does the lesson say about this?",
+        "options": [
+          "This is the recommended approach — enthusiasm is a reliable signal for the right plan",
+          "Higher-tier plans are always worth it regardless of usage volume",
+          "The plan choice doesn't matter since all tiers offer identical features",
+          "Plan choice should be driven by hitting actual Free or Pro limits and the audit's volume reasoning, not by enthusiasm"
+        ],
+        "answer": 3,
+        "why": "The lesson explicitly warns against upgrading based on enthusiasm; plan choice should follow from actually hitting Free or Pro's usage limits and the audit's volume reasoning, not excitement after finishing a course."
+      },
+      {
+        "q": "What is described as the course's \"real deliverable,\" and what keeps it working over time?",
+        "options": [
+          "A list of memorized prompt techniques, refreshed monthly from the lesson content",
+          "A subscription to the highest-tier plan, reviewed annually",
+          "A written one-page personal workflow (default tasks, templates, projects, plan, review day), kept alive by a recurring short weekly review",
+          "A single perfect prompt template that never needs to change"
+        ],
+        "answer": 2,
+        "why": "The lesson frames the written one-page workflow, kept current by a short recurring review, as the course's real deliverable — intentions that only exist as a mental note tend to dissolve within weeks."
+      }
+    ]
+  }
+}

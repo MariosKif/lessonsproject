@@ -1,0 +1,284 @@
+{
+  "quizzes": {
+    "cur-b1-setup-tab-autocomplete": [
+      {
+        "q": "While renaming a variable, Tab highlights a suggestion at a different location in the file that you weren't expecting. What should you do?",
+        "options": [
+          "Always press Tab automatically - predicted edits are always correct",
+          "Read the full suggestion before accepting - it may extend the rename to a similarly-named but unrelated variable",
+          "Immediately press Esc without reading, since any jump means the suggestion is wrong",
+          "Close and restart Cursor to reset the suggestion"
+        ],
+        "answer": 1,
+        "why": "Tab predicts your next several edits and can jump to another location in the file; a plausible-looking prediction isn't automatically correct, so reading it before accepting matters."
+      },
+      {
+        "q": "Why does the lesson recommend practicing Tab on a project you already know well, rather than an unfamiliar one?",
+        "options": [
+          "Tab technically doesn't function on unfamiliar codebases",
+          "Tab only builds its predictions from projects you've indexed previously",
+          "You need to be able to judge whether a suggestion is actually correct, which you can't do on code you don't understand",
+          "It's simply faster to demo on a project you already know"
+        ],
+        "answer": 2,
+        "why": "Practicing on a project you already know lets you judge suggestion quality directly instead of trusting output you can't yet evaluate."
+      },
+      {
+        "q": "What is Tab explicitly NOT designed to do, per the lesson?",
+        "options": [
+          "Predict follow-on edits after you make one manual change",
+          "Understand your intent from a plain-language description alone, with no edit yet started",
+          "Let you jump between several predicted edit sites",
+          "Operate across an entire file rather than just the current line"
+        ],
+        "answer": 1,
+        "why": "Expecting Tab to understand intent from nothing is a listed common mistake - it predicts from an edit pattern you start, not from a description of what you want."
+      }
+    ],
+    "cur-b2-chat-with-codebase": [
+      {
+        "q": "Why should you wait for codebase indexing to finish before asking Chat detailed architecture questions?",
+        "options": [
+          "Indexing is purely cosmetic and has no effect on answer quality",
+          "Chat searches semantically across the whole project once indexed; asking too early produces a thinner or stale answer",
+          "Cursor technically blocks the Chat panel entirely until indexing completes",
+          "Indexing only affects Tab's suggestions, not Chat's answers"
+        ],
+        "answer": 1,
+        "why": "Asking broad questions before indexing has finished is a listed common mistake, since Chat's semantic search depends on the index being complete."
+      },
+      {
+        "q": "What does explicitly @-mentioning a specific folder in a Chat question accomplish?",
+        "options": [
+          "It's purely cosmetic formatting with no functional effect",
+          "It disables Chat's semantic search for that question",
+          "It grounds the answer in exactly those files rather than a more generic, plausible-sounding explanation",
+          "It automatically switches Chat into an edit mode"
+        ],
+        "answer": 2,
+        "why": "@-mentioning files or folders grounds the answer in Cursor's semantic index of your actual code, rather than a generic explanation the codebase might not actually support."
+      },
+      {
+        "q": "Chat gives you a codebase tour with several cited file paths. What should you do before trusting it fully?",
+        "options": [
+          "Immediately ask Chat to start making edits based on the tour in the same thread",
+          "Nothing further is needed, since Chat already cited real paths",
+          "Discard the tour entirely and redo the exploration using Agent mode instead",
+          "Open at least two of the cited files yourself to verify the explanation is accurate"
+        ],
+        "answer": 3,
+        "why": "Trusting the explanation without opening any cited file is a listed common mistake; spot-checking two files confirms the tour matches the real code before you rely on it."
+      }
+    ],
+    "cur-i1-inline-edit-multi-file": [
+      {
+        "q": "You need to rename a shared TypeScript type used across 11 files. Which tool best fits this task?",
+        "options": [
+          "Inline edit (Cmd+K), run separately 11 times",
+          "A multi-file edit describing the full rename across the project, reviewed file by file",
+          "Tab, since it automatically predicts follow-on edits everywhere in the project",
+          "None of Cursor's tools - this kind of rename must be done manually"
+        ],
+        "answer": 1,
+        "why": "Multi-file edits coordinate a change across many files at once; doing 11 separate inline-edit reviews would waste time that a single coordinated, per-file-reviewed diff handles directly."
+      },
+      {
+        "q": "A multi-file edit correctly updates 10 files but incorrectly also renamed an unrelated local variable in the 11th. What's the recommended response?",
+        "options": [
+          "Reject the entire batch and restart the whole task from scratch",
+          "Accept all 11 files since the large majority are correct",
+          "Accept the 10 correct files and reject just the one wrong file, then send a targeted correction for it",
+          "Manually redo all 11 files by hand to be safe"
+        ],
+        "answer": 2,
+        "why": "You can accept or reject changes per file rather than as one unit - rejecting only the wrong file and sending a targeted correction avoids throwing out a mostly-correct change."
+      },
+      {
+        "q": "Why is inline edit (Cmd+K) the better choice for adding one optional parameter to a single function signature, rather than a multi-file edit?",
+        "options": [
+          "Inline edit is scoped to the selection or current file, producing a tightly scoped diff you can read at a glance",
+          "Multi-file edit is technically incapable of touching function signatures",
+          "Inline edit must always run before any multi-file edit is allowed to start",
+          "There is no real functional difference between the two tools"
+        ],
+        "answer": 0,
+        "why": "Using multi-file edits for a one-line, local fix is a listed common mistake - inline edit handles it faster with a smaller, easier-to-review diff."
+      }
+    ],
+    "cur-i2-agent-mode-whole-tasks": [
+      {
+        "q": "Ten minutes into an Agent-mode task, you notice it's clearly heading in the wrong direction. What should you do?",
+        "options": [
+          "Wait until it reports done, then review the entire diff at once",
+          "Interrupt it early - redirecting mid-task is cheaper than reviewing a finished wrong diff",
+          "Let it keep going, since interrupting an Agent session isn't actually supported",
+          "Close Cursor entirely and start a brand-new session"
+        ],
+        "answer": 1,
+        "why": "Letting Agent run unsupervised through an ambiguous or wrong-direction task instead of interrupting early is a listed common mistake."
+      },
+      {
+        "q": "Why does the newsletter-validation task spec instruct Agent to check for an existing validation pattern before writing new logic?",
+        "options": [
+          "It's required syntax that all Agent-mode prompts must include",
+          "Doing so intentionally slows the task down to improve the result",
+          "It prevents duplicate, inconsistent validation logic when a reusable pattern already exists in the codebase",
+          "It has no real effect on the resulting diff"
+        ],
+        "answer": 2,
+        "why": "Checking for and reusing an existing utility, rather than writing new logic from scratch, avoids duplicated and inconsistent approaches to the same problem."
+      },
+      {
+        "q": "When does the lesson say it's worth deliberately choosing a flagship model over Auto in Agent mode?",
+        "options": [
+          "For architecture-sensitive or ambiguous work, since flagship models handle harder judgment calls at a higher usage-credit cost",
+          "Always, for every single task regardless of complexity",
+          "Never - Auto is described as sufficient for all cases",
+          "Only for one-line formatting fixes"
+        ],
+        "answer": 0,
+        "why": "The lesson frames model choice as a cost lever: Auto suits routine, well-scoped tasks, while a flagship model is reserved for architecture-sensitive or ambiguous work."
+      }
+    ],
+    "cur-i3-rules-files-conventions": [
+      {
+        "q": "Your team keeps getting default-exported components and swallowed errors from Agent-generated code, despite repeating the convention in prompts. What's the better fix?",
+        "options": [
+          "Keep repeating the convention manually in every future prompt",
+          "Write it once as a .cursor/rules/*.mdc file with alwaysApply: true, so it's applied to every future task automatically",
+          "Switch away from Cursor to a different AI coding tool",
+          "Disable Agent mode and rely only on Tab going forward"
+        ],
+        "answer": 1,
+        "why": "Rules files exist precisely so a team encodes a convention once instead of re-explaining it in every prompt - alwaysApply makes it ambient across every task."
+      },
+      {
+        "q": "What happens to a legacy root .cursorrules file when Agent mode runs?",
+        "options": [
+          "It continues to work exactly as it always did",
+          "Agent mode ignores it entirely - it must be migrated into .cursor/rules/*.mdc files",
+          "Cursor automatically converts it to the new format on first use",
+          "It applies only to Tab suggestions, not to Agent tasks"
+        ],
+        "answer": 1,
+        "why": "The lesson explicitly warns that legacy root .cursorrules files no longer work with Agent mode, and that leaving one in place unmigrated is a common mistake."
+      },
+      {
+        "q": "Why does the lesson recommend citing a real file, like src/lib/logging.ts, inside a rule instead of describing the pattern abstractly?",
+        "options": [
+          "File citations are a required part of the .mdc syntax",
+          "It gives Agent something concrete to imitate rather than an adjective to interpret",
+          "It reduces the overall size of the rule file",
+          "It's purely for documentation and has no effect on generated output"
+        ],
+        "answer": 1,
+        "why": "Writing rules as vague aspirations instead of concrete, checkable conventions with a real file reference is a listed common mistake - a cited real file gives the Agent something specific to imitate."
+      }
+    ],
+    "cur-i4-debugging-workflows": [
+      {
+        "q": "Agent proposes a fix that makes a failing test pass by loosening its assertion. How should this be judged?",
+        "options": [
+          "This is an acceptable minimal fix, since the test technically passes now",
+          "This is the exact risky shortcut the lesson warns against - it redefines correctness rather than fixing the underlying code",
+          "It's fine as long as no one notices the change",
+          "This is the lesson's recommended approach for stubborn bugs"
+        ],
+        "answer": 1,
+        "why": "An agent under pressure to make an error go away can take the fastest route, like loosening an assertion - the lesson explicitly frames this as patching the symptom instead of the cause."
+      },
+      {
+        "q": "Before proposing any fix, what must Agent do first per the lesson's process?",
+        "options": [
+          "Immediately implement whichever fix looks most obvious",
+          "Actually reproduce the failure by running the command in the terminal and confirm it sees the same error",
+          "Skip reproduction whenever the stack trace looks familiar",
+          "Ask a teammate to reproduce the issue instead"
+        ],
+        "answer": 1,
+        "why": "Requiring Agent to reproduce the failure itself, not just read the pasted trace, rules out a fix based on a misread of the error."
+      },
+      {
+        "q": "If BugBot (automated review) flags a comment on your fix, what's the recommended response?",
+        "options": [
+          "Treat it as mandatory and apply it without question",
+          "Treat it as a second check, not the final word - triage explicitly as fix or reject-with-reason, the same discipline as a human reviewer's comment",
+          "Ignore every BugBot comment by default as noise",
+          "Disable BugBot on the repository after the very first false positive"
+        ],
+        "answer": 1,
+        "why": "The proTip explicitly instructs treating automated review comments the same way you'd treat a human reviewer's - with deliberate, explicit triage, not blanket acceptance or dismissal."
+      }
+    ],
+    "cur-a1-background-cloud-agents": [
+      {
+        "q": "You want to dispatch three tasks as background/cloud agents to run in parallel. What must be true of them?",
+        "options": [
+          "They should all touch the same core file for consistency",
+          "They must be independent and not touch the same files, since overlapping edits create conflicts you'll have to resolve manually",
+          "They should be as ambiguous as possible so the agent can use its own judgment",
+          "They must all be configured to use the exact same model"
+        ],
+        "answer": 1,
+        "why": "Background and cloud agents run unsupervised and in parallel - dispatching tasks that touch overlapping files creates merge conflicts between two supposedly 'independent' agents."
+      },
+      {
+        "q": "A cloud agent reports its task completed and that tests passed. What should you do before merging the result?",
+        "options": [
+          "Trust the report and merge directly from the cloud environment",
+          "Pull the result down locally and run your own build/test suite before merging",
+          "Merge immediately, since cloud agents are described as always accurate",
+          "Re-dispatch the identical task again just to double-check"
+        ],
+        "answer": 1,
+        "why": "Trusting a cloud agent's own claim that tests passed without rerunning them yourself locally is a listed common mistake."
+      },
+      {
+        "q": "Which kind of task should be reserved for a live, supervised Agent session instead of background/cloud dispatch?",
+        "options": [
+          "Adding unit tests to an already well-understood utility function",
+          "Genuinely ambiguous or high-stakes work, since no one is present to clarify mid-run",
+          "A minor, isolated dependency version bump",
+          "Adding JSDoc comments to existing exported functions"
+        ],
+        "answer": 1,
+        "why": "The lesson explicitly reserves genuinely ambiguous or high-stakes work for a live, interruptible session rather than unsupervised background/cloud dispatch."
+      }
+    ],
+    "cur-a2-feature-delivery-workflow": [
+      {
+        "q": "Before starting implementation on a new ticket, what should you check against your existing .cursor/rules/ files?",
+        "options": [
+          "Nothing - rules only matter after implementation is finished",
+          "Whether the task exposes a convention that isn't documented yet - if so, add it to a rule file before starting, not after",
+          "Whether the rules folder currently has too many files in it",
+          "Whether any rules need to be deleted before this particular task"
+        ],
+        "answer": 1,
+        "why": "The pipeline explicitly calls for confirming Rules already cover relevant conventions, and adding any missing one before starting rather than after the fact."
+      },
+      {
+        "q": "Why does the pipeline require Agent to run the real build/test/lint commands and paste actual output, rather than accepting a claim?",
+        "options": [
+          "It's a formality with no practical benefit",
+          "It closes the gap between 'Agent says it works' and demonstrated proof - a claim is never accepted on its own",
+          "It's only necessary for tasks dispatched to the cloud",
+          "It replaces the need for a final human read-through of the diff"
+        ],
+        "answer": 1,
+        "why": "The pipeline states plainly: never accept a claim that it works - real pasted output from the actual commands is what's required."
+      },
+      {
+        "q": "Even after every automated checkpoint (plan, diff review, verified tests, review triage) looks clean, what final step does the lesson insist on?",
+        "options": [
+          "None - the automated checkpoints are considered sufficient at that point",
+          "A final personal read of the complete diff yourself, since you are the author of record",
+          "Re-running Agent from scratch on the same task to cross-check the result",
+          "Disabling BugBot immediately before the PR is merged"
+        ],
+        "answer": 1,
+        "why": "The lesson insists on a final personal read of the full diff even when every earlier checkpoint looked clean, because you remain the author of record for what ships."
+      }
+    ]
+  }
+}

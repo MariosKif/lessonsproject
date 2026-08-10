@@ -1,0 +1,769 @@
+{
+  "enrichment": {
+    "ecom-b1-product-descriptions-that-sell": {
+      "placeholders": [
+        {
+          "name": "PRODUCT NAME",
+          "what": "The exact product name as it will appear on your store listing or ad. Use the actual title you sell under, not a generic category name, so the description reads specifically about this item.",
+          "examples": ["Lodge 10.25-inch Pre-Seasoned Cast Iron Skillet", "Bluetooth Noise-Cancelling Over-Ear Headphones — Model AH-200", "Organic Cotton Waffle-Knit Bath Towel Set (4-Piece)"]
+        },
+        {
+          "name": "PASTE SPECS: materials, dimensions, weight, what it does, what's included, certifications/test results",
+          "what": "Every real, verifiable fact about the product you're willing to have quoted back in the description. The AI is told to use ONLY this list, so anything you leave out won't appear, and anything false you include will end up in the copy. Pull this from your actual spec sheet or manufacturer documentation, not memory.",
+          "examples": ["Material: cast iron, pre-seasoned with 3 layers of vegetable oil. Diameter: 10.25\". Weight: 5.2 lbs. Oven-safe to 500°F. Includes: skillet only, no lid. Certification: none.", "Material: 100% recycled aluminum shell, silicone ear cushions. Battery: 30-hour playback, USB-C charging. Weight: 250g. Includes: charging cable, carrying pouch, 2 ear tip sizes. Bluetooth 5.3.", "Material: 100% GOTS-certified organic cotton, 500 GSM. Set includes: 1 bath towel (30x56\"), 2 hand towels (16x28\"), 1 washcloth. Machine washable, cold water. OEKO-TEX Standard 100 certified."]
+        },
+        {
+          "name": "WHO IS BUYING THIS, e.g. \"home cooks who are tired of pans warping on high heat\"",
+          "what": "One specific real buyer and the one problem they're solving when they land on this page — this is who the description should open by speaking to. Naming a vague audience produces vague copy; naming a specific frustration produces copy that hooks people.",
+          "examples": ["Home cooks who are tired of nonstick pans warping or peeling after a year of daily use", "Remote workers who need noise-cancelling headphones for video calls in a noisy shared apartment", "New parents buying their first set of towels for a nursery who want something soft but durable through frequent washing"]
+        },
+        {
+          "name": "LIST 2-3 FACTS",
+          "what": "Concrete, factual differences between your product and typical competitors — not adjectives like \"better quality,\" but things you can point to (a warranty, a process, a test result). These become the backbone of why a shopper should pick you.",
+          "examples": ["Triple-seasoned in the factory vs. single-coat competitors; lifetime warranty against warping; made in a foundry operating since 1896", "30-hour battery vs. the 20-hour industry average; shell made from recycled aluminum vs. virgin plastic; 2-year warranty vs. the standard 1-year", "GOTS-certified organic cotton vs. unlabeled \"cotton blend\" competitors; 500 GSM density vs. the common 400 GSM; OEKO-TEX certified free of harmful chemicals"]
+        },
+        {
+          "name": "LENGTH, e.g. 120-160 words",
+          "what": "How long you want the main description paragraph to be, separate from the bullet list. Pick a length that matches where it will be published — shorter for a mobile-first marketplace listing, longer for a dedicated product page.",
+          "examples": ["120-160 words", "80-100 words for a mobile-first marketplace listing", "200-250 words for a dedicated brand product page"]
+        },
+        {
+          "name": "e.g. \"warm and direct, like a knowledgeable friend, not a hype ad\"",
+          "what": "How the description should sound — match this to your brand's actual voice elsewhere (your emails, your Instagram captions) so the page doesn't sound like it was written by someone else. Be specific rather than just saying \"professional.\"",
+          "examples": ["Warm and direct, like a knowledgeable friend, not a hype ad", "Confident and minimal, short sentences, no exclamation points", "Playful and a little cheeky, like talking to a friend who already loves the brand"]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Short version for a marketplace listing",
+          "whenToUse": "Use this when the description is going on Amazon, Etsy, or another marketplace with strict character limits and shoppers skimming fast on their phone.",
+          "prompt": "Write a short product description for [PRODUCT NAME] for a marketplace listing (Amazon/Etsy style), that will sell it honestly.\n\nFacts about the product (use ONLY these — do not invent materials, results, or claims not listed):\n[PASTE SPECS: materials, dimensions, weight, what it does, what's included, certifications/test results]\n\nBuyer: [WHO IS BUYING THIS]\nReal differentiators vs typical alternatives: [LIST 2-3 FACTS]\n\nRequirements:\n- 60-90 words maximum, plus a 5-bullet feature list (each bullet under 12 words).\n- Lead with the buyer's problem in the first sentence.\n- Every benefit claim must trace directly to a fact I gave you — if you want to add a claim I didn't support, put it in a separate \"needs a source\" list instead.\n- No unverifiable superlatives (\"best,\" \"revolutionary,\" \"clinically proven\") — marketplace policies can suspend listings for these.\n- Tone: [e.g. \"warm and direct, like a knowledgeable friend\"]."
+        },
+        {
+          "label": "Longer brand-story version for your own product page",
+          "whenToUse": "Use this when you're writing for your own Shopify or website product page where you have more room and want to weave in real brand story details instead of just facts and bullets.",
+          "prompt": "Write a longer product description for [PRODUCT NAME] for our own website product page, that will sell it honestly.\n\nFacts about the product (use ONLY these): [PASTE SPECS]\nBuyer: [WHO IS BUYING THIS]\nReal differentiators vs typical alternatives: [LIST 2-3 FACTS]\nReal brand story detail worth including (only if true): [e.g. \"handmade in small batches by a 3-person team in Portland\"]\n\nRequirements:\n- 200-250 words, structured as: opening hook on the buyer's problem, 2-3 short paragraphs weaving in the facts and brand story, then a 5-bullet feature list.\n- Every benefit claim must trace to a fact I gave you; anything else goes in a separate \"needs a source\" list.\n- No unverifiable superlatives unless I gave you data supporting it.\n- Tone: [e.g. \"warm and direct, like a knowledgeable friend, not a hype ad\"]."
+        },
+        {
+          "label": "Rewriting an existing description you already have",
+          "whenToUse": "Use this when you already have a live description that's underperforming or full of vague hype, and want it rebuilt from real facts instead of starting from a blank page.",
+          "prompt": "Here is our current live product description for [PRODUCT NAME], which I think is too vague/hype-y and want rewritten to be honest and specific:\n\n[PASTE CURRENT DESCRIPTION]\n\nReal facts about the product (use ONLY these to rewrite — flag and remove any claim in the current version that isn't backed by one of these facts): [PASTE SPECS]\nBuyer: [WHO IS BUYING THIS]\nReal differentiators: [LIST 2-3 FACTS]\n\nRewrite it to: lead with the buyer's problem, keep every claim traceable to a fact above, cut any claim from the old version that isn't supported (list those separately as \"removed — unverifiable\"), and match this tone: [e.g. \"warm and direct\"]. Keep it to [LENGTH]."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check it didn't invent anything",
+          "prompt": "Go through your draft line by line and list every claim or benefit stated. For each one, quote the exact fact from my input list that supports it. If any claim doesn't trace to something I gave you, flag it and move it to the \"needs a source\" list instead of leaving it in the main copy."
+        },
+        {
+          "label": "Too generic? Make the opening more specific",
+          "prompt": "The opening line still sounds like it could describe any product in this category. Rewrite just the first sentence to name the buyer's specific frustration in concrete terms, not a general benefit statement."
+        },
+        {
+          "label": "Cut it down",
+          "prompt": "This is too long. Cut it to [X] words without losing any of the factual claims — tighten sentences rather than deleting whole ideas, and keep the 5-bullet list intact."
+        },
+        {
+          "label": "Make the bullets scannable",
+          "prompt": "Rewrite the 5 bullets so each one leads with the concrete benefit in the first 3-4 words, not the feature name — someone skimming should understand the payoff without reading the whole bullet."
+        }
+      ],
+      "walkthrough": "Priya runs a small kitchenware store on Shopify and needs a description for a cast iron skillet she recently started stocking. She opens the spec sheet the manufacturer sent her, a PDF with diameter, weight, seasoning process, and oven-safe temperature, and keeps it open in a second tab.\n\nShe opens Claude, pastes the lesson's prompt, and fills in the blanks: PRODUCT NAME becomes \"Lodge 10.25-inch Pre-Seasoned Cast Iron Skillet,\" the specs field becomes five lines copied straight from the PDF, WHO IS BUYING THIS becomes \"home cooks tired of nonstick pans warping,\" the differentiators become the triple-seasoning process and the lifetime warranty, LENGTH becomes \"120-160 words,\" and tone becomes \"warm and direct, like a knowledgeable friend.\"\n\nThe AI returns a description opening with the frustration of pans that warp and stick after a year, two short paragraphs describing the seasoning process and oven-safe range in plain language, a 5-bullet list covering size, weight, oven temperature, warranty, and what's included, and a separate note: \"needs a source — I wanted to say 'a kitchen staple for generations' but nothing you gave me supports that claim.\"\n\nPriya reads it and notices the second paragraph runs long, so she sends the follow-up: \"Cut it to 140 words without losing any of the factual claims — tighten sentences rather than deleting whole ideas.\" The AI trims it down, keeping every fact intact.\n\nShe checks the trimmed version against the spec sheet one more time, deletes the flagged \"generations\" line entirely since she can't back it up, and pastes the final copy into her Shopify product page.\n\nTotal time: about 12 minutes, most of it spent gathering the real specs before opening the AI tool at all."
+    },
+    "ecom-b2-ad-copy-variants-for-testing": {
+      "placeholders": [
+        {
+          "name": "NUMBER, e.g. 6",
+          "what": "How many ad variants you want generated in this batch — this should match the number of angles you list below, since the prompt asks for exactly one variant per angle.",
+          "examples": ["6", "4", "8"]
+        },
+        {
+          "name": "PRODUCT/OFFER",
+          "what": "The specific product or promotion this ad batch is for — name it precisely so the copy doesn't drift into generic brand messaging.",
+          "examples": ["Eco-packaging skincare gift set ($38)", "Buy-one-get-one-50%-off on all running shoes through Sunday", "New arrival: waterproof commuter backpack"]
+        },
+        {
+          "name": "PLATFORM, e.g. Meta feed ad",
+          "what": "Where this ad will actually run — this determines format conventions and character limits, so name the specific placement, not just \"social media.\"",
+          "examples": ["Meta feed ad", "Google Responsive Search Ad (RSA)", "TikTok in-feed video ad caption"]
+        },
+        {
+          "name": "PRICE, PROMO, KEY FEATURES, SHIPPING/RETURN TERMS",
+          "what": "The real, current offer details — price, any active promo, the actual key features, and your real shipping/return terms. This is the guardrail data that keeps the AI from inventing claims.",
+          "examples": ["$38, free shipping over $35, 30-day returns, key features: reef-safe ingredients, recyclable packaging", "$89 (20% off $111 with code SUMMER20 through Aug 31), free 2-day shipping, 60-day returns, waterproof upper, lifetime lace guarantee", "$64, no current promo, standard 5-7 day shipping, 14-day returns, TSA-approved lock, 22L capacity"]
+        },
+        {
+          "name": "WHO, e.g. \"first-time buyers who abandoned a cart in the last 7 days\"",
+          "what": "The specific audience this ad set is targeting, matching the actual audience/retargeting segment you'll load it into.",
+          "examples": ["First-time buyers who abandoned a cart in the last 7 days", "Existing customers who bought once 6+ months ago and haven't returned", "Cold audience who has never visited the site, interested in sustainable home goods"]
+        },
+        {
+          "name": "e.g. \"primary text 125 chars, headline 40 chars\"",
+          "what": "The exact character or word limits for the ad format and placement you chose, so the copy fits without being cut off or rejected at upload.",
+          "examples": ["Primary text 125 characters, headline 40 characters (Meta feed)", "Headlines 30 characters each up to 15, descriptions 90 characters each up to 4 (Google RSA)", "Caption 150 characters, minimal on-screen text (TikTok in-feed)"]
+        },
+        {
+          "name": "ANGLE 1, e.g. Price/value",
+          "what": "The distinct angle or hypothesis you want that variant to test — this repeats for angles 1 through 6 in the prompt. Pick angles that are genuinely different core messages, not six ways of saying the same thing.",
+          "examples": ["1. Price/value 2. Social proof (\"2,400+ five-star reviews\") 3. Urgency/scarcity (\"only 40 left in this size\") 4. Problem → solution (dry, irritated skin) 5. Feature-led (reef-safe, recyclable ingredients) 6. Lifestyle/aspirational (a self-care evening routine)", "1. Price/value (BOGO 50% off) 2. Social proof 3. Urgency (sale ends Sunday) 4. Problem → solution (uncomfortable running shoes)", "1. Feature-led (waterproof, TSA lock) 2. Lifestyle (weekend commuter) 3. Social proof 4. Urgency (back-to-school stock limited)"]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Fewer, higher-budget variants for a small test budget",
+          "whenToUse": "Use this when your ad budget or audience size is too small to properly test 6 variants at once — fewer variants with more spend each gives you a real read faster.",
+          "prompt": "Write 3 ad copy variants for [PRODUCT/OFFER] on [PLATFORM].\n\nOffer facts (use only these): [PRICE, PROMO, KEY FEATURES, SHIPPING/RETURN TERMS]\nAudience: [WHO]\nCharacter limits: [LIMITS]\n\nMy budget/audience size is small, so I only want to test 3 genuinely different angles at once instead of 6:\n1. [ANGLE 1]\n2. [ANGLE 2]\n3. [ANGLE 3]\n\nFor each: label the angle, give the headline + primary text, stay within character limits, and do not add a claim, discount, or guarantee I didn't list above."
+        },
+        {
+          "label": "Google Search ad version (headlines + descriptions)",
+          "whenToUse": "Use this when the destination is Google RSA instead of a social feed ad — the format is short headline fragments, not a paragraph of primary text.",
+          "prompt": "Write [NUMBER] ad variants for [PRODUCT/OFFER] as Google Responsive Search Ad (RSA) assets.\n\nOffer facts (use only these): [PRICE, PROMO, KEY FEATURES, SHIPPING/RETURN TERMS]\nAudience: [WHO]\nFormat: up to 15 headlines (30 characters each) and up to 4 descriptions (90 characters each), pulling from these angles — write headline/description pairs per angle:\n1. [ANGLE 1]\n2. [ANGLE 2]\n3. [ANGLE 3]\n4. [ANGLE 4]\n\nKeep every headline and description within the character limit exactly (count characters, don't estimate), label which angle each belongs to, and do not add a claim, discount, or guarantee I didn't list above."
+        },
+        {
+          "label": "Iterating on the winning angle after a test",
+          "whenToUse": "Use this after a test has already declared a winning angle, to generate new variants that push deeper on that one angle instead of testing new ones.",
+          "prompt": "Our last A/B test found that the [WINNING ANGLE, e.g. \"urgency/scarcity\"] angle outperformed the others for [PRODUCT/OFFER] on [PLATFORM]. Write 4 new variants that all stay within that same angle but test different specific executions of it (different trigger, different phrasing, different framing) — not a return to generic copy.\n\nOffer facts (use only these): [PRICE, PROMO, KEY FEATURES, SHIPPING/RETURN TERMS]\nAudience: [WHO]\nCharacter limits: [LIMITS]\n\nLabel each variant with what specific execution of the angle it's testing, and do not add a claim, discount, or guarantee I didn't list above."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check the angles are actually different",
+          "prompt": "Read back the core message of each variant in one sentence per variant. If any two variants have essentially the same core message despite different wording, tell me which ones and replace one of them with a genuinely different angle."
+        },
+        {
+          "label": "Check it didn't invent an offer",
+          "prompt": "List every price, discount percentage, guarantee, and claim mentioned across all variants. For each one, confirm it matches exactly what I gave you in the offer facts, and flag anything that doesn't."
+        },
+        {
+          "label": "Verify character limits",
+          "prompt": "Go through each variant and give me the exact character count for the headline and primary text. Flag any that exceed the limit I gave you and shorten just those."
+        },
+        {
+          "label": "Sounds too much like an ad? Make one variant more native",
+          "prompt": "Take variant [NUMBER] and rewrite it to sound less like a traditional ad and more like an organic post or a friend's recommendation — same angle and offer facts, just less salesy phrasing."
+        }
+      ],
+      "walkthrough": "Marcus sells eco-packaging skincare sets and wants to test ad copy before boosting a Meta campaign for cart abandoners. He opens Meta Ads Manager in one tab to check his current character limits, and a note with his real offer, $38, free shipping over $35, 30-day returns, in another.\n\nHe pastes the lesson's prompt into ChatGPT and fills in: NUMBER is 6, PRODUCT/OFFER is the skincare set, PLATFORM is Meta feed ad, the offer facts and audience (cart abandoners in the last 7 days) go in as written, character limits are 125/40, and he lists six angles: price/value, social proof, urgency, problem-solution, feature-led, lifestyle.\n\nThe AI returns six labeled variants. Reading through them, Marcus notices the \"urgency\" and \"lifestyle\" variants both lean on the same \"treat yourself this weekend\" framing, different words, same idea. He sends the follow-up: \"Read back the core message of each variant in one sentence per variant. If any two variants have essentially the same core message, tell me which ones and replace one with a genuinely different angle.\"\n\nThe AI flags the overlap and rewrites the lifestyle variant around a self-care evening routine instead, which reads as a clearly different angle from urgency around stock.\n\nMarcus double-checks the character counts against Meta's limits, confirms no invented discount snuck in, and loads four of the six variants into his test, naming each ad by its angle so he can trace results later.\n\nTotal time: about 15 minutes."
+    },
+    "ecom-i1-product-lifestyle-photos-ai-image": {
+      "placeholders": [
+        {
+          "name": "PRODUCT",
+          "what": "The name of the real product you're generating a scene around. This should match your actual product exactly since the goal is placing the real item into a new setting, not designing a new one.",
+          "examples": ["Ceramic pour-over coffee mug, terracotta glaze", "Waterproof canvas commuter backpack, olive green", "10oz soy candle, \"Cedar & Fog\" scent, amber glass jar"]
+        },
+        {
+          "name": "PLATFORM/PLACEMENT, e.g. \"Instagram feed ad background\" — NOT a marketplace primary listing photo",
+          "what": "Exactly where this image will be used — this determines aspect ratio, composition, and whether AI generation is even appropriate. Never put this in a marketplace's primary listing photo slot.",
+          "examples": ["Instagram feed ad background", "Seasonal homepage banner for the website", "Email newsletter header image"]
+        },
+        {
+          "name": "SETTING, e.g. \"sunlit kitchen counter, morning\"",
+          "what": "The physical scene or backdrop you want around the product — be specific about location, time of day, and any props, since vague settings produce generic stock-photo-style results.",
+          "examples": ["Sunlit kitchen counter, morning, small potted herb plant blurred in background", "Weathered wooden park bench, golden hour, autumn leaves scattered nearby", "Minimalist marble bathroom shelf, soft diffused daylight"]
+        },
+        {
+          "name": "COMPOSITION, e.g. \"product on left third, negative space right for text overlay\"",
+          "what": "Where the product should sit in the frame and how much empty space to leave — plan this around where you'll add text or a logo afterward.",
+          "examples": ["Product on left third, negative space right for text overlay", "Product centered, symmetrical framing, no room needed for text", "Product in lower third, most of frame is open sky for a banner headline"]
+        },
+        {
+          "name": "LIGHTING",
+          "what": "The light quality and direction you want — this has a huge effect on mood and on whether the scene matches your other product photography.",
+          "examples": ["Soft natural window light from the left, warm tone", "Bright even studio lighting, no harsh shadows", "Golden hour backlighting with a soft lens flare"]
+        },
+        {
+          "name": "STYLE, e.g. \"photorealistic, editorial food photography\"",
+          "what": "The overall visual style or photographic genre to aim for — naming a real reference style gives the model a concrete target instead of a vague \"nice photo.\"",
+          "examples": ["Photorealistic, editorial food photography", "Clean product-catalog style, minimal shadows, studio look", "35mm film photography, slightly grainy, warm tones"]
+        },
+        {
+          "name": "MOOD/PALETTE matching brand colors: LIST HEX/DESCRIPTION",
+          "what": "The color palette and overall feeling that should match your existing brand materials — list actual hex codes if you have brand guidelines, or plain descriptions if you don't.",
+          "examples": ["Warm terracotta (#C97C4F) and cream (#F5EDE1), cozy and inviting", "Cool sage green (#8FA787) and off-white, calm and minimal", "Deep navy (#1B2A41) and brass accents, moody and premium"]
+        },
+        {
+          "name": "ASPECT RATIO for platform",
+          "what": "The exact pixel dimensions or ratio required for where this image will be published — get this from the platform's current spec.",
+          "examples": ["1:1 square (1080x1080px) for Instagram feed", "9:16 vertical (1080x1920px) for Instagram/TikTok Stories", "16:9 (1920x1080px) for a website homepage banner"]
+        },
+        {
+          "name": "N",
+          "what": "How many variations you want generated in this batch, so you have real options to compare rather than accepting the first result.",
+          "examples": ["4", "6", "3"]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Seasonal banner batch (same product, multiple seasons)",
+          "whenToUse": "Use this when you want a set of seasonal variations of the same scene for the same product, to swap through the year without rebuilding the prompt each time.",
+          "prompt": "Generate [N] seasonal variations of a lifestyle scene for [PRODUCT], for use as [PLATFORM/PLACEMENT] across the year.\n\nReference image attached = my actual product photo, unchanged.\n\nBase scene concept: [SETTING], [COMPOSITION], [STYLE], [MOOD/PALETTE matching brand colors], [ASPECT RATIO for platform].\n\nGenerate one version per season, keeping composition and style consistent but varying: [SEASONAL ELEMENT, e.g. \"lighting warmth, props (autumn leaves / spring flowers / summer citrus / winter pine), color temperature\"].\n\nRequirements:\n- Keep the product itself exactly as shown in the reference in every version — do not redesign its shape, color, label, or add features it doesn't have.\n- No text or logos rendered into the image.\n- Label each variation by season."
+        },
+        {
+          "label": "Quick single background for a fast social post",
+          "whenToUse": "Use this for a same-day social post when you just need one usable background fast, not a full comparison set.",
+          "prompt": "Generate 1 quick styled background for [PRODUCT], for use as [PLATFORM/PLACEMENT] — I need one usable option today, not a full comparison set.\n\nReference image attached = my actual product photo, unchanged.\n\nScene: [SETTING], [COMPOSITION], [LIGHTING], [STYLE], [ASPECT RATIO for platform].\n\nRequirements:\n- Keep the product itself exactly as shown in the reference — do not redesign its shape, color, label, or add features it doesn't have.\n- No text or logos rendered into the image.\n- Generate 2 variations only so I can pick fast."
+        },
+        {
+          "label": "Cross-check the same brief in the other tool before a paid placement",
+          "whenToUse": "Use this for a hero image going into a paid ad, where getting the product accuracy exactly right is worth generating the same brief in both ChatGPT and Gemini and comparing before you commit spend.",
+          "prompt": "Generate a lifestyle/styled scene for [PRODUCT], for use as [PLATFORM/PLACEMENT — a paid placement, so accuracy matters more than usual].\n\nReference image attached = my actual product photo, unchanged.\n\nScene: [SETTING], [COMPOSITION], [LIGHTING], [STYLE], [MOOD/PALETTE matching brand colors: LIST HEX/DESCRIPTION], [ASPECT RATIO for platform].\n\nRequirements:\n- Keep the product itself exactly as shown in the reference — do not redesign its shape, color, label, or add features it doesn't have.\n- No text or logos rendered into the image.\n- Generate [N] variations so I can compare.\n\nI'm running this identical brief in both ChatGPT (GPT Image 2) and Gemini (Nano Banana 2) — after generating, tell me which of your outputs you'd flag as least faithful to the reference photo, if any, so I can compare against the other tool's results before picking a final image."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Product looks altered? Flag it",
+          "prompt": "Compare this generated image to my reference photo specifically for the product's shape, color, and any label or logo details. Tell me exactly what, if anything, differs from the reference so I can decide whether to regenerate or reject it."
+        },
+        {
+          "label": "Regenerate with the product unchanged",
+          "prompt": "The product's [SPECIFIC DETAIL, e.g. color/proportions/label] doesn't match my reference photo. Regenerate keeping the scene the same but the product exactly as shown in the reference, with no redesign."
+        },
+        {
+          "label": "Doesn't match brand colors — adjust",
+          "prompt": "The color palette in this generation doesn't match our brand colors [RESTATE HEX/DESCRIPTION]. Regenerate the same scene and composition with the color grading adjusted to match."
+        },
+        {
+          "label": "Text or logo got rendered in — remove it",
+          "prompt": "This generation has text/a logo rendered directly into the image, which I need removed since I'll add real text separately. Regenerate the same scene with no text or logo elements anywhere in the image."
+        }
+      ],
+      "walkthrough": "Elena sells ceramic mugs and wants a cozy autumn background for an Instagram ad, without paying for a photo shoot. She takes a clean photo of her actual terracotta mug on a white background and saves it as a file she can upload.\n\nShe opens Gemini and starts a new chat, uploading that photo as a reference. She pastes the lesson's prompt, filling in PRODUCT as \"ceramic pour-over mug, terracotta glaze,\" PLATFORM/PLACEMENT as \"Instagram feed ad background,\" SETTING as \"sunlit kitchen counter, morning, autumn leaves blurred in background,\" COMPOSITION as \"product on left third, negative space right for text,\" STYLE as \"photorealistic, editorial,\" MOOD/PALETTE as her brand's warm terracotta and cream hex codes, ASPECT RATIO as 1:1, and N as 4.\n\nNano Banana 2 returns four variations. In two of them, the mug's glaze reads a slightly different orange-red than her real product. She sends the follow-up: \"Compare this generated image to my reference photo specifically for the product's shape, color, and any label or logo details. Tell me exactly what, if anything, differs.\"\n\nGemini flags the color shift on those two. Elena discards them and keeps the two where the mug matches her reference exactly, picking the one with the better negative space for her ad text. She asks it, in the same chat, to warm up the lighting slightly on her favorite — a quick conversational edit rather than a new prompt.\n\nShe adds her headline text separately in a design tool, since the AI was told not to render text into the image, and uploads the finished ad background.\n\nTotal time: about 18 minutes."
+    },
+    "ecom-i2-customer-service-replies-refunds-delays-complaints": {
+      "placeholders": [
+        {
+          "name": "SITUATION: refund request / shipping delay / complaint about damaged or wrong item",
+          "what": "Which of the three common situations this reply is for — this shapes the whole structure of the response, so pick the one that actually matches.",
+          "examples": ["Refund request", "Shipping delay", "Complaint about damaged or wrong item"]
+        },
+        {
+          "name": "PASTE OR SUMMARIZE",
+          "what": "The customer's actual message, pasted in full if short, or summarized accurately if long or rambling. Keep their real tone and specific complaint intact. Replace any information you wouldn't want stored in a shared or logged AI tool, like their full name or email, with a placeholder if required.",
+          "examples": ["\"This is the third email I've sent about my order and no one has responded. I ordered a birthday gift and it still hasn't shipped 9 days later. I want a refund now.\"", "Summary: customer received the wrong item (ordered a size M jacket, got a size S), attached a photo, first contact, polite but clearly frustrated, wants a replacement in the correct size.", "\"My package tracking shows it's been stuck at a distribution hub for 6 days with no movement. I need this by Friday for a trip — what's going on?\""]
+        },
+        {
+          "name": "ORDER #, ITEM, ORDER DATE, CURRENT STATUS, TRACKING INFO IF RELEVANT",
+          "what": "The real facts of this specific order pulled from your order management system. This is what keeps the reply grounded in reality instead of a generic apology.",
+          "examples": ["Order #48213, Cast Iron Skillet, ordered Aug 1, status: shipped Aug 3, tracking shows arrived at regional hub Aug 6 and no movement since", "Order #55902, Waterproof Backpack (size M ordered), status: delivered Aug 5, customer reports size S received instead", "Order #61034, Skincare Gift Set, ordered Jul 28, status: still processing, has not shipped as of today"]
+        },
+        {
+          "name": "PASTE POLICY, e.g. \"refunds within 30 days of delivery, no restocking fee, replacement offered for damaged items with photo proof\"",
+          "what": "Your actual, current written policy for this exact situation, copied from your real policy document, not what you remember it being. This is the single most important guardrail in the prompt.",
+          "examples": ["Refunds within 30 days of delivery, no restocking fee, replacement offered for damaged items with photo proof within 14 days of delivery", "For delays over 7 business days with no tracking movement, we offer either a refund of shipping cost or $10 store credit, customer's choice", "Wrong item shipped: we cover return shipping and send the correct item immediately without waiting for the wrong item to be returned first"]
+        },
+        {
+          "name": "WORD COUNT",
+          "what": "How long the reply should be — keep this short for a first-contact reply and slightly longer only if there's real detail to walk through.",
+          "examples": ["120 words", "150 words", "80 words"]
+        },
+        {
+          "name": "firm / apologetic / neutral — pick what fits",
+          "what": "The emotional register of the reply, chosen to match the real situation — apologetic when your company made a genuine error, neutral for a standard policy outcome, firm when the answer is no.",
+          "examples": ["Apologetic — we shipped the wrong item, this is our error", "Neutral — explaining a standard delay that's outside our control, tracking shows it's moving", "Firm — the return window has closed and no exception applies"]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Angry, repeat-contact customer (third email on the same issue)",
+          "whenToUse": "Use when this isn't the customer's first message about the issue and they're clearly frustrated by lack of response — the reply needs to acknowledge that history.",
+          "prompt": "Draft a reply to a customer email about [SITUATION]. This is their [NUMBER, e.g. \"third\"] email about the same issue with no prior response from us — the reply needs to acknowledge that directly, not read like a first-contact message.\n\nCustomer's message(s) (or summary, including that this is a repeat contact): [PASTE OR SUMMARIZE]\nOrder facts: [ORDER #, ITEM, ORDER DATE, CURRENT STATUS, TRACKING INFO IF RELEVANT]\nOur actual policy for this situation: [PASTE POLICY]\n\nRequirements:\n- Open by acknowledging both the specific issue AND that this is a repeat contact with no response yet — take real ownership of the delay in responding.\n- State only commitments directly supported by the policy and facts I gave you — do not invent a resolution I didn't authorize.\n- If the right resolution isn't clear from what I gave you, say so and list what you need from me.\n- Keep it under [WORD COUNT], warm but professional, no corporate filler.\n- Tone: apologetic for the response delay, but factually firm on any policy limit that applies."
+        },
+        {
+          "label": "Good news reply — refund or replacement already approved",
+          "whenToUse": "Use when the resolution is already decided and good, and you just need to communicate it clearly and warmly.",
+          "prompt": "Draft a reply to a customer confirming a resolution that's already been approved for [SITUATION].\n\nCustomer's message (or summary): [PASTE OR SUMMARIZE]\nOrder facts: [ORDER #, ITEM, ORDER DATE, CURRENT STATUS, TRACKING INFO IF RELEVANT]\nApproved resolution (state ONLY this, don't add anything beyond it): [e.g. \"full refund of $52, processing within 3-5 business days back to original payment method\"]\n\nRequirements:\n- Open by confirming the good news clearly in the first sentence.\n- State the exact resolution I gave you — do not round up, add an extra perk, or promise a faster timeline than stated.\n- Keep it warm and under [WORD COUNT].\n- Tone: warm and appreciative of their patience, not overly apologetic since this has a good outcome."
+        },
+        {
+          "label": "Internal note version — for your ticket log, not the customer",
+          "whenToUse": "Use when you need a short internal summary of the resolution for your ticketing system's internal notes, separate from the customer-facing reply.",
+          "prompt": "Write a short internal ticket note (not customer-facing) summarizing this resolved case for [SITUATION], for our support platform's internal log.\n\nCustomer's message (or summary): [PASTE OR SUMMARIZE]\nOrder facts: [ORDER #, ITEM, ORDER DATE, CURRENT STATUS, TRACKING INFO IF RELEVANT]\nResolution given: [WHAT WAS OFFERED/DECIDED]\nPolicy applied: [PASTE POLICY]\n\nWrite 3-4 sentences: what the customer needed, what was decided and why (citing the policy line applied), and any follow-up action still pending. Plain internal language, no need for customer-facing tone."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check it didn't invent a promise",
+          "prompt": "List every specific commitment in this reply — any dollar amount, timeline, or action promised. For each one, confirm it's directly supported by the policy and order facts I gave you, and flag anything that isn't."
+        },
+        {
+          "label": "Opens too generic — make it specific",
+          "prompt": "The opening line is a generic apology. Rewrite the first two sentences to name the specific issue from the customer's message instead."
+        },
+        {
+          "label": "Match tone to how upset they actually are",
+          "prompt": "Reread the customer's message for how frustrated they actually sound. If this reply's tone doesn't match that, adjust the tone accordingly without changing any of the factual commitments."
+        },
+        {
+          "label": "Redact before reusing elsewhere",
+          "prompt": "Give me a version of this reply with the customer's name, email, and order number replaced with placeholders, so I can save it as a template for similar future cases without carrying over this customer's personal details."
+        }
+      ],
+      "walkthrough": "Devon runs support for a small home-goods store and gets an email from a customer whose order has been stuck at a shipping hub for 6 days. He opens the order in Shopify to check the real facts: order #48213, cast iron skillet, ordered August 1, tracking shows no movement since August 6. He also has the store's written delay policy open in a doc: refund of shipping cost or $10 store credit for delays over 7 business days.\n\nHe opens Claude and pastes the lesson's prompt, filling in SITUATION as shipping delay, the customer's actual message about needing the item by Friday for a trip, the order facts, the policy text, WORD COUNT as 120, and tone as neutral since this is a standard delay, not a company error.\n\nThe AI drafts a reply acknowledging the specific 6-day stall at the hub, honestly stating the tracking status, and noting that since the delay hasn't yet crossed the 7-business-day policy threshold, no compensation applies yet, but it will automatically once it does, and Devon should follow up then.\n\nDevon reads it and worries it sounds too neutral given the customer mentioned a Friday deadline. He sends the follow-up: \"Reread the customer's message for how frustrated they actually sound... adjust the tone without changing any of the factual commitments.\"\n\nThe revised version acknowledges the time pressure of the trip more directly while keeping the same factual content. Devon personalizes the greeting, adds his name, and sends it from the support platform.\n\nTotal time: about 9 minutes."
+    },
+    "ecom-i3-email-flows-welcome-abandoned-cart-post-purchase": {
+      "placeholders": [
+        {
+          "name": "FLOW TYPE: welcome / abandoned cart / post-purchase",
+          "what": "Which of the three flow types you're building — each has a different job, so pick one and build it well rather than trying to cover all three at once.",
+          "examples": ["Welcome", "Abandoned cart", "Post-purchase"]
+        },
+        {
+          "name": "NUMBER",
+          "what": "How many emails should be in this flow — most effective flows run 3-5 emails; more risks feeling spammy, fewer may not give enough chances to recover a sale or build trust.",
+          "examples": ["3", "4", "5"]
+        },
+        {
+          "name": "BRAND/STORE",
+          "what": "Your actual store or brand name, so the emails read as genuinely from you rather than a generic placeholder brand.",
+          "examples": ["Northbound Goods", "Willow & Sage Skincare", "Pathfinder Outdoor Co."]
+        },
+        {
+          "name": "PRODUCT CATEGORY",
+          "what": "The general category of what you sell, which helps the AI pick relevant language — be specific enough to be useful but not so narrow it only fits one SKU.",
+          "examples": ["Handmade ceramic homeware", "Natural skincare and bath products", "Outdoor and camping gear"]
+        },
+        {
+          "name": "DESCRIBE, e.g. \"casual, a little playful, short sentences, no corporate jargon\"",
+          "what": "A concrete description of your brand's actual writing voice, based on how you already write in real emails or social posts, not an aspirational voice you don't actually use yet.",
+          "examples": ["Casual, a little playful, short sentences, no corporate jargon", "Warm and knowledgeable, like a friend who happens to be an expert, longer explanatory sentences are fine", "Minimal and confident, very short sentences, almost no exclamation points"]
+        },
+        {
+          "name": "DISCOUNT/OFFER, or \"none — no discount\"",
+          "what": "The exact real discount or offer you're actually willing to give in this flow, or an explicit statement that there is none — this is the guardrail that stops the AI from inventing a percentage-off deal.",
+          "examples": ["15% off first order with code WELCOME15, valid 14 days", "None — no discount, this flow is about product education only", "Free shipping on the recovered cart if completed within 48 hours, no percentage discount"]
+        },
+        {
+          "name": "e.g. \"email 1 immediately, email 2 at +24h, email 3 at +72h\"",
+          "what": "The real send-delay schedule between emails in the flow, matching what you'll actually configure in your email platform's automation builder.",
+          "examples": ["Email 1 immediately, email 2 at +24h, email 3 at +72h", "Email 1 immediately, email 2 at +4h, email 3 at +24h, email 4 at +7 days", "Email 1 at +1 day post-delivery, email 2 at +14 days, email 3 at +30 days"]
+        },
+        {
+          "name": "LIST",
+          "what": "The real product links, category pages, or specific items you want featured in this flow — pull actual URLs or product names so the AI references things that exist.",
+          "examples": ["Best-selling starter mug set, link: yourstore.com/starter-set; Instagram: @yourbrand", "The exact cart contents: Waterproof Backpack (M, olive) + Rain Cover Add-on", "New arrivals collection: yourstore.com/new; top review page: yourstore.com/reviews"]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Single re-engagement email instead of a full flow",
+          "whenToUse": "Use when you don't need a full multi-email sequence yet and just want one strong email, for example a one-off win-back email to lapsed customers.",
+          "prompt": "Write a single re-engagement email for [BRAND/STORE], selling [PRODUCT CATEGORY], for customers who haven't purchased in [TIMEFRAME, e.g. \"6+ months\"].\n\nBrand voice: [DESCRIBE]\nReal offer I'm willing to include (if any): [DISCOUNT/OFFER, or \"none\"]\nLinks/products to feature: [LIST]\n\nGive me: subject line + preview text, and full body copy. Keep it to one clear job, win them back with something specific (new arrivals, a real offer, or what's changed), not a generic \"we miss you.\" Do not invent a discount, percentage, or deadline beyond what I specified above."
+        },
+        {
+          "label": "Browse-abandonment flow (viewed but didn't add to cart)",
+          "whenToUse": "Use for customers who viewed products but never added to cart, which needs different messaging than true cart abandonment since there's no specific item they left behind.",
+          "prompt": "Write a browse-abandonment email flow of [NUMBER] emails for [BRAND/STORE], selling [PRODUCT CATEGORY], for visitors who viewed products but never added anything to a cart.\n\nBrand voice: [DESCRIBE]\nReal offer I'm willing to include (if any): [DISCOUNT/OFFER, or \"none — no discount\"]\nTiming: [e.g. \"email 1 at +2h, email 2 at +48h\"]\nProduct category or collection they viewed: [LIST]\n\nFor each email, give me: subject line + preview text, send delay, the specific job this email does (no two emails should have the same job), and full body copy. Since there's no specific cart item, focus on the category/collection they showed interest in, not a fake \"item in your cart\" framing. Do not invent a discount or deadline beyond what I specified."
+        },
+        {
+          "label": "Adapting an existing flow's structure to a new one",
+          "whenToUse": "Use once one flow (e.g. abandoned cart) is already performing well and you want to reuse its structure and timing logic for a different flow type instead of starting from scratch.",
+          "prompt": "Our [EXISTING FLOW TYPE, e.g. \"abandoned cart\"] flow has performed well: [PASTE the existing flow's structure — number of emails, timing, and job of each email].\n\nAdapt this same structure, timing logic, and job-per-email pattern to a new [NEW FLOW TYPE] flow for [BRAND/STORE], selling [PRODUCT CATEGORY].\n\nBrand voice: [DESCRIBE]\nReal offer I'm willing to include (if any): [DISCOUNT/OFFER, or \"none\"]\nLinks/products to feature: [LIST]\n\nKeep the same number of emails and similar timing gaps unless the new flow type genuinely needs different pacing, explain any timing change. Do not invent a discount, percentage, or deadline beyond what I specified."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check no invented discount snuck in",
+          "prompt": "Go through every email in this flow and list any discount, percentage, or deadline mentioned. Confirm each one matches exactly what I specified, and flag anything you added that I didn't authorize."
+        },
+        {
+          "label": "Emails feel repetitive — check the jobs are distinct",
+          "prompt": "State the specific job of each email in this flow in one sentence. If any two emails are doing essentially the same job, tell me which ones and rewrite one of them with a genuinely different purpose."
+        },
+        {
+          "label": "Subject lines too similar — make them distinct",
+          "prompt": "Rewrite the subject lines so each one is clearly distinct in approach (question vs. statement vs. curiosity vs. direct offer), right now too many follow the same pattern."
+        },
+        {
+          "label": "Shorten the body copy",
+          "prompt": "These emails are too long for how people actually read email. Cut each email's body to under [WORD COUNT] words without losing its specific job or any real facts."
+        }
+      ],
+      "walkthrough": "Sana runs a small skincare store and has never built an abandoned-cart email flow beyond her platform's default template. She gathers her real inputs: her brand voice notes, casual, a little playful, no corporate jargon, her actual policy of no discounts in this flow, and her timing plan of immediate, +24h, +72h.\n\nShe opens ChatGPT, pastes the lesson's prompt, and fills in FLOW TYPE as abandoned cart, NUMBER as 3, BRAND/STORE as Willow & Sage, PRODUCT CATEGORY as natural skincare, the brand voice description, DISCOUNT/OFFER as \"none, no discount,\" the timing, and LIST as her best-selling serum's product link.\n\nThe AI returns three emails: email 1 sent immediately reminds what's in the cart with light urgency about limited stock, no discount anywhere; email 2 at +24h adds a customer review addressing a common hesitation about scent; email 3 at +72h uses a stronger urgency angle around a restock date. Each has a distinct subject line and stated job.\n\nSana reads through and worries email 1 and email 3 both lean on \"stock running low,\" which feels repetitive. She sends the follow-up: \"State the specific job of each email in this flow in one sentence. If any two emails are doing essentially the same job, tell me which ones and rewrite one.\"\n\nThe AI confirms the overlap and rewrites email 3's angle around the customer's own routine and past purchase interest instead of stock urgency.\n\nSana loads all three into her email platform's automation builder, test-triggers the flow on her own account to confirm timing and links work, then turns it on.\n\nTotal time: about 20 minutes."
+    },
+    "ecom-a1-automate-recurring-store-content": {
+      "placeholders": [
+        {
+          "name": "TASK, e.g. \"draft a product description and Instagram caption every time a new product is added in Shopify\"",
+          "what": "The one specific, recurring content task you want automated — pick something that happens repeatedly on a predictable trigger, not a one-off project.",
+          "examples": ["Draft a product description and Instagram caption every time a new product is added in Shopify", "Draft a restock announcement post whenever a sold-out item comes back in stock", "Draft a reply suggestion whenever a new 1-2 star review comes in"]
+        },
+        {
+          "name": "WHAT STARTS IT, e.g. \"new product created in Shopify\"",
+          "what": "The exact event that should kick off the automation — this needs to be something your platform can actually detect and trigger on.",
+          "examples": ["New product created in Shopify", "Inventory count changes from 0 to any positive number", "New review submitted with a rating of 1 or 2 stars"]
+        },
+        {
+          "name": "LIST FIELDS, e.g. \"product title, price, category, spec fields, uploaded photos\"",
+          "what": "The real data fields that are actually available and reliably populated at the moment the trigger fires — the AI step can only draft from what's really there.",
+          "examples": ["Product title, price, category, spec fields (material, dimensions), uploaded photos", "Product title, restock date, current stock count, product page URL", "Review text, star rating, product name, customer's stated issue"]
+        },
+        {
+          "name": "WHAT SHOULD BE DRAFTED, e.g. \"150-word product description + 1 Instagram caption with 3 hashtag options\"",
+          "what": "Exactly what the AI step should output, in enough detail to write a prompt template from — specify format, length, and how many pieces of content.",
+          "examples": ["150-word product description + 1 Instagram caption with 3 hashtag options", "One restock announcement post (60-80 words) + one email subject line", "A suggested reply draft (under 100 words) flagged for human review, not auto-sent"]
+        },
+        {
+          "name": "Claude with Cowork + MCP connectors / ChatGPT with Agent mode + Scheduled tasks",
+          "what": "Which tool you're actually building this in — Claude's Cowork with MCP connectors, or ChatGPT's Agent mode with Scheduled tasks — since the available connectors and how the human-approval step gets surfaced to you differ between them.",
+          "examples": ["Claude with Cowork and a Shopify MCP connector", "ChatGPT with Agent mode and a Scheduled task set to check every morning", "Claude with Cowork connected to Gmail and Google Drive"]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Lower-risk task — spot-check instead of full approval",
+          "whenToUse": "Use only once a similar automation has already run cleanly for a few weeks — this designs a lighter-touch spot-check instead of full per-item approval, for genuinely low-risk content only.",
+          "prompt": "I have an automation running for this recurring content task: [TASK]. It's been running for [TIMEFRAME, e.g. \"6 weeks\"] with full human approval on every draft, and approval has needed minimal edits.\n\nTrigger: [WHAT STARTS IT]\nReal inputs available: [LIST FIELDS]\nCurrent AI output: [WHAT SHOULD BE DRAFTED]\nTool: [Claude with Cowork + MCP connectors / ChatGPT with Agent mode + Scheduled tasks]\n\nHelp me design a lighter-touch spot-check version instead of full per-item approval, for this specific low-risk task only:\n1. What percentage or sample of drafts should still get full human review vs. auto-publish.\n2. What would immediately disqualify this task from spot-checking (e.g. any pricing, promise, or policy content) and should go back to full approval.\n3. How I'll catch a quality drift early if the spot-check sample looks fine but the un-reviewed majority has started to slip."
+        },
+        {
+          "label": "Reply-suggestion automation (never auto-sent)",
+          "whenToUse": "Use when the recurring task involves customer-facing replies (like review responses) where you want a suggested draft an agent can pick up, not full publish automation.",
+          "prompt": "I want to automate suggested reply drafts for this recurring task: [TASK, e.g. \"draft a suggested reply whenever a new 1-2 star review comes in\"]. These drafts must never be auto-sent, they're for an agent to review, edit, and send manually.\n\nTrigger: [WHAT STARTS IT]\nReal inputs available: [LIST FIELDS]\nDesired AI output: [WHAT SHOULD BE DRAFTED]\nTool: [Claude with Cowork + MCP connectors / ChatGPT with Agent mode + Scheduled tasks]\n\nHelp me:\n1. Map this as: trigger → data pull (via the MCP connector or connected app) → AI drafting step (prompt template using only real input fields, flagging anywhere it would need to guess) → notification to an agent's queue (never auto-sent) → agent edits and sends manually.\n2. Write the exact prompt template for the AI step.\n3. Note the single biggest risk of this automation and how the human-in-the-loop step guards against it."
+        },
+        {
+          "label": "Auditing an automation that's already running",
+          "whenToUse": "Use a few weeks after launch to review real output and catch a recurring quality problem before it causes real harm.",
+          "prompt": "I've had this automation running for [TIMEFRAME]: [TASK], trigger = [WHAT STARTS IT], AI output = [WHAT SHOULD BE DRAFTED], tool = [Claude with Cowork + MCP connectors / ChatGPT with Agent mode + Scheduled tasks].\n\nHere are [N] real recent drafts it produced, with my notes on which needed heavy edits and why: [PASTE DRAFTS + NOTES]\n\nHelp me: 1. Identify any recurring pattern in what needed editing. 2. Suggest a specific change to the prompt template to fix that pattern, without changing what's working. 3. Tell me whether this pattern is concerning enough to pause the automation and revert to full manual drafting until fixed."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Confirm the approval step can't be skipped",
+          "prompt": "Walk through the exact sequence again and confirm explicitly: is there any path in this design where content could publish or send without passing through the human approval step first? If so, close that gap."
+        },
+        {
+          "label": "Stress-test with a missing field",
+          "prompt": "What happens in this design if one of the real input fields I listed is empty or missing when the trigger fires, does the AI step guess, produce a thin draft, or does something notify me instead? Tell me exactly, and if it would silently guess, add a guard against that."
+        },
+        {
+          "label": "Make the prompt template stricter",
+          "prompt": "Rewrite the AI drafting step's prompt template to be more explicit that it must only use the real fields listed, and must flag, not guess at, anything it would otherwise need to infer."
+        },
+        {
+          "label": "Simplify for a first version",
+          "prompt": "This design has [N] steps. For a first version I want the absolute minimum viable version of this automation, keeping the approval step mandatory but cutting anything else that isn't essential to prove the concept works. What can be simplified or removed?"
+        }
+      ],
+      "walkthrough": "Tom runs a mid-size Shopify store and adds 5-10 new SKUs a week, each needing a product description and an Instagram caption, work he's been doing by hand every Friday. He wants to automate the drafting step while keeping a human check before anything publishes.\n\nHe decides to build this in Claude, since his Pro plan includes Cowork and he can connect Shopify through an MCP connector. He pastes the lesson's prompt into a chat, filling in TASK as drafting a description and caption whenever a new product is added, WHAT STARTS IT as \"new product created in Shopify,\" LIST FIELDS as title, price, category, and spec fields (Tom checks Shopify and confirms these are always filled in, unlike the optional \"care instructions\" field which is often blank), WHAT SHOULD BE DRAFTED as a 150-word description plus one Instagram caption with 3 hashtags, and Tool as \"Claude with Cowork and a Shopify MCP connector.\"\n\nClaude maps the sequence: the Shopify MCP connector detects a new product → Cowork pulls the confirmed fields → an AI drafting step uses a prompt template referencing only those fields → Cowork checks in with him, showing the draft next to the original product data → Tom approves or edits directly in that check-in → only then does it save to a drafts folder for him to publish. It also flags a risk: if the spec field is ever blank, the draft would come out thin, and suggests Cowork should flag him directly instead of drafting silently when that field is empty.\n\nTom sends the follow-up asking it to stress-test what happens with a missing field, confirming the guard works as described. He connects the Shopify MCP connector in Claude's settings, tests the whole thing on one real new product, and watches the first two weeks of real runs closely before considering removing the approval step later.\n\nTotal time: about 40 minutes to design and connect."
+    },
+    "cs-b1-rewrite-difficult-reply-firm-kind-correct": {
+      "placeholders": [
+        {
+          "name": "PASTE DRAFT",
+          "what": "Your own rough, blunt, or emotionally-charged first attempt at the reply, even if it's just a few angry bullet points to yourself. Paste that real starting point rather than nothing, since the AI is rewriting your actual draft, not starting from a blank page.",
+          "examples": ["\"No. Policy is 30 days, it's been 41. Not our problem you didn't check.\"", "\"We already told you twice this isn't covered under warranty. Please stop asking.\"", "\"Sorry but no refunds after opening the product, that's just how it works here.\""]
+        },
+        {
+          "name": "e.g. \"we cannot refund — the return window closed 11 days ago and the item was used\"",
+          "what": "The real, unchangeable decision exactly as it stands, stated plainly to yourself first — this is the fact the AI must keep firm no matter how it softens the delivery.",
+          "examples": ["We cannot refund — the return window closed 11 days ago and the item was used", "We cannot expedite this order — it's already in transit and can't be rerouted", "We cannot waive the warranty exclusion — the damage described is from a drop, which isn't a manufacturing defect"]
+        },
+        {
+          "name": "e.g. \"a 15% discount on next order, or store credit\" / \"nothing — this is a firm no\"",
+          "what": "Anything genuinely real that you're authorized to offer as a goodwill gesture, or an explicit statement that there's nothing — never let this field be vague or aspirational.",
+          "examples": ["A 15% discount on their next order, or store credit for the item's value", "Nothing — this is a firm no, no exceptions available", "We can expedite their next order for free as a goodwill gesture, but cannot change this order's outcome"]
+        },
+        {
+          "name": "ONE SENTENCE",
+          "what": "What the customer is actually upset or worried about, distilled to one honest sentence — this keeps the reply focused on acknowledging their real concern instead of a generic \"I understand your frustration.\"",
+          "examples": ["They feel the 30-day window wasn't clearly communicated at checkout", "They're frustrated this is the second time they've had to explain the issue", "They're worried they wasted money on something they can't use"]
+        },
+        {
+          "name": "WORD COUNT",
+          "what": "How long the final reply should be — keep firm-no replies tight, since padding a difficult message with extra words tends to read as either over-apologizing or burying the actual answer.",
+          "examples": ["100 words", "80 words", "130 words"]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Team lead reviewing an agent's draft before it's sent",
+          "whenToUse": "Use when you're a team lead or senior agent checking a colleague's difficult draft before it goes out, not writing your own.",
+          "prompt": "Review this draft reply a teammate wrote before it goes out to the customer. Check whether it's firm, kind, and factually correct, flag if it's too soft (implying flexibility that doesn't exist) or too cold (dismissive of the customer).\n\nTeammate's draft: [PASTE DRAFT]\nThe actual decision (do not soften or change this): [ACTUAL DECISION]\nWhat we can genuinely offer instead, if anything: [WHAT CAN BE OFFERED]\nCustomer's core concern: [ONE SENTENCE]\n\nGive me: 1) whether the decision is stated clearly in the first two sentences, 2) whether it invents any exception or offer not listed above, 3) whether the tone reads as cold or genuinely empathetic, 4) a rewritten version if it needs one, under [WORD COUNT]."
+        },
+        {
+          "label": "Verbal difficult conversation, not email (talking points)",
+          "whenToUse": "Use when you need to deliver a firm no on a phone call or in person, not in writing, this produces talking points instead of a full written reply.",
+          "prompt": "I need to deliver this firm decision out loud, on a call, not in writing. Give me 4-5 short talking points, not a script to read verbatim, that:\n- State the decision clearly and early in the conversation.\n- Explain the real reason in plain language.\n- Only reference what I can genuinely offer, if anything, do not invent an exception.\n- Include one line acknowledging the customer's frustration without apologizing for a decision that's correct.\n\nThe actual decision (do not soften or change this): [ACTUAL DECISION]\nWhat I can genuinely offer instead, if anything: [WHAT CAN BE OFFERED]\nCustomer's core concern: [ONE SENTENCE]"
+        },
+        {
+          "label": "Escalated customer — not their first pushback",
+          "whenToUse": "Use when the customer has already pushed back once and is asking again — the reply needs to hold the line without simply repeating the same message.",
+          "prompt": "The customer already pushed back once on this decision and is asking again. Rewrite this reply so it holds the same firm line without sounding like a copy-pasted repeat of the first message, acknowledge that they've asked again, restate the decision clearly, and don't cave or introduce a new exception just because they pushed back.\n\nMy rough/blunt draft: [PASTE DRAFT]\nThe actual decision (do not soften or change this): [ACTUAL DECISION]\nWhat I can genuinely offer instead, if anything: [WHAT CAN BE OFFERED]\nWhat they said when pushing back: [PASTE OR SUMMARIZE]\n\nRequirements: state the decision clearly in the first two sentences, explain why it hasn't changed, don't invent a new exception just because this is round two, acknowledge their frustration genuinely. Keep it under [WORD COUNT]."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check it didn't soften into sounding negotiable",
+          "prompt": "Read this reply as if you were the customer. Does any part of it sound like the decision might still be negotiable, even though it isn't? Quote the specific sentence if so, and rewrite it to be clearer without becoming colder."
+        },
+        {
+          "label": "Check for an invented exception",
+          "prompt": "List every offer, exception, or workaround mentioned in this reply. Confirm each one matches exactly what I said I can genuinely offer, and flag anything you added that I didn't authorize."
+        },
+        {
+          "label": "Too cold — add genuine warmth",
+          "prompt": "This reads as too blunt or cold. Add genuine acknowledgment of the customer's frustration without apologizing for the decision itself and without changing any of the facts or softening the firmness."
+        },
+        {
+          "label": "Shorten it",
+          "prompt": "This is longer than it needs to be for a firm, clear answer. Cut it to under [WORD COUNT] words while keeping the decision stated in the first two sentences and keeping the genuine acknowledgment of frustration."
+        }
+      ],
+      "walkthrough": "Aisha works support at an outdoor gear store and has to reply to a customer asking for a refund on a tent used on one camping trip, well outside the 30-day window. Her first instinct draft, typed fast out of frustration with a long back-and-forth thread, reads: \"No. Policy is 30 days, it's been 41. Not our problem you didn't check.\" She knows this can't go out as written.\n\nShe opens Claude and pastes the lesson's prompt. For the draft field she pastes her blunt line above. For the actual decision she writes: \"we cannot refund, the window closed 11 days ago and the tent shows signs of use.\" For what she can offer, she writes: \"nothing, this is a firm no, no exceptions available.\" For the customer's core concern, she writes: \"they feel the 30-day window wasn't clearly communicated at checkout.\" Word count: 100.\n\nThe AI returns a reply that opens by clearly stating a refund isn't possible in the first two sentences, explains the 30-day window and usage plainly, acknowledges that the timing feels frustrating without apologizing for the policy itself, and closes without inventing any workaround.\n\nAisha reads it once more as the customer and worries it still reads slightly cold. She sends the follow-up: \"This reads as too blunt or cold. Add genuine acknowledgment of the customer's frustration without apologizing for the decision itself.\"\n\nThe revised version adds one warmer sentence acknowledging the disappointment. She sends it.\n\nTotal time: about 7 minutes."
+    },
+    "cs-b2-macro-library-from-real-tickets": {
+      "placeholders": [
+        {
+          "name": "N",
+          "what": "How many real replies you're feeding in for this batch — the lesson suggests starting with 5-8 of your most common ticket types rather than converting your entire history at once.",
+          "examples": ["5", "8", "6"]
+        },
+        {
+          "name": "PASTE REPLY 1 — with a one-line label for what kind of ticket it answers",
+          "what": "One of your actual best real replies to a common ticket type, copied exactly as sent, with a short label describing what kind of ticket it answers. Use a reply you'd genuinely be proud to reuse, not an average one.",
+          "examples": ["Label: Shipping delay, first contact. Reply: \"Hi Sam, thanks for reaching out, and sorry for the wait, I checked your order and tracking shows it's currently sitting at our regional hub, which is 5 days longer than normal. If it hasn't moved by [date], you'll qualify for store credit or a refund of shipping under our delay policy, and I'll follow up with you directly at that point. Appreciate your patience.\"", "Label: Password reset not working. Reply: \"Hi Jordan, that's frustrating, and I'm sorry the reset link didn't work. This usually happens when the link expires after 30 minutes, I've just sent you a fresh one that's active now. If it still doesn't work, reply here and I'll reset it manually from our end.\"", "Label: Wrong item received. Reply: \"Hi Priya, I'm sorry, that's on us, you should have received the medium and got a small instead. I've gone ahead and shipped the correct size at no charge, no need to return the wrong one. You'll get tracking within 24 hours.\""]
+        },
+        {
+          "name": "PASTE REPLY 2 — label",
+          "what": "A second real reply of a different common ticket type, formatted the same way as the first — the \"...\" in the prompt means you can keep adding more replies beyond just two, up to your chosen N.",
+          "examples": ["Label: Order cancellation request. Reply: \"Hi Morgan, no problem, I've cancelled order #3391 and the charge will be voided within 1-2 business days, you won't be charged at all. Let me know if you'd like help finding something else in the meantime.\"", "Label: Damaged item on arrival. Reply: \"Hi Chris, I'm really sorry it arrived damaged. If you can send a quick photo, I'll get a replacement shipped out right away at no cost, no need to return the damaged one.\"", "Label: Subscription pause request. Reply: \"Hi Dana, done, your subscription is paused starting with next month's order, and you won't be charged again until you resume it from your account page whenever you're ready.\""]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Small batch — just one macro at a time",
+          "whenToUse": "Use when you only have one strong real reply ready to convert right now, rather than waiting to gather a full batch of 5-8.",
+          "prompt": "I'm adding one macro to my team's library from a real reply I'm proud of.\n\n[PASTE REPLY — with a one-line label for what kind of ticket it answers]\n\nConvert it into a reusable macro: replace every ticket-specific or customer-specific detail with a clearly labeled placeholder in [BRACKETS] (e.g. [CUSTOMER NAME], [ORDER #], [ISSUE DATE]). Keep the tone, structure, and wording as close to my original as possible, do not rewrite it into generic customer-service language. Give it a short category label, and add a one-line \"fill in before sending\" checklist."
+        },
+        {
+          "label": "Building macros for a new agent's first week",
+          "whenToUse": "Use when onboarding a new hire and want macros built specifically for the situations they'll hit most in their first weeks, prioritized by frequency.",
+          "prompt": "I'm building a starter macro set for a new support hire's first two weeks. Here are our [N] most common ticket types they'll hit, with our best real replies to each.\n\n[PASTE REPLY 1 — label]\n[PASTE REPLY 2 — label]\n...\n\nFor each: 1) convert it into a macro with placeholders in [BRACKETS], keeping original wording and tone, 2) give a short category label, 3) add a fill-in checklist, and 4) add one sentence of guidance a new agent specifically would need to know before using this macro (e.g. \"only use if the order is confirmed shipped, check tracking first\")."
+        },
+        {
+          "label": "Converting an existing FAQ doc into macros",
+          "whenToUse": "Use when you already have a written internal FAQ or policy doc (not ticket replies) and want to convert its answers into the same macro format.",
+          "prompt": "I have an internal FAQ/policy doc with written answers to common questions (not ticket replies). I want to convert its answers into the same macro format as ticket-based macros.\n\n[PASTE FAQ SECTION — question + our written answer]\n\nFor each Q&A: 1) rewrite it in a natural reply voice a support agent would actually send (not FAQ-page language), matching this tone: [DESCRIBE VOICE], 2) add placeholders in [BRACKETS] for anything customer-specific, 3) give a short category label, 4) add a fill-in checklist."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check it preserved your real voice",
+          "prompt": "Compare this macro back to my original reply sentence by sentence. Tell me anywhere the wording, tone, or structure changed from what I wrote, rather than just having placeholders swapped in."
+        },
+        {
+          "label": "Placeholders too vague — make them specific",
+          "prompt": "Review the placeholders used in this macro. Replace any vague one like [DETAILS] or [INFO] with a specific one that says exactly what to fill in, like [ORDER #] or [DAYS DELAYED]."
+        },
+        {
+          "label": "Test it with a real example",
+          "prompt": "Fill in this macro's placeholders with this real example and show me the finished reply, so I can check it reads naturally once filled in: [PASTE REAL DETAILS]"
+        },
+        {
+          "label": "Add the fill-in checklist if missing",
+          "prompt": "Add a short \"fill in before sending\" checklist to this macro listing exactly which placeholders must be personalized before it can be sent, I don't want an agent sending it with a placeholder still in."
+        }
+      ],
+      "walkthrough": "Ben leads a 4-person support team that keeps answering the same handful of questions from scratch every time, which is slow and inconsistent. He decides to build a macro library and pulls his team's 6 best real replies from the last month's tickets, a shipping delay reply, a wrong-item reply, a password reset reply, a cancellation reply, a damaged-item reply, and a subscription pause reply.\n\nHe opens ChatGPT and pastes the lesson's prompt, setting N to 6, then pastes each reply with a one-line label, like \"Label: Shipping delay, first contact\" followed by the actual reply text his teammate Maria sent last week.\n\nThe AI converts each into a macro: the shipping delay reply becomes a template with [CUSTOMER NAME], [ORDER #], [CURRENT TRACKING STATUS], and [DAYS DELAYED] as placeholders, wording otherwise unchanged, labeled \"Shipping delay — over 5 days,\" with a checklist reminding the agent to confirm the actual tracking status before sending.\n\nBen checks one macro against the original and notices the AI smoothed out a slightly casual phrase Maria used (\"no biggie\") into something more formal. He sends the follow-up: \"Compare this macro back to my original reply sentence by sentence. Tell me anywhere the wording, tone, or structure changed.\"\n\nThe AI flags the change and restores the original phrasing. Ben tests one macro by filling in a real order number and reading it as a customer would, confirms it reads naturally, then saves all six into the team's shared macro doc with a review date three months out.\n\nTotal time: about 35 minutes."
+    },
+    "cs-i1-knowledge-base-articles-from-resolved-tickets": {
+      "placeholders": [
+        {
+          "name": "PASTE CLEANED TRANSCRIPT — CUSTOMER ISSUE + HOW IT WAS RESOLVED",
+          "what": "The full resolved ticket conversation, with every customer name, email, order number, or account-specific detail already removed or swapped for a placeholder before you paste it anywhere. Include both what the customer reported and exactly how the agent resolved it.",
+          "examples": ["Customer: My orders keep showing as 'processing' even after I get a shipping confirmation email. Very confusing. Agent: This happens when the store's inventory sync hasn't caught up with the shipping carrier update yet, I refreshed [CUSTOMER]'s account manually and the status updated within a few minutes. Agent note: usually resolves itself within 24 hours without manual intervention.", "Customer: The app crashes every time I try to upload a photo larger than a few MB. Agent: Confirmed this happens with images over 10MB on the current app version. Had [CUSTOMER] resize the photo before uploading as a workaround, which worked. Agent note: reported to engineering as a known bug, no fix timeline yet.", "Customer: I can't find where to update my shipping address after placing an order. Agent: Walked [CUSTOMER] through it, orders can only have their address changed within 1 hour of placing, after that it's locked for processing. Within that window, it's under Account > Order History > Edit Address."]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Combining multiple similar tickets into one article",
+          "whenToUse": "Use when you have several resolved tickets about the same underlying issue with slightly different details, so the article reflects the real range of the problem.",
+          "prompt": "Turn these resolved support tickets into one general knowledge-base article, they're all about the same underlying issue with slightly different specifics, and I want the article to reflect the real range of how it shows up. All customer-identifying details have already been replaced with placeholders.\n\nTicket 1 (cleaned): [PASTE CLEANED TRANSCRIPT]\nTicket 2 (cleaned): [PASTE CLEANED TRANSCRIPT]\nTicket 3 (cleaned, if any): [PASTE CLEANED TRANSCRIPT]\n\nStructure the article as: 1) Title (a real search query), 2) short summary, 3) step-by-step resolution generalized across all the tickets, note if different tickets needed different steps, 4) \"when this might not work\" section, 5) related issues. Do not state anything as generally true that only appeared in one of the tickets, flag those under \"needs verification\" instead."
+        },
+        {
+          "label": "Short quick-answer article for a simple issue",
+          "whenToUse": "Use for a simple, well-understood issue that doesn't need the full 5-section structure.",
+          "prompt": "Turn this resolved ticket into a short quick-answer help article for a simple issue. All customer-identifying details have already been replaced with placeholders.\n\nTicket transcript (cleaned): [PASTE CLEANED TRANSCRIPT]\n\nGive me just: 1) Title (a real search query), 2) a 2-4 sentence direct answer, 3) one \"needs verification\" flag if any part of the resolution might not generalize to every customer. Keep the whole thing under 100 words, this doesn't need the full multi-section structure."
+        },
+        {
+          "label": "Article aimed at internal agents, not customers",
+          "whenToUse": "Use when the article is for your own support team's internal knowledge base rather than a public customer-facing help center.",
+          "prompt": "Turn this resolved ticket into an internal knowledge-base article for our own support team, not customers. All customer-identifying details have already been replaced with placeholders.\n\nTicket transcript (cleaned): [PASTE CLEANED TRANSCRIPT]\n\nStructure it as: 1) Title (how an agent would search for this internally), 2) short summary, 3) step-by-step resolution including any internal tool names, admin panel steps, or escalation paths mentioned in the ticket, 4) \"when this might not work\" / when to escalate instead, 5) related internal articles or macros to check. Since this is internal-only, you can include operational detail a customer-facing article would omit, but still flag anything uncertain under \"needs verification\" rather than stating it as settled process."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check nothing customer-specific was generalized",
+          "prompt": "Reread the ticket transcript and the article side by side. Point out anywhere the article states something as generally true that was actually specific to this one customer's account or situation, and move it to the \"needs verification\" section."
+        },
+        {
+          "label": "Make the title a real search query",
+          "prompt": "Rewrite the title as the exact phrase or question a customer would actually type into a search bar or help-center search, not a description of the internal issue."
+        },
+        {
+          "label": "Simplify the steps",
+          "prompt": "Rewrite the step-by-step section in shorter, simpler steps a non-technical customer could follow without help, break any step that does more than one thing into two steps."
+        },
+        {
+          "label": "Double-check for leftover PII",
+          "prompt": "Scan this article one more time for anything that could identify a real customer, a name, email, order number, or account-specific detail that wasn't replaced with a placeholder. List anything you find."
+        }
+      ],
+      "walkthrough": "Renata handles support for a subscription box service and recently resolved a ticket where a customer's account showed orders stuck on \"processing\" even after a shipping email went out. She realizes this probably happens to other customers too, and decides to turn it into a help-center article instead of explaining it from scratch every time it comes up.\n\nShe copies the ticket transcript out of her helpdesk tool into a text file and replaces the customer's name and account email with [CUSTOMER] and [EMAIL] before pasting anything into an AI tool, since her company's policy requires that.\n\nIn Claude, she pastes the lesson's prompt with the cleaned transcript: the customer's confusion, the agent's explanation that this happens when inventory sync lags behind the shipping update, the manual refresh that fixed it immediately, and a note that it usually self-resolves within 24 hours anyway.\n\nThe AI returns a structured draft: a title phrased as \"why does my order still say processing after shipping,\" a short summary, three generalized steps (wait 24 hours, refresh the order page, contact support if it persists past 24 hours), a \"when this might not work\" section, and a \"needs verification\" flag questioning whether the manual refresh trick works for every customer or only worked because a support agent has backend access customers don't.\n\nRenata sends that flag to her product lead, who confirms customers can't self-refresh, so she removes that step and keeps only the wait-and-contact-support path. She publishes after that check.\n\nTotal time: about 25 minutes including the verification step."
+    },
+    "cs-i2-escalation-summaries-engineers-managers": {
+      "placeholders": [
+        {
+          "name": "PASTE THREAD OR NOTES — include error messages, timestamps, steps already tried",
+          "what": "The raw ticket thread or your own working notes on the issue, including exact error messages as they appeared, timestamps, and anything already tried to fix it. Paste this as-is rather than cleaning it up first. Replace customer names or emails with placeholders first if your tool logs or shares AI conversations.",
+          "examples": ["Customer reports checkout fails with error 'PAYMENT_DECLINED_502' at the final step. Started ~9:40am today. 6 similar reports since. Agent tried: had customer clear cache and retry (still fails), tried a different card (still fails). No timestamp pattern noticed yet, all reports are US customers.", "App crashes on launch with error 'SIGABRT: memory pressure' after the 2.4.1 update, reported starting yesterday evening. Affects iPhone SE and iPhone 8 users specifically so far, not seen on newer models. Agent tried: had 2 customers reinstall the app, crash still occurs on first launch.", "Customer's dashboard shows '$0.00' for all historical revenue reports as of this morning, was working correctly as of last night per customer. Agent tried: logging out/in (no change), checked account in admin panel and data appears present in the database, just not rendering on the customer-facing dashboard."]
+        },
+        {
+          "name": "e.g. \"affecting an estimated 40+ customers since yesterday, no known workaround\" / \"unknown — flag as unknown\"",
+          "what": "The real scope of the problem if you know it, how many customers, since when, whether there's a workaround, or an honest \"unknown\" if you don't. Guessing here to sound more certain than you are will mislead whoever reads the manager summary.",
+          "examples": ["Affecting an estimated 40+ customers since yesterday, no known workaround", "Unknown — flag as unknown, only 6 reports confirmed so far but could be wider", "Confirmed to affect all customers on the 2.4.1 app update on older devices (iPhone SE and 8), roughly 15% of our user base by device type, no workaround besides staying on the previous version"]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Technical summary only — engineer already has context",
+          "whenToUse": "Use when you're escalating directly to an engineer who's already aware of the issue and just needs the technical detail, without a separate manager-facing summary.",
+          "prompt": "I need to send a technical summary only to an engineer who's already aware of this issue, no manager summary needed.\n\nRaw thread/notes: [PASTE THREAD OR NOTES — include error messages, timestamps, steps already tried]\n\nGive me: exact error message(s) as written, steps to reproduce as far as known, what's already been tried and ruled out, environment/version details if mentioned. Do not infer a root cause or fix that wasn't stated. Flag anything needed to reproduce that isn't in the thread as \"missing — need to obtain.\""
+        },
+        {
+          "label": "Customer-facing incident update, not internal escalation",
+          "whenToUse": "Use during an active incident when you need a short public or customer-facing status update instead of an internal escalation summary.",
+          "prompt": "I need a short customer-facing status update for an active incident, not an internal escalation summary, this may be posted publicly or sent to affected customers, so it needs to be careful and not overpromise.\n\nRaw thread/notes (internal only, do not include specifics from this in the public version): [PASTE THREAD OR NOTES]\nKnown impact: [KNOWN IMPACT]\n\nWrite a 2-3 sentence customer-facing update that: states plainly what's affected in non-technical language, does not speculate on cause, does not promise a specific fix time unless I've confirmed one, and tells customers what to do if anything (retry, wait, contact support)."
+        },
+        {
+          "label": "Follow-up escalation update once more is known",
+          "whenToUse": "Use to update an escalation that's already in progress once new information has come in, without re-writing the whole thing from scratch.",
+          "prompt": "This escalation is already in progress. Here's the original summary I sent: [PASTE PREVIOUS SUMMARY]\n\nHere's what's new since then: [PASTE NEW THREAD/NOTES — new error info, what's been tried, updated impact]\n\nGive me an updated version of both the technical and manager summaries reflecting only what's changed, don't repeat unchanged information at length, just note what's new, what's now ruled out, and whether the known impact figure has changed. Do not infer a root cause or fix that wasn't stated."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check for an inferred root cause",
+          "prompt": "Reread both summaries and point out anywhere a cause, fix, or explanation is stated that wasn't actually confirmed in the raw thread I gave you, even if it sounds like a reasonable guess, flag it so I can mark it as unconfirmed or remove it."
+        },
+        {
+          "label": "Check the impact numbers match exactly",
+          "prompt": "Confirm the impact figures in the manager summary match exactly what I stated, not rounded up, not more confident than what I actually know. Flag any mismatch."
+        },
+        {
+          "label": "Manager summary still too technical — simplify",
+          "prompt": "The manager summary still has technical language in it. Rewrite it so a non-technical manager could read it in 15 seconds and understand what's broken, how bad it is, and what's being asked of them."
+        },
+        {
+          "label": "List what's still missing to reproduce",
+          "prompt": "Give me a clean bullet list of everything flagged as \"missing — need to obtain\" across both summaries, so I know exactly what to go collect from the customer or logs before engineering can act on this."
+        }
+      ],
+      "walkthrough": "Karim works support at a software company and starts seeing a pattern: six customers in one morning report checkout failing with the same error code. He needs to escalate this to engineering fast, and his manager will also ask what's going on, so he wants both summaries from the same facts instead of writing two separate reports under pressure.\n\nHe opens his notes doc where he's been logging each report as it came in, exact error code, timestamps, the fact that clearing cache and trying a different card didn't help, and pastes the lesson's prompt into ChatGPT. For known impact, he writes: \"affecting at least 6 confirmed customers since 9:40am today, likely more not yet reported, no known workaround.\"\n\nThe AI returns two summaries. The technical one quotes the exact error code, lists the two failed attempts to fix it, and flags that browser and specific checkout-step details weren't captured yet, marking them \"missing — need to obtain.\" The manager summary states checkout is failing for at least 6 customers since this morning with no workaround, and requests engineering prioritize investigating.\n\nKarim rereads the technical summary and notices a line implying the issue might be payment-processor related, something nobody actually confirmed, only his own hunch bleeding into the draft. He sends the follow-up: \"Reread both summaries and point out anywhere a cause is stated that wasn't actually confirmed... flag it.\"\n\nThe AI catches the line and marks it as an unconfirmed hypothesis instead of stated fact. Karim sends both summaries to their respective audiences.\n\nTotal time: about 10 minutes."
+    },
+    "cs-i3-tone-consistency-across-support-team": {
+      "placeholders": [
+        {
+          "name": "PASTE 4-6 REAL REPLIES",
+          "what": "Real replies your team actually sent that you and your team agree represent the tone you want, include a mix of easy and difficult situations, not just the easy wins.",
+          "examples": ["Reply 1 (easy — order status): \"Hi Jamie, good news, your order shipped this morning and should land by Thursday. Tracking: [link]. Let me know if you don't see movement by Wednesday.\"\n\nReply 2 (difficult — denied refund): \"Hi Alex, I checked and unfortunately this falls outside our 30-day window, so I'm not able to process a refund. I know that's not what you wanted to hear, happy to help with anything else on the account.\"", "Reply 3 (easy — how-to question): \"Hi Sam, you can update that from Account > Settings > Notifications, then just save at the bottom. Let me know if it doesn't stick.\"\n\nReply 4 (difficult — repeat complaint): \"Hi Morgan, I see this is the second time you've reported this, I'm sorry it's still happening. I've escalated it directly to our engineering team with your account details so they can look deeper, and I'll personally follow up once I hear back.\"", "Reply 5 (easy — thank you response): \"That honestly makes our day, thank you for saying so! Passing this along to the team.\"\n\nReply 6 (difficult — angry customer, our error): \"Hi Dana, you're right to be frustrated, we shipped the wrong size and that's on us. I've sent the correct one out today at no charge, no need to return the wrong item.\""]
+        },
+        {
+          "name": "PASTE 1-2, OR \"none provided\"",
+          "what": "One or two real replies your team agrees missed the mark, too stiff, too casual, over-apologetic, or otherwise off, so the AI can name specifically what went wrong instead of guessing. If you don't have an example handy, write \"none provided\" and skip this.",
+          "examples": ["\"To Whom It May Concern, We regret to inform you that per our terms of service section 4.2, your request cannot be accommodated at this time. Regards, Customer Service Department\" (too stiff/corporate)", "\"omg so sorry that happened to u!! that totally sucks lol, let me see what I can do\" (too casual for the situation, a billing dispute)", "\"none provided\""]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Comparing two agents' tone side by side",
+          "whenToUse": "Use when you want to understand how two specific agents' styles differ, before deciding what the team-wide standard should be.",
+          "prompt": "I want to compare two agents' tone before deciding on a team-wide standard.\n\nAgent A's replies: [PASTE 3-4 REAL REPLIES]\nAgent B's replies: [PASTE 3-4 REAL REPLIES]\n\nFrom these examples only: 1) describe the concrete, specific differences between how each agent writes (sentence length, how they open, how much they apologize, specific phrases), 2) note which specific patterns from each would be worth keeping in a team-wide standard, 3) don't declare one agent \"better\" overall, just describe the real differences and let me decide what to standardize on."
+        },
+        {
+          "label": "Channel-specific tone guide (chat vs. email)",
+          "whenToUse": "Use when your team writes in more than one channel and the tone genuinely should differ, chat shorter and more casual, email more complete.",
+          "prompt": "I want two versions of our tone guide, one for live chat, one for email, since the right tone genuinely differs by channel.\n\nReal chat replies that hit our tone well: [PASTE 3-4 REAL CHAT REPLIES]\nReal email replies that hit our tone well: [PASTE 3-4 REAL EMAIL REPLIES]\n\nFor each channel separately: 1) identify the concrete patterns (message length, formality, how greetings/sign-offs work, response speed expectations), 2) note the real differences between the two channels based on these examples, 3) give a short do's-and-don'ts list with an example for each, per channel. Do not invent a tone rule not reflected in the examples."
+        },
+        {
+          "label": "Quick tone check on a single draft",
+          "whenToUse": "Use day-to-day once the guide exists, to check one specific draft against it without rebuilding the whole guide.",
+          "prompt": "Check this draft reply against our team's tone guide before I send it.\n\nOur tone guide: [PASTE YOUR TONE GUIDE OR ITS 5-POINT CHECKLIST]\nMy draft: [PASTE DRAFT]\n\nGo through the checklist point by point and tell me where this draft passes or fails, with a specific fix for anything that fails, don't rewrite the whole thing, just flag and fix the specific issues."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Check no invented rule snuck in",
+          "prompt": "Go through the guide point by point and confirm each do/don't is backed by a specific example from what I gave you. Flag anything that sounds like generic customer-service advice not actually reflected in my examples, and remove or revise it."
+        },
+        {
+          "label": "Make it more specific with real quotes",
+          "prompt": "For each do/don't point, quote the exact sentence from my examples that demonstrates it, so the guide is anchored to real language, not just described in the abstract."
+        },
+        {
+          "label": "Checklist too long — cut to essentials",
+          "prompt": "The pre-send checklist has too many points to realistically run through before sending every reply. Cut it to the 3 most important checks."
+        },
+        {
+          "label": "Add a weak example I forgot to include",
+          "prompt": "I have another example that missed the mark: [PASTE EXAMPLE]. Add an analysis of specifically what's off about it, tied to a concrete pattern, and fold that into the existing guide."
+        }
+      ],
+      "walkthrough": "Yuki manages a 6-person support team that's grown fast, and she's noticed replies vary a lot, one agent signs off formally with \"Kind regards,\" another is almost too casual for a billing dispute. She wants a tone guide built from the team's own real writing, not generic advice nobody will actually reference.\n\nShe asks two teammates to nominate their best recent replies and pulls 5 real examples: an easy shipping update, a denied refund handled well, a repeat-complaint escalation, a thank-you response, and an apology for a shipping error that was genuinely their fault. She also has one example she saved months ago that was too corporate-sounding, opening with \"To Whom It May Concern.\"\n\nIn ChatGPT, she pastes the lesson's prompt with all 5 good examples and the one weak one, labeled clearly. The AI identifies a real pattern: the good replies all state the answer or action in the first sentence before adding context, keep sentences short, and only apologize when the company was actually at fault. It flags the weak example specifically for its stiff corporate opening and lack of a direct answer. It produces a do's-and-don'ts guide with a quoted real example next to each point, plus a 5-point pre-send checklist.\n\nYuki reviews it and feels the checklist has too many items for agents to realistically run through before every send. She sends the follow-up: \"Cut it to the 3 most important checks.\"\n\nShe shares the trimmed guide with the team in their next meeting.\n\nTotal time: about 30 minutes."
+    },
+    "cs-a1-triage-workflows-ai-assistance-human-judgment": {
+      "placeholders": [
+        {
+          "name": "LIST, e.g. \"billing, shipping, technical, account access, general question, complaint/escalation\"",
+          "what": "Your team's real, currently-used ticket categories exactly as they appear in your helpdesk system, don't invent new categories for this exercise.",
+          "examples": ["Billing, shipping, technical, account access, general question, complaint/escalation", "Order issue, product question, returns/refunds, technical support, account/login, other", "Bug report, feature request, billing, onboarding help, churn risk/cancellation"]
+        },
+        {
+          "name": "LIST, e.g. \"urgent, standard, low\"",
+          "what": "The real priority levels your team currently uses to triage tickets, keep to your existing scale rather than introducing a new one.",
+          "examples": ["Urgent, standard, low", "P1 (immediate), P2 (same day), P3 (this week)", "Critical, high, normal, low"]
+        },
+        {
+          "name": "LIST, e.g. \"repeat contact within 48h, words like 'cancel'/'refund my money now', VIP account tag, angry tone\"",
+          "what": "The actual real signals a human triager currently notices when judging urgency, specific words, repeat contact, account tier, tone. Naming these concretely is what lets the AI classification step approximate a real triager's judgment.",
+          "examples": ["Repeat contact within 48h, words like 'cancel' / 'refund my money now' / 'lawyer', VIP account tag, clearly angry tone, mentions of a competitor", "Order marked as a gift with an upcoming event date mentioned, any mention of a safety issue, enterprise account tier", "Multiple failed login attempts mentioned, any mention of unauthorized account access, phrases like 'I've been charged twice'"]
+        }
+      ],
+      "variations": [
+        {
+          "label": "Adding an AI-suggested reply step (after validation)",
+          "whenToUse": "Use only after the classification-only workflow has already run and been validated for a few weeks, this extends it to also suggest a reply, still requiring human send.",
+          "prompt": "Our AI classification-and-routing workflow has been running and validated for [TIMEFRAME, e.g. \"6 weeks\"], with accuracy against past human decisions at [ACCURACY %]. I want to extend it to also draft a suggested reply, still requiring a human to review and send, never auto-sent.\n\nOur real ticket categories: [LIST]\nOur real priority levels: [LIST]\nSignals we use: [LIST]\n\nDesign the addition: 1) what real data the AI reply-drafting step should use (ticket text, category, relevant macro from our library if one matches), 2) where the human review/send step sits, confirm it cannot be skipped, 3) which ticket categories or priority levels should be excluded from getting an AI-suggested reply at all, 4) the single biggest new risk this addition introduces."
+        },
+        {
+          "label": "Smaller team — simplified single-queue version",
+          "whenToUse": "Use for a very small team (1-3 agents) where a full multi-queue routing system is overkill and a simpler priority-flag-only version makes more sense.",
+          "prompt": "I run a small support team ([NUMBER] agents) and want a simplified version of an AI triage workflow, not full multi-queue routing, just an urgency flag to help me prioritize my own inbox.\n\nOur real ticket categories: [LIST]\nOur real priority levels: [LIST]\nSignals we use to judge urgency: [LIST]\n\nDesign a simple version: 1) AI reads each incoming ticket and outputs just a priority flag + one-line reason, 2) low-confidence tickets get flagged for me to judge myself rather than guessed at, 3) which situations should always be flagged urgent regardless of AI confidence, 4) a lightweight way for me to spot-check accuracy weekly without a formal test setup."
+        },
+        {
+          "label": "Designing the validation test in detail",
+          "whenToUse": "Use when you're ready to actually build the accuracy test against past tickets and need a detailed test plan, not just the high-level workflow design.",
+          "prompt": "I'm ready to build the validation test for an AI ticket classification step before trusting it on live traffic.\n\nOur real ticket categories: [LIST]\nOur real priority levels: [LIST]\nWe have [NUMBER] real past tickets with known correct category/priority (what a human actually assigned).\n\nHelp me design the test in detail: 1) how to structure a spreadsheet or test set comparing AI classification to the known-correct human classification for each ticket, 2) what accuracy rate would be a reasonable bar before trusting it on live traffic for classification-only use, 3) how to break down accuracy by category so I know where to keep more human oversight even after rollout, 4) what to do about tickets where the AI was confident but wrong, specifically."
+        }
+      ],
+      "followUps": [
+        {
+          "label": "Tighten the always-human list",
+          "prompt": "Review the always-human decision list again. Are there any other high-stakes situations specific to our business that should be added, anything involving money, legal exposure, safety, or a customer threatening to leave, that isn't already covered? Add any I'm missing."
+        },
+        {
+          "label": "Make the low-confidence rule concrete",
+          "prompt": "The low-confidence-routes-to-human rule needs an actual threshold, not just a general principle. Suggest a specific, reasonable confidence threshold to start with, and explain how I'd adjust it up or down based on the first few weeks of real results."
+        },
+        {
+          "label": "Stress-test with an ambiguous example",
+          "prompt": "Here's a real ambiguous ticket: [PASTE TICKET TEXT]. Walk through exactly how this workflow would classify and route it, step by step, and tell me whether it would correctly send this to a human or risk mishandling it."
+        },
+        {
+          "label": "Turn the test plan into a checklist",
+          "prompt": "Turn the test plan into a concrete step-by-step checklist I can follow this week, including how many past tickets I need, what to record for each, and what result would mean I'm ready to roll out vs. need to adjust the workflow first."
+        }
+      ],
+      "walkthrough": "Diego manages support for a growing SaaS company where ticket volume has outpaced his team's ability to manually read and route every incoming ticket before someone even starts working it. He wants AI to help with the first-pass sorting, but he's wary of anything auto-closing or auto-resolving a ticket without a human looking at it.\n\nHe opens his helpdesk platform's settings to confirm his team's real categories (billing, shipping, technical, account access, general question, complaint/escalation) and priority levels (urgent, standard, low), and writes down the real signals his senior agents currently use to judge urgency: repeat contact within 48 hours, specific words like \"cancel\" or \"refund my money now,\" a VIP account tag, and clearly angry tone.\n\nHe pastes the lesson's prompt into Claude with those three lists filled in. The AI designs a workflow: ticket text and account metadata feed an AI classification step that outputs category, priority, and a confidence score; anything below a stated confidence threshold routes to a human review queue instead of being force-classified; an explicit always-human list covers anything mentioning cancellation or legal terms, any VIP account regardless of AI-assessed priority, and any auto-close action; and a test plan running the classifier against 100 recent resolved tickets, comparing results to what a human actually decided, before trusting it on live traffic.\n\nDiego sends the follow-up asking it to stress-test the workflow against a real ambiguous ticket he has on hand, one where a frustrated customer mentions both a refund and canceling their account. The AI confirms this would correctly route to the human queue given the always-human list.\n\nHe builds the test set next, planning to run it before turning anything on live.\n\nTotal time: about 40 minutes."
+    }
+  }
+}

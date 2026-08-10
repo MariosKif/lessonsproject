@@ -1,0 +1,244 @@
+{
+  "quizzes": {
+    "sales-b1-cold-outreach-from-prospect-research": [
+      {
+        "q": "Why does the prompt ban openers like 'I noticed we're both in the same industry' or a generic compliment?",
+        "options": ["They're too long for a cold email", "They violate CAN-SPAM regulations", "They're reliable tells of a mass email and don't reference anything specific about the prospect", "They don't fit LinkedIn's character limit"],
+        "answer": 2,
+        "why": "Generic compliments and fake-personal openers are the tells buyers spot instantly in a mail-merge email; the prompt requires referencing one real researched fact instead."
+      },
+      {
+        "q": "A rep has only vague research on a prospect ('they seem successful') but no specific recent fact. What should they do before running the outreach prompt?",
+        "options": ["Run the prompt anyway; the AI will invent a plausible detail", "Skip personalization for that prospect and send a template", "Ask the AI what to say about the industry instead", "Go back and find a specific, current fact — a launch, a post, a role change — since vague research produces a fallback to generic compliments"],
+        "answer": 3,
+        "why": "The lesson lists handing over vague research instead of a specific, current fact as a common mistake, since it forces the opener toward generic filler."
+      },
+      {
+        "q": "Why does the prompt cap the message to one clear, low-friction ask instead of offering the prospect several options (call, resource, referral)?",
+        "options": ["Multiple asks make the message harder to reply to quickly, and a busy prospect is looking for a reason to stop reading", "Email clients strip out messages with more than one ask", "Multiple asks are considered spam by filters", "It's required to keep the message under 100 words"],
+        "answer": 0,
+        "why": "A single, low-friction ask matches how a busy prospect actually reads a cold message — fast, and looking for a reason to stop, not to weigh multiple options."
+      }
+    ],
+    "sales-b2-followup-sequence-that-doesnt-feel-robotic": [
+      {
+        "q": "Why does the prompt explicitly ban phrases like 'just checking in' and 'circling back' across the whole sequence?",
+        "options": ["They are considered unprofessional in B2B email overall", "Those phrases are the default filler openers that make follow-ups feel automated instead of adding a genuine new reason to reply", "They trigger spam filters", "They're too informal for LinkedIn"],
+        "answer": 1,
+        "why": "Banning these exact phrases stops the model from defaulting to filler openers that make a follow-up read as automated pressure rather than a genuine new touchpoint."
+      },
+      {
+        "q": "The sequence's social-proof touch (message 3) has no real client example available. What should happen?",
+        "options": ["Skip straight to the break-up message instead", "Ask the AI to generate a realistic-sounding example anyway", "Use the [YOUR EXAMPLE] placeholder rather than let the model invent a case study or client name", "Reuse the exact wording from message 1"],
+        "answer": 2,
+        "why": "The prompt explicitly bans inventing case studies, statistics, or client names, since social proof is a category a model will happily fabricate if not constrained."
+      },
+      {
+        "q": "A prospect replies 'not interested right now' after touch 2. What should the rep do?",
+        "options": ["Continue to touch 3 and 4 since the sequence was already planned", "Skip to the break-up message only", "Wait a month and restart the sequence from touch 1", "Stop the sequence — any reply, including a soft no, ends it"],
+        "answer": 3,
+        "why": "The workflow explicitly says to stop the sequence the moment you get any reply, including a 'not now,' rather than continuing regardless."
+      }
+    ],
+    "sales-b3-objection-handling-from-real-objections": [
+      {
+        "q": "Why does the prompt ask for talking points rather than a verbatim script?",
+        "options": ["A memorized line falls apart the moment the prospect responds unpredictably, while talking points adapt to the live conversation", "Talking points are shorter to generate", "Verbatim scripts are against most CRM policies", "Scripts can't include limitations"],
+        "answer": 0,
+        "why": "Objections happen live and unpredictably; talking points stay usable when the conversation goes off-script, unlike a memorized line."
+      },
+      {
+        "q": "The prospect's real objection is about price being nearly double a competitor's, and this is genuinely true. What does the lesson say the response set should include?",
+        "options": ["A response denying the price difference exists", "At least one approach that honestly acknowledges the price gap rather than only a flattering framing that dodges it", "A response that only compares unrelated features", "A response redirecting to a different product entirely"],
+        "answer": 1,
+        "why": "The prompt requires at least one response to acknowledge a real limitation honestly, since prospects tend to trust a rep more after an honest admission than a dodge they can later disprove."
+      },
+      {
+        "q": "Why does the prompt include a roleplay step where the AI pushes back further on the strongest approach?",
+        "options": ["It's required to validate the objection is real", "It replaces the need to log the objection afterward", "It turns preparation into practice, rather than a reading exercise, before the objection is faced live", "It shortens the response for the real call"],
+        "answer": 2,
+        "why": "The roleplay step is what makes this practice instead of just reading talking points silently, so the rep is genuinely rehearsed before facing the objection live."
+      }
+    ],
+    "sales-i1-proposal-quote-from-discovery-notes": [
+      {
+        "q": "The discovery notes mention reconciliation automation but not a reporting dashboard, yet the model's draft lists a dashboard under scope. What should happen?",
+        "options": ["Leave it in scope since dashboards are usually included", "Delete the whole proposal and start over", "Ask the client to add a dashboard to their notes retroactively", "Move it to 'Scope items to confirm' since it wasn't explicitly discussed, rather than leaving it in the main scope section"],
+        "answer": 3,
+        "why": "The prompt separates confirmed scope from inferred scope specifically so an item the model inferred rather than quoted from notes doesn't silently slip into the promised deliverables."
+      },
+      {
+        "q": "No price was discussed on the discovery call. What should the pricing section of the draft show?",
+        "options": ["[PRICE PLACEHOLDER], filled in by the rep with a real number before sending — never an AI-estimated figure", "An estimated market-rate price the AI calculates from the scope", "The competitor's public pricing as a reference point", "No pricing section at all"],
+        "answer": 0,
+        "why": "The prompt instructs the model to never estimate a price itself; pricing must stay a placeholder unless an actual number was given, since a wrong or invented figure is the costliest kind of proposal error."
+      },
+      {
+        "q": "Why does the lesson emphasize sending the proposal within a day or two of the discovery call?",
+        "options": ["It's a legal requirement in most sales contracts", "Proposals sent soon after a strong discovery call close at a meaningfully higher rate than ones that arrive after momentum is lost", "Slower proposals are considered spam by email providers", "AI-drafted proposals expire after 24 hours"],
+        "answer": 1,
+        "why": "Proposals sent quickly after a strong discovery call close at a meaningfully higher rate; the AI-assisted draft is meant to preserve that momentum, provided scope and pricing stay accurate."
+      }
+    ],
+    "sales-i2-prospect-research-before-a-call-perplexity": [
+      {
+        "q": "Why does the prompt require a source and publish date for every researched item?",
+        "options": ["Dates are required by ChatGPT's terms of use", "It shortens the research to only recent items", "It gives the rep a citation trail to sanity-check before the call, instead of repeating something stale or wrong to the prospect's face", "It's needed to bill the research time"],
+        "answer": 2,
+        "why": "A source and date on every item lets the rep quickly verify accuracy before the call, rather than risk stating something outdated or wrong directly to the prospect."
+      },
+      {
+        "q": "A rep researched a prospect two weeks ago, but the call just got rescheduled to next month. What should they do?",
+        "options": ["Nothing — the original research is still valid indefinitely", "Use only the parts of the research that mention the company name", "Cancel the call since the research is now unusable", "Re-run the research, since company context (funding, leadership, priorities) can change meaningfully within weeks"],
+        "answer": 3,
+        "why": "The lesson warns against running research too far in advance and not re-checking it if the call gets rescheduled, since company context changes fast."
+      },
+      {
+        "q": "Why does the prompt instruct ChatGPT to flag missing information instead of filling gaps with general or outdated context?",
+        "options": ["A confident-sounding briefing built on outdated or generic filler is worse than an honest gap, since it risks the rep repeating something wrong on the call", "It's a technical limitation of the search engine", "Flagging gaps is required for GDPR compliance", "It reduces the number of citations needed"],
+        "answer": 0,
+        "why": "Explicitly flagging what wasn't found keeps the briefing honest rather than producing a confident-sounding summary built on stale or generic filler."
+      }
+    ],
+    "sales-a1-reusable-sales-messaging-library": [
+      {
+        "q": "Why does the lesson put anti-invention and placeholder rules into the Claude Project's standing instructions instead of repeating them in every prompt?",
+        "options": ["Standing instructions run faster than per-prompt instructions", "Standing rules apply automatically to every future request instead of depending on the rep remembering to add guardrails each time", "It's required by Claude's Projects feature", "It reduces the project's storage usage"],
+        "answer": 1,
+        "why": "Putting guardrails into standing project instructions makes them apply automatically to every future request, rather than relying on the rep remembering to re-add them each time."
+      },
+      {
+        "q": "Why does the standing rule require at least one objection response to acknowledge a real limitation honestly?",
+        "options": ["It's a legal disclosure requirement for all sales teams", "It reduces the number of objection types needed", "It keeps the whole messaging library credible instead of just persuasive, protecting trust across every rep who uses it", "It shortens response generation time"],
+        "answer": 2,
+        "why": "Making the honest-limitation rule standing, not a one-off request, keeps every rep's use of the library credible rather than only persuasive."
+      },
+      {
+        "q": "A sales team lets each rep create and maintain their own separate Claude Project with their own version of the messaging assets. What's the risk noted in the lesson?",
+        "options": ["Individual projects run slower than a shared one", "Claude limits each account to one project", "It duplicates the compliance review workload only", "It breaks the point of a shared source of truth — tone and approved claims drift between reps instead of staying consistent"],
+        "answer": 3,
+        "why": "The lesson lists letting every rep maintain a separate project as a common mistake, since it defeats the goal of one shared source of truth for approved claims and tone."
+      }
+    ],
+    "hr-b1-job-description-that-attracts-right-candidates": [
+      {
+        "q": "A draft job description bundles 'nice to have' skills into the 'Required' section as an aspirational wish list. What's the risk?",
+        "options": ["Qualified candidates, especially from underrepresented groups, tend to self-select out when requirements read as an inflated wish list", "The posting will be rejected by most job boards", "It has no real effect on who applies", "It only affects search engine ranking of the listing"],
+        "answer": 0,
+        "why": "Bundling an aspirational wish list into 'Required' is a well-documented reason qualified candidates, especially from underrepresented groups, don't apply."
+      },
+      {
+        "q": "The prompt flags 'young and energetic team player' in a separate 'Language flagged for review' section rather than silently rewriting it. Why?",
+        "options": ["Silently rewriting text is technically impossible for the model", "It keeps the hiring manager in control of the final wording while still surfacing patterns worth reconsidering", "Flagged language is always removed automatically after review", "It's required to publish on major job boards"],
+        "answer": 1,
+        "why": "Flagging exclusionary language separately, instead of silently rewriting it, keeps the hiring manager in control of the final decision while still surfacing the pattern."
+      },
+      {
+        "q": "Why does the prompt ban generic filler like 'fast-paced environment' or 'wear many hats' unless it reflects something actually described?",
+        "options": ["Filler phrases are considered discriminatory language", "It's required to fit within job board character limits", "Generic filler makes the posting read like every other listing instead of describing this specific role", "Filler phrases lower the posting's search ranking"],
+        "answer": 2,
+        "why": "Banning filler that doesn't reflect the actual role forces the JD to describe this specific job rather than reading like a template shared by every other listing."
+      }
+    ],
+    "hr-b2-interview-questions-per-role-and-competency": [
+      {
+        "q": "Why does the prompt name specific protected-characteristic categories to avoid (age, family status, national origin) instead of a general 'keep it appropriate' instruction?",
+        "options": ["General instructions are technically not supported by ChatGPT", "Naming categories shortens the question set", "It's only relevant for government jobs", "Indirect versions of these questions, like asking about childcare logistics, are exactly the ones interviewers ask without realizing the legal risk"],
+        "answer": 3,
+        "why": "Naming the exact categories is more reliable than a vague instruction, because indirect versions of these questions are the ones interviewers most often ask unintentionally."
+      },
+      {
+        "q": "Why does the prompt require questions to be grouped explicitly by named competency rather than one flat list?",
+        "options": ["Grouped questions let interviewers score a candidate competency by competency afterward, supporting structured, comparable evaluation", "Grouping is required for ATS software to parse the questions", "It reduces the total number of questions needed", "It's the only way to add follow-up probes"],
+        "answer": 0,
+        "why": "Grouping by competency is what makes the set usable for structured evaluation, letting a recruiter score candidates competency by competency instead of reconstructing which question mapped to what."
+      },
+      {
+        "q": "A hiring manager improvises different questions for each candidate interviewing for the same role, based on how the conversation goes. What problem does this create?",
+        "options": ["It's actually the recommended best practice for behavioral interviews", "It breaks the ability to compare candidates fairly against a consistent structure", "It has no real effect since all candidates are evaluated by the same person", "It only matters for panel interviews, not 1:1s"],
+        "answer": 1,
+        "why": "Using a different, improvised question set for different candidates breaks the ability to compare them fairly afterward, which the structured set is specifically designed to enable."
+      }
+    ],
+    "hr-b3-candidate-outreach-messages": [
+      {
+        "q": "Why does the outreach prompt require the message to transparently state it's recruiting outreach, rather than a vague 'let's connect'?",
+        "options": ["It's a legal requirement for all recruiting messages", "Vague framing triggers spam filters on LinkedIn", "Candidates find vague framing evasive once they realize what it actually is, which damages trust before the conversation even starts", "It shortens the required message length"],
+        "answer": 2,
+        "why": "Being explicit that the message is recruiting outreach avoids the evasive feel of a vague 'let's connect' approach once the candidate figures out the real intent."
+      },
+      {
+        "q": "A recruiter can't find a strong, specific detail on a candidate's profile and considers using 'I came across your impressive profile' instead. What does the lesson say?",
+        "options": ["That phrasing is fine as long as the follow-up message is more specific", "Generic openers work better for senior-level candidates", "It's acceptable if the recruiter is sourcing at high volume", "That's exactly the generic opener the prompt is designed to prevent — the message should be built from a real, specific detail instead"],
+        "answer": 3,
+        "why": "The prompt explicitly bans generic compliments like 'impressive profile,' since passive candidates can spot that pattern within a sentence and it drives lower reply rates."
+      },
+      {
+        "q": "Why does the prompt limit the first-touch message to one clear next step instead of offering a call, a resume request, and a referral ask together?",
+        "options": ["A passive candidate isn't looking for a new role and needs a low-effort reason to engage, not multiple asks to weigh", "Multiple asks are blocked by most recruiting platforms", "It's required to stay under the character limit for LinkedIn InMail", "Passive candidates are legally entitled to a single ask only"],
+        "answer": 0,
+        "why": "A passive candidate isn't actively job hunting, so a single low-friction ask respects their limited attention far better than multiple competing requests."
+      }
+    ],
+    "hr-i1-screen-cvs-against-criteria-fairly": [
+      {
+        "q": "The screening prompt requires 'Matches / Partial match / Does not match / Insufficient information' per criterion instead of one overall pass/fail verdict. Why?",
+        "options": ["Per-criterion ratings are required by employment law in most jurisdictions", "A single pass/fail invites rubber-stamping, while per-criterion ratings force the recruiter to make an actual judgment call on borderline results", "It's the only rating format Claude supports for structured output", "It reduces the number of CVs that need review"],
+        "answer": 1,
+        "why": "A per-criterion rating keeps the tool in triage mode — a recruiter reading 'partial match' has to make a real judgment call, whereas one overall verdict invites rubber-stamping."
+      },
+      {
+        "q": "Why does the prompt explicitly exclude the candidate's name, presumed gender, age signals, and employment gaps from the evaluation?",
+        "options": ["Excluding them is required to keep the CV anonymous for legal reasons", "These fields are usually missing from most CVs anyway", "These are precisely the signals a model, like a human reviewer, will otherwise weight even when not explicitly asked to, so naming them is more effective than a general 'be unbiased' instruction", "It shortens the length of the evaluation output"],
+        "answer": 2,
+        "why": "Naming the specific factors to exclude is far more effective than a general 'be unbiased' instruction, because these are exactly the signals that quietly influence ratings otherwise."
+      },
+      {
+        "q": "A recruiter treats every 'Does not match' rating as an automatic rejection without further review. What does the lesson say about this?",
+        "options": ["This is the correct, intended use of the tool", "Automatic rejection is fine as long as the criteria were written before screening began", "It only becomes a problem if the candidate complains", "'Does not match' should be a starting point for the recruiter's own review, not an automatic rejection — a human must make the final decision"],
+        "answer": 3,
+        "why": "The prompt's closing disclaimer and the lesson's guidance both stress that a human must make the final screening decision, especially for 'does not match' or borderline results."
+      }
+    ],
+    "hr-i2-hr-policy-and-process-documentation": [
+      {
+        "q": "Why must jurisdiction-specific requirements (like statutory leave minimums) be routed to a separate 'Needs legal/compliance review' section instead of written directly into the policy?",
+        "options": ["A model asked to write policy language will otherwise produce plausible-sounding but potentially inaccurate legal claims, which creates real liability if an employee relies on them", "It's required to keep the document under a certain word count", "Legal language is against the HR platform's formatting rules", "It speeds up the drafting process only"],
+        "answer": 0,
+        "why": "AI must never be the source of a legal or compliance claim; routing jurisdiction-specific content to a flagged section prevents plausible-sounding but unverified legal language from ending up in the policy."
+      },
+      {
+        "q": "An HR draft is published without routing its flagged legal-review items to actual legal counsel first. What's the risk?",
+        "options": ["The document will fail to save in most HR systems", "Unreviewed compliance gaps could be published as if they were confirmed policy, creating real legal exposure for the company", "Nothing — the AI's flagged items are already legally verified", "It only matters for publicly traded companies"],
+        "answer": 1,
+        "why": "Skipping the routing step is listed as a common mistake — publishing without legal sign-off on flagged items leaves genuine compliance gaps unresolved."
+      },
+      {
+        "q": "Why does the prompt require a concrete 'how to request/use this' process section using only the steps actually provided?",
+        "options": ["It's required for the document to be indexed by the company wiki", "Process sections are a legal requirement in every jurisdiction", "A policy an employee can't act on without asking HR to clarify it has mostly failed at its job", "It reduces the need for an effective date"],
+        "answer": 2,
+        "why": "A policy that isn't paired with a concrete, usable process forces employees to ask HR for clarification anyway, which defeats the purpose of publishing clear documentation."
+      }
+    ],
+    "hr-a1-structured-hiring-workflow-ai-safe-steps": [
+      {
+        "q": "Why does the workflow-mapping prompt use a three-way classification (AI-assisted drafting / AI-assisted summary-triage / human-only) instead of a simple yes/no on AI use?",
+        "options": ["Three-way classification is required by most companies' legal teams", "It's the only format Claude Projects can store", "It reduces the number of stages that need review", "Most hiring stages aren't cleanly automatable or off-limits — they're places where AI can draft or summarize while a human still decides"],
+        "answer": 3,
+        "why": "A simple yes/no doesn't fit most real hiring stages, which sit in between full automation and full exclusion; the three-way classification captures that nuance."
+      },
+      {
+        "q": "A team classifies CV screening and interview scoring as fully 'AI-decided' to save time. What does the lesson say about this?",
+        "options": ["Any stage where a candidate is advanced, screened out, or offered a role must be at most 'AI-assisted summary/triage' — never AI-decided", "This is acceptable as long as the AI's accuracy rate is above 90%", "It's fine for high-volume roles but not executive roles", "This is only a problem if the AI wasn't given clear criteria"],
+        "answer": 0,
+        "why": "The lesson states as a hard rule that any stage involving candidate advancement or rejection must never be classified as AI-decided, regardless of accuracy or role level."
+      },
+      {
+        "q": "Why does the lesson recommend sharing the finalized hiring workflow map with every interviewer and hiring manager, not just the recruiting team?",
+        "options": ["It's a compliance requirement to share it company-wide", "Most inconsistent AI use in hiring comes from people outside recruiting who never saw the guardrails in the first place", "It reduces the recruiting team's workload directly", "Interviewers are legally required to co-sign the workflow map"],
+        "answer": 1,
+        "why": "The lesson's pro tip notes that inconsistent AI use most often comes from people outside recruiting who were never shown the guardrails, so wide visibility matters."
+      }
+    ]
+  }
+}
