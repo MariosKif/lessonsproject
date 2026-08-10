@@ -28,8 +28,8 @@ const FAQ: [string, string][] = [
     "Yes, in one click from your account page. You keep access until the end of the paid period.",
   ],
   [
-    "What do the free preview lessons include?",
-    "The first lessons of every path are free with a plain account — no card required. Subscribe when you want the full library.",
+    "What does the free plan include?",
+    "Up to 10 lessons every day — any lessons you like, across every path and academy. Lessons you open stay readable for the rest of the day, and your allowance resets daily. No card required. Subscribe when you want unlimited access.",
   ],
 ];
 
@@ -43,11 +43,34 @@ export default function PricingPage() {
     <main className="mx-auto max-w-4xl px-4 py-16 sm:px-6">
       <h1 className="display text-center text-4xl font-bold">Simple pricing. Serious library.</h1>
       <p className="mx-auto mt-3 max-w-xl text-center text-ink-soft">
-        One subscription, everything included. No tiers, no per-course fees, no AI usage bills
-        hiding behind the price.
+        Learn free every day, or go unlimited for less than a coffee. No per-course fees, no AI
+        usage bills hiding behind the price.
       </p>
 
-      <div className="mx-auto mt-12 max-w-md rounded-2xl border-2 border-ultramarine bg-sheet p-8 shadow-[0_24px_60px_-30px_rgba(43,58,143,0.4)]">
+      <div className="mx-auto mt-12 grid max-w-3xl items-start gap-6 sm:grid-cols-2">
+        <div className="rounded-2xl border border-mist bg-sheet p-8">
+          <p className="font-mono text-xs font-semibold uppercase tracking-widest text-ink-soft">
+            Free
+          </p>
+          <p className="display mt-3 text-5xl font-bold">
+            €0<span className="text-base font-medium text-ink-soft">/forever</span>
+          </p>
+          <ul className="mt-6 space-y-2.5 text-sm">
+            <li>✓ {`10 lessons every day — any lesson, your pick`}</li>
+            <li>✓ Lessons you opened stay readable all day</li>
+            <li>✓ Progress, bookmarks and search included</li>
+            <li>✓ Allowance resets daily — learn a little every day, free</li>
+          </ul>
+          <Link
+            href="/signup"
+            className="mt-8 block rounded-lg border border-mist py-3 text-center text-sm font-semibold text-ink transition-colors hover:border-cobalt/40"
+          >
+            Create a free account
+          </Link>
+          <p className="mt-3 text-center text-xs text-ink-soft">No card required.</p>
+        </div>
+
+        <div className="rounded-2xl border-2 border-ultramarine bg-sheet p-8 shadow-[0_24px_60px_-30px_rgba(43,58,143,0.4)]">
         <p className="font-mono text-xs font-semibold uppercase tracking-widest text-ultramarine">
           SkillStack Monthly
         </p>
@@ -67,15 +90,16 @@ export default function PricingPage() {
           <li>✓ Full-text search, filters, bookmarks and progress</li>
           <li>✓ Lessons revised as AI tools change</li>
         </ul>
-        <Link
-          href="/signup"
-          className="mt-8 block rounded-lg bg-ultramarine py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-cobalt"
-        >
-          Start learning
-        </Link>
-        <p className="mt-3 text-center text-xs text-ink-soft">
-          Free preview lessons with any account. Cancel anytime.
-        </p>
+          <Link
+            href="/signup"
+            className="mt-8 block rounded-lg bg-ultramarine py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-cobalt"
+          >
+            Start learning
+          </Link>
+          <p className="mt-3 text-center text-xs text-ink-soft">
+            No daily limits. Cancel anytime.
+          </p>
+        </div>
       </div>
 
       <section className="mt-20">

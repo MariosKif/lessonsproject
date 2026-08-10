@@ -236,6 +236,18 @@ export const bookmarks = sqliteTable(
   (t) => [primaryKey({ columns: [t.userId, t.lessonSlug] })]
 );
 
+// Metered free tier: one row per (user, lesson, UTC day). Free accounts may open
+// up to FREE_DAILY_LIMIT distinct non-preview lessons per day; subscribers bypass.
+export const dailyLessonViews = sqliteTable(
+  "daily_lesson_views",
+  {
+    userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    lessonSlug: text("lesson_slug").notNull().references(() => lessons.slug, { onDelete: "cascade" }),
+    day: text("day").notNull(), // YYYY-MM-DD (UTC)
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.lessonSlug, t.day] })]
+);
+
 export const recentlyViewed = sqliteTable(
   "recently_viewed",
   {

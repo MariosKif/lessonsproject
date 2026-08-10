@@ -114,7 +114,7 @@ export default async function ProfilePage({ searchParams }: PageProps<"/app/prof
             active ? "bg-moss/10 text-moss" : "bg-spark/10 text-spark"
           }`}
         >
-          {active ? "Subscriber" : "Free preview"}
+          {active ? "Subscriber" : "Free plan"}
         </span>
       </header>
 
@@ -230,8 +230,8 @@ export default async function ProfilePage({ searchParams }: PageProps<"/app/prof
         ) : (
           <>
             <p className="text-sm leading-relaxed text-ink-soft">
-              You&apos;re on the <strong className="text-ink">free preview</strong>: the first lessons of
-              every path are open. Subscribe to unlock the full library.
+              You&apos;re on the <strong className="text-ink">free plan</strong>: up to 10 lessons every
+              day, resetting daily. Subscribe to read without limits.
             </p>
             <div className="mt-4 rounded-xl border border-ultramarine/20 bg-ultramarine/5 p-5">
               <p className="display text-2xl font-bold">

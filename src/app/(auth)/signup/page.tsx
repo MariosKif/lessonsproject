@@ -10,7 +10,7 @@ export default function SignupPage() {
     <>
       <h1 className="display mb-1 text-xl font-bold">Create your account</h1>
       <p className="mb-6 text-sm text-ink-soft">
-        Free preview lessons included — no card required.
+        10 free lessons every day — no card required.
       </p>
       <AuthForm action={registerAction} mode="signup" />
       <p className="mt-6 text-center text-sm text-ink-soft">

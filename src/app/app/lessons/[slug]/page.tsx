@@ -11,6 +11,7 @@ import { CompleteButton, BookmarkButton } from "@/components/lesson-actions";
 import { DifficultyBadge, ToolChip } from "@/components/badges";
 import { LessonCard, LessonGrid } from "@/components/lesson-card";
 import { CodingLessonView } from "@/components/coding/coding-lesson-view";
+import { checkDailyAccess } from "@/lib/daily-limit";
 
 function Section({ n, title, children }: { n: number; title: string; children: React.ReactNode }) {
   return (
@@ -31,8 +32,14 @@ export default async function LessonPage({ params }: PageProps<"/app/lessons/[sl
   const lesson = getLesson(slug);
   if (!lesson) notFound();
 
-  const locked = !lesson.isFree && !ctx.isSubscribed;
+  // Metered free tier: free accounts open up to 10 distinct lessons per day.
+  const access = checkDailyAccess(ctx.user.id, slug, {
+    isFree: lesson.isFree,
+    isSubscribed: ctx.isSubscribed,
+  });
+  const locked = !access.allowed;
   if (!locked) recordView(ctx.user.id, slug);
+  const showQuota = !ctx.isSubscribed && !locked;
 
   const completed = getCompletedSlugs(ctx.user.id).has(slug);
   const bookmarked = getBookmarkedSlugs(ctx.user.id).has(slug);
@@ -46,6 +53,25 @@ export default async function LessonPage({ params }: PageProps<"/app/lessons/[sl
   if (lesson.kind === "coding" && lesson.coding && !locked) {
     return (
       <>
+        {showQuota && (
+          <div className="mx-auto mb-6 flex max-w-[1500px] items-center gap-3 rounded-xl border border-mist bg-sheet px-4 py-2.5 text-sm">
+            <span className="shrink-0 font-mono text-xs font-semibold text-ink-soft">
+              Free plan · {access.used}/{access.limit} lessons today
+            </span>
+            <span className="h-1.5 min-w-16 flex-1 overflow-hidden rounded-full bg-mist" aria-hidden>
+              <span
+                className="block h-full rounded-full bg-cobalt"
+                style={{ width: `${Math.min(100, (access.used / access.limit) * 100)}%` }}
+              />
+            </span>
+            <Link
+              href="/app/profile#subscription"
+              className="shrink-0 text-xs font-semibold text-cobalt hover:underline"
+            >
+              Go unlimited →
+            </Link>
+          </div>
+        )}
         <CodingLessonView
           lesson={{
             slug: lesson.slug,
@@ -110,10 +136,15 @@ export default async function LessonPage({ params }: PageProps<"/app/lessons/[sl
 
       {locked ? (
         <div className="rounded-2xl border border-mist bg-sheet p-10 text-center">
-          <p className="display text-xl font-semibold">This lesson is part of the full library</p>
+          <p className="font-mono text-xs font-semibold uppercase tracking-widest text-spark">
+            {access.used}/{access.limit} free lessons used today
+          </p>
+          <p className="display mt-3 text-xl font-semibold">
+            You&apos;ve read your {access.limit} free lessons for today
+          </p>
           <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-ink-soft">
-            Subscribe for €5.99/month to unlock every lesson, path and academy. You bring your own
-            AI accounts — we teach you how to use them well.
+            Your free allowance resets tomorrow — or subscribe for €5.99/month and read without
+            limits: every lesson, path and academy, plus the interactive coding courses.
           </p>
           <Link
             href="/app/profile#subscription"
@@ -121,9 +152,31 @@ export default async function LessonPage({ params }: PageProps<"/app/lessons/[sl
           >
             Unlock everything — €5.99/mo
           </Link>
+          <p className="mt-3 text-xs text-ink-soft">
+            Lessons you already opened today stay readable until the daily reset.
+          </p>
         </div>
       ) : (
         <div className="space-y-6">
+          {showQuota && (
+            <div className="flex items-center gap-3 rounded-xl border border-mist bg-sheet px-4 py-2.5 text-sm">
+              <span className="shrink-0 font-mono text-xs font-semibold text-ink-soft">
+                Free plan · {access.used}/{access.limit} lessons today
+              </span>
+              <span className="h-1.5 min-w-16 flex-1 overflow-hidden rounded-full bg-mist" aria-hidden>
+                <span
+                  className="block h-full rounded-full bg-cobalt"
+                  style={{ width: `${Math.min(100, (access.used / access.limit) * 100)}%` }}
+                />
+              </span>
+              <Link
+                href="/app/profile#subscription"
+                className="shrink-0 text-xs font-semibold text-cobalt hover:underline"
+              >
+                Go unlimited →
+              </Link>
+            </div>
+          )}
           {(() => {
             let n = 0;
             const next = () => ++n;
