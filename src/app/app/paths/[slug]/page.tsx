@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { getUserContext } from "@/lib/auth/session";
-import { getPath } from "@/lib/queries/paths";
+import { getPath, getNextCourse } from "@/lib/queries/paths";
 import { getCompletedSlugs } from "@/lib/queries/user";
 import { DifficultyBadge, FreeBadge } from "@/components/badges";
 import { toolMeta } from "@/lib/tool-meta";
@@ -18,6 +18,7 @@ export default async function PathPage({ params }: PageProps<"/app/paths/[slug]"
   const pct = path.lessons.length ? Math.round((doneCount / path.lessons.length) * 100) : 0;
   const accent = path.toolSlug ? toolMeta(path.toolSlug).color : "var(--ultramarine)";
   const nextLesson = path.lessons.find((l) => !completed.has(l.slug));
+  const nextCourse = getNextCourse(slug);
 
   return (
     <div className="mx-auto max-w-3xl">
@@ -68,6 +69,21 @@ export default async function PathPage({ params }: PageProps<"/app/paths/[slug]"
             </Link>
           )}
         </div>
+        {pct === 100 && nextCourse && (
+          <div className="mt-5 rounded-xl border border-moss/30 bg-moss/5 p-5">
+            <p className="font-mono text-xs font-semibold uppercase tracking-widest text-moss">
+              Course complete — well done!
+            </p>
+            <p className="display mt-1.5 text-lg font-semibold">Keep going: {nextCourse.title}</p>
+            <p className="mt-1 text-sm leading-relaxed text-ink-soft">{nextCourse.tagline}</p>
+            <Link
+              href={`/app/paths/${nextCourse.slug}`}
+              className="mt-3 inline-block rounded-lg bg-moss px-5 py-2 text-sm font-semibold text-white hover:opacity-90"
+            >
+              Start the {nextCourse.level} course →
+            </Link>
+          </div>
+        )}
       </header>
 
       <ol className="mt-8 space-y-2">

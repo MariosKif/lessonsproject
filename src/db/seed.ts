@@ -34,6 +34,7 @@ type LessonJson = {
 type PathJson = {
   slug: string; title: string; tagline: string; description: string; kind: string;
   level?: string; toolSlug?: string; professionSlug?: string; sortOrder?: number;
+  nextPath?: string; // course chaining: recommended follow-up path
   lessons: string[];
 };
 
@@ -204,11 +205,24 @@ function seed() {
         slug: p.slug, title: p.title, tagline: p.tagline, description: p.description,
         kind: p.kind, level: p.level ?? "mixed", toolSlug: p.toolSlug ?? null,
         professionSlug: p.professionSlug ?? null, sortOrder: p.sortOrder ?? 0,
+        nextPathSlug: p.nextPath ?? null,
       }).run();
       known.forEach((slug, i) =>
         db.insert(pathLessons).values({ pathSlug: p.slug, lessonSlug: slug, position: i + 1 }).run()
       );
       pathsOk++;
+    }
+  }
+
+  // Validate course chains now that every path row exists; clear dangling links.
+  const chainRows = sqlite
+    .prepare("SELECT slug, next_path_slug FROM paths WHERE next_path_slug IS NOT NULL")
+    .all() as { slug: string; next_path_slug: string }[];
+  for (const row of chainRows) {
+    const exists = sqlite.prepare("SELECT 1 FROM paths WHERE slug = ?").get(row.next_path_slug);
+    if (!exists) {
+      console.warn(`⚠ path ${row.slug}: nextPath "${row.next_path_slug}" does not exist — cleared`);
+      sqlite.prepare("UPDATE paths SET next_path_slug = NULL WHERE slug = ?").run(row.slug);
     }
   }
 

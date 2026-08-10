@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { getUserContext } from "@/lib/auth/session";
 import { getLesson, getRelatedLessons } from "@/lib/queries/lessons";
-import { getPathsContainingLesson, getNextLessonInPath } from "@/lib/queries/paths";
+import { getPathsContainingLesson, getNextLessonInPath, getNextCourse } from "@/lib/queries/paths";
 import { getCompletedSlugs, getBookmarkedSlugs, recordView } from "@/lib/queries/user";
 import { PromptBlock } from "@/components/prompt-block";
 import { QuizBlock } from "@/components/quiz-block";
@@ -38,6 +38,8 @@ export default async function LessonPage({ params }: PageProps<"/app/lessons/[sl
   const bookmarked = getBookmarkedSlugs(ctx.user.id).has(slug);
   const inPaths = getPathsContainingLesson(slug);
   const next = inPaths.length ? getNextLessonInPath(inPaths[0].path.slug, inPaths[0].position) : null;
+  // Course chaining: on the last lesson of a path, point to the follow-up course.
+  const nextCourse = !next && inPaths.length ? getNextCourse(inPaths[0].path.slug) : null;
   const related = getRelatedLessons(slug);
   const launchTool = lesson.toolTags[0];
 
@@ -64,6 +66,8 @@ export default async function LessonPage({ params }: PageProps<"/app/lessons/[sl
             pathTitle: inPaths[0]?.path.title,
             nextSlug: next?.lessonSlug,
             nextTitle: next?.title,
+            nextCourseSlug: nextCourse?.slug,
+            nextCourseTitle: nextCourse?.title,
             completed,
             bookmarked,
           }}
@@ -237,6 +241,22 @@ export default async function LessonPage({ params }: PageProps<"/app/lessons/[sl
               </Link>
             )}
           </section>
+
+          {nextCourse && (
+            <section className="rounded-2xl border border-ultramarine/25 bg-ultramarine/5 p-6">
+              <p className="font-mono text-xs font-semibold uppercase tracking-widest text-ultramarine">
+                You reached the end of this course
+              </p>
+              <h2 className="display mt-2 text-xl font-bold">Keep going: {nextCourse.title}</h2>
+              <p className="mt-1 text-sm leading-relaxed text-ink-soft">{nextCourse.tagline}</p>
+              <Link
+                href={`/app/paths/${nextCourse.slug}`}
+                className="mt-4 inline-block rounded-lg bg-ultramarine px-5 py-2.5 text-sm font-semibold text-white hover:bg-cobalt"
+              >
+                Continue to the {nextCourse.level} course →
+              </Link>
+            </section>
+          )}
         </div>
       )}
 

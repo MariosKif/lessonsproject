@@ -49,6 +49,23 @@ export function getPath(slug: string) {
   return { ...path, lessons: items };
 }
 
+/** Course chaining: the recommended follow-up course for a finished path. */
+export function getNextCourse(pathSlug: string) {
+  const current = db
+    .select({ nextPathSlug: paths.nextPathSlug })
+    .from(paths)
+    .where(eq(paths.slug, pathSlug))
+    .get();
+  if (!current?.nextPathSlug) return null;
+  return (
+    db
+      .select({ slug: paths.slug, title: paths.title, tagline: paths.tagline, level: paths.level })
+      .from(paths)
+      .where(eq(paths.slug, current.nextPathSlug))
+      .get() ?? null
+  );
+}
+
 /** Which paths contain this lesson (for next/previous navigation). */
 export function getPathsContainingLesson(lessonSlug: string) {
   return db

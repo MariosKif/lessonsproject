@@ -34,7 +34,8 @@
         "html-b22-head-title-meta",
         "html-b23-charsets-entities",
         "html-b24-project-profile-page"
-      ]
+      ],
+      "nextPath": "html-intermediate"
     },
     {
       "slug": "html-intermediate",
@@ -66,7 +67,8 @@
         "html-i18-computercode",
         "html-i19-responsive-basics",
         "html-i20-project-registration"
-      ]
+      ],
+      "nextPath": "html-advanced"
     },
     {
       "slug": "html-advanced",

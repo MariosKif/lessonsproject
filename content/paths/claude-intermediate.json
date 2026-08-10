@@ -23,7 +23,8 @@
         "claude-i10-memory-conversation-strategy",
         "claude-i11-quality-control-verification",
         "claude-i12-cross-platform-workflow"
-      ]
+      ],
+      "nextPath": "claude-advanced"
     }
   ]
 }

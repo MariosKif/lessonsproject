@@ -164,6 +164,9 @@ export const paths = sqliteTable("paths", {
   toolSlug: text("tool_slug").references(() => tools.slug),
   professionSlug: text("profession_slug").references(() => professions.slug),
   sortOrder: integer("sort_order").notNull().default(0),
+  // Course chaining: the path to recommend when this one is finished
+  // (e.g. html-foundations → html-intermediate). Plain text, validated in seed.
+  nextPathSlug: text("next_path_slug"),
 });
 
 export const pathLessons = sqliteTable(

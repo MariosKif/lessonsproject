@@ -26,6 +26,8 @@ type NavProps = {
   pathTitle?: string;
   nextSlug?: string;
   nextTitle?: string;
+  nextCourseSlug?: string;
+  nextCourseTitle?: string;
   completed: boolean;
   bookmarked: boolean;
 };
@@ -124,6 +126,21 @@ export function CodingLessonView({ lesson, nav }: { lesson: LessonForView; nav: 
               </Link>
             )}
           </section>
+
+          {!nav.nextSlug && nav.nextCourseSlug && (
+            <section className="rounded-2xl border border-ultramarine/25 bg-ultramarine/5 p-6">
+              <p className="font-mono text-xs font-semibold uppercase tracking-widest text-ultramarine">
+                You reached the end of this course
+              </p>
+              <h2 className="display mt-2 text-xl font-bold">Keep going: {nav.nextCourseTitle}</h2>
+              <Link
+                href={`/app/paths/${nav.nextCourseSlug}`}
+                className="mt-4 inline-block rounded-lg bg-ultramarine px-5 py-2.5 text-sm font-semibold text-white hover:bg-cobalt"
+              >
+                Continue to the next course →
+              </Link>
+            </section>
+          )}
         </div>
 
         {/* RIGHT: sticky workbench — editor/preview on top, feedback console below */}

@@ -23,7 +23,8 @@
         "claude-b10-research-with-web-search",
         "claude-b11-reusable-prompt-templates",
         "claude-b12-personal-workflow"
-      ]
+      ],
+      "nextPath": "claude-intermediate"
     }
   ]
 }
